@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoPlayer hides the loading indicator after load 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "aspectRatio": 1.7777777777777777,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+    }
+  }
+>
+  <Video
+    controls={true}
+    muted={false}
+    onError={[Function]}
+    onLoad={[Function]}
+    onLoadStart={[Function]}
+    paused={true}
+    repeat={false}
+    resizeMode="contain"
+    source={
+      Object {
+        "uri": "https://mendix.com/video.mp4",
+      }
+    }
+    style={
+      Object {
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+    testID="video-player-test"
+    useTextureView={false}
+  />
+</View>
+`;
+
+exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "aspectRatio": 1.9494584837545126,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+    }
+  }
+>
+  <Video
+    controls={true}
+    muted={false}
+    onError={[Function]}
+    onLoad={[Function]}
+    onLoadStart={[Function]}
+    paused={true}
+    repeat={false}
+    resizeMode="contain"
+    source={
+      Object {
+        "uri": "https://mendix.com/video.mp4",
+      }
+    }
+    style={
+      Object {
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+    testID="video-player-test"
+    useTextureView={false}
+  />
+</View>
+`;
+
+exports[`VideoPlayer renders a loading indicator 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "aspectRatio": 1.7777777777777777,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+    }
+  }
+>
+  <Video
+    controls={true}
+    muted={false}
+    onError={[Function]}
+    onLoad={[Function]}
+    onLoadStart={[Function]}
+    paused={true}
+    repeat={false}
+    resizeMode="contain"
+    source={
+      Object {
+        "uri": "https://mendix.com/video.mp4",
+      }
+    }
+    style={
+      Object {
+        "height": 0,
+      }
+    }
+    testID="video-player-test"
+    useTextureView={false}
+  />
+</View>
+`;
+
+exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "aspectRatio": 1.7777777777777777,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+    }
+  }
+>
+  <ActivityIndicator
+    animating={true}
+    color="white"
+    hidesWhenStopped={true}
+    size="large"
+  />
+  <Video
+    controls={true}
+    muted={false}
+    onError={[Function]}
+    onLoad={[Function]}
+    onLoadStart={[Function]}
+    paused={true}
+    repeat={false}
+    resizeMode="contain"
+    source={
+      Object {
+        "uri": "https://mendix.com/video.mp4",
+      }
+    }
+    style={
+      Object {
+        "height": 0,
+      }
+    }
+    testID="video-player-test"
+    useTextureView={false}
+  />
+</View>
+`;

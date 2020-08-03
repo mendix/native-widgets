@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Safe area view renders with content 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+  testID="safe-area-view-test"
+>
+  <View
+    pointerEvents="box-none"
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <Text>
+      Content
+    </Text>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`Safe area view renders with custom styling 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+  testID="safe-area-view-test"
+>
+  <View
+    pointerEvents="box-none"
+    style={
+      Object {
+        "backgroundColor": "green",
+        "flex": 1,
+      }
+    }
+  >
+    <Text>
+      Content
+    </Text>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`Safe area view renders without content 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+  testID="safe-area-view-test"
+>
+  <View
+    pointerEvents="box-none"
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  />
+</RCTSafeAreaView>
+`;
