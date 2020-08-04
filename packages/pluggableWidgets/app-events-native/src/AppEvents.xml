@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="com.mendix.widget.native.appevents.AppEvents" supportedPlatform="Native" needsEntityContext="false" offlineCapable="true" pluginWidget="true" xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../../../node_modules/mendix/custom_widget.xsd">
+    <name>App events</name>
+    <description>Trigger actions based on load, network status and timer events.</description>
+    <icon>iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACwUlEQVR4Ae2bNbTXUAzGcVhw2/GN/eAOvS3uriOyIxtuvcUnbMJ9g33FXXuLuzvlfs9faB/eW0nOydO2SX7/L6nX+ltjY2NjGzp0aFshxDrtF7W/tSwr/B+ObSMGYiFmKop3HGe2TugZEkzSEROxjRZv2/YcJGPSkYOpT74LkbsRRw7IJXEAOvAOKknt00aMGNHyf8XEtnWs6bTlkEviAHRgRZIYmSD8kUQJvgkFfKmaxPTp0xvVsOyJP5D2ibjtIRZZ9kviAGjC+Ns/BnD8j+ObB5D/+AzA9O6PATAABsBDMEsAGIC9QfW2pH8dbsugX6EADHUfttWFv7BcP4QLVwVj9oZ1CwPAlmoXCq/qwrvXoxAAHHmvOy0ebrtqVe4BQOaWVGeiAAipLkWtg/kgXHUNDpVkGQCkPx/FxvnQTapD1eXDMKytwdypXEY9neQ9bZJBAHTwRbvwggXVgHlB1x+W8/xFmQRABx9gaF9WvUB16meKEdJ/BhVkCUD04PPUvOHew/YEyqcx2541rdimqw6R9YgKMgAgavDh9/L9vi76QrW9wYa748r7Hz1PiicqSDGAmnodiqhYT6qVZG+wm/Z/nAqyCmBnze2hnkIdtP+F63+MUkGmAGDwYW9Ajw2EVE/oUSHtf+GpJSg6DmzqAejkbw517w6IWheyJ7vDNbT/0RKQfWYA/Na6MhhLlPKStgWGIiSPn3MHAIVhFxg/N9ShipmxIeiLw+I8AKBtcDIOAAZi7q8I0alP+z/3AOhRIe3/3AOACde/GN//+QdAjwpp/+cfAA6Aovo/9wDIiZOqcl5wG/1fGAAwx1O9cHlM9/5lIYM+fGMkowAYgGlnAAyAAfAQZAA5e1DyhHkAZh+VPZ72R2X9Yj8sHfG4PB5lN/+4fAFfmBg6dGhn5GTkfSHTAP78vSF+aYpfm2NjY2P7DgYfzaS2P0WyAAAAAElFTkSuQmCC</icon>
+    <properties>
+        <propertyGroup caption="App events">
+            <propertyGroup caption="Page load">
+                <property key="onLoadAction" type="action" required="false">
+                    <caption>On load</caption>
+                    <description>This action is immediately triggered when this widget is created.</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="App resume">
+                <property key="onResumeAction" type="action" required="false">
+                    <caption>On resume</caption>
+                    <description>This action is triggered when the user navigates back to this app.</description>
+                </property>
+                <property key="onResumeTimeout" type="integer" defaultValue="0">
+                    <caption>Timeout period</caption>
+                    <description>Prevent calling the action too often, it can only be called once in the given period of seconds.</description>
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+        <propertyGroup caption="Network events">
+            <propertyGroup caption="Online">
+                <property key="onOnlineAction" type="action" required="false">
+                    <caption>On online</caption>
+                    <description>Action called when the device network status is changed to online.</description>
+                </property>
+                <property key="onOnlineTimeout" type="integer" defaultValue="5">
+                    <caption>Timeout period </caption>
+                    <description>Prevent calling the action too often, it can only be called once in the given period of seconds.</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Offline">
+                <property key="onOfflineAction" type="action" required="false">
+                    <caption>On offline</caption>
+                    <description>Action called when the device network status is changed to offline.</description>
+                </property>
+                <property key="onOfflineTimeout" type="integer" defaultValue="5">
+                    <caption>Timeout period  </caption>
+                    <description>Prevent calling the action too often, it can only be called once in the given period of seconds.</description>
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+        <propertyGroup caption="Timer events">
+            <propertyGroup caption="Timer">
+                <property key="timerType" type="enumeration" defaultValue="once">
+                    <caption>Call</caption>
+                    <description/>
+                    <enumerationValues>
+                        <enumerationValue key="once">Once</enumerationValue>
+                        <enumerationValue key="interval">Interval (loop)</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="delayTime" type="integer" defaultValue="30">
+                    <caption>Time</caption>
+                    <description>How many second should pass before the action is called.</description>
+                </property>
+                <property key="onTimeoutAction" type="action" required="false">
+                    <caption>On timeout</caption>
+                    <description/>
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+    </properties>
+</widget>

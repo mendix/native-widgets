@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Carousel renders loading 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+/>
+`;
