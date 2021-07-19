@@ -1,0 +1,25 @@
+{
+  "name": "nanoflow-actions-native",
+  "version": "2.0.1",
+  "license": "Apache-2.0",
+  "marketplace": {
+    "minimumMXVersion": "9.0.5",
+    "marketplaceId": 109515
+  },
+  "scripts": {
+    "build": "rollup --config ../../../configs/jsactions/rollup.config.js --configProject nanoflowcommons",
+    "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
+    "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "1.12.1",
+    "@react-native-community/geolocation": "2.0.2",
+    "react-native-geocoder": "0.5.0",
+    "invariant": "^2.2.4"
+  },
+  "devDependencies": {
+    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "eslint": "^7.20.0",
+    "rollup": "^2.28.2"
+  }
+}
