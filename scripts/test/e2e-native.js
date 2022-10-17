@@ -59,7 +59,7 @@ async function main() {
     }
 
     const existingImages = execSync(`docker image ls -q ${ghcr}mxbuild:${mendixVersion}`).toString().trim();
-    const scriptsPath = join(root, "packages/tools/pluggable-widgets-tools/scripts");
+    const scriptsPath = join(root, "scripts/automation");
 
     if (!existingImages) {
         console.log(`Creating new mxbuild docker image...`);
