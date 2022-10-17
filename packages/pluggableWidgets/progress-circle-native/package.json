@@ -27,7 +27,7 @@
     "react-native-progress": "^4.0.3"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@mendix/piw-utils-internal": "^1.0.0",
     "detox": "^19.7.1",
     "eslint": "^7.20.0"

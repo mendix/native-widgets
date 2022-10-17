@@ -25,7 +25,7 @@
     "react-native-system-navigation-bar": "1.0.2"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@mendix/piw-utils-internal": "1.0.0",
     "@types/react-native-video": "^5.0.4",
     "eslint": "^7.20.0"

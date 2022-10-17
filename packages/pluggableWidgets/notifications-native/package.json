@@ -24,7 +24,7 @@
     "react-native-push-notification": "^6.1.2"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "eslint": "^7.20.0"
   }
 }

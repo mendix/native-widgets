@@ -43,7 +43,7 @@
     "mime": "3.0.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@types/querystringify": "^2.0.0",
     "@types/url-parse": "^1.4.3",
     "@types/react-native-push-notification": "^5.0.5",

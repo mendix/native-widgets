@@ -30,7 +30,7 @@
     "react-native-snap-carousel": "^3.9.1"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@types/react-native-snap-carousel": "^3.7.4",
     "eslint": "^7.20.0",
     "detox": "^19.7.1"
