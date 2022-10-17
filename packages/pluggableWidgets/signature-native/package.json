@@ -30,7 +30,7 @@
     "react-native-signature-canvas": "3.4.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "detox": "^19.7.1",
     "eslint": "^7.20.0"
   }

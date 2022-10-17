@@ -31,7 +31,7 @@
     "js-base64": "~3.7.2"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": ">=8.9.2",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "eslint": "^7.20.0",
     "rollup": "^2.68.0"
   }
