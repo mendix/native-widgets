@@ -1,6 +1,6 @@
 {
     "version": "independent",
-    "packages": ["packages/*/*", "scripts/data"],
+    "packages": ["packages/*/*"],
     "command": {
         "bootstrap": {
             "npmClientArgs": ["--package-lock", "--legacy-peer-deps"]

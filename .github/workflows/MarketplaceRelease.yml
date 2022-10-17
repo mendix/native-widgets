@@ -3,13 +3,7 @@ name: Marketplace Release
 on:
   push:
     tags:
-      - "*-web-v*"
       - "*-native-v*"
-      - "*-hybrid-v*"
-      - "data-widgets-v*"
-      - "atlas-core-v*"
-      - "atlas-web-*-v*"
-      - "web-actions-v*"
 
 jobs:
   publish_release:
@@ -37,11 +31,9 @@ jobs:
       - name: "Installing dependencies"
         run: npm install
       - name: "Building native widgets and js actions"
-        if: contains(steps.scope.outputs._0, '-native')
         run: npm run release:native
       - name: "Updating Native Mobile Resources project"
-        if: contains(steps.scope.outputs._0, '-native')
-        run: "npm run create-modules:native"
+        run: "npm run create-modules"
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
