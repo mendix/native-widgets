@@ -51,12 +51,12 @@ jobs:
         if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@12e36fc18b0689399306c2e0b3e0f2978b7f1ee7 # v2
         env:
-          SLACK_CHANNEL: ${{ secrets.SLACK_MULTIXP_CHANNEL }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
           SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: ${{ secrets.WEBCONTENT_BOT_IMAGE }}
+          SLACK_ICON: ${{ secrets.BOT_IMAGE }}
           SLACK_MESSAGE: "Something went wrong while uploading version ${{ steps.scope.outputs._1 }} of package ${{ steps.scope.outputs._0 }} to the marketplace. <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|More info..>"
           SLACK_TITLE: ":warning: *Automation Failed*"
-          SLACK_USERNAME: ${{ secrets.WEBCONTENT_BOT_NAME }}
-          SLACK_WEBHOOK: ${{ secrets.SLACK_MULTIXP_WEBHOOK }}
-          SLACK_FOOTER: "Created by Aliens"
+          SLACK_USERNAME: ${{ secrets.BOT_NAME }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_FOOTER: ${{ secrets.BOT_FOOTER }}
           MSG_MINIMAL: true
