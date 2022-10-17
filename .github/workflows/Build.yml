@@ -2,9 +2,9 @@ name: Run build
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   test:
@@ -20,6 +20,7 @@ jobs:
         uses: softprops/diffset@3aeca0719d5043522e155012d3c9f7470fdd2dc6 # v1
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         with:
+          base: main
           global_files: |
             !{packages/**/*,configs/e2e/*.json,scripts/**/*,data/**/*}
         env:
@@ -28,7 +29,7 @@ jobs:
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2
         with:
           submodules: false
-      - name: "Fetching master to compare"
+      - name: "Fetching main to compare"
         if: github.event_name == 'pull_request' && steps.files.outputs.global_files == ''
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - name: "Defining environment variables"

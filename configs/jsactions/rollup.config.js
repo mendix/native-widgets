@@ -10,7 +10,7 @@ import command from "rollup-plugin-command";
 import { promisify } from "util";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import { collectDependencies } from "../../packages/tools/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies";
+import { collectDependencies } from "@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies";
 import {
     licenseCustomTemplate,
     copyLicenseFile

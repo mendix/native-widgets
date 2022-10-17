@@ -3,11 +3,11 @@ name: Run native automated end-to-end tests for Android
 on:
   workflow_dispatch
   # push:
-  #     branches: [master]
+  #     branches: [main]
   #     paths: "packages/pluggableWidgets/*-native/**/*"
 
   # pull_request:
-  #     branches: [master]
+  #     branches: [main]
   #     paths: "packages/pluggableWidgets/*-native/**/*"
 
 jobs:
@@ -25,6 +25,7 @@ jobs:
       #           github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name ==
       #           github.repository
       #       with:
+      #           base: main
       #           global_files: |
       #               !{packages/**/*,configs/e2e/*.json,detox/**/*,scripts/**/*}
       #           not_atlas_native_files: |
@@ -35,7 +36,7 @@ jobs:
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2
         with:
           submodules: false
-      - name: "Fetching master to compare"
+      - name: "Fetching main to compare"
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       # - name: "Defining environment variables"
