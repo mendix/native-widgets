@@ -48,14 +48,8 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - name: "Installing dependencies"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: install
+        run: yarn install
       - name: "Linting code"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: workspaces foreach ${{ steps.variables.outputs.arg }} run lint
+        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} run lint
       - name: "Running unit tests"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: workspaces foreach ${{ steps.variables.outputs.arg }} run test
+        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} run test

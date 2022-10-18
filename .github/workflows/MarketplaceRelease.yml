@@ -29,17 +29,11 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: "Installing dependencies"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: install
+        run: yarn install
       - name: "Building native widgets and js actions"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: workspaces foreach run release:native
+        run: yarn workspaces foreach run release:native
       - name: "Updating Native Mobile Resources project"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: workspaces foreach run create-modules
+        run: yarn workspaces foreach run create-modules
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
@@ -47,9 +41,7 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           TAG: ${{ steps.variables.outputs.tag }}
       - name: "Check changes and publish package ${{ steps.variables.outputs.tag }}"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: workspace ${{ steps.scope.outputs._0 }} run release:marketplace
+        run: yarn workspace ${{ steps.scope.outputs._0 }} run release:marketplace
         env:
           OPENID_URL: ${{ secrets.OPENID_URL }}
           CPAPI_USERNAME: ${{ secrets.CPAPI_USERNAME }}

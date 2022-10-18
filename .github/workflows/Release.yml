@@ -56,12 +56,8 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - name: "Installing dependencies"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: install
+        run: yarn install
       - name: "Running release for production"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} run release
+        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} run release
         env:
           NODE_OPTIONS: --max_old_space_size=8192

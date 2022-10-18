@@ -45,19 +45,22 @@ jobs:
       #       echo ::set-output name=arg::$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{
       #       github.event_name == 'pull_request' }}; then echo '--since origin/${{ github.base_ref }}'; else echo
       #       ''; fi)
+      - name: "Get yarn cache directory path"
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
       - name: "Defining cache"
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
         env:
           cache-name: cache-node-modules
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - name: "Defining node version"
         uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2
         with:
           node-version-file: ".nvmrc"
       - name: "Installing dependencies"
-        run: yarn
+        run: yarn install
       - name: Login to GitHub Container Registry
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         uses: docker/login-action@42d299face0c5c43a0487c477f595ac9cf22f1a7 # v1.12.0
