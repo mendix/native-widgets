@@ -27,4 +27,4 @@ mendixProject
 **/cypress-visual-screenshots/diff
 
 tests
-.yarn/
+.yarn/cache/

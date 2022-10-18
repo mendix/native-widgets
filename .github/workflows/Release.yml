@@ -45,10 +45,6 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "yarn"
-      - name: "Define yarn berry version"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: set version berry
       - name: "Get yarn cache directory path"
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -59,10 +55,6 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - name: "Installing yarn workspaces plugin"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: plugin import workspace-tools
       - name: "Installing dependencies"
         uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
         with:

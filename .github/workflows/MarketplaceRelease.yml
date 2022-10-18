@@ -28,14 +28,6 @@ jobs:
         uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2
         with:
           node-version-file: ".nvmrc"
-      - name: "Define yarn berry version"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: set version berry
-      - name: "Installing yarn workspaces plugin"
-        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
-        with:
-          cmd: plugin import workspace-tools
       - name: "Installing dependencies"
         uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
         with:
