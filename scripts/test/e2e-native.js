@@ -33,10 +33,10 @@ async function main() {
         throw new Error("Failed to unzip the test project into testProject", e.message);
     }
 
-    const output = execSync("npx lerna list --json --since origin/master --loglevel silent --scope '*-native'");
+    const output = execSync("yarn workspaces list --json --since origin/master");
     const packages = JSON.parse(output);
 
-    execSync("npx lerna run release --since origin/master --scope '*-native'");
+    execSync("yarn workspaces foreach run release --since origin/master");
 
     packages.forEach(({ name, location }) => {
         if (["mobile-resources-native", "nanoflow-actions-native"].includes(name)) {
@@ -176,11 +176,11 @@ async function main() {
         }
         const changedPackages = packages.map(package => package.name).join(",");
         console.log("Setup for android...");
-        execSync("npm run setup-android");
+        execSync("yarn setup-android");
         console.log("Android successfully setup");
         // https://github.com/lerna/lerna/issues/1846
         // execSync(`npx lerna run test:e2e:local:android --stream --concurrency 1 --scope '{${changedPackages},}'`);
-        execSync(`npx lerna run test:e2e:local:android --stream --concurrency 1 --scope '{bar-chart-native,}'`);
+        execSync(`yarn workspaces run test:e2e:local:android --from '{bar-chart-native,}'`);
     } catch (e) {
         try {
             execSync(`docker logs ${mxbuildContainerId}`, { stdio: "inherit" });

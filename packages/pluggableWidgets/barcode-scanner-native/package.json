@@ -16,11 +16,11 @@
     "release": "pluggable-widgets-tools release:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "test": "pluggable-widgets-tools test:unit:native",
-    "version": "npm run release"
+    "version": "yarn release"
   },
   "dependencies": {
-    "@mendix/piw-native-utils-internal": "^1.0.0",
-    "@mendix/piw-utils-internal": "^1.0.0",
+    "@mendix/piw-native-utils-internal": "*",
+    "@mendix/piw-utils-internal": "*",
     "react-native-barcode-mask": "^1.2.4",
     "react-native-camera": "3.19.2"
   },

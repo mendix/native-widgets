@@ -20,16 +20,16 @@
     "test:e2e:local:ios": "detox test --configuration ios.simulator.developerapp",
     "debug:e2e:local:android": "detox test --record-logs all -l trace --configuration android.emulator.developerapp",
     "debug:e2e:local:ios": "detox test --record-logs all -l trace --configuration ios.simulator.developerapp",
-    "version": "npm run release"
+    "version": "yarn release"
   },
   "dependencies": {
-    "@mendix/piw-native-utils-internal": "^1.0.0",
+    "@mendix/piw-native-utils-internal": "*",
     "@react-native-community/netinfo": "5.9.7"
   },
   "devDependencies": {
+    "@mendix/piw-utils-internal": "*",
     "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "@mendix/piw-utils-internal": "^1.0.0",
-    "eslint": "^7.20.0",
-    "detox": "^19.7.1"
+    "detox": "^19.7.1",
+    "eslint": "^7.20.0"
   }
 }

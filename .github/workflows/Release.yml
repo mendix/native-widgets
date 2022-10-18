@@ -40,20 +40,36 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         id: variablesWindows
         run: echo "::set-output name=arg::$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since origin/${{ github.base_ref }}' } Else { echo '' })"
+      - name: "Defining node version"
+        uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2
+        with:
+          node-version-file: ".nvmrc"
+          cache: "yarn"
+      - name: "Define yarn berry version"
+        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
+        with:
+          cmd: set version berry
+      - name: "Get yarn cache directory path"
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
       - name: "Defining cache"
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
         env:
           cache-name: cache-node-modules
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      - name: "Defining node version"
-        uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - name: "Installing yarn workspaces plugin"
+        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
         with:
-          node-version-file: ".nvmrc"
+          cmd: plugin import workspace-tools
       - name: "Installing dependencies"
-        run: npm install
+        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
+        with:
+          cmd: install
       - name: "Running release for production"
-        run: npm run release -- ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }}
+        uses: borales/actions-yarn@d8ce577a6f5d99a459fc7fdf2a86844617e353e4 #v3
+        with:
+          cmd: workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} run release
         env:
           NODE_OPTIONS: --max_old_space_size=8192

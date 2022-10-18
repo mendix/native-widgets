@@ -57,7 +57,7 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: "Installing dependencies"
-        run: npm install
+        run: yarn
       - name: Login to GitHub Container Registry
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         uses: docker/login-action@42d299face0c5c43a0487c477f595ac9cf22f1a7 # v1.12.0
@@ -66,12 +66,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Start Mendix Environment and run tests"
-        run: npm run start:native-tests-ci
+        run: yarn start:native-tests-ci
       # - name: "Executing E2E tests"
       #   if:
       #       github.event_name == 'push' || (github.event_name == 'pull_request' &&
       #       github.event.pull_request.head.repo.full_name != github.repository)
-      #   run: npm run test:e2e -- --since origin/${{ github.base_ref }}
+      #   run: yarn test:e2e -- --since origin/${{ github.base_ref }}
       # env:
       #     FORKED:
       #         github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name ==

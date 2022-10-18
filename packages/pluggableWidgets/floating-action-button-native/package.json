@@ -22,16 +22,16 @@
     "test:e2e:android:update-snapshot": "detox test --updateSnapshot --configuration android.emulator.developerapp",
     "test:e2e:ios:update-snapshot": "detox test --updateSnapshot --configuration ios.simulator.developerapp",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "version": "npm run release"
+    "version": "yarn release"
   },
   "dependencies": {
-    "@mendix/piw-native-utils-internal": "^1.0.0",
-    "@mendix/piw-utils-internal": "^1.0.0",
+    "@mendix/piw-native-utils-internal": "*",
+    "@mendix/piw-utils-internal": "*",
     "react-native-action-button": "^2.8.5"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "eslint": "^7.20.0",
-    "detox": "^19.7.1"
+    "detox": "^19.7.1",
+    "eslint": "^7.20.0"
   }
 }

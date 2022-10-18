@@ -15,7 +15,7 @@
     "format": "pluggable-widgets-tools format",
     "release": "pluggable-widgets-tools release:native",
     "lint": "..\"/../../node_modules/.bin/eslint\" --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "version": "npm run release",
+    "version": "yarn release",
     "test": "pluggable-widgets-tools test:unit:native",
     "test:e2e:local:android": "detox test --configuration android.emulator.developerapp",
     "test:e2e:local:ios": "detox test --configuration ios.simulator.developerapp",
@@ -25,15 +25,15 @@
     "test:e2e:ios:update-snapshot": "detox test --updateSnapshot --configuration ios.simulator.developerapp"
   },
   "dependencies": {
-    "@mendix/piw-native-utils-internal": "^1.0.0",
-    "@mendix/piw-utils-internal": "^1.0.0",
+    "@mendix/piw-native-utils-internal": "*",
+    "@mendix/piw-utils-internal": "*",
     "prop-types": "^15.7.2",
     "react-native-geocoder": "0.5.0",
     "react-native-maps": "0.27.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "eslint": "^7.20.0",
-    "detox": "^19.7.1"
+    "detox": "^19.7.1",
+    "eslint": "^7.20.0"
   }
 }
