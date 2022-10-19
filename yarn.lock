@@ -3309,25 +3309,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native@npm:*":
-  version: 0.70.5
-  resolution: "@types/react-native@npm:0.70.5"
-  dependencies:
-    "@types/react": "*"
-  checksum: 1a21cd62afcd23cbd2d8e27c3b7601819739bb822e77ce9a3995af14be88e4ae19e467bc4b9c133f6da82648e8a951f07d1e55997d1a7a50260b79c784c24535
-  languageName: node
-  linkType: hard
-
-"@types/react-native@npm:0.63.30":
-  version: 0.63.30
-  resolution: "@types/react-native@npm:0.63.30"
-  dependencies:
-    "@types/react": "*"
-  checksum: 665a76f52c4a5fb3e92f5ba2ec30891961e2755d8b2400c67b36cfa2635441209d1957cb90a4f0de7b6b2c7e90f4d955fbaedae7f6bc28cbb3f0bf00df1f7e23
-  languageName: node
-  linkType: hard
-
-"@types/react-native@npm:~0.64.10":
+"@types/react-native@npm:~0.64.13":
   version: 0.64.29
   resolution: "@types/react-native@npm:0.64.29"
   dependencies:
