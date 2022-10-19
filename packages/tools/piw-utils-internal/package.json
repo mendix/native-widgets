@@ -22,12 +22,10 @@
     "postinstall": "yarn build"
   },
   "devDependencies": {
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "eslint": "^7.20.0",
     "rimraf": "^2.7.1",
     "typescript": "4.5.4"
-  },
-  "peerDependencies": {
-    "@mendix/pluggable-widgets-tools": "*"
   },
   "files": [
     "components",
