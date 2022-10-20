@@ -72,10 +72,7 @@ async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, exc
     if (!existingImages) {
         console.log(`Creating new mxbuild docker image...`);
         await execShellCommand(
-            `docker build -f ${join(
-                process.cwd(),
-                "packages/tools/pluggable-widgets-tools/scripts/mxbuild.Dockerfile"
-            )} ` +
+            `docker build -f ${join(process.cwd(), "scripts/automation/mxbuild.Dockerfile")} ` +
                 `--build-arg MENDIX_VERSION=${mendixVersion} ` +
                 `-t mxbuild:${mendixVersion} ${process.cwd()}`
         );

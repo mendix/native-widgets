@@ -1,5 +1,3 @@
-packages/tools/generator-widget/generators/app/templates
-packages/tools/pluggable-widgets-tools/tests/projects
 *.png
 *.svg
 *.snap

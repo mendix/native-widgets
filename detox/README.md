@@ -10,7 +10,7 @@
 ## Setup emulators
 
 The devices that will be run on are defined in the top of the `detox/detox.config.js` file.
-To prepare your environment for running the e2e tests (or when you changed the devices in the config file), first run `npm run setup-mobile` from the root of this package.
+To prepare your environment for running the e2e tests (or when you changed the devices in the config file), first run `yarn setup-mobile` from the root of this package.
 
 ## Setup developerapp
 
@@ -21,24 +21,24 @@ Note: The below setup is only required whenever we change the detox version in p
 Steps:
 
 1. In the `appdev` repo, go to the `developerapp` folder. Install the version of Detox that you want to use with the `npm i -D detox@<version>` command.
-2. Run `npm run ios:clean-pod-install` in the `developerapp` dir
+2. Run `yarn ios:clean-pod-install` in the `developerapp` dir
     1. if this fails with “CDN: trunk URL couldn't be downloaded…”,
     2. then `cd ios` & `pod repo remove trunk`
     3. then run `pod install`
-3. Go to the `appdev/automated/frontend/native` folder. Run `npm run build`
+3. Go to the `appdev/automated/frontend/native` folder. Run `yarn build`
 4. Android files `app-detox-debug.apk` and `app-detox-debug-androidTest.apk` should be in the `appdev/developerapp/artifacts` folder.
 5. iOS file `DeveloperApp.app` should be at the `appdev/developerapp/ios/build/detox/output/Build/Products/Debug-iphonesimulator/DeveloperApp.app` folder. Zip the `DeveloperApp.app` file
 6. Upload the 3 files generated above at `https://www.dropbox.com/home/RnD/NativeContent/detox-apps/19.7.1`. Ensure to give rights of `Anyone with this link can view` to all the 3 files.
 7. Update the scripts with new URLs at `widgets-resources/detox/scripts`
-8. In `widgets-resources` root, run `npm run setup-mobile` to download the latest `developerapp` files.
+8. In `widgets-resources` root, run `yarn setup-mobile` to download the latest `developerapp` files.
 
 ## Run or debug the tests:
 
-To run all the specs(from the root directory of the repository or particular native-widget): `npm run test:e2e:local:PLATFORM_NAME`
+To run all the specs(from the root directory of the repository or particular native-widget): `yarn test:e2e:local:PLATFORM_NAME`
 
-To run one spec file(from the root directory of the repository or particular native-widget): `npm run test:e2e:local:PLATFORM_NAME FILE_NAME.spec.ts`
+To run one spec file(from the root directory of the repository or particular native-widget): `yarn test:e2e:local:PLATFORM_NAME FILE_NAME.spec.ts`
 
-Debugging(from the root directory of the particular native-widget): `npm run debug:e2e:local:PLATFORM_NAME`
+Debugging(from the root directory of the particular native-widget): `yarn debug:e2e:local:PLATFORM_NAME`
 
 PLATFORM_NAME = `android` or `ios`
 

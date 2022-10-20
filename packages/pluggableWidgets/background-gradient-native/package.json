@@ -14,7 +14,7 @@
     "build": "pluggable-widgets-tools build:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "lint:fix": "pluggable-widgets-tools lint:fix",
-    "prerelease": "npm run lint",
+    "prerelease": "yarn lint",
     "release": "pluggable-widgets-tools release:native",
     "test": "pluggable-widgets-tools test:unit:native",
     "test:e2e:local:android": "detox test --configuration android.emulator.developerapp",
@@ -26,11 +26,11 @@
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "eslint": "^7.20.0",
-    "detox": "^19.7.1"
+    "detox": "^19.7.1",
+    "eslint": "^7.20.0"
   },
   "dependencies": {
-    "react-native-linear-gradient": "2.5.6",
-    "@mendix/piw-utils-internal": "^1.0.0"
+    "@mendix/piw-utils-internal": "*",
+    "react-native-linear-gradient": "2.5.6"
   }
 }

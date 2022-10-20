@@ -13,10 +13,10 @@ preCommit().catch(error => {
 
 async function preCommit() {
     const [{ stdout: lernaPackages }, { stdout: stagedFiles }] = await Promise.all([
-        execAsync("npx lerna ls --json --all"),
+        execAsync("yarn workspaces list --json"),
         execAsync("git diff --staged --name-only")
     ]);
-    const packages = JSON.parse(lernaPackages.trim());
+    const packages = JSON.parse(`[${lernaPackages.replace(/\}\n/g, "},").slice(0, -1)}]`);
     const staged = stagedFiles.trim().split("\n");
     const changedWidgetPackages = packages
         .filter(({ location }) => location.match(/(pluggable|custom)Widgets/))

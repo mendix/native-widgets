@@ -10,11 +10,8 @@ import command from "rollup-plugin-command";
 import { promisify } from "util";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import { collectDependencies } from "../../packages/tools/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies";
-import {
-    licenseCustomTemplate,
-    copyLicenseFile
-} from "../../packages/tools/pluggable-widgets-tools/configs/helpers/rollup-helper";
+import { collectDependencies } from "./rollup-plugin-collect-dependencies";
+import { licenseCustomTemplate, copyLicenseFile } from "./rollup-helper";
 import { bigJsImportReplacer } from "./rollup-plugin-bigjs-import-replacer";
 
 const cwd = process.cwd();

@@ -22,11 +22,11 @@
     "debug:e2e:local:ios": "detox test --record-logs all -l trace --configuration ios.simulator.developerapp",
     "test:e2e:android:update-snapshot": "detox test --updateSnapshot --configuration android.emulator.developerapp",
     "test:e2e:ios:update-snapshot": "detox test --updateSnapshot --configuration ios.simulator.developerapp",
-    "version": "npm run release"
+    "version": "yarn release"
   },
   "dependencies": {
-    "@mendix/piw-native-utils-internal": "^1.0.0",
-    "@mendix/piw-utils-internal": "^1.0.0",
+    "@mendix/piw-native-utils-internal": "*",
+    "@mendix/piw-utils-internal": "*",
     "react-native-color": "^0.0.10",
     "react-native-slider": "^0.11.0",
     "tinycolor2": "^1.4.1"
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@types/tinycolor2": "^1.4.1",
-    "eslint": "^7.20.0",
-    "detox": "^19.7.1"
+    "detox": "^19.7.1",
+    "eslint": "^7.20.0"
   }
 }

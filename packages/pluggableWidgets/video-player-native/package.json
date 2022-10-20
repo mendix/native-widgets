@@ -16,17 +16,17 @@
     "release": "pluggable-widgets-tools release:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "test": "pluggable-widgets-tools test:unit:native",
-    "version": "npm run release"
+    "version": "yarn release"
   },
   "dependencies": {
-    "@mendix/piw-native-utils-internal": "^1.0.0",
-    "react-native-video": "5.2.0",
+    "@mendix/piw-native-utils-internal": "*",
+    "react-native-system-navigation-bar": "1.0.2",
     "react-native-vector-icons": "7.1.0",
-    "react-native-system-navigation-bar": "1.0.2"
+    "react-native-video": "5.2.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@mendix/piw-utils-internal": "1.0.0",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@types/react-native-video": "^5.0.4",
     "eslint": "^7.20.0"
   }
