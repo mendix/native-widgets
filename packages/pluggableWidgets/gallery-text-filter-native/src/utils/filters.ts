@@ -1,4 +1,4 @@
-import { FilterValue } from "@mendix/piw-utils-internal/components/web";
+import { FilterValue } from "@mendix/piw-utils-internal";
 import { DefaultFilterEnum } from "../../typings/GalleryTextFilterProps";
 
 export type DefaultFilterValue = {

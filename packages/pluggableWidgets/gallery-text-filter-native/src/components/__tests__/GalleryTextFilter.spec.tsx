@@ -1,7 +1,12 @@
 import { createElement, createContext } from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import { FilterContextValue } from "@mendix/piw-utils-internal/components/native";
-import { actionValue, dynamicValue, EditableValueBuilder, ListAttributeValueBuilder } from "@mendix/piw-utils-internal";
+import {
+    FilterContextValue,
+    actionValue,
+    dynamicValue,
+    EditableValueBuilder,
+    ListAttributeValueBuilder
+} from "@mendix/piw-utils-internal";
 import { GalleryTextFilter, Props } from "../../GalleryTextFilter";
 
 jest.useFakeTimers();

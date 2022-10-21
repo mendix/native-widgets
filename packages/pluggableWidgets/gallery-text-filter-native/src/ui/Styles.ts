@@ -11,7 +11,6 @@ export interface InputStyleProps {
 export interface InputStyle extends TextStyle, InputStyleProps {}
 
 export interface GalleryTextFilterStyle extends Style {
-    container: ViewStyle & { rippleColor?: string };
     textInputContainer: ViewStyle;
     textInputContainerFocused: ViewStyle;
     textInput: InputStyle;
@@ -19,7 +18,6 @@ export interface GalleryTextFilterStyle extends Style {
 }
 
 export const defaultGalleryTextFilterStyle: GalleryTextFilterStyle = {
-    container: {},
     textInputContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
