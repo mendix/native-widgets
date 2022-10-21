@@ -1,7 +1,7 @@
 import { all } from "deepmerge";
 import { createElement, ReactElement, useCallback, useEffect, useMemo, useState, useRef } from "react";
-import { executeAction } from "@mendix/piw-utils-internal";
 import {
+    executeAction,
     FilterType,
     SortInstruction,
     SortFunction,
@@ -9,7 +9,7 @@ import {
     useMultipleFiltering,
     useSortContext,
     FilterFunction
-} from "@mendix/piw-utils-internal/components/native";
+} from "@mendix/piw-utils-internal";
 import { and } from "mendix/filters/builders";
 import { defaultGalleryStyle, GalleryStyle } from "./ui/Styles";
 import { extractFilters } from "./utils/filters";
