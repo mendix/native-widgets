@@ -129,7 +129,7 @@ describe("Gallery", () => {
         it("triggers pull down action", async () => {
             const pullDown = jest.fn();
             const galleryComponent = render(
-                <Gallery {...defaultProps} scrollDirection="vertical" pullDown={pullDown} />
+                <Gallery {...defaultProps} scrollDirection="vertical" pullDown={pullDown} pullDownIsExecuting />
             );
             const galleryFlatList = galleryComponent.getByTestId("gallery-test-list");
             expect(galleryFlatList).toBeDefined();
