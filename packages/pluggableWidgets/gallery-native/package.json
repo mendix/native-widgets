@@ -18,7 +18,7 @@
     "build": "pluggable-widgets-tools build:native",
     "release": "pluggable-widgets-tools release:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "version": "npm run release",
+    "version": "yarn release",
     "test": "pluggable-widgets-tools test:unit:native",
     "test:e2e:local:android": "detox test --configuration android.emulator.developerapp",
     "test:e2e:local:ios": "detox test --configuration ios.simulator.developerapp",

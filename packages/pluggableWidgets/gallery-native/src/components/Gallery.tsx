@@ -13,7 +13,7 @@ export interface GalleryProps<T extends ObjectItem> {
         renderWrapper: (children: ReactNode, className?: string, onClick?: () => void) => ReactElement,
         item: T
     ) => ReactElement;
-    items: T[];
+    items: T[] | undefined;
     loadMoreItems: () => void;
     filters?: ReactNode;
     name: string;
@@ -30,8 +30,8 @@ export interface GalleryProps<T extends ObjectItem> {
 export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElement => {
     const isScrollDirectionVertical = props.scrollDirection === "vertical";
     const numOfColumns = DeviceInfo.isTablet() ? props.tabletColumns : props.phoneColumns;
-    const firstItemId = props.items[0]?.id;
-    const lastItemId = props.items[props.items.length - 1]?.id;
+    const firstItemId = props.items?.[0]?.id;
+    const lastItemId = props.items?.[props.items.length - 1]?.id;
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -92,7 +92,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                     ...props.style.loadMoreButtonContainer,
                     ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
                 }}
-                refreshing={false}
+                refreshing={props.pullDownIsExecuting}
                 data={props.items}
                 horizontal={!isScrollDirectionVertical}
                 keyExtractor={item => item.id}

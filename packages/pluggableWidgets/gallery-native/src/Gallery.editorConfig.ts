@@ -13,7 +13,7 @@ export function getProperties(values: GalleryPreviewProps, defaultProperties: Pr
         hidePropertyIn(defaultProperties, values, "phoneColumns");
     }
 
-    if (values.filterList?.length === 0 && values.sortList?.length === 0) {
+    if (values.filterList?.length === 0) {
         hidePropertyIn(defaultProperties, values, "filtersPlaceholder");
     }
 
@@ -44,14 +44,7 @@ export function check(values: GalleryPreviewProps): Problem[] {
 }
 
 export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): StructurePreviewProps {
-    const filterCaption =
-        values.filterList.length > 0
-            ? values.sortList.length > 0
-                ? "Place filter/sort widgets here"
-                : "Place filter widgets here"
-            : values.sortList.length > 0
-            ? "Place sort widgets here"
-            : "Place widgets here";
+    const filterCaption = values.filterList.length > 0 ? "Place filter widgets here" : "Place widgets here";
 
     const filters = {
         type: "RowLayout",
@@ -152,12 +145,7 @@ export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): St
 
     return {
         type: "Container",
-        children: [
-            titleHeader,
-            ...(values.filterList.length > 0 || values.sortList.length > 0 ? [filters] : []),
-            content,
-            ...footer
-        ]
+        children: [titleHeader, ...(values.filterList.length > 0 ? [filters] : []), content, ...footer]
     };
 }
 

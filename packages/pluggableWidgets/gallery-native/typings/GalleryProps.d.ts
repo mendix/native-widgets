@@ -23,18 +23,8 @@ export interface FilterListType {
     filter: ListAttributeValue<string | Big | boolean | Date>;
 }
 
-export interface SortListType {
-    attribute: ListAttributeValue<string | Big | boolean | Date>;
-    caption: DynamicValue<string>;
-}
-
 export interface FilterListPreviewType {
     filter: string;
-}
-
-export interface SortListPreviewType {
-    attribute: string;
-    caption: string;
 }
 
 export interface GalleryProps<Style> {
@@ -54,7 +44,6 @@ export interface GalleryProps<Style> {
     pullDown?: ActionValue;
     filterList: FilterListType[];
     filtersPlaceholder?: ReactNode;
-    sortList: SortListType[];
 }
 
 export interface GalleryPreviewProps {
@@ -76,5 +65,4 @@ export interface GalleryPreviewProps {
     pullDown: {} | null;
     filterList: FilterListPreviewType[];
     filtersPlaceholder: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    sortList: SortListPreviewType[];
 }

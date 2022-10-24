@@ -3,11 +3,8 @@ import { createElement, ReactElement, useCallback, useEffect, useMemo, useState,
 import {
     executeAction,
     FilterType,
-    SortInstruction,
-    SortFunction,
     useFilterContext,
     useMultipleFiltering,
-    useSortContext,
     FilterFunction
 } from "@mendix/piw-utils-internal";
 import { and } from "mendix/filters/builders";
@@ -19,13 +16,9 @@ import { GalleryProps } from "../typings/GalleryProps";
 
 export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const viewStateFilters = useRef<FilterCondition | undefined>(undefined);
-    const viewStateSort = useRef<SortInstruction[] | undefined>(undefined);
     const [filtered, setFiltered] = useState(false);
-    const [sorted, setSorted] = useState(false);
     const customFiltersState = useMultipleFiltering();
-    const [sortState, setSortState] = useState<SortFunction>();
     const { FilterContext } = useFilterContext();
-    const { SortContext } = useSortContext();
     const styles = all<GalleryStyle>([defaultGalleryStyle, ...props.style]);
     const currentPage = props.datasource.limit / props.pageSize;
 
@@ -39,23 +32,11 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
         if (props.datasource.filter && !filtered && !viewStateFilters.current) {
             viewStateFilters.current = props.datasource.filter;
         }
-        if (props.datasource.sortOrder && !sorted && !viewStateSort.current) {
-            viewStateSort.current = props.datasource.sortOrder;
-        }
-    }, [props.datasource, filtered, sorted]);
+    }, [props.datasource, filtered]);
 
     const filterList = useMemo(
         () => props.filterList.reduce((filters, { filter }) => ({ ...filters, [filter.id]: filter }), {}),
         [props.filterList]
-    );
-
-    const sortList = useMemo(
-        () =>
-            props.sortList.map(({ attribute, caption }) => ({
-                attribute,
-                caption: caption.value ?? ""
-            })),
-        [props.sortList]
     );
 
     const initialFilters = useMemo(
@@ -82,15 +63,6 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
         props.datasource.setFilter(viewStateFilters.current);
     }
 
-    if (sortState && "getSortCondition" in sortState) {
-        const sortCondition = sortState.getSortCondition();
-        props.datasource.setSortOrder(sortCondition ? [sortCondition] : undefined);
-    } else {
-        props.datasource.setSortOrder(undefined);
-    }
-
-    const isSortableFilterable = props.filterList.length > 0 || props.sortList.length > 0;
-
     const loadMoreItems = useCallback(() => {
         props.datasource.setLimit((currentPage + 1) * props.pageSize);
     }, [currentPage, props.datasource, props.pageSize]);
@@ -107,9 +79,10 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
 
     const pullDown = useCallback(() => props.pullDown && executeAction(props.pullDown), [props.pullDown]);
 
-    const filterAndSortContextProvider = useMemo(
+    const isFilterable = props.filterList.length > 0;
+    const filterContextProvider = useMemo(
         () =>
-            isSortableFilterable ? (
+            isFilterable ? (
                 <FilterContext.Provider
                     value={{
                         filterDispatcher: (prev: FilterFunction) => {
@@ -124,31 +97,10 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
                         multipleInitialFilters: initialFilters
                     }}
                 >
-                    <SortContext.Provider
-                        value={{
-                            sortDispatcher: (prev: SortFunction) => {
-                                setSorted(true);
-                                setSortState(prev);
-                                return prev;
-                            },
-                            attributes: sortList,
-                            initialSort: viewStateSort.current
-                        }}
-                    >
-                        {props.filtersPlaceholder}
-                    </SortContext.Provider>
+                    {props.filtersPlaceholder}
                 </FilterContext.Provider>
             ) : null,
-        [
-            FilterContext,
-            SortContext,
-            customFiltersState,
-            filterList,
-            initialFilters,
-            isSortableFilterable,
-            props.filtersPlaceholder,
-            sortList
-        ]
+        [FilterContext, customFiltersState, filterList, initialFilters, isFilterable, props.filtersPlaceholder]
     );
 
     return (
@@ -157,7 +109,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
             hasMoreItems={props.datasource.hasMoreItems ?? false}
             itemRenderer={itemRenderer}
             items={props.datasource.items ?? []}
-            filters={filterAndSortContextProvider}
+            filters={filterContextProvider}
             loadMoreItems={loadMoreItems}
             name={props.name}
             pagination={props.pagination}
