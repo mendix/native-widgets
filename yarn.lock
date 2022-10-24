@@ -2163,7 +2163,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mendix/piw-native-utils-internal@*, @mendix/piw-native-utils-internal@^1.0.0, @mendix/piw-native-utils-internal@workspace:packages/tools/piw-native-utils-internal":
+"@mendix/piw-native-utils-internal@*, @mendix/piw-native-utils-internal@workspace:packages/tools/piw-native-utils-internal":
   version: 0.0.0-use.local
   resolution: "@mendix/piw-native-utils-internal@workspace:packages/tools/piw-native-utils-internal"
   dependencies:
@@ -2175,7 +2175,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/piw-utils-internal@*, @mendix/piw-utils-internal@1.0.0, @mendix/piw-utils-internal@^1.0.0, @mendix/piw-utils-internal@workspace:packages/tools/piw-utils-internal":
+"@mendix/piw-utils-internal@*, @mendix/piw-utils-internal@1.0.0, @mendix/piw-utils-internal@workspace:packages/tools/piw-utils-internal":
   version: 0.0.0-use.local
   resolution: "@mendix/piw-utils-internal@workspace:packages/tools/piw-utils-internal"
   dependencies:
@@ -2186,7 +2186,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@npm:>=8.9.2, @mendix/pluggable-widgets-tools@npm:^9.0.0":
+"@mendix/pluggable-widgets-tools@npm:^9.0.0":
   version: 9.17.0
   resolution: "@mendix/pluggable-widgets-tools@npm:9.17.0"
   dependencies:
@@ -8306,9 +8306,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gallery-text-filter-native@workspace:packages/pluggableWidgets/gallery-text-filter-native"
   dependencies:
-    "@mendix/piw-native-utils-internal": ^1.0.0
-    "@mendix/piw-utils-internal": ^1.0.0
-    "@mendix/pluggable-widgets-tools": ">=8.9.2"
+    "@mendix/piw-native-utils-internal": "*"
+    "@mendix/piw-utils-internal": "*"
+    "@mendix/pluggable-widgets-tools": ^9.0.0
     detox: ^19.7.1
     eslint: ^7.20.0
     react-native-svg: ^9.6.4
