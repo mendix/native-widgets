@@ -6,7 +6,7 @@
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mendix/widgets-resources.git"
+    "url": "https://github.com/mendix/native-widgets.git"
   },
   "marketplace": {
     "minimumMXVersion": "9.6.0.27784",

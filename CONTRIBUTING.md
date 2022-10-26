@@ -2,15 +2,15 @@
 
 ## Prerequisites
 
-See [Prerequisites](https://github.com/mendix/widgets-resources/blob/master/README.md#prerequisites) section of README.md.
+See [Prerequisites](https://github.com/mendix/native-widgets/blob/main/README.md#prerequisites) section of README.md.
 
 ## Getting started
 
 1. Clone this repository
 
 ```sh
-$ git clone https://github.com/mendix/widgets-resources.git
-$ cd widgets-resources
+$ git clone https://github.com/mendix/native-widgets.git
+$ cd native-widgets
 ```
 
 2. Install and link dependencies

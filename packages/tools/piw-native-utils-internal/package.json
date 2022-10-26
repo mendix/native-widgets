@@ -4,10 +4,10 @@
   "description": "Tools and helper functions for PIW",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
-  "homepage": "https://github.com/mendix/widgets-resources/tree/master/packages/tools/piw-native-utils-internal",
+  "homepage": "https://github.com/mendix/native-widgets/tree/main/packages/tools/piw-native-utils-internal",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mendix/widgets-resources/"
+    "url": "https://github.com/mendix/native-widgets/"
   },
   "private": true,
   "main": "dist/index.js",

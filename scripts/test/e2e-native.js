@@ -18,7 +18,7 @@ main().catch(e => {
 async function main() {
     const mendixVersion = await getMendixVersion();
     const ip = nodeIp.address();
-    const ghcr = process.env.CI && process.env.FORKED !== "true" ? "ghcr.io/mendix/widgets-resources/" : "";
+    const ghcr = process.env.CI && process.env.FORKED !== "true" ? "ghcr.io/mendix/native-widgets/" : "";
 
     const testArchivePath = await getTestProject("https://github.com/mendix/Native-Mobile-Resources", "main");
     const root = process.cwd();
@@ -232,7 +232,7 @@ async function getMendixVersion() {
     }
     try {
         const mendixVersions = await fetch(
-            "https://raw.githubusercontent.com/mendix/widgets-resources/master/configs/e2e/mendix-versions.json"
+            "https://raw.githubusercontent.com/mendix/native-widgets/master/configs/e2e/mendix-versions.json"
         );
 
         const mendixVersionsJson = await mendixVersions.json();
