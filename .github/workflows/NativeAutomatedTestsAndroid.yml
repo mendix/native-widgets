@@ -43,7 +43,7 @@ jobs:
       #   id: variables
       #   run:
       #       echo ::set-output name=arg::$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{
-      #       github.event_name == 'pull_request' }}; then echo '--since origin/${{ github.base_ref }}'; else echo
+      #       github.event_name == 'pull_request' }}; then echo '--since'; else echo
       #       ''; fi)
       - name: "Get yarn cache directory path"
         id: yarn-cache-dir-path
@@ -74,7 +74,7 @@ jobs:
       #   if:
       #       github.event_name == 'push' || (github.event_name == 'pull_request' &&
       #       github.event.pull_request.head.repo.full_name != github.repository)
-      #   run: yarn test:e2e -- --since origin/${{ github.base_ref }}
+      #   run: yarn test:e2e -- --since
       # env:
       #     FORKED:
       #         github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name ==

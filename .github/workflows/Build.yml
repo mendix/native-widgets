@@ -35,11 +35,11 @@ jobs:
       - name: "Defining environment variables"
         if: startsWith(matrix.os, 'ubuntu')
         id: variablesLinux
-        run: echo "::set-output name=arg::$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since origin/${{ github.base_ref }}'; else echo ''; fi)"
+        run: echo "::set-output name=arg::$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo ''; fi)"
       - name: "Defining environment variables"
         if: startsWith(matrix.os, 'windows')
         id: variablesWindows
-        run: echo "::set-output name=arg::$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since origin/${{ github.base_ref }}' } Else { echo '' })"
+        run: echo "::set-output name=arg::$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since' } Else { echo '' })"
       - name: "Defining node version"
         uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2
         with:
