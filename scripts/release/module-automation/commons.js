@@ -155,7 +155,7 @@ async function commitAndCreatePullRequest(moduleInfo) {
         `git checkout -b ${changelogBranchName} && git add . && git commit -m "chore(${moduleInfo.nameWithDash}): update changelogs" && git push --set-upstream origin ${changelogBranchName}`
     );
     await execShellCommand(
-        `gh pr create --title "${moduleInfo.nameWithSpace}: Updating changelogs" --body "This is an automated PR." --base master --head ${changelogBranchName}`
+        `gh pr create --title "${moduleInfo.nameWithSpace}: Updating changelogs" --body "This is an automated PR." --base main --head ${changelogBranchName}`
     );
     console.log("Created PR for changelog updates.");
 }
