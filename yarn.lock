@@ -8290,6 +8290,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gallery-native@workspace:packages/pluggableWidgets/gallery-native":
+  version: 0.0.0-use.local
+  resolution: "gallery-native@workspace:packages/pluggableWidgets/gallery-native"
+  dependencies:
+    "@mendix/piw-utils-internal": "*"
+    "@mendix/pluggable-widgets-tools": ^9.0.0
+    detox: ^19.7.1
+    eslint: ^7.20.0
+    react-native-device-info: 8.0.1
+  languageName: unknown
+  linkType: soft
+
+"gallery-text-filter-native@workspace:packages/pluggableWidgets/gallery-text-filter-native":
+  version: 0.0.0-use.local
+  resolution: "gallery-text-filter-native@workspace:packages/pluggableWidgets/gallery-text-filter-native"
+  dependencies:
+    "@mendix/piw-native-utils-internal": "*"
+    "@mendix/piw-utils-internal": "*"
+    "@mendix/pluggable-widgets-tools": ^9.0.0
+    detox: ^19.7.1
+    eslint: ^7.20.0
+    react-native-svg: ^9.6.4
+  languageName: unknown
+  linkType: soft
+
 "gauge@npm:^4.0.3":
   version: 4.0.4
   resolution: "gauge@npm:4.0.4"
