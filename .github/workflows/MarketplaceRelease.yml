@@ -31,7 +31,7 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Building native widgets and js actions"
-        run: yarn workspaces foreach run release:native
+        run: yarn workspaces foreach run release
       - name: "Updating Native Mobile Resources project"
         run: yarn workspaces foreach run create-modules
         env:
