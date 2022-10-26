@@ -7,7 +7,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
-    ListFooterComponent={null}
+    ListFooterComponent={[Function]}
     ListFooterComponentStyle={
       Object {
         "marginTop": 8,
@@ -63,18 +63,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -88,7 +76,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
                   undefined,
                   undefined,
                   false,
-                  false,
                 ]
               }
             >
@@ -96,18 +83,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
             </View>
           </View>
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -119,7 +94,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
               style={
                 Array [
                   undefined,
-                  false,
                   false,
                   false,
                 ]
@@ -142,18 +116,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -167,7 +129,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
                   undefined,
                   false,
                   undefined,
-                  false,
                 ]
               }
             >
@@ -176,6 +137,14 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
           </View>
         </View>
       </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "marginTop": 8,
+          }
+        }
+      />
     </View>
   </RCTScrollView>
 </View>
@@ -188,16 +157,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
-    ListFooterComponent={
-      <Memo(Pressable)
-        onPress={[Function]}
-        testID="gallery-test-pagination-button"
-      >
-        <Text>
-          Load more
-        </Text>
-      </Memo(Pressable)>
-    }
+    ListFooterComponent={[Function]}
     ListFooterComponentStyle={
       Object {
         "marginTop": 8,
@@ -253,18 +213,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -278,7 +226,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
                   undefined,
                   undefined,
                   false,
-                  false,
                 ]
               }
             >
@@ -286,18 +233,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
             </View>
           </View>
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -309,7 +244,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
               style={
                 Array [
                   undefined,
-                  false,
                   false,
                   false,
                 ]
@@ -332,18 +266,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -357,7 +279,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
                   undefined,
                   false,
                   undefined,
-                  false,
                 ]
               }
             >
@@ -376,17 +297,19 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
       >
         <View
           accessible={true}
-          collapsable={false}
           focusable={true}
-          onBlur={[Function]}
           onClick={[Function]}
-          onFocus={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
           testID="gallery-test-pagination-button"
         >
           <Text>
@@ -406,16 +329,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
-    ListFooterComponent={
-      <Memo(Pressable)
-        onPress={[Function]}
-        testID="gallery-test-pagination-button"
-      >
-        <Text>
-          Show more
-        </Text>
-      </Memo(Pressable)>
-    }
+    ListFooterComponent={[Function]}
     ListFooterComponentStyle={
       Object {
         "marginTop": 8,
@@ -471,18 +385,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -496,7 +398,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
                   undefined,
                   undefined,
                   false,
-                  false,
                 ]
               }
             >
@@ -504,18 +405,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
             </View>
           </View>
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -527,7 +416,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
               style={
                 Array [
                   undefined,
-                  false,
                   false,
                   false,
                 ]
@@ -550,18 +438,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -575,7 +451,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
                   undefined,
                   false,
                   undefined,
-                  false,
                 ]
               }
             >
@@ -594,17 +469,19 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
       >
         <View
           accessible={true}
-          collapsable={false}
           focusable={true}
-          onBlur={[Function]}
           onClick={[Function]}
-          onFocus={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
           testID="gallery-test-pagination-button"
         >
           <Text>
@@ -624,7 +501,7 @@ exports[`Gallery rendering renders correctly 1`] = `
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
-    ListFooterComponent={null}
+    ListFooterComponent={[Function]}
     ListFooterComponentStyle={
       Object {
         "marginTop": 8,
@@ -680,18 +557,6 @@ exports[`Gallery rendering renders correctly 1`] = `
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -705,7 +570,6 @@ exports[`Gallery rendering renders correctly 1`] = `
                   undefined,
                   undefined,
                   false,
-                  false,
                 ]
               }
             >
@@ -713,18 +577,6 @@ exports[`Gallery rendering renders correctly 1`] = `
             </View>
           </View>
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -736,7 +588,6 @@ exports[`Gallery rendering renders correctly 1`] = `
               style={
                 Array [
                   undefined,
-                  false,
                   false,
                   false,
                 ]
@@ -759,18 +610,6 @@ exports[`Gallery rendering renders correctly 1`] = `
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -784,7 +623,6 @@ exports[`Gallery rendering renders correctly 1`] = `
                   undefined,
                   false,
                   undefined,
-                  false,
                 ]
               }
             >
@@ -793,6 +631,14 @@ exports[`Gallery rendering renders correctly 1`] = `
           </View>
         </View>
       </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "marginTop": 8,
+          }
+        }
+      />
     </View>
   </RCTScrollView>
 </View>
@@ -805,7 +651,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
-    ListFooterComponent={null}
+    ListFooterComponent={[Function]}
     ListFooterComponentStyle={
       Object {
         "marginStart": 8,
@@ -861,18 +707,6 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         }
       >
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={false}
           testID="gallery-test-list-item-11"
         >
@@ -881,7 +715,6 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
               Array [
                 undefined,
                 undefined,
-                false,
                 false,
               ]
             }
@@ -902,18 +735,6 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         }
       >
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={false}
           testID="gallery-test-list-item-22"
         >
@@ -921,7 +742,6 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
             style={
               Array [
                 undefined,
-                false,
                 false,
                 false,
               ]
@@ -943,18 +763,6 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         }
       >
         <View
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={false}
           testID="gallery-test-list-item-33"
         >
@@ -964,7 +772,6 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
                 undefined,
                 false,
                 undefined,
-                false,
               ]
             }
           >
@@ -972,192 +779,14 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
           </View>
         </View>
       </View>
-    </View>
-  </RCTScrollView>
-</View>
-`;
-
-exports[`Gallery rendering renders correctly with dynamic item class 1`] = `
-<View
-  testID="gallery-test"
->
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={null}
-    ListFooterComponentStyle={
-      Object {
-        "marginTop": 8,
-      }
-    }
-    data={
-      Array [
-        Object {
-          "id": "11",
-        },
-        Object {
-          "id": "22",
-        },
-        Object {
-          "id": "33",
-        },
-      ]
-    }
-    disableVirtualization={false}
-    getItem={[Function]}
-    getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
-    keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
-    onContentSizeChange={[Function]}
-    onEndReached={[Function]}
-    onEndReachedThreshold={2}
-    onLayout={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
-    renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
-    testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
-  >
-    <View>
       <View
         onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
+        style={
+          Object {
+            "marginStart": 8,
           }
-        >
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-11"
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  false,
-                  Object {
-                    "backgroundColor": "blue",
-                  },
-                ]
-              }
-            >
-              11
-            </View>
-          </View>
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-22"
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  false,
-                  false,
-                  Object {
-                    "backgroundColor": "blue",
-                  },
-                ]
-              }
-            >
-              22
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-33"
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  false,
-                  undefined,
-                  Object {
-                    "backgroundColor": "blue",
-                  },
-                ]
-              }
-            >
-              33
-            </View>
-          </View>
-        </View>
-      </View>
+        }
+      />
     </View>
   </RCTScrollView>
 </View>
@@ -1170,7 +799,7 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
-    ListFooterComponent={null}
+    ListFooterComponent={[Function]}
     ListFooterComponentStyle={
       Object {
         "marginTop": 8,
@@ -1208,6 +837,14 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
           Empty list...
         </Text>
       </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "marginTop": 8,
+          }
+        }
+      />
     </View>
   </RCTScrollView>
 </View>
@@ -1227,7 +864,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
   </View>
   <RCTScrollView
     ListEmptyComponent={[Function]}
-    ListFooterComponent={null}
+    ListFooterComponent={[Function]}
     ListFooterComponentStyle={
       Object {
         "marginTop": 8,
@@ -1283,18 +920,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -1308,7 +933,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
                   undefined,
                   undefined,
                   false,
-                  false,
                 ]
               }
             >
@@ -1316,18 +940,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
             </View>
           </View>
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -1339,7 +951,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
               style={
                 Array [
                   undefined,
-                  false,
                   false,
                   false,
                 ]
@@ -1362,18 +973,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
           }
         >
           <View
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
                 "width": "50%",
@@ -1387,7 +986,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
                   undefined,
                   false,
                   undefined,
-                  false,
                 ]
               }
             >
@@ -1396,6 +994,14 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
           </View>
         </View>
       </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "marginTop": 8,
+          }
+        }
+      />
     </View>
   </RCTScrollView>
 </View>

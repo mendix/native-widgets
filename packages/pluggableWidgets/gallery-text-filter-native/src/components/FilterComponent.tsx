@@ -28,7 +28,6 @@ export default function FilterComponent(props: FilterComponentProps): ReactEleme
     const [textInputContainerStyle, setTextInputContainerStyle] = useState<ViewStyle>(
         props.styles?.textInputContainer || {}
     );
-    const [renderClearTextIcon, setRenderClearTextIcon] = useState<boolean>(false);
 
     const inputRef = useRef<TextInput | null>(null);
 
@@ -45,11 +44,7 @@ export default function FilterComponent(props: FilterComponentProps): ReactEleme
         </Svg>
     );
 
-    useEffect(() => setRenderClearTextIcon(valueInput !== ""), [valueInput]);
-
-    useEffect(() => {
-        props.updateFilters?.(value);
-    }, [value]);
+    useEffect(() => props.updateFilters?.(value), [value]);
 
     useEffect(() => {
         setValueInput(props.value ?? "");
@@ -98,7 +93,7 @@ export default function FilterComponent(props: FilterComponentProps): ReactEleme
                 onBlur={onBlur}
                 {...textInputProps}
             />
-            {renderClearTextIcon ? (
+            {value !== "" ? (
                 <TouchableOpacity
                     testID={`${props.name}-clear-text-button`}
                     onPress={onPressClearTextIcon}

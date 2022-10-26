@@ -71,10 +71,9 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
         (renderWrapper, item) =>
             renderWrapper(
                 props.content?.get(item),
-                props.itemClass?.get(item)?.value,
                 props.onClick ? () => executeAction(props.onClick?.get(item)) : undefined
             ),
-        [props.content, props.itemClass, props.onClick]
+        [props.content, props.onClick]
     );
 
     const pullDown = useCallback(() => props.pullDown && executeAction(props.pullDown), [props.pullDown]);

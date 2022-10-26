@@ -1,5 +1,5 @@
 import { createElement, createContext } from "react";
-import { render, fireEvent } from "@testing-library/react-native";
+import { render, fireEvent, act } from "@testing-library/react-native";
 import {
     FilterContextValue,
     actionValue,
@@ -78,7 +78,7 @@ describe("Text Filter", () => {
                 <GalleryTextFilter {...commonProps} onChange={action} valueAttribute={attribute} />
             );
             fireEvent.changeText(component.getByTestId(`${commonProps.name}-text-input`), "B");
-            jest.advanceTimersByTime(1000);
+            act(() => jest.advanceTimersByTime(1000));
             expect(action.execute).toHaveBeenCalledTimes(1);
         });
 

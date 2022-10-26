@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { createElement, ReactElement } from "react";
 import { Text } from "react-native";
 import { all } from "deepmerge";
@@ -32,8 +33,8 @@ export function GalleryTextFilter(props: GalleryTextFilterProps<GalleryTextFilte
     const alertMessage = <Text>The Text filter widget must be placed inside the header of the Gallery widget.</Text>;
     const alertMessageMultipleFilters = (
         <Text>
-            The Text filter widget can&apos;t be used with the filters options you have selected. It requires a
-            &quot;Hashed string or String&quot; attribute to be selected.
+            The Text filter widget can't be used with the filters options you have selected. It requires a "Hashed
+            string or String" attribute to be selected.
         </Text>
     );
 

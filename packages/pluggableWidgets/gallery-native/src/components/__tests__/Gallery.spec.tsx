@@ -10,15 +10,9 @@ import { Gallery, GalleryProps } from "../Gallery";
 jest.mock("react-native-device-info", () => ({ isTablet: jest.fn().mockReturnValue(false) }));
 
 const itemWrapperFunction =
-    ({
-        onClick,
-        customClass
-    }: {
-        onClick?: () => void;
-        customClass?: string;
-    }): GalleryProps<ObjectItem>["itemRenderer"] =>
+    ({ onClick }: { onClick?: () => void }): GalleryProps<ObjectItem>["itemRenderer"] =>
     (wrapper, item) =>
-        wrapper(item.id, customClass, onClick);
+        wrapper(item.id, onClick);
 
 const defaultProps: GalleryProps<ObjectItem> = {
     hasMoreItems: true,
@@ -58,17 +52,6 @@ describe("Gallery", () => {
             expect(gallery).toMatchSnapshot();
             const emptyPlaceholder = gallery.getByText("Empty list...");
             expect(emptyPlaceholder).toBeDefined();
-        });
-
-        it("renders correctly with dynamic item class", () => {
-            const gallery = render(
-                <Gallery
-                    {...defaultProps}
-                    itemRenderer={itemWrapperFunction({ customClass: "testClass" })}
-                    style={{ dynamicItemClasses: { testClass: { listItem: { backgroundColor: "blue" } } } }}
-                />
-            );
-            expect(gallery).toMatchSnapshot();
         });
 
         it("renders correctly with filter", () => {

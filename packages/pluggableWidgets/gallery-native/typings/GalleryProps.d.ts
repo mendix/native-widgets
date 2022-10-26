@@ -4,15 +4,7 @@
  * @author Mendix UI Content Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
-import {
-    ActionValue,
-    DynamicValue,
-    ListValue,
-    ListActionValue,
-    ListAttributeValue,
-    ListExpressionValue,
-    ListWidgetValue
-} from "mendix";
+import { ActionValue, DynamicValue, ListValue, ListActionValue, ListAttributeValue, ListWidgetValue } from "mendix";
 import { Big } from "big.js";
 
 export type ScrollDirectionEnum = "vertical" | "horizontal";
@@ -39,7 +31,6 @@ export interface GalleryProps<Style> {
     pagination: PaginationEnum;
     loadMoreButtonCaption?: DynamicValue<string>;
     emptyPlaceholder?: ReactNode;
-    itemClass?: ListExpressionValue<string>;
     onClick?: ListActionValue;
     pullDown?: ActionValue;
     filterList: FilterListType[];
@@ -60,7 +51,6 @@ export interface GalleryPreviewProps {
     pagination: PaginationEnum;
     loadMoreButtonCaption: string;
     emptyPlaceholder: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    itemClass: string;
     onClick: {} | null;
     pullDown: {} | null;
     filterList: FilterListPreviewType[];
