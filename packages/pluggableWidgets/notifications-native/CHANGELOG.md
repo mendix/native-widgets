@@ -6,8 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [3.2.2] - 2022-10-12
-
 ### Fixed
 
 -   We fixed an issue where push notifications do not work on Android 12. This release updates "@react-native-firebase/app" and "@react-native-firebase/messaging" dependencies' version to 15.7.0. This change may break your native app unless you update it to the latest version. Ensure that your native template depends on the same version.
@@ -16,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
--   We fixed an issue that occured on Android devices when using the Make it Native app to preview a page containing the Notifications widget.
+-   We fixed an issue that occurred on Android devices when using the Make it Native app to preview a page containing the Notifications widget.
 
 ## [3.2.0] - 2022-04-07
 
