@@ -25,7 +25,7 @@ jobs:
       - name: "Checking-out code"
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2
         with:
-          submodules: false
+          fetch-depth: 0
       - name: "Fetching main to compare"
         if: github.event_name == 'pull_request' && steps.files.outputs.global_files == ''
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
