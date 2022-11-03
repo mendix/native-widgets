@@ -21,5 +21,5 @@ export interface FeedbackPreviewProps {
     readOnly: boolean;
     sprintrapp: string;
     allowScreenshot: boolean;
-    logo: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    logo: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
 }
