@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ### Fixed
--  We removed the `_WidgetExport` snippet which was forcing Push notifications entitlement for iOS apps. Ticket #167685
+-  We removed the `_WidgetExporter` snippet which was forcing Push notifications entitlement for iOS apps. Ticket #167685
 
 ## [3.12.0] Native Mobile Resources - 2022-10-26
 
