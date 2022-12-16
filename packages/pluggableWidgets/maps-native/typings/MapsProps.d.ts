@@ -56,7 +56,7 @@ export interface MarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string } | { type: "image"; imageUrl: string } | null;
+    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
     iconSize: number | null;
     iconColor: string;
 }
@@ -70,7 +70,7 @@ export interface DynamicMarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string } | { type: "image"; imageUrl: string } | null;
+    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
     iconSize: number | null;
     iconColor: string;
 }
