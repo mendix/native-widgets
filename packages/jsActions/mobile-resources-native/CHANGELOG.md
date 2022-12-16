@@ -6,16 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.13.0] Native Mobile Resources - 2022-11-10
+
+## [3.2.2] Notifications
+
+### Fixed
+
 -   We fixed an issue where push notifications do not work on Android 12. This change may break your native app unless you update it to the latest version. Ensure that your native template depends on the same version.
 
 ## [3.12.1] Native Mobile Resources - 2022-11-4
+
 ### Fixed
--  We removed the `_WidgetExporter` snippet which was forcing Push notifications entitlement for iOS apps. Ticket #167685
+
+-   We removed the `_WidgetExporter` snippet which was forcing Push notifications entitlement for iOS apps. Ticket #167685
 
 ## [3.12.0] Native Mobile Resources - 2022-10-26
 
-
 ## [1.0.0] Gallery
+
 ### Added
 
 -   We introduced the widget
