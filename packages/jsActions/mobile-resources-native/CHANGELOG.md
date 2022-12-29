@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.13.1] Native Mobile Resources - 2022-12-28
 ### Changed
 
 -   We reduced the widget file size by reducing the dependencies list file size.
