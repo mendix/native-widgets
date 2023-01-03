@@ -19,6 +19,9 @@ export class BarcodeScanner extends Component<Props> {
         return (
             <View style={this.styles.container}>
                 <RNCamera
+                    accessible={this.props.accessible === "yes"}
+                    accessibilityLabel={this.props.screenReaderCaption?.value}
+                    accessibilityHint={this.props.screenReaderHint?.value}
                     testID={this.props.name}
                     style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
                     captureAudio={false}
