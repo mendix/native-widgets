@@ -12,6 +12,7 @@ jest.mock("react-native/Libraries/Utilities/Platform", () => ({
 
 const defaultProps: Props = {
     name: "badge-test",
+    accessible: "yes",
     style: [],
     caption: dynamicValue<string>()
 };

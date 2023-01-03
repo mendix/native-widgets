@@ -1,5 +1,6 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
 import { BadgePreviewProps } from "../typings/BadgeProps";
+import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import badgeSvgDark from "./assets/Badge.dark.svg";
 import badgeSvgLight from "./assets/Badge.light.svg";
@@ -10,4 +11,13 @@ export function getPreview(_: BadgePreviewProps, isDarkMode: boolean): Structure
         document: decodeURIComponent((isDarkMode ? badgeSvgDark : badgeSvgLight).replace("data:image/svg+xml,", "")),
         width: 60
     };
+}
+
+export function getProperties(values: BadgePreviewProps, defaultProperties: Properties): Properties {
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
+    return defaultProperties;
 }
