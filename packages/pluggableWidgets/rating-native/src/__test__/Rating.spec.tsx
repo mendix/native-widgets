@@ -17,7 +17,8 @@ const ratingProps: Props = {
     ratingAttribute: new EditableValueBuilder<Big>().withValue(new Big(0)).build(),
     style: [defaultRatingStyle],
     icon: dynamicValue({ uri: "" }),
-    emptyIcon: dynamicValue({ uri: "" })
+    emptyIcon: dynamicValue({ uri: "" }),
+    accessible: "yes"
 };
 
 describe("Rating", () => {
