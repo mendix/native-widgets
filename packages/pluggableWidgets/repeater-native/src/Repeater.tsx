@@ -16,7 +16,12 @@ export function Repeater(props: RepeaterProps<RepeaterStyle>): ReactElement {
     }
 
     return (
-        <View style={styles.container}>
+        <View
+            accessible={props.accessible === "yes"}
+            accessibilityLabel={props.screenReaderCaption?.value}
+            accessibilityHint={props.screenReaderHint?.value}
+            style={styles.container}
+        >
             {props.datasource.items?.map((item, index) => (
                 <Fragment key={`item_${index}`}>{props.content.get(item)}</Fragment>
             ))}
