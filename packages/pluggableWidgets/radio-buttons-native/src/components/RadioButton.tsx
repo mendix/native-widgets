@@ -11,6 +11,7 @@ export interface RadioButtonProps {
     name: string;
     disabled: boolean;
     orientation: OrientationEnum;
+    accessible: boolean;
 }
 
 export function RadioButton({
@@ -20,10 +21,15 @@ export function RadioButton({
     styles,
     name,
     disabled,
-    orientation
+    orientation,
+    accessible
 }: RadioButtonProps): ReactElement {
     return (
         <Pressable
+            accessible={accessible}
+            accessibilityLabel={title}
+            accessibilityRole="radio"
+            accessibilityState={{ disabled, selected: active }}
             style={[
                 styles.radioButtonItemContainerStyle,
                 orientation === "horizontal" && styles.radioButtonItemContainerHorizontalStyle,
