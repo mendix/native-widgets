@@ -2,6 +2,7 @@
 
 exports[`Safe area view renders with content 1`] = `
 <RCTSafeAreaView
+  accessible={true}
   emulateUnlessSupported={true}
   pointerEvents="box-none"
   style={
@@ -29,6 +30,7 @@ exports[`Safe area view renders with content 1`] = `
 
 exports[`Safe area view renders with custom styling 1`] = `
 <RCTSafeAreaView
+  accessible={true}
   emulateUnlessSupported={true}
   pointerEvents="box-none"
   style={
@@ -57,6 +59,7 @@ exports[`Safe area view renders with custom styling 1`] = `
 
 exports[`Safe area view renders without content 1`] = `
 <RCTSafeAreaView
+  accessible={true}
   emulateUnlessSupported={true}
   pointerEvents="box-none"
   style={

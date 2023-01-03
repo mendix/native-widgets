@@ -11,6 +11,7 @@ describe("Safe area view", () => {
     beforeEach(() => {
         defaultProps = {
             name: "safe-area-view-test",
+            accessible: "yes",
             style: [],
             content: <Text>Content</Text>
         };
@@ -18,7 +19,12 @@ describe("Safe area view", () => {
 
     it("renders with content", () => {
         const component = render(
-            <SafeAreaView name={defaultProps.name} style={defaultProps.style} content={defaultProps.content} />
+            <SafeAreaView
+                name={defaultProps.name}
+                accessible="yes"
+                style={defaultProps.style}
+                content={defaultProps.content}
+            />
         );
         expect(component.toJSON()).toMatchSnapshot();
     });

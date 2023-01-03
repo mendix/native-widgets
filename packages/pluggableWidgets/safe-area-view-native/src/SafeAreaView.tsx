@@ -10,6 +10,9 @@ export const SafeAreaView = (props: SafeAreaViewProps<SafeAreaViewStyle>): JSX.E
 
     return (
         <ReactSaveAreaView
+            accessible={props.accessible === "yes"}
+            accessibilityLabel={props.screenReaderCaption?.value}
+            accessibilityHint={props.screenReaderHint?.value}
             style={{ flex: 1, ...{ backgroundColor: styles.container.backgroundColor } }}
             pointerEvents={"box-none"}
             testID={props.name}
