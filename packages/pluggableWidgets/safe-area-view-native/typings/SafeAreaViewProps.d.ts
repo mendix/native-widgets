@@ -4,11 +4,17 @@
  * @author Mendix UI Content Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
+import { DynamicValue } from "mendix";
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface SafeAreaViewProps<Style> {
     name: string;
     style: Style[];
     content?: ReactNode;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface SafeAreaViewPreviewProps {
@@ -17,4 +23,7 @@ export interface SafeAreaViewPreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }

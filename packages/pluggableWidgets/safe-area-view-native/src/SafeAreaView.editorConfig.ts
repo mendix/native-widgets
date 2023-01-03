@@ -1,4 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { SafeAreaViewPreviewProps } from "../typings/SafeAreaViewProps";
 
@@ -31,4 +32,13 @@ export function getPreview(values: SafeAreaViewPreviewProps, isDarkMode: boolean
             }
         ]
     };
+}
+
+export function getProperties(values: SafeAreaViewPreviewProps, defaultProperties: Properties): Properties {
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
+    return defaultProperties;
 }
