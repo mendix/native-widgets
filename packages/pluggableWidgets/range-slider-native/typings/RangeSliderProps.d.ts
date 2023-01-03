@@ -7,11 +7,16 @@ import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue } from "mendix";
 import { Big } from "big.js";
 
+export type AccessibleEnum = "yes" | "no";
+
 export type EditableEnum = "default" | "never";
 
 export interface RangeSliderProps<Style> {
     name: string;
     style: Style[];
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     lowerValueAttribute: EditableValue<Big>;
     upperValueAttribute: EditableValue<Big>;
     editable: EditableEnum;
@@ -26,6 +31,9 @@ export interface RangeSliderPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     lowerValueAttribute: string;
     upperValueAttribute: string;
     editable: EditableEnum;
