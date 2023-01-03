@@ -9,6 +9,8 @@ import { SortOrderEnum } from "../../typings/ColumnChartProps";
 import { Legend } from "./Legend";
 import { aggregateGridPadding, mapToAxisStyle, mapToGridStyle, mapToColumnStyles } from "../utils/StyleUtils";
 
+import { DynamicValue } from "mendix";
+
 export interface ColumnChartProps {
     name: string;
     series: ColumnChartSeries[];
@@ -20,6 +22,9 @@ export interface ColumnChartProps {
     xAxisLabel?: string;
     yAxisLabel?: string;
     warningPrefix?: string;
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface ColumnChartSeries {
@@ -56,7 +61,10 @@ export function ColumnChart({
     showLegend,
     sortOrder,
     style,
-    warningPrefix
+    warningPrefix,
+    accessible,
+    screenReaderCaption,
+    screenReaderHint
 }: ColumnChartProps): ReactElement | null {
     const dataTypesResult = useMemo(() => getDataTypes(series), [series]);
     const sortedSeries = useMemo(() => {
@@ -159,7 +167,13 @@ export function ColumnChart({
     );
 
     return (
-        <View style={style.container} testID={name}>
+        <View
+            accessible={accessible}
+            accessibilityLabel={screenReaderCaption?.value}
+            accessibilityHint={screenReaderHint?.value}
+            style={style.container}
+            testID={name}
+        >
             {dataTypesResult instanceof Error ? (
                 <Text style={style.errorMessage}>{dataTypesResult.message}</Text>
             ) : (

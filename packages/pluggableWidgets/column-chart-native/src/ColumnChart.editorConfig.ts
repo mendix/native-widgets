@@ -1,5 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
-import { hideNestedPropertiesIn, Problem, Properties } from "@mendix/pluggable-widgets-tools";
+import { hideNestedPropertiesIn, hidePropertyIn, Problem, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { ColumnChartPreviewProps } from "../typings/ColumnChartProps";
 import columnChartGroupedSvgDark from "./assets/ColumnChart.Grouped.dark.svg";
@@ -70,6 +70,11 @@ export function getProperties(values: ColumnChartPreviewProps, defaultProperties
             ]);
         }
     });
+
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
 
     return defaultProperties;
 }

@@ -7,7 +7,18 @@ import { ColumnChartStyle, defaultColumnChartStyle } from "./ui/Styles";
 import { useSeries } from "./utils/SeriesLoader";
 
 export function ColumnChart(props: ColumnChartProps<ColumnChartStyle>): ReactElement | null {
-    const { name, columnSeries, style, xAxisLabel, yAxisLabel, showLabels, ...rest } = props;
+    const {
+        name,
+        columnSeries,
+        style,
+        xAxisLabel,
+        yAxisLabel,
+        showLabels,
+        accessible,
+        screenReaderCaption,
+        screenReaderHint,
+        ...rest
+    } = props;
 
     const customStyles = style.filter(o => o != null);
 
@@ -22,6 +33,9 @@ export function ColumnChart(props: ColumnChartProps<ColumnChartStyle>): ReactEle
     return (
         <ColumnChartComponent
             name={name}
+            accessible={accessible === "yes"}
+            screenReaderCaption={screenReaderCaption}
+            screenReaderHint={screenReaderHint}
             series={series}
             style={styles}
             xAxisLabel={xAxisLabel?.value}
