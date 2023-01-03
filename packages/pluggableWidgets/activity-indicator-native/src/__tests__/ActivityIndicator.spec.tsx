@@ -5,6 +5,7 @@ import { ActivityIndicator, Props } from "../ActivityIndicator";
 
 const defaultProps: Props = {
     name: "activity-indicator-test",
+    accessible: "yes",
     style: []
 };
 
