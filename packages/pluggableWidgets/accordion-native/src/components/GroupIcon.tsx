@@ -16,9 +16,16 @@ interface GroupIconProps {
     iconCollapsed: DynamicValue<NativeIcon> | undefined;
     iconExpanded: DynamicValue<NativeIcon> | undefined;
     style: AccordionIconStyle;
+    accessible: boolean;
 }
 
-export function GroupIcon({ iconCollapsed, iconExpanded, isExpanded, style }: GroupIconProps): ReactElement | null {
+export function GroupIcon({
+    iconCollapsed,
+    iconExpanded,
+    isExpanded,
+    style,
+    accessible
+}: GroupIconProps): ReactElement | null {
     const customIconsConfigured = iconCollapsed?.value ?? iconExpanded?.value;
     const customIconSource = iconCollapsed?.value || { type: "glyph", iconClass: "glyphicon-chevron-down" };
     const customExpandedIconSource = iconExpanded?.value || { type: "glyph", iconClass: "glyphicon-chevron-up" };
@@ -41,11 +48,12 @@ export function GroupIcon({ iconCollapsed, iconExpanded, isExpanded, style }: Gr
     }, [isExpanded, animatedValue]);
 
     return customIconsConfigured ? (
-        <View style={iconStyles}>
+        <View accessible={accessible} style={iconStyles}>
             <Icon icon={source} size={style.size} color={style.color} />
         </View>
     ) : (
         <Animated.View
+            accessible={accessible}
             style={[
                 iconStyles,
                 {
