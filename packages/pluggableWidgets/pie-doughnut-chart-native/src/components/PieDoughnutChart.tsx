@@ -3,7 +3,7 @@ import { VictoryPie } from "victory-native";
 import { VictoryStyleObject, CallbackArgs, BlockProps } from "victory-core";
 
 import { ChartStyle, SlicesStyle } from "../ui/Styles";
-import { Option } from "mendix";
+import { Option, DynamicValue } from "mendix";
 import { LayoutChangeEvent, View } from "react-native";
 
 const DEFAULT_INNER_RADIUS_RATIO = 12;
@@ -16,6 +16,9 @@ export interface ChartProps {
     style: ChartStyle;
     presentation: string;
     showLabels: boolean;
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export type DataPoints = Array<Slice<string, number>>;
@@ -26,7 +29,16 @@ export interface Slice<X extends string, Y extends number> {
     stylingKey: Option<string>;
 }
 
-export function PieDoughnutChart({ name, presentation, series, style, showLabels }: ChartProps): ReactElement | null {
+export function PieDoughnutChart({
+    name,
+    presentation,
+    series,
+    style,
+    showLabels,
+    accessible,
+    screenReaderCaption,
+    screenReaderHint
+}: ChartProps): ReactElement | null {
     // due to the nature of the chart type, we only reply on the width, as the chart is always a square
     const [chartDimensions, setChartDimensions] = useState<{ width: number }>();
     // Chart user-styling may be missing for certain slices. A palette is passed, any missing colours
@@ -61,7 +73,13 @@ export function PieDoughnutChart({ name, presentation, series, style, showLabels
     );
 
     return (
-        <View style={{ ...style.container }} testID={name}>
+        <View
+            accessible={accessible}
+            accessibilityLabel={screenReaderCaption?.value}
+            accessibilityHint={screenReaderHint?.value}
+            style={{ ...style.container }}
+            testID={name}
+        >
             <View
                 onLayout={updateChartDimensions}
                 style={{ justifyContent: "center", alignItems: "center" }}

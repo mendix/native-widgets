@@ -4,7 +4,7 @@
  * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { ListValue, ListAttributeValue } from "mendix";
+import { DynamicValue, ListValue, ListAttributeValue } from "mendix";
 import { Big } from "big.js";
 
 export type PresentationEnum = "pie" | "doughnut";
@@ -17,6 +17,8 @@ export interface SeriesType {
 }
 
 export type SortOrderEnum = "ascending" | "descending";
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface SeriesPreviewType {
     dataSource: {} | { type: string } | null;
@@ -32,6 +34,9 @@ export interface PieDoughnutChartProps<Style> {
     series: SeriesType[];
     sortOrder: SortOrderEnum;
     showLabels: boolean;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface PieDoughnutChartPreviewProps {
@@ -43,4 +48,7 @@ export interface PieDoughnutChartPreviewProps {
     series: SeriesPreviewType[];
     sortOrder: SortOrderEnum;
     showLabels: boolean;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
