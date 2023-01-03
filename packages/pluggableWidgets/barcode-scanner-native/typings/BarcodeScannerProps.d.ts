@@ -4,7 +4,9 @@
  * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { ActionValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue } from "mendix";
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface BarcodeScannerProps<Style> {
     name: string;
@@ -13,6 +15,9 @@ export interface BarcodeScannerProps<Style> {
     showMask: boolean;
     showAnimatedLine: boolean;
     onDetect?: ActionValue;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface BarcodeScannerPreviewProps {
@@ -24,4 +29,7 @@ export interface BarcodeScannerPreviewProps {
     showMask: boolean;
     showAnimatedLine: boolean;
     onDetect: {} | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
