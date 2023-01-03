@@ -10,6 +10,7 @@ describe("QRCode", () => {
     beforeEach(() => {
         defaultProps = {
             name: "qr-code-test",
+            accessible: "yes",
             style: [],
             value: dynamicValue("Hello, world!")
         };

@@ -1,4 +1,6 @@
 import { RowLayoutProps } from "@mendix/piw-utils-internal";
+import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
+
 import StructurePreviewQRCodeSVG from "./assets/StructurePreviewQRCode.svg";
 import StructurePreviewQRCodeDarkSVG from "./assets/StructurePreviewQRCodeDark.svg";
 import { QRCodePreviewProps } from "../typings/QRCodeProps";
@@ -22,3 +24,12 @@ export const getPreview = (_: QRCodePreviewProps, isDarkMode: boolean): RowLayou
         }
     ]
 });
+
+export function getProperties(values: QRCodePreviewProps, defaultProperties: Properties): Properties {
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
+    return defaultProperties;
+}
