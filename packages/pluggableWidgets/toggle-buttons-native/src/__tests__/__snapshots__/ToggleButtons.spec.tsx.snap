@@ -22,7 +22,7 @@ exports[`ToggleButtons renders 1`] = `
     }
   >
     <View
-      accessibilityLabel="Formatted a"
+      accessibilityLabel="Formatted a \\"button\\"  active tab"
       accessible={true}
       focusable={true}
       onClick={[Function]}
@@ -84,7 +84,7 @@ exports[`ToggleButtons renders 1`] = `
       </View>
     </View>
     <View
-      accessibilityLabel="Formatted b"
+      accessibilityLabel="Formatted b \\"button\\"  "
       accessible={true}
       focusable={true}
       onClick={[Function]}
