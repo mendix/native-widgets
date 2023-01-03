@@ -61,6 +61,11 @@ export function getProperties(values: ImagePreviewProps, defaultProperties: Prop
         hidePropertyIn(defaultProperties, values, "customHeight");
     }
 
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
     return defaultProperties;
 }
 
