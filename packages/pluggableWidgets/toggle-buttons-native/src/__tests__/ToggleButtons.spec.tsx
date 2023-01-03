@@ -11,6 +11,7 @@ describe("ToggleButtons", () => {
     beforeEach(() => {
         defaultProps = {
             name: "toggle-buttons-test",
+            accessible: "yes",
             style: [],
             enum: new EditableValueBuilder<string>().withUniverse("a", "b").withValue("a").build(),
             editable: "default"

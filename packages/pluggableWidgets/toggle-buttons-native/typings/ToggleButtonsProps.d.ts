@@ -4,9 +4,11 @@
  * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { ActionValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
 export type EditableEnum = "default" | "never";
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface ToggleButtonsProps<Style> {
     name: string;
@@ -14,6 +16,9 @@ export interface ToggleButtonsProps<Style> {
     enum: EditableValue<string>;
     editable: EditableEnum;
     onChange?: ActionValue;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface ToggleButtonsPreviewProps {
@@ -24,4 +29,7 @@ export interface ToggleButtonsPreviewProps {
     enum: string;
     editable: EditableEnum;
     onChange: {} | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
