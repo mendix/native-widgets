@@ -78,7 +78,7 @@ export function Accordion(props: Props): ReactElement | null {
     }, [props.groups]);
 
     return (
-        <View style={styles.container} testID={props.name}>
+        <View accessibilityRole="tablist" style={styles.container} testID={props.name}>
             {props.groups.map(
                 (group, index): ReactElement => (
                     <AccordionGroup

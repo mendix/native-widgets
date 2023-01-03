@@ -12,6 +12,8 @@ export type HeaderTextRenderModeEnum = "heading1" | "heading2" | "heading3" | "h
 
 export type GroupCollapsedEnum = "groupStartExpanded" | "groupStartCollapsed" | "groupStartDynamic";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface GroupsType {
     headerRenderMode: HeaderRenderModeEnum;
     headerTextRenderMode: HeaderTextRenderModeEnum;
@@ -21,6 +23,9 @@ export interface GroupsType {
     visible: DynamicValue<boolean>;
     groupCollapsed: GroupCollapsedEnum;
     groupCollapsedDynamic?: DynamicValue<boolean>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     groupCollapsedAttribute?: EditableValue<boolean>;
     groupOnChange?: ActionValue;
 }
@@ -38,6 +43,9 @@ export interface GroupsPreviewType {
     visible: string;
     groupCollapsed: GroupCollapsedEnum;
     groupCollapsedDynamic: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     groupCollapsedAttribute: string;
     groupOnChange: {} | null;
 }

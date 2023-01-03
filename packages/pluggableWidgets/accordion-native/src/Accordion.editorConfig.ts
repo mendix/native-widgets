@@ -126,6 +126,10 @@ export function getProperties(values: AccordionPreviewProps, defaultProperties: 
         if (group.groupCollapsed !== "groupStartDynamic") {
             hidePropertyIn(defaultProperties, values, "groups", index, "groupCollapsedDynamic");
         }
+        if (group.accessible !== "yes") {
+            hidePropertyIn(defaultProperties, values, "groups", index, "screenReaderCaption");
+            hidePropertyIn(defaultProperties, values, "groups", index, "screenReaderHint");
+        }
     });
 
     if (!values.collapsible) {
