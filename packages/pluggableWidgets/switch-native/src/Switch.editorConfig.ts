@@ -1,5 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
-import { hidePropertiesIn, Properties } from "@mendix/pluggable-widgets-tools";
+import { hidePropertiesIn, hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { SwitchPreviewProps } from "../typings/SwitchProps";
 import StructurePreviewSwitchSVG from "./assets/checked.svg";
@@ -49,6 +49,10 @@ export function getPreview(values: SwitchPreviewProps, isDarkMode: boolean): Str
 export function getProperties(values: SwitchPreviewProps, defaultProperties: Properties): Properties {
     if (!values.showLabel) {
         hidePropertiesIn(defaultProperties, values, ["label", "labelOrientation"]);
+    }
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
     }
 
     return defaultProperties;
