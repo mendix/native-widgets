@@ -67,7 +67,17 @@ export function Slider(props: Props): ReactElement {
     );
 
     return (
-        <View onLayout={onLayout} style={styles.container} testID={props.name}>
+        <View
+            accessible={props.accessible === "yes"}
+            accessibilityLabel={props.screenReaderCaption?.value}
+            accessibilityHint={props.screenReaderHint?.value}
+            accessibilityRole="adjustable"
+            accessibilityValue={{ min: toNumber(props.minimumValue), max: toNumber(props.maximumValue), now: value }}
+            accessibilityState={{ disabled: !editable }}
+            onLayout={onLayout}
+            style={styles.container}
+            testID={props.name}
+        >
             <MultiSlider
                 values={value != null ? [value] : undefined}
                 min={validProps ? toNumber(props.minimumValue) : undefined}
