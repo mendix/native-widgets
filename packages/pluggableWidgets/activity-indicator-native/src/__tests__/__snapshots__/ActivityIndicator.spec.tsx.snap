@@ -9,6 +9,12 @@ exports[`ActivityIndicator renders with custom styles 1`] = `
   }
 >
   <ActivityIndicator
+    accessibilityState={
+      Object {
+        "busy": true,
+      }
+    }
+    accessible={true}
     animating={true}
     color="green"
     hidesWhenStopped={true}
@@ -23,6 +29,12 @@ exports[`ActivityIndicator renders with default styles 1`] = `
   style={Object {}}
 >
   <ActivityIndicator
+    accessibilityState={
+      Object {
+        "busy": true,
+      }
+    }
+    accessible={true}
     animating={true}
     color="gray"
     hidesWhenStopped={true}
