@@ -17,7 +17,18 @@ export class ProgressCircle extends Component<Props> {
         const showsText = this.props.circleText !== "none";
 
         return (
-            <View style={this.styles.container}>
+            <View
+                accessible={this.props.accessible === "yes"}
+                accessibilityLabel={this.props.screenReaderCaption?.value}
+                accessibilityHint={this.props.screenReaderHint?.value}
+                accessibilityValue={{
+                    min: Number(this.props.minimumValue.value),
+                    max: Number(this.props.maximumValue.value),
+                    now: Number(this.props.progressValue.value)
+                }}
+                accessibilityRole="progressbar"
+                style={this.styles.container}
+            >
                 <Circle
                     testID={this.props.name}
                     progress={progress}
