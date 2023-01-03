@@ -342,6 +342,7 @@ function createProps(opts: Partial<PieDoughnutChartProps<ChartStyle>> = {}): Pie
 
     return {
         name: "PieDoughnutTestWidget",
+        accessible: "yes",
         showLabels,
         sortOrder,
         presentation,
