@@ -15,6 +15,8 @@ import {
     aggregateGridPadding
 } from "../utils/StyleUtils";
 
+import { DynamicValue } from "mendix";
+
 export interface LineChartProps {
     name: string;
     lines: LineChartSeries[];
@@ -23,6 +25,9 @@ export interface LineChartProps {
     xAxisLabel?: string;
     yAxisLabel?: string;
     warningPrefix?: string;
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface LineChartSeries {
@@ -47,7 +52,17 @@ export interface LineChartDataPoint<X extends number | Date, Y extends number | 
 }
 
 export function LineChart(props: LineChartProps): ReactElement | null {
-    const { lines, showLegend, style, warningPrefix, xAxisLabel, yAxisLabel } = props;
+    const {
+        lines,
+        showLegend,
+        style,
+        warningPrefix,
+        xAxisLabel,
+        yAxisLabel,
+        accessible,
+        screenReaderCaption,
+        screenReaderHint
+    } = props;
 
     const warningMessagePrefix = useMemo(() => (warningPrefix ? warningPrefix + "i" : "I"), [warningPrefix]);
 
@@ -188,7 +203,13 @@ export function LineChart(props: LineChartProps): ReactElement | null {
     );
 
     return (
-        <View style={style.container} testID={props.name}>
+        <View
+            accessible={accessible}
+            accessibilityLabel={screenReaderCaption?.value}
+            accessibilityHint={screenReaderHint?.value}
+            style={style.container}
+            testID={props.name}
+        >
             {dataTypesResult instanceof Error ? (
                 <Text style={style.errorMessage}>{dataTypesResult.message}</Text>
             ) : (

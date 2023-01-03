@@ -14,7 +14,7 @@
                         <propertyGroup caption="General">
                             <property key="dataSet" type="enumeration" defaultValue="static">
                                 <caption>Data set</caption>
-                                <description/>
+                                <description />
                                 <enumerationValues>
                                     <enumerationValue key="static">Static</enumerationValue>
                                     <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -152,8 +152,27 @@
                 </property>
             </propertyGroup>
             <propertyGroup caption="Common">
-                <systemProperty key="Name"/>
+                <systemProperty key="Name" />
                 <systemProperty key="Visibility" />
+            </propertyGroup>
+
+            <propertyGroup caption="Accessibilty">
+                <property key="accessible" type="enumeration" defaultValue="yes">
+                    <caption>Accessible</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="yes">Yes</enumerationValue>
+                        <enumerationValue key="no">No</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="screenReaderCaption" type="textTemplate" required="false">
+                    <caption>Screen reader caption</caption>
+                    <description />
+                </property>
+                <property key="screenReaderHint" type="textTemplate" required="false">
+                    <caption>Screen reader hint</caption>
+                    <description />
+                </property>
             </propertyGroup>
         </propertyGroup>
     </properties>

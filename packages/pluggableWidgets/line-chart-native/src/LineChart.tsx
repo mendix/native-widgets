@@ -7,7 +7,17 @@ import { LineChartStyle, defaultLineChartStyle } from "./ui/Styles";
 import { useSeries } from "./utils/SeriesLoader";
 
 export function LineChart(props: LineChartProps<LineChartStyle>): ReactElement | null {
-    const { name, lines, showLegend, style, xAxisLabel, yAxisLabel } = props;
+    const {
+        name,
+        lines,
+        showLegend,
+        style,
+        xAxisLabel,
+        yAxisLabel,
+        accessible,
+        screenReaderCaption,
+        screenReaderHint
+    } = props;
 
     const customStyles = style.filter(o => o != null);
     const styles = all<LineChartStyle>([defaultLineChartStyle, ...customStyles]);
@@ -25,6 +35,9 @@ export function LineChart(props: LineChartProps<LineChartStyle>): ReactElement |
     return (
         <LineChartComponent
             name={name}
+            accessible={accessible === "yes"}
+            screenReaderCaption={screenReaderCaption}
+            screenReaderHint={screenReaderHint}
             lines={chartLines}
             style={styles}
             showLegend={showLegend}

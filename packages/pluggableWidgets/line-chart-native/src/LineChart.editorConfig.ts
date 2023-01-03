@@ -1,5 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
-import { hideNestedPropertiesIn, Problem, Properties } from "@mendix/pluggable-widgets-tools";
+import { hideNestedPropertiesIn, hidePropertyIn, Problem, Properties } from "@mendix/pluggable-widgets-tools";
 
 import lineChartSvgDark from "./assets/LineChart.dark.svg";
 import lineChartSvgLight from "./assets/LineChart.light.svg";
@@ -64,6 +64,12 @@ export function getProperties(values: LineChartPreviewProps, defaultProperties: 
             ]);
         }
     });
+
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
     return defaultProperties;
 }
 
