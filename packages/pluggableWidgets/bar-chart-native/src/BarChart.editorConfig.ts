@@ -1,5 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
-import { hideNestedPropertiesIn, Problem, Properties } from "@mendix/pluggable-widgets-tools";
+import { hideNestedPropertiesIn, hidePropertyIn, Problem, Properties } from "@mendix/pluggable-widgets-tools";
 
 import barChartGroupedSvgDark from "./assets/BarChart.Grouped.dark.svg";
 import barChartGroupedSvgLight from "./assets/BarChart.Grouped.light.svg";
@@ -71,6 +71,11 @@ export function getProperties(values: BarChartPreviewProps, defaultProperties: P
             ]);
         }
     });
+
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
 
     return defaultProperties;
 }

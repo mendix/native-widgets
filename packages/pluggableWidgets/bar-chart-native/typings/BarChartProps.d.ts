@@ -28,6 +28,8 @@ export interface BarSeriesType {
 
 export type SortOrderEnum = "ascending" | "descending";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface BarSeriesPreviewType {
     dataSet: DataSetEnum;
     staticDataSource: {} | { type: string } | null;
@@ -53,6 +55,9 @@ export interface BarChartProps<Style> {
     showLegend: boolean;
     xAxisLabel?: DynamicValue<string>;
     yAxisLabel?: DynamicValue<string>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface BarChartPreviewProps {
@@ -67,4 +72,7 @@ export interface BarChartPreviewProps {
     showLegend: boolean;
     xAxisLabel: string;
     yAxisLabel: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
