@@ -28,6 +28,8 @@ export interface ColumnSeriesType {
 
 export type SortOrderEnum = "ascending" | "descending";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface ColumnSeriesPreviewType {
     dataSet: DataSetEnum;
     staticDataSource: {} | { type: string } | null;
@@ -53,6 +55,9 @@ export interface ColumnChartProps<Style> {
     showLegend: boolean;
     xAxisLabel?: DynamicValue<string>;
     yAxisLabel?: DynamicValue<string>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface ColumnChartPreviewProps {
@@ -67,4 +72,7 @@ export interface ColumnChartPreviewProps {
     showLegend: boolean;
     xAxisLabel: string;
     yAxisLabel: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
