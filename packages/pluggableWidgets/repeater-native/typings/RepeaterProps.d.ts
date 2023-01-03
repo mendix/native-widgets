@@ -4,13 +4,18 @@
  * @author Mendix UI Content Team
  */
 import { ComponentType, CSSProperties } from "react";
-import { ListValue, ListWidgetValue } from "mendix";
+import { DynamicValue, ListValue, ListWidgetValue } from "mendix";
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface RepeaterProps<Style> {
     name: string;
     style: Style[];
     datasource: ListValue;
     content: ListWidgetValue;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface RepeaterPreviewProps {
@@ -20,4 +25,7 @@ export interface RepeaterPreviewProps {
     readOnly: boolean;
     datasource: {} | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
