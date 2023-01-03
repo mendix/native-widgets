@@ -2,6 +2,7 @@
 
 exports[`Accordion in collapsible & single expanded group mode renders correctly 1`] = `
 <View
+  accessibilityRole="tablist"
   style={
     Object {
       "backgroundColor": "#FFF",
@@ -20,6 +21,12 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     }
   >
     <View
+      accessibilityLabel="Header1"
+      accessibilityState={
+        Object {
+          "expanded": false,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -47,6 +54,7 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       }
     >
       <Text
+        accessible={true}
         style={
           Array [
             Object {
@@ -64,6 +72,7 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
         Header1
       </Text>
       <View
+        accessible={true}
         style={
           Object {
             "height": 16,
@@ -115,6 +124,11 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     }
   >
     <View
+      accessibilityState={
+        Object {
+          "expanded": true,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -142,6 +156,7 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       }
     >
       <View
+        accessible={true}
         style={
           Object {
             "flex": 1,
@@ -153,6 +168,7 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
         </Text>
       </View>
       <View
+        accessible={true}
         style={
           Object {
             "height": 16,
