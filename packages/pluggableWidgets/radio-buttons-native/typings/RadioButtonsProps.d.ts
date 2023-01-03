@@ -8,6 +8,8 @@ import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
 export type OrientationEnum = "vertical" | "horizontal";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface RadioButtonsProps<Style> {
     name: string;
     style: Style[];
@@ -15,6 +17,9 @@ export interface RadioButtonsProps<Style> {
     enum: EditableValue<string>;
     showLabel: boolean;
     label?: DynamicValue<string>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     onChange?: ActionValue;
 }
 
@@ -27,5 +32,8 @@ export interface RadioButtonsPreviewProps {
     enum: string;
     showLabel: boolean;
     label: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     onChange: {} | null;
 }

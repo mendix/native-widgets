@@ -18,6 +18,7 @@ describe("Radio buttons", () => {
                 .withValue(enumValues[0])
                 .build(),
             name: "radio-buttons-test",
+            accessible: "yes",
             orientation: "vertical",
             style: [],
             onChange: actionValue(),
