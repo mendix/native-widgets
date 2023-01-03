@@ -11,6 +11,7 @@ const defaultProps = (): Props => ({
     style: [],
     groups: [
         {
+            accessible: "yes",
             headerRenderMode: "text",
             headerTextRenderMode: "heading1",
             headerText: dynamicValue<string>("Header1"),
@@ -23,6 +24,7 @@ const defaultProps = (): Props => ({
             groupOnChange: actionValue()
         },
         {
+            accessible: "yes",
             headerRenderMode: "custom",
             headerTextRenderMode: "heading1",
             headerText: dynamicValue<string>(undefined),
