@@ -54,7 +54,18 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
     const progress = calculateProgress();
 
     return (
-        <View style={styles.container}>
+        <View
+            accessible={props.accessible === "yes"}
+            accessibilityLabel={props.screenReaderCaption?.value}
+            accessibilityHint={props.screenReaderHint?.value}
+            accessibilityValue={{
+                min: Number(props.minimumValue.value),
+                max: Number(props.maximumValue.value),
+                now: Number(props.progressValue.value)
+            }}
+            accessibilityRole="progressbar"
+            style={styles.container}
+        >
             <Bar
                 testID={props.name}
                 height={Number(styles.bar.height)}

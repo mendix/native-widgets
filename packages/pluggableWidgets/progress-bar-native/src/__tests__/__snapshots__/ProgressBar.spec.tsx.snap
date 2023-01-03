@@ -2,6 +2,15 @@
 
 exports[`ProgressBar renders 1`] = `
 <View
+  accessibilityRole="progressbar"
+  accessibilityValue={
+    Object {
+      "max": 100,
+      "min": 0,
+      "now": 50,
+    }
+  }
+  accessible={true}
   style={Object {}}
 >
   <View
