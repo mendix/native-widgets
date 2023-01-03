@@ -33,6 +33,8 @@ export interface LinesType {
     dynamicCustomLineStyle?: ListAttributeValue<string>;
 }
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface LinesPreviewType {
     dataSet: DataSetEnum;
     staticDataSource: {} | { type: string } | null;
@@ -58,6 +60,9 @@ export interface LineChartProps<Style> {
     showLegend: boolean;
     xAxisLabel?: DynamicValue<string>;
     yAxisLabel?: DynamicValue<string>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface LineChartPreviewProps {
@@ -69,4 +74,7 @@ export interface LineChartPreviewProps {
     showLegend: boolean;
     xAxisLabel: string;
     yAxisLabel: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
