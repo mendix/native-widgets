@@ -78,7 +78,6 @@ Array [
       >
         <Text
           allowFontScaling={false}
-          selectable={false}
           style={
             Array [
               Object {
@@ -170,7 +169,6 @@ Array [
     >
       <Text
         allowFontScaling={false}
-        selectable={false}
         style={
           Array [
             Object {
