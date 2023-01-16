@@ -33,6 +33,7 @@
     "validate-staged-widget-versions": "node scripts/validation/validate-versions-staged-files.js",
     "setup-mobile": "yarn setup-android && yarn setup-ios",
     "setup-android": "node ./detox/scripts/setup-android.js",
+    "setup-android-m1": "node ./detox/scripts/setup-android.js --target=arm64-v8a",
     "setup-ios": "node ./detox/scripts/setup-ios.js"
   },
   "workspaces": {
