@@ -39,9 +39,10 @@ describe("Image", () => {
         const btnImageUrl = element(by.text("Image url"));
         await btnImageUrl.tap();
 
+        const clickableImage = element(by.id("clickableImage$ImageSmallPressable"));
+        await waitFor(clickableImage).toBeVisible().withTimeout(2000);
         await expectToMatchScreenshot();
 
-        const clickableImage = element(by.id("clickableImage$ImageSmallPressable"));
         await clickableImage.tap();
 
         const alert = Alert();
