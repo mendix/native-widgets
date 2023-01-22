@@ -130,6 +130,13 @@ export function getPreview(values: ImagePreviewProps, isDarkMode: boolean): Stru
 export function check(values: ImagePreviewProps): Problem[] {
     const errors: Problem[] = [];
 
+    if (!values.isBackgroundImage && values.accessible === "yes" && !values.screenReaderCaption) {
+        errors.push({
+            property: "screenReaderCaption",
+            message: "Screen reader caption cannot be empty."
+        });
+    }
+
     if (values.datasource === "image" && !values.imageObject) {
         errors.push({
             property: "imageObject",

@@ -92,7 +92,12 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
 
     private renderFloatingButton(): JSX.Element | null {
         return this.state.status === "initial" ? (
-            <View style={floatingButtonContainer(this.state.deviceHeight)}>
+            <View
+                accessible={this.props.accessible === "yes"}
+                accessibilityLabel={this.props.screenReaderCaption?.value}
+                accessibilityHint={this.props.screenReaderHint?.value}
+                style={floatingButtonContainer(this.state.deviceHeight)}
+            >
                 <View style={this.styles.floatingButton}>
                     <TouchableOpacity onPress={this.onFeedbackButtonPressHandler} testID={`${this.props.name}$button`}>
                         {this.props.logo && this.props.logo.value ? (

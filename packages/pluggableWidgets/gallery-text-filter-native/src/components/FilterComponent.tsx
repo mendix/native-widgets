@@ -3,6 +3,7 @@ import { View, TextInput, TouchableOpacity, ViewStyle } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { debounce } from "@mendix/piw-utils-internal";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
+import { DynamicValue } from "mendix";
 
 import { GalleryTextFilterStyle, InputStyleProps } from "../ui/Styles";
 
@@ -13,6 +14,9 @@ export interface FilterComponentProps {
     updateFilters?: (value: string) => void;
     value?: string;
     name: string;
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 const textInputPropsKeys: Array<keyof InputStyleProps> = [
@@ -81,6 +85,9 @@ export default function FilterComponent(props: FilterComponentProps): ReactEleme
         <View testID={`${props.name}-text-filter`} style={textInputContainerStyle}>
             <TextInput
                 testID={`${props.name}-text-input`}
+                accessible={props.accessible}
+                accessibilityLabel={props.screenReaderCaption?.value}
+                accessibilityHint={props.screenReaderHint?.value}
                 value={valueInput}
                 placeholder={props.placeholder}
                 ref={inputRef}

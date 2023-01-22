@@ -104,6 +104,9 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
 
     return (
         <GalleryComponent
+            accessible={props.accessible === "yes"}
+            screenReaderCaption={props.screenReaderCaption}
+            screenReaderHint={props.screenReaderHint}
             emptyPlaceholder={props.emptyPlaceholder}
             hasMoreItems={props.datasource.hasMoreItems ?? false}
             itemRenderer={itemRenderer}

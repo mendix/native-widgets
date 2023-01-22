@@ -29,6 +29,9 @@ export function BottomSheet(props: BottomSheetProps<BottomSheetStyle>): ReactEle
     if (props.type === "expanding") {
         return (
             <ExpandingDrawer
+                accessible={props.accessible === "yes"}
+                screenReaderCaption={props.screenReaderCaption}
+                screenReaderHint={props.screenReaderHint}
                 smallContent={props.smallContent}
                 largeContent={props.largeContent}
                 fullscreenContent={props.showFullscreenContent ? props.fullscreenContent : null}

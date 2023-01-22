@@ -86,7 +86,7 @@
                 </property>
             </propertyGroup>
             <propertyGroup caption="Accessibilty">
-                <property key="accessible" type="enumeration" defaultValue="yes">
+                <property key="accessible" type="enumeration" defaultValue="no">
                     <caption>Accessible</caption>
                     <description />
                     <enumerationValues>

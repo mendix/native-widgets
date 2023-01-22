@@ -1,4 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { ColorPickerPreviewProps } from "../typings/ColorPickerProps";
 import colorPickerSvgNoPreviewDark from "./assets/ColorPicker.nopreview.dark.svg";
@@ -21,4 +22,29 @@ export function getPreview(values: ColorPickerPreviewProps, isDarkMode: boolean)
         ),
         width: 188
     };
+}
+
+export function getProperties(values: ColorPickerPreviewProps, defaultProperties: Properties): Properties {
+    if (!values.showSaturation) {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaptionSaturation");
+    }
+
+    if (!values.showLightness) {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaptionBrightness");
+    }
+
+    if (!values.showAlpha) {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaptionTransparency");
+    }
+
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+        hidePropertyIn(defaultProperties, values, "screenReaderCaptionHue");
+        hidePropertyIn(defaultProperties, values, "screenReaderCaptionSaturation");
+        hidePropertyIn(defaultProperties, values, "screenReaderCaptionBrightness");
+        hidePropertyIn(defaultProperties, values, "screenReaderCaptionTransparency");
+    }
+
+    return defaultProperties;
 }

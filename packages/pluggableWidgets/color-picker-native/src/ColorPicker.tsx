@@ -1,7 +1,7 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
 import { Component, createElement, ReactElement, ReactNode } from "react";
-import { View, ViewStyle } from "react-native";
+import { AccessibilityInfo, View, ViewStyle } from "react-native";
 
 import { HueGradient, LightnessGradient, SaturationGradient } from "react-native-color";
 import tinycolor from "tinycolor2";
@@ -15,6 +15,7 @@ import { executeAction } from "@mendix/piw-utils-internal";
 
 interface State {
     color?: HSLA;
+    screenReaderEnabled?: boolean;
 }
 
 export type Props = ColorPickerProps<ColorPickerStyle>;
@@ -28,7 +29,8 @@ export class ColorPicker extends Component<Props, State> {
     private readonly styles = flattenStyles(defaultColorPickerStyle, this.props.style);
     private readonly defaultSteps = 80;
     readonly state: State = {
-        color: undefined
+        color: undefined,
+        screenReaderEnabled: undefined
     };
 
     render(): ReactNode {
@@ -48,6 +50,17 @@ export class ColorPicker extends Component<Props, State> {
                 {this.props.format !== "hex" && this.renderAlpha(color)}
             </View>
         );
+    }
+
+    componentDidMount(): void {
+        if (this.props.accessible === "yes") {
+            AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderEnabled =>
+                this.setState({ screenReaderEnabled: isScreenReaderEnabled })
+            );
+            AccessibilityInfo.addEventListener("screenReaderChanged", isScreenReaderEnabled =>
+                this.setState({ screenReaderEnabled: isScreenReaderEnabled })
+            );
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
@@ -108,6 +121,9 @@ export class ColorPicker extends Component<Props, State> {
                 <View
                     testID={`${this.props.name}$preview`}
                     style={[this.styles.preview, { backgroundColor: tinycolor(color).toHslString() }]}
+                    accessible={this.props.accessible === "yes"}
+                    accessibilityLabel={this.props.screenReaderCaption?.value}
+                    accessibilityHint={this.props.screenReaderHint?.value}
                 />
             )
         );
@@ -122,6 +138,10 @@ export class ColorPicker extends Component<Props, State> {
         return (
             <PickerSlider
                 testID={`${this.props.name}$hue`}
+                accessible={this.props.accessible === "yes"}
+                screenReaderCaption={this.props.screenReaderCaptionHue}
+                screenReaderEnabled={this.state.screenReaderEnabled}
+                accessibilityValue={{ min: 0, max: 359, now: color.h }}
                 value={color.h}
                 onValueChange={this.onChangeHueHandler}
                 onValueChangeComplete={this.onChangeCompleteHandler}
@@ -143,6 +163,10 @@ export class ColorPicker extends Component<Props, State> {
         return (
             <PickerSlider
                 testID={`${this.props.name}$saturation`}
+                accessible={this.props.accessible === "yes"}
+                screenReaderCaption={this.props.screenReaderCaptionSaturation}
+                screenReaderEnabled={this.state.screenReaderEnabled}
+                accessibilityValue={{ text: `${color.s * 100}%` }}
                 value={color.s}
                 onValueChange={this.onChangeSaturationHandler}
                 onValueChangeComplete={this.onChangeCompleteHandler}
@@ -163,6 +187,10 @@ export class ColorPicker extends Component<Props, State> {
         return (
             <PickerSlider
                 testID={`${this.props.name}$lightness`}
+                accessible={this.props.accessible === "yes"}
+                screenReaderCaption={this.props.screenReaderCaptionBrightness}
+                screenReaderEnabled={this.state.screenReaderEnabled}
+                accessibilityValue={{ text: `${color.l * 100}%` }}
                 value={color.l}
                 onValueChange={this.onChangeLightnessHandler}
                 onValueChangeComplete={this.onChangeCompleteHandler}
@@ -183,6 +211,10 @@ export class ColorPicker extends Component<Props, State> {
         return (
             <PickerSlider
                 testID={`${this.props.name}$alpha`}
+                accessible={this.props.accessible === "yes"}
+                screenReaderCaption={this.props.screenReaderCaptionTransparency}
+                screenReaderEnabled={this.state.screenReaderEnabled}
+                accessibilityValue={{ text: `${color.a * 100}%` }}
                 value={color.a}
                 onValueChange={this.onChangeAlphaHandler}
                 onValueChangeComplete={this.onChangeCompleteHandler}

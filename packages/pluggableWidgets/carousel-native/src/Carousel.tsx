@@ -147,6 +147,9 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
                     <Fragment>
                         <NativeCarousel
                             testID={`${props.name}$carousel`}
+                            accessible={props.accessible === "yes"}
+                            accessibilityLabel={props.screenReaderCaption?.value}
+                            accessibilityHint={props.screenReaderHint?.value}
                             activeSlideAlignment={props.activeSlideAlignment}
                             layout="default"
                             firstItem={0}

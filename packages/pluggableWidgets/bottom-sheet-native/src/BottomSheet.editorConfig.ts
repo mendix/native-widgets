@@ -87,9 +87,10 @@ export function getPreview(values: BottomSheetPreviewProps, isDarkMode: boolean)
     };
 }
 
-export function getProperties(values: any, defaultProperties: Properties): Properties {
+export function getProperties(values: BottomSheetPreviewProps, defaultProperties: Properties): Properties {
     if (values.type === "modal") {
         if (values.modalRendering === "basic") {
+            hidePropertyIn(defaultProperties, values, "accessible");
             hidePropertiesIn(defaultProperties, values, ["smallContent", "largeContent", "fullscreenContent"]);
         } else {
             hidePropertiesIn(defaultProperties, values, [
@@ -112,10 +113,23 @@ export function getProperties(values: any, defaultProperties: Properties): Prope
             hidePropertyIn(defaultProperties, values, "fullscreenContent");
         }
     }
+
+    if (values.accessible === "no" || (values.type === "modal" && values.modalRendering === "basic")) {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
+    values.itemsBasic.forEach((item, index) => {
+        if (item.modalAccessible === "no") {
+            hidePropertyIn(defaultProperties, values, "itemsBasic", index, "modalScreenReaderCaption");
+            hidePropertyIn(defaultProperties, values, "itemsBasic", index, "modalScreenReaderHint");
+        }
+    });
+
     return defaultProperties;
 }
 
-export function check(values: any): Problem[] {
+export function check(values: BottomSheetPreviewProps): Problem[] {
     const errors: Problem[] = [];
     if (values.type === "modal") {
         if (!values.triggerAttribute) {

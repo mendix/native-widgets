@@ -46,23 +46,34 @@ export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
             return item.itemType === "divider" ? (
                 <MenuDivider key={index} color={styles.basic?.dividerColor} />
             ) : (
-                <MenuItem
-                    key={index}
-                    onPress={() => handlePress(item.action)}
-                    textStyle={itemStyle}
-                    ellipsizeMode={styles.basic?.itemStyle?.ellipsizeMode as any}
-                    style={styles.basic?.container as any}
-                    {...getRippleColor(styles.basic?.itemStyle?.rippleColor)}
-                    testID={`${props.name}_basic-item`}
+                <View
+                    accessible={item.accessible === "yes"}
+                    accessibilityLabel={item.screenReaderCaption?.value || item.caption}
+                    accessibilityHint={item.screenReaderHint?.value}
+                    accessibilityRole="menuitem"
                 >
-                    {item.caption}
-                </MenuItem>
+                    <MenuItem
+                        key={index}
+                        onPress={() => handlePress(item.action)}
+                        textStyle={itemStyle}
+                        ellipsizeMode={styles.basic?.itemStyle?.ellipsizeMode as any}
+                        style={styles.basic?.container as any}
+                        {...getRippleColor(styles.basic?.itemStyle?.rippleColor)}
+                        testID={`${props.name}_basic-item`}
+                    >
+                        {item.caption}
+                    </MenuItem>
+                </View>
             );
         });
     } else {
         menuOptions = props.customItems.map((item, index) => (
             <TouchableItem
                 key={index}
+                accessible={item.customItemAccessible === "yes"}
+                accessibilityLabel={item.customItemScreenReaderCaption?.value}
+                accessibilityHint={item.customItemScreenReaderHint?.value}
+                accessibilityRole="menuitem"
                 style={styles.custom?.container}
                 onPress={() => handlePress(item.action)}
                 {...getRippleColor(styles.custom?.itemStyle?.rippleColor)}

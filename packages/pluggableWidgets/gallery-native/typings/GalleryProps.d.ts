@@ -11,6 +11,8 @@ export type ScrollDirectionEnum = "vertical" | "horizontal";
 
 export type PaginationEnum = "virtualScrolling" | "buttons";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface FilterListType {
     filter: ListAttributeValue<string | Big | boolean | Date>;
 }
@@ -33,6 +35,9 @@ export interface GalleryProps<Style> {
     emptyPlaceholder?: ReactNode;
     onClick?: ListActionValue;
     pullDown?: ActionValue;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     filterList: FilterListType[];
     filtersPlaceholder?: ReactNode;
 }
@@ -53,6 +58,9 @@ export interface GalleryPreviewProps {
     emptyPlaceholder: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     onClick: {} | null;
     pullDown: {} | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     filterList: FilterListPreviewType[];
     filtersPlaceholder: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
 }

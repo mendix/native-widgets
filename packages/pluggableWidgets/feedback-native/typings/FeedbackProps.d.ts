@@ -6,12 +6,17 @@
 import { CSSProperties } from "react";
 import { DynamicValue, NativeImage } from "mendix";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface FeedbackProps<Style> {
     name: string;
     style: Style[];
     sprintrapp: string;
     allowScreenshot: boolean;
     logo?: DynamicValue<NativeImage>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface FeedbackPreviewProps {
@@ -22,4 +27,7 @@ export interface FeedbackPreviewProps {
     sprintrapp: string;
     allowScreenshot: boolean;
     logo: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }

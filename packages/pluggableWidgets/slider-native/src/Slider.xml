@@ -6,24 +6,6 @@
     <studioCategory>Input elements</studioCategory>
     <properties>
         <propertyGroup caption="General">
-            <propertyGroup caption="Accessibilty">
-                <property key="accessible" type="enumeration" defaultValue="yes">
-                    <caption>Accessible</caption>
-                    <description />
-                    <enumerationValues>
-                        <enumerationValue key="yes">Yes</enumerationValue>
-                        <enumerationValue key="no">No</enumerationValue>
-                    </enumerationValues>
-                </property>
-                <property key="screenReaderCaption" type="textTemplate" required="false">
-                    <caption>Screen reader caption</caption>
-                    <description />
-                </property>
-                <property key="screenReaderHint" type="textTemplate" required="false">
-                    <caption>Screen reader hint</caption>
-                    <description />
-                </property>
-            </propertyGroup>
             <propertyGroup caption="Data source">
                 <property key="valueAttribute" type="attribute">
                     <caption>Value attribute</caption>
@@ -60,6 +42,24 @@
                     <caption>Step size</caption>
                     <description>The interval between two selectable points.</description>
                     <returnType type="Decimal" />
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Accessibilty">
+                <property key="accessible" type="enumeration" defaultValue="yes">
+                    <caption>Accessible</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="yes">Yes</enumerationValue>
+                        <enumerationValue key="no">No</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="screenReaderCaption" type="textTemplate" required="false">
+                    <caption>Screen reader caption</caption>
+                    <description />
+                </property>
+                <property key="screenReaderHint" type="textTemplate" required="false">
+                    <caption>Screen reader hint</caption>
+                    <description />
                 </property>
             </propertyGroup>
         </propertyGroup>

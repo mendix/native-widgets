@@ -178,11 +178,11 @@ export const ImageSmall: FunctionComponent<ImageSmallProps> = props => {
         },
         [initialDimensions, customWidth, customHeight]
     );
-    console.warn("screenReaderCaption", screenReaderCaption?.value !== "");
+
     return source.type === "icon" || (initialDimensions?.width && initialDimensions?.height) ? (
         <Pressable
             accessible={accessible}
-            accessibilityLabel={screenReaderCaption?.value !== "" ? screenReaderCaption?.value : "image"}
+            accessibilityLabel={screenReaderCaption?.value}
             accessibilityHint={screenReaderHint?.value}
             accessibilityRole="image"
             testID={`${name}$ImageSmallPressable`}

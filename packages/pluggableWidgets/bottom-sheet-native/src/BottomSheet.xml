@@ -19,7 +19,7 @@
                     <caption>Trigger attribute</caption>
                     <description>Defines if the modal bottom sheet is visible or not. Initially this value should be false. When set to true, the bottom sheet will be shown. When the bottom sheet is hidden, the trigger attribute value is set to false.</description>
                     <attributeTypes>
-                        <attributeType name="Boolean"/>
+                        <attributeType name="Boolean" />
                     </attributeTypes>
                 </property>
                 <property key="modalRendering" type="enumeration" defaultValue="basic">
@@ -55,6 +55,25 @@
                                 <enumerationValue key="customStyle">Custom</enumerationValue>
                             </enumerationValues>
                         </property>
+                        <property key="modalAccessible" type="enumeration" defaultValue="yes">
+                            <caption>Accessible</caption>
+                            <category>General</category>
+                            <description />
+                            <enumerationValues>
+                                <enumerationValue key="yes">Yes</enumerationValue>
+                                <enumerationValue key="no">No</enumerationValue>
+                            </enumerationValues>
+                        </property>
+                        <property key="modalScreenReaderCaption" type="textTemplate" required="false">
+                            <caption>Screen reader caption</caption>
+                            <category>General</category>
+                            <description />
+                        </property>
+                        <property key="modalScreenReaderHint" type="textTemplate" required="false">
+                            <caption>Screen reader hint</caption>
+                            <category>General</category>
+                            <description />
+                        </property>
                     </properties>
                 </property>
                 <property key="nativeImplementation" type="boolean" defaultValue="true">
@@ -87,8 +106,26 @@
                 </property>
             </propertyGroup>
             <propertyGroup caption="Common">
-                <systemProperty key="Name"/>
+                <systemProperty key="Name" />
                 <systemProperty key="Visibility" />
+            </propertyGroup>
+            <propertyGroup caption="Accessibilty">
+                <property key="accessible" type="enumeration" defaultValue="no">
+                    <caption>Accessible</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="yes">Yes</enumerationValue>
+                        <enumerationValue key="no">No</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="screenReaderCaption" type="textTemplate" required="false">
+                    <caption>Screen reader caption</caption>
+                    <description />
+                </property>
+                <property key="screenReaderHint" type="textTemplate" required="false">
+                    <caption>Screen reader hint</caption>
+                    <description />
+                </property>
             </propertyGroup>
         </propertyGroup>
     </properties>

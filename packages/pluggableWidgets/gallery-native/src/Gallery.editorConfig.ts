@@ -17,6 +17,11 @@ export function getProperties(values: GalleryPreviewProps, defaultProperties: Pr
         hidePropertyIn(defaultProperties, values, "filtersPlaceholder");
     }
 
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
     return defaultProperties;
 }
 

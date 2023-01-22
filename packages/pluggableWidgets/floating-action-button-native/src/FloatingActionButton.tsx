@@ -30,6 +30,8 @@ export class FloatingActionButton extends Component<FloatingActionButtonProps<Fl
 
         return (
             <ActionButton
+                accessible={this.props.accessible === "yes"}
+                accessibilityLabel={this.props.screenReaderCaption?.value}
                 size={this.styles.button.size}
                 style={this.styles.container}
                 shadowStyle={buttonStyle}
@@ -77,6 +79,7 @@ export class FloatingActionButton extends Component<FloatingActionButtonProps<Fl
                 return (
                     <ActionButton.Item
                         testID={`${this.props.name}$button${index}`}
+                        accessibilityLabel={button.buttonScreenReaderCaption?.value}
                         key={`button${index}`}
                         size={this.styles.secondaryButton.size}
                         title={button.caption && button.caption.value}
