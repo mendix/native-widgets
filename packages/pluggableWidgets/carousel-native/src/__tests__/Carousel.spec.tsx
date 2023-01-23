@@ -12,6 +12,7 @@ describe("Carousel", () => {
     beforeEach(() => {
         defaultProps = {
             name: "carousel",
+            accessible: "yes",
             contentSource: listValueBuilder.simple(),
             content: buildWidgetValue(
                 <View>

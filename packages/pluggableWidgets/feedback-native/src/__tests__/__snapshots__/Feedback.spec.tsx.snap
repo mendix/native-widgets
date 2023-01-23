@@ -3,6 +3,7 @@
 exports[`Feedback renders 1`] = `
 Array [
   <View
+    accessible={true}
     style={
       Object {
         "marginTop": 567,

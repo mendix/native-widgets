@@ -104,48 +104,54 @@ exports[`Popup menu renders 1`] = `
             }
           >
             <View
+              accessibilityLabel="yolo"
+              accessibilityRole="menuitem"
               accessible={true}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              testID="popup-menu_basic-item"
             >
               <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
+                accessible={true}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                testID="popup-menu_basic-item"
               >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
+                <View
                   style={
                     Array [
                       Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
+                        "height": 48,
+                        "justifyContent": "center",
+                        "maxWidth": 248,
+                        "minWidth": 124,
                       },
-                      false,
                       undefined,
                     ]
                   }
                 >
-                  yolo
-                </Text>
+                  <Text
+                    ellipsizeMode="clip"
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {
+                          "fontSize": 14,
+                          "fontWeight": "400",
+                          "paddingHorizontal": 16,
+                          "textAlign": "left",
+                        },
+                        false,
+                        undefined,
+                      ]
+                    }
+                  >
+                    yolo
+                  </Text>
+                </View>
               </View>
             </View>
             <View

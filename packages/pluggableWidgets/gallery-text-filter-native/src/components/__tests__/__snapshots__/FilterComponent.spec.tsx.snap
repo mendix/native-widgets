@@ -15,6 +15,7 @@ exports[`Filter component renders correctly 1`] = `
   testID="test-text-filter"
 >
   <TextInput
+    accessible={true}
     allowFontScaling={true}
     onBlur={[Function]}
     onChangeText={[Function]}

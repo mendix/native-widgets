@@ -13,6 +13,7 @@ jest.useFakeTimers();
 
 const commonProps: Props = {
     name: "filter-test",
+    accessible: "yes",
     defaultFilter: "equal" as const,
     delay: 1000,
     style: []

@@ -6,6 +6,7 @@ exports[`Color Picker renders 1`] = `
   testID="color-picker-test"
 >
   <View
+    accessible={true}
     style={
       Array [
         Object {
@@ -20,8 +21,32 @@ exports[`Color Picker renders 1`] = `
     testID="color-picker-test$preview"
   />
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": 359,
+        "min": 0,
+        "now": 0,
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -904,8 +929,30 @@ exports[`Color Picker renders 1`] = `
     </View>
   </View>
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "text": "100%",
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1788,8 +1835,30 @@ exports[`Color Picker renders 1`] = `
     </View>
   </View>
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "text": "50%",
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -2680,6 +2749,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
   testID="color-picker-test"
 >
   <View
+    accessible={true}
     style={
       Array [
         Object {
@@ -2694,8 +2764,32 @@ exports[`Color Picker renders with alpha slider 1`] = `
     testID="color-picker-test$preview"
   />
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": 359,
+        "min": 0,
+        "now": 0,
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -3578,8 +3672,30 @@ exports[`Color Picker renders with alpha slider 1`] = `
     </View>
   </View>
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "text": "100%",
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -4462,8 +4578,30 @@ exports[`Color Picker renders with alpha slider 1`] = `
     </View>
   </View>
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "text": "50%",
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -5346,8 +5484,30 @@ exports[`Color Picker renders with alpha slider 1`] = `
     </View>
   </View>
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "text": "100%",
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -6238,6 +6398,7 @@ exports[`Color Picker renders with custom style 1`] = `
   testID="color-picker-test"
 >
   <View
+    accessible={true}
     style={
       Array [
         Object {
@@ -6253,8 +6414,32 @@ exports[`Color Picker renders with custom style 1`] = `
     testID="color-picker-test$preview"
   />
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "max": 359,
+        "min": 0,
+        "now": 0,
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -7137,8 +7322,30 @@ exports[`Color Picker renders with custom style 1`] = `
     </View>
   </View>
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "text": "100%",
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -8021,8 +8228,30 @@ exports[`Color Picker renders with custom style 1`] = `
     </View>
   </View>
   <View
+    accessibilityActions={
+      Array [
+        Object {
+          "name": "increment",
+        },
+        Object {
+          "name": "decrement",
+        },
+      ]
+    }
+    accessibilityRole="adjustable"
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessibilityValue={
+      Object {
+        "text": "50%",
+      }
+    }
     accessible={true}
     focusable={false}
+    onAccessibilityAction={[Function]}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}

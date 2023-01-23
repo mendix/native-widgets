@@ -2,6 +2,16 @@
 
 exports[`Slider renders 1`] = `
 <View
+  accessibilityActions={
+    Array [
+      Object {
+        "name": "increment",
+      },
+      Object {
+        "name": "decrement",
+      },
+    ]
+  }
   accessibilityRole="adjustable"
   accessibilityState={
     Object {
@@ -16,6 +26,7 @@ exports[`Slider renders 1`] = `
     }
   }
   accessible={true}
+  onAccessibilityAction={[Function]}
   onLayout={[Function]}
   style={Object {}}
   testID="slider-test"

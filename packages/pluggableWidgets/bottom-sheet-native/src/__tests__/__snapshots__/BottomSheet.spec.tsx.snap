@@ -84,6 +84,9 @@ exports[`Bottom sheet renders a custom bottom action sheet for ios (Basic modal)
             }
           >
             <Text
+              accessibilityLabel="Item 1"
+              accessibilityRole="button"
+              accessible={true}
               style={
                 Object {
                   "color": "red",
@@ -118,6 +121,9 @@ exports[`Bottom sheet renders a custom bottom action sheet for ios (Basic modal)
             }
           >
             <Text
+              accessibilityLabel="Item 2"
+              accessibilityRole="button"
+              accessible={true}
               style={
                 Object {
                   "color": "red",
@@ -174,6 +180,12 @@ exports[`Bottom sheet renders a expanding 1`] = `
     pointerEvents="box-none"
   >
     <View
+      accessibilityState={
+        Object {
+          "expanded": false,
+        }
+      }
+      accessible={true}
       onLayout={[Function]}
       pointerEvents="box-none"
       style={Object {}}
