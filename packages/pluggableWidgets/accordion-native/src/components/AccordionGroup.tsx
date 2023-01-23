@@ -32,21 +32,32 @@ export function AccordionGroup({
     visible,
     style
 }: AccordionGroupProps): ReactElement | null {
+    const isAccessible = group.accessible === "yes";
     return visible ? (
         <View style={style.container}>
             <Pressable
                 style={[style.header.container, icon === "left" && { flexDirection: "row-reverse" }]}
                 onPress={collapsible ? () => onPressGroupHeader(group, index) : null}
+                accessible={isAccessible}
+                accessibilityLabel={
+                    group.screenReaderCaption?.value ||
+                    (group.headerRenderMode === "text" ? group.headerText.value : undefined)
+                }
+                accessibilityHint={group.screenReaderHint?.value}
+                accessibilityState={{ expanded: isExpanded }}
             >
                 {group.headerRenderMode === "text" ? (
-                    <Text style={[style.header[group.headerTextRenderMode], { flex: 1 }]}>
+                    <Text accessible={isAccessible} style={[style.header[group.headerTextRenderMode], { flex: 1 }]}>
                         {group.headerText.value}
                     </Text>
                 ) : (
-                    <View style={{ flex: 1 }}>{group.headerContent}</View>
+                    <View accessible={isAccessible} style={{ flex: 1 }}>
+                        {group.headerContent}
+                    </View>
                 )}
                 {icon !== "no" && collapsible ? (
                     <GroupIcon
+                        accessible={isAccessible}
                         isExpanded={isExpanded}
                         iconCollapsed={iconCollapsed}
                         iconExpanded={iconExpanded}

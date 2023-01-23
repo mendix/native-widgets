@@ -8,6 +8,8 @@ import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
 export type DefaultFilterEnum = "contains" | "startsWith" | "endsWith" | "greater" | "greaterEqual" | "equal" | "notEqual" | "smaller" | "smallerEqual" | "empty" | "notEmpty";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface GalleryTextFilterProps<Style> {
     name: string;
     style: Style[];
@@ -17,6 +19,9 @@ export interface GalleryTextFilterProps<Style> {
     delay: number;
     valueAttribute?: EditableValue<string>;
     onChange?: ActionValue;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface GalleryTextFilterPreviewProps {
@@ -30,4 +35,7 @@ export interface GalleryTextFilterPreviewProps {
     delay: number | null;
     valueAttribute: string;
     onChange: {} | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }

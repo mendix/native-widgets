@@ -1,5 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
-import { Properties, hidePropertiesIn } from "@mendix/pluggable-widgets-tools";
+import { Properties, hidePropertiesIn, hidePropertyIn } from "@mendix/pluggable-widgets-tools";
 
 import { RadioButtonsPreviewProps } from "../typings/RadioButtonsProps";
 import darkRadioIcon from "./assets/radioButton_dark.svg";
@@ -132,6 +132,10 @@ export function getPreview(values: RadioButtonsPreviewProps, isDark: boolean): S
 export function getProperties(values: RadioButtonsPreviewProps, defaultProperties: Properties): Properties {
     if (!values.showLabel) {
         hidePropertiesIn(defaultProperties, values, ["label"]);
+    }
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
     }
     return defaultProperties;
 }

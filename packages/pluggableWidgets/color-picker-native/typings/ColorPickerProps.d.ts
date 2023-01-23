@@ -4,9 +4,11 @@
  * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { ActionValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
 export type FormatEnum = "hex" | "hsl" | "hsv" | "rgb";
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface ColorPickerProps<Style> {
     name: string;
@@ -18,6 +20,13 @@ export interface ColorPickerProps<Style> {
     showLightness: boolean;
     showAlpha: boolean;
     onChange?: ActionValue;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
+    screenReaderCaptionHue?: DynamicValue<string>;
+    screenReaderCaptionSaturation?: DynamicValue<string>;
+    screenReaderCaptionBrightness?: DynamicValue<string>;
+    screenReaderCaptionTransparency?: DynamicValue<string>;
 }
 
 export interface ColorPickerPreviewProps {
@@ -32,4 +41,11 @@ export interface ColorPickerPreviewProps {
     showLightness: boolean;
     showAlpha: boolean;
     onChange: {} | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
+    screenReaderCaptionHue: string;
+    screenReaderCaptionSaturation: string;
+    screenReaderCaptionBrightness: string;
+    screenReaderCaptionTransparency: string;
 }

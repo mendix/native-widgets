@@ -9,6 +9,7 @@ describe("Repeater", () => {
         const component = render(
             <Repeater
                 name="test-repeater"
+                accessible="yes"
                 style={[{ container: {} }]}
                 datasource={ListValueBuilder().withAmountOfItems(5)}
                 content={buildWidgetValue(<Text>Item</Text>)}
@@ -22,6 +23,7 @@ describe("Repeater", () => {
         const component = render(
             <Repeater
                 name="test-repeater"
+                accessible="yes"
                 style={[{ container: {} }]}
                 datasource={ListValueBuilder().withAmountOfItems(0)}
                 content={buildWidgetValue(<Text>Item</Text>)}
@@ -35,6 +37,7 @@ describe("Repeater", () => {
         const component = render(
             <Repeater
                 name="test-repeater"
+                accessible="yes"
                 style={[{ container: { backgroundColor: "red" } }]}
                 datasource={ListValueBuilder().withAmountOfItems(5)}
                 content={buildWidgetValue(<Text>Item</Text>)}

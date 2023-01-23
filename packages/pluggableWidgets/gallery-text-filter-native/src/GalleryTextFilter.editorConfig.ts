@@ -1,5 +1,15 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 import { GalleryTextFilterPreviewProps } from "../typings/GalleryTextFilterProps";
+
+export function getProperties(values: GalleryTextFilterPreviewProps, defaultProperties: Properties): Properties {
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
+    return defaultProperties;
+}
 
 export function getPreview(values: GalleryTextFilterPreviewProps, isDark: boolean): StructurePreviewProps {
     const style: { borderColor: string; backgroundColor: string; textColor: string } = {

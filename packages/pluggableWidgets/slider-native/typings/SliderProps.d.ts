@@ -9,6 +9,8 @@ import { Big } from "big.js";
 
 export type EditableEnum = "default" | "never";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface SliderProps<Style> {
     name: string;
     style: Style[];
@@ -17,6 +19,9 @@ export interface SliderProps<Style> {
     minimumValue: DynamicValue<Big>;
     maximumValue: DynamicValue<Big>;
     stepSize: DynamicValue<Big>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     onChange?: ActionValue;
 }
 
@@ -30,5 +35,8 @@ export interface SliderPreviewProps {
     minimumValue: string;
     maximumValue: string;
     stepSize: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     onChange: {} | null;
 }

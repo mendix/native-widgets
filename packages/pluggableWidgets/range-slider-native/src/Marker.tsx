@@ -4,7 +4,7 @@ import { Platform, StyleSheet, TouchableHighlight, View } from "react-native";
 
 export function Marker(props: MarkerProps & { testID: string }): ReactElement {
     return (
-        <TouchableHighlight testID={props.testID}>
+        <TouchableHighlight accessibilityLabel="Test" testID={props.testID}>
             <View
                 style={
                     props.enabled

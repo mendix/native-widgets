@@ -4,6 +4,7 @@ import FilterComponent, { FilterComponentProps } from "../FilterComponent";
 import { defaultGalleryTextFilterStyle } from "../../ui/Styles";
 
 const defaultProps: FilterComponentProps = {
+    accessible: true,
     delay: 500,
     name: "test",
     styles: defaultGalleryTextFilterStyle

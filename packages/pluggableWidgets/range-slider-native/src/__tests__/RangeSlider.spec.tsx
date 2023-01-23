@@ -14,6 +14,7 @@ describe("RangeSlider", () => {
     beforeEach(() => {
         defaultProps = {
             name: "range-slider-test",
+            accessible: "yes",
             style: [],
             lowerValueAttribute: new EditableValueBuilder<Big>().withValue(new Big(70)).build(),
             upperValueAttribute: new EditableValueBuilder<Big>().withValue(new Big(210)).build(),

@@ -4,11 +4,13 @@
  * @author Mendix UI Content Team
  */
 import { ComponentType, CSSProperties } from "react";
-import { ListValue, ListWidgetValue } from "mendix";
+import { DynamicValue, ListValue, ListWidgetValue } from "mendix";
 
 export type LayoutEnum = "card" | "fullWidth";
 
 export type ActiveSlideAlignmentEnum = "center" | "start";
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface CarouselProps<Style> {
     name: string;
@@ -18,6 +20,9 @@ export interface CarouselProps<Style> {
     layout: LayoutEnum;
     showPagination: boolean;
     activeSlideAlignment: ActiveSlideAlignmentEnum;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface CarouselPreviewProps {
@@ -30,4 +35,7 @@ export interface CarouselPreviewProps {
     layout: LayoutEnum;
     showPagination: boolean;
     activeSlideAlignment: ActiveSlideAlignmentEnum;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }

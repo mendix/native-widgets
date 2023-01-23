@@ -1,4 +1,4 @@
-import { FloatingActionButtonProps } from "../../typings/FloatingActionButtonProps";
+import { FloatingActionButtonProps, SecondaryButtonsType } from "../../typings/FloatingActionButtonProps";
 import { FloatingActionButtonStyle } from "../ui/styles";
 import { fireEvent, render, waitForElementToBeRemoved } from "@testing-library/react-native";
 import { createElement } from "react";
@@ -9,14 +9,15 @@ import { Icon } from "mendix/components/native/Icon";
 
 describe("FloatingActionButton", () => {
     let defaultProps: FloatingActionButtonProps<FloatingActionButtonStyle>;
-    const secondaryButtons = [
+    const secondaryButtons: SecondaryButtonsType[] = [
         {
             icon: dynamicValue({
                 type: "glyph",
                 iconClass: "fa-glyph1"
             } as NativeIcon),
             caption: dynamicValue("caption1"),
-            onClick: actionValue(true, false)
+            onClick: actionValue(true, false),
+            buttonAccessible: "yes"
         },
         {
             icon: dynamicValue({
@@ -24,7 +25,8 @@ describe("FloatingActionButton", () => {
                 iconClass: "fa-glyph2"
             } as NativeIcon),
             caption: dynamicValue("caption2"),
-            onClick: actionValue(true, false)
+            onClick: actionValue(true, false),
+            buttonAccessible: "yes"
         },
         {
             icon: dynamicValue({
@@ -32,13 +34,15 @@ describe("FloatingActionButton", () => {
                 iconClass: "fa-glyph3"
             } as NativeIcon),
             caption: dynamicValue("caption3"),
-            onClick: actionValue(true, false)
+            onClick: actionValue(true, false),
+            buttonAccessible: "yes"
         }
     ];
 
     beforeEach(() => {
         defaultProps = {
             name: "FloatingAction",
+            accessible: "yes",
             style: [],
             horizontalPosition: "right",
             verticalPosition: "bottom",
@@ -94,7 +98,7 @@ describe("FloatingActionButton", () => {
 
         fireEvent(getByTestId("FloatingAction"), "onPress");
         fireEvent(getByTestId("FloatingAction$button1"), "onPress");
-        expect(secondaryButtons[1].onClick.execute).toHaveBeenCalledTimes(1);
+        expect(secondaryButtons[1].onClick?.execute).toHaveBeenCalledTimes(1);
     });
 
     it("should have custom icons on primary button", async () => {
@@ -142,7 +146,7 @@ describe("FloatingActionButton", () => {
         );
 
         fireEvent(getByTestId("FloatingAction"), "onPress");
-        await findByText(secondaryButtons[2].caption.value as string);
+        await findByText(secondaryButtons[2].caption?.value as string);
     });
 
     describe("vertical position", () => {

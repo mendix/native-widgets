@@ -2,6 +2,7 @@
 
 exports[`Repeater renders correctly 1`] = `
 <View
+  accessible={true}
   style={Object {}}
 >
   <Text>
@@ -24,6 +25,7 @@ exports[`Repeater renders correctly 1`] = `
 
 exports[`Repeater renders correctly with custom styles 1`] = `
 <View
+  accessible={true}
   style={
     Object {
       "backgroundColor": "red",

@@ -20,7 +20,16 @@ export function Badge(props: BadgeProps<BadgeStyle>): ReactElement {
     }, [props.caption, styles]);
 
     return (
-        <View style={styles.container} testID={props.name}>
+        <View
+            accessible={props.accessible === "yes"}
+            accessibilityLabel={
+                props.screenReaderCaption?.value || (isAvailable(props.caption) ? props.caption.value : undefined)
+            }
+            accessibilityHint={props.screenReaderHint?.value}
+            accessibilityRole={props.onClick ? "button" : "text"}
+            style={styles.container}
+            testID={props.name}
+        >
             {props.onClick ? (
                 <Pressable
                     onPress={() => executeAction(props.onClick)}

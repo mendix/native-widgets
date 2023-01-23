@@ -25,6 +25,9 @@ export interface GalleryProps<T extends ObjectItem> {
     scrollDirection: ScrollDirectionEnum;
     style: GalleryStyle;
     tabletColumns: number;
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElement => {
@@ -114,6 +117,10 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         <View testID={`${props.name}`} style={props.style.container}>
             {props.filters ? <View>{props.filters}</View> : null}
             <FlatList
+                accessible={props.accessible}
+                accessibilityLabel={props.screenReaderCaption?.value}
+                accessibilityHint={props.screenReaderHint?.value}
+                accessibilityState={{ busy: props.pullDownIsExecuting }}
                 {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
                 {...(isScrollDirectionVertical ? { numColumns } : {})}
                 ListFooterComponent={loadMoreButton}

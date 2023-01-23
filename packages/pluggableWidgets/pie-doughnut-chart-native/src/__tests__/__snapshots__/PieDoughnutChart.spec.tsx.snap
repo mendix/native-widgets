@@ -2,6 +2,7 @@
 
 exports[`PieDoughnutChart configuration basic static props 1`] = `
 <View
+  accessible={true}
   style={
     Object {
       "flex": 1,

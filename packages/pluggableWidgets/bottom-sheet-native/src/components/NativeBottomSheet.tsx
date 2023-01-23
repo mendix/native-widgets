@@ -2,9 +2,9 @@ import { createElement, ReactElement, useCallback, useEffect, useRef, useState }
 import ActionSheet, { ActionSheetCustom } from "react-native-actionsheet";
 import { Platform, Text } from "react-native";
 import { EditableValue, ValueStatus } from "mendix";
+import { executeAction } from "@mendix/piw-utils-internal";
 import { ItemsBasicType } from "../../typings/BottomSheetProps";
 import { ModalItemContainerStyle, BottomSheetStyle, defaultMargins } from "../ui/Styles";
-import { executeAction } from "@mendix/piw-utils-internal";
 
 interface NativeBottomSheetProps {
     name: string;
@@ -47,7 +47,14 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     if (Platform.OS === "android" || !props.useNative) {
         const options = props.itemsBasic.map((item, index) => (
-            <Text key={`${props.name}_item_${index}`} style={props.styles.modalItems[item.styleClass]}>
+            <Text
+                accessible={item.modalAccessible === "yes"}
+                accessibilityLabel={item.modalScreenReaderCaption?.value || item.caption}
+                accessibilityHint={item.modalScreenReaderHint?.value}
+                accessibilityRole="button"
+                key={`${props.name}_item_${index}`}
+                style={props.styles.modalItems[item.styleClass]}
+            >
                 {item.caption}
             </Text>
         ));

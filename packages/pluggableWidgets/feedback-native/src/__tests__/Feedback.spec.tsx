@@ -16,6 +16,7 @@ describe("Feedback", () => {
     beforeEach(() => {
         defaultProps = {
             name: "feedback-test",
+            accessible: "yes",
             style: [],
             sprintrapp: "sprintr-app-id",
             allowScreenshot: true,

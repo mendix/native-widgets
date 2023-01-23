@@ -9,6 +9,8 @@ import { SortOrderEnum } from "../../typings/BarChartProps";
 import { Legend } from "./Legend";
 import { aggregateGridPadding, mapToAxisStyle, mapToGridStyle, mapToBarStyles } from "../utils/StyleUtils";
 
+import { DynamicValue } from "mendix";
+
 export interface BarChartProps {
     name: string;
     series: BarChartSeries[];
@@ -20,6 +22,9 @@ export interface BarChartProps {
     xAxisLabel?: string;
     yAxisLabel?: string;
     warningPrefix?: string;
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface BarChartSeries {
@@ -48,6 +53,9 @@ export interface BarDataPoint<X extends number | Date | string, Y extends number
 
 export function BarChart({
     name,
+    accessible,
+    screenReaderCaption,
+    screenReaderHint,
     presentation,
     series,
     showLabels,
@@ -201,7 +209,13 @@ export function BarChart({
     );
 
     return (
-        <View style={style.container} testID={name}>
+        <View
+            accessible={accessible}
+            accessibilityLabel={screenReaderCaption?.value}
+            accessibilityHint={screenReaderHint?.value}
+            style={style.container}
+            testID={name}
+        >
             {dataTypesResult instanceof Error ? (
                 <Text style={style.errorMessage}>{dataTypesResult.message}</Text>
             ) : (

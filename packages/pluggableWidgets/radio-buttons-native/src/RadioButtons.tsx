@@ -17,7 +17,9 @@ export function RadioButtons({
     onChange,
     name,
     label,
-    showLabel
+    showLabel,
+    accessible,
+    screenReaderHint
 }: props): ReactElement {
     const styles = mergeNativeStyles(defaultRadioButtonsStyle, style);
     const onSelect = useCallback(
@@ -32,11 +34,12 @@ export function RadioButtons({
     );
 
     return (
-        <View testID={name} style={styles.container}>
+        <View accessibilityHint={screenReaderHint?.value} testID={name} style={styles.container}>
             {showLabel && <Text style={styles.labelTextStyle}>{label?.value}</Text>}
             <View style={orientation === "horizontal" && styles.containerHorizontal}>
                 {universe?.map(name => (
                     <RadioButton
+                        accessible={accessible === "yes"}
                         key={name}
                         active={value === name}
                         onSelect={onSelect}

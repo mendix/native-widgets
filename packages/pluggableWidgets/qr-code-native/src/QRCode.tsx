@@ -13,7 +13,13 @@ export class QRCode extends Component<Props> {
 
     render(): JSX.Element {
         return (
-            <View style={this.styles.container} testID={this.props.name}>
+            <View
+                accessible={this.props.accessible === "yes"}
+                accessibilityLabel={this.props.screenReaderCaption?.value}
+                accessibilityHint={this.props.screenReaderHint?.value}
+                style={this.styles.container}
+                testID={this.props.name}
+            >
                 {this.props.value.value ? (
                     <RNQRCode
                         value={this.props.value.value}

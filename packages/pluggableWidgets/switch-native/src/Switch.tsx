@@ -10,7 +10,17 @@ import { SwitchStyle, defaultSwitchStyle, CheckBoxInputType } from "./ui/Styles"
 export type Props = SwitchProps<SwitchStyle>;
 
 export function Switch(props: Props): ReactElement {
-    const { label, labelOrientation, showLabel, name, onChange, booleanAttribute } = props;
+    const {
+        label,
+        labelOrientation,
+        showLabel,
+        name,
+        onChange,
+        booleanAttribute,
+        accessible,
+        screenReaderCaption,
+        screenReaderHint
+    } = props;
     const combinedStyles = flattenStyles(defaultSwitchStyle, props.style);
     const styles = processStyles(combinedStyles);
     const horizontalOrientation = showLabel && labelOrientation === "horizontal";
@@ -51,6 +61,11 @@ export function Switch(props: Props): ReactElement {
             ) : null}
             <View style={[horizontalOrientation ? { flex: 1, alignItems: "flex-end" } : { alignItems: "flex-start" }]}>
                 <SwitchComponent
+                    accessible={accessible === "yes"}
+                    accessibilityLabel={screenReaderCaption?.value}
+                    accessibilityHint={screenReaderHint?.value}
+                    accessibilityRole="switch"
+                    accessibilityState={{ disabled: !editable, checked: booleanAttribute.value }}
                     disabled={!editable}
                     testID={name}
                     style={inputStyle}

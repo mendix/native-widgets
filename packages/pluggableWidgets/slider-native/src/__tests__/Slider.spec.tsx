@@ -15,6 +15,7 @@ describe("Slider", () => {
     beforeEach(() => {
         defaultProps = {
             name: "slider-test",
+            accessible: "yes",
             style: [],
             valueAttribute: new EditableValueBuilder<Big>().withValue(new Big(140)).build(),
             editable: "default",

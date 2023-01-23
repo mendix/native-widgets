@@ -4,7 +4,7 @@
  * @author Mendix UI Content Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
-import { ActionValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
 export type TypeEnum = "modal" | "expanding";
 
@@ -12,16 +12,26 @@ export type ModalRenderingEnum = "basic" | "custom";
 
 export type StyleClassEnum = "defaultStyle" | "primaryStyle" | "dangerStyle" | "customStyle";
 
+export type ModalAccessibleEnum = "yes" | "no";
+
 export interface ItemsBasicType {
     caption: string;
     action?: ActionValue;
     styleClass: StyleClassEnum;
+    modalAccessible: ModalAccessibleEnum;
+    modalScreenReaderCaption?: DynamicValue<string>;
+    modalScreenReaderHint?: DynamicValue<string>;
 }
+
+export type AccessibleEnum = "yes" | "no";
 
 export interface ItemsBasicPreviewType {
     caption: string;
     action: {} | null;
     styleClass: StyleClassEnum;
+    modalAccessible: ModalAccessibleEnum;
+    modalScreenReaderCaption: string;
+    modalScreenReaderHint: string;
 }
 
 export interface BottomSheetProps<Style> {
@@ -38,6 +48,9 @@ export interface BottomSheetProps<Style> {
     fullscreenContent?: ReactNode;
     onOpen?: ActionValue;
     onClose?: ActionValue;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface BottomSheetPreviewProps {
@@ -56,4 +69,7 @@ export interface BottomSheetPreviewProps {
     fullscreenContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
     onOpen: {} | null;
     onClose: {} | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }

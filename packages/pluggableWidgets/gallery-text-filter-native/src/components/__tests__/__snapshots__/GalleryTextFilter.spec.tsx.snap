@@ -15,6 +15,7 @@ exports[`Text Filter with multiple attributes renders correctly 1`] = `
   testID="filter-test-text-filter"
 >
   <TextInput
+    accessible={true}
     allowFontScaling={true}
     onBlur={[Function]}
     onChangeText={[Function]}
@@ -52,6 +53,7 @@ exports[`Text Filter with single attribute renders correctly 1`] = `
   testID="filter-test-text-filter"
 >
   <TextInput
+    accessible={true}
     allowFontScaling={true}
     onBlur={[Function]}
     onChangeText={[Function]}

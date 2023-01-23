@@ -79,7 +79,15 @@ export function RangeSlider(props: Props): ReactElement {
     );
 
     return (
-        <View onLayout={onLayout} style={styles.container} testID={props.name}>
+        <View
+            accessibilityLabel={props.screenReaderCaption?.value}
+            accessibilityHint={props.screenReaderHint?.value}
+            accessibilityRole="adjustable"
+            accessibilityValue={{ min: toNumber(props.minimumValue), max: toNumber(props.minimumValue) }}
+            onLayout={onLayout}
+            style={styles.container}
+            testID={props.name}
+        >
             <MultiSlider
                 values={lowerValue != null && upperValue != null ? [lowerValue, upperValue] : undefined}
                 min={validProps ? toNumber(props.minimumValue) : undefined}

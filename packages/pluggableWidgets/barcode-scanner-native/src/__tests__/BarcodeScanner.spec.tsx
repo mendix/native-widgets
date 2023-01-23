@@ -14,6 +14,7 @@ describe("BarcodeScanner", () => {
 
     beforeEach(() => {
         defaultProps = {
+            accessible: "yes",
             showAnimatedLine: false,
             showMask: false,
             name: "barcode-scanner-test",

@@ -6,11 +6,16 @@
 import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
+export type AccessibleEnum = "yes" | "no";
+
 export type LabelOrientationEnum = "horizontal" | "vertical";
 
 export interface SwitchProps<Style> {
     name: string;
     style: Style[];
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     booleanAttribute: EditableValue<boolean>;
     onChange?: ActionValue;
     showLabel: boolean;
@@ -23,6 +28,9 @@ export interface SwitchPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     booleanAttribute: string;
     onChange: {} | null;
     showLabel: boolean;

@@ -15,6 +15,7 @@ const itemWrapperFunction =
         wrapper(item.id, onClick);
 
 const defaultProps: GalleryProps<ObjectItem> = {
+    accessible: true,
     hasMoreItems: true,
     itemRenderer: itemWrapperFunction({}),
     items: [{ id: "11" as GUID }, { id: "22" as GUID }, { id: "33" as GUID }],

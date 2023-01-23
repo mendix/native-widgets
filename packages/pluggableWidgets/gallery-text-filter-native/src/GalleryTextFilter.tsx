@@ -70,6 +70,9 @@ export function GalleryTextFilter(props: GalleryTextFilterProps<GalleryTextFilte
                 return (
                     <FilterComponent
                         name={props.name}
+                        accessible={props.accessible === "yes"}
+                        screenReaderCaption={props.screenReaderCaption}
+                        screenReaderHint={props.screenReaderHint}
                         delay={props.delay}
                         styles={styles}
                         placeholder={props.placeholder?.value}

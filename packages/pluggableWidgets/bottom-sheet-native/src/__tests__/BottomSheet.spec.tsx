@@ -23,14 +23,17 @@ const defaultProps: BottomSheetProps<BottomSheetStyle> = {
     nativeImplementation: true,
     type: "modal",
     modalRendering: "basic",
+    accessible: "yes",
     itemsBasic: [
         {
             caption: "Item 1",
-            styleClass: "defaultStyle"
+            styleClass: "defaultStyle",
+            modalAccessible: "yes"
         },
         {
             caption: "Item 2",
-            styleClass: "defaultStyle"
+            styleClass: "defaultStyle",
+            modalAccessible: "yes"
         }
     ],
     showFullscreenContent: false,

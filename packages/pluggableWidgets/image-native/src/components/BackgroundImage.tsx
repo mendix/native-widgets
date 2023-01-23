@@ -5,6 +5,7 @@ import { ResizeModeEnum } from "../../typings/ImageProps";
 import { CustomImageObjectProps, onLayoutSetDimensions } from "../utils/imageUtils";
 import { DimensionsType, ImageIconSVG } from "./ImageIconSVG";
 import { DefaultImageStyle } from "../ui/Styles.js";
+import { DynamicValue } from "mendix";
 
 export interface BackgroundImageProps {
     name?: string;
@@ -14,6 +15,9 @@ export interface BackgroundImageProps {
     resizeMode: ResizeModeEnum;
     opacity: number;
     styles: DefaultImageStyle;
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export const BackgroundImage: FunctionComponent<BackgroundImageProps> = props => {

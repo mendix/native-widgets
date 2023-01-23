@@ -45,6 +45,7 @@ describe("Widget", () => {
     beforeEach(() => {
         imageProps = {
             name: "Image1",
+            accessible: "yes",
             style: [],
             datasource: "image",
             imageObject: dynamicValue<number>(1),

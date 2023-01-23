@@ -7,12 +7,17 @@ import { CSSProperties } from "react";
 import { DynamicValue } from "mendix";
 import { Big } from "big.js";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface ProgressBarProps<Style> {
     name: string;
     style: Style[];
     progressValue: DynamicValue<Big>;
     minimumValue: DynamicValue<Big>;
     maximumValue: DynamicValue<Big>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface ProgressBarPreviewProps {
@@ -23,4 +28,7 @@ export interface ProgressBarPreviewProps {
     progressValue: string;
     minimumValue: string;
     maximumValue: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }

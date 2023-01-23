@@ -1,4 +1,5 @@
 import { RowLayoutProps, StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import paginationSVG from "./assets/pagination.svg";
 
@@ -55,4 +56,13 @@ export function getPreview(values: CarouselPreviewProps, isDarkMode: boolean): S
             ...(values.showPagination ? [paginationImageRowLayout] : [])
         ]
     };
+}
+
+export function getProperties(values: CarouselPreviewProps, defaultProperties: Properties): Properties {
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
+    return defaultProperties;
 }

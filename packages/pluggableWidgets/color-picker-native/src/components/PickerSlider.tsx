@@ -1,6 +1,16 @@
 import { Component, createElement, createRef } from "react";
-import { GestureResponderEvent, Platform, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import {
+    AccessibilityActionEvent,
+    AccessibilityValue,
+    GestureResponderEvent,
+    Platform,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    View,
+    ViewStyle
+} from "react-native";
 import Slider from "react-native-slider";
+import { DynamicValue } from "mendix";
 
 interface PickerSlidersProps {
     value: number;
@@ -14,6 +24,11 @@ interface PickerSlidersProps {
     trackStyle?: ViewStyle;
     disabled?: boolean;
     testID?: string;
+    accessible?: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
+    screenReaderEnabled?: boolean;
+    accessibilityValue?: AccessibilityValue;
 }
 
 export class PickerSlider extends Component<PickerSlidersProps> {
@@ -23,37 +38,67 @@ export class PickerSlider extends Component<PickerSlidersProps> {
     private readonly viewRef = createRef<View>();
     private isSliding = false;
 
-    render(): JSX.Element {
-        return (
+    private renderSlider = (): JSX.Element => {
+        const minValue = this.props.minimumValue || 0;
+        const maxValue = this.props.maximumValue || 1;
+        const SliderRender = (
+            <View
+                {...(this.props.accessible && this.props.screenReaderEnabled && { testID: this.props.testID })}
+                accessible={this.props.accessible}
+                accessibilityLabel={this.props.screenReaderCaption?.value}
+                accessibilityRole="adjustable"
+                accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
+                onAccessibilityAction={(event: AccessibilityActionEvent) => {
+                    const value = event.nativeEvent.actionName === "increment" ? 1 : -1;
+                    const newValue = this.props.value + value * this.props.step;
+                    if (newValue >= minValue && newValue <= maxValue) {
+                        this.onChangeHandler(newValue);
+                        this.onSlidingComplete();
+                    }
+                }}
+                accessibilityState={{ disabled: this.props.disabled }}
+                accessibilityValue={this.props.accessibilityValue}
+                style={[styles.container]}
+                ref={this.viewRef}
+            >
+                <View style={styles.gradient}>{this.props.children}</View>
+                <Slider
+                    value={this.props.value}
+                    step={this.props.step}
+                    animateTransitions={false}
+                    thumbTouchSize={{ width: 48, height: 48 }}
+                    minimumValue={this.props.minimumValue}
+                    maximumValue={this.props.maximumValue}
+                    onValueChange={this.onChangeHandler}
+                    onSlidingComplete={this.onSlidingCompleteHandler}
+                    minimumTrackTintColor="transparent"
+                    maximumTrackTintColor="transparent"
+                    trackStyle={this.props.trackStyle}
+                    thumbStyle={[
+                        styles.thumb,
+                        this.props.thumbStyle as ViewStyle,
+                        { backgroundColor: this.props.thumbTintColor }
+                    ]}
+                    disabled={this.props.disabled}
+                />
+            </View>
+        );
+
+        return this.props.accessible && this.props.screenReaderEnabled ? (
+            SliderRender
+        ) : (
             <TouchableWithoutFeedback
                 onPressIn={this.onTapHandler}
                 testID={this.props.testID}
                 disabled={this.props.disabled}
             >
-                <View style={[styles.container]} ref={this.viewRef}>
-                    <View style={styles.gradient}>{this.props.children}</View>
-                    <Slider
-                        value={this.props.value}
-                        step={this.props.step}
-                        animateTransitions={false}
-                        thumbTouchSize={{ width: 48, height: 48 }}
-                        minimumValue={this.props.minimumValue}
-                        maximumValue={this.props.maximumValue}
-                        onValueChange={this.onChangeHandler}
-                        onSlidingComplete={this.onSlidingCompleteHandler}
-                        minimumTrackTintColor="transparent"
-                        maximumTrackTintColor="transparent"
-                        trackStyle={this.props.trackStyle}
-                        thumbStyle={[
-                            styles.thumb,
-                            this.props.thumbStyle as ViewStyle,
-                            { backgroundColor: this.props.thumbTintColor }
-                        ]}
-                        disabled={this.props.disabled}
-                    />
-                </View>
+                {SliderRender}
             </TouchableWithoutFeedback>
         );
+    };
+
+    render(): JSX.Element {
+        return this.renderSlider();
     }
 
     private onChange(value: number): void {

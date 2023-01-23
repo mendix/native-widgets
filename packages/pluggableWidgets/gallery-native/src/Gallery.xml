@@ -71,6 +71,24 @@
                     <description />
                 </property>
             </propertyGroup>
+            <propertyGroup caption="Accessibilty">
+                <property key="accessible" type="enumeration" defaultValue="no">
+                    <caption>Accessible</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="yes">Yes</enumerationValue>
+                        <enumerationValue key="no">No</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="screenReaderCaption" type="textTemplate" required="false">
+                    <caption>Screen reader caption</caption>
+                    <description />
+                </property>
+                <property key="screenReaderHint" type="textTemplate" required="false">
+                    <caption>Screen reader hint</caption>
+                    <description />
+                </property>
+            </propertyGroup>
         </propertyGroup>
         <propertyGroup caption="Filtering">
             <propertyGroup caption="Filtering">

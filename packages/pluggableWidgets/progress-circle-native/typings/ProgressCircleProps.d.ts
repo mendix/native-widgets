@@ -9,6 +9,8 @@ import { Big } from "big.js";
 
 export type CircleTextEnum = "percentage" | "customText" | "none";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface ProgressCircleProps<Style> {
     name: string;
     style: Style[];
@@ -17,6 +19,9 @@ export interface ProgressCircleProps<Style> {
     maximumValue: DynamicValue<Big>;
     circleText: CircleTextEnum;
     customText?: DynamicValue<string>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface ProgressCirclePreviewProps {
@@ -29,4 +34,7 @@ export interface ProgressCirclePreviewProps {
     maximumValue: string;
     circleText: CircleTextEnum;
     customText: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }

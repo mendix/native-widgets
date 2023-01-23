@@ -3,7 +3,7 @@ import { executeAction } from "@mendix/piw-utils-internal";
 import { ValueStatus, Option } from "mendix";
 import MultiSlider, { MarkerProps } from "@ptomasroos/react-native-multi-slider";
 import { createElement, ReactElement, useCallback, useRef, useState } from "react";
-import { LayoutChangeEvent, Text, View } from "react-native";
+import { AccessibilityActionEvent, LayoutChangeEvent, Text, View } from "react-native";
 import { Big } from "big.js";
 
 import { SliderProps } from "../typings/SliderProps";
@@ -67,7 +67,31 @@ export function Slider(props: Props): ReactElement {
     );
 
     return (
-        <View onLayout={onLayout} style={styles.container} testID={props.name}>
+        <View
+            testID={props.name}
+            accessible={props.accessible === "yes"}
+            accessibilityLabel={props.screenReaderCaption?.value}
+            accessibilityHint={props.screenReaderHint?.value}
+            accessibilityRole="adjustable"
+            accessibilityValue={{ min: toNumber(props.minimumValue), max: toNumber(props.maximumValue), now: value }}
+            accessibilityState={{ disabled: !editable }}
+            accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
+            onAccessibilityAction={(event: AccessibilityActionEvent) => {
+                const minValue = toNumber(props.minimumValue);
+                const maxValue = toNumber(props.maximumValue);
+                if (!value || minValue === undefined || maxValue === undefined) {
+                    return;
+                }
+                const swipeValue = event.nativeEvent.actionName === "increment" ? 1 : -1;
+                const newValue = value + swipeValue * (toNumber(props.stepSize) || 1);
+                if (newValue >= minValue && newValue <= maxValue) {
+                    onSlide([newValue]);
+                    onChange([newValue]);
+                }
+            }}
+            onLayout={onLayout}
+            style={styles.container}
+        >
             <MultiSlider
                 values={value != null ? [value] : undefined}
                 min={validProps ? toNumber(props.minimumValue) : undefined}

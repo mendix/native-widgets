@@ -1,7 +1,7 @@
 import { StructurePreviewProps, DropZoneProps, ContainerProps, RowLayoutProps } from "@mendix/piw-utils-internal";
 import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
-import { BasicItemsPreviewType, PopupMenuPreviewProps } from "../typings/PopupMenuProps";
+import { BasicItemsPreviewType, CustomItemsPreviewType, PopupMenuPreviewProps } from "../typings/PopupMenuProps";
 
 export function getPreview(values: PopupMenuPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     return {
@@ -101,9 +101,19 @@ export function getProperties(values: PopupMenuPreviewProps, defaultProperties: 
                 hidePropertyIn(defaultProperties, values, "basicItems", index, "action");
                 hidePropertyIn(defaultProperties, values, "basicItems", index, "styleClass");
             }
+            if (item.accessible === "no") {
+                hidePropertyIn(defaultProperties, values, "basicItems", index, "screenReaderCaption");
+                hidePropertyIn(defaultProperties, values, "basicItems", index, "screenReaderHint");
+            }
         });
     } else {
         hidePropertyIn(defaultProperties, values, "basicItems");
+        values.customItems.forEach((item: CustomItemsPreviewType, index: number) => {
+            if (item.customItemAccessible === "no") {
+                hidePropertyIn(defaultProperties, values, "customItems", index, "customItemScreenReaderCaption");
+                hidePropertyIn(defaultProperties, values, "customItems", index, "customItemScreenReaderHint");
+            }
+        });
     }
     return defaultProperties;
 }

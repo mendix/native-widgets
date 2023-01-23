@@ -1,7 +1,8 @@
-import { BottomSheetStyle } from "../ui/Styles";
 import { createElement, ReactNode, useCallback, useState, ReactElement, Children } from "react";
-import BottomSheet from "reanimated-bottom-sheet";
 import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
+import BottomSheet from "reanimated-bottom-sheet";
+import { DynamicValue } from "mendix";
+import { BottomSheetStyle } from "../ui/Styles";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -10,6 +11,9 @@ interface ExpandingDrawerProps {
     onOpen?: () => void;
     onClose?: () => void;
     styles: BottomSheetStyle;
+    accessible?: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
@@ -56,6 +60,10 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 pointerEvents="box-none"
             >
                 <View
+                    accessible={props.accessible}
+                    accessibilityLabel={props.screenReaderCaption?.value}
+                    accessibilityHint={props.screenReaderHint?.value}
+                    accessibilityState={{ expanded: isOpen }}
                     onLayout={onLayoutHandlerHeader}
                     style={!isSmallContentValid ? { height: 20 } : {}}
                     pointerEvents="box-none"

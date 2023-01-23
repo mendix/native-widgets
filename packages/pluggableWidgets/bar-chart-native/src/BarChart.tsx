@@ -7,7 +7,18 @@ import { BarChartStyle, defaultBarChartStyle } from "./ui/Styles";
 import { useSeries } from "./utils/SeriesLoader";
 
 export function BarChart(props: BarChartProps<BarChartStyle>): ReactElement | null {
-    const { name, barSeries, style, xAxisLabel, yAxisLabel, showLabels, ...rest } = props;
+    const {
+        name,
+        barSeries,
+        style,
+        xAxisLabel,
+        yAxisLabel,
+        showLabels,
+        accessible,
+        screenReaderCaption,
+        screenReaderHint,
+        ...rest
+    } = props;
 
     const customStyles = style.filter(o => o != null);
 
@@ -22,6 +33,9 @@ export function BarChart(props: BarChartProps<BarChartStyle>): ReactElement | nu
     return (
         <BarChartComponent
             name={name}
+            accessible={accessible === "yes"}
+            screenReaderCaption={screenReaderCaption}
+            screenReaderHint={screenReaderHint}
             series={series}
             style={styles}
             xAxisLabel={xAxisLabel?.value}

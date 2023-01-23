@@ -24,10 +24,21 @@ describe("Popup menu", () => {
             style: [],
             menuTriggerer: <Text>Menu Triggerer</Text>,
             basicItems: [
-                { itemType: "item", action: dummyActionValue, caption: "yolo", styleClass: "defaultStyle" },
-                { itemType: "divider", styleClass: "defaultStyle", caption: "" }
+                {
+                    accessible: "yes",
+                    itemType: "item",
+                    action: dummyActionValue,
+                    caption: "yolo",
+                    styleClass: "defaultStyle"
+                },
+                {
+                    accessible: "yes",
+                    itemType: "divider",
+                    styleClass: "defaultStyle",
+                    caption: ""
+                }
             ],
-            customItems: [{ content: <Text>Yolo</Text>, action: dummyActionValue }]
+            customItems: [{ customItemAccessible: "yes", content: <Text>Yolo</Text>, action: dummyActionValue }]
         };
 
         basicItemTestId = `${defaultProps.name}_basic-item`;

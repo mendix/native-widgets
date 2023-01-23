@@ -13,6 +13,12 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
         "marginTop": 8,
       }
     }
+    accessibilityState={
+      Object {
+        "busy": undefined,
+      }
+    }
+    accessible={true}
     data={
       Array [
         Object {
@@ -163,6 +169,12 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         "marginTop": 8,
       }
     }
+    accessibilityState={
+      Object {
+        "busy": undefined,
+      }
+    }
+    accessible={true}
     data={
       Array [
         Object {
@@ -335,6 +347,12 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         "marginTop": 8,
       }
     }
+    accessibilityState={
+      Object {
+        "busy": undefined,
+      }
+    }
+    accessible={true}
     data={
       Array [
         Object {
@@ -507,6 +525,12 @@ exports[`Gallery rendering renders correctly 1`] = `
         "marginTop": 8,
       }
     }
+    accessibilityState={
+      Object {
+        "busy": undefined,
+      }
+    }
+    accessible={true}
     data={
       Array [
         Object {
@@ -657,6 +681,12 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         "marginStart": 8,
       }
     }
+    accessibilityState={
+      Object {
+        "busy": undefined,
+      }
+    }
+    accessible={true}
     data={
       Array [
         Object {
@@ -805,6 +835,12 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
         "marginTop": 8,
       }
     }
+    accessibilityState={
+      Object {
+        "busy": false,
+      }
+    }
+    accessible={true}
     data={Array []}
     disableVirtualization={false}
     getItem={[Function]}
@@ -870,6 +906,12 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
         "marginTop": 8,
       }
     }
+    accessibilityState={
+      Object {
+        "busy": undefined,
+      }
+    }
+    accessible={true}
     data={
       Array [
         Object {

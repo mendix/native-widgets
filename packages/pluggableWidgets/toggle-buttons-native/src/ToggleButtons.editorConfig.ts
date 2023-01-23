@@ -1,4 +1,5 @@
 import { RowLayoutProps, StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { ToggleButtonsPreviewProps } from "../typings/ToggleButtonsProps";
 
@@ -42,4 +43,13 @@ export function getPreview(_: ToggleButtonsPreviewProps, isDarkMode: boolean): S
         columnSize: "fixed",
         children: [renderButton("Button 1", true), renderButton("Button 2"), renderButton("Button 3")]
     };
+}
+
+export function getProperties(values: ToggleButtonsPreviewProps, defaultProperties: Properties): Properties {
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
+    return defaultProperties;
 }

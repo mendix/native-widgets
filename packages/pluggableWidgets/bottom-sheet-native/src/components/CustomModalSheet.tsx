@@ -1,13 +1,16 @@
 import { createElement, ReactElement, ReactNode, useCallback, useEffect, useState } from "react";
 import { InteractionManager, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
 import Modal, { OnSwipeCompleteParams } from "react-native-modal";
-import { EditableValue, ValueStatus } from "mendix";
+import { DynamicValue, EditableValue, ValueStatus } from "mendix";
 import { BottomSheetStyle, defaultPaddings } from "../ui/Styles";
 
 interface CustomModalSheetProps {
     triggerAttribute?: EditableValue<boolean>;
     content?: ReactNode;
     styles: BottomSheetStyle;
+    accessible?: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
@@ -62,6 +65,10 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
 
     return (
         <Modal
+            accessible={props.accessible}
+            accessibilityLabel={props.screenReaderCaption?.value}
+            accessibilityHint={props.screenReaderHint?.value}
+            accessibilityState={{ expanded: height > 0 }}
             isVisible={currentStatus}
             coverScreen
             backdropOpacity={0.5}

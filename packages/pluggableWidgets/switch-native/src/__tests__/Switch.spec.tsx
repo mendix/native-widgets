@@ -15,6 +15,7 @@ const createProps = (props?: Partial<Props>): Props => {
     const style = props?.style ?? {};
     const defaultProps: Props = {
         name,
+        accessible: "yes",
         label: dynamicValue<string>("Label", false),
         labelOrientation: "horizontal",
         showLabel: false,

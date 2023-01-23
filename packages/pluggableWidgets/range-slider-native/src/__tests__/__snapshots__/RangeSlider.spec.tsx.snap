@@ -2,6 +2,13 @@
 
 exports[`RangeSlider renders 1`] = `
 <View
+  accessibilityRole="adjustable"
+  accessibilityValue={
+    Object {
+      "max": 0,
+      "min": 0,
+    }
+  }
   onLayout={[Function]}
   style={Object {}}
   testID="range-slider-test"
@@ -134,6 +141,7 @@ exports[`RangeSlider renders 1`] = `
           }
         >
           <View
+            accessibilityLabel="Test"
             accessible={true}
             focusable={false}
             onClick={[Function]}
@@ -222,6 +230,7 @@ exports[`RangeSlider renders 1`] = `
           }
         >
           <View
+            accessibilityLabel="Test"
             accessible={true}
             focusable={false}
             onClick={[Function]}

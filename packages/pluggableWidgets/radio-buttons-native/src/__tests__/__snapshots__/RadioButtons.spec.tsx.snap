@@ -9,6 +9,14 @@ exports[`Radio buttons render correctly with show label false 1`] = `
     style={false}
   >
     <View
+      accessibilityLabel="Formatted firstItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": true,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -75,6 +83,14 @@ exports[`Radio buttons render correctly with show label false 1`] = `
       </Text>
     </View>
     <View
+      accessibilityLabel="Formatted secondItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": false,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -152,6 +168,14 @@ exports[`Radio buttons render correctly without label 1`] = `
     style={false}
   >
     <View
+      accessibilityLabel="Formatted firstItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": true,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -218,6 +242,14 @@ exports[`Radio buttons render correctly without label 1`] = `
       </Text>
     </View>
     <View
+      accessibilityLabel="Formatted secondItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": false,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -297,6 +329,14 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
     style={false}
   >
     <View
+      accessibilityLabel="Formatted firstItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": true,
+          "selected": false,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -354,6 +394,14 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
       </Text>
     </View>
     <View
+      accessibilityLabel="Formatted secondItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": true,
+          "selected": false,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -441,6 +489,14 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
     }
   >
     <View
+      accessibilityLabel="Formatted firstItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": true,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -510,6 +566,14 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
       </Text>
     </View>
     <View
+      accessibilityLabel="Formatted secondItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": false,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -592,6 +656,14 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
     style={false}
   >
     <View
+      accessibilityLabel="Formatted firstItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": true,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -658,6 +730,14 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
       </Text>
     </View>
     <View
+      accessibilityLabel="Formatted secondItem"
+      accessibilityRole="radio"
+      accessibilityState={
+        Object {
+          "disabled": false,
+          "selected": false,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}

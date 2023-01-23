@@ -22,10 +22,15 @@ export class ToggleButtons extends Component<Props> {
         const selectedIndex = this.universe.indexOf(this.props.enum.value!);
         const captions = this.universe.map(name => this.props.enum.formatter.format(name));
         const enabled = this.props.editable !== "never" && !this.props.enum.readOnly;
-
+        const accessibilityLabels = captions.map(
+            (caption, index) =>
+                `${caption} "button" ${!enabled ? "disabled" : ""} ${selectedIndex === index ? "active tab" : ""}`
+        );
         return (
             <View style={enabled ? this.styles.container : this.styles.containerDisabled} testID={this.props.name}>
                 <SegmentedControlTab
+                    accessible={this.props.accessible === "yes"}
+                    accessibilityLabels={accessibilityLabels}
                     values={captions}
                     selectedIndex={selectedIndex}
                     enabled={enabled}

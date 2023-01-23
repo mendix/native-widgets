@@ -6,10 +6,15 @@
 import { CSSProperties } from "react";
 import { DynamicValue } from "mendix";
 
+export type AccessibleEnum = "yes" | "no";
+
 export interface QRCodeProps<Style> {
     name: string;
     style: Style[];
     value: DynamicValue<string>;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
 }
 
 export interface QRCodePreviewProps {
@@ -18,4 +23,7 @@ export interface QRCodePreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     value: string;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
 }
