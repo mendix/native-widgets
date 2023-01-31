@@ -60,4 +60,5 @@ export interface BottomSheetPreviewProps {
     fullscreenContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     onOpen: {} | null;
     onClose: {} | null;
+    triggerAttributeChange: {} | null;
 }
