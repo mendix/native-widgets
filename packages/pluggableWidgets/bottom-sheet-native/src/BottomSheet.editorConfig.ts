@@ -89,6 +89,7 @@ export const getProperties = (values: any, defaultProperties: Properties): Prope
             "nativeImplementation",
             "itemsBasic",
             "triggerAttribute",
+            "triggerAttributeChange",
             "modalRendering"
         ]);
         if (!values.showFullscreenContent) {
