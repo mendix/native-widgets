@@ -15,7 +15,7 @@
                         <enumerationValue key="expanding">Expanding</enumerationValue>
                     </enumerationValues>
                 </property>
-                <property key="triggerAttribute" type="attribute" required="false">
+                <property key="triggerAttribute" type="attribute" onChange="triggerAttributeChange" required="false">
                     <caption>Trigger attribute</caption>
                     <description>Defines if the modal bottom sheet is visible or not. Initially this value should be false. When set to true, the bottom sheet will be shown. When the bottom sheet is hidden, the trigger attribute value is set to false.</description>
                     <attributeTypes>
@@ -84,6 +84,12 @@
                 <property key="onClose" type="action" required="false">
                     <caption>On close</caption>
                     <description />
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Events">
+                <property key="triggerAttributeChange" type="action" required="false">
+                    <caption>On change</caption>
+                    <description>Called on change of the 'Trigger attribute'</description>
                 </property>
             </propertyGroup>
             <propertyGroup caption="Common">
