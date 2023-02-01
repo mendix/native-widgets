@@ -1,4 +1,4 @@
-import { Component, createElement, createRef } from "react";
+import { Component, createElement, createRef, PropsWithChildren } from "react";
 import { GestureResponderEvent, Platform, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import Slider from "react-native-slider";
 
@@ -16,7 +16,7 @@ interface PickerSlidersProps {
     testID?: string;
 }
 
-export class PickerSlider extends Component<PickerSlidersProps> {
+export class PickerSlider extends Component<PropsWithChildren<PickerSlidersProps>> {
     private readonly onTapHandler = this.onTap.bind(this);
     private readonly onChangeHandler = this.onChange.bind(this);
     private readonly onSlidingCompleteHandler = this.onSlidingComplete.bind(this);

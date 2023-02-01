@@ -1,18 +1,24 @@
 import { actionValue } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
 import { AppStateStatus } from "react-native";
-import { flushMicrotasksQueue, render } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 
 import { AppEvents, Props } from "../AppEvents";
 
 let appStateChangeHandler: ((state: AppStateStatus) => void) | undefined;
 let connectionChangeHandler: ((result: { isConnected: boolean }) => void) | undefined;
 
+function flushMicrotasksQueue() {
+    return new Promise(resolve => setImmediate(resolve));
+}
+
 jest.mock("react-native", () => ({
     AppState: {
         currentState: "active",
-        addEventListener: jest.fn((_type, listener) => (appStateChangeHandler = listener)),
-        removeEventListener: jest.fn(() => (appStateChangeHandler = undefined))
+        addEventListener: jest.fn((_type, listener) => {
+            appStateChangeHandler = listener;
+            return { remove: jest.fn(() => (appStateChangeHandler = undefined)) };
+        })
     }
 }));
 

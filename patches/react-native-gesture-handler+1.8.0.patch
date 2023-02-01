@@ -1,0 +1,38 @@
+diff --git a/node_modules/react-native-gesture-handler/react-native-gesture-handler.d.ts b/node_modules/react-native-gesture-handler/react-native-gesture-handler.d.ts
+index 99896ab..c8b5d26 100644
+--- a/node_modules/react-native-gesture-handler/react-native-gesture-handler.d.ts
++++ b/node_modules/react-native-gesture-handler/react-native-gesture-handler.d.ts
+@@ -19,6 +19,7 @@ declare module 'react-native-gesture-handler' {
+     StyleProp,
+     ViewProps,
+   } from 'react-native';
++  import {PropsWithChildren} from "react";
+ 
+   /* GESTURE HANDLER STATE */
+ 
+@@ -404,7 +405,7 @@ declare module 'react-native-gesture-handler' {
+ 
+   export class BaseButton extends React.Component<BaseButtonProperties> {}
+ 
+-  export class RectButton extends React.Component<RectButtonProperties> {}
++  export class RectButton extends React.Component<PropsWithChildren<RectButtonProperties>> {}
+ 
+   export class BorderlessButton extends React.Component<
+     BorderlessButtonProperties
+@@ -478,6 +479,7 @@ declare module 'react-native-gesture-handler' {
+ declare module 'react-native-gesture-handler/Swipeable' {
+   import { Animated, StyleProp, ViewStyle } from 'react-native';
+   import { PanGestureHandlerProperties } from 'react-native-gesture-handler'
++  import {PropsWithChildren} from "react";
+   type SwipeableExcludes = Exclude<keyof PanGestureHandlerProperties, 'onGestureEvent' | 'onHandlerStateChange'>
+ 
+   interface SwipeableProperties extends Pick<PanGestureHandlerProperties, SwipeableExcludes> {
+@@ -528,7 +530,7 @@ declare module 'react-native-gesture-handler/Swipeable' {
+     childrenContainerStyle?: StyleProp<ViewStyle>;
+   }
+ 
+-  export default class Swipeable extends React.Component<SwipeableProperties> {
++  export default class Swipeable extends React.Component<PropsWithChildren<SwipeableProperties>> {
+     close: () => void;
+     openLeft: () => void;
+     openRight: () => void;
