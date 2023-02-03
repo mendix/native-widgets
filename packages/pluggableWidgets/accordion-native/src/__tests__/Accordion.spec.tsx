@@ -214,9 +214,7 @@ describe("Accordion", () => {
             customProps.collapsible = false;
             const accordion = render(<Accordion {...customProps} />);
 
-            expect(() => fireEvent.press(accordion.getByText("Header1"))).toThrow(
-                'No handler function found for event: "press"'
-            );
+            fireEvent.press(accordion.getByText("Header1"));
             const accordionGroupViews = accordion.UNSAFE_getAllByType(AnimatedCollapsibleView);
             expect(accordionGroupViews[0].props.isExpanded).toBeTruthy();
             expect(accordionGroupViews[1].props.isExpanded).toBeTruthy();

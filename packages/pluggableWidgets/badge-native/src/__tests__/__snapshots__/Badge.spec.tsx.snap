@@ -3,7 +3,7 @@
 exports[` 1`] = `
 <View
   style={
-    Object {
+    {
       "alignSelf": "baseline",
       "backgroundColor": "#ccc",
       "borderRadius": 30,
@@ -16,7 +16,7 @@ exports[` 1`] = `
 >
   <Text
     style={
-      Object {
+      {
         "color": "#444",
         "fontSize": 14,
         "fontWeight": "bold",
@@ -32,7 +32,7 @@ exports[` 1`] = `
 exports[`Badge renders with custom styles 1`] = `
 <View
   style={
-    Object {
+    {
       "alignSelf": "baseline",
       "backgroundColor": "green",
       "borderColor": "green",
@@ -46,23 +46,21 @@ exports[`Badge renders with custom styles 1`] = `
 >
   <Text
     style={
-      Object {
+      {
         "color": "green",
         "fontSize": 14,
         "fontWeight": "bold",
       }
     }
     testID="badge-test$caption"
-  >
-    
-  </Text>
+  />
 </View>
 `;
 
 exports[`Badge renders with default styles 1`] = `
 <View
   style={
-    Object {
+    {
       "alignSelf": "baseline",
       "backgroundColor": "#ccc",
       "borderRadius": 30,
@@ -75,23 +73,21 @@ exports[`Badge renders with default styles 1`] = `
 >
   <Text
     style={
-      Object {
+      {
         "color": "#444",
         "fontSize": 14,
         "fontWeight": "bold",
       }
     }
     testID="badge-test$caption"
-  >
-    
-  </Text>
+  />
 </View>
 `;
 
 exports[`Badge with on click action Android renders touchables 1`] = `
 <View
   style={
-    Object {
+    {
       "alignSelf": "baseline",
       "backgroundColor": "#ccc",
       "borderRadius": 30,
@@ -103,6 +99,23 @@ exports[`Badge with on click action Android renders touchables 1`] = `
   testID="badge-test"
 >
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -118,16 +131,14 @@ exports[`Badge with on click action Android renders touchables 1`] = `
   >
     <Text
       style={
-        Object {
+        {
           "color": "#444",
           "fontSize": 14,
           "fontWeight": "bold",
         }
       }
       testID="badge-test$caption"
-    >
-      
-    </Text>
+    />
   </View>
 </View>
 `;
@@ -135,7 +146,7 @@ exports[`Badge with on click action Android renders touchables 1`] = `
 exports[`Badge with on click action iOS renders touchables 1`] = `
 <View
   style={
-    Object {
+    {
       "alignSelf": "baseline",
       "backgroundColor": "#ccc",
       "borderRadius": 30,
@@ -147,6 +158,23 @@ exports[`Badge with on click action iOS renders touchables 1`] = `
   testID="badge-test"
 >
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -162,16 +190,14 @@ exports[`Badge with on click action iOS renders touchables 1`] = `
   >
     <Text
       style={
-        Object {
+        {
           "color": "#444",
           "fontSize": 14,
           "fontWeight": "bold",
         }
       }
       testID="badge-test$caption"
-    >
-      
-    </Text>
+    />
   </View>
 </View>
 `;

@@ -4,9 +4,9 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
 <View
   pointerEvents="box-none"
   style={
-    Array [
-      Array [
-        Object {
+    [
+      [
+        {
           "backgroundColor": "transparent",
           "bottom": 0,
           "left": 0,
@@ -14,22 +14,23 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
           "right": 0,
           "top": 0,
         },
-        Object {
+        {
           "elevation": 5,
           "justifyContent": "flex-end",
           "zIndex": 999,
         },
       ],
-      Object {
+      {
         "margin": 30,
       },
     ]
   }
 >
   <View
+    collapsable={false}
     pointerEvents="none"
     style={
-      Object {
+      {
         "backgroundColor": "transparent",
         "bottom": 0,
         "elevation": 5,
@@ -46,9 +47,9 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
   <View
     pointerEvents="box-none"
     style={
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
@@ -56,16 +57,16 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
             "right": 0,
             "top": 0,
           },
-          Object {
+          {
             "elevation": 5,
             "justifyContent": "flex-end",
             "zIndex": 999,
           },
         ],
-        Object {
+        {
           "alignItems": "flex-end",
         },
-        Object {
+        {
           "paddingVertical": 0,
         },
       ]
@@ -73,26 +74,28 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
   >
     <View
       style={
-        Array [
-          Object {
-            "marginHorizontal": 0,
+        [
+          {
+            "borderRadius": 27,
+            "right": 0,
+            "width": 54,
             "zIndex": 999,
           },
-          Object {
+          {
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
             "shadowOpacity": 0.35,
             "shadowRadius": 3,
           },
-          Object {
+          {
             "backgroundColor": "#e74c3c",
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
@@ -104,8 +107,33 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
+        collapsable={false}
         focusable={true}
+        nativeBackgroundAndroid={
+          {
+            "attribute": "selectableItemBackground",
+            "rippleRadius": undefined,
+            "type": "ThemeAttrAndroid",
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -114,58 +142,51 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
+          {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderRadius": 27,
+            "height": 54,
+            "width": 54,
           }
         }
         testID="FloatingAction"
       >
         <View
+          collapsable={false}
           style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0)",
+            {
+              "alignItems": "center",
               "borderRadius": 27,
               "height": 54,
+              "justifyContent": "center",
+              "transform": [
+                {
+                  "scale": 1,
+                },
+                {
+                  "rotate": "0deg",
+                },
+              ],
               "width": 54,
             }
           }
         >
           <View
             style={
-              Object {
-                "alignItems": "center",
-                "borderRadius": 27,
-                "height": 54,
-                "justifyContent": "center",
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 54,
-              }
+              [
+                {},
+                {
+                  "alignItems": "center",
+                  "flexShrink": 1,
+                  "justifyContent": "center",
+                },
+              ]
             }
+            testID="FloatingAction$IconView"
           >
             <View
-              style={
-                Array [
-                  Object {},
-                  Object {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-              testID="FloatingAction$IconView"
-            >
-              <View
-                testId="icon"
-              />
-            </View>
+              testId="icon"
+            />
           </View>
         </View>
       </View>
@@ -178,9 +199,9 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
 <View
   pointerEvents="box-none"
   style={
-    Array [
-      Array [
-        Object {
+    [
+      [
+        {
           "backgroundColor": "transparent",
           "bottom": 0,
           "left": 0,
@@ -188,22 +209,23 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
           "right": 0,
           "top": 0,
         },
-        Object {
+        {
           "elevation": 5,
           "justifyContent": "flex-end",
           "zIndex": 999,
         },
       ],
-      Object {
+      {
         "margin": 30,
       },
     ]
   }
 >
   <View
+    collapsable={false}
     pointerEvents="none"
     style={
-      Object {
+      {
         "backgroundColor": "transparent",
         "bottom": 0,
         "elevation": 5,
@@ -220,9 +242,9 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
   <View
     pointerEvents="box-none"
     style={
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
@@ -230,16 +252,16 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
             "right": 0,
             "top": 0,
           },
-          Object {
+          {
             "elevation": 5,
             "justifyContent": "flex-end",
             "zIndex": 999,
           },
         ],
-        Object {
+        {
           "alignItems": "flex-end",
         },
-        Object {
+        {
           "paddingVertical": 0,
         },
       ]
@@ -247,26 +269,28 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
   >
     <View
       style={
-        Array [
-          Object {
-            "marginHorizontal": 0,
+        [
+          {
+            "borderRadius": 27,
+            "right": 0,
+            "width": 54,
             "zIndex": 999,
           },
-          Object {
+          {
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
             "shadowOpacity": 0.35,
             "shadowRadius": 3,
           },
-          Object {
+          {
             "backgroundColor": "#e74c3c",
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
@@ -278,8 +302,33 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
+        collapsable={false}
         focusable={true}
+        nativeBackgroundAndroid={
+          {
+            "attribute": "selectableItemBackground",
+            "rippleRadius": undefined,
+            "type": "ThemeAttrAndroid",
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -288,58 +337,51 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
+          {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderRadius": 27,
+            "height": 54,
+            "width": 54,
           }
         }
         testID="FloatingAction"
       >
         <View
+          collapsable={false}
           style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0)",
+            {
+              "alignItems": "center",
               "borderRadius": 27,
               "height": 54,
+              "justifyContent": "center",
+              "transform": [
+                {
+                  "scale": 1,
+                },
+                {
+                  "rotate": "0deg",
+                },
+              ],
               "width": 54,
             }
           }
         >
           <View
             style={
-              Object {
-                "alignItems": "center",
-                "borderRadius": 27,
-                "height": 54,
-                "justifyContent": "center",
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 54,
-              }
+              [
+                {},
+                {
+                  "alignItems": "center",
+                  "flexShrink": 1,
+                  "justifyContent": "center",
+                },
+              ]
             }
+            testID="FloatingAction$IconView"
           >
             <View
-              style={
-                Array [
-                  Object {},
-                  Object {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-              testID="FloatingAction$IconView"
-            >
-              <View
-                testId="icon"
-              />
-            </View>
+              testId="icon"
+            />
           </View>
         </View>
       </View>
@@ -352,9 +394,9 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
 <View
   pointerEvents="box-none"
   style={
-    Array [
-      Array [
-        Object {
+    [
+      [
+        {
           "backgroundColor": "transparent",
           "bottom": 0,
           "left": 0,
@@ -362,22 +404,23 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
           "right": 0,
           "top": 0,
         },
-        Object {
+        {
           "elevation": 5,
           "justifyContent": "flex-end",
           "zIndex": 999,
         },
       ],
-      Object {
+      {
         "margin": 30,
       },
     ]
   }
 >
   <View
+    collapsable={false}
     pointerEvents="none"
     style={
-      Object {
+      {
         "backgroundColor": "transparent",
         "bottom": 0,
         "elevation": 5,
@@ -394,9 +437,9 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
   <View
     pointerEvents="box-none"
     style={
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
@@ -404,16 +447,16 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
             "right": 0,
             "top": 0,
           },
-          Object {
+          {
             "elevation": 5,
             "justifyContent": "flex-end",
             "zIndex": 999,
           },
         ],
-        Object {
+        {
           "alignItems": "flex-end",
         },
-        Object {
+        {
           "paddingVertical": 0,
         },
       ]
@@ -421,26 +464,28 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
   >
     <View
       style={
-        Array [
-          Object {
-            "marginHorizontal": 0,
+        [
+          {
+            "borderRadius": 27,
+            "right": 0,
+            "width": 54,
             "zIndex": 999,
           },
-          Object {
+          {
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
             "shadowOpacity": 0.35,
             "shadowRadius": 3,
           },
-          Object {
+          {
             "backgroundColor": "#e74c3c",
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
@@ -452,8 +497,33 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
+        collapsable={false}
         focusable={true}
+        nativeBackgroundAndroid={
+          {
+            "attribute": "selectableItemBackground",
+            "rippleRadius": undefined,
+            "type": "ThemeAttrAndroid",
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -462,58 +532,51 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
+          {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderRadius": 27,
+            "height": 54,
+            "width": 54,
           }
         }
         testID="FloatingAction"
       >
         <View
+          collapsable={false}
           style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0)",
+            {
+              "alignItems": "center",
               "borderRadius": 27,
               "height": 54,
+              "justifyContent": "center",
+              "transform": [
+                {
+                  "scale": 1,
+                },
+                {
+                  "rotate": "0deg",
+                },
+              ],
               "width": 54,
             }
           }
         >
           <View
             style={
-              Object {
-                "alignItems": "center",
-                "borderRadius": 27,
-                "height": 54,
-                "justifyContent": "center",
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 54,
-              }
+              [
+                {},
+                {
+                  "alignItems": "center",
+                  "flexShrink": 1,
+                  "justifyContent": "center",
+                },
+              ]
             }
+            testID="FloatingAction$IconView"
           >
             <View
-              style={
-                Array [
-                  Object {},
-                  Object {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-              testID="FloatingAction$IconView"
-            >
-              <View
-                testId="icon"
-              />
-            </View>
+              testId="icon"
+            />
           </View>
         </View>
       </View>
@@ -526,9 +589,9 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
 <View
   pointerEvents="box-none"
   style={
-    Array [
-      Array [
-        Object {
+    [
+      [
+        {
           "backgroundColor": "transparent",
           "bottom": 0,
           "left": 0,
@@ -536,22 +599,23 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
           "right": 0,
           "top": 0,
         },
-        Object {
+        {
           "elevation": 5,
           "justifyContent": "flex-start",
           "zIndex": 999,
         },
       ],
-      Object {
+      {
         "margin": 30,
       },
     ]
   }
 >
   <View
+    collapsable={false}
     pointerEvents="none"
     style={
-      Object {
+      {
         "backgroundColor": "transparent",
         "bottom": 0,
         "elevation": 5,
@@ -568,9 +632,9 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
   <View
     pointerEvents="box-none"
     style={
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
@@ -578,16 +642,16 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
             "right": 0,
             "top": 0,
           },
-          Object {
+          {
             "elevation": 5,
             "justifyContent": "flex-start",
             "zIndex": 999,
           },
         ],
-        Object {
+        {
           "alignItems": "flex-end",
         },
-        Object {
+        {
           "paddingVertical": 0,
         },
       ]
@@ -595,26 +659,28 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
   >
     <View
       style={
-        Array [
-          Object {
-            "marginHorizontal": 0,
+        [
+          {
+            "borderRadius": 27,
+            "right": 0,
+            "width": 54,
             "zIndex": 999,
           },
-          Object {
+          {
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
             "shadowOpacity": 0.35,
             "shadowRadius": 3,
           },
-          Object {
+          {
             "backgroundColor": "#e74c3c",
             "elevation": 5,
             "shadowColor": "#000",
-            "shadowOffset": Object {
+            "shadowOffset": {
               "height": 5,
               "width": 0,
             },
@@ -626,8 +692,33 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
       }
     >
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
+        collapsable={false}
         focusable={true}
+        nativeBackgroundAndroid={
+          {
+            "attribute": "selectableItemBackground",
+            "rippleRadius": undefined,
+            "type": "ThemeAttrAndroid",
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -636,58 +727,51 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "opacity": 1,
+          {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderRadius": 27,
+            "height": 54,
+            "width": 54,
           }
         }
         testID="FloatingAction"
       >
         <View
+          collapsable={false}
           style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0)",
+            {
+              "alignItems": "center",
               "borderRadius": 27,
               "height": 54,
+              "justifyContent": "center",
+              "transform": [
+                {
+                  "scale": 1,
+                },
+                {
+                  "rotate": "0deg",
+                },
+              ],
               "width": 54,
             }
           }
         >
           <View
             style={
-              Object {
-                "alignItems": "center",
-                "borderRadius": 27,
-                "height": 54,
-                "justifyContent": "center",
-                "transform": Array [
-                  Object {
-                    "scale": 1,
-                  },
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 54,
-              }
+              [
+                {},
+                {
+                  "alignItems": "center",
+                  "flexShrink": 1,
+                  "justifyContent": "center",
+                },
+              ]
             }
+            testID="FloatingAction$IconView"
           >
             <View
-              style={
-                Array [
-                  Object {},
-                  Object {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-              testID="FloatingAction$IconView"
-            >
-              <View
-                testId="icon"
-              />
-            </View>
+              testId="icon"
+            />
           </View>
         </View>
       </View>

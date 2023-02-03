@@ -2,13 +2,13 @@
 
 exports[`ProgressCircle renders 1`] = `
 <View
-  style={Object {}}
+  style={{}}
 >
   <View
     indeterminateAnimationDuration={1000}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "overflow": "hidden",
         },
@@ -19,15 +19,15 @@ exports[`ProgressCircle renders 1`] = `
   >
     <ARTSurfaceView
       style={
-        Array [
-          Object {
-            "transform": Array [
-              Object {
+        [
+          {
+            "transform": [
+              {
                 "rotate": "0deg",
               },
             ],
           },
-          Object {
+          {
             "height": 100,
             "width": 100,
           },
@@ -36,7 +36,7 @@ exports[`ProgressCircle renders 1`] = `
     >
       <ARTShape
         d={
-          Array [
+          [
             0,
             50,
             2.5,
@@ -58,13 +58,13 @@ exports[`ProgressCircle renders 1`] = `
         }
         fill={null}
         opacity={1}
-        stroke="#007aff"
+        stroke="#6200ee"
         strokeCap={2}
         strokeDash={null}
         strokeJoin={1}
         strokeWidth={3}
         transform={
-          Array [
+          [
             1,
             0,
             0,
@@ -76,7 +76,7 @@ exports[`ProgressCircle renders 1`] = `
       />
       <ARTShape
         d={
-          Array [
+          [
             0,
             50,
             0.5,
@@ -99,13 +99,13 @@ exports[`ProgressCircle renders 1`] = `
         }
         fill={null}
         opacity={1}
-        stroke="#007aff"
+        stroke="#6200ee"
         strokeCap={2}
         strokeDash={null}
         strokeJoin={1}
         strokeWidth={1}
         transform={
-          Array [
+          [
             1,
             0,
             0,
@@ -118,7 +118,7 @@ exports[`ProgressCircle renders 1`] = `
     </ARTSurfaceView>
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "borderRadius": 46,
           "height": 92,
@@ -133,14 +133,14 @@ exports[`ProgressCircle renders 1`] = `
       <Text
         allowFontScaling={true}
         style={
-          Array [
-            Object {
-              "color": "rgb(0, 122, 255)",
+          [
+            {
+              "color": "rgb(98,0,238)",
               "fontSize": 20.444444444444443,
               "fontWeight": "300",
             },
-            Object {
-              "color": "rgb(0, 122, 255)",
+            {
+              "color": "rgb(98,0,238)",
               "fontSize": 18,
             },
           ]

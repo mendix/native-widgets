@@ -7,138 +7,13 @@ exports[`Bottom sheet renders a custom bottom action sheet for ios (Basic modal)
   onRequestClose={[Function]}
   transparent={true}
   visible={false}
->
-  <View
-    style={
-      Array [
-        Array [
-          Object {
-            "flex": 1,
-            "flexDirection": "row",
-          },
-          Object {
-            "marginBottom": 24,
-          },
-        ],
-      ]
-    }
-  >
-    <Text
-      onPress={[Function]}
-      style={
-        Array [
-          Array [
-            Object {
-              "backgroundColor": "#000",
-              "bottom": 0,
-              "left": 0,
-              "opacity": 0.4,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            },
-          ],
-        ]
-      }
-    />
-    <View
-      style={
-        Object {
-          "alignSelf": "flex-end",
-          "backgroundColor": "#e5e5e5",
-          "flex": 1,
-          "height": 0,
-          "transform": Array [
-            Object {
-              "translateY": 0,
-            },
-          ],
-        }
-      }
-    >
-      <RCTScrollView
-        scrollEnabled={false}
-      >
-        <View>
-          <View
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#fff",
-                  "height": 50,
-                  "justifyContent": "center",
-                  "marginTop": 0.5,
-                },
-                Object {},
-              ]
-            }
-          >
-            <Text
-              style={
-                Object {
-                  "color": "red",
-                  "fontSize": 60,
-                }
-              }
-            >
-              Item 1
-            </Text>
-          </View>
-          <View
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#fff",
-                  "height": 50,
-                  "justifyContent": "center",
-                  "marginTop": 0.5,
-                },
-                Object {},
-              ]
-            }
-          >
-            <Text
-              style={
-                Object {
-                  "color": "red",
-                  "fontSize": 60,
-                }
-              }
-            >
-              Item 2
-            </Text>
-          </View>
-        </View>
-      </RCTScrollView>
-    </View>
-  </View>
-</Modal>
+/>
 `;
 
 exports[`Bottom sheet renders a custom modal 1`] = `
 <View
   style={
-    Object {
+    {
       "bottom": 0,
       "left": 0,
       "opacity": 0,
@@ -149,10 +24,9 @@ exports[`Bottom sheet renders a custom modal 1`] = `
   }
 >
   <RCTSafeAreaView
-    emulateUnlessSupported={true}
     onLayout={[Function]}
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
@@ -163,7 +37,7 @@ exports[`Bottom sheet renders a custom modal 1`] = `
 exports[`Bottom sheet renders a expanding 1`] = `
 <View
   style={
-    Object {
+    {
       "bottom": -1334,
       "position": "absolute",
     }
@@ -176,7 +50,7 @@ exports[`Bottom sheet renders a expanding 1`] = `
     <View
       onLayout={[Function]}
       pointerEvents="box-none"
-      style={Object {}}
+      style={{}}
     >
       <Text>
         Header
@@ -192,7 +66,7 @@ exports[`Bottom sheet renders a expanding 1`] = `
 exports[`Bottom sheet renders a expanding fullscreen 1`] = `
 <View
   style={
-    Object {
+    {
       "bottom": 0,
       "left": 0,
       "opacity": 0,
@@ -203,10 +77,9 @@ exports[`Bottom sheet renders a expanding fullscreen 1`] = `
   }
 >
   <RCTSafeAreaView
-    emulateUnlessSupported={true}
     onLayout={[Function]}
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
@@ -217,7 +90,7 @@ exports[`Bottom sheet renders a expanding fullscreen 1`] = `
 exports[`Bottom sheet renders a expanding fullscreen with custom styles 1`] = `
 <View
   style={
-    Object {
+    {
       "bottom": 0,
       "left": 0,
       "opacity": 0,
@@ -228,10 +101,9 @@ exports[`Bottom sheet renders a expanding fullscreen with custom styles 1`] = `
   }
 >
   <RCTSafeAreaView
-    emulateUnlessSupported={true}
     onLayout={[Function]}
     style={
-      Object {
+      {
         "flex": 1,
       }
     }

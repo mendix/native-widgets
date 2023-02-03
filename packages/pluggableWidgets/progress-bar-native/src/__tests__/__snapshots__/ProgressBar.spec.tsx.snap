@@ -2,12 +2,12 @@
 
 exports[`ProgressBar renders 1`] = `
 <View
-  style={Object {}}
+  style={{}}
 >
   <View
     animated={true}
     animationConfig={
-      Object {
+      {
         "bounciness": 0,
       }
     }
@@ -17,19 +17,19 @@ exports[`ProgressBar renders 1`] = `
     onLayout={[Function]}
     progress={0.5}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": undefined,
-          "borderColor": "rgb(0,122,255)",
+          "borderColor": "rgb(98,0,238)",
           "borderRadius": 4,
-          "borderWidth": 1,
+          "borderWidth": 0,
           "overflow": "hidden",
           "width": null,
         },
-        Object {
-          "borderColor": "rgb(0,122,255)",
-          "borderRadius": 4,
-          "borderWidth": 1,
+        {
+          "backgroundColor": "rgba(98,0,238, 0.2)",
+          "borderRadius": 0,
+          "borderWidth": 0,
           "height": 6,
         },
       ]
@@ -38,18 +38,19 @@ exports[`ProgressBar renders 1`] = `
     useNativeDriver={false}
   >
     <View
+      collapsable={false}
       style={
-        Object {
-          "backgroundColor": "rgb(0,122,255)",
+        {
+          "backgroundColor": "rgb(98,0,238)",
           "height": 6,
-          "transform": Array [
-            Object {
-              "translateX": 0,
+          "transform": [
+            {
+              "translateX": -0,
             },
-            Object {
-              "translateX": 0.5,
+            {
+              "translateX": -0,
             },
-            Object {
+            {
               "scaleX": 0.50005,
             },
           ],

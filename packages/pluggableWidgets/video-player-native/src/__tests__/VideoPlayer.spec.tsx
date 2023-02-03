@@ -1,6 +1,6 @@
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
-import { Modal, Text, View } from "react-native";
+import { Modal, View } from "react-native";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import { VideoProperties } from "react-native-video";
 
@@ -85,8 +85,8 @@ describe("VideoPlayer", () => {
 
         fireEvent(component.getByTestId("video-player-test"), "error");
 
-        expect(component.UNSAFE_getByType(Text).props.style).toEqual({ color: "white" });
-        expect(component.UNSAFE_getByType(Text).props.children).toEqual("The video failed to load");
+        expect(component.getByText("The video failed to load")).toBeDefined();
+        expect(component.getByText("The video failed to load").props.style).toEqual({ color: "white" });
     });
 
     describe("VideoPlayerAndroid", () => {

@@ -3,15 +3,13 @@
 exports[`ActivityIndicator renders with custom styles 1`] = `
 <View
   style={
-    Object {
+    {
       "backgroundColor": "green",
     }
   }
 >
   <ActivityIndicator
-    animating={true}
     color="green"
-    hidesWhenStopped={true}
     size="large"
     testID="activity-indicator-test"
   />
@@ -20,12 +18,10 @@ exports[`ActivityIndicator renders with custom styles 1`] = `
 
 exports[`ActivityIndicator renders with default styles 1`] = `
 <View
-  style={Object {}}
+  style={{}}
 >
   <ActivityIndicator
-    animating={true}
     color="gray"
-    hidesWhenStopped={true}
     size="large"
     testID="activity-indicator-test"
   />

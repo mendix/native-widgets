@@ -2,7 +2,8 @@
 
 exports[`List View Swipe render with archive animation 1`] = `
 <View
-  style={Object {}}
+  collapsable={false}
+  style={{}}
 >
   <View
     friction={1}
@@ -19,7 +20,7 @@ exports[`List View Swipe render with archive animation 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "backgroundColor": "white",
           "flex": 1,
@@ -35,7 +36,8 @@ exports[`List View Swipe render with archive animation 1`] = `
 
 exports[`List View Swipe render with buttons option 1`] = `
 <View
-  style={Object {}}
+  collapsable={false}
+  style={{}}
 >
   <View
     friction={1}
@@ -52,7 +54,7 @@ exports[`List View Swipe render with buttons option 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "backgroundColor": "white",
           "flex": 1,
@@ -68,7 +70,8 @@ exports[`List View Swipe render with buttons option 1`] = `
 
 exports[`List View Swipe render with left and action 1`] = `
 <View
-  style={Object {}}
+  collapsable={false}
+  style={{}}
 >
   <View
     friction={1}
@@ -85,7 +88,7 @@ exports[`List View Swipe render with left and action 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "backgroundColor": "white",
           "flex": 1,
@@ -101,7 +104,8 @@ exports[`List View Swipe render with left and action 1`] = `
 
 exports[`List View Swipe render with left and right with actions 1`] = `
 <View
-  style={Object {}}
+  collapsable={false}
+  style={{}}
 >
   <View
     friction={1}
@@ -118,7 +122,7 @@ exports[`List View Swipe render with left and right with actions 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "backgroundColor": "white",
           "flex": 1,
@@ -134,7 +138,8 @@ exports[`List View Swipe render with left and right with actions 1`] = `
 
 exports[`List View Swipe render with right and action 1`] = `
 <View
-  style={Object {}}
+  collapsable={false}
+  style={{}}
 >
   <View
     friction={1}
@@ -151,7 +156,7 @@ exports[`List View Swipe render with right and action 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "backgroundColor": "white",
           "flex": 1,
@@ -167,7 +172,8 @@ exports[`List View Swipe render with right and action 1`] = `
 
 exports[`List View Swipe render with toggle animation 1`] = `
 <View
-  style={Object {}}
+  collapsable={false}
+  style={{}}
 >
   <View
     friction={1}
@@ -184,7 +190,7 @@ exports[`List View Swipe render with toggle animation 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "backgroundColor": "white",
           "flex": 1,
@@ -200,7 +206,8 @@ exports[`List View Swipe render with toggle animation 1`] = `
 
 exports[`List View Swipe renders 1`] = `
 <View
-  style={Object {}}
+  collapsable={false}
+  style={{}}
 >
   <View
     friction={1}
@@ -217,7 +224,7 @@ exports[`List View Swipe renders 1`] = `
     <View
       onLayout={[Function]}
       style={
-        Object {
+        {
           "alignItems": "stretch",
           "backgroundColor": "white",
           "flex": 1,

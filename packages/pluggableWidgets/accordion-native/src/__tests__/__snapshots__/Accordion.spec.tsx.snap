@@ -3,7 +3,7 @@
 exports[`Accordion in collapsible & single expanded group mode renders correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "backgroundColor": "#FFF",
       "borderColor": "#CED0D3",
       "flexGrow": 1,
@@ -13,13 +13,30 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
 >
   <View
     style={
-      Object {
+      {
         "borderColor": "#CED0D3",
         "borderWidth": 1,
       }
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -33,8 +50,8 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "borderColor": "#CED0D3",
             "flexDirection": "row",
@@ -48,14 +65,14 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#0A1326",
               "fontSize": 40,
               "fontWeight": "600",
               "lineHeight": 60,
             },
-            Object {
+            {
               "flex": 1,
             },
           ]
@@ -64,12 +81,13 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
         Header1
       </Text>
       <View
+        collapsable={false}
         style={
-          Object {
+          {
             "height": 16,
             "marginRight": -2,
-            "transform": Array [
-              Object {
+            "transform": [
+              {
                 "rotate": "0deg",
               },
             ],
@@ -83,9 +101,10 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       </View>
     </View>
     <View
+      collapsable={false}
       onLayout={[Function]}
       style={
-        Object {
+        {
           "height": undefined,
           "overflow": undefined,
         }
@@ -93,7 +112,7 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     >
       <View
         style={
-          Object {
+          {
             "paddingBottom": 24,
             "paddingHorizontal": 16,
             "paddingTop": 8,
@@ -108,13 +127,30 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
   </View>
   <View
     style={
-      Object {
+      {
         "borderColor": "#CED0D3",
         "borderWidth": 1,
       }
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -128,8 +164,8 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "borderColor": "#CED0D3",
             "flexDirection": "row",
@@ -143,7 +179,7 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     >
       <View
         style={
-          Object {
+          {
             "flex": 1,
           }
         }
@@ -153,12 +189,13 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
         </Text>
       </View>
       <View
+        collapsable={false}
         style={
-          Object {
+          {
             "height": 16,
             "marginRight": undefined,
-            "transform": Array [
-              Object {
+            "transform": [
+              {
                 "rotate": "0deg",
               },
             ],
@@ -172,9 +209,10 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       </View>
     </View>
     <View
+      collapsable={false}
       onLayout={[Function]}
       style={
-        Object {
+        {
           "height": undefined,
           "overflow": undefined,
         }
@@ -182,7 +220,7 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     >
       <View
         style={
-          Object {
+          {
             "paddingBottom": 24,
             "paddingHorizontal": 16,
             "paddingTop": 8,
@@ -199,8 +237,8 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
 `;
 
 exports[`Accordion in collapsible & single expanded group mode renders the accordion groups icon on left side 1`] = `
-Array [
-  Object {
+[
+  {
     "alignItems": "center",
     "borderColor": "#CED0D3",
     "flexDirection": "row",
@@ -208,7 +246,7 @@ Array [
     "paddingHorizontal": 16,
     "paddingVertical": 16,
   },
-  Object {
+  {
     "flexDirection": "row-reverse",
   },
 ]

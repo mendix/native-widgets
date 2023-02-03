@@ -3,8 +3,8 @@
 exports[`ToggleButtons renders 1`] = `
 <View
   style={
-    Object {
-      "borderRadius": 5,
+    {
+      "borderRadius": 3,
     }
   }
   testID="toggle-buttons-test"
@@ -12,18 +12,36 @@ exports[`ToggleButtons renders 1`] = `
   <View
     removeClippedSubviews={false}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "flexDirection": "row",
         },
-        Object {},
+        {},
       ]
     }
   >
     <View
       accessibilityLabel="Formatted a"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
+      collapsable={false}
       focusable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -33,14 +51,14 @@ exports[`ToggleButtons renders 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
-          "backgroundColor": "rgb(0, 122, 255)",
-          "borderBottomLeftRadius": 5,
-          "borderColor": "rgb(0, 122, 255)",
+          "backgroundColor": "rgb(98, 0, 238)",
+          "borderBottomLeftRadius": 3,
+          "borderColor": "rgb(98, 0, 238)",
           "borderRadius": 0,
           "borderRightWidth": 1,
-          "borderTopLeftRadius": 5,
+          "borderTopLeftRadius": 3,
           "borderWidth": 1,
           "flex": 1,
           "justifyContent": "center",
@@ -51,7 +69,7 @@ exports[`ToggleButtons renders 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -61,18 +79,20 @@ exports[`ToggleButtons renders 1`] = `
           ellipsizeMode="tail"
           numberOfLines={1}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#0076FF",
               },
-              Object {
-                "color": "rgb(0, 122, 255)",
+              {
+                "color": "#666",
+                "fontWeight": "600",
+                "paddingVertical": 3,
               },
-              Array [
-                Object {
+              [
+                {
                   "color": "white",
                 },
-                Object {
+                {
                   "color": "#fff",
                 },
               ],
@@ -85,7 +105,25 @@ exports[`ToggleButtons renders 1`] = `
     </View>
     <View
       accessibilityLabel="Formatted b"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
+      collapsable={false}
       focusable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -95,14 +133,14 @@ exports[`ToggleButtons renders 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
           "backgroundColor": "white",
-          "borderBottomRightRadius": 5,
-          "borderColor": "rgb(0, 122, 255)",
+          "borderBottomRightRadius": 3,
+          "borderColor": "#CCC",
           "borderLeftWidth": 0,
           "borderRadius": 0,
-          "borderTopRightRadius": 5,
+          "borderTopRightRadius": 3,
           "borderWidth": 1,
           "flex": 1,
           "justifyContent": "center",
@@ -113,7 +151,7 @@ exports[`ToggleButtons renders 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
           }
         }
@@ -123,14 +161,16 @@ exports[`ToggleButtons renders 1`] = `
           ellipsizeMode="tail"
           numberOfLines={1}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#0076FF",
               },
-              Object {
-                "color": "rgb(0, 122, 255)",
+              {
+                "color": "#666",
+                "fontWeight": "600",
+                "paddingVertical": 3,
               },
-              Object {},
+              {},
             ]
           }
         >

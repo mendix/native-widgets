@@ -3,7 +3,7 @@
 exports[`Filter component renders correctly 1`] = `
 <View
   style={
-    Object {
+    {
       "borderColor": "#606671",
       "borderRadius": 6,
       "borderWidth": 1,
@@ -15,14 +15,12 @@ exports[`Filter component renders correctly 1`] = `
   testID="test-text-filter"
 >
   <TextInput
-    allowFontScaling={true}
     onBlur={[Function]}
     onChangeText={[Function]}
     onFocus={[Function]}
     placeholderTextColor="#264AE5"
-    rejectResponderTermination={true}
     style={
-      Object {
+      {
         "backgroundColor": "#FFFFFF",
         "color": "#6C717E",
         "height": 40,
@@ -31,7 +29,6 @@ exports[`Filter component renders correctly 1`] = `
       }
     }
     testID="test-text-input"
-    underlineColorAndroid="transparent"
     value=""
   />
 </View>

@@ -2,69 +2,65 @@
 
 exports[`Gallery rendering rendering with load more button it shouldn't render the paging button if hasn't more item 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="gallery-test"
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListFooterComponentStyle={
-      Object {
+      {
         "marginTop": 8,
       }
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "id": "11",
         },
-        Object {
+        {
           "id": "22",
         },
-        Object {
+        {
           "id": "33",
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
+    removeClippedSubviews={true}
     renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -72,7 +68,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   undefined,
                   false,
@@ -84,7 +80,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
           </View>
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -92,7 +88,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   false,
@@ -105,19 +101,20 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -125,7 +122,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   undefined,
@@ -140,7 +137,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
       <View
         onLayout={[Function]}
         style={
-          Object {
+          {
             "marginTop": 8,
           }
         }
@@ -152,69 +149,65 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
 
 exports[`Gallery rendering rendering with load more button renders correctly 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="gallery-test"
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListFooterComponentStyle={
-      Object {
+      {
         "marginTop": 8,
       }
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "id": "11",
         },
-        Object {
+        {
           "id": "22",
         },
-        Object {
+        {
           "id": "33",
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
+    removeClippedSubviews={true}
     renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -222,7 +215,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   undefined,
                   false,
@@ -234,7 +227,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
           </View>
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -242,7 +235,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   false,
@@ -255,19 +248,20 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -275,7 +269,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   undefined,
@@ -290,26 +284,42 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
       <View
         onLayout={[Function]}
         style={
-          Object {
+          {
             "marginTop": 8,
           }
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
+          collapsable={false}
           focusable={true}
+          onBlur={[Function]}
           onClick={[Function]}
+          onFocus={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
+          style={{}}
           testID="gallery-test-pagination-button"
         >
           <Text>
@@ -324,69 +334,65 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
 
 exports[`Gallery rendering rendering with load more button renders correctly with custom paging button title 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="gallery-test"
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListFooterComponentStyle={
-      Object {
+      {
         "marginTop": 8,
       }
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "id": "11",
         },
-        Object {
+        {
           "id": "22",
         },
-        Object {
+        {
           "id": "33",
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
+    removeClippedSubviews={true}
     renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -394,7 +400,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   undefined,
                   false,
@@ -406,7 +412,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
           </View>
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -414,7 +420,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   false,
@@ -427,19 +433,20 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -447,7 +454,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   undefined,
@@ -462,26 +469,42 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
       <View
         onLayout={[Function]}
         style={
-          Object {
+          {
             "marginTop": 8,
           }
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
+          collapsable={false}
           focusable={true}
+          onBlur={[Function]}
           onClick={[Function]}
+          onFocus={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
+          style={{}}
           testID="gallery-test-pagination-button"
         >
           <Text>
@@ -496,69 +519,65 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
 
 exports[`Gallery rendering renders correctly 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="gallery-test"
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListFooterComponentStyle={
-      Object {
+      {
         "marginTop": 8,
       }
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "id": "11",
         },
-        Object {
+        {
           "id": "22",
         },
-        Object {
+        {
           "id": "33",
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
+    removeClippedSubviews={true}
     renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -566,7 +585,7 @@ exports[`Gallery rendering renders correctly 1`] = `
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   undefined,
                   false,
@@ -578,7 +597,7 @@ exports[`Gallery rendering renders correctly 1`] = `
           </View>
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -586,7 +605,7 @@ exports[`Gallery rendering renders correctly 1`] = `
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   false,
@@ -599,19 +618,20 @@ exports[`Gallery rendering renders correctly 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -619,7 +639,7 @@ exports[`Gallery rendering renders correctly 1`] = `
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   undefined,
@@ -634,7 +654,7 @@ exports[`Gallery rendering renders correctly 1`] = `
       <View
         onLayout={[Function]}
         style={
-          Object {
+          {
             "marginTop": 8,
           }
         }
@@ -646,60 +666,56 @@ exports[`Gallery rendering renders correctly 1`] = `
 
 exports[`Gallery rendering renders correctly horizontal 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="gallery-test"
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListFooterComponentStyle={
-      Object {
+      {
         "marginStart": 8,
       }
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "id": "11",
         },
-        Object {
+        {
           "id": "22",
         },
-        Object {
+        {
           "id": "33",
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={true}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
+    removeClippedSubviews={true}
     renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
-          Array [
-            Object {
+          [
+            {
               "flexDirection": "row",
             },
             null,
@@ -712,7 +728,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         >
           <View
             style={
-              Array [
+              [
                 undefined,
                 undefined,
                 false,
@@ -724,10 +740,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
-          Array [
-            Object {
+          [
+            {
               "flexDirection": "row",
             },
             null,
@@ -740,7 +757,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         >
           <View
             style={
-              Array [
+              [
                 undefined,
                 false,
                 false,
@@ -752,10 +769,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
-          Array [
-            Object {
+          [
+            {
               "flexDirection": "row",
             },
             null,
@@ -768,7 +786,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         >
           <View
             style={
-              Array [
+              [
                 undefined,
                 false,
                 undefined,
@@ -782,7 +800,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
       <View
         onLayout={[Function]}
         style={
-          Object {
+          {
             "marginStart": 8,
           }
         }
@@ -794,42 +812,37 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
 
 exports[`Gallery rendering renders correctly with empty list and custom placeholder 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="gallery-test"
 >
   <RCTScrollView
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListFooterComponentStyle={
-      Object {
+      {
         "marginTop": 8,
       }
     }
-    data={Array []}
-    disableVirtualization={false}
+    data={[]}
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     refreshing={false}
-    removeClippedSubviews={false}
+    removeClippedSubviews={true}
     renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View>
@@ -840,7 +853,7 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
       <View
         onLayout={[Function]}
         style={
-          Object {
+          {
             "marginTop": 8,
           }
         }
@@ -852,76 +865,68 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
 
 exports[`Gallery rendering renders correctly with filter 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="gallery-test"
 >
   <View>
-    <TextInput
-      allowFontScaling={true}
-      rejectResponderTermination={true}
-      underlineColorAndroid="transparent"
-    />
+    <TextInput />
   </View>
   <RCTScrollView
     ListEmptyComponent={[Function]}
     ListFooterComponent={[Function]}
     ListFooterComponentStyle={
-      Object {
+      {
         "marginTop": 8,
       }
     }
     data={
-      Array [
-        Object {
+      [
+        {
           "id": "11",
         },
-        Object {
+        {
           "id": "22",
         },
-        Object {
+        {
           "id": "33",
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
     horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
+    removeClippedSubviews={true}
     renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -929,7 +934,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   undefined,
                   false,
@@ -941,7 +946,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
           </View>
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -949,7 +954,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   false,
@@ -962,19 +967,20 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
         <View
           style={
-            Object {
+            {
               "flexDirection": "row",
             }
           }
         >
           <View
             style={
-              Object {
+              {
                 "width": "50%",
               }
             }
@@ -982,7 +988,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
           >
             <View
               style={
-                Array [
+                [
                   undefined,
                   false,
                   undefined,
@@ -997,7 +1003,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
       <View
         onLayout={[Function]}
         style={
-          Object {
+          {
             "marginTop": 8,
           }
         }

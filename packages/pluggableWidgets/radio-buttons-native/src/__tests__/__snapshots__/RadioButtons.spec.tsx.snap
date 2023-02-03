@@ -2,13 +2,30 @@
 
 exports[`Radio buttons render correctly with show label false 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="radio-buttons-test"
 >
   <View
     style={false}
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -22,8 +39,8 @@ exports[`Radio buttons render correctly with show label false 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
@@ -36,8 +53,8 @@ exports[`Radio buttons render correctly with show label false 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -53,7 +70,7 @@ exports[`Radio buttons render correctly with show label false 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "backgroundColor": "#264AE5",
               "borderRadius": 4,
               "height": 8,
@@ -64,7 +81,7 @@ exports[`Radio buttons render correctly with show label false 1`] = `
       </View>
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -75,6 +92,23 @@ exports[`Radio buttons render correctly with show label false 1`] = `
       </Text>
     </View>
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -88,8 +122,8 @@ exports[`Radio buttons render correctly with show label false 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
@@ -102,8 +136,8 @@ exports[`Radio buttons render correctly with show label false 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -119,7 +153,7 @@ exports[`Radio buttons render correctly with show label false 1`] = `
       />
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -135,12 +169,12 @@ exports[`Radio buttons render correctly with show label false 1`] = `
 
 exports[`Radio buttons render correctly without label 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="radio-buttons-test"
 >
   <Text
     style={
-      Object {
+      {
         "color": "#0A1326",
         "fontSize": 12,
         "lineHeight": 18,
@@ -152,6 +186,23 @@ exports[`Radio buttons render correctly without label 1`] = `
     style={false}
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -165,8 +216,8 @@ exports[`Radio buttons render correctly without label 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
@@ -179,8 +230,8 @@ exports[`Radio buttons render correctly without label 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -196,7 +247,7 @@ exports[`Radio buttons render correctly without label 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "backgroundColor": "#264AE5",
               "borderRadius": 4,
               "height": 8,
@@ -207,7 +258,7 @@ exports[`Radio buttons render correctly without label 1`] = `
       </View>
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -218,6 +269,23 @@ exports[`Radio buttons render correctly without label 1`] = `
       </Text>
     </View>
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -231,8 +299,8 @@ exports[`Radio buttons render correctly without label 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
@@ -245,8 +313,8 @@ exports[`Radio buttons render correctly without label 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -262,7 +330,7 @@ exports[`Radio buttons render correctly without label 1`] = `
       />
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -278,12 +346,12 @@ exports[`Radio buttons render correctly without label 1`] = `
 
 exports[`Radio buttons render disabled radio buttons correctly 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="radio-buttons-test"
 >
   <Text
     style={
-      Object {
+      {
         "color": "#0A1326",
         "fontSize": 12,
         "lineHeight": 18,
@@ -297,6 +365,23 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
     style={false}
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -310,14 +395,14 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
           },
           false,
-          Object {
+          {
             "opacity": 0.5,
           },
         ]
@@ -326,8 +411,8 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -343,7 +428,7 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
       />
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -354,6 +439,23 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
       </Text>
     </View>
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -367,14 +469,14 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
           },
           false,
-          Object {
+          {
             "opacity": 0.5,
           },
         ]
@@ -383,8 +485,8 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -400,7 +502,7 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
       />
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -416,12 +518,12 @@ exports[`Radio buttons render disabled radio buttons correctly 1`] = `
 
 exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="radio-buttons-test"
 >
   <Text
     style={
-      Object {
+      {
         "color": "#0A1326",
         "fontSize": 12,
         "lineHeight": 18,
@@ -433,7 +535,7 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "flexDirection": "row",
         "flexWrap": "wrap",
@@ -441,6 +543,23 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -454,13 +573,13 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
           },
-          Object {
+          {
             "marginBottom": 0,
             "marginEnd": 8,
           },
@@ -471,8 +590,8 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -488,7 +607,7 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "backgroundColor": "#264AE5",
               "borderRadius": 4,
               "height": 8,
@@ -499,7 +618,7 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
       </View>
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -510,6 +629,23 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
       </Text>
     </View>
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -523,13 +659,13 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
           },
-          Object {
+          {
             "marginBottom": 0,
             "marginEnd": 8,
           },
@@ -540,8 +676,8 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -557,7 +693,7 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
       />
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -573,12 +709,12 @@ exports[`Radio buttons render horizontal radio buttons correctly 1`] = `
 
 exports[`Radio buttons render vertical radio buttons correctly 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="radio-buttons-test"
 >
   <Text
     style={
-      Object {
+      {
         "color": "#0A1326",
         "fontSize": 12,
         "lineHeight": 18,
@@ -592,6 +728,23 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
     style={false}
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -605,8 +758,8 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
@@ -619,8 +772,8 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -636,7 +789,7 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "backgroundColor": "#264AE5",
               "borderRadius": 4,
               "height": 8,
@@ -647,7 +800,7 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
       </View>
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -658,6 +811,23 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
       </Text>
     </View>
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -671,8 +841,8 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "marginBottom": 8,
@@ -685,8 +855,8 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "#CED0D3",
               "borderRadius": 8,
@@ -702,7 +872,7 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
       />
       <Text
         style={
-          Object {
+          {
             "color": "#0A1326",
             "fontSize": 12,
             "lineHeight": 18,
@@ -718,12 +888,12 @@ exports[`Radio buttons render vertical radio buttons correctly 1`] = `
 
 exports[`Radio buttons shows validations correctly 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="radio-buttons-test"
 >
   <Text
     style={
-      Object {
+      {
         "color": "#0A1326",
         "fontSize": 12,
         "lineHeight": 18,
@@ -738,7 +908,7 @@ exports[`Radio buttons shows validations correctly 1`] = `
   />
   <Text
     style={
-      Object {
+      {
         "color": "#E33F4E",
         "fontSize": 12,
       }
@@ -751,12 +921,12 @@ exports[`Radio buttons shows validations correctly 1`] = `
 
 exports[`Radio buttons works correctly without options 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="radio-buttons-test"
 >
   <Text
     style={
-      Object {
+      {
         "color": "#0A1326",
         "fontSize": 12,
         "lineHeight": 18,

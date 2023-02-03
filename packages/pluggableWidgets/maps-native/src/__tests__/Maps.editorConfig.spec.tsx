@@ -6,6 +6,7 @@ describe("Zoom level check", () => {
 
     beforeEach(() => {
         mapsPreviewProps = {
+            class: "",
             markers: [],
             dynamicMarkers: [],
             fitToMarkers: true,

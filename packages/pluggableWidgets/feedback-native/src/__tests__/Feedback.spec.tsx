@@ -5,10 +5,23 @@ import { FeedbackProps } from "../../typings/FeedbackProps";
 import { Feedback } from "../Feedback";
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { NativeImage } from "mendix";
-// import { sendToSprintr } from "../utils/sprintrApi";
 
-// jest.mock("../utils/sprintrApi");
-global.fetch = jest.fn();
+// @ts-ignore
+global.fetch = jest.fn(() =>
+    Promise.resolve({
+        ok: true
+    })
+);
+
+jest.mock("react-native/Libraries/Utilities/Platform", () => {
+    const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
+    Platform.OS = "ios";
+    return Platform;
+});
+
+jest.mock("react-native-view-shot", () => ({
+    captureScreen: jest.fn(() => Promise.resolve(""))
+}));
 
 describe("Feedback", () => {
     let defaultProps: FeedbackProps<FeedbackStyle>;
