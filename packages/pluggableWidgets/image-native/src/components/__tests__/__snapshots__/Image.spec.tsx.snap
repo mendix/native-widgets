@@ -72,9 +72,6 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
           },
         ],
         {
-          "opacity": 1,
-        },
-        {
           "flex": 0,
           "height": 9999,
           "width": 9999,
@@ -94,87 +91,9 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup
-      fill={
-        [
-          0,
-          -16777216,
-        ]
-      }
-      fillOpacity={1}
-      fillRule={1}
-      font={{}}
-      matrix={
-        [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-        ]
-      }
-      opacity={1}
-      originX={0}
-      originY={0}
-      propList={[]}
-      rotation={0}
-      scaleX={1}
-      scaleY={1}
-      skewX={0}
-      skewY={0}
-      stroke={null}
-      strokeDasharray={null}
-      strokeDashoffset={null}
-      strokeLinecap={0}
-      strokeLinejoin={0}
-      strokeMiterlimit={4}
-      strokeOpacity={1}
-      strokeWidth={1}
-      vectorEffect={0}
-      x={0}
-      y={0}
-    >
+    <RNSVGGroup>
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
       />
     </RNSVGGroup>
   </RNSVGSvgView>
@@ -359,9 +278,6 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
             },
           ],
           {
-            "opacity": 1,
-          },
-          {
             "flex": 0,
             "height": 9999,
             "width": 9999,
@@ -381,87 +297,9 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        font={{}}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
-      >
+      <RNSVGGroup>
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-          fill={
-            [
-              0,
-              -16777216,
-            ]
-          }
-          fillOpacity={1}
-          fillRule={1}
-          matrix={
-            [
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-            ]
-          }
-          opacity={1}
-          originX={0}
-          originY={0}
-          propList={[]}
-          rotation={0}
-          scaleX={1}
-          scaleY={1}
-          skewX={0}
-          skewY={0}
-          stroke={null}
-          strokeDasharray={null}
-          strokeDashoffset={null}
-          strokeLinecap={0}
-          strokeLinejoin={0}
-          strokeMiterlimit={4}
-          strokeOpacity={1}
-          strokeWidth={1}
-          vectorEffect={0}
-          x={0}
-          y={0}
         />
       </RNSVGGroup>
     </RNSVGSvgView>
@@ -591,9 +429,6 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
                 },
               ],
               {
-                "opacity": 1,
-              },
-              {
                 "flex": 0,
                 "height": 9999,
                 "width": 9999,
@@ -613,87 +448,9 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
           xmlnsXlink="http://www.w3.org/1999/xlink"
           y="0px"
         >
-          <RNSVGGroup
-            fill={
-              [
-                0,
-                -16777216,
-              ]
-            }
-            fillOpacity={1}
-            fillRule={1}
-            font={{}}
-            matrix={
-              [
-                1,
-                0,
-                0,
-                1,
-                0,
-                0,
-              ]
-            }
-            opacity={1}
-            originX={0}
-            originY={0}
-            propList={[]}
-            rotation={0}
-            scaleX={1}
-            scaleY={1}
-            skewX={0}
-            skewY={0}
-            stroke={null}
-            strokeDasharray={null}
-            strokeDashoffset={null}
-            strokeLinecap={0}
-            strokeLinejoin={0}
-            strokeMiterlimit={4}
-            strokeOpacity={1}
-            strokeWidth={1}
-            vectorEffect={0}
-            x={0}
-            y={0}
-          >
+          <RNSVGGroup>
             <RNSVGPath
               d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-              fill={
-                [
-                  0,
-                  -16777216,
-                ]
-              }
-              fillOpacity={1}
-              fillRule={1}
-              matrix={
-                [
-                  1,
-                  0,
-                  0,
-                  1,
-                  0,
-                  0,
-                ]
-              }
-              opacity={1}
-              originX={0}
-              originY={0}
-              propList={[]}
-              rotation={0}
-              scaleX={1}
-              scaleY={1}
-              skewX={0}
-              skewY={0}
-              stroke={null}
-              strokeDasharray={null}
-              strokeDashoffset={null}
-              strokeLinecap={0}
-              strokeLinejoin={0}
-              strokeMiterlimit={4}
-              strokeOpacity={1}
-              strokeWidth={1}
-              vectorEffect={0}
-              x={0}
-              y={0}
             />
           </RNSVGGroup>
         </RNSVGSvgView>
@@ -775,9 +532,6 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
           },
         ],
         {
-          "opacity": 1,
-        },
-        {
           "flex": 0,
           "height": 100,
           "width": 100,
@@ -797,87 +551,9 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup
-      fill={
-        [
-          0,
-          -16777216,
-        ]
-      }
-      fillOpacity={1}
-      fillRule={1}
-      font={{}}
-      matrix={
-        [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-        ]
-      }
-      opacity={1}
-      originX={0}
-      originY={0}
-      propList={[]}
-      rotation={0}
-      scaleX={1}
-      scaleY={1}
-      skewX={0}
-      skewY={0}
-      stroke={null}
-      strokeDasharray={null}
-      strokeDashoffset={null}
-      strokeLinecap={0}
-      strokeLinejoin={0}
-      strokeMiterlimit={4}
-      strokeOpacity={1}
-      strokeWidth={1}
-      vectorEffect={0}
-      x={0}
-      y={0}
-    >
+    <RNSVGGroup>
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
       />
     </RNSVGGroup>
   </RNSVGSvgView>
@@ -956,9 +632,6 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
           },
         ],
         {
-          "opacity": 1,
-        },
-        {
           "flex": 0,
           "height": 100,
           "width": 100,
@@ -978,87 +651,9 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup
-      fill={
-        [
-          0,
-          -16777216,
-        ]
-      }
-      fillOpacity={1}
-      fillRule={1}
-      font={{}}
-      matrix={
-        [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-        ]
-      }
-      opacity={1}
-      originX={0}
-      originY={0}
-      propList={[]}
-      rotation={0}
-      scaleX={1}
-      scaleY={1}
-      skewX={0}
-      skewY={0}
-      stroke={null}
-      strokeDasharray={null}
-      strokeDashoffset={null}
-      strokeLinecap={0}
-      strokeLinejoin={0}
-      strokeMiterlimit={4}
-      strokeOpacity={1}
-      strokeWidth={1}
-      vectorEffect={0}
-      x={0}
-      y={0}
-    >
+    <RNSVGGroup>
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
       />
     </RNSVGGroup>
   </RNSVGSvgView>
@@ -1860,6 +1455,7 @@ exports[`Widget Icon type: icon/glyph renders the structure with an icon and def
   >
     <Text
       allowFontScaling={false}
+      selectable={false}
       style={
         [
           {
@@ -2370,9 +1966,6 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
           },
         ],
         {
-          "opacity": 1,
-        },
-        {
           "flex": 0,
           "height": 15,
           "width": 15,
@@ -2396,87 +1989,9 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup
-      fill={
-        [
-          0,
-          -16777216,
-        ]
-      }
-      fillOpacity={1}
-      fillRule={1}
-      font={{}}
-      matrix={
-        [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-        ]
-      }
-      opacity={1}
-      originX={0}
-      originY={0}
-      propList={[]}
-      rotation={0}
-      scaleX={1}
-      scaleY={1}
-      skewX={0}
-      skewY={0}
-      stroke={null}
-      strokeDasharray={null}
-      strokeDashoffset={null}
-      strokeLinecap={0}
-      strokeLinejoin={0}
-      strokeMiterlimit={4}
-      strokeOpacity={1}
-      strokeWidth={1}
-      vectorEffect={0}
-      x={0}
-      y={0}
-    >
+    <RNSVGGroup>
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
       />
     </RNSVGGroup>
   </RNSVGSvgView>
@@ -2541,9 +2056,6 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
             },
           ],
           {
-            "opacity": 1,
-          },
-          {
             "flex": 0,
             "height": 15,
             "width": 15,
@@ -2567,87 +2079,9 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        font={{}}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
-      >
+      <RNSVGGroup>
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-          fill={
-            [
-              0,
-              -16777216,
-            ]
-          }
-          fillOpacity={1}
-          fillRule={1}
-          matrix={
-            [
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-            ]
-          }
-          opacity={1}
-          originX={0}
-          originY={0}
-          propList={[]}
-          rotation={0}
-          scaleX={1}
-          scaleY={1}
-          skewX={0}
-          skewY={0}
-          stroke={null}
-          strokeDasharray={null}
-          strokeDashoffset={null}
-          strokeLinecap={0}
-          strokeLinejoin={0}
-          strokeMiterlimit={4}
-          strokeOpacity={1}
-          strokeWidth={1}
-          vectorEffect={0}
-          x={0}
-          y={0}
         />
       </RNSVGGroup>
     </RNSVGSvgView>
@@ -2716,9 +2150,6 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
             },
           ],
           {
-            "opacity": 1,
-          },
-          {
             "flex": 0,
             "height": 15,
             "width": 15,
@@ -2742,87 +2173,9 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        font={{}}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
-      >
+      <RNSVGGroup>
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-          fill={
-            [
-              0,
-              -16777216,
-            ]
-          }
-          fillOpacity={1}
-          fillRule={1}
-          matrix={
-            [
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-            ]
-          }
-          opacity={1}
-          originX={0}
-          originY={0}
-          propList={[]}
-          rotation={0}
-          scaleX={1}
-          scaleY={1}
-          skewX={0}
-          skewY={0}
-          stroke={null}
-          strokeDasharray={null}
-          strokeDashoffset={null}
-          strokeLinecap={0}
-          strokeLinejoin={0}
-          strokeMiterlimit={4}
-          strokeOpacity={1}
-          strokeWidth={1}
-          vectorEffect={0}
-          x={0}
-          y={0}
         />
       </RNSVGGroup>
     </RNSVGSvgView>
@@ -2891,9 +2244,6 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
             },
           ],
           {
-            "opacity": 1,
-          },
-          {
             "flex": 0,
             "height": 15,
             "width": 15,
@@ -2917,87 +2267,9 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        font={{}}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
-      >
+      <RNSVGGroup>
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-          fill={
-            [
-              0,
-              -16777216,
-            ]
-          }
-          fillOpacity={1}
-          fillRule={1}
-          matrix={
-            [
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-            ]
-          }
-          opacity={1}
-          originX={0}
-          originY={0}
-          propList={[]}
-          rotation={0}
-          scaleX={1}
-          scaleY={1}
-          skewX={0}
-          skewY={0}
-          stroke={null}
-          strokeDasharray={null}
-          strokeDashoffset={null}
-          strokeLinecap={0}
-          strokeLinejoin={0}
-          strokeMiterlimit={4}
-          strokeOpacity={1}
-          strokeWidth={1}
-          vectorEffect={0}
-          x={0}
-          y={0}
         />
       </RNSVGGroup>
     </RNSVGSvgView>
@@ -3059,6 +2331,8 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
   >
     <RNSVGSvgView
       align="xMidYMid"
+      bbHeight="100%"
+      bbWidth="100%"
       color={-16777216}
       focusable={false}
       id="Layer_1"
@@ -3084,9 +2358,10 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
             },
           ],
           {
-            "opacity": 1,
+            "flex": 0,
+            "height": "100%",
+            "width": "100%",
           },
-          null,
         ]
       }
       testID="Image1$SvgXml"
@@ -3105,87 +2380,9 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        font={{}}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
-      >
+      <RNSVGGroup>
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-          fill={
-            [
-              0,
-              -16777216,
-            ]
-          }
-          fillOpacity={1}
-          fillRule={1}
-          matrix={
-            [
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-            ]
-          }
-          opacity={1}
-          originX={0}
-          originY={0}
-          propList={[]}
-          rotation={0}
-          scaleX={1}
-          scaleY={1}
-          skewX={0}
-          skewY={0}
-          stroke={null}
-          strokeDasharray={null}
-          strokeDashoffset={null}
-          strokeLinecap={0}
-          strokeLinejoin={0}
-          strokeMiterlimit={4}
-          strokeOpacity={1}
-          strokeWidth={1}
-          vectorEffect={0}
-          x={0}
-          y={0}
         />
       </RNSVGGroup>
     </RNSVGSvgView>
@@ -3315,9 +2512,6 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
                 },
               ],
               {
-                "opacity": 1,
-              },
-              {
                 "flex": 0,
                 "height": 15,
                 "width": 15,
@@ -3341,87 +2535,9 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
           xmlnsXlink="http://www.w3.org/1999/xlink"
           y="0px"
         >
-          <RNSVGGroup
-            fill={
-              [
-                0,
-                -16777216,
-              ]
-            }
-            fillOpacity={1}
-            fillRule={1}
-            font={{}}
-            matrix={
-              [
-                1,
-                0,
-                0,
-                1,
-                0,
-                0,
-              ]
-            }
-            opacity={1}
-            originX={0}
-            originY={0}
-            propList={[]}
-            rotation={0}
-            scaleX={1}
-            scaleY={1}
-            skewX={0}
-            skewY={0}
-            stroke={null}
-            strokeDasharray={null}
-            strokeDashoffset={null}
-            strokeLinecap={0}
-            strokeLinejoin={0}
-            strokeMiterlimit={4}
-            strokeOpacity={1}
-            strokeWidth={1}
-            vectorEffect={0}
-            x={0}
-            y={0}
-          >
+          <RNSVGGroup>
             <RNSVGPath
               d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-              fill={
-                [
-                  0,
-                  -16777216,
-                ]
-              }
-              fillOpacity={1}
-              fillRule={1}
-              matrix={
-                [
-                  1,
-                  0,
-                  0,
-                  1,
-                  0,
-                  0,
-                ]
-              }
-              opacity={1}
-              originX={0}
-              originY={0}
-              propList={[]}
-              rotation={0}
-              scaleX={1}
-              scaleY={1}
-              skewX={0}
-              skewY={0}
-              stroke={null}
-              strokeDasharray={null}
-              strokeDashoffset={null}
-              strokeLinecap={0}
-              strokeLinejoin={0}
-              strokeMiterlimit={4}
-              strokeOpacity={1}
-              strokeWidth={1}
-              vectorEffect={0}
-              x={0}
-              y={0}
             />
           </RNSVGGroup>
         </RNSVGSvgView>
@@ -3503,9 +2619,6 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
           },
         ],
         {
-          "opacity": 1,
-        },
-        {
           "flex": 0,
           "height": 15,
           "width": 15,
@@ -3529,87 +2642,9 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup
-      fill={
-        [
-          0,
-          -16777216,
-        ]
-      }
-      fillOpacity={1}
-      fillRule={1}
-      font={{}}
-      matrix={
-        [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-        ]
-      }
-      opacity={1}
-      originX={0}
-      originY={0}
-      propList={[]}
-      rotation={0}
-      scaleX={1}
-      scaleY={1}
-      skewX={0}
-      skewY={0}
-      stroke={null}
-      strokeDasharray={null}
-      strokeDashoffset={null}
-      strokeLinecap={0}
-      strokeLinejoin={0}
-      strokeMiterlimit={4}
-      strokeOpacity={1}
-      strokeWidth={1}
-      vectorEffect={0}
-      x={0}
-      y={0}
-    >
+    <RNSVGGroup>
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
       />
     </RNSVGGroup>
   </RNSVGSvgView>
@@ -3688,9 +2723,6 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
           },
         ],
         {
-          "opacity": 1,
-        },
-        {
           "flex": 0,
           "height": 15,
           "width": 15,
@@ -3714,87 +2746,9 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup
-      fill={
-        [
-          0,
-          -16777216,
-        ]
-      }
-      fillOpacity={1}
-      fillRule={1}
-      font={{}}
-      matrix={
-        [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-        ]
-      }
-      opacity={1}
-      originX={0}
-      originY={0}
-      propList={[]}
-      rotation={0}
-      scaleX={1}
-      scaleY={1}
-      skewX={0}
-      skewY={0}
-      stroke={null}
-      strokeDasharray={null}
-      strokeDashoffset={null}
-      strokeLinecap={0}
-      strokeLinejoin={0}
-      strokeMiterlimit={4}
-      strokeOpacity={1}
-      strokeWidth={1}
-      vectorEffect={0}
-      x={0}
-      y={0}
-    >
+    <RNSVGGroup>
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-        fill={
-          [
-            0,
-            -16777216,
-          ]
-        }
-        fillOpacity={1}
-        fillRule={1}
-        matrix={
-          [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0,
-          ]
-        }
-        opacity={1}
-        originX={0}
-        originY={0}
-        propList={[]}
-        rotation={0}
-        scaleX={1}
-        scaleY={1}
-        skewX={0}
-        skewY={0}
-        stroke={null}
-        strokeDasharray={null}
-        strokeDashoffset={null}
-        strokeLinecap={0}
-        strokeLinejoin={0}
-        strokeMiterlimit={4}
-        strokeOpacity={1}
-        strokeWidth={1}
-        vectorEffect={0}
-        x={0}
-        y={0}
       />
     </RNSVGGroup>
   </RNSVGSvgView>

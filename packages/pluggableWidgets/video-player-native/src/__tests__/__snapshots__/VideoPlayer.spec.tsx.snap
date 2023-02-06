@@ -106,6 +106,7 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           [
             {
@@ -301,6 +302,7 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           [
             {
@@ -431,6 +433,7 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           [
             {
@@ -560,6 +563,7 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           [
             {
@@ -693,6 +697,7 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
     >
       <Text
         allowFontScaling={false}
+        selectable={false}
         style={
           [
             {
