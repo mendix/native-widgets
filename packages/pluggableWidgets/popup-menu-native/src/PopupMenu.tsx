@@ -1,4 +1,4 @@
-import { ComponentType, createElement, ReactElement, useCallback, useRef, Fragment } from "react";
+import { ComponentType, createElement, ReactElement, Fragment, useState } from "react";
 import { PopupMenuProps } from "../typings/PopupMenuProps";
 import { PopupMenuStyle } from "./ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
@@ -13,7 +13,7 @@ import {
     View
 } from "react-native";
 import { ActionValue } from "mendix";
-import Menu, { MenuDivider, MenuItem } from "react-native-material-menu";
+import { Menu, MenuDivider, MenuItem } from "react-native-material-menu";
 
 const TouchableItem: ComponentType<TouchableNativeFeedbackProps | TouchableHighlightProps> =
     Platform.OS === "android" ? TouchableNativeFeedback : TouchableHighlight;
@@ -23,21 +23,17 @@ const TouchableButton: ComponentType<TouchableNativeFeedbackProps | TouchableOpa
 
 export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
     const styles = StyleSheet.flatten(props.style);
+    const [visible, setVisible] = useState(false);
 
-    const menuRef = useRef<Menu | null>(null);
-    const showMenu = useCallback(() => {
-        menuRef.current?.show();
-    }, [menuRef.current]);
-    const handlePress = useCallback(
-        (action?: ActionValue) => {
-            menuRef.current?.hide();
-            // Set timeout needed since modal closes the alerts which might be shown in action
-            setTimeout(() => {
-                executeAction(action);
-            }, 500);
-        },
-        [menuRef.current]
-    );
+    const showMenu = () => setVisible(true);
+
+    const handlePress = (action?: ActionValue) => {
+        setVisible(false);
+        // Set timeout needed since modal closes the alerts which might be shown in action
+        setTimeout(() => {
+            executeAction(action);
+        }, 500);
+    };
 
     let menuOptions: ReactElement[];
     if (props.renderMode === "basic") {
@@ -50,9 +46,13 @@ export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
                     key={index}
                     onPress={() => handlePress(item.action)}
                     textStyle={itemStyle}
-                    ellipsizeMode={styles.basic?.itemStyle?.ellipsizeMode as any}
-                    style={styles.basic?.container as any}
-                    {...getRippleColor(styles.basic?.itemStyle?.rippleColor)}
+                    style={({ pressed }) => ({
+                        ...styles.basic?.container,
+                        ...(pressed ? { backgroundColor: styles.basic?.itemStyle?.rippleColor } : {})
+                    })}
+                    {...(Platform.OS === "android" && styles.basic?.itemStyle?.rippleColor
+                        ? { android_ripple: { color: styles.basic.itemStyle.rippleColor, borderless: false } }
+                        : undefined)}
                     testID={`${props.name}_basic-item`}
                 >
                     {item.caption}
@@ -79,10 +79,10 @@ export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
 
     return (
         <Menu
+            visible={visible}
             animationDuration={150}
-            ref={menuRef}
             style={styles?.container as any}
-            button={
+            anchor={
                 <TouchableButton onPress={showMenu} testID={`${props.name}_trigger`}>
                     <View pointerEvents="box-only" style={styles.buttonContainer}>
                         {props.menuTriggerer}

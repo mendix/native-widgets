@@ -25,11 +25,10 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-material-menu": "~1.2.0"
+    "react-native-material-menu": "^2.0.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "@types/react-native-material-menu": "^1.0.6",
     "detox": "^19.7.1",
     "eslint": "^7.20.0"
   }

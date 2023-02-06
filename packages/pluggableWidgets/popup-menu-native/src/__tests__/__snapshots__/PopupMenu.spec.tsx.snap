@@ -4,52 +4,48 @@ exports[`Popup menu renders 1`] = `
 <View
   collapsable={false}
 >
-  <View>
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
-      accessible={true}
-      focusable={true}
-      nativeBackgroundAndroid={
-        {
-          "attribute": "selectableItemBackground",
-          "rippleRadius": undefined,
-          "type": "ThemeAttrAndroid",
-        }
+    }
+    accessible={true}
+    focusable={true}
+    nativeBackgroundAndroid={
+      {
+        "attribute": "selectableItemBackground",
+        "rippleRadius": undefined,
+        "type": "ThemeAttrAndroid",
       }
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      pointerEvents="box-only"
-      testID="popup-menu_trigger"
-    >
-      <Text>
-        Menu Triggerer
-      </Text>
-    </View>
+    }
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    pointerEvents="box-only"
+    testID="popup-menu_trigger"
+  >
+    <Text>
+      Menu Triggerer
+    </Text>
   </View>
-  <Modal
-    hardwareAccelerated={false}
-    onDismiss={[Function]}
+  <View
     onRequestClose={[Function]}
     supportedOrientations={
       [
@@ -60,8 +56,326 @@ exports[`Popup menu renders 1`] = `
         "landscape-right",
       ]
     }
+    testID="modal"
     transparent={true}
     visible={false}
-  />
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessible={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        onLayout={[Function]}
+        style={
+          {
+            "backgroundColor": "white",
+            "borderRadius": 4,
+            "elevation": 8,
+            "left": 8,
+            "opacity": 0,
+            "position": "absolute",
+            "top": 8,
+            "transform": [],
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "overflow": "hidden",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "borderRadius": undefined,
+                "overflow": "hidden",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "backgroundColor": undefined,
+                }
+              }
+              testID="popup-menu_basic-item"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "height": 48,
+                      "justifyContent": "center",
+                      "maxWidth": 248,
+                      "minWidth": 124,
+                    },
+                    [Function],
+                  ]
+                }
+              >
+                <Text
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "fontSize": 14,
+                        "fontWeight": "400",
+                        "paddingHorizontal": 16,
+                        "textAlign": "left",
+                      },
+                      false,
+                      undefined,
+                    ]
+                  }
+                >
+                  yolo
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "borderBottomWidth": 0.5,
+                    "flex": 1,
+                  },
+                  {
+                    "borderBottomColor": "rgba(0,0,0,0.12)",
+                  },
+                ]
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Popup menu renders custom items 1`] = `
+<View
+  collapsable={false}
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    nativeBackgroundAndroid={
+      {
+        "attribute": "selectableItemBackground",
+        "rippleRadius": undefined,
+        "type": "ThemeAttrAndroid",
+      }
+    }
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    pointerEvents="box-only"
+    testID="popup-menu_trigger"
+  >
+    <Text>
+      Menu Triggerer
+    </Text>
+  </View>
+  <View
+    onRequestClose={[Function]}
+    supportedOrientations={
+      [
+        "portrait",
+        "portrait-upside-down",
+        "landscape",
+        "landscape-left",
+        "landscape-right",
+      ]
+    }
+    testID="modal"
+    transparent={true}
+    visible={false}
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessible={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        onLayout={[Function]}
+        style={
+          {
+            "backgroundColor": "white",
+            "borderRadius": 4,
+            "elevation": 8,
+            "left": 8,
+            "opacity": 0,
+            "position": "absolute",
+            "top": 8,
+            "transform": [],
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "overflow": "hidden",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "borderRadius": undefined,
+                "overflow": "hidden",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              nativeBackgroundAndroid={
+                {
+                  "attribute": "selectableItemBackground",
+                  "rippleRadius": undefined,
+                  "type": "ThemeAttrAndroid",
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              testID="popup-menu_custom-item"
+            >
+              <Text>
+                Yolo
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
 </View>
 `;
