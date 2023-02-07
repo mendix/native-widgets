@@ -11,6 +11,7 @@ export interface RepeaterProps<Style> {
     style: Style[];
     datasource: ListValue;
     content: ListWidgetValue;
+    contentEmpty?: ReactNode;
 }
 
 export interface RepeaterPreviewProps {
@@ -25,4 +26,5 @@ export interface RepeaterPreviewProps {
     renderMode?: "design" | "xray" | "structure";
     datasource: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    contentEmpty: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
 }
