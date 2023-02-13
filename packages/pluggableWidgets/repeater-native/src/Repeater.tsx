@@ -10,13 +10,13 @@ export function Repeater(props: RepeaterProps<RepeaterStyle>): ReactElement {
     if (props.datasource.status === ValueStatus.Loading || !props.datasource.items) {
         return <View />;
     }
-    const contentEmpty = props.datasource.items.length === 0 ? props.contentEmpty : null;
+    const emptyPlaceholder = props.datasource.items.length === 0 ? props.emptyPlaceholder : null;
     return (
         <View style={styles.container}>
             {props.datasource.items.map((item, index) => (
                 <Fragment key={`item_${index}`}>{props.content.get(item)}</Fragment>
             ))}
-            {contentEmpty}
+            {emptyPlaceholder}
         </View>
     );
 }
