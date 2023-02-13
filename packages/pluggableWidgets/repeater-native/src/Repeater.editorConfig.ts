@@ -35,8 +35,8 @@ export function getPreview(values: RepeaterPreviewProps, isDarkMode: boolean): S
                 children: [
                     {
                         type: "DropZone",
-                        placeholder: "Content when Empty",
-                        property: values.contentEmpty
+                        placeholder: "No items placeholder: Place widgets here",
+                        property: values.emptyPlaceholder
                     }
                 ]
             }
