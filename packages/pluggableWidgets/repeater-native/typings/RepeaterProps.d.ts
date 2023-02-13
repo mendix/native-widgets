@@ -11,7 +11,7 @@ export interface RepeaterProps<Style> {
     style: Style[];
     datasource: ListValue;
     content: ListWidgetValue;
-    contentEmpty?: ReactNode;
+    emptyPlaceholder?: ReactNode;
 }
 
 export interface RepeaterPreviewProps {
@@ -27,5 +27,5 @@ export interface RepeaterPreviewProps {
     translate: (text: string) => string;
     datasource: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
-    contentEmpty: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    emptyPlaceholder: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
 }

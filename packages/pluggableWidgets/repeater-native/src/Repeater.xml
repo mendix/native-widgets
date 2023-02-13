@@ -15,8 +15,8 @@
                     <caption>Content</caption>
                     <description/>
                 </property>                
-                <property key="contentEmpty" type="widgets" required="false">
-                    <caption>Content empty</caption>
+                <property key="emptyPlaceholder" type="widgets" required="false">
+                    <caption>Empty placeholder</caption>
                     <description/>
                 </property>
             </propertyGroup>
