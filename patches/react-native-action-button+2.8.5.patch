@@ -1,0 +1,21 @@
+diff --git a/node_modules/react-native-action-button/ActionButton.js b/node_modules/react-native-action-button/ActionButton.js
+index b8306c2efb2460d4aa110e83d2e5410588f280de..1a25a8e3ee766581ec23388f15ce244791e683be 100644
+--- a/node_modules/react-native-action-button/ActionButton.js
++++ b/node_modules/react-native-action-button/ActionButton.js
+@@ -16,6 +16,7 @@ import {
+   touchableBackground,
+   DEFAULT_ACTIVE_OPACITY
+ } from "./shared";
++import { TextPropTypes } from 'deprecated-react-native-prop-types'
+
+ export default class ActionButton extends Component {
+   constructor(props) {
+@@ -363,7 +364,7 @@ ActionButton.propTypes = {
+   bgColor: PropTypes.string,
+   bgOpacity: PropTypes.number,
+   buttonColor: PropTypes.string,
+-  buttonTextStyle: Text.propTypes.style,
++  buttonTextStyle: TextPropTypes.style(),
+   buttonText: PropTypes.string,
+
+   offsetX: PropTypes.number,

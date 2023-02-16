@@ -87,12 +87,12 @@
     "node": ">=16"
   },
   "resolutions": {
-    "@mendix/pluggable-widgets-tools": "/Users/Diego.Antonelli/Desktop/projects/widgets-tools/packages/pluggable-widgets-tools/mendix-pluggable-widgets-tools-9.23.2.tgz",
+    "@mendix/pluggable-widgets-tools": "/Users/Ahmed.Elsayed_1/Desktop/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz",
     "@types/react": "^18",
     "@types/react-native": "~0.71.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.2",
+    "react-native": "0.70.7",
     "typescript": "^4.7.0"
   },
   "packageManager": "yarn@3.2.4"
