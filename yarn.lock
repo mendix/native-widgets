@@ -2662,14 +2662,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ptomasroos/react-native-multi-slider@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@ptomasroos/react-native-multi-slider@npm:1.0.0"
+"@ptomasroos/react-native-multi-slider@npm:*, @ptomasroos/react-native-multi-slider@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@ptomasroos/react-native-multi-slider@npm:2.2.2"
   peerDependencies:
-    prop-types: "*"
     react: "*"
     react-native: "*"
-  checksum: f71a7c04d0e100307a029ad7dbd5fb39f9fc6aa7949ad3b7ff03cfa8b5f391a5e3520dd9910930ea011fc4e206296f56042e3ab8473132afcade20c87d25bce7
+  checksum: f9e2263b4283cdd0011ad3c2e1ea6d70afe2c2f865a52c35e0f6c4fd948114762105a11f364e68da87de782490bfa1473540c6227e2e0033555e84827086464c
   languageName: node
   linkType: hard
 
@@ -2957,10 +2956,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/normalize-color@npm:*, @react-native/normalize-color@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@react-native/normalize-color@npm:2.1.0"
-  checksum: 8ccbd40b3c7629f1dc97b3e9aadd95fd3507fcf2e37535a6299a70436ab891c34cbdc4240b07380553d6e85dd909e23d5773b5be1da2906b026312e0b0768838
+"@react-native/normalize-color@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@react-native/normalize-color@npm:1.0.0"
+  checksum: 22f1af279576ffd2609dc8362054dba2a7553d055f762f6dc7f6c9082c0e83c10260a99cb046d240fecde27a3858525a53d337f8c23d549b52f714dc599a1961
   languageName: node
   linkType: hard
 
@@ -2971,10 +2970,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/polyfills@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@react-native/polyfills@npm:2.0.0"
-  checksum: 6f2a0d1c8c4df4f20e8adac92fcfaec0fb536d097f96fbfd56bdb21b0a3afc4157f82d084b6851093255f58d350818f7ad28098818d584f654533eeb9cba2656
+"@react-native/polyfills@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@react-native/polyfills@npm:1.0.0"
+  checksum: b68f722b2325315d41cd3edfbc6f4eb7c6ec355e52aa8d781a3da6289e302f47f3b9e11deb69f689395e70923eb5b8202203e9e25a714c30c30ba2392c850db3
   languageName: node
   linkType: hard
 
@@ -3464,6 +3463,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/geojson@npm:^7946.0.7":
+  version: 7946.0.10
+  resolution: "@types/geojson@npm:7946.0.10"
+  checksum: 12c407c2dc93ecb26c08af533ee732f1506a9b29456616ba7ba1d525df96206c28ddf44a528f6a5415d7d22893e9d967420940a9c095ee5e539c1eba5fefc1f4
+  languageName: node
+  linkType: hard
+
 "@types/glob@npm:*":
   version: 8.0.0
   resolution: "@types/glob@npm:8.0.0"
@@ -3657,13 +3663,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ptomasroos__react-native-multi-slider@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "@types/ptomasroos__react-native-multi-slider@npm:0.0.1"
+"@types/ptomasroos__react-native-multi-slider@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@types/ptomasroos__react-native-multi-slider@npm:2.2.1"
   dependencies:
-    "@types/react": "*"
-    "@types/react-native": "*"
-  checksum: 9c04a2168bf2710348d04b8e2477a597f61c69c292008d5f18d9fdee89331f88369cf8cd9ae228deb3387b1d3d822ab830b4334cb9b9e03d5bc48616c40df3b8
+    "@ptomasroos/react-native-multi-slider": "*"
+  checksum: 9c8275b04a96cb1fd29c82b385a5ce91a7863a53e84b1606175883548cf8aebfbe4aa8e2463d3f1a46e66a3822b6b8b6437fb6b5637440af1f0f890ed757e668
   languageName: node
   linkType: hard
 
@@ -3689,16 +3694,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: a24a16768dc960bf4b6cc4f20e020956f143c1ea463ecdeac593077c48845f40bbb29d9f89d0e9bb5ba9abef5cb95471e3191b08716bfa481eb7dcec4836c40f
-  languageName: node
-  linkType: hard
-
-"@types/react-native-button@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@types/react-native-button@npm:3.0.1"
-  dependencies:
-    "@types/react": "*"
-    "@types/react-native": "*"
-  checksum: bf3bf7b4ac199165a5efd4964c7ce51ffffed4c1dbc08962b81600ba962938a7b5f732c4c09fe59bd3ae93ee209580e3b7965db250f93bf9d8682a719084bc76
   languageName: node
   linkType: hard
 
@@ -5413,6 +5408,7 @@ __metadata:
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
     "@types/react-native-snap-carousel": ^3.7.4
+    deprecated-react-native-prop-types: ^4.0.0
     detox: ^19.7.1
     eslint: ^7.20.0
     react-native-snap-carousel: ^3.9.1
@@ -5744,6 +5740,7 @@ __metadata:
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
     "@types/tinycolor2": ^1.4.1
+    deprecated-react-native-prop-types: ^4.0.0
     detox: ^19.7.1
     eslint: ^7.20.0
     react-native-color: ^0.0.10
@@ -11215,7 +11212,7 @@ __metadata:
     eslint: ^7.20.0
     prop-types: ^15.7.2
     react-native-geocoder: 0.5.0
-    react-native-maps: 0.27.0
+    react-native-maps: 0.31.1
   languageName: unknown
   linkType: soft
 
@@ -13947,7 +13944,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15.5.10, prop-types@npm:^15.5.6, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.5.6, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.0, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -14131,8 +14128,8 @@ __metadata:
     "@mendix/piw-native-utils-internal": "*"
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
-    "@ptomasroos/react-native-multi-slider": ^1.0.0
-    "@types/ptomasroos__react-native-multi-slider": ^0.0.1
+    "@ptomasroos/react-native-multi-slider": ^2.2.2
+    "@types/ptomasroos__react-native-multi-slider": ^2.2.1
     detox: ^19.7.1
     eslint: ^7.20.0
     prop-types: ^15.7.2
@@ -14146,12 +14143,11 @@ __metadata:
     "@mendix/piw-native-utils-internal": "*"
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
-    "@types/react-native-button": ^3.0.1
     "@types/react-native-star-rating": ^1.1.2
     detox: ^19.7.1
     eslint: ^7.20.0
     react-native-animatable: ^1.3.2
-    react-native-button: ^3.0.1
+    react-native-button: ^2.3.0
     react-native-vector-icons: 9.1.0
   languageName: unknown
   linkType: soft
@@ -14299,14 +14295,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-button@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "react-native-button@npm:3.0.1"
+"react-native-button@npm:^2.3.0":
+  version: 2.4.0
+  resolution: "react-native-button@npm:2.4.0"
   dependencies:
     prop-types: ^15.5.10
   peerDependencies:
     react-native: "*"
-  checksum: 3e8ebadfb8a3767c9fe410498369fc898b4878e807e5b6278453b1447fd9d8f3a28442d6b8f50315eade68b79cb8c192105d948b7ffe9229a9f4e717aabbdab0
+  checksum: 41c8e74deb8be8162ce401091ae7c9ce44e3adfe60574f12de16fb3a503098712c7d4e2e3e6399e3e20468d7bea616051ae091f8ee083356fd680f65644d8471
   languageName: node
   linkType: hard
 
@@ -14455,14 +14451,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-maps@npm:0.27.0":
-  version: 0.27.0
-  resolution: "react-native-maps@npm:0.27.0"
+"react-native-maps@npm:0.31.1":
+  version: 0.31.1
+  resolution: "react-native-maps@npm:0.31.1"
+  dependencies:
+    "@types/geojson": ^7946.0.7
+    deprecated-react-native-prop-types: ^2.3.0
   peerDependencies:
-    prop-types: ^15.0 || ^16.0
-    react: ">= 16.0 || < 17.0"
+    react: ">= 16.0"
     react-native: ">= 0.51"
-  checksum: a8e11452d03ea90cf155166145ee6ed867546a5b78c329e72752552c265a7eb03ee8fac0ff45882ee7ed23afd968fc1750c7c6f9bfeff8daa627e2ed708bdbb4
+    react-native-web: ">= 0.11"
+  peerDependenciesMeta:
+    react-native-web:
+      optional: true
+  checksum: 0afe7ca5c3b017bcc84503114260abf7db71c28f1fa4c11495ffa01ada33d37a84b60f54ab80ba206bd967caa1003c4245639c877a7cef485c96b98778666f40
   languageName: node
   linkType: hard
 
@@ -14652,14 +14654,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-video@npm:5.2.0":
-  version: 5.2.0
-  resolution: "react-native-video@npm:5.2.0"
+"react-native-video@npm:5.2.1":
+  version: 5.2.1
+  resolution: "react-native-video@npm:5.2.1"
   dependencies:
+    deprecated-react-native-prop-types: ^2.2.0
     keymirror: ^0.1.1
     prop-types: ^15.7.2
     shaka-player: ^2.5.9
-  checksum: 6182b8c880620bc16ef1871634a92e563542615a27db40d732faca72762e6bd2539cdedaf473d447b336bb40168461d51dc34995d9876ee4913ace76b890b59d
+  checksum: efbc09a47e3080dde2986a3a1ea3f32b815317f99013c015522fd2e6ed937ed02244761f4dd5c8f5bf0260bf8a1d518315025cae499c16a6c3b1cd0fa6935d2d
   languageName: node
   linkType: hard
 
@@ -15928,10 +15931,11 @@ __metadata:
     "@mendix/piw-native-utils-internal": "*"
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
-    "@ptomasroos/react-native-multi-slider": ^1.0.0
-    "@types/ptomasroos__react-native-multi-slider": ^0.0.1
+    "@ptomasroos/react-native-multi-slider": ^2.2.2
+    "@types/ptomasroos__react-native-multi-slider": ^2.2.1
     detox: ^19.7.1
     eslint: ^7.20.0
+    prop-types: ^15.7.2
   languageName: unknown
   linkType: soft
 
@@ -17816,10 +17820,11 @@ __metadata:
     "@mendix/piw-utils-internal": 1.0.0
     "@mendix/pluggable-widgets-tools": ^9.0.0
     "@types/react-native-video": ^5.0.4
+    deprecated-react-native-prop-types: ^4.0.0
     eslint: ^7.20.0
     react-native-system-navigation-bar: 1.0.2
     react-native-vector-icons: 9.1.0
-    react-native-video: 5.2.0
+    react-native-video: 5.2.1
   languageName: unknown
   linkType: soft
 

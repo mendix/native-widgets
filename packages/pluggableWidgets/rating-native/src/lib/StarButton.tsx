@@ -1,10 +1,18 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
 // has an outdated dependency (RN-vector-icons) that we now managed here in this widget.
 import { Component, createElement } from "react";
-import { GestureResponderEvent, Image, ImageStyle, ImageURISource, StyleSheet } from "react-native";
+import {
+    GestureResponderEvent,
+    Image,
+    ImageStyle,
+    ImageURISource,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+    Platform
+} from "react-native";
 import type { StarRatingProps } from "react-native-star-rating";
 
-import Button from "react-native-button";
 import EntypoIcons from "react-native-vector-icons/Entypo";
 import EvilIconsIcons from "react-native-vector-icons/EvilIcons";
 import FeatherIcons from "react-native-vector-icons/Feather";
@@ -109,14 +117,11 @@ class StarButton extends Component<Props> {
         const { activeOpacity, buttonStyle, disabled } = this.props;
 
         return (
-            <Button
-                activeOpacity={activeOpacity}
-                disabled={disabled}
-                containerStyle={buttonStyle}
-                onPress={this.onButtonPress}
-            >
-                {this.renderIcon()}
-            </Button>
+            <View style={buttonStyle}>
+                <TouchableOpacity activeOpacity={activeOpacity} disabled={disabled} onPress={this.onButtonPress}>
+                    {this.renderIcon()}
+                </TouchableOpacity>
+            </View>
         );
     }
 }
