@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-camera/src/RNCamera.js b/node_modules/react-native-camera/src/RNCamera.js
-index c5c447b9c68634d93b27c97d81af3cd2d3e0633c..82b268b246316f89bcac8045c74ddc267f27fccb 100644
+index 0d9b516..e0eeeec 100644
 --- a/node_modules/react-native-camera/src/RNCamera.js
 +++ b/node_modules/react-native-camera/src/RNCamera.js
 @@ -5,7 +5,6 @@ import {
@@ -14,7 +14,7 @@ index c5c447b9c68634d93b27c97d81af3cd2d3e0633c..82b268b246316f89bcac8045c74ddc26
    StyleSheet,
    PermissionsAndroid,
  } from 'react-native';
-+import { ViewPropTypes } from 'deprecated-react-native-prop-types'
-
++import {ViewPropTypes} from 'deprecated-react-native-prop-types';
+ 
  import type { FaceFeature } from './FaceDetector';
-
+ 
