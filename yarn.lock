@@ -2731,9 +2731,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@file:/Users/Ahmed.Elsayed_1/Desktop/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A.":
+"@mendix/pluggable-widgets-tools@file:/Users/uraz.akgultan/Desktop/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A.":
   version: 9.24.0-beta.1
-  resolution: "@mendix/pluggable-widgets-tools@file:/Users/Ahmed.Elsayed_1/Desktop/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A."
+  resolution: "@mendix/pluggable-widgets-tools@file:/Users/uraz.akgultan/Desktop/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A."
   dependencies:
     "@babel/core": ^7.12.3
     "@babel/plugin-proposal-class-properties": ^7.18.6
@@ -3927,6 +3927,16 @@ __metadata:
     "@types/react-native": "*"
     react-native-modal: ">=9.0.0"
   checksum: a16d4770912e225ecc186ff984160d12d9c4937ad3405f09d3206d64583525b051b74fb1391522d07def521da4584e35707a1269c82300420703b3cdfdfd8b9e
+  languageName: node
+  linkType: hard
+
+"@types/react-native-material-menu@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@types/react-native-material-menu@npm:1.0.6"
+  dependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+  checksum: feded2eafb51f5b1aa9355f97967a30ec1063062bf6aaa8f77df5b4e1768a280c93d230c51300b3cb28294bd39e6759922446efb3f4c27a60a81dd8e77c43b47
   languageName: node
   linkType: hard
 
@@ -5248,7 +5258,7 @@ __metadata:
     deprecated-react-native-prop-types: ^4.0.0
     eslint: ^7.20.0
     react-native-barcode-mask: ^1.2.4
-    react-native-camera: 3.19.2
+    react-native-camera: 3.40.0
   languageName: unknown
   linkType: soft
 
@@ -13833,9 +13843,10 @@ __metadata:
     "@mendix/piw-native-utils-internal": "*"
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
+    "@types/react-native-material-menu": ^1.0.6
     detox: ^19.7.1
     eslint: ^7.20.0
-    react-native-material-menu: ^2.0.0
+    react-native-material-menu: ~1.2.0
   languageName: unknown
   linkType: soft
 
@@ -14848,12 +14859,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-camera@npm:3.19.2":
-  version: 3.19.2
-  resolution: "react-native-camera@npm:3.19.2"
+"react-native-camera@npm:3.40.0":
+  version: 3.40.0
+  resolution: "react-native-camera@npm:3.40.0"
   dependencies:
     prop-types: ^15.6.2
-  checksum: 215959865ef66ca56214a7e29eccd63b1c3600f446d22c662c364cf316ce14961a2609b58da0b4b6f0d20a6d8a061d65ca9d33c409b7c74bea962b64c2e7b659
+  checksum: 86c0654ce29ef490f18a1f55c90a757616d3127974fae28075b3db026810d89d9e5f9182d4807a577883429941c0be03db38c28c1a02cf8da06367dffd799093
   languageName: node
   linkType: hard
 
@@ -15010,13 +15021,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-material-menu@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "react-native-material-menu@npm:2.0.0"
+"react-native-material-menu@npm:~1.2.0":
+  version: 1.2.0
+  resolution: "react-native-material-menu@npm:1.2.0"
   peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 6aaf1f53f41c03803b37c84bde5d4b4994f76092e992a91523ab09879e042d0df931c0ba8d5f7ef24074ca5cb88fdd7defbfabb68aef209e1a0ad8202562aab1
+    react: ">= 16.3.0"
+    react-native: ">= 0.54.0"
+  checksum: 8e58b651de84e75ffff2e273ba14fc5e7e8ced312afdbfe295d599591c5dc76b9b6a2da6270844e2006de4a14774e2bff600a597eb15bd49509ecfe1ad86655e
   languageName: node
   linkType: hard
 
