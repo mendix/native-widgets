@@ -8,8 +8,7 @@ import {
     ImageURISource,
     StyleSheet,
     TouchableOpacity,
-    View,
-    Platform
+    View
 } from "react-native";
 import type { StarRatingProps } from "react-native-star-rating";
 
