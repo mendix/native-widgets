@@ -5,7 +5,7 @@ import { createElement } from "react";
 import { actionValue } from "@mendix/piw-utils-internal";
 import { fireEvent, render, within } from "@testing-library/react-native";
 import { PopupMenu } from "../PopupMenu";
-import { MenuDivider } from "react-native-material-menu";
+import { MenuDivider, MenuItem } from "react-native-material-menu";
 import { ReactTestInstance } from "react-test-renderer";
 
 let dummyActionValue: any;
