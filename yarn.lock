@@ -2731,9 +2731,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@file:/Users/uraz.akgultan/Desktop/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A.":
+"@mendix/pluggable-widgets-tools@file:./mendix-pluggable-widgets/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A.":
   version: 9.24.0-beta.1
-  resolution: "@mendix/pluggable-widgets-tools@file:/Users/uraz.akgultan/Desktop/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A."
+  resolution: "@mendix/pluggable-widgets-tools@file:./mendix-pluggable-widgets/mendix-pluggable-widgets-tools-9.24.0-beta.1.tgz::locator=native-widgets%40workspace%3A."
   dependencies:
     "@babel/core": ^7.12.3
     "@babel/plugin-proposal-class-properties": ^7.18.6
