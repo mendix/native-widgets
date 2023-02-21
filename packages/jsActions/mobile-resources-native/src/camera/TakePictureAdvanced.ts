@@ -63,53 +63,56 @@ export async function TakePictureAdvanced(
     const resultObject = await createMxObject("NativeMobileResources.ImageMetaData");
 
     try {
-        let response = await takePicture();
+        const response = await takePicture();
         let pictureTaken: boolean;
 
         if (nativeVersionMajor === 2) {
-            response = response as ImagePickerV2Response;
+            const responseV2 = response as ImagePickerV2Response;
 
-            if (!response || !response.uri) {
+            if (!responseV2 || !responseV2.uri) {
                 return Promise.resolve(resultObject);
             }
+            const responseV2Uri = responseV2.uri;
 
-            pictureTaken = await storeFile(picture, response.uri);
+            pictureTaken = await storeFile(picture, responseV2Uri);
 
             resultObject.set("PictureTaken", pictureTaken);
-            resultObject.set("URI", response.uri);
-            resultObject.set("IsVertical", response.isVertical);
-            resultObject.set("Width", response.width);
-            resultObject.set("Height", response.height);
+            resultObject.set("URI", responseV2Uri);
+            resultObject.set("IsVertical", responseV2.isVertical);
+            resultObject.set("Width", responseV2.width);
+            resultObject.set("Height", responseV2.height);
             resultObject.set(
                 "FileName",
                 // eslint-disable-next-line no-useless-escape
-                response.fileName ? response.fileName : /[^\/]*$/.exec(response.uri)![0]
+                responseV2.fileName ? responseV2.fileName : /[^\/]*$/.exec(responseV2Uri)![0]
             );
-            resultObject.set("FileSize", response.fileSize);
-            resultObject.set("FileType", response.type);
+            resultObject.set("FileSize", responseV2.fileSize);
+            resultObject.set("FileType", responseV2.type);
         } else {
-            response = response as ImagePickerResponse;
+            const responseV1 = response as ImagePickerResponse;
 
-            if (!response || !response.assets[0] || !response.assets[0].uri) {
+            if (!responseV1 || !responseV1.assets || !responseV1.assets[0] || !responseV1.assets[0].uri) {
                 return Promise.resolve(resultObject);
             }
+            const responseV1Assets = responseV1.assets[0];
+            const responseV1Uri = responseV1.assets[0].uri;
 
-            pictureTaken = await storeFile(picture, response.assets[0].uri);
+            pictureTaken = await storeFile(picture, responseV1Uri);
 
             resultObject.set("PictureTaken", pictureTaken);
-            resultObject.set("URI", response.assets[0].uri);
+            resultObject.set("URI", responseV1Uri);
             // Note:  V4 asset doesn't include isVertical
-            resultObject.set("Width", response.assets[0].width);
-            resultObject.set("Height", response.assets[0].height);
+            resultObject.set("Width", responseV1Assets.width);
+            resultObject.set("Height", responseV1Assets.height);
             resultObject.set(
                 "FileName",
-                response.assets[0].fileName
-                    ? response.assets[0].fileName
+                responseV1Assets.fileName
+                    ? responseV1Assets.fileName
                     : // eslint-disable-next-line no-useless-escape
-                      /[^\/]*$/.exec(response.assets[0].uri)![0]
+                      /[^\/]*$/.exec(responseV1Uri)![0]
             );
-            resultObject.set("FileSize", response.assets[0].fileSize);
-            resultObject.set("FileType", response.assets[0].type);
+            resultObject.set("FileSize", responseV1Assets.fileSize);
+            resultObject.set("FileType", responseV1Assets.type);
         }
 
         return Promise.resolve(resultObject);
@@ -132,19 +135,19 @@ export async function TakePictureAdvanced(
                         }
 
                         if (nativeVersionMajor === 2) {
-                            response = response as ImagePickerV2Response;
+                            const responseV2 = response as ImagePickerV2Response;
 
-                            if (response.error) {
-                                const unhandledError = handleImagePickerV2Error(response.error);
+                            if (responseV2.error) {
+                                const unhandledError = handleImagePickerV2Error(responseV2.error);
 
                                 if (!unhandledError) {
                                     return resolve(undefined);
                                 }
 
-                                return reject(new Error(response.error));
+                                return reject(new Error(responseV2.error));
                             }
 
-                            return resolve(response);
+                            return resolve(responseV2);
                         }
 
                         response = response as ImagePickerResponse;

@@ -12746,7 +12746,7 @@ __metadata:
     react-native-blob-util: 0.16.2
     react-native-device-info: 8.0.1
     react-native-file-viewer: 2.1.5
-    react-native-image-picker: 4.0.3
+    react-native-image-picker: 5.0.1
     react-native-inappbrowser-reborn: 3.4.0
     react-native-localize: 1.3.4
     react-native-permissions: 3.3.1
@@ -14964,13 +14964,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-image-picker@npm:4.0.3":
-  version: 4.0.3
-  resolution: "react-native-image-picker@npm:4.0.3"
+"react-native-image-picker@npm:5.0.1":
+  version: 5.0.1
+  resolution: "react-native-image-picker@npm:5.0.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 410b6f1a5190e46641be8e9ab63fe4c3f45e4049f92f202c5437f79480f4fdc0f36fd2b4a36a353f926b826896f1a52faad9a9e64efe9d5c09a3685cf921fcec
+  checksum: c14eb042ed55a6edbe6d0d5b09627e6191ca730451c4086b0ea218c6cfd10645372f7eabb77141ea8f63e35bb4b8c7ed0e4e100b3cd6bba5e51c4b38581505b0
   languageName: node
   linkType: hard
 
