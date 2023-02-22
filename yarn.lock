@@ -2896,13 +2896,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ptomasroos/react-native-multi-slider@npm:*, @ptomasroos/react-native-multi-slider@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "@ptomasroos/react-native-multi-slider@npm:2.2.2"
+"@ptomasroos/react-native-multi-slider@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@ptomasroos/react-native-multi-slider@npm:1.0.0"
   peerDependencies:
+    prop-types: "*"
     react: "*"
     react-native: "*"
-  checksum: f9e2263b4283cdd0011ad3c2e1ea6d70afe2c2f865a52c35e0f6c4fd948114762105a11f364e68da87de782490bfa1473540c6227e2e0033555e84827086464c
+  checksum: f71a7c04d0e100307a029ad7dbd5fb39f9fc6aa7949ad3b7ff03cfa8b5f391a5e3520dd9910930ea011fc4e206296f56042e3ab8473132afcade20c87d25bce7
   languageName: node
   linkType: hard
 
@@ -3932,12 +3933,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ptomasroos__react-native-multi-slider@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@types/ptomasroos__react-native-multi-slider@npm:2.2.1"
+"@types/ptomasroos__react-native-multi-slider@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@types/ptomasroos__react-native-multi-slider@npm:0.0.1"
   dependencies:
-    "@ptomasroos/react-native-multi-slider": "*"
-  checksum: 9c8275b04a96cb1fd29c82b385a5ce91a7863a53e84b1606175883548cf8aebfbe4aa8e2463d3f1a46e66a3822b6b8b6437fb6b5637440af1f0f890ed757e668
+    "@types/react": "*"
+    "@types/react-native": "*"
+  checksum: 9c04a2168bf2710348d04b8e2477a597f61c69c292008d5f18d9fdee89331f88369cf8cd9ae228deb3387b1d3d822ab830b4334cb9b9e03d5bc48616c40df3b8
   languageName: node
   linkType: hard
 
@@ -14740,8 +14742,8 @@ __metadata:
     "@mendix/piw-native-utils-internal": "*"
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
-    "@ptomasroos/react-native-multi-slider": ^2.2.2
-    "@types/ptomasroos__react-native-multi-slider": ^2.2.1
+    "@ptomasroos/react-native-multi-slider": ^1.0.0
+    "@types/ptomasroos__react-native-multi-slider": ^0.0.1
     detox: ^19.7.1
     eslint: ^7.20.0
     prop-types: ^15.7.2
@@ -16538,8 +16540,8 @@ __metadata:
     "@mendix/piw-native-utils-internal": "*"
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
-    "@ptomasroos/react-native-multi-slider": ^2.2.2
-    "@types/ptomasroos__react-native-multi-slider": ^2.2.1
+    "@ptomasroos/react-native-multi-slider": ^1.0.0
+    "@types/ptomasroos__react-native-multi-slider": ^0.0.1
     detox: ^19.7.1
     eslint: ^7.20.0
     prop-types: ^15.7.2

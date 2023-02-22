@@ -27,12 +27,12 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "@ptomasroos/react-native-multi-slider": "^2.2.2",
+    "@ptomasroos/react-native-multi-slider": "^1.0.0",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "@types/ptomasroos__react-native-multi-slider": "^2.2.1",
+    "@types/ptomasroos__react-native-multi-slider": "^0.0.1",
     "detox": "^19.7.1",
     "eslint": "^7.20.0"
   }
