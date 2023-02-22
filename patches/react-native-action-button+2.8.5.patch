@@ -15,7 +15,7 @@ index b8306c2efb2460d4aa110e83d2e5410588f280de..1a25a8e3ee766581ec23388f15ce2447
    bgOpacity: PropTypes.number,
    buttonColor: PropTypes.string,
 -  buttonTextStyle: Text.propTypes.style,
-+  buttonTextStyle: TextPropTypes.style(),
++  buttonTextStyle: TextPropTypes.style,
    buttonText: PropTypes.string,
 
    offsetX: PropTypes.number,
