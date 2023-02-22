@@ -22,11 +22,7 @@ exports[`Color Picker renders 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -918,11 +914,7 @@ exports[`Color Picker renders 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -1814,11 +1806,7 @@ exports[`Color Picker renders 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -2732,11 +2720,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -3628,11 +3612,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -4524,11 +4504,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -5420,11 +5396,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -6339,11 +6311,7 @@ exports[`Color Picker renders with custom style 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -7235,11 +7203,7 @@ exports[`Color Picker renders with custom style 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}
@@ -8131,11 +8095,7 @@ exports[`Color Picker renders with custom style 1`] = `
   <View
     accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
         "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
       }
     }
     accessible={true}

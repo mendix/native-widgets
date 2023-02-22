@@ -1,3 +1,15 @@
+diff --git a/node_modules/react-native-gesture-handler/GestureHandlerRootView.android.js b/node_modules/react-native-gesture-handler/GestureHandlerRootView.android.js
+index 656480d..ca3e17f 100644
+--- a/node_modules/react-native-gesture-handler/GestureHandlerRootView.android.js
++++ b/node_modules/react-native-gesture-handler/GestureHandlerRootView.android.js
+@@ -1,5 +1,6 @@
+ import React from 'react';
+-import { View, ViewPropTypes, requireNativeComponent } from 'react-native';
++import { View, requireNativeComponent } from 'react-native';
++import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+ 
+ const iface = {
+   name: 'GestureHandlerRootView',
 diff --git a/node_modules/react-native-gesture-handler/react-native-gesture-handler.d.ts b/node_modules/react-native-gesture-handler/react-native-gesture-handler.d.ts
 index 99896ab..c8b5d26 100644
 --- a/node_modules/react-native-gesture-handler/react-native-gesture-handler.d.ts

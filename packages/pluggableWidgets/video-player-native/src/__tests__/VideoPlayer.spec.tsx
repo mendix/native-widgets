@@ -1,7 +1,7 @@
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
 import { Modal, View } from "react-native";
-import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { VideoProperties } from "react-native-video";
 
 import { VideoPlayer } from "../VideoPlayer";
@@ -105,16 +105,16 @@ describe("VideoPlayer", () => {
             expect(component).toMatchSnapshot();
         });
 
-        it("show fullscreen when press fullscreen icon-- android", () => {
+        it("show fullscreen when press fullscreen icon-- android", async () => {
             const component = render(<VideoPlayer {...defaultProps} />);
             const fullScreenBtn = component.getByTestId("btn-fullscreen");
-            act(async () => {
-                fireEvent.press(fullScreenBtn);
-                await waitFor(() => {
-                    component.getByTestId("btn-fullscreen-exit");
-                    const modal = component.UNSAFE_getByType(Modal);
-                    expect(modal.props.visible).toBe(true);
-                });
+
+            fireEvent.press(fullScreenBtn);
+
+            await waitFor(() => {
+                component.getByTestId("btn-fullscreen-exit");
+                const modal = component.UNSAFE_getByType(Modal);
+                expect(modal.props.visible).toBe(true);
             });
         });
     });
