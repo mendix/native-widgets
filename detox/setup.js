@@ -3,9 +3,9 @@ const config = require("./detox.config");
 const { toMatchImageSnapshot } = require("jest-image-snapshot");
 const { join, resolve } = require("path");
 const { execSync } = require("child_process");
-const { expect } = require("expect");
+const { expect } = require("@jest/globals");
 
-jest.retryTimes(3);
+jest.retryTimes(1);
 
 expect.extend({
     toMatchImageSnapshot(screenshot, options = {}) {
@@ -37,6 +37,8 @@ expect.extend({
         });
     }
 });
+
+global.expect = expect;
 
 beforeAll(async () => {
     await device.launchApp({
