@@ -35,11 +35,11 @@ jobs:
       - name: "Defining environment variables"
         if: startsWith(matrix.os, 'ubuntu')
         id: variablesLinux
-        run: echo "::set-output name=arg::$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo ''; fi)"
+        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo ''; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
       - name: "Defining environment variables"
         if: startsWith(matrix.os, 'windows')
         id: variablesWindows
-        run: echo "::set-output name=arg::$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since' } Else { echo '' })"
+        run: echo "arg=$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since' } Else { echo '' })" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
       - name: "Defining node version"
         uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2
         with:
@@ -47,7 +47,7 @@ jobs:
           cache: "yarn"
       - name: "Get yarn cache directory path"
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: echo "dir=$(yarn config get cacheFolder)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
       - name: "Defining cache"
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
         env:

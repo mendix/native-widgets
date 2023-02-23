@@ -17,7 +17,7 @@ jobs:
           submodules: false
       - name: "Defining Environment Variables"
         id: variables
-        run: echo "::set-output name=tag::$(git tag --points-at HEAD)"
+        run: echo "tag=$(git tag --points-at HEAD)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
       - name: "Defining scope"
         uses: jungwinter/split@c185fe95439c136a8788b7f700bd5275920d7109 # v1
         id: scope

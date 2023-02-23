@@ -24,8 +24,8 @@ jobs:
       - name: Getting variables
         id: variables
         run: |
-          echo "::set-output name=mx9::$(sed -n 's/.*"latest": "\([^"]*\)",/\1/p' $JSON_PATH)"
-          echo "::set-output name=mx8::$(sed -n 's/.*"8": "\([^"]*\)"/\1/p' $JSON_PATH)"
+          echo "mx9=$(sed -n 's/.*"latest": "\([^"]*\)",/\1/p' $JSON_PATH)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
+          echo "mx8=$(sed -n 's/.*"8": "\([^"]*\)"/\1/p' $JSON_PATH)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
 
       - name: Building Mx Build 8 docker image
         run: docker build . --file $PWT_PATH/scripts/mxbuild.Dockerfile --build-arg MENDIX_VERSION=${{steps.variables.outputs.mx8}} --tag $MXBUILD:${{steps.variables.outputs.mx8}} --label "runnumber=${GITHUB_RUN_ID}"
