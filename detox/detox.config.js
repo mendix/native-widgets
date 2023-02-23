@@ -1,15 +1,16 @@
 const ANDROID_SDK_VERSION = "30"; // Set to 30 because: https://github.com/wix/Detox/issues/3071
 const ANDROID_DEVICE_TYPE = "pixel";
-const IOS_SDK_VERSION = "15.5";
-const IOS_DEVICE_TYPE = "iPhone 13";
+const IOS_SDK_VERSION = "16.2";
+const IOS_DEVICE_TYPE = "iPhone 14";
 
 module.exports = {
     ANDROID_SDK_VERSION,
     ANDROID_DEVICE_TYPE,
     IOS_SDK_VERSION,
     IOS_DEVICE_TYPE,
-    "test-runner": "npx jest",
-    "runner-config": `${__dirname}/jest.detox.config.js`,
+    "test-runner": "jest",
+    "runner-config": `${__dirname}/jest.config.js`,
+    skipLegacyWorkersInjection: true,
     apps: {
         "ios.developerapp": {
             type: "ios.app",

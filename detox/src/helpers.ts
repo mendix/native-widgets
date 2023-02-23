@@ -1,7 +1,6 @@
 import { by, element, device } from "detox";
 import { readFileSync } from "fs";
 import { MatchImageSnapshotOptions } from "jest-image-snapshot";
-import "../jest.detox.startup";
 
 export async function expectToMatchScreenshot(
     element?: Detox.NativeElement,
@@ -43,7 +42,11 @@ export async function resetDevice(): Promise<void> {
      */
 
     await device.terminateApp();
-    await device.launchApp();
+    await device.launchApp({
+        launchArgs: {
+            appUrl: "http://10.0.2.2:8080"
+        }
+    });
     if (device.getPlatform() === "ios") {
         // TODO: Investigate why the request is pending.
         await device.setURLBlacklist([`http://localhost:8080/components.json`]);
