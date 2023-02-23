@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: "Checking changed files"
         id: files
-        uses: softprops/diffset@3aeca0719d5043522e155012d3c9f7470fdd2dc6 # v1
+        uses: softprops/diffset@d5947696689a571f7a984a52505e2649eead5c22 # v1
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         with:
           base: main
@@ -50,6 +50,6 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Linting code"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run lint
+        run: yarn workspaces foreach ${{ env.arg }} --parallel run lint
       - name: "Running unit tests"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run test
+        run: yarn workspaces foreach ${{ env.arg }} --parallel run test
