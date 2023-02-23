@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: "Checking-out code"
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           submodules: false
       - name: "Defining Environment Variables"
@@ -25,7 +25,7 @@ jobs:
           msg: "${{ steps.variables.outputs.tag }}"
           seperator: "-v"
       - name: "Defining node version"
-        uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # v2
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version-file: ".nvmrc"
       - name: "Installing dependencies"
