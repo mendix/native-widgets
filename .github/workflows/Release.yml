@@ -53,11 +53,11 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          path: ${{ env.dir }}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - name: "Installing dependencies"
         run: yarn install
       - name: "Running release for production"
-        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} --parallel run release
+        run: yarn workspaces foreach ${{ env.arg }} --parallel run release
         env:
           NODE_OPTIONS: --max_old_space_size=8192
