@@ -35,11 +35,11 @@ jobs:
       - name: "Defining environment variables"
         if: startsWith(matrix.os, 'ubuntu')
         id: variablesLinux
-        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo ''; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
+        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo ''; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining environment variables"
         if: startsWith(matrix.os, 'windows')
         id: variablesWindows
-        run: echo "arg=$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since' } Else { echo '' })" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
+        run: echo "arg=$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since' } Else { echo '' })" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining node version"
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
@@ -58,6 +58,6 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Running release for production"
-        run: yarn workspaces foreach ${{ env.arg }} --parallel run release
+        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} --parallel run release
         env:
           NODE_OPTIONS: --max_old_space_size=8192
