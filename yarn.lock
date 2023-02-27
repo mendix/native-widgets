@@ -2099,9 +2099,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/config-plugins@npm:^5.0.1":
-  version: 5.0.3
-  resolution: "@expo/config-plugins@npm:5.0.3"
+"@expo/config-plugins@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "@expo/config-plugins@npm:5.0.4"
   dependencies:
     "@expo/config-types": ^47.0.0
     "@expo/json-file": 8.2.36
@@ -2118,7 +2118,7 @@ __metadata:
     slash: ^3.0.0
     xcode: ^3.0.1
     xml2js: 0.4.23
-  checksum: 40fab6a309ffdd4cff8b8695d030daff8e75407cc5bd7fb00a78df2590e7959c79b669c44a2d489384ad67fa9aa48063bfff24776acfedcedce14a98e1aa04a4
+  checksum: 9fc5e19a92e105d200aeb7ed28607c2e4e8dcf2b7256c8bae32b2f30ccb5139fbe4854df8c6d6db0bb80e254ddb48a82665043582e7044b4ba1888448909c818
   languageName: node
   linkType: hard
 
@@ -3149,7 +3149,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/push-notification-ios@npm:^1.5.0":
+"@react-native-community/push-notification-ios@npm:1.10.1":
   version: 1.10.1
   resolution: "@react-native-community/push-notification-ios@npm:1.10.1"
   dependencies:
@@ -3161,26 +3161,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-firebase/app@npm:15.7.0":
-  version: 15.7.0
-  resolution: "@react-native-firebase/app@npm:15.7.0"
+"@react-native-firebase/app@npm:17.3.0":
+  version: 17.3.0
+  resolution: "@react-native-firebase/app@npm:17.3.0"
   dependencies:
-    "@expo/config-plugins": ^5.0.1
+    "@expo/config-plugins": ^5.0.4
     opencollective-postinstall: ^2.0.1
     superstruct: ^0.6.2
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 609f5e0ba061ebe8beae74061efbdb349a244a570d8778433cfca67cc9672f59c98b1080e8be04aad6332616601ed8c09e29c23b9cfbc28b73fb81098e321402
+  checksum: ad48ef750f79c784504fce48e03051ca1a1383c4e8dbbf103cc92a64238b07580beb4d6ee35c29ce3a1be08540a3a295ec0e68fd954960849e8364d06872970e
   languageName: node
   linkType: hard
 
-"@react-native-firebase/messaging@npm:15.7.0":
-  version: 15.7.0
-  resolution: "@react-native-firebase/messaging@npm:15.7.0"
+"@react-native-firebase/messaging@npm:17.3.0":
+  version: 17.3.0
+  resolution: "@react-native-firebase/messaging@npm:17.3.0"
   peerDependencies:
-    "@react-native-firebase/app": 15.7.0
-  checksum: fbebbd6c2468a9c1f1d5ff1511994b20a7e4633eaab0562b702e26a009c7aa3c0c7af988f833215c3c01d5ab47618266d443beef9fe04aef257aea12632f0ec3
+    "@react-native-firebase/app": 17.3.0
+  checksum: 79fc2e0b635c463577f364972ec3a37a58ca72a4922e11cda95153c05f21191b2d4dfdd8627270beb62c0deaa21fb9a788775e2f1f938cdb395724667f3342f4
   languageName: node
   linkType: hard
 
@@ -3998,10 +3998,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-push-notification@npm:^5.0.5":
-  version: 5.0.6
-  resolution: "@types/react-native-push-notification@npm:5.0.6"
-  checksum: 9af9b9c84c498b63d5a288709d286fe87cc6f20b8f1fc27e1e43b2623a5040fd6c987ebe77110b333ad0287dee72c0bf7abc504530a3ec231224a9ed196f37fb
+"@types/react-native-push-notification@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@types/react-native-push-notification@npm:8.1.1"
+  checksum: 72ceeac02c3de98729be79dd4347bf0d3a9f21f85b879814d11abf5b5a1bb2525a39522df265e4fb24ba7fdad80e8f01f4fd94baabd0da5a9ce23697d18903c0
   languageName: node
   linkType: hard
 
@@ -12784,10 +12784,10 @@ __metadata:
   dependencies:
     "@mendix/pluggable-widgets-tools": ^9.0.0
     "@react-native-community/cameraroll": 4.0.1
-    "@react-native-community/push-notification-ios": ^1.5.0
-    "@react-native-firebase/messaging": 15.7.0
+    "@react-native-community/push-notification-ios": 1.10.1
+    "@react-native-firebase/messaging": 17.3.0
     "@types/querystringify": ^2.0.0
-    "@types/react-native-push-notification": ^5.0.5
+    "@types/react-native-push-notification": 8.1.1
     "@types/url-parse": ^1.4.3
     eslint: ^7.20.0
     fbjs: 3.0.4
@@ -12799,7 +12799,7 @@ __metadata:
     react-native-inappbrowser-reborn: 3.4.0
     react-native-localize: 1.4.2
     react-native-permissions: 3.3.1
-    react-native-push-notification: ^6.1.2
+    react-native-push-notification: 8.1.1
     react-native-sound: 0.11.0
     react-native-touch-id: 4.4.1
     rimraf: ^2.7.1
@@ -13197,10 +13197,10 @@ __metadata:
   dependencies:
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
-    "@react-native-firebase/app": 15.7.0
-    "@react-native-firebase/messaging": 15.7.0
+    "@react-native-firebase/app": 17.3.0
+    "@react-native-firebase/messaging": 17.3.0
     eslint: ^7.20.0
-    react-native-push-notification: ^6.1.2
+    react-native-push-notification: 8.1.1
   languageName: unknown
   linkType: soft
 
@@ -15130,13 +15130,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-push-notification@npm:^6.1.2":
-  version: 6.1.3
-  resolution: "react-native-push-notification@npm:6.1.3"
+"react-native-push-notification@npm:8.1.1":
+  version: 8.1.1
+  resolution: "react-native-push-notification@npm:8.1.1"
   peerDependencies:
-    "@react-native-community/push-notification-ios": ^1.5.0
+    "@react-native-community/push-notification-ios": ^1.10.1
     react-native: ">=0.33"
-  checksum: b16a9f3731abda4d700c743b5603da7d3a5ff10eb6510396579eb03853fe0592e9b56daa4b34759050e65ff5251e74506cc831bfcddb2715b9c7a3d3c0ef5a8b
+  checksum: 64d500c1163eaa4eee549e6e2f8204cac643f91ae918a227e9d93f8261afdebbdaa7ba5d12da0039155cbf6a599032dd15be4ebe53737cbeeadec4469893f00d
   languageName: node
   linkType: hard
 
