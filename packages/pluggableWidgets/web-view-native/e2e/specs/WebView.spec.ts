@@ -1,16 +1,23 @@
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
-import { expect, element, by, device, waitFor } from "detox";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    sleep,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
+import { expect, element, by, waitFor } from "detox";
 import { Alert } from "../../../../../detox/src/Alert";
 
-const timeout = 5000;
+const timeout = 10000;
 
 describe("Web view", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Web view");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("should render messge if no content is provided", async () => {
@@ -60,17 +67,15 @@ describe("Web view", () => {
         await expectToMatchScreenshot(element(by.id("webViewUserAgent")));
     });
 
-    it("should open URL externally", async () => {
-        // Skipping this test for Android because link is not clickable in web view
-        if (device.getPlatform() !== "android") {
-            await element(by.text("External")).tap();
+    // Skipping this test for Android because link is not clickable in web view
+    it(":ios:should open URL externally", async () => {
+        await element(by.text("External")).tap();
 
-            await waitForAndCloseOnLoadAlert();
+        await waitForAndCloseOnLoadAlert();
 
-            await element(by.id("webViewExternal")).tap({ x: 3, y: 3 });
-            await new Promise(res => setTimeout(res, timeout));
-            await expectToMatchScreenshot();
-        }
+        await element(by.id("webViewExternal")).tap({ x: 3, y: 3 });
+        await sleep(timeout);
+        await expectToMatchScreenshot();
     });
 });
 

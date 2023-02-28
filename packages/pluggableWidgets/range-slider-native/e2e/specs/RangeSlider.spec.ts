@@ -1,14 +1,21 @@
-import { expectToMatchScreenshot, resetDevice, setText, tapMenuItem } from "../../../../../detox/src/helpers";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    setText,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
 import { Alert } from "../../../../../detox/src/Alert";
 import { expect, element, by } from "detox";
 
 describe("Slider", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Range slider");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders correctly after setting value", async () => {

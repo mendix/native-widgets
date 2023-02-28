@@ -1,11 +1,16 @@
 import { expect, element, by, waitFor } from "detox";
 import { Alert } from "../../../../../detox/src/Alert";
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 
 describe("Gallery", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Gallery");
         await element(by.id("galleryButton")).tap();
+    });
+
+    afterEach(async () => {
+        await sessionLogout();
     });
 
     it("renders correctly", async () => {
@@ -27,9 +32,5 @@ describe("Gallery", () => {
             .scroll(50, "down");
         await element(by.id("galleryVertical-pagination-button")).tap();
         await expectToMatchScreenshot(gallery);
-    });
-
-    afterEach(async () => {
-        await resetDevice();
     });
 });

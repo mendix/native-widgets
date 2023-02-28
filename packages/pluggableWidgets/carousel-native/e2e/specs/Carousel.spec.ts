@@ -1,14 +1,15 @@
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { expect, element, by } from "detox";
 import { Alert } from "../../../../../detox/src/Alert";
 
 describe("Carousel", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Carousel");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("should be able to swipe left and right", async () => {

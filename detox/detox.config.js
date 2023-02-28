@@ -18,8 +18,8 @@ module.exports = {
         },
         "android.developerapp": {
             type: "android.apk",
-            binaryPath: `${__dirname}/apps/app-detox-debug.apk`,
-            testBinaryPath: `${__dirname}/apps/app-detox-debug-androidTest.apk`
+            binaryPath: `${__dirname}/apps/app-dev-debug.apk`,
+            testBinaryPath: `${__dirname}/apps/app-dev-debug-androidTest.apk`
         }
     },
     devices: {
@@ -40,11 +40,23 @@ module.exports = {
     configurations: {
         "ios.simulator.developerapp": {
             device: "ios",
-            app: "ios.developerapp"
+            app: "ios.developerapp",
+            behavior: {
+                init: {
+                    exposeGlobals: false,
+                    reinstallApp: true
+                }
+            }
         },
         "android.emulator.developerapp": {
             device: "android",
-            app: "android.developerapp"
+            app: "android.developerapp",
+            behavior: {
+                init: {
+                    exposeGlobals: false,
+                    reinstallApp: process.env.CI !== "true"
+                }
+            }
         }
     }
 };

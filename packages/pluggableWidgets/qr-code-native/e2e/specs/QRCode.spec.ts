@@ -1,13 +1,20 @@
 import { element, by } from "detox";
-import { expectToMatchScreenshot, resetDevice, setText, tapMenuItem } from "../../../../../detox/src/helpers";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    setText,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
 
 describe("QR code", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("QR code");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders correctly", async () => {

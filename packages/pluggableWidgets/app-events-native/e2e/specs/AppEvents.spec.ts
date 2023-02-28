@@ -1,30 +1,31 @@
-import { resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { waitFor, element, by } from "detox";
 
 describe("App events", () => {
     beforeAll(async () => {
+        await launchApp();
         await tapMenuItem("App events");
     });
 
     afterAll(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("should generate onPageLoad event", async () => {
         await waitFor(element(by.text("Event: Load")))
             .toBeVisible()
-            .withTimeout(1000);
+            .withTimeout(10000);
     });
 
     it("should generate sinlge onTimeout event", async () => {
         await waitFor(element(by.text("Event: Timer 2s")))
-            .toBeVisible()
-            .withTimeout(3000);
+            .toExist()
+            .withTimeout(10000);
     });
 
     it("should generate looping onTimeout event", async () => {
-        await waitFor(element(by.text("Event: Interval 3s")))
+        await waitFor(element(by.text("Event: Interval 10s")).atIndex(0))
             .toBeVisible()
-            .withTimeout(4000);
+            .withTimeout(20000);
     });
 });

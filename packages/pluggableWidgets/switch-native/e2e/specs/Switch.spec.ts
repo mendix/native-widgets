@@ -1,14 +1,15 @@
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { Alert } from "../../../../../detox/src/Alert";
 import { expect, by, element } from "detox";
 
 describe("Switch", () => {
     beforeAll(async () => {
+        await launchApp();
         await tapMenuItem("Switch");
     });
 
     afterAll(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders correctly when false", async () => {

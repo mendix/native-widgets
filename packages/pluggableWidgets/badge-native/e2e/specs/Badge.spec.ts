@@ -1,9 +1,10 @@
 import { Alert } from "../../../../../detox/src/Alert";
 import { expect, element, by } from "detox";
-import { resetDevice, setText, tapMenuItem } from "../../../../../detox/src/helpers";
+import { launchApp, sessionLogout, setText, tapMenuItem } from "../../../../../detox/src/helpers";
 
 describe("Badge", () => {
     beforeAll(async () => {
+        await launchApp();
         await tapMenuItem("Badge");
 
         const textBox = element(by.id("textBoxBadge"));
@@ -11,7 +12,7 @@ describe("Badge", () => {
     });
 
     afterAll(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders the normal badge", async () => {

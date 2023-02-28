@@ -1,4 +1,4 @@
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { expect, element, by } from "detox";
 import { Alert } from "../../../../../detox/src/Alert";
 
@@ -6,12 +6,13 @@ describe("Intro screen", () => {
     let introScreen: Detox.IndexableNativeElement;
 
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Intro screen");
         introScreen = element(by.id("introScreen"));
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("should be able to change screens and fire event", async () => {
