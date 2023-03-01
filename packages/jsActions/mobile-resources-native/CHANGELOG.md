@@ -6,6 +6,78 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.1] Native Mobile Resources - 2023-3-1
+
+
+## [4.0.0] AppEvents
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [3.0.0] BarChart
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [4.0.0] BarcodeScanner
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [3.0.0] Carousel
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [2.0.0] ColorPicker
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [2.0.0] ColumnChart
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [4.0.0] FloatingActionButton
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [3.0.0] LineChart
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [4.0.0] Maps
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [2.0.0] PieDoughnutChart
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [3.0.1] PopupMenu
+### Added
+
+-   Added id for testing
+
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [3.0.0] Rating
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
+## [4.0.0] VideoPlayer
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
 ## [3.13.1] Native Mobile Resources - 2022-12-28
 ### Changed
 
