@@ -23,7 +23,7 @@ describe("Feedback widget", () => {
         await expectToMatchScreenshot(element(by.id(`${widgetName}$button`)));
 
         await element(by.id(`${widgetName}$button`)).tap();
-        await expectToMatchScreenshot(element(by.id(`${widgetName}$popup`)));
+        await expectToMatchScreenshot();
 
         await setText(element(by.id(`${widgetName}$input`)), "e2e test for feedback widget");
         await element(by.id(`${widgetName}$send`)).tap();
