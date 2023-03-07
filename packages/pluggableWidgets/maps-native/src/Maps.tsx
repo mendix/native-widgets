@@ -75,7 +75,7 @@ export class Maps extends Component<Props, State> {
                 {this.state.status !== Status.LoadingMarkers ? (
                     <MapView
                         ref={this.mapViewRef}
-                        provider={this.props.provider === "default" ? null : this.props.provider}
+                        provider={this.props.provider === "default" ? undefined : this.props.provider}
                         mapType={this.props.mapType}
                         showsUserLocation={this.props.showsUserLocation}
                         showsMyLocationButton={this.props.showsUserLocation}

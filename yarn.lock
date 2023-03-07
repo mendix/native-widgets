@@ -3719,7 +3719,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/geojson@npm:^7946.0.7":
+"@types/geojson@npm:^7946.0.8":
   version: 7946.0.10
   resolution: "@types/geojson@npm:7946.0.10"
   checksum: 12c407c2dc93ecb26c08af533ee732f1506a9b29456616ba7ba1d525df96206c28ddf44a528f6a5415d7d22893e9d967420940a9c095ee5e539c1eba5fefc1f4
@@ -6994,7 +6994,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deprecated-react-native-prop-types@npm:^2.2.0, deprecated-react-native-prop-types@npm:^2.3.0":
+"deprecated-react-native-prop-types@npm:^2.2.0":
   version: 2.3.0
   resolution: "deprecated-react-native-prop-types@npm:2.3.0"
   dependencies:
@@ -11802,7 +11802,7 @@ __metadata:
     eslint: ^7.20.0
     prop-types: ^15.7.2
     react-native-geocoder: 0.5.0
-    react-native-maps: 0.31.1
+    react-native-maps: 1.4.0
   languageName: unknown
   linkType: soft
 
@@ -15033,20 +15033,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-maps@npm:0.31.1":
-  version: 0.31.1
-  resolution: "react-native-maps@npm:0.31.1"
+"react-native-maps@npm:1.4.0":
+  version: 1.4.0
+  resolution: "react-native-maps@npm:1.4.0"
   dependencies:
-    "@types/geojson": ^7946.0.7
-    deprecated-react-native-prop-types: ^2.3.0
+    "@types/geojson": ^7946.0.8
   peerDependencies:
-    react: ">= 16.0"
-    react-native: ">= 0.51"
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
     react-native-web: ">= 0.11"
   peerDependenciesMeta:
     react-native-web:
       optional: true
-  checksum: 0afe7ca5c3b017bcc84503114260abf7db71c28f1fa4c11495ffa01ada33d37a84b60f54ab80ba206bd967caa1003c4245639c877a7cef485c96b98778666f40
+  checksum: f97cf0756bfc198d5963cbf9825d70583e45b516ae91e2f4078d0984eeeb60fb7ef63312ed3c726d799005ebee30d34874386d5d3a754d7d2627408346ea5b0c
   languageName: node
   linkType: hard
 
