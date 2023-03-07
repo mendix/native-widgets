@@ -8140,7 +8140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fbjs@npm:3.0.4":
+"fbjs@npm:3.0.4, fbjs@npm:^3.0.0":
   version: 3.0.4
   resolution: "fbjs@npm:3.0.4"
   dependencies:
@@ -11395,7 +11395,7 @@ __metadata:
     "@mendix/piw-utils-internal": "*"
     "@mendix/pluggable-widgets-tools": ^9.0.0
     eslint: ^7.20.0
-    react-native-gesture-handler: 1.8.0
+    react-native-gesture-handler: 1.10.3
   languageName: unknown
   linkType: soft
 
@@ -14973,15 +14973,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gesture-handler@npm:1.8.0":
-  version: 1.8.0
-  resolution: "react-native-gesture-handler@npm:1.8.0"
+"react-native-gesture-handler@npm:1.10.3":
+  version: 1.10.3
+  resolution: "react-native-gesture-handler@npm:1.10.3"
   dependencies:
     "@egjs/hammerjs": ^2.0.17
+    fbjs: ^3.0.0
     hoist-non-react-statics: ^3.3.0
     invariant: ^2.2.4
     prop-types: ^15.7.2
-  checksum: 565e770dfcd66f3169358cbb0a0887c35d1452102934e891403447b8b1f6d4c59d00db6d89f655acf802a2a4ac1ae817f575554312a5d431a7775f2ab37e7253
+  checksum: fd06147df96fe0b38752c653a2d4bf49570396922719939a31b494197fd30e6775e4c5e73f889af808204dcfbc087eb00f31a0b676c838d5a35e2b017ae9a419
   languageName: node
   linkType: hard
 
@@ -15153,12 +15154,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-signature-canvas@npm:4.3.0":
-  version: 4.3.0
-  resolution: "react-native-signature-canvas@npm:4.3.0"
+"react-native-signature-canvas@npm:3.4.0":
+  version: 3.4.0
+  resolution: "react-native-signature-canvas@npm:3.4.0"
   peerDependencies:
     react-native-webview: ^11.0.3
-  checksum: 179f9846541b127c9f0fd7aad982dd4eec6a31654389b8d6c3eace6f6dc981e0ab46d1284cbe3e3acebd91ad3172358ca9ff7e5dc24dea0d04b861db6c9a04e5
+  checksum: be305ecb6841bb100809a0aef21e157172c211ea0d0855d876ad100f47ff8fc38546d9f4a327b4455761c11564481e5b48e099d6994e297dbf7aab1c74ee4796
   languageName: node
   linkType: hard
 
@@ -16438,7 +16439,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": ^9.0.0
     detox: ^19.7.1
     eslint: ^7.20.0
-    react-native-signature-canvas: 4.3.0
+    react-native-signature-canvas: 3.4.0
     react-native-webview: 11.26.1
   languageName: unknown
   linkType: soft
