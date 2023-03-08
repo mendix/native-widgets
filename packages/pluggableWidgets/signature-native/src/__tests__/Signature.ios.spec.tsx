@@ -5,6 +5,12 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { Signature, Props } from "../Signature";
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 
+jest.mock("react-native", () => {
+    const RN = jest.requireActual("react-native");
+    RN.NativeModules.RNCWebView = { isFileUploadSupported: jest.fn(() => true) };
+    return RN;
+});
+
 jest.mock("react-native/Libraries/Utilities/Platform", () => {
     const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
     Platform.OS = "ios";
