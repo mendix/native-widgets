@@ -96,6 +96,7 @@ exports[`Popup menu renders 1`] = `
                 "overflow": "hidden",
               }
             }
+            testID="popup-menu_menu"
           >
             <View
               accessibilityState={
@@ -264,6 +265,7 @@ exports[`Popup menu renders custom items 1`] = `
                 "overflow": "hidden",
               }
             }
+            testID="popup-menu_menu"
           >
             <View
               accessible={true}
