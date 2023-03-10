@@ -3,7 +3,7 @@
 exports[`Legend doesn't render series when there is no series name 1`] = `
 <View
   style={
-    Object {
+    {
       "flexDirection": "row",
       "flexWrap": "wrap",
       "justifyContent": "center",
@@ -13,7 +13,7 @@ exports[`Legend doesn't render series when there is no series name 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "flexDirection": "row",
         "padding": 10,
@@ -22,11 +22,11 @@ exports[`Legend doesn't render series when there is no series name 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "green",
           },
-          Object {
+          {
             "height": 10,
             "marginRight": 5,
             "width": 10,
@@ -46,7 +46,7 @@ exports[`Legend doesn't render when there are no series 1`] = `null`;
 exports[`Legend renders 1`] = `
 <View
   style={
-    Object {
+    {
       "flexDirection": "row",
       "flexWrap": "wrap",
       "justifyContent": "center",
@@ -56,7 +56,7 @@ exports[`Legend renders 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "flexDirection": "row",
         "padding": 10,
@@ -65,11 +65,11 @@ exports[`Legend renders 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#0595DB",
           },
-          Object {
+          {
             "height": 10,
             "marginRight": 5,
             "width": 10,
@@ -83,7 +83,7 @@ exports[`Legend renders 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "flexDirection": "row",
         "padding": 10,
@@ -92,11 +92,11 @@ exports[`Legend renders 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "green",
           },
-          Object {
+          {
             "height": 10,
             "marginRight": 5,
             "width": 10,

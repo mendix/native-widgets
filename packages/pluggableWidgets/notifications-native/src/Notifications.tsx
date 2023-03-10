@@ -1,5 +1,5 @@
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging";
-import PushNotification from "react-native-push-notification";
+import PushNotification, { ReceivedNotification } from "react-native-push-notification";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
@@ -9,21 +9,9 @@ import "@react-native-firebase/app";
 import { ActionsType, NotificationsProps } from "../typings/NotificationsProps";
 
 // re-declare the library's type because: 1) it doesn't match library version 2) the definition file exports two symbols with same name.
-interface IPushNotification {
-    playSound?: boolean;
-    subText?: string;
-    userInteraction: boolean;
-    id?: number;
+interface IPushNotification extends ReceivedNotification {
     title: string;
     message: string;
-    channelId?: string;
-    foreground: boolean;
-    data: ActionData & {
-        actionIdentifier?: string; // iOS
-        userInteraction?: number; // iOS
-        "gcm.message_id"?: string; // iOS
-        "google.message_id"?: string; // Android
-    };
 }
 
 interface ActionData {
@@ -124,8 +112,6 @@ export function Notifications(props: NotificationsProps<undefined>): null {
         if (loadNotifications) {
             PushNotification.configure({
                 // called when user taps local notification
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error - see comment top top of file
                 onNotification(notification: IPushNotification) {
                     const messageId = notification.data[Platform.OS === "ios" ? "gcm.message_id" : "google.message_id"];
                     handleNotification(

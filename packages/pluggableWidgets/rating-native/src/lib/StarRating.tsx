@@ -1,7 +1,7 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
 // has an outdated dependency (react-native-vector-icons) that we now managed here in this widget.
-import { ClassicComponent, Component, createElement } from "react";
-import { View, StyleSheet, ViewStyle, ViewProps } from "react-native";
+import { ClassicComponentClass, Component, createElement } from "react";
+import { View, StyleSheet, ViewStyle } from "react-native";
 import { AnimatableProperties, View as AnimatableView } from "react-native-animatable";
 import type { StarRatingProps } from "react-native-star-rating";
 
@@ -50,10 +50,24 @@ const defaultProps = {
 interface Props extends StarRatingProps {
     iconSet: keyof typeof iconSets;
 }
+type AnimationFn = (duration: number) => Promise<{ finished: boolean }>;
+
+interface AnimationProps {
+    bounce: AnimationFn;
+    flash: AnimationFn;
+    jello: AnimationFn;
+    pulse: AnimationFn;
+    rotate: AnimationFn;
+    rubberBand: AnimationFn;
+    shake: AnimationFn;
+    swing: AnimationFn;
+    tada: AnimationFn;
+    wobble: AnimationFn;
+}
 
 class StarRating extends Component<Props> {
     static defaultProps: typeof defaultProps;
-    starRef: Array<ClassicComponent<AnimatableProperties<ViewStyle> & ViewProps, any> | null>;
+    starRef: Array<ClassicComponentClass<AnimatableProperties<ViewStyle>> & AnimationProps>;
 
     constructor(props: Props) {
         super(props);
@@ -110,7 +124,17 @@ class StarRating extends Component<Props> {
             }
 
             const starButtonElement = (
-                <AnimatableView key={i} ref={node => (this.starRef[i] = node)}>
+                <AnimatableView
+                    key={i}
+                    ref={node => {
+                        if (node) {
+                            this.starRef[i] = node as unknown as ClassicComponentClass<
+                                AnimatableProperties<ViewStyle>
+                            > &
+                                AnimationProps;
+                        }
+                    }}
+                >
                     <StarButton
                         activeOpacity={activeOpacity}
                         buttonStyle={buttonStyle}
@@ -122,7 +146,7 @@ class StarRating extends Component<Props> {
                                 for (let s = 0; s <= i; s++) {
                                     const component = this.starRef[s];
 
-                                    component?.[animation as keyof typeof component](
+                                    component?.[animation as keyof AnimationProps](
                                         MILLISECONDS_IN_SECOND + s * ANIMATION_DELAY_MS
                                     );
                                 }

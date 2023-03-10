@@ -1,10 +1,21 @@
 import { element, by } from "detox";
-import { expectToMatchScreenshot, resetDevice, setText, tapMenuItem } from "../../../../../detox/src/helpers";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    setText,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
 
 describe("Gallery", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Gallery");
         await element(by.id("galleryTextFilterButton")).tap();
+    });
+
+    afterEach(async () => {
+        await sessionLogout();
     });
 
     it("renders correctly", async () => {
@@ -24,9 +35,5 @@ describe("Gallery", () => {
         const filterTextBox = element(by.id("textFilter1-text-input"));
         await setText(filterTextBox, "Title 100");
         await expectToMatchScreenshot(gallery);
-    });
-
-    afterEach(async () => {
-        await resetDevice();
     });
 });

@@ -14,19 +14,13 @@ detox/apps
 detox/*.log
 **/results
 mendixProject
-**/e2e/diffs
+**/e2e/images/diffs
+**/e2e/images/actual
 **/screenshot
 **/screenshot-results
 **/tests/testProject
 **/pluggableWidgets/**/artifacts
 
-**/cypress/videos
-**/cypress/screenshots
-**/cypress-visual-report
-**/cypress-visual-screenshots/comparison
-**/cypress-visual-screenshots/diff
-
-tests
 .yarn/*
 !.yarn/patches
 !.yarn/plugins

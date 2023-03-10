@@ -1,13 +1,14 @@
-import { resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { expect, element, by } from "detox";
 
 describe("Activity indicator", () => {
     beforeAll(async () => {
+        await launchApp();
         await tapMenuItem("Activity indicator");
     });
 
     afterAll(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders the default indicator", async () => {

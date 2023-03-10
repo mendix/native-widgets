@@ -1,14 +1,21 @@
 import { Alert } from "../../../../../detox/src/Alert";
 import { expect, element, by } from "detox";
-import { expectToMatchScreenshot, resetDevice, setText, tapMenuItem } from "../../../../../detox/src/helpers";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    setText,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
 
 describe("Color picker", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Color picker");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders correctly after change", async () => {

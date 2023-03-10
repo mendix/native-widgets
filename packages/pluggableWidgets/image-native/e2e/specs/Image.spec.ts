@@ -1,14 +1,21 @@
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
-import { element, by, waitFor, expect } from "detox";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    sleep,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
+import { element, by, expect } from "detox";
 import { Alert } from "../../../../../detox/src/Alert";
 
 describe("Image", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Image");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders the static image", async () => {
@@ -22,8 +29,7 @@ describe("Image", () => {
         const btnImageDynamic = element(by.text("Image dynamic"));
         await btnImageDynamic.tap();
 
-        const dynamicImage = element(by.id("dynamicImageText"));
-        await waitFor(dynamicImage).toBeVisible().withTimeout(2000);
+        await sleep(10000);
 
         await expectToMatchScreenshot();
     });
@@ -39,10 +45,9 @@ describe("Image", () => {
         const btnImageUrl = element(by.text("Image url"));
         await btnImageUrl.tap();
 
-        const clickableImage = element(by.id("clickableImage$ImageSmallPressable"));
-        await waitFor(clickableImage).toBeVisible().withTimeout(2000);
         await expectToMatchScreenshot();
 
+        const clickableImage = element(by.id("clickableImage$ImageSmallPressable"));
         await clickableImage.tap();
 
         const alert = Alert();

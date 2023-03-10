@@ -1,13 +1,20 @@
-import { expectToMatchScreenshot, resetDevice, setText, tapMenuItem } from "../../../../../detox/src/helpers";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    setText,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
 import { element, by } from "detox";
 
 describe("Rating", () => {
     beforeAll(async () => {
+        await launchApp();
         await tapMenuItem("Rating");
     });
 
     afterAll(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders correctly after change", async () => {

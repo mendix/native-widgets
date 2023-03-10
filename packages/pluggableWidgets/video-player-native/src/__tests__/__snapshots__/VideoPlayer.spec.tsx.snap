@@ -1,108 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
-Array [
+[
   <Modal
     hardwareAccelerated={false}
     onRequestClose={[Function]}
     statusBarTranslucent={true}
     testID="fullscreen-modal"
     visible={false}
-  >
-    <View
-      style={
-        Object {
-          "backgroundColor": "black",
-          "justifyContent": "center",
-          "margin": 0,
-        }
-      }
-    >
-      <Video
-        accessible={true}
-        controls={true}
-        focusable={true}
-        muted={false}
-        onClick={[Function]}
-        onError={[Function]}
-        onLoad={[Function]}
-        onLoadStart={[Function]}
-        onProgress={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        paused={false}
-        repeat={false}
-        resizeMode="stretch"
-        source={
-          Object {
-            "uri": "https://mendix.com/video.mp4",
-          }
-        }
-        style={
-          Object {
-            "height": "100%",
-            "width": "100%",
-          }
-        }
-        testID="fullscreen-overlay"
-        useTextureView={false}
-      />
-      <View
-        accessible={true}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "rgba(0,0,0,0.5)",
-            "borderRadius": 1,
-            "justifyContent": "center",
-            "opacity": 1,
-            "padding": 2,
-            "position": "absolute",
-            "right": 10,
-            "top": "10%",
-          }
-        }
-        testID="btn-fullscreen-exit"
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            Array [
-              Object {
-                "color": "white",
-                "fontSize": 22,
-              },
-              undefined,
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
-  </Modal>,
+  />,
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "aspectRatio": undefined,
         "backgroundColor": "black",
@@ -131,12 +40,12 @@ Array [
       repeat={false}
       resizeMode="stretch"
       source={
-        Object {
+        {
           "uri": "https://mendix.com/video.mp4",
         }
       }
       style={
-        Object {
+        {
           "height": 0,
         }
       }
@@ -145,6 +54,7 @@ Array [
     />
     <View
       accessible={true}
+      collapsable={false}
       focusable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
@@ -154,7 +64,7 @@ Array [
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
           "backgroundColor": "rgba(0,0,0,0.5)",
           "borderRadius": 1,
@@ -172,18 +82,18 @@ Array [
         allowFontScaling={false}
         selectable={false}
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "white",
               "fontSize": 22,
             },
             undefined,
-            Object {
-              "fontFamily": "Material Icons",
+            {
+              "fontFamily": "MaterialIcons",
               "fontStyle": "normal",
               "fontWeight": "normal",
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -195,61 +105,17 @@ Array [
 `;
 
 exports[`VideoPlayer VideoPlayerAndroid render video without controls if showControls is set to false 1`] = `
-Array [
+[
   <Modal
     hardwareAccelerated={false}
     onRequestClose={[Function]}
     statusBarTranslucent={true}
     testID="fullscreen-modal"
     visible={false}
-  >
-    <View
-      style={
-        Object {
-          "backgroundColor": "black",
-          "justifyContent": "center",
-          "margin": 0,
-        }
-      }
-    >
-      <Video
-        accessible={true}
-        controls={false}
-        focusable={true}
-        muted={false}
-        onClick={[Function]}
-        onError={[Function]}
-        onLoad={[Function]}
-        onLoadStart={[Function]}
-        onProgress={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        paused={false}
-        repeat={false}
-        resizeMode="stretch"
-        source={
-          Object {
-            "uri": "https://mendix.com/video.mp4",
-          }
-        }
-        style={
-          Object {
-            "height": "100%",
-            "width": "100%",
-          }
-        }
-        testID="fullscreen-overlay"
-        useTextureView={false}
-      />
-    </View>
-  </Modal>,
+  />,
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "aspectRatio": undefined,
         "backgroundColor": "black",
@@ -278,12 +144,12 @@ Array [
       repeat={false}
       resizeMode="stretch"
       source={
-        Object {
+        {
           "uri": "https://mendix.com/video.mp4",
         }
       }
       style={
-        Object {
+        {
           "height": 0,
         }
       }
@@ -295,197 +161,423 @@ Array [
 `;
 
 exports[`VideoPlayer hides the loading indicator after load 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "center",
-      "aspectRatio": undefined,
-      "backgroundColor": "black",
-      "justifyContent": "center",
-      "width": "100%",
-    }
-  }
->
-  <Video
-    accessible={true}
-    controls={true}
-    focusable={true}
-    muted={false}
-    onClick={[Function]}
-    onError={[Function]}
-    onLoad={[Function]}
-    onLoadStart={[Function]}
-    onProgress={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    paused={true}
-    repeat={false}
-    resizeMode="stretch"
-    source={
-      Object {
-        "uri": "https://mendix.com/video.mp4",
-      }
-    }
+[
+  <Modal
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    statusBarTranslucent={true}
+    testID="fullscreen-modal"
+    visible={false}
+  />,
+  <View
     style={
-      Object {
-        "height": undefined,
+      {
+        "alignItems": "center",
+        "aspectRatio": undefined,
+        "backgroundColor": "black",
+        "justifyContent": "center",
         "width": "100%",
       }
     }
-    testID="video-player-test"
-    useTextureView={false}
-  />
-</View>
+  >
+    <Video
+      accessible={true}
+      controls={true}
+      focusable={true}
+      muted={false}
+      onClick={[Function]}
+      onError={[Function]}
+      onLoad={[Function]}
+      onLoadStart={[Function]}
+      onProgress={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      paused={true}
+      repeat={false}
+      resizeMode="stretch"
+      source={
+        {
+          "uri": "https://mendix.com/video.mp4",
+        }
+      }
+      style={
+        {
+          "height": undefined,
+          "width": "100%",
+        }
+      }
+      testID="video-player-test"
+      useTextureView={false}
+    />
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0,0,0,0.5)",
+          "borderRadius": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 2,
+          "position": "absolute",
+          "right": 10,
+          "top": "10%",
+        }
+      }
+      testID="btn-fullscreen"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "white",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "MaterialIcons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>,
+]
 `;
 
 exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "center",
-      "aspectRatio": 1.9494584837545126,
-      "backgroundColor": "black",
-      "justifyContent": "center",
-    }
-  }
->
-  <Video
-    accessible={true}
-    controls={true}
-    focusable={true}
-    muted={false}
-    onClick={[Function]}
-    onError={[Function]}
-    onLoad={[Function]}
-    onLoadStart={[Function]}
-    onProgress={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    paused={true}
-    repeat={false}
-    resizeMode="contain"
-    source={
-      Object {
-        "uri": "https://mendix.com/video.mp4",
-      }
-    }
+[
+  <Modal
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    statusBarTranslucent={true}
+    testID="fullscreen-modal"
+    visible={false}
+  />,
+  <View
     style={
-      Object {
+      {
+        "alignItems": "center",
         "aspectRatio": 1.9494584837545126,
-        "height": undefined,
-        "width": "100%",
+        "backgroundColor": "black",
+        "justifyContent": "center",
       }
     }
-    testID="video-player-test"
-    useTextureView={false}
-  />
-</View>
+  >
+    <Video
+      accessible={true}
+      controls={true}
+      focusable={true}
+      muted={false}
+      onClick={[Function]}
+      onError={[Function]}
+      onLoad={[Function]}
+      onLoadStart={[Function]}
+      onProgress={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      paused={true}
+      repeat={false}
+      resizeMode="contain"
+      source={
+        {
+          "uri": "https://mendix.com/video.mp4",
+        }
+      }
+      style={
+        {
+          "aspectRatio": 1.9494584837545126,
+          "height": undefined,
+          "width": "100%",
+        }
+      }
+      testID="video-player-test"
+      useTextureView={false}
+    />
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0,0,0,0.5)",
+          "borderRadius": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 2,
+          "position": "absolute",
+          "right": 10,
+          "top": "10%",
+        }
+      }
+      testID="btn-fullscreen"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "white",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "MaterialIcons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>,
+]
 `;
 
 exports[`VideoPlayer renders a loading indicator 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "center",
-      "aspectRatio": undefined,
-      "backgroundColor": "black",
-      "justifyContent": "center",
-      "width": "100%",
-    }
-  }
->
-  <Video
-    accessible={true}
-    controls={true}
-    focusable={true}
-    muted={false}
-    onClick={[Function]}
-    onError={[Function]}
-    onLoad={[Function]}
-    onLoadStart={[Function]}
-    onProgress={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    paused={true}
-    repeat={false}
-    resizeMode="stretch"
-    source={
-      Object {
-        "uri": "https://mendix.com/video.mp4",
-      }
-    }
+[
+  <Modal
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    statusBarTranslucent={true}
+    testID="fullscreen-modal"
+    visible={false}
+  />,
+  <View
     style={
-      Object {
-        "height": 0,
+      {
+        "alignItems": "center",
+        "aspectRatio": undefined,
+        "backgroundColor": "black",
+        "justifyContent": "center",
+        "width": "100%",
       }
     }
-    testID="video-player-test"
-    useTextureView={false}
-  />
-</View>
+  >
+    <Video
+      accessible={true}
+      controls={true}
+      focusable={true}
+      muted={false}
+      onClick={[Function]}
+      onError={[Function]}
+      onLoad={[Function]}
+      onLoadStart={[Function]}
+      onProgress={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      paused={true}
+      repeat={false}
+      resizeMode="stretch"
+      source={
+        {
+          "uri": "https://mendix.com/video.mp4",
+        }
+      }
+      style={
+        {
+          "height": 0,
+        }
+      }
+      testID="video-player-test"
+      useTextureView={false}
+    />
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0,0,0,0.5)",
+          "borderRadius": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 2,
+          "position": "absolute",
+          "right": 10,
+          "top": "10%",
+        }
+      }
+      testID="btn-fullscreen"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "white",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "MaterialIcons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>,
+]
 `;
 
 exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
-<View
-  style={
-    Object {
-      "alignItems": "center",
-      "aspectRatio": undefined,
-      "backgroundColor": "black",
-      "justifyContent": "center",
-      "width": "100%",
-    }
-  }
->
-  <ActivityIndicator
-    animating={true}
-    color="white"
-    hidesWhenStopped={true}
-    size="large"
-  />
-  <Video
-    accessible={true}
-    controls={true}
-    focusable={true}
-    muted={false}
-    onClick={[Function]}
-    onError={[Function]}
-    onLoad={[Function]}
-    onLoadStart={[Function]}
-    onProgress={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    paused={true}
-    repeat={false}
-    resizeMode="stretch"
-    source={
-      Object {
-        "uri": "https://mendix.com/video.mp4",
-      }
-    }
+[
+  <Modal
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    statusBarTranslucent={true}
+    testID="fullscreen-modal"
+    visible={false}
+  />,
+  <View
     style={
-      Object {
-        "height": 0,
+      {
+        "alignItems": "center",
+        "aspectRatio": undefined,
+        "backgroundColor": "black",
+        "justifyContent": "center",
+        "width": "100%",
       }
     }
-    testID="video-player-test"
-    useTextureView={false}
-  />
-</View>
+  >
+    <ActivityIndicator
+      color="white"
+      size="large"
+    />
+    <Video
+      accessible={true}
+      controls={true}
+      focusable={true}
+      muted={false}
+      onClick={[Function]}
+      onError={[Function]}
+      onLoad={[Function]}
+      onLoadStart={[Function]}
+      onProgress={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      paused={true}
+      repeat={false}
+      resizeMode="stretch"
+      source={
+        {
+          "uri": "https://mendix.com/video.mp4",
+        }
+      }
+      style={
+        {
+          "height": 0,
+        }
+      }
+      testID="video-player-test"
+      useTextureView={false}
+    />
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0,0,0,0.5)",
+          "borderRadius": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "padding": 2,
+          "position": "absolute",
+          "right": 10,
+          "top": "10%",
+        }
+      }
+      testID="btn-fullscreen"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "white",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "MaterialIcons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>,
+]
 `;

@@ -1,6 +1,6 @@
 import NetInfo, { NetInfoSubscription, NetInfoState } from "@react-native-community/netinfo";
 import { Component } from "react";
-import { AppState, AppStateStatus } from "react-native";
+import { AppState, AppStateStatus, NativeEventSubscription } from "react-native";
 
 import { AppEventsProps } from "../typings/AppEventsProps";
 import { executeAction } from "@mendix/piw-utils-internal";
@@ -20,10 +20,11 @@ export class AppEvents extends Component<Props> {
     private onLoadTriggered = false;
     private timeoutHandle?: any;
     private unsubscribeNetworkEventListener?: NetInfoSubscription;
+    unsubscribeAppStateChangeHandler?: NativeEventSubscription;
 
     async componentDidMount(): Promise<void> {
         if (this.props.onResumeAction) {
-            AppState.addEventListener("change", this.onAppStateChangeHandler);
+            this.unsubscribeAppStateChangeHandler = AppState.addEventListener("change", this.onAppStateChangeHandler);
         }
 
         if (this.props.onTimeoutAction) {
@@ -48,7 +49,7 @@ export class AppEvents extends Component<Props> {
         }
 
         if (this.props.onResumeAction) {
-            AppState.removeEventListener("change", this.onAppStateChangeHandler);
+            this.unsubscribeAppStateChangeHandler?.remove();
         }
 
         if (this.unsubscribeNetworkEventListener) {

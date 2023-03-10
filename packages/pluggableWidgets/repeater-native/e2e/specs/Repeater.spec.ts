@@ -1,12 +1,13 @@
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 
 describe("Repeater", () => {
     beforeAll(async () => {
+        await launchApp();
         await tapMenuItem("Repeater");
     });
 
     afterAll(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders the default repeater", async () => {

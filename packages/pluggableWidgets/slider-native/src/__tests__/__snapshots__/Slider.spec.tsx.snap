@@ -3,13 +3,13 @@
 exports[`Slider renders 1`] = `
 <View
   onLayout={[Function]}
-  style={Object {}}
+  style={{}}
   testID="slider-test"
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "height": 50,
           "justifyContent": "center",
           "position": "relative",
@@ -20,11 +20,11 @@ exports[`Slider renders 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flexDirection": "row",
           },
-          Object {
+          {
             "width": 280,
           },
         ]
@@ -32,19 +32,18 @@ exports[`Slider renders 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
-              "backgroundColor": "#A7A7A7",
-              "borderRadius": 2,
+          [
+            {
+              "backgroundColor": "#CECECE",
               "height": 2,
             },
-            Object {
-              "backgroundColor": "rgba(0,122,255,0.3)",
+            {
+              "backgroundColor": "rgba(98,0,238, 0.3)",
             },
-            Object {
-              "backgroundColor": "rgb(0,122,255)",
+            {
+              "backgroundColor": "rgb(98,0,238)",
             },
-            Object {
+            {
               "width": 140,
             },
           ]
@@ -52,17 +51,16 @@ exports[`Slider renders 1`] = `
       />
       <View
         style={
-          Array [
-            Object {
-              "backgroundColor": "#A7A7A7",
-              "borderRadius": 2,
+          [
+            {
+              "backgroundColor": "#CECECE",
               "height": 2,
             },
-            Object {
-              "backgroundColor": "rgba(0,122,255,0.3)",
+            {
+              "backgroundColor": "rgba(98,0,238, 0.3)",
             },
             undefined,
-            Object {
+            {
               "width": 140,
             },
           ]
@@ -70,8 +68,8 @@ exports[`Slider renders 1`] = `
       />
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "backgroundColor": "transparent",
               "height": 48,
@@ -79,7 +77,7 @@ exports[`Slider renders 1`] = `
               "position": "absolute",
               "width": 48,
             },
-            Object {
+            {
               "left": 116,
               "top": -24,
             },
@@ -102,14 +100,14 @@ exports[`Slider renders 1`] = `
           onStartShouldSetResponder={[Function]}
           onStartShouldSetResponderCapture={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "alignSelf": "stretch",
                 "backgroundColor": "transparent",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "borderRadius": 15,
               },
             ]
@@ -129,25 +127,19 @@ exports[`Slider renders 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
-                    "backgroundColor": "#FFFFFF",
-                    "borderColor": "#DDDDDD",
-                    "borderRadius": 30,
-                    "borderWidth": 1,
-                    "height": 30,
-                    "shadowColor": "#000000",
-                    "shadowOffset": Object {
-                      "height": 3,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.2,
-                    "shadowRadius": 1,
-                    "width": 30,
+                [
+                  {
+                    "backgroundColor": "#0D8675",
+                    "borderRadius": 12,
+                    "height": 12,
+                    "width": 12,
                   },
-                  Array [
+                  [
                     undefined,
-                    Object {},
+                    {
+                      "backgroundColor": "rgb(98,0,238)",
+                      "borderColor": "rgb(98,0,238)",
+                    },
                   ],
                   undefined,
                   undefined,

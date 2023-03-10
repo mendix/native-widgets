@@ -24,6 +24,6 @@
     "@mendix/pluggable-widgets-tools": "^9.0.0",
     "concurrently": "^6.0.0",
     "copy-and-watch": "^0.1.5",
-    "ts-node": "^9.0.0"
+    "ts-node": "^10.9.1"
   }
 }

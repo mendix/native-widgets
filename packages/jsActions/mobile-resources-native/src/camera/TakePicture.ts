@@ -82,19 +82,19 @@ export async function TakePicture(
                         }
 
                         if (nativeVersionMajor === 2) {
-                            response = response as ImagePickerV2Response;
+                            const responseV2 = response as ImagePickerV2Response;
 
-                            if (response.error) {
-                                const unhandledError = handleImagePickerV2Error(response.error);
+                            if (responseV2.error) {
+                                const unhandledError = handleImagePickerV2Error(responseV2.error);
 
                                 if (!unhandledError) {
                                     return resolve(undefined);
                                 }
 
-                                return reject(new Error(response.error));
+                                return reject(new Error(responseV2.error));
                             }
 
-                            return resolve(response.uri);
+                            return resolve(responseV2.uri);
                         }
 
                         response = response as ImagePickerResponse;
@@ -105,7 +105,7 @@ export async function TakePicture(
                             return resolve(undefined);
                         }
 
-                        return resolve(response.assets[0].uri);
+                        return resolve(response?.assets?.[0].uri);
                     })
                 )
                 .catch(error => reject(error));

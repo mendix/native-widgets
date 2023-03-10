@@ -1,7 +1,7 @@
 {
   "name": "bar-chart-native",
   "widgetName": "BarChart",
-  "version": "2.2.1",
+  "version": "3.0.0",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "victory-native": "^35.5.5"
+    "victory-native": "^36.6.8"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",

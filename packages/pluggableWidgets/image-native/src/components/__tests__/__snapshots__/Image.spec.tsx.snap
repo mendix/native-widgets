@@ -15,9 +15,9 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -29,7 +29,7 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
     align="xMidYMid"
     bbHeight={9999}
     bbWidth={9999}
-    color={4278190080}
+    color={-16777216}
     focusable={false}
     height={9999}
     id="Layer_1"
@@ -37,16 +37,16 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
     minX={0}
     minY={0}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "borderWidth": 0,
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 1,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -54,7 +54,7 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
             "minWidth": 8,
           },
         ],
-        Object {
+        {
           "flex": 0,
           "height": 9999,
           "width": 9999,
@@ -62,8 +62,8 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
       ]
     }
     testID="Image1$SvgUri"
-    tintColor={4278190080}
-    uri="this/is/a/fake/path.svg"
+    tintColor={-16777216}
+    uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
     version={1.1}
@@ -87,12 +87,12 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image 1`
 <View
   onLayout={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "height": "100%",
         "width": "100%",
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -102,7 +102,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image 1`
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -122,12 +122,12 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
 <View
   onLayout={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "height": "100%",
         "width": "100%",
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -137,7 +137,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.5,
@@ -157,12 +157,12 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
 <View
   onLayout={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "height": "100%",
         "width": "100%",
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -172,7 +172,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -189,7 +189,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
 `;
 
 exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
-Array [
+[
   <View
     accessible={true}
     collapsable={false}
@@ -204,9 +204,9 @@ Array [
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {},
-        Object {
+      [
+        {},
+        {
           "alignItems": "center",
           "justifyContent": "center",
         },
@@ -218,7 +218,7 @@ Array [
       align="xMidYMid"
       bbHeight={9999}
       bbWidth={9999}
-      color={4278190080}
+      color={-16777216}
       focusable={false}
       height={9999}
       id="Layer_1"
@@ -226,16 +226,16 @@ Array [
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 1,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -243,7 +243,7 @@ Array [
               "minWidth": 8,
             },
           ],
-          Object {
+          {
             "flex": 0,
             "height": 9999,
             "width": 9999,
@@ -251,8 +251,8 @@ Array [
         ]
       }
       testID="Image1$SvgUri"
-      tintColor={4278190080}
-      uri="this/is/a/fake/path.svg"
+      tintColor={-16777216}
+      uri="file:///this/is/a/fake/path.svg"
       vbHeight={9999}
       vbWidth={9999}
       version={1.1}
@@ -276,7 +276,7 @@ Array [
     onDismiss={[Function]}
     onRequestClose={[Function]}
     supportedOrientations={
-      Array [
+      [
         "portrait",
         "portrait-upside-down",
         "landscape",
@@ -301,7 +301,7 @@ Array [
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
           "backgroundColor": "rgba(0,0,0,0.8)",
           "height": "100%",
@@ -325,7 +325,7 @@ Array [
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "height": 9999,
             "width": 9999,
           }
@@ -335,7 +335,7 @@ Array [
           align="xMidYMid"
           bbHeight={9999}
           bbWidth={9999}
-          color={4278190080}
+          color={-16777216}
           focusable={false}
           height={9999}
           id="Layer_1"
@@ -343,16 +343,16 @@ Array [
           minX={0}
           minY={0}
           style={
-            Array [
-              Object {
+            [
+              {
                 "backgroundColor": "transparent",
                 "borderWidth": 0,
               },
-              Array [
-                Object {
+              [
+                {
                   "aspectRatio": 1,
                 },
-                Object {
+                {
                   "flexGrow": 1,
                   "maxHeight": "100%",
                   "maxWidth": "100%",
@@ -360,7 +360,7 @@ Array [
                   "minWidth": 8,
                 },
               ],
-              Object {
+              {
                 "flex": 0,
                 "height": 9999,
                 "width": 9999,
@@ -368,8 +368,8 @@ Array [
             ]
           }
           testID="Image1$SvgUri"
-          tintColor={4278190080}
-          uri="this/is/a/fake/path.svg"
+          tintColor={-16777216}
+          uri="file:///this/is/a/fake/path.svg"
           vbHeight={9999}
           vbWidth={9999}
           version={1.1}
@@ -407,9 +407,9 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -421,7 +421,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
     align="xMidYMid"
     bbHeight={100}
     bbWidth={100}
-    color={4278190080}
+    color={-16777216}
     focusable={false}
     height={100}
     id="Layer_1"
@@ -429,16 +429,16 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
     minX={0}
     minY={0}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "borderWidth": 0,
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 1,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -446,7 +446,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
             "minWidth": 8,
           },
         ],
-        Object {
+        {
           "flex": 0,
           "height": 100,
           "width": 100,
@@ -454,8 +454,8 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
       ]
     }
     testID="Image1$SvgUri"
-    tintColor={4278190080}
-    uri="this/is/a/fake/path.svg"
+    tintColor={-16777216}
+    uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
     version={1.1}
@@ -490,9 +490,9 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -504,7 +504,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
     align="xMidYMid"
     bbHeight={100}
     bbWidth={100}
-    color={4278190080}
+    color={-16777216}
     focusable={false}
     height={100}
     id="Layer_1"
@@ -512,16 +512,16 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
     minX={0}
     minY={0}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "borderWidth": 0,
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 1,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -529,7 +529,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
             "minWidth": 8,
           },
         ],
-        Object {
+        {
           "flex": 0,
           "height": 100,
           "width": 100,
@@ -537,8 +537,8 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
       ]
     }
     testID="Image1$SvgUri"
-    tintColor={4278190080}
-    uri="this/is/a/fake/path.svg"
+    tintColor={-16777216}
+    uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
     version={1.1}
@@ -573,9 +573,9 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -585,19 +585,19 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -611,13 +611,13 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -634,12 +634,12 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
 exports[`Widget Dynamic Image renders the structure as a background image 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 1111,
         "width": 2222,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -649,7 +649,7 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -661,19 +661,19 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {
+            {
               "height": 1111,
               "width": 2222,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -687,13 +687,13 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
       <FastImageView
         resizeMode="contain"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -714,12 +714,12 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
 exports[`Widget Dynamic Image renders the structure as a background image with 50% opacity 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 1111,
         "width": 2222,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -729,7 +729,7 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.5,
@@ -741,19 +741,19 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {
+            {
               "height": 1111,
               "width": 2222,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -767,13 +767,13 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
       <FastImageView
         resizeMode="contain"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -794,12 +794,12 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
 exports[`Widget Dynamic Image renders the structure as a background image with a different resizeMode 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 1111,
         "width": 2222,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -809,7 +809,7 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -821,19 +821,19 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {
+            {
               "height": 1111,
               "width": 2222,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -847,13 +847,13 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
       <FastImageView
         resizeMode="cover"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -872,7 +872,7 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
 `;
 
 exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
-Array [
+[
   <View
     accessible={true}
     collapsable={false}
@@ -888,14 +888,14 @@ Array [
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "aspectRatio": 2,
           "opacity": 0,
           "position": "absolute",
           "width": "100%",
         },
-        Object {
+        {
           "alignItems": "center",
           "justifyContent": "center",
         },
@@ -905,16 +905,16 @@ Array [
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {},
-            Object {
+            {},
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -928,13 +928,13 @@ Array [
       <FastImageView
         resizeMode="contain"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -952,7 +952,7 @@ Array [
     onDismiss={[Function]}
     onRequestClose={[Function]}
     supportedOrientations={
-      Array [
+      [
         "portrait",
         "portrait-upside-down",
         "landscape",
@@ -977,7 +977,7 @@ Array [
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
           "backgroundColor": "rgba(0,0,0,0.8)",
           "height": "100%",
@@ -1001,7 +1001,7 @@ Array [
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
@@ -1009,19 +1009,19 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
-              Array [
-                Object {
+              [
+                {
                   "aspectRatio": 2,
                 },
-                Object {
+                {
                   "height": 1111,
                   "width": 2222,
                 },
-                Object {
+                {
                   "flexGrow": 1,
                   "maxHeight": "100%",
                   "maxWidth": "100%",
@@ -1035,13 +1035,13 @@ Array [
           <FastImageView
             resizeMode="contain"
             source={
-              Object {
+              {
                 "height": 1111,
                 "width": 2222,
               }
             }
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
@@ -1073,9 +1073,9 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1085,19 +1085,19 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 100,
             "width": 200,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -1111,13 +1111,13 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -1146,9 +1146,9 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1158,19 +1158,19 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 50,
             "width": 100,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -1184,13 +1184,13 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -1219,9 +1219,9 @@ exports[`Widget Icon type: icon/glyph renders the structure with an icon and def
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1236,18 +1236,18 @@ exports[`Widget Icon type: icon/glyph renders the structure with an icon and def
       allowFontScaling={false}
       selectable={false}
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "black",
             "fontSize": 16,
           },
           undefined,
-          Object {
-            "fontFamily": "GLYPHICONS Halflings",
+          {
+            "fontFamily": "glyphicons-halflings-regular",
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          Object {},
+          {},
         ]
       }
     >
@@ -1272,9 +1272,9 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1284,19 +1284,19 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -1310,13 +1310,13 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -1331,7 +1331,7 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
 `;
 
 exports[`Widget Icon type: image/staticImage renders the structure inside a modal 1`] = `
-Array [
+[
   <View
     accessible={true}
     collapsable={false}
@@ -1346,9 +1346,9 @@ Array [
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {},
-        Object {
+      [
+        {},
+        {
           "alignItems": "center",
           "justifyContent": "center",
         },
@@ -1358,19 +1358,19 @@ Array [
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {
+            {
               "height": 1111,
               "width": 2222,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -1384,13 +1384,13 @@ Array [
       <FastImageView
         resizeMode="contain"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -1408,7 +1408,7 @@ Array [
     onDismiss={[Function]}
     onRequestClose={[Function]}
     supportedOrientations={
-      Array [
+      [
         "portrait",
         "portrait-upside-down",
         "landscape",
@@ -1433,7 +1433,7 @@ Array [
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
           "backgroundColor": "rgba(0,0,0,0.8)",
           "height": "100%",
@@ -1457,7 +1457,7 @@ Array [
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
@@ -1465,19 +1465,19 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
-              Array [
-                Object {
+              [
+                {
                   "aspectRatio": 2,
                 },
-                Object {
+                {
                   "height": 1111,
                   "width": 2222,
                 },
-                Object {
+                {
                   "flexGrow": 1,
                   "maxHeight": "100%",
                   "maxWidth": "100%",
@@ -1491,13 +1491,13 @@ Array [
           <FastImageView
             resizeMode="contain"
             source={
-              Object {
+              {
                 "height": 1111,
                 "width": 2222,
               }
             }
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
@@ -1529,9 +1529,9 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1541,19 +1541,19 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           },
-          Object {
+          {
             "flexGrow": 1,
             "left": 1,
             "maxHeight": "100%",
@@ -1568,13 +1568,13 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -1603,9 +1603,9 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1617,7 +1617,7 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
     align="xMidYMid"
     bbHeight={15}
     bbWidth={15}
-    color={4278190080}
+    color={-16777216}
     focusable={false}
     height={15}
     id="Layer_1"
@@ -1625,16 +1625,16 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
     minX={0}
     minY={0}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "borderWidth": 0,
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 1,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -1642,7 +1642,7 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
             "minWidth": 8,
           },
         ],
-        Object {
+        {
           "flex": 0,
           "height": 15,
           "width": 15,
@@ -1650,15 +1650,15 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
       ]
     }
     testID="Image1$SvgXml"
-    tintColor={4278190080}
+    tintColor={-16777216}
     vbHeight={15}
     vbWidth={15}
     version={1.1}
     width={15}
     x="0px"
-    xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+    xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
     xmlSpace="preserve"
@@ -1678,12 +1678,12 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
 exports[`Widget Static Image SVG renders the structure as a background image 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 15,
         "width": 15,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1693,7 +1693,7 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -1707,7 +1707,7 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
       align="xMidYMid"
       bbHeight={15}
       bbWidth={15}
-      color={4278190080}
+      color={-16777216}
       focusable={false}
       height={15}
       id="Layer_1"
@@ -1715,16 +1715,16 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 1,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -1732,7 +1732,7 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
               "minWidth": 8,
             },
           ],
-          Object {
+          {
             "flex": 0,
             "height": 15,
             "width": 15,
@@ -1740,15 +1740,15 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={4278190080}
+      tintColor={-16777216}
       vbHeight={15}
       vbWidth={15}
       version={1.1}
       width={15}
       x="0px"
-      xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+      xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
       xmlSpace="preserve"
@@ -1772,12 +1772,12 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
 exports[`Widget Static Image SVG renders the structure as a background image with 50% opacity 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 15,
         "width": 15,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1787,7 +1787,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.5,
@@ -1801,7 +1801,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       align="xMidYMid"
       bbHeight={15}
       bbWidth={15}
-      color={4278190080}
+      color={-16777216}
       focusable={false}
       height={15}
       id="Layer_1"
@@ -1809,16 +1809,16 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 1,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -1826,7 +1826,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
               "minWidth": 8,
             },
           ],
-          Object {
+          {
             "flex": 0,
             "height": 15,
             "width": 15,
@@ -1834,15 +1834,15 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={4278190080}
+      tintColor={-16777216}
       vbHeight={15}
       vbWidth={15}
       version={1.1}
       width={15}
       x="0px"
-      xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+      xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
       xmlSpace="preserve"
@@ -1866,12 +1866,12 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
 exports[`Widget Static Image SVG renders the structure as a background image with a different resizeMode 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 15,
         "width": 15,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -1881,7 +1881,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -1895,7 +1895,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       align="xMidYMid"
       bbHeight={15}
       bbWidth={15}
-      color={4278190080}
+      color={-16777216}
       focusable={false}
       height={15}
       id="Layer_1"
@@ -1903,16 +1903,16 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 1,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -1920,7 +1920,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
               "minWidth": 8,
             },
           ],
-          Object {
+          {
             "flex": 0,
             "height": 15,
             "width": 15,
@@ -1928,15 +1928,15 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={4278190080}
+      tintColor={-16777216}
       vbHeight={15}
       vbWidth={15}
       version={1.1}
       width={15}
       x="0px"
-      xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+      xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
       xmlSpace="preserve"
@@ -1958,7 +1958,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
 `;
 
 exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
-Array [
+[
   <View
     accessible={true}
     collapsable={false}
@@ -1974,14 +1974,14 @@ Array [
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "aspectRatio": 1,
           "opacity": 0,
           "position": "absolute",
           "width": "100%",
         },
-        Object {
+        {
           "alignItems": "center",
           "justifyContent": "center",
         },
@@ -1993,23 +1993,23 @@ Array [
       align="xMidYMid"
       bbHeight="100%"
       bbWidth="100%"
-      color={4278190080}
+      color={-16777216}
       focusable={false}
       id="Layer_1"
       meetOrSlice={0}
       minX={0}
       minY={0}
       style={
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 1,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -2017,7 +2017,7 @@ Array [
               "minWidth": 8,
             },
           ],
-          Object {
+          {
             "flex": 0,
             "height": "100%",
             "width": "100%",
@@ -2025,14 +2025,14 @@ Array [
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={4278190080}
+      tintColor={-16777216}
       vbHeight={15}
       vbWidth={15}
       version={1.1}
       x="0px"
-      xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+      xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
       xmlSpace="preserve"
@@ -2053,7 +2053,7 @@ Array [
     onDismiss={[Function]}
     onRequestClose={[Function]}
     supportedOrientations={
-      Array [
+      [
         "portrait",
         "portrait-upside-down",
         "landscape",
@@ -2078,7 +2078,7 @@ Array [
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
           "backgroundColor": "rgba(0,0,0,0.8)",
           "height": "100%",
@@ -2102,7 +2102,7 @@ Array [
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "height": 15,
             "width": 15,
           }
@@ -2112,7 +2112,7 @@ Array [
           align="xMidYMid"
           bbHeight={15}
           bbWidth={15}
-          color={4278190080}
+          color={-16777216}
           focusable={false}
           height={15}
           id="Layer_1"
@@ -2120,16 +2120,16 @@ Array [
           minX={0}
           minY={0}
           style={
-            Array [
-              Object {
+            [
+              {
                 "backgroundColor": "transparent",
                 "borderWidth": 0,
               },
-              Array [
-                Object {
+              [
+                {
                   "aspectRatio": 1,
                 },
-                Object {
+                {
                   "flexGrow": 1,
                   "maxHeight": "100%",
                   "maxWidth": "100%",
@@ -2137,7 +2137,7 @@ Array [
                   "minWidth": 8,
                 },
               ],
-              Object {
+              {
                 "flex": 0,
                 "height": 15,
                 "width": 15,
@@ -2145,15 +2145,15 @@ Array [
             ]
           }
           testID="Image1$SvgXml"
-          tintColor={4278190080}
+          tintColor={-16777216}
           vbHeight={15}
           vbWidth={15}
           version={1.1}
           width={15}
           x="0px"
-          xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+          xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
           xmlSpace="preserve"
@@ -2188,9 +2188,9 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2202,7 +2202,7 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
     align="xMidYMid"
     bbHeight={15}
     bbWidth={15}
-    color={4278190080}
+    color={-16777216}
     focusable={false}
     height={15}
     id="Layer_1"
@@ -2210,16 +2210,16 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
     minX={0}
     minY={0}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "borderWidth": 0,
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 1,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -2227,7 +2227,7 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
             "minWidth": 8,
           },
         ],
-        Object {
+        {
           "flex": 0,
           "height": 15,
           "width": 15,
@@ -2235,15 +2235,15 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
       ]
     }
     testID="Image1$SvgXml"
-    tintColor={4278190080}
+    tintColor={-16777216}
     vbHeight={15}
     vbWidth={15}
     version={1.1}
     width={15}
     x="0px"
-    xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+    xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
     xmlSpace="preserve"
@@ -2275,9 +2275,9 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2289,7 +2289,7 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
     align="xMidYMid"
     bbHeight={15}
     bbWidth={15}
-    color={4278190080}
+    color={-16777216}
     focusable={false}
     height={15}
     id="Layer_1"
@@ -2297,16 +2297,16 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
     minX={0}
     minY={0}
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "transparent",
           "borderWidth": 0,
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 1,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -2314,7 +2314,7 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
             "minWidth": 8,
           },
         ],
-        Object {
+        {
           "flex": 0,
           "height": 15,
           "width": 15,
@@ -2322,15 +2322,15 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
       ]
     }
     testID="Image1$SvgXml"
-    tintColor={4278190080}
+    tintColor={-16777216}
     vbHeight={15}
     vbWidth={15}
     version={1.1}
     width={15}
     x="0px"
-    xml="<svg version=\\"1.1\\" id=\\"Layer_1\\" xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" x=\\"0px\\" y=\\"0px\\"
-	 width=\\"15px\\" height=\\"15px\\" viewBox=\\"0 0 15 15\\" style=\\"enable-background:new 0 0 15 15;\\" xml:space=\\"preserve\\">
-<path d=\\"M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z\\"/>
+    xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
     xmlSpace="preserve"
@@ -2362,9 +2362,9 @@ exports[`Widget Static Image renders the structure 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2374,19 +2374,19 @@ exports[`Widget Static Image renders the structure 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -2400,13 +2400,13 @@ exports[`Widget Static Image renders the structure 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -2423,12 +2423,12 @@ exports[`Widget Static Image renders the structure 1`] = `
 exports[`Widget Static Image renders the structure as a background image 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 1111,
         "width": 2222,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2438,7 +2438,7 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -2450,19 +2450,19 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {
+            {
               "height": 1111,
               "width": 2222,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -2476,13 +2476,13 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
       <FastImageView
         resizeMode="contain"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -2503,12 +2503,12 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
 exports[`Widget Static Image renders the structure as a background image with 50% opacity 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 1111,
         "width": 2222,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2518,7 +2518,7 @@ exports[`Widget Static Image renders the structure as a background image with 50
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.5,
@@ -2530,19 +2530,19 @@ exports[`Widget Static Image renders the structure as a background image with 50
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {
+            {
               "height": 1111,
               "width": 2222,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -2556,13 +2556,13 @@ exports[`Widget Static Image renders the structure as a background image with 50
       <FastImageView
         resizeMode="contain"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -2583,12 +2583,12 @@ exports[`Widget Static Image renders the structure as a background image with 50
 exports[`Widget Static Image renders the structure as a background image with a different resizeMode 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 1111,
         "width": 2222,
       },
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2598,7 +2598,7 @@ exports[`Widget Static Image renders the structure as a background image with a 
 >
   <View
     style={
-      Object {
+      {
         "height": "100%",
         "left": 0,
         "opacity": 0.01,
@@ -2610,19 +2610,19 @@ exports[`Widget Static Image renders the structure as a background image with a 
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {
+            {
               "height": 1111,
               "width": 2222,
             },
-            Object {
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -2636,13 +2636,13 @@ exports[`Widget Static Image renders the structure as a background image with a 
       <FastImageView
         resizeMode="cover"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -2661,7 +2661,7 @@ exports[`Widget Static Image renders the structure as a background image with a 
 `;
 
 exports[`Widget Static Image renders the structure inside a modal 1`] = `
-Array [
+[
   <View
     accessible={true}
     collapsable={false}
@@ -2677,14 +2677,14 @@ Array [
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "aspectRatio": 2,
           "opacity": 0,
           "position": "absolute",
           "width": "100%",
         },
-        Object {
+        {
           "alignItems": "center",
           "justifyContent": "center",
         },
@@ -2694,16 +2694,16 @@ Array [
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          Array [
-            Object {
+          [
+            {
               "aspectRatio": 2,
             },
-            Object {},
-            Object {
+            {},
+            {
               "flexGrow": 1,
               "maxHeight": "100%",
               "maxWidth": "100%",
@@ -2717,13 +2717,13 @@ Array [
       <FastImageView
         resizeMode="contain"
         source={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
         }
         style={
-          Object {
+          {
             "bottom": 0,
             "left": 0,
             "position": "absolute",
@@ -2741,7 +2741,7 @@ Array [
     onDismiss={[Function]}
     onRequestClose={[Function]}
     supportedOrientations={
-      Array [
+      [
         "portrait",
         "portrait-upside-down",
         "landscape",
@@ -2766,7 +2766,7 @@ Array [
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
+        {
           "alignItems": "center",
           "backgroundColor": "rgba(0,0,0,0.8)",
           "height": "100%",
@@ -2790,7 +2790,7 @@ Array [
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "height": 1111,
             "width": 2222,
           }
@@ -2798,19 +2798,19 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
-              Array [
-                Object {
+              [
+                {
                   "aspectRatio": 2,
                 },
-                Object {
+                {
                   "height": 1111,
                   "width": 2222,
                 },
-                Object {
+                {
                   "flexGrow": 1,
                   "maxHeight": "100%",
                   "maxWidth": "100%",
@@ -2824,13 +2824,13 @@ Array [
           <FastImageView
             resizeMode="contain"
             source={
-              Object {
+              {
                 "height": 1111,
                 "width": 2222,
               }
             }
             style={
-              Object {
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
@@ -2862,9 +2862,9 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2874,19 +2874,19 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 100,
             "width": 200,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -2900,13 +2900,13 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -2935,9 +2935,9 @@ exports[`Widget Static Image renders the structure with custom width 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {},
-      Object {
+    [
+      {},
+      {
         "alignItems": "center",
         "justifyContent": "center",
       },
@@ -2947,19 +2947,19 @@ exports[`Widget Static Image renders the structure with custom width 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
-        Array [
-          Object {
+        [
+          {
             "aspectRatio": 2,
           },
-          Object {
+          {
             "height": 50,
             "width": 100,
           },
-          Object {
+          {
             "flexGrow": 1,
             "maxHeight": "100%",
             "maxWidth": "100%",
@@ -2973,13 +2973,13 @@ exports[`Widget Static Image renders the structure with custom width 1`] = `
     <FastImageView
       resizeMode="contain"
       source={
-        Object {
+        {
           "height": 1111,
           "width": 2222,
         }
       }
       style={
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",

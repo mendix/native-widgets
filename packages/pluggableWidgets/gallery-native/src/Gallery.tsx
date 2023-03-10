@@ -11,8 +11,9 @@ import { and } from "mendix/filters/builders";
 import { defaultGalleryStyle, GalleryStyle } from "./ui/Styles";
 import { extractFilters } from "./utils/filters";
 import { FilterCondition } from "mendix/filters";
-import { Gallery as GalleryComponent } from "./components/Gallery";
+import { Gallery as GalleryComponent, GalleryProps as GalleryComponentProps } from "./components/Gallery";
 import { GalleryProps } from "../typings/GalleryProps";
+import { ObjectItem } from "mendix";
 
 export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const viewStateFilters = useRef<FilterCondition | undefined>(undefined);
@@ -67,7 +68,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
         props.datasource.setLimit((currentPage + 1) * props.pageSize);
     }, [currentPage, props.datasource, props.pageSize]);
 
-    const itemRenderer = useCallback(
+    const itemRenderer: GalleryComponentProps<ObjectItem>["itemRenderer"] = useCallback(
         (renderWrapper, item) =>
             renderWrapper(
                 props.content?.get(item),

@@ -1,7 +1,7 @@
 {
   "name": "line-chart-native",
   "widgetName": "LineChart",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "victory-native": "^35.5.5"
+    "victory-native": "^36.6.8"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",

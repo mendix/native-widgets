@@ -15,46 +15,69 @@ exports[`Background gradient render background gradient with custom style 1`] = 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "flex": undefined,
       "opacity": 1,
     }
   }
   testID="test"
 >
-  <BVLinearGradient
-    angle={0}
-    colors={
-      Array [
-        4294967295,
-        4278190080,
-      ]
-    }
-    endPoint={
-      Object {
-        "x": 0.5,
-        "y": 1,
-      }
-    }
-    locations={
-      Array [
-        NaN,
-        NaN,
-      ]
-    }
-    startPoint={
-      Object {
-        "x": 0.5,
-        "y": 0,
-      }
-    }
-    style={Object {}}
-    useAngle={true}
+  <View
+    style={{}}
   >
+    <BVLinearGradient
+      angle={0}
+      borderRadii={
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ]
+      }
+      colors={
+        [
+          -1,
+          -16777216,
+        ]
+      }
+      endPoint={
+        [
+          0.5,
+          1,
+        ]
+      }
+      locations={
+        [
+          NaN,
+          NaN,
+        ]
+      }
+      startPoint={
+        [
+          0.5,
+          0,
+        ]
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      useAngle={true}
+    />
     <Text>
       Test
     </Text>
-  </BVLinearGradient>
+  </View>
 </View>
 `;
 
@@ -73,46 +96,69 @@ exports[`Background gradient render background gradient with one color 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "flex": undefined,
       "opacity": 1,
     }
   }
   testID="test"
 >
-  <BVLinearGradient
-    angle={0}
-    colors={
-      Array [
-        4294967295,
-        4294967295,
-      ]
-    }
-    endPoint={
-      Object {
-        "x": 0.5,
-        "y": 1,
-      }
-    }
-    locations={
-      Array [
-        0,
-        0,
-      ]
-    }
-    startPoint={
-      Object {
-        "x": 0.5,
-        "y": 0,
-      }
-    }
-    style={Object {}}
-    useAngle={true}
+  <View
+    style={{}}
   >
+    <BVLinearGradient
+      angle={0}
+      borderRadii={
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ]
+      }
+      colors={
+        [
+          -1,
+          -1,
+        ]
+      }
+      endPoint={
+        [
+          0.5,
+          1,
+        ]
+      }
+      locations={
+        [
+          0,
+          0,
+        ]
+      }
+      startPoint={
+        [
+          0.5,
+          0,
+        ]
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      useAngle={true}
+    />
     <Text>
       Test
     </Text>
-  </BVLinearGradient>
+  </View>
 </View>
 `;
 
@@ -131,46 +177,69 @@ exports[`Background gradient render correctly 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "flex": undefined,
       "opacity": 1,
     }
   }
   testID="test"
 >
-  <BVLinearGradient
-    angle={0}
-    colors={
-      Array [
-        4294967295,
-        4278190080,
-      ]
-    }
-    endPoint={
-      Object {
-        "x": 0.5,
-        "y": 1,
-      }
-    }
-    locations={
-      Array [
-        0,
-        1,
-      ]
-    }
-    startPoint={
-      Object {
-        "x": 0.5,
-        "y": 0,
-      }
-    }
-    style={Object {}}
-    useAngle={true}
+  <View
+    style={{}}
   >
+    <BVLinearGradient
+      angle={0}
+      borderRadii={
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ]
+      }
+      colors={
+        [
+          -1,
+          -16777216,
+        ]
+      }
+      endPoint={
+        [
+          0.5,
+          1,
+        ]
+      }
+      locations={
+        [
+          0,
+          1,
+        ]
+      }
+      startPoint={
+        [
+          0.5,
+          0,
+        ]
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      useAngle={true}
+    />
     <Text>
       Test
     </Text>
-  </BVLinearGradient>
+  </View>
 </View>
 `;
 
@@ -189,46 +258,69 @@ exports[`Background gradient render with undefined angle 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "flex": undefined,
       "opacity": 1,
     }
   }
   testID="test"
 >
-  <BVLinearGradient
-    angle={0}
-    colors={
-      Array [
-        4294967295,
-        4278190080,
-      ]
-    }
-    endPoint={
-      Object {
-        "x": 0.5,
-        "y": 1,
-      }
-    }
-    locations={
-      Array [
-        0,
-        1,
-      ]
-    }
-    startPoint={
-      Object {
-        "x": 0.5,
-        "y": 0,
-      }
-    }
-    style={Object {}}
-    useAngle={true}
+  <View
+    style={{}}
   >
+    <BVLinearGradient
+      angle={0}
+      borderRadii={
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ]
+      }
+      colors={
+        [
+          -1,
+          -16777216,
+        ]
+      }
+      endPoint={
+        [
+          0.5,
+          1,
+        ]
+      }
+      locations={
+        [
+          0,
+          1,
+        ]
+      }
+      startPoint={
+        [
+          0.5,
+          0,
+        ]
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      useAngle={true}
+    />
     <Text>
       Test
     </Text>
-  </BVLinearGradient>
+  </View>
 </View>
 `;
 
@@ -247,45 +339,68 @@ exports[`Background gradient render with undefined opacity 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "flex": undefined,
       "opacity": 1,
     }
   }
   testID="test"
 >
-  <BVLinearGradient
-    angle={0}
-    colors={
-      Array [
-        4294967295,
-        4278190080,
-      ]
-    }
-    endPoint={
-      Object {
-        "x": 0.5,
-        "y": 1,
-      }
-    }
-    locations={
-      Array [
-        0,
-        1,
-      ]
-    }
-    startPoint={
-      Object {
-        "x": 0.5,
-        "y": 0,
-      }
-    }
-    style={Object {}}
-    useAngle={true}
+  <View
+    style={{}}
   >
+    <BVLinearGradient
+      angle={0}
+      borderRadii={
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+        ]
+      }
+      colors={
+        [
+          -1,
+          -16777216,
+        ]
+      }
+      endPoint={
+        [
+          0.5,
+          1,
+        ]
+      }
+      locations={
+        [
+          0,
+          1,
+        ]
+      }
+      startPoint={
+        [
+          0.5,
+          0,
+        ]
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      useAngle={true}
+    />
     <Text>
       Test
     </Text>
-  </BVLinearGradient>
+  </View>
 </View>
 `;

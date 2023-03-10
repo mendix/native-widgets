@@ -3,7 +3,7 @@
 exports[`PieDoughnutChart configuration basic static props 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -12,7 +12,7 @@ exports[`PieDoughnutChart configuration basic static props 1`] = `
   <View
     onLayout={[Function]}
     style={
-      Object {
+      {
         "alignItems": "center",
         "justifyContent": "center",
       }
@@ -20,12 +20,12 @@ exports[`PieDoughnutChart configuration basic static props 1`] = `
     testID="innerView"
   >
     <View
-      colorScale={Array []}
-      data={Array []}
+      colorScale={[]}
+      data={[]}
       height={300}
       labels={[Function]}
       padding={
-        Object {
+        {
           "bottom": 40,
           "left": 40,
           "right": 40,
@@ -33,8 +33,8 @@ exports[`PieDoughnutChart configuration basic static props 1`] = `
         }
       }
       style={
-        Object {
-          "labels": Object {
+        {
+          "labels": {
             "fill": [Function],
             "fontFamily": [Function],
             "fontSize": [Function],

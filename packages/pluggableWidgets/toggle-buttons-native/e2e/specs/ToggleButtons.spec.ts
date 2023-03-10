@@ -1,14 +1,15 @@
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { Alert } from "../../../../../detox/src/Alert";
 import { expect, by, element } from "detox";
 
 describe("Toggle Buttons", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Toggle buttons");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders default state correctly", async () => {
@@ -37,7 +38,7 @@ describe("Toggle Buttons", () => {
         await expectToMatchScreenshot(toggleBtnsCustomStyle);
     });
 
-    fit("triggers configured event", async () => {
+    it("triggers configured event", async () => {
         const mapsType = "Satellite";
         const toggleBtnsOnChange = element(by.id("toggleButtonsOnChange").withDescendant(by.label(mapsType)));
         const alert = Alert();

@@ -8,7 +8,7 @@ exports[`Intro Screen renders 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
@@ -19,7 +19,7 @@ exports[`Intro Screen renders 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -27,51 +27,46 @@ exports[`Intro Screen renders 1`] = `
       <RCTScrollView
         bounces={false}
         data={
-          Array [
-            Object {
+          [
+            {
               "content": <View />,
               "name": "Page 1",
             },
           ]
         }
-        disableVirtualization={false}
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
         horizontal={true}
-        initialNumToRender={10}
         keyExtractor={[Function]}
-        maxToRenderPerBatch={10}
         onContentSizeChange={[Function]}
-        onEndReachedThreshold={2}
         onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
         onMomentumScrollEnd={[Function]}
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
         onScrollEndDrag={[Function]}
         pagingEnabled={true}
-        removeClippedSubviews={false}
+        removeClippedSubviews={true}
         renderItem={[Function]}
         scrollEventThrottle={50}
         showsHorizontalScrollIndicator={false}
-        stickyHeaderIndices={Array []}
+        stickyHeaderIndices={[]}
         style={
-          Object {
+          {
             "flex": 1,
             "flexDirection": "row",
           }
         }
         testID="intro-screen-test"
-        updateCellsBatchingPeriod={50}
-        viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
+        viewabilityConfigCallbackPairs={[]}
       >
         <View>
           <View
             onLayout={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexDirection": "row",
                 },
                 null,
@@ -80,8 +75,8 @@ exports[`Intro Screen renders 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flex": 1,
                     "width": 0,
                   },
@@ -95,8 +90,8 @@ exports[`Intro Screen renders 1`] = `
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "bottom": 0,
               "justifyContent": "space-between",
@@ -104,7 +99,7 @@ exports[`Intro Screen renders 1`] = `
               "position": "absolute",
               "right": 0,
             },
-            Object {
+            {
               "flexDirection": "row",
             },
           ]
@@ -112,13 +107,13 @@ exports[`Intro Screen renders 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "width": 0,
               },
             ]
@@ -127,6 +122,13 @@ exports[`Intro Screen renders 1`] = `
         <View
           accessible={true}
           focusable={true}
+          nativeBackgroundAndroid={
+            {
+              "attribute": "selectableItemBackground",
+              "rippleRadius": undefined,
+              "type": "ThemeAttrAndroid",
+            }
+          }
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -135,39 +137,31 @@ exports[`Intro Screen renders 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            [
+              {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 12,
+              },
+              {
+                "width": 0,
+              },
+            ]
           }
           testID="intro-screen-test$buttonDone"
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "stretch",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "paddingVertical": 12,
-                },
-                Object {
-                  "width": 0,
-                },
-              ]
+              {
+                "alignSelf": "center",
+              }
             }
           >
             <View
-              style={
-                Object {
-                  "alignSelf": "center",
-                }
-              }
-            >
-              <View
-                testId="icon"
-              />
-            </View>
+              testId="icon"
+            />
           </View>
         </View>
       </View>
@@ -184,7 +178,7 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
@@ -195,7 +189,7 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -203,51 +197,46 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
       <RCTScrollView
         bounces={false}
         data={
-          Array [
-            Object {
+          [
+            {
               "content": <View />,
               "name": "Page 1",
             },
           ]
         }
-        disableVirtualization={false}
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
         horizontal={true}
-        initialNumToRender={10}
         keyExtractor={[Function]}
-        maxToRenderPerBatch={10}
         onContentSizeChange={[Function]}
-        onEndReachedThreshold={2}
         onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
         onMomentumScrollEnd={[Function]}
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
         onScrollEndDrag={[Function]}
         pagingEnabled={true}
-        removeClippedSubviews={false}
+        removeClippedSubviews={true}
         renderItem={[Function]}
         scrollEventThrottle={50}
         showsHorizontalScrollIndicator={false}
-        stickyHeaderIndices={Array []}
+        stickyHeaderIndices={[]}
         style={
-          Object {
+          {
             "flex": 1,
             "flexDirection": "row",
           }
         }
         testID="intro-screen-test"
-        updateCellsBatchingPeriod={50}
-        viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
+        viewabilityConfigCallbackPairs={[]}
       >
         <View>
           <View
             onLayout={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexDirection": "row",
                 },
                 null,
@@ -256,8 +245,8 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flex": 1,
                     "width": 0,
                   },
@@ -271,8 +260,8 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "bottom": 0,
               "justifyContent": "space-between",
@@ -280,19 +269,19 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
               "position": "absolute",
               "right": 0,
             },
-            Object {},
+            {},
           ]
         }
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "width": "100%",
               },
             ]
@@ -300,7 +289,7 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
         />
         <View
           style={
-            Object {
+            {
               "flex": 1,
               "flexDirection": "row",
               "justifyContent": "center",
@@ -310,7 +299,7 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
         >
           <View
             style={
-              Object {
+              {
                 "flex": 1,
               }
             }
@@ -318,6 +307,13 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
             <View
               accessible={true}
               focusable={true}
+              nativeBackgroundAndroid={
+                {
+                  "attribute": "selectableItemBackground",
+                  "rippleRadius": undefined,
+                  "type": "ThemeAttrAndroid",
+                }
+              }
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -326,36 +322,28 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
-                  "opacity": 1,
-                }
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "paddingVertical": 12,
+                  },
+                  {},
+                ]
               }
               testID="intro-screen-test$buttonDone"
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                      "paddingVertical": 12,
-                    },
-                    Object {},
-                  ]
+                  {
+                    "alignSelf": "center",
+                  }
                 }
               >
                 <View
-                  style={
-                    Object {
-                      "alignSelf": "center",
-                    }
-                  }
-                >
-                  <View
-                    testId="icon"
-                  />
-                </View>
+                  testId="icon"
+                />
               </View>
             </View>
           </View>
@@ -374,7 +362,7 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
@@ -385,7 +373,7 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -393,51 +381,46 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
       <RCTScrollView
         bounces={false}
         data={
-          Array [
-            Object {
+          [
+            {
               "content": <View />,
               "name": "Page 1",
             },
           ]
         }
-        disableVirtualization={false}
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
         horizontal={true}
-        initialNumToRender={10}
         keyExtractor={[Function]}
-        maxToRenderPerBatch={10}
         onContentSizeChange={[Function]}
-        onEndReachedThreshold={2}
         onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
         onMomentumScrollEnd={[Function]}
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
         onScrollEndDrag={[Function]}
         pagingEnabled={true}
-        removeClippedSubviews={false}
+        removeClippedSubviews={true}
         renderItem={[Function]}
         scrollEventThrottle={50}
         showsHorizontalScrollIndicator={false}
-        stickyHeaderIndices={Array []}
+        stickyHeaderIndices={[]}
         style={
-          Object {
+          {
             "flex": 1,
             "flexDirection": "row",
           }
         }
         testID="intro-screen-test"
-        updateCellsBatchingPeriod={50}
-        viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
+        viewabilityConfigCallbackPairs={[]}
       >
         <View>
           <View
             onLayout={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexDirection": "row",
                 },
                 null,
@@ -446,8 +429,8 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flex": 1,
                     "width": 0,
                   },
@@ -461,8 +444,8 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "bottom": 0,
               "justifyContent": "space-between",
@@ -470,19 +453,19 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
               "position": "absolute",
               "right": 0,
             },
-            Object {},
+            {},
           ]
         }
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "width": "100%",
               },
             ]
@@ -490,7 +473,7 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
         />
         <View
           style={
-            Object {
+            {
               "flex": 1,
               "flexDirection": "row",
               "justifyContent": "center",
@@ -500,7 +483,7 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
         >
           <View
             style={
-              Object {
+              {
                 "flex": 1,
               }
             }
@@ -508,6 +491,13 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
             <View
               accessible={true}
               focusable={true}
+              nativeBackgroundAndroid={
+                {
+                  "attribute": "selectableItemBackground",
+                  "rippleRadius": undefined,
+                  "type": "ThemeAttrAndroid",
+                }
+              }
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -516,36 +506,28 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
-                  "opacity": 1,
-                }
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "paddingVertical": 12,
+                  },
+                  {},
+                ]
               }
               testID="intro-screen-test$buttonDone"
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                      "paddingVertical": 12,
-                    },
-                    Object {},
-                  ]
+                  {
+                    "alignSelf": "center",
+                  }
                 }
               >
                 <View
-                  style={
-                    Object {
-                      "alignSelf": "center",
-                    }
-                  }
-                >
-                  <View
-                    testId="icon"
-                  />
-                </View>
+                  testId="icon"
+                />
               </View>
             </View>
           </View>
@@ -564,7 +546,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
@@ -575,7 +557,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "flex": 1,
         }
       }
@@ -583,51 +565,46 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
       <RCTScrollView
         bounces={false}
         data={
-          Array [
-            Object {
+          [
+            {
               "content": <View />,
               "name": "Page 1",
             },
           ]
         }
-        disableVirtualization={false}
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
         horizontal={true}
-        initialNumToRender={10}
         keyExtractor={[Function]}
-        maxToRenderPerBatch={10}
         onContentSizeChange={[Function]}
-        onEndReachedThreshold={2}
         onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
         onMomentumScrollEnd={[Function]}
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
         onScrollEndDrag={[Function]}
         pagingEnabled={true}
-        removeClippedSubviews={false}
+        removeClippedSubviews={true}
         renderItem={[Function]}
         scrollEventThrottle={50}
         showsHorizontalScrollIndicator={false}
-        stickyHeaderIndices={Array []}
+        stickyHeaderIndices={[]}
         style={
-          Object {
+          {
             "flex": 1,
             "flexDirection": "row",
           }
         }
         testID="intro-screen-test"
-        updateCellsBatchingPeriod={50}
-        viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
+        viewabilityConfigCallbackPairs={[]}
       >
         <View>
           <View
             onLayout={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "flexDirection": "row",
                 },
                 null,
@@ -636,8 +613,8 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flex": 1,
                     "width": 0,
                   },
@@ -651,8 +628,8 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
       </RCTScrollView>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "bottom": 0,
               "justifyContent": "space-between",
@@ -660,7 +637,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
               "position": "absolute",
               "right": 0,
             },
-            Object {
+            {
               "flexDirection": "row",
             },
           ]
@@ -668,13 +645,13 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
                 "justifyContent": "center",
               },
-              Object {
+              {
                 "width": 0,
               },
             ]
@@ -683,6 +660,13 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
         <View
           accessible={true}
           focusable={true}
+          nativeBackgroundAndroid={
+            {
+              "attribute": "selectableItemBackground",
+              "rippleRadius": undefined,
+              "type": "ThemeAttrAndroid",
+            }
+          }
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -691,39 +675,31 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Object {
-              "opacity": 1,
-            }
+            [
+              {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 12,
+              },
+              {
+                "width": 0,
+              },
+            ]
           }
           testID="intro-screen-test$buttonDone"
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "stretch",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "paddingVertical": 12,
-                },
-                Object {
-                  "width": 0,
-                },
-              ]
+              {
+                "alignSelf": "center",
+              }
             }
           >
             <View
-              style={
-                Object {
-                  "alignSelf": "center",
-                }
-              }
-            >
-              <View
-                testId="icon"
-              />
-            </View>
+              testId="icon"
+            />
           </View>
         </View>
       </View>
@@ -737,173 +713,5 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
   hardwareAccelerated={false}
   transparent={false}
   visible={false}
->
-  <View
-    style={
-      Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    }
-  >
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      <RCTScrollView
-        bounces={false}
-        data={
-          Array [
-            Object {
-              "content": <View />,
-              "name": "Page 1",
-            },
-          ]
-        }
-        disableVirtualization={false}
-        extraData={0}
-        getItem={[Function]}
-        getItemCount={[Function]}
-        horizontal={true}
-        initialNumToRender={10}
-        keyExtractor={[Function]}
-        maxToRenderPerBatch={10}
-        onContentSizeChange={[Function]}
-        onEndReachedThreshold={2}
-        onLayout={[Function]}
-        onMomentumScrollEnd={[Function]}
-        onScroll={[Function]}
-        onScrollBeginDrag={[Function]}
-        onScrollEndDrag={[Function]}
-        pagingEnabled={true}
-        removeClippedSubviews={false}
-        renderItem={[Function]}
-        scrollEventThrottle={50}
-        showsHorizontalScrollIndicator={false}
-        stickyHeaderIndices={Array []}
-        style={
-          Object {
-            "flex": 1,
-            "flexDirection": "row",
-          }
-        }
-        testID="intro-screen-test"
-        updateCellsBatchingPeriod={50}
-        viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
-      >
-        <View>
-          <View
-            onLayout={[Function]}
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "flex": 1,
-                    "width": 0,
-                  },
-                ]
-              }
-            >
-              <View />
-            </View>
-          </View>
-        </View>
-      </RCTScrollView>
-      <View
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "bottom": 0,
-              "justifyContent": "space-between",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-            },
-            Object {
-              "flexDirection": "row",
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              },
-              Object {
-                "width": 0,
-              },
-            ]
-          }
-        />
-        <View
-          accessible={true}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="intro-screen-test$buttonDone"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "stretch",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "paddingVertical": 12,
-                },
-                Object {
-                  "width": 0,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Object {
-                  "alignSelf": "center",
-                }
-              }
-            >
-              <View
-                testId="icon"
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-    </View>
-  </View>
-</Modal>
+/>
 `;

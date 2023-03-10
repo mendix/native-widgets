@@ -3,7 +3,7 @@
 exports[`WebView renders a web view when a url is provided 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
       "height": "100%",
       "minHeight": 300,
@@ -13,8 +13,8 @@ exports[`WebView renders a web view when a url is provided 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
           "overflow": "hidden",
         },
@@ -23,42 +23,50 @@ exports[`WebView renders a web view when a url is provided 1`] = `
     }
   >
     <RNCWebView
+      allowFileAccess={false}
+      allowsFullscreenVideo={false}
+      androidHardwareAccelerationDisabled={false}
+      androidLayerType="none"
       cacheEnabled={true}
-      injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-      injectedJavaScriptForMainFrameOnly={true}
       javaScriptEnabled={true}
       messagingEnabled={true}
-      onContentProcessDidTerminate={[Function]}
-      onError={[Function]}
+      messagingModuleName="WebViewMessageHandler1"
+      nestedScrollEnabled={false}
       onHttpError={[Function]}
-      onLoad={[Function]}
       onLoadingError={[Function]}
       onLoadingFinish={[Function]}
       onLoadingProgress={[Function]}
       onLoadingStart={[Function]}
       onMessage={[Function]}
+      onRenderProcessGone={[Function]}
       onShouldStartLoadWithRequest={[Function]}
+      overScrollMode="always"
+      saveFormDataDisabled={false}
+      scalesPageToFit={true}
+      setBuiltInZoomControls={true}
+      setDisplayZoomControls={false}
+      setSupportMultipleWindows={true}
       source={
-        Object {
+        {
           "uri": "https://mendix.com",
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
             "overflow": "hidden",
           },
-          Object {
+          {
             "backgroundColor": "#ffffff",
           },
-          Object {
+          {
             "height": "100%",
             "width": "100%",
           },
         ]
       }
-      useSharedProcessPool={true}
+      thirdPartyCookiesEnabled={true}
       userAgent=""
     />
   </View>
@@ -68,7 +76,7 @@ exports[`WebView renders a web view when a url is provided 1`] = `
 exports[`WebView renders a web view when html content is provided 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
       "height": "100%",
       "minHeight": 300,
@@ -78,8 +86,8 @@ exports[`WebView renders a web view when html content is provided 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
           "overflow": "hidden",
         },
@@ -88,42 +96,50 @@ exports[`WebView renders a web view when html content is provided 1`] = `
     }
   >
     <RNCWebView
+      allowFileAccess={false}
+      allowsFullscreenVideo={false}
+      androidHardwareAccelerationDisabled={false}
+      androidLayerType="none"
       cacheEnabled={true}
-      injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-      injectedJavaScriptForMainFrameOnly={true}
       javaScriptEnabled={true}
       messagingEnabled={true}
-      onContentProcessDidTerminate={[Function]}
-      onError={[Function]}
+      messagingModuleName="WebViewMessageHandler2"
+      nestedScrollEnabled={false}
       onHttpError={[Function]}
-      onLoad={[Function]}
       onLoadingError={[Function]}
       onLoadingFinish={[Function]}
       onLoadingProgress={[Function]}
       onLoadingStart={[Function]}
       onMessage={[Function]}
+      onRenderProcessGone={[Function]}
       onShouldStartLoadWithRequest={[Function]}
+      overScrollMode="always"
+      saveFormDataDisabled={false}
+      scalesPageToFit={true}
+      setBuiltInZoomControls={true}
+      setDisplayZoomControls={false}
+      setSupportMultipleWindows={true}
       source={
-        Object {
+        {
           "html": "Hello, world!",
         }
       }
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
             "overflow": "hidden",
           },
-          Object {
+          {
             "backgroundColor": "#ffffff",
           },
-          Object {
+          {
             "height": "100%",
             "width": "100%",
           },
         ]
       }
-      useSharedProcessPool={true}
+      thirdPartyCookiesEnabled={true}
       userAgent=""
     />
   </View>
@@ -132,12 +148,12 @@ exports[`WebView renders a web view when html content is provided 1`] = `
 
 exports[`WebView renders an error when no url or content is provided 1`] = `
 <View
-  style={Object {}}
+  style={{}}
   testID="webview-test"
 >
   <Text
     style={
-      Object {
+      {
         "color": "red",
         "fontWeight": "bold",
       }

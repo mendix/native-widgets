@@ -1,14 +1,15 @@
 import { Alert } from "../../../../../detox/src/Alert";
-import { expectToMatchScreenshot, resetDevice, tapMenuItem } from "../../../../../detox/src/helpers";
+import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { expect, element, by } from "detox";
 
 describe("Badge", () => {
     beforeEach(async () => {
+        await launchApp();
         await tapMenuItem("Floating action button");
     });
 
     afterEach(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders correct initial appearance", async () => {

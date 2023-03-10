@@ -1,11 +1,11 @@
 import { PopupMenuProps } from "../../typings/PopupMenuProps";
 import { PopupMenuStyle } from "../ui/Styles";
-import { Modal, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { createElement } from "react";
 import { actionValue } from "@mendix/piw-utils-internal";
 import { fireEvent, render, within } from "@testing-library/react-native";
 import { PopupMenu } from "../PopupMenu";
-import { MenuDivider } from "react-native-material-menu";
+import { MenuDivider, MenuItem } from "react-native-material-menu";
 import { ReactTestInstance } from "react-test-renderer";
 
 let dummyActionValue: any;
@@ -14,6 +14,11 @@ jest.useFakeTimers();
 
 let basicItemTestId: string;
 let customItemTestId: string;
+
+jest.mock("react-native/Libraries/Modal/Modal", () => (props: any) => {
+    const MockedModal = jest.requireActual("react-native").View;
+    return <MockedModal {...props} testID="modal" />;
+});
 
 describe("Popup menu", () => {
     beforeEach(() => {
@@ -40,6 +45,12 @@ describe("Popup menu", () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
+    it("renders custom items", () => {
+        const component = render(<PopupMenu {...defaultProps} renderMode="custom" />);
+
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+
     describe("in basic mode", () => {
         it("renders only basic items", async () => {
             const component = render(<PopupMenu {...defaultProps} />);
@@ -55,9 +66,15 @@ describe("Popup menu", () => {
 
         it("triggers action", () => {
             const component = render(<PopupMenu {...defaultProps} />);
-            fireEvent.press(component.getByTestId(basicItemTestId));
+            const basicItem = component.container.findByType(MenuItem);
+            expect(basicItem).toBeDefined();
+            expect(basicItem.props.testID).toBe(basicItemTestId);
 
-            expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 500);
+            fireEvent.press(basicItem);
+
+            jest.advanceTimersByTime(501);
+
+            expect(dummyActionValue.execute).toHaveBeenCalled();
         });
 
         it("renders with custom styles", () => {
@@ -73,7 +90,9 @@ describe("Popup menu", () => {
                 }
             ];
             const component = render(<PopupMenu {...defaultProps} style={customStyle} />);
-            expect(component.getByTestId(basicItemTestId).findByProps({ color: "green" })).not.toBeNull();
+            expect(component.getByTestId(basicItemTestId).findByType(Text).props.style).toEqual(
+                expect.arrayContaining([{ color: "green" }])
+            );
         });
     });
 
@@ -98,7 +117,9 @@ describe("Popup menu", () => {
             const component = render(<PopupMenu {...defaultProps} />);
             fireEvent.press(component.getByTestId(customItemTestId));
 
-            expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 500);
+            jest.advanceTimersByTime(501);
+
+            expect(dummyActionValue.execute).toHaveBeenCalled();
         });
 
         it("renders with custom styles", () => {
@@ -110,7 +131,7 @@ describe("Popup menu", () => {
                 }
             ];
             const component = render(<PopupMenu {...defaultProps} style={customStyle} />);
-            const modal = component.UNSAFE_getByType(Modal);
+            const modal = component.getByTestId("modal");
             const firstView = within(modal).UNSAFE_getByType(View);
             const secondView = within(firstView.children[0] as ReactTestInstance).UNSAFE_getByType(View);
             expect(secondView.props.style.backgroundColor).toEqual("yellow");

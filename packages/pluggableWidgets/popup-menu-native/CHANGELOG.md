@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   Added id for testing
+
+## BREAKING
+
+-   We made the widget compatible with React Native 0.70.7
+
 ## [2.2.0] - 2022-04-07
 
 ### Added

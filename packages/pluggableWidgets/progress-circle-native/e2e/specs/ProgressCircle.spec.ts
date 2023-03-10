@@ -1,10 +1,17 @@
 import { expect, element, by } from "detox";
-import { expectToMatchScreenshot, resetDevice, setText, tapMenuItem } from "../../../../../detox/src/helpers";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    setText,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
 
 describe("Progress Circle", () => {
     const percentage = "75";
 
     beforeAll(async () => {
+        await launchApp();
         await tapMenuItem("Progress circle");
 
         const textBox = element(by.id("textBoxProgressCircleValue"));
@@ -12,15 +19,10 @@ describe("Progress Circle", () => {
     });
 
     afterAll(async () => {
-        await resetDevice();
+        await sessionLogout();
     });
 
     it("renders correctly", async () => {
-        /**
-         * Taking a full page screenshot because when only taking a screenshot of a single
-         * progress circle does not seem to work for Android. The circles do not show up
-         * on the screenshot. For iOS it works fine.
-         **/
         await expectToMatchScreenshot();
     });
 

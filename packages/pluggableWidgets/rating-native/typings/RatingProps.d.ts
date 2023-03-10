@@ -1,7 +1,7 @@
 /**
  * This file was generated from Rating.xml
  * WARNING: All changes made to this file will be overwritten
- * @author Mendix UI Content Team
+ * @author Mendix Widgets Framework Team
  */
 import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue, NativeImage } from "mendix";
@@ -24,7 +24,11 @@ export interface RatingProps<Style> {
 }
 
 export interface RatingPreviewProps {
+    /**
+     * @deprecated Deprecated since version 9.18.0. Please use class property instead.
+     */
     className: string;
+    class: string;
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;

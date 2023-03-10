@@ -2,7 +2,7 @@
 
 exports[`Repeater renders correctly 1`] = `
 <View
-  style={Object {}}
+  style={{}}
 >
   <Text>
     Item
@@ -25,7 +25,7 @@ exports[`Repeater renders correctly 1`] = `
 exports[`Repeater renders correctly with custom styles 1`] = `
 <View
   style={
-    Object {
+    {
       "backgroundColor": "red",
     }
   }

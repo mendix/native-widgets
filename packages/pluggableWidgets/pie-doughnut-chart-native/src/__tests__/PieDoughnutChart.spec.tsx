@@ -1,5 +1,5 @@
 import { EditableValueBuilder, ListAttributeValueBuilder, ListValueBuilder } from "@mendix/piw-utils-internal";
-import { act, fireEvent, render, Thenable } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { ObjectItem } from "mendix";
 import { View } from "react-native";
@@ -350,15 +350,13 @@ function createProps(opts: Partial<PieDoughnutChartProps<ChartStyle>> = {}): Pie
     };
 }
 
-const fireLayoutEvent = (view: ReactTestInstance): Thenable =>
-    act(() => {
-        fireEvent(view, "layout", {
-            nativeEvent: {
-                layout: {
-                    width: 300
-                }
+const fireLayoutEvent = (view: ReactTestInstance) =>
+    fireEvent(view, "layout", {
+        nativeEvent: {
+            layout: {
+                width: 300
             }
-        });
+        }
     });
 
 function setupBasicSeries(): SeriesType[] {
