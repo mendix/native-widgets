@@ -11,7 +11,7 @@ runs:
   using: composite
   steps:
     - name: "Setup Python"
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v4.5.0
       with:
         python-version: "3.x"
     - name: "Install Python dependencies"
@@ -19,7 +19,7 @@ runs:
       shell: bash
     - name: "Setup Java 11"
       id: setup-java
-      uses: actions/setup-java@16cca5479d7c6b6843f6a6515640ba33c6501543 #3.4.0
+      uses: actions/setup-java@v3.10.0
       with:
         distribution: "temurin"
         java-version: "11"
