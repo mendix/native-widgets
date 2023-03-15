@@ -2,11 +2,11 @@ name: Run Native Pipeline
 on:
   workflow_dispatch:
 
-  push:
-    branches: [master]
+  # push:
+  #   branches: [master]
 
   pull_request:
-    branches: [master]
+  #   branches: [master]
 
 jobs:
   scope:
