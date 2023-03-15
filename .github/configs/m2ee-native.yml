@@ -1,0 +1,24 @@
+m2ee:
+    app_name: Test App
+    app_base: $ROOT_PATH/project
+    admin_port: 8090
+    admin_pass: Password1!
+    runtime_port: 8080
+    runtime_listen_addresses: "*"
+    javaopts:
+        ["-Dfile.encoding=UTF-8", "-Xmx512M", "-Xms512M", "-Djava.io.tmpdir=$ROOT_PATH/project/data/tmp"]
+    javabin: $JAVA_HOME/bin/java
+    pidfile: $ROOT_PATH/var/run/m2ee.pid
+mxruntime:
+    DTAPMode: T
+    ApplicationRootUrl: http://localhost:8080/
+    DatabaseType: HSQLDB
+    DatabaseName: default
+    DatabasePassword: ""
+    BuiltInDatabasePath: $ROOT_PATH/project/data/database
+logging:
+    -
+        type: file
+        name: FileSubscriber
+        autosubscribe: TRACE
+        filename: $ROOT_PATH/log/runtime.log
