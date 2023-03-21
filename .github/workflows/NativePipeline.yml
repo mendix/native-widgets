@@ -85,7 +85,7 @@ jobs:
           node-version-file: .nvmrc
           cache: yarn
       - name: "Install dependencies"
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install --immutable --immutable-cache
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
       - name: "Run build for development"
@@ -121,7 +121,6 @@ jobs:
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              echo "HALLLLLOOOOOOOO"
               newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
               mv -f $oldPath $newPath
             done
@@ -187,6 +186,7 @@ jobs:
         with:
           repository: mendix/native-template
           ref: master
+          path: native_template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
         with:
@@ -198,23 +198,26 @@ jobs:
           path: bundles/android
       - name: "Copy files to the right location"
         run: |
-          echo $PWD
-          ls -al ../
-          ls -al
-          mv bundles/android/index.android.bundle android/app/src/main/assets/index.android.bundle
-          cp -r bundles/android/assets/* android/app/src/main/res/
-          mv native_widgets/configs/e2e/config.json .
-          mv native_widgets/configs/e2e/.dependencies .
-          mv native_widgets/configs/e2e/.native_dependencies .
+          mv bundles/android/index.android.bundle native_template/android/app/src/main/assets/index.android.bundle
+          cp -r bundles/android/assets/* native_template/android/app/src/main/res/
+          mv native_widgets/configs/e2e/config.json native_template
+          mv native_widgets/configs/e2e/.dependencies native_template
+          mv native_widgets/configs/e2e/.native_dependencies native_template
+          mv native_widgets/configs/e2e/google-services.json native_template/android/app
       - name: "Set up Node"
         uses: actions/setup-node@v3.6.0
         with:
-          node-version-file: .nvmrc
+          node-version-file: native_template/.nvmrc
           cache: npm
+          cache-dependency-path: native_template/package-lock.json
       - name: "Install dependencies"
+        working-directory: native_template
         run: npm ci
       - name: "Configure"
-        run: npm run configure
+        working-directory: native_template
+        run: |
+          npm run configure
+          npm install
       - name: "Setup JDK 11"
         uses: actions/setup-java@v3.10.0
         with:
@@ -222,13 +225,13 @@ jobs:
           distribution: temurin
           cache: gradle
       - name: "Build Android app"
-        working-directory: android
-        run: ./gradlew assembleAppstoreRelease assembleAndroidTest -DtestBuildType=release
+        working-directory: native_template/android
+        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
       - name: "Archive Android app"
         uses: actions/upload-artifact@v3.1.2
         with:
           name: android-app
-          path: android/app/build/outputs/apk/**/*.apk
+          path: native_template/android/app/build/outputs/apk/**/*.apk
   ios-app:
     needs: [ios-bundle]
     runs-on: macos-12
@@ -238,6 +241,7 @@ jobs:
         with:
           repository: mendix/native-template
           ref: master
+          path: native_template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
         with:
@@ -249,38 +253,43 @@ jobs:
           path: bundles/ios
       - name: "Copy files to the right location"
         run: |
-          mv bundles/ios/index.ios.bundle ios/Bundle/index.ios.bundle
-          mv bundles/ios/assets/assets ios/Bundle/
-          mv native_widgets/configs/e2e/config.json .
-          mv native_widgets/configs/e2e/.dependencies .
-          mv native_widgets/configs/e2e/.native_dependencies .
+          mv bundles/ios/index.ios.bundle native_template/ios/Bundle/index.ios.bundle
+          mv bundles/ios/assets/assets native_template/ios/Bundle/
+          mv native_widgets/configs/e2e/config.json native_template
+          mv native_widgets/configs/e2e/.dependencies native_template
+          mv native_widgets/configs/e2e/.native_dependencies native_template
       - name: "Set up Node"
         uses: actions/setup-node@v3.6.0
         with:
-          node-version-file: .nvmrc
+          node-version-file: native_template/.nvmrc
           cache: npm
+          cache-dependency-path: native_template/package-lock.json
       - name: "Install Node dependencies"
+        working-directory: native_template
         run: npm ci
       - name: "Configure"
-        run: npm run configure
+        working-directory: native_template
+        run: |
+          npm run configure
+          npm install
       - name: "Setup Pods cache"
         uses: actions/cache@v3.3.1
         with:
-          path: Pods
+          path: native_template/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
       - name: "Install Pod dependencies"
-        working-directory: ios
+        working-directory: native_template/ios
         run: pod install
       - name: "Build iOS app"
-        working-directory: ios
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build
+        working-directory: native_template/ios
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator
       - name: "Archive iOS app"
         uses: actions/upload-artifact@v3.1.2
         with:
           name: ios-app
-          path: ios/build/Build/Products/**/*.app
+          path: native_template/ios/build/Build/Products/**/*.app
   android-avd:
     runs-on: macos-12
     steps:
@@ -322,8 +331,9 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: yarn
+          cache-dependency-path: yarn.lock
       - name: "Install dependencies"
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install --immutable --immutable-cache
       - name: "Download project MDA file"
         uses: actions/download-artifact@v3.0.2
         with:
@@ -407,8 +417,9 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: yarn
+          cache-dependency-path: yarn.lock
       - name: "Install dependencies"
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install --immutable --immutable-cache
       - name: "Download project MDA file"
         uses: actions/download-artifact@v3.0.2
         with:
