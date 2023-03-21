@@ -27,7 +27,7 @@ runs:
       run: |
         mkdir project
         unzip -qq ${{ inputs.mda-file }} -d project
-        cp .github/configs/m2ee-native.yml project/m2ee-native.yml
+        cp configs/e2e/m2ee-native.yml project/m2ee-native.yml
         sed -i -- 's=$ROOT_PATH=${{ github.workspace }}=g' project/m2ee-native.yml
         sed -i -- 's=$JAVA_HOME=${{ steps.setup-java.outputs.path }}=g' project/m2ee-native.yml
       shell: bash
