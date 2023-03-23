@@ -85,7 +85,7 @@ jobs:
           node-version-file: .nvmrc
           cache: yarn
       - name: "Install dependencies"
-        run: yarn install --immutable --immutable-cache
+        run: yarn install --immutable
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
       - name: "Run build for development"
@@ -330,11 +330,8 @@ jobs:
         uses: actions/setup-node@v3.6.0
         with:
           node-version-file: .nvmrc
-          cache: yarn
       - name: "Install dependencies"
-        run: |
-          yarn config get cache-folder
-          yarn install --immutable --immutable-cache
+        run: yarn install --immutable
       - name: "Download project MDA file"
         uses: actions/download-artifact@v3.0.2
         with:
@@ -419,7 +416,7 @@ jobs:
           node-version-file: .nvmrc
           cache: yarn
       - name: "Install dependencies"
-        run: yarn install --immutable --immutable-cache
+        run: yarn install --immutable
       - name: "Download project MDA file"
         uses: actions/download-artifact@v3.0.2
         with:
