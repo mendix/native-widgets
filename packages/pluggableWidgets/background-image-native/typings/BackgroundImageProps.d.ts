@@ -13,6 +13,7 @@ export interface BackgroundImageProps<Style> {
     name: string;
     style: Style[];
     image: DynamicValue<NativeImage>;
+    defaultImage?: DynamicValue<NativeImage>;
     resizeMode: ResizeModeEnum;
     opacity: Big;
     content?: ReactNode;
@@ -30,6 +31,7 @@ export interface BackgroundImagePreviewProps {
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
     image: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    defaultImage: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
     resizeMode: ResizeModeEnum;
     opacity: number | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
