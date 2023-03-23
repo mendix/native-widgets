@@ -330,6 +330,7 @@ jobs:
         uses: actions/setup-node@v3.6.0
         with:
           node-version-file: .nvmrc
+          cache: yarn
       - name: "Install dependencies"
         run: yarn install --immutable --immutable-cache
       - name: "Download project MDA file"
@@ -414,6 +415,7 @@ jobs:
         uses: actions/setup-node@v3.6.0
         with:
           node-version-file: .nvmrc
+          cache: yarn
       - name: "Install dependencies"
         run: yarn install --immutable --immutable-cache
       - name: "Download project MDA file"
