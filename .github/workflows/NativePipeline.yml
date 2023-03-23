@@ -332,7 +332,9 @@ jobs:
           node-version-file: .nvmrc
           cache: yarn
       - name: "Install dependencies"
-        run: yarn install --immutable --immutable-cache
+        run: |
+          yarn config get cache-folder
+          yarn install --immutable --immutable-cache
       - name: "Download project MDA file"
         uses: actions/download-artifact@v3.0.2
         with:
