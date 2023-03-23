@@ -9,7 +9,7 @@ import { BackgroundImageProps } from "../typings/BackgroundImageProps";
 
 export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle>): JSX.Element | null {
     const styles = flattenStyles(defaultBackgroundImageStyle, props.style);
-    const { image, name, resizeMode } = props;
+    const { image, defaultImage, name, resizeMode } = props;
     let opacity = Number(props.opacity.toFixed());
 
     if (opacity < 0) {
@@ -18,15 +18,17 @@ export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle
         opacity = 1;
     }
 
-    if (image.status !== ValueStatus.Available || !image.value) {
+    const renderImage = (image.status === ValueStatus.Available && image.value) || !defaultImage ? image : defaultImage;
+
+    if (renderImage.status !== ValueStatus.Available || !renderImage.value) {
         return null;
     }
 
     const imageStyle = [
         StyleSheet.absoluteFill,
-        typeof image.value === "number"
+        typeof renderImage.value === "number"
             ? { width: undefined, height: undefined }
-            : typeof image.value === "string"
+            : typeof renderImage.value === "string"
             ? { width: "100%", height: "100%" }
             : undefined,
         styles.image,
@@ -35,7 +37,12 @@ export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle
 
     return (
         <View style={styles.container} testID={name}>
-            <Image source={image.value} style={imageStyle} color={styles.image.svgColor} testID={`${name}$image`} />
+            <Image
+                source={renderImage.value}
+                style={imageStyle}
+                color={styles.image.svgColor}
+                testID={`${name}$image`}
+            />
             {props.content}
         </View>
     );
