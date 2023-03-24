@@ -326,6 +326,8 @@ jobs:
     steps:
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
+        with:
+          fetch-depth: 0
       - name: "Set up node"
         uses: actions/setup-node@v3.6.0
         with:
@@ -411,6 +413,8 @@ jobs:
     steps:
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
+        with:
+          fetch-depth: 0
       - name: "Set up node"
         uses: actions/setup-node@v3.6.0
         with:
