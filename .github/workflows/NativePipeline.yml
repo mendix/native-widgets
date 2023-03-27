@@ -284,7 +284,7 @@ jobs:
         run: pod install
       - name: "Build iOS app"
         working-directory: native_template/ios
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
       - name: "Archive iOS app"
         uses: actions/upload-artifact@v3.1.2
         with:
