@@ -8,7 +8,7 @@ module.exports = {
     ANDROID_DEVICE_TYPE,
     IOS_SDK_VERSION,
     IOS_DEVICE_TYPE,
-    "test-runner": "jest",
+    "test-runner": `${__dirname}/../node_modules/.bin/jest`,
     "runner-config": `${__dirname}/jest.config.js`,
     skipLegacyWorkersInjection: true,
     apps: {
