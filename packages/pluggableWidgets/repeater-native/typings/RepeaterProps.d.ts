@@ -3,7 +3,7 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ComponentType, CSSProperties } from "react";
+import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ListValue, ListWidgetValue } from "mendix";
 
 export interface RepeaterProps<Style> {
@@ -11,6 +11,7 @@ export interface RepeaterProps<Style> {
     style: Style[];
     datasource: ListValue;
     content: ListWidgetValue;
+    emptyPlaceholder?: ReactNode;
 }
 
 export interface RepeaterPreviewProps {
@@ -24,4 +25,5 @@ export interface RepeaterPreviewProps {
     readOnly: boolean;
     datasource: {} | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    emptyPlaceholder: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
 }

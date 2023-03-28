@@ -28,6 +28,17 @@ export function getPreview(values: RepeaterPreviewProps, isDarkMode: boolean): S
                 type: "DropZone",
                 placeholder: "Content",
                 property: values.content
+            },
+            {
+                type: "Container",
+                borders: true,
+                children: [
+                    {
+                        type: "DropZone",
+                        placeholder: "No items placeholder: Place widgets here",
+                        property: values.emptyPlaceholder
+                    }
+                ]
             }
         ]
     };
