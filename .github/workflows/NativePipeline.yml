@@ -185,7 +185,7 @@ jobs:
         uses: actions/checkout@v3.4.0
         with:
           repository: mendix/native-template
-          ref: master
+          ref: fix/duplicate-symbols
           path: native_template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
@@ -240,7 +240,7 @@ jobs:
         uses: actions/checkout@v3.4.0
         with:
           repository: mendix/native-template
-          ref: master
+          ref: fix/duplicate-symbols
           path: native_template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
