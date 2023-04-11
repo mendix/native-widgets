@@ -185,7 +185,7 @@ jobs:
         uses: actions/checkout@v3.4.0
         with:
           repository: mendix/native-template
-          ref: fix/duplicate-symbols
+          ref: master
           path: native_template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
@@ -240,7 +240,7 @@ jobs:
         uses: actions/checkout@v3.4.0
         with:
           repository: mendix/native-template
-          ref: fix/duplicate-symbols
+          ref: master
           path: native_template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
@@ -284,12 +284,12 @@ jobs:
         run: pod install
       - name: "Build iOS app"
         working-directory: native_template/ios
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
       - name: "Archive iOS app"
         uses: actions/upload-artifact@v3.1.2
         with:
           name: ios-app
-          path: native_template/ios
+          path: native_template/ios/build/Build/Products/**/*.app
   android-avd:
     runs-on: macos-12
     steps:
@@ -405,7 +405,7 @@ jobs:
         if: always()
         with:
           name: android-artifacts
-          path: packages/pluggableWidgets/**/.artifacts/
+          path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
@@ -445,7 +445,7 @@ jobs:
           brew tap wix/brew
           brew install applesimutils
       - name: "Run tests"
-        run: yarn workspace foreach ${{ needs.scope.outputs.scope }} run test:e2e:ios
+        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test:e2e:ios
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v3.1.2
         if: always()
@@ -467,5 +467,5 @@ jobs:
         if: always()
         with:
           name: ios-artifacts
-          path: packages/pluggableWidgets/**/.artifacts/
+          path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore

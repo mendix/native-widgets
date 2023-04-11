@@ -14,7 +14,7 @@ module.exports = {
     apps: {
         "ios.developerapp": {
             type: "ios.app",
-            binaryPath: `${__dirname}/apps/DeveloperApp.app`
+            binaryPath: `${__dirname}/apps/NativeComponent.app`
         },
         "android.developerapp": {
             type: "android.apk",
@@ -56,6 +56,28 @@ module.exports = {
                     exposeGlobals: false,
                     reinstallApp: process.env.CI !== "true"
                 }
+            }
+        }
+    },
+    artifacts: {
+        rootDir: "artifacts",
+        plugins: {
+            instruments: { enabled: false },
+            log: { enabled: true },
+            uiHierarchy: "enabled",
+            screenshot: {
+                enabled: true,
+                shouldTakeAutomaticSnapshots: true,
+                keepOnlyFailedTestsArtifacts: true,
+                takeWhen: {
+                    testStart: true,
+                    testDone: true,
+                    appNotReady: true
+                }
+            },
+            video: {
+                enabled: true,
+                keepOnlyFailedTestsArtifacts: true
             }
         }
     }
