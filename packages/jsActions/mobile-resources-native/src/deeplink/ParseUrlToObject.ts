@@ -57,7 +57,6 @@ function createMxObject(entity: string): Promise<mendix.lib.MxObject> {
         });
     });
 }
-
 // END EXTRA CODE
 
 /**

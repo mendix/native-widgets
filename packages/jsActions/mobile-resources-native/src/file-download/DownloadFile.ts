@@ -15,12 +15,12 @@ function formatPath(...pathArgs: string[]): string {
     return pathArgs.filter(arg => !!arg).join("/");
 }
 
-function sanitizeFileName(name: string) {
+function sanitizeFileName(name: string): string {
     /* eslint-disable-next-line no-control-regex */
     return name.replace(/[<>"?:|*/\\\u0000-\u001F\u007F]/g, "_");
 }
 
-async function getUniqueFilePath(path: string, fileName: string) {
+async function getUniqueFilePath(path: string, fileName: string): Promise<string> {
     const insertionIndex = fileName.lastIndexOf(".");
     const fileNameWithoutExtension = fileName.substring(0, insertionIndex);
     const extension = fileName.substring(insertionIndex);
@@ -34,7 +34,6 @@ async function getUniqueFilePath(path: string, fileName: string) {
 
     return uniqueFilePath;
 }
-
 // END EXTRA CODE
 
 /**
@@ -43,7 +42,7 @@ async function getUniqueFilePath(path: string, fileName: string) {
  * @returns {Promise.<void>}
  */
 
-export async function DownloadFile(file: mendix.lib.MxObject, openWithOS: boolean) {
+export async function DownloadFile(file: mendix.lib.MxObject, openWithOS: boolean): Promise<void> {
     // BEGIN USER CODE
     if (!file) {
         return Promise.reject(new Error("Input parameter 'file' is required"));
