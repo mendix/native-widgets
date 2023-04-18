@@ -232,6 +232,11 @@ jobs:
         with:
           name: android-app
           path: native_template/android/app/build/outputs/apk/**/*.apk
+      - name: "Archive Android package.json"
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: android-native-template-package-json
+          path: native_template/package.json
   ios-app:
     needs: [ios-bundle]
     runs-on: macos-12
@@ -290,6 +295,11 @@ jobs:
         with:
           name: ios-app
           path: native_template/ios/build/Build/Products/**/*.app
+      - name: "Archive iOS package.json"
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: ios-native-template-package-json
+          path: native_template/package.json
   android-avd:
     runs-on: macos-12
     steps:
