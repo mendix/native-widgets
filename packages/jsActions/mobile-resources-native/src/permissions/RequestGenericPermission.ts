@@ -10,6 +10,7 @@ import { check, request, RESULTS, openSettings, PERMISSIONS, Permission } from "
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
 
 // BEGIN EXTRA CODE
+
 function handleBlockedPermission(permission: string): void {
     const permissionName = permission.replace(/_IOS|_ANDROID/, "");
     Alert.alert("", `Please allow ${permissionName} access`, [
