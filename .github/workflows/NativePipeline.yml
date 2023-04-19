@@ -186,11 +186,11 @@ jobs:
         with:
           repository: mendix/native-template
           ref: master
-          path: native_template
+          path: native-template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
         with:
-          path: native_widgets
+          path: native-widgets
       - name: "Download Android bundle and assets"
         uses: actions/download-artifact@v3.0.2
         with:
@@ -198,26 +198,20 @@ jobs:
           path: bundles/android
       - name: "Copy files to the right location"
         run: |
-          mv bundles/android/index.android.bundle native_template/android/app/src/main/assets/index.android.bundle
-          cp -r bundles/android/assets/* native_template/android/app/src/main/res/
-          mv native_widgets/configs/e2e/config.json native_template
-          mv native_widgets/configs/e2e/.dependencies native_template
-          mv native_widgets/configs/e2e/.native_dependencies native_template
-          mv native_widgets/configs/e2e/google-services.json native_template/android/app
+          mv bundles/android/index.android.bundle native-template/android/app/src/main/assets/index.android.bundle
+          cp -r bundles/android/assets/* native-template/android/app/src/main/res/
+          mv native-widgets/configs/e2e/config.json native-template
+          mv native-widgets/configs/e2e/google-services.json native-template/android/app
+          node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Set up Node"
         uses: actions/setup-node@v3.6.0
         with:
-          node-version-file: native_template/.nvmrc
+          node-version-file: native-template/.nvmrc
           cache: npm
-          cache-dependency-path: native_template/package-lock.json
+          cache-dependency-path: native-template/package-lock.json
       - name: "Install dependencies"
-        working-directory: native_template
-        run: npm ci
-      - name: "Configure"
-        working-directory: native_template
-        run: |
-          npm run configure
-          npm install
+        working-directory: native-template
+        run: npm i
       - name: "Setup JDK 11"
         uses: actions/setup-java@v3.10.0
         with:
@@ -225,18 +219,18 @@ jobs:
           distribution: temurin
           cache: gradle
       - name: "Build Android app"
-        working-directory: native_template/android
+        working-directory: native-template/android
         run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
       - name: "Archive Android app"
         uses: actions/upload-artifact@v3.1.2
         with:
           name: android-app
-          path: native_template/android/app/build/outputs/apk/**/*.apk
+          path: native-template/android/app/build/outputs/apk/**/*.apk
       - name: "Archive Android package.json"
         uses: actions/upload-artifact@v3.1.2
         with:
           name: android-native-template-package-json
-          path: native_template/package.json
+          path: native-template/package.json
   ios-app:
     needs: [ios-bundle]
     runs-on: macos-12
@@ -246,11 +240,11 @@ jobs:
         with:
           repository: mendix/native-template
           ref: master
-          path: native_template
+          path: native-template
       - name: "Check out code"
         uses: actions/checkout@v3.4.0
         with:
-          path: native_widgets
+          path: native-widgets
       - name: "Download iOS bundle and assets"
         uses: actions/download-artifact@v3.0.2
         with:
@@ -258,48 +252,42 @@ jobs:
           path: bundles/ios
       - name: "Copy files to the right location"
         run: |
-          mv bundles/ios/index.ios.bundle native_template/ios/Bundle/index.ios.bundle
-          mv bundles/ios/assets/assets native_template/ios/Bundle/
-          mv native_widgets/configs/e2e/config.json native_template
-          mv native_widgets/configs/e2e/.dependencies native_template
-          mv native_widgets/configs/e2e/.native_dependencies native_template
+          mv bundles/ios/index.ios.bundle native-template/ios/Bundle/index.ios.bundle
+          mv bundles/ios/assets/assets native-template/ios/Bundle/
+          mv native-widgets/configs/e2e/config.json native-template
+          node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Set up Node"
         uses: actions/setup-node@v3.6.0
         with:
-          node-version-file: native_template/.nvmrc
+          node-version-file: native-template/.nvmrc
           cache: npm
-          cache-dependency-path: native_template/package-lock.json
+          cache-dependency-path: native-template/package-lock.json
       - name: "Install Node dependencies"
-        working-directory: native_template
-        run: npm ci
-      - name: "Configure"
-        working-directory: native_template
-        run: |
-          npm run configure
-          npm install
+        working-directory: native-template
+        run: npm i
       - name: "Setup Pods cache"
         uses: actions/cache@v3.3.1
         with:
-          path: native_template/Pods
+          path: native-template/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
       - name: "Install Pod dependencies"
-        working-directory: native_template/ios
+        working-directory: native-template/ios
         run: pod install
       - name: "Build iOS app"
-        working-directory: native_template/ios
+        working-directory: native-template/ios
         run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
       - name: "Archive iOS app"
         uses: actions/upload-artifact@v3.1.2
         with:
           name: ios-app
-          path: native_template/ios/build/Build/Products/**/*.app
+          path: native-template/ios/build/Build/Products/**/*.app
       - name: "Archive iOS package.json"
         uses: actions/upload-artifact@v3.1.2
         with:
           name: ios-native-template-package-json
-          path: native_template/package.json
+          path: native-template/package.json
   android-avd:
     runs-on: macos-12
     steps:
