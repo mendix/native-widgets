@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   We changed the JS actions and widgets icons.
+
+## [3.0.0] Native Mobile Resources - 2023-3-28
+
+-   We made widgets compatible with React Native 0.70.7
+
 ## [2.6.1] Nanoflow Commons - 2022-9-23
 
 ### Fixed

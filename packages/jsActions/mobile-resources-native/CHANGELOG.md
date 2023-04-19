@@ -50,7 +50,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We fixed an issue where height or width with a value of 0 crash the app.
 
 ## [4.0.0] Native Mobile Resources - 2023-3-28
-undefined
+
+- We made widgets compatible with React Native 0.70.7
 
 ## [4.0.0] AppEvents
 ## BREAKING
