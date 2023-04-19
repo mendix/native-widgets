@@ -10,7 +10,7 @@ import DoughnutWithLabelsDark from "./assets/doughnut-w-labels-dark.svg";
 import DoughnutWithoutLabels from "./assets/doughnut-wo-labels.svg";
 import DoughnutWithoutLabelsDark from "./assets/doughnut-wo-labels-dark.svg";
 
-export function getPreview(values: PieDoughnutChartPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+export const getPreview = (values: PieDoughnutChartPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
     const pieWithLabelsSVG = isDarkMode ? PieWithLabelsDark : PieWithLabels;
     const pieWithoutLabelsSVG = isDarkMode ? PieWithoutLabelsDark : PieWithoutLabels;
     const doughnutWithLabelsDarkSVG = isDarkMode ? DoughnutWithLabelsDark : DoughnutWithLabels;
@@ -27,4 +27,4 @@ export function getPreview(values: PieDoughnutChartPreviewProps, isDarkMode: boo
             height: 234
         };
     }
-}
+};

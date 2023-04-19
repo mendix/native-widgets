@@ -1,8 +1,15 @@
-import { ContainerProps, DropZoneProps, RowLayoutProps, StructurePreviewProps } from "@mendix/piw-utils-internal";
+import {
+    ContainerProps,
+    DropZoneProps,
+    RowLayoutProps,
+    StructurePreviewProps,
+    topBar,
+    getColors
+} from "@mendix/piw-utils-internal";
 import { Problem, hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 import { GalleryPreviewProps } from "../typings/GalleryProps";
 
-export function getProperties(values: GalleryPreviewProps, defaultProperties: Properties): Properties {
+export const getProperties = (values: GalleryPreviewProps, defaultProperties: Properties): Properties => {
     if (values.pagination !== "buttons") {
         hidePropertyIn(defaultProperties, values, "loadMoreButtonCaption");
     }
@@ -18,9 +25,9 @@ export function getProperties(values: GalleryPreviewProps, defaultProperties: Pr
     }
 
     return defaultProperties;
-}
+};
 
-export function check(values: GalleryPreviewProps): Problem[] {
+export const check = (values: GalleryPreviewProps): Problem[] => {
     const errors: Problem[] = [];
     if (!values.phoneColumns || values.phoneColumns < 1) {
         errors.push({
@@ -41,9 +48,9 @@ export function check(values: GalleryPreviewProps): Problem[] {
         });
     }
     return errors;
-}
+};
 
-export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+export const getPreview = (values: GalleryPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
     const filterCaption = values.filterList.length > 0 ? "Place filter widgets here" : "Place widgets here";
 
     const filters = {
@@ -58,27 +65,6 @@ export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): St
             } as DropZoneProps
         ]
     } as RowLayoutProps;
-
-    const titleHeader: RowLayoutProps = {
-        type: "RowLayout",
-        columnSize: "fixed",
-        backgroundColor: isDarkMode ? "#3B5C8F" : "#DAEFFB",
-        borders: true,
-        borderWidth: 1,
-        children: [
-            {
-                type: "Container",
-                padding: 4,
-                children: [
-                    {
-                        type: "Text",
-                        content: "Gallery",
-                        fontColor: isDarkMode ? "#6DB1FE" : "#2074C8"
-                    }
-                ]
-            }
-        ]
-    };
 
     const content = {
         type: "Container",
@@ -114,7 +100,7 @@ export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): St
                                     "Column",
                                     values.tabletColumns!
                                 )}, Phone ${values.phoneColumns} ${getSingularPlural("Column", values.phoneColumns!)}`,
-                                fontColor: isDarkMode ? "#DEDEDE" : "#899499"
+                                fontColor: getColors(isDarkMode).text.secondary
                             }
                         ]
                     },
@@ -143,11 +129,8 @@ export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): St
         } as RowLayoutProps
     ];
 
-    return {
-        type: "Container",
-        children: [titleHeader, ...(values.filterList.length > 0 ? [filters] : []), content, ...footer]
-    };
-}
+    return topBar("Gallery", [...(values.filterList.length > 0 ? [filters] : []), content, ...footer], isDarkMode);
+};
 
 function getSingularPlural(word: string, elements: number): string {
     return elements > 1 ? word + "s" : word;

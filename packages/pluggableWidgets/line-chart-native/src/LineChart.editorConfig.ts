@@ -8,40 +8,38 @@ import lineChartLegendSvgLight from "./assets/LineChart.Legend.light.svg";
 
 import { LineChartPreviewProps } from "../typings/LineChartProps";
 
-export function getPreview(values: LineChartPreviewProps, isDarkMode: boolean): StructurePreviewProps {
-    return {
-        type: "RowLayout",
-        columnSize: "grow",
-        children: [
-            {
-                type: "Image",
-                document: decodeURIComponent(
-                    (isDarkMode ? lineChartSvgDark : lineChartSvgLight).replace("data:image/svg+xml,", "")
-                )
-            },
-            ...((values.showLegend
-                ? [
-                      {
-                          type: "Container",
-                          grow: 1
-                      },
-                      {
-                          type: "Image",
-                          document: decodeURIComponent(
-                              (isDarkMode ? lineChartLegendSvgDark : lineChartLegendSvgLight).replace(
-                                  "data:image/svg+xml,",
-                                  ""
-                              )
-                          ),
-                          width: 85
-                      }
-                  ]
-                : [{ type: "Container" }]) as StructurePreviewProps[])
-        ]
-    };
-}
+export const getPreview = (values: LineChartPreviewProps, isDarkMode: boolean): StructurePreviewProps => ({
+    type: "RowLayout",
+    columnSize: "grow",
+    children: [
+        {
+            type: "Image",
+            document: decodeURIComponent(
+                (isDarkMode ? lineChartSvgDark : lineChartSvgLight).replace("data:image/svg+xml,", "")
+            )
+        },
+        ...((values.showLegend
+            ? [
+                  {
+                      type: "Container",
+                      grow: 1
+                  },
+                  {
+                      type: "Image",
+                      document: decodeURIComponent(
+                          (isDarkMode ? lineChartLegendSvgDark : lineChartLegendSvgLight).replace(
+                              "data:image/svg+xml,",
+                              ""
+                          )
+                      ),
+                      width: 85
+                  }
+              ]
+            : [{ type: "Container" }]) as StructurePreviewProps[])
+    ]
+});
 
-export function getProperties(values: LineChartPreviewProps, defaultProperties: Properties): Properties {
+export const getProperties = (values: LineChartPreviewProps, defaultProperties: Properties): Properties => {
     values.lines.forEach((lines, index) => {
         if (lines.dataSet === "static") {
             hideNestedPropertiesIn(defaultProperties, values, "lines", index, [
@@ -65,9 +63,9 @@ export function getProperties(values: LineChartPreviewProps, defaultProperties: 
         }
     });
     return defaultProperties;
-}
+};
 
-export function check(values: LineChartPreviewProps): Problem[] {
+export const check = (values: LineChartPreviewProps): Problem[] => {
     const errors: Problem[] = [];
 
     values.lines.forEach((lines, index) => {
@@ -137,4 +135,4 @@ export function check(values: LineChartPreviewProps): Problem[] {
     });
 
     return errors;
-}
+};

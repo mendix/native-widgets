@@ -5,7 +5,7 @@ import { SwitchPreviewProps } from "../typings/SwitchProps";
 import StructurePreviewSwitchSVG from "./assets/checked.svg";
 import StructurePreviewSwitchDarkSVG from "./assets/checked-dark.svg";
 
-export function getPreview(values: SwitchPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+export const getPreview = (values: SwitchPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
     const label: StructurePreviewProps = {
         type: "Container",
         borders: false,
@@ -44,12 +44,12 @@ export function getPreview(values: SwitchPreviewProps, isDarkMode: boolean): Str
               padding: 4,
               children
           };
-}
+};
 
-export function getProperties(values: SwitchPreviewProps, defaultProperties: Properties): Properties {
+export const getProperties = (values: SwitchPreviewProps, defaultProperties: Properties): Properties => {
     if (!values.showLabel) {
         hidePropertiesIn(defaultProperties, values, ["label", "labelOrientation"]);
     }
 
     return defaultProperties;
-}
+};

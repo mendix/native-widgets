@@ -10,47 +10,45 @@ import barChartLegendSvgLight from "./assets/BarChart.Legend.light.svg";
 
 import { BarChartPreviewProps } from "../typings/BarChartProps";
 
-export function getPreview(values: BarChartPreviewProps, isDarkMode: boolean): StructurePreviewProps {
-    return {
-        type: "RowLayout",
-        columnSize: "grow",
-        children: [
-            {
-                type: "Image",
-                document: decodeURIComponent(
-                    (values.presentation === "grouped"
-                        ? isDarkMode
-                            ? barChartGroupedSvgDark
-                            : barChartGroupedSvgLight
-                        : isDarkMode
-                        ? barChartStackedSvgDark
-                        : barChartStackedSvgLight
-                    ).replace("data:image/svg+xml,", "")
-                )
-            },
-            ...((values.showLegend
-                ? [
-                      {
-                          type: "Container",
-                          grow: 1
-                      },
-                      {
-                          type: "Image",
-                          document: decodeURIComponent(
-                              (isDarkMode ? barChartLegendSvgDark : barChartLegendSvgLight).replace(
-                                  "data:image/svg+xml,",
-                                  ""
-                              )
-                          ),
-                          width: 85
-                      }
-                  ]
-                : [{ type: "Container" }]) as StructurePreviewProps[])
-        ]
-    };
-}
+export const getPreview = (values: BarChartPreviewProps, isDarkMode: boolean): StructurePreviewProps => ({
+    type: "RowLayout",
+    columnSize: "grow",
+    children: [
+        {
+            type: "Image",
+            document: decodeURIComponent(
+                (values.presentation === "grouped"
+                    ? isDarkMode
+                        ? barChartGroupedSvgDark
+                        : barChartGroupedSvgLight
+                    : isDarkMode
+                    ? barChartStackedSvgDark
+                    : barChartStackedSvgLight
+                ).replace("data:image/svg+xml,", "")
+            )
+        },
+        ...((values.showLegend
+            ? [
+                  {
+                      type: "Container",
+                      grow: 1
+                  },
+                  {
+                      type: "Image",
+                      document: decodeURIComponent(
+                          (isDarkMode ? barChartLegendSvgDark : barChartLegendSvgLight).replace(
+                              "data:image/svg+xml,",
+                              ""
+                          )
+                      ),
+                      width: 85
+                  }
+              ]
+            : [{ type: "Container" }]) as StructurePreviewProps[])
+    ]
+});
 
-export function getProperties(values: BarChartPreviewProps, defaultProperties: Properties): Properties {
+export const getProperties = (values: BarChartPreviewProps, defaultProperties: Properties): Properties => {
     values.barSeries.forEach((series, index) => {
         if (series.dataSet === "static") {
             hideNestedPropertiesIn(defaultProperties, values, "barSeries", index, [
@@ -73,9 +71,9 @@ export function getProperties(values: BarChartPreviewProps, defaultProperties: P
     });
 
     return defaultProperties;
-}
+};
 
-export function check(values: BarChartPreviewProps): Problem[] {
+export const check = (values: BarChartPreviewProps): Problem[] => {
     const errors: Problem[] = [];
 
     values.barSeries.forEach((series, index) => {
@@ -145,4 +143,4 @@ export function check(values: BarChartPreviewProps): Problem[] {
     });
 
     return errors;
-}
+};

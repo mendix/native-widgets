@@ -1,18 +1,17 @@
-import { StructurePreviewProps, ContainerProps } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps, ContainerProps, topBar, getColors } from "@mendix/piw-utils-internal";
 import { changePropertyIn, hidePropertyIn, Properties, Problem } from "@mendix/pluggable-widgets-tools";
 
 import { AccordionPreviewProps, GroupsPreviewType } from "../typings/AccordionProps";
 
-export function getPreview(values: AccordionPreviewProps, isDarkMode: boolean): StructurePreviewProps {
-    const headerBackgroundColor: string = isDarkMode ? "#454545" : "#F5F5F5";
-
+export const getPreview = (values: AccordionPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+    const colors = getColors(isDarkMode);
     const noGroupsContainer: ContainerProps = {
         type: "Container",
         borders: true,
         children: [
             {
                 type: "Container",
-                backgroundColor: headerBackgroundColor,
+                backgroundColor: colors.background.topBar.standard,
                 children: [
                     {
                         type: "RowLayout",
@@ -22,7 +21,7 @@ export function getPreview(values: AccordionPreviewProps, isDarkMode: boolean): 
                             { type: "Container" },
                             {
                                 type: "Text",
-                                fontColor: isDarkMode ? "#A4A4A4" : "#0A1324",
+                                fontColor: colors.text.primary,
                                 bold: true,
                                 content: "[No groups configured]"
                             },
@@ -43,7 +42,7 @@ export function getPreview(values: AccordionPreviewProps, isDarkMode: boolean): 
                             {
                                 type: "Text",
                                 content: "Add groups in order to place widgets here",
-                                fontColor: isDarkMode ? "#A4A4A4" : "#6B707B"
+                                fontColor: colors.text.secondary
                             },
                             { type: "Container" }
                         ]
@@ -53,64 +52,42 @@ export function getPreview(values: AccordionPreviewProps, isDarkMode: boolean): 
         ]
     };
 
-    return {
+    const content: StructurePreviewProps = {
         type: "Container",
-        borders: true,
         children: [
-            {
-                type: "Container",
-                backgroundColor: headerBackgroundColor,
-                children: [
-                    {
-                        type: "Container",
-                        padding: 4,
-                        borders: true,
-                        children: [
-                            {
-                                type: "Text",
-                                fontColor: isDarkMode ? "#DEDEDE" : "#6B707B",
-                                content: "Accordion"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                type: "Container",
-                children: [
-                    ...(values.groups.length === 0
-                        ? [noGroupsContainer]
-                        : values.groups
-                              .map<StructurePreviewProps[]>((group, index) =>
-                                  group.headerRenderMode === "custom"
-                                      ? [
-                                            {
-                                                type: "DropZone",
-                                                property: group.headerContent,
-                                                placeholder: `Group/${index + 1}/Header`
-                                            },
-                                            {
-                                                type: "DropZone",
-                                                property: group.content,
-                                                placeholder: `Group/${index + 1}/Content`
-                                            }
-                                        ]
-                                      : [
-                                            {
-                                                type: "DropZone",
-                                                property: group.content,
-                                                placeholder: `Group/${index + 1}/Content`
-                                            }
-                                        ]
-                              )
-                              .reduce((previousValue, currentValue) => previousValue.concat(currentValue), []))
-                ]
-            }
+            ...(values.groups.length === 0
+                ? [noGroupsContainer]
+                : values.groups
+                      .map<StructurePreviewProps[]>((group, index) =>
+                          group.headerRenderMode === "custom"
+                              ? [
+                                    {
+                                        type: "DropZone",
+                                        property: group.headerContent,
+                                        placeholder: `Group/${index + 1}/Header`
+                                    },
+                                    {
+                                        type: "DropZone",
+                                        property: group.content,
+                                        placeholder: `Group/${index + 1}/Content`
+                                    }
+                                ]
+                              : [
+                                    {
+                                        type: "DropZone",
+                                        property: group.content,
+                                        placeholder: `Group/${index + 1}/Content`
+                                    }
+                                ]
+                      )
+                      .reduce((previousValue, currentValue) => previousValue.concat(currentValue), []))
         ]
     };
-}
 
-export function getProperties(values: AccordionPreviewProps, defaultProperties: Properties): Properties {
+    return topBar("Accordion", content, isDarkMode);
+};
+
+export const getProperties = (values: AccordionPreviewProps, defaultProperties: Properties): Properties => {
     values.groups.forEach((group, index) => {
         if (group.headerRenderMode === "text") {
             hidePropertyIn(defaultProperties, values, "groups", index, "headerContent");
@@ -156,9 +133,9 @@ export function getProperties(values: AccordionPreviewProps, defaultProperties: 
     );
 
     return defaultProperties;
-}
+};
 
-export function check(values: AccordionPreviewProps): Problem[] {
+export const check = (values: AccordionPreviewProps): Problem[] => {
     const errors: Problem[] = [];
 
     const amountOfGroupsStartingExpanded = values.groups.filter(
@@ -190,4 +167,4 @@ export function check(values: AccordionPreviewProps): Problem[] {
     });
 
     return errors;
-}
+};

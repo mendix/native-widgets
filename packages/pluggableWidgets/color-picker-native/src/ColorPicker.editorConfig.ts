@@ -6,19 +6,17 @@ import colorPickerSvgNoPreviewLight from "./assets/ColorPicker.nopreview.light.s
 import colorPickerSvgPreviewDark from "./assets/ColorPicker.preview.dark.svg";
 import colorPickerSvgPreviewLight from "./assets/ColorPicker.preview.light.svg";
 
-export function getPreview(values: ColorPickerPreviewProps, isDarkMode: boolean): StructurePreviewProps {
-    return {
-        type: "Image",
-        document: decodeURIComponent(
-            (values.showPreview
-                ? isDarkMode
-                    ? colorPickerSvgPreviewDark
-                    : colorPickerSvgPreviewLight
-                : isDarkMode
-                ? colorPickerSvgNoPreviewDark
-                : colorPickerSvgNoPreviewLight
-            ).replace("data:image/svg+xml,", "")
-        ),
-        width: 188
-    };
-}
+export const getPreview = (values: ColorPickerPreviewProps, isDarkMode: boolean): StructurePreviewProps => ({
+    type: "Image",
+    document: decodeURIComponent(
+        (values.showPreview
+            ? isDarkMode
+                ? colorPickerSvgPreviewDark
+                : colorPickerSvgPreviewLight
+            : isDarkMode
+            ? colorPickerSvgNoPreviewDark
+            : colorPickerSvgNoPreviewLight
+        ).replace("data:image/svg+xml,", "")
+    ),
+    width: 188
+});
