@@ -196,6 +196,12 @@ jobs:
         with:
           name: android-bundle
           path: bundles/android
+      - name: "Set up Node"
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version-file: native-template/.nvmrc
+          cache: npm
+          cache-dependency-path: native-template/package-lock.json
       - name: "Copy files to the right location"
         run: |
           mv bundles/android/index.android.bundle native-template/android/app/src/main/assets/index.android.bundle
@@ -203,12 +209,6 @@ jobs:
           mv native-widgets/configs/e2e/config.json native-template
           mv native-widgets/configs/e2e/google-services.json native-template/android/app
           node native-widgets/scripts/test/add-native-dependencies.js
-      - name: "Set up Node"
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version-file: native-template/.nvmrc
-          cache: npm
-          cache-dependency-path: native-template/package-lock.json
       - name: "Install dependencies"
         working-directory: native-template
         run: npm i
@@ -250,18 +250,18 @@ jobs:
         with:
           name: ios-bundle
           path: bundles/ios
-      - name: "Copy files to the right location"
-        run: |
-          mv bundles/ios/index.ios.bundle native-template/ios/Bundle/index.ios.bundle
-          mv bundles/ios/assets/assets native-template/ios/Bundle/
-          mv native-widgets/configs/e2e/config.json native-template
-          node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Set up Node"
         uses: actions/setup-node@v3.6.0
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
           cache-dependency-path: native-template/package-lock.json
+      - name: "Copy files to the right location"
+        run: |
+          mv bundles/ios/index.ios.bundle native-template/ios/Bundle/index.ios.bundle
+          mv bundles/ios/assets/assets native-template/ios/Bundle/
+          mv native-widgets/configs/e2e/config.json native-template
+          node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Install Node dependencies"
         working-directory: native-template
         run: npm i
