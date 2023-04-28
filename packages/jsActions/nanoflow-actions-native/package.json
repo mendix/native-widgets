@@ -17,6 +17,7 @@
     "branchName": "main"
   },
   "scripts": {
+    "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nanoflowcommons",
     "build": "rollup --config ../../../configs/jsactions/rollup.config.js --configProject nanoflowcommons",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "release": "yarn build",
