@@ -25,3 +25,15 @@ index ec507d5..f5bf176
  
      if (args.indexOf("--subprojectPath") > -1) {
          args.splice(args.indexOf("--subprojectPath"), 2);
+diff --git a/node_modules/@mendix/pluggable-widgets-tools/test-config/jest.native.config.js b/node_modules/@mendix/pluggable-widgets-tools/test-config/jest.native.config.js
+index 7e604c2..62afe21 100644
+--- a/node_modules/@mendix/pluggable-widgets-tools/test-config/jest.native.config.js
++++ b/node_modules/@mendix/pluggable-widgets-tools/test-config/jest.native.config.js
+@@ -33,7 +33,6 @@ module.exports = {
+         "^.+\\.tsx?$": [
+             "ts-jest",
+             {
+-                isolatedModules: true,
+                 tsconfig: { module: "commonjs" }
+             }
+         ],
