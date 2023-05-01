@@ -56,13 +56,13 @@ export interface MarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     iconSize: number | null;
     iconColor: string;
 }
 
 export interface DynamicMarkersPreviewType {
-    markersDS: {} | { type: string } | null;
+    markersDS: {} | { caption: string } | { type: string } | null;
     locationDynamicType: LocationDynamicTypeEnum;
     address: string;
     latitude: string;
@@ -70,7 +70,7 @@ export interface DynamicMarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     iconSize: number | null;
     iconColor: string;
 }

@@ -3,7 +3,7 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ComponentType, CSSProperties } from "react";
+import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ListValue, ListWidgetValue } from "mendix";
 
 export type LayoutEnum = "card" | "fullWidth";
@@ -29,8 +29,8 @@ export interface CarouselPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    contentSource: {} | { type: string } | null;
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    contentSource: {} | { caption: string } | { type: string } | null;
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     layout: LayoutEnum;
     showPagination: boolean;
     activeSlideAlignment: ActiveSlideAlignmentEnum;
