@@ -31,11 +31,11 @@ export interface ListViewSwipePreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    left: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    left: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     leftRenderMode: LeftRenderModeEnum;
     onSwipeLeft: {} | null;
-    right: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    right: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     rightRenderMode: RightRenderModeEnum;
     onSwipeRight: {} | null;
 }

@@ -19,7 +19,7 @@ export interface SeriesType {
 export type SortOrderEnum = "ascending" | "descending";
 
 export interface SeriesPreviewType {
-    dataSource: {} | { type: string } | null;
+    dataSource: {} | { caption: string } | { type: string } | null;
     XAttribute: string;
     YAttribute: string;
     sliceStylingKey: string;
