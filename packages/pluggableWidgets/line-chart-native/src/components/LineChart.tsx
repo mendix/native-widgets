@@ -182,7 +182,7 @@ export function LineChart(props: LineChartProps): ReactElement | null {
     const updateChartDimensions = useCallback(
         (event: LayoutChangeEvent) => {
             const { height, width } = event.nativeEvent.layout;
-            setChartDimensions({ height, width });
+            setChartDimensions({ height: height <= 0 ? -1 : height, width: width <= 0 ? -1 : width });
         },
         [setChartDimensions]
     );

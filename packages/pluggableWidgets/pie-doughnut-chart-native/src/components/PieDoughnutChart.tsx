@@ -53,10 +53,12 @@ export function PieDoughnutChart({ name, presentation, series, style, showLabels
     }, [series, style]);
 
     const updateChartDimensions = useCallback(
-        (event: LayoutChangeEvent) =>
+        (event: LayoutChangeEvent) => {
+            const { width } = event.nativeEvent.layout;
             setChartDimensions({
-                width: event.nativeEvent.layout.width
-            }),
+                width: width <= 0 ? -1 : width
+            });
+        },
         [setChartDimensions]
     );
 
