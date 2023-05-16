@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue where height or width with a value of 0 crash the app.
+
 ## [3.0.0] - 2023-3-28
 
 ## BREAKING
