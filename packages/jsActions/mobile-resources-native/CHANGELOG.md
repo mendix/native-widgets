@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.2] Native Mobile Resources - 2023-5-16
+
+
+## [3.0.1] BarChart
+### Fixed
+
+-   We fixed an issue where height or width with a value of 0 crash the app.
+
+## [2.0.1] ColumnChart
+### Fixed
+
+-   We fixed an issue where height or width with a value of 0 crash the app.
+
+## [3.0.1] LineChart
+### Fixed
+
+-   We fixed an issue where height or width with a value of 0 crash the app.
+
+## [2.0.1] PieDoughnutChart
+### Fixed
+
+-   We fixed an issue where height or width with a value of 0 crash the app.
+
 ## [4.0.0] Native Mobile Resources - 2023-3-28
 undefined
 
