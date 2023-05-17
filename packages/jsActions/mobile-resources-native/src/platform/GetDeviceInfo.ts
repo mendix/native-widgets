@@ -27,7 +27,10 @@ export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
         DeviceInfo.getTotalMemory(),
         DeviceInfo.getCarrier(),
         DeviceInfo.getManufacturer(),
-        DeviceInfo.getUserAgent()
+        DeviceInfo.getUserAgent(),
+        DeviceInfo.getUniqueId(),
+        DeviceInfo.isEmulator(),
+        DeviceInfo.isLandscape()
     ]).then(
         async ([
             mxObject,
@@ -38,7 +41,10 @@ export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
             totalMemory,
             carrier,
             manufacturer,
-            userAgent
+            userAgent,
+            uniqueId,
+            isEmulator,
+            isLandscape
         ]) => {
             const locales = getLocales();
             mxObject.set("ApplicationName", DeviceInfo.getApplicationName());
@@ -60,13 +66,13 @@ export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
             mxObject.set("Timezone", getTimeZone());
             mxObject.set("TotalDiskCapacity", new Big(totalDiskCapacity));
             mxObject.set("TotalMemory", new Big(totalMemory));
-            mxObject.set("UniqueId", DeviceInfo.getUniqueId());
+            mxObject.set("UniqueId", uniqueId);
             mxObject.set("UserAgent", userAgent);
             mxObject.set("Version", DeviceInfo.getVersion());
             mxObject.set("Is24Hour", uses24HourClock());
-            mxObject.set("IsEmulator", DeviceInfo.isEmulator());
+            mxObject.set("IsEmulator", isEmulator);
             mxObject.set("IsTablet", DeviceInfo.isTablet());
-            mxObject.set("IsLandscape", DeviceInfo.isLandscape());
+            mxObject.set("IsLandscape", isLandscape);
             mxObject.set("HasNotch", DeviceInfo.hasNotch());
 
             return mxObject;
