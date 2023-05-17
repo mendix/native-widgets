@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "react-native-device-info": "10.6.0"
+    "react-native-device-info": "8.7.1"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
