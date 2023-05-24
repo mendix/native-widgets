@@ -5385,7 +5385,7 @@ __metadata:
     "@types/react-native-modal": ^4.1.1
     eslint: ^7.20.0
     react-native-actionsheet: ^2.4.2
-    react-native-device-info: 8.0.1
+    react-native-device-info: 8.7.1
     react-native-modal: ^11.5.4
     react-native-reanimated: ^1.0.1
     reanimated-bottom-sheet: ^1.0.0-alpha.19
@@ -8560,7 +8560,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": ^9.0.0
     detox: ^19.7.1
     eslint: ^7.20.0
-    react-native-device-info: 8.0.1
+    react-native-device-info: 8.7.1
   languageName: unknown
   linkType: soft
 
@@ -9392,7 +9392,7 @@ __metadata:
     "@react-native-community/async-storage": 1.12.1
     detox: ^19.7.1
     eslint: ^7.20.0
-    react-native-device-info: 8.0.1
+    react-native-device-info: 8.7.1
   languageName: unknown
   linkType: soft
 
@@ -12723,7 +12723,7 @@ __metadata:
     fbjs: 3.0.4
     mime: 3.0.0
     react-native-blob-util: 0.16.2
-    react-native-device-info: 8.0.1
+    react-native-device-info: 8.7.1
     react-native-file-viewer: 2.1.5
     react-native-image-picker: 5.0.1
     react-native-inappbrowser-reborn: 3.4.0
@@ -14836,12 +14836,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-device-info@npm:8.0.1":
-  version: 8.0.1
-  resolution: "react-native-device-info@npm:8.0.1"
+"react-native-device-info@npm:8.7.1":
+  version: 8.7.1
+  resolution: "react-native-device-info@npm:8.7.1"
   peerDependencies:
     react-native: "*"
-  checksum: 124d27444e1ae08db84ed6d16f9b5142e40f6ec12d614a3c4b7021dd69c68b96cc26ebc3737fe2c0269eaecad7870a6112fa7dcfadede77cbab1819514e3752b
+  checksum: ada819913315958bd8297059682d2345e410104930ce928acd373eba71f2e683a05f1ddb19ea6b3f511b641a85f3c6d6d6fa3d830026ee9edf17fdb61f4a69b0
   languageName: node
   linkType: hard
 
