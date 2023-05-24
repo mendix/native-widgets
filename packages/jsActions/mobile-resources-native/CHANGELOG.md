@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.3] Native Mobile Resources - 2023-5-24
+### Fixed
+
+-   We've updated react-native-device-info library.
+
+## [3.2.2] BottomSheet
+### Fixed
+
+-   We've updated react-native-device-info library.
+
+## [1.0.2] Gallery
+### Fixed
+
+-   We've updated react-native-device-info library.
+
+## [3.2.3] IntroScreen
 ### Fixed
 
 -   We've updated react-native-device-info library.
