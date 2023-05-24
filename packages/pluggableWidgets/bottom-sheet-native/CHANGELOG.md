@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.2.2] - 2023-5-24
+
 ### Fixed
 
 -   We've updated react-native-device-info library.
