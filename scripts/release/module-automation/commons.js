@@ -241,7 +241,7 @@ async function createGithubReleaseFrom({ title, body = "", tag, mpkOutput, isDra
     const command = [
         `gh release create`,
         `--title '${title}'`,
-        `--notes '${body.replace("'", "\'")}'`,
+        `--notes '${body.replaceAll("'", "`")}'`,
         isDraft ? "--draft" : "",
         `'${tag}'`,
         `'${mpkOutput}'`
