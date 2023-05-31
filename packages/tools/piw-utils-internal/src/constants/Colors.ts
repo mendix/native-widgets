@@ -1,8 +1,12 @@
+import { colorWithOpacity } from "src/utils/StylingPropertyUtils";
+
 export type Theme = "dark" | "light";
 
 interface ButtonColors {
     default: string;
     inverse: string;
+    primary: string;
+    info: string;
     success: string;
     warning: string;
     danger: string;
@@ -42,7 +46,7 @@ export interface ColorsType {
 export const ColorsLight: ColorsType = {
     background: {
         topBar: {
-            data: "#C2E2FF",
+            data: "#DCEEFE",
             standard: "#F7F7F7"
         },
         page: "#FFFFFF",
@@ -50,8 +54,10 @@ export const ColorsLight: ColorsType = {
         shade: "#F2F2F3",
         button: {
             default: "#535965",
-            inverse: "#C1C3C8",
-            success: "#0D990D",
+            inverse: "#D9DBDD",
+            primary: "#0123C6",
+            info: "#146FF4",
+            success: "#0A7D0A",
             warning: "#DB5F12",
             danger: "#D31E23",
             icon: "#D9DBDD"
@@ -60,7 +66,7 @@ export const ColorsLight: ColorsType = {
     text: {
         primary: "#2F3646",
         secondary: "#6B707B",
-        data: "#064AE4",
+        data: "#146FF4",
         button: {
             dark: "#0A1324",
             light: "#FFFFFF"
@@ -79,8 +85,8 @@ export const ColorsLight: ColorsType = {
 export const ColorsDark: ColorsType = {
     background: {
         topBar: {
-            data: "#C2E2FF",
-            standard: "#323232"
+            data: colorWithOpacity("#3A65E5", 20),
+            standard: colorWithOpacity("#646464", 20)
         },
         page: "#313131",
         container: "#313131",
@@ -88,6 +94,8 @@ export const ColorsDark: ColorsType = {
         button: {
             default: "#646464",
             inverse: "#DEDEDE",
+            primary: "#344BCE",
+            info: "#579BF9",
             success: "#5BDB5B",
             warning: "#F69558",
             danger: "#F25C5C",
