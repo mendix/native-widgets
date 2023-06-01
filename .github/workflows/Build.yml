@@ -2,10 +2,13 @@ name: Run build
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'mx/release/**'
   pull_request:
-    branches: [main]
-
+    branches:
+      - main
+      - 'mx/release/**'
 jobs:
   test:
     name: "Build (${{ matrix.os }})"
