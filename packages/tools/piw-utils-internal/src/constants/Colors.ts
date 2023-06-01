@@ -1,5 +1,3 @@
-import { colorWithOpacity } from "src/utils/StylingPropertyUtils";
-
 export type Theme = "dark" | "light";
 
 interface ButtonColors {
@@ -85,8 +83,8 @@ export const ColorsLight: ColorsType = {
 export const ColorsDark: ColorsType = {
     background: {
         topBar: {
-            data: colorWithOpacity("#3A65E5", 20),
-            standard: colorWithOpacity("#646464", 20)
+            data: "#3A65E5",
+            standard: "#646464"
         },
         page: "#313131",
         container: "#313131",

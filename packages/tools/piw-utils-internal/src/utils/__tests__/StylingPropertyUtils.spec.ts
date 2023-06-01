@@ -1,4 +1,4 @@
-import { colorWithOpacity, getDimensions } from "../StylingPropertyUtils";
+import { getDimensions } from "../StylingPropertyUtils";
 
 describe("getDimensions", () => {
     describe("width", () => {
@@ -96,37 +96,3 @@ describe("getDimensions", () => {
         });
     });
 });
-
-
-describe("colorWithOpacity", () => {
-    it("color:#3A65E5 with opacity:0", () => {
-        const color = "#3A65E5";
-        const opacity = 0;
-        expect(colorWithOpacity(color, opacity)).toEqual("#3A65E500")
-    })
-    it("color:#3A65E5 with opacity:20", () => {
-        const color = "#3A65E5";
-        const opacity = 20;
-        expect(colorWithOpacity(color, opacity)).toEqual("#3A65E533")
-    })
-    it("color:#3A65E5 with opacity:50", () => {
-        const color = "#3A65E5";
-        const opacity = 50;
-        expect(colorWithOpacity(color, opacity)).toEqual("#3A65E580")
-    })
-    it("color:#3A65E5 with opacity:75", () => {
-        const color = "#3A65E5";
-        const opacity = 75;
-        expect(colorWithOpacity(color, opacity)).toEqual("#3A65E5BF")
-    })
-    it("color:#3A65E5 with opacity:90", () => {
-        const color = "#3A65E5";
-        const opacity = 90;
-        expect(colorWithOpacity(color, opacity)).toEqual("#3A65E5E6")
-    })
-    it("color:#3A65E5 with opacity:90", () => {
-        const color = "#3A65E5";
-        const opacity = 100;
-        expect(colorWithOpacity(color, opacity)).toEqual("#3A65E5FF")
-    })
-})
