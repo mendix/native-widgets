@@ -83,8 +83,8 @@ export const ColorsLight: ColorsType = {
 export const ColorsDark: ColorsType = {
     background: {
         topBar: {
-            data: "#3A65E5",
-            standard: "#646464"
+            data: "#333A65E5",
+            standard: "#33646464"
         },
         page: "#313131",
         container: "#313131",
