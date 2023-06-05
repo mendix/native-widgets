@@ -1,7 +1,7 @@
 import { StructurePreviewProps, topBar } from "@mendix/piw-utils-internal";
 import { AnimationProps } from "../typings/AnimationProps";
 
-export const getPreview = (values: AnimationProps<any>, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(values: AnimationProps<any>, isDarkMode: boolean): StructurePreviewProps {
     const prettifyText = (text: string): string => text.replace(/([A-Z])/g, " $1").toLowerCase();
     const animationType =
         values.animationType === "in" ? "Entrance" : values.animationType === "attention" ? "Attention" : "Exit";
@@ -21,4 +21,4 @@ export const getPreview = (values: AnimationProps<any>, isDarkMode: boolean): St
     };
 
     return topBar(title, content, isDarkMode);
-};
+}

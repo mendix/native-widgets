@@ -9,45 +9,47 @@ import columnChartStackedSvgLight from "./assets/ColumnChart.Stacked.light.svg";
 import columnChartLegendSvgLight from "./assets/ColumnChart.Legend.light.svg";
 import columnChartLegendSvgDark from "./assets/ColumnChart.Legend.dark.svg";
 
-export const getPreview = (values: ColumnChartPreviewProps, isDarkMode: boolean): StructurePreviewProps => ({
-    type: "RowLayout",
-    columnSize: "grow",
-    children: [
-        {
-            type: "Image",
-            document: decodeURIComponent(
-                (values.presentation === "grouped"
-                    ? isDarkMode
-                        ? columnChartGroupedSvgDark
-                        : columnChartGroupedSvgLight
-                    : isDarkMode
-                    ? columnChartStackedSvgDark
-                    : columnChartStackedSvgLight
-                ).replace("data:image/svg+xml,", "")
-            )
-        },
-        ...((values.showLegend
-            ? [
-                  {
-                      type: "Container",
-                      grow: 1
-                  },
-                  {
-                      type: "Image",
-                      document: decodeURIComponent(
-                          (isDarkMode ? columnChartLegendSvgDark : columnChartLegendSvgLight).replace(
-                              "data:image/svg+xml,",
-                              ""
-                          )
-                      ),
-                      width: 85
-                  }
-              ]
-            : [{ type: "Container" }]) as StructurePreviewProps[])
-    ]
-});
+export function getPreview(values: ColumnChartPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+    return {
+        type: "RowLayout",
+        columnSize: "grow",
+        children: [
+            {
+                type: "Image",
+                document: decodeURIComponent(
+                    (values.presentation === "grouped"
+                        ? isDarkMode
+                            ? columnChartGroupedSvgDark
+                            : columnChartGroupedSvgLight
+                        : isDarkMode
+                        ? columnChartStackedSvgDark
+                        : columnChartStackedSvgLight
+                    ).replace("data:image/svg+xml,", "")
+                )
+            },
+            ...((values.showLegend
+                ? [
+                      {
+                          type: "Container",
+                          grow: 1
+                      },
+                      {
+                          type: "Image",
+                          document: decodeURIComponent(
+                              (isDarkMode ? columnChartLegendSvgDark : columnChartLegendSvgLight).replace(
+                                  "data:image/svg+xml,",
+                                  ""
+                              )
+                          ),
+                          width: 85
+                      }
+                  ]
+                : [{ type: "Container" }]) as StructurePreviewProps[])
+        ]
+    };
+}
 
-export const getProperties = (values: ColumnChartPreviewProps, defaultProperties: Properties): Properties => {
+export function getProperties(values: ColumnChartPreviewProps, defaultProperties: Properties): Properties {
     values.columnSeries.forEach((series, index) => {
         if (series.dataSet === "static") {
             hideNestedPropertiesIn(defaultProperties, values, "columnSeries", index, [
@@ -70,9 +72,9 @@ export const getProperties = (values: ColumnChartPreviewProps, defaultProperties
     });
 
     return defaultProperties;
-};
+}
 
-export const check = (values: ColumnChartPreviewProps): Problem[] => {
+export function check(values: ColumnChartPreviewProps): Problem[] {
     const errors: Problem[] = [];
 
     values.columnSeries.forEach((series, index) => {
@@ -142,4 +144,4 @@ export const check = (values: ColumnChartPreviewProps): Problem[] => {
     });
 
     return errors;
-};
+}

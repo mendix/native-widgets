@@ -3,7 +3,7 @@ import { changePropertyIn, hidePropertyIn, Properties, Problem } from "@mendix/p
 
 import { AccordionPreviewProps, GroupsPreviewType } from "../typings/AccordionProps";
 
-export const getPreview = (values: AccordionPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(values: AccordionPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     const colors = getColors(isDarkMode);
     const noGroupsContainer: ContainerProps = {
         type: "Container",
@@ -85,9 +85,9 @@ export const getPreview = (values: AccordionPreviewProps, isDarkMode: boolean): 
     };
 
     return topBar("Accordion", content, isDarkMode);
-};
+}
 
-export const getProperties = (values: AccordionPreviewProps, defaultProperties: Properties): Properties => {
+export function getProperties(values: AccordionPreviewProps, defaultProperties: Properties): Properties {
     values.groups.forEach((group, index) => {
         if (group.headerRenderMode === "text") {
             hidePropertyIn(defaultProperties, values, "groups", index, "headerContent");
@@ -133,9 +133,9 @@ export const getProperties = (values: AccordionPreviewProps, defaultProperties: 
     );
 
     return defaultProperties;
-};
+}
 
-export const check = (values: AccordionPreviewProps): Problem[] => {
+export function check(values: AccordionPreviewProps): Problem[] {
     const errors: Problem[] = [];
 
     const amountOfGroupsStartingExpanded = values.groups.filter(
@@ -167,4 +167,4 @@ export const check = (values: AccordionPreviewProps): Problem[] => {
     });
 
     return errors;
-};
+}

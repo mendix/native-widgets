@@ -10,14 +10,16 @@ import {
 import { MapsPreviewProps } from "../typings/MapsProps";
 import StructurePreviewMapsSVG from "./assets/StructurePreviewMaps.svg";
 
-export const getPreview = (_: MapsPreviewProps): StructurePreviewProps => ({
-    type: "Image",
-    document: decodeURIComponent(StructurePreviewMapsSVG.replace("data:image/svg+xml,", "")),
-    width: 375,
-    height: 375
-});
+export function getPreview(_: MapsPreviewProps): StructurePreviewProps {
+    return {
+        type: "Image",
+        document: decodeURIComponent(StructurePreviewMapsSVG.replace("data:image/svg+xml,", "")),
+        width: 375,
+        height: 375
+    };
+}
 
-export const getProperties = (values: MapsPreviewProps, defaultProperties: Properties): Properties => {
+export function getProperties(values: MapsPreviewProps, defaultProperties: Properties): Properties {
     values.markers.forEach((f, index) => {
         if (f.locationType === "address") {
             hidePropertyIn(defaultProperties, values, "markers", index, "latitude");
@@ -71,9 +73,9 @@ export const getProperties = (values: MapsPreviewProps, defaultProperties: Prope
     );
 
     return defaultProperties;
-};
+}
 
-export const check = (values: Omit<MapsPreviewProps, "className" | "style" | "readOnly">): Problem[] => {
+export function check(values: Omit<MapsPreviewProps, "className" | "style" | "readOnly">): Problem[] {
     const errors: Problem[] = [];
     const zoomLevels = ["world", "continent", "country", "city", "town", "streets", "building"];
     const defaultZoomLevelIndex = zoomLevels.indexOf(values.defaultZoomLevel);
@@ -158,4 +160,4 @@ export const check = (values: Omit<MapsPreviewProps, "className" | "style" | "re
     });
 
     return errors;
-};
+}

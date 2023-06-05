@@ -9,62 +9,66 @@ import {
 
 import { BottomSheetPreviewProps } from "../typings/BottomSheetProps";
 
-export const getPreview = (values: BottomSheetPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
-    const content: StructurePreviewProps[] = (
-        values.type === "modal"
-            ? values.modalRendering === "custom"
+export function getPreview(values: BottomSheetPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+    let content: StructurePreviewProps[] | null = null;
+
+    if (values.type === "modal") {
+        if (values.modalRendering === "custom") {
+            content = [
+                {
+                    type: "DropZone",
+                    property: values.largeContent,
+                    placeholder: "Content"
+                }
+            ] as StructurePreviewProps[];
+        } else {
+            content = values.itemsBasic.map((value, index) => ({
+                type: "RowLayout",
+                columnSize: "grow",
+                padding: 12,
+                borders: true,
+                children: [
+                    {
+                        type: "Container",
+                        grow: 1
+                    },
+                    {
+                        type: "Text",
+                        fontColor: getColors(isDarkMode).text.secondary,
+                        content: value.caption || `[Item ${index + 1}]`
+                    },
+                    {
+                        type: "Container",
+                        grow: 1
+                    }
+                ]
+            }));
+        }
+    } else {
+        content = [
+            {
+                type: "DropZone",
+                property: values.smallContent,
+                placeholder: "Always visible"
+            },
+            {
+                type: "DropZone",
+                property: values.largeContent,
+                placeholder: "Visible on first drag"
+            },
+            ...(values.showFullscreenContent
                 ? [
                       {
                           type: "DropZone",
-                          property: values.largeContent,
-                          placeholder: "Content"
+                          property: values.fullscreenContent,
+                          placeholder: "Visible on drag to top of screen"
                       }
                   ]
-                : values.itemsBasic.map((value, index) => ({
-                      type: "RowLayout",
-                      columnSize: "grow",
-                      padding: 12,
-                      borders: true,
-                      children: [
-                          {
-                              type: "Container",
-                              grow: 1
-                          },
-                          {
-                              type: "Text",
-                              fontColor: getColors(isDarkMode).text.secondary,
-                              content: value.caption || `[Item ${index + 1}]`
-                          },
-                          {
-                              type: "Container",
-                              grow: 1
-                          }
-                      ]
-                  }))
-            : [
-                  {
-                      type: "DropZone",
-                      property: values.smallContent,
-                      placeholder: "Always visible"
-                  },
-                  {
-                      type: "DropZone",
-                      property: values.largeContent,
-                      placeholder: "Visible on first drag"
-                  },
-                  ...(values.showFullscreenContent
-                      ? [
-                            {
-                                type: "DropZone",
-                                property: values.fullscreenContent,
-                                placeholder: "Visible on drag to top of screen"
-                            }
-                        ]
-                      : [])
-              ]
-    ) as StructurePreviewProps[];
+                : [])
+        ] as StructurePreviewProps[];
+    }
     return topBar("Bottom sheet", content, isDarkMode);
-};
+}
 
 export const getProperties = (values: any, defaultProperties: Properties): Properties => {
     if (values.type === "modal") {

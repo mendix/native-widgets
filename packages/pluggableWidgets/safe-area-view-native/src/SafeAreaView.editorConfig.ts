@@ -2,8 +2,8 @@ import { StructurePreviewProps, topBar } from "@mendix/piw-utils-internal";
 
 import { SafeAreaViewPreviewProps } from "../typings/SafeAreaViewProps";
 
-export const getPreview = (values: SafeAreaViewPreviewProps, isDarkMode: boolean): StructurePreviewProps =>
-    topBar(
+export function getPreview(values: SafeAreaViewPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+    return topBar(
         "Safe area view",
         {
             type: "DropZone",
@@ -12,3 +12,4 @@ export const getPreview = (values: SafeAreaViewPreviewProps, isDarkMode: boolean
         },
         isDarkMode
     );
+}

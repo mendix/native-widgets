@@ -9,7 +9,7 @@ import {
 import { Problem, hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 import { GalleryPreviewProps } from "../typings/GalleryProps";
 
-export const getProperties = (values: GalleryPreviewProps, defaultProperties: Properties): Properties => {
+export function getProperties(values: GalleryPreviewProps, defaultProperties: Properties): Properties {
     if (values.pagination !== "buttons") {
         hidePropertyIn(defaultProperties, values, "loadMoreButtonCaption");
     }
@@ -25,9 +25,9 @@ export const getProperties = (values: GalleryPreviewProps, defaultProperties: Pr
     }
 
     return defaultProperties;
-};
+}
 
-export const check = (values: GalleryPreviewProps): Problem[] => {
+export function check(values: GalleryPreviewProps): Problem[] {
     const errors: Problem[] = [];
     if (!values.phoneColumns || values.phoneColumns < 1) {
         errors.push({
@@ -48,9 +48,9 @@ export const check = (values: GalleryPreviewProps): Problem[] => {
         });
     }
     return errors;
-};
+}
 
-export const getPreview = (values: GalleryPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     const filterCaption = values.filterList.length > 0 ? "Place filter widgets here" : "Place widgets here";
 
     const filters = {
@@ -130,7 +130,7 @@ export const getPreview = (values: GalleryPreviewProps, isDarkMode: boolean): St
     ];
 
     return topBar("Gallery", [...(values.filterList.length > 0 ? [filters] : []), content, ...footer], isDarkMode);
-};
+}
 
 function getSingularPlural(word: string, elements: number): string {
     return elements > 1 ? word + "s" : word;

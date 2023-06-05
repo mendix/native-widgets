@@ -14,7 +14,7 @@ const swipeContentContainer = (property: ReactNode, isDarkMode: boolean): Contai
     ]
 });
 
-export const getPreview = (values: ListViewSwipeProps<any>, isDarkMode: boolean): RowLayoutProps => {
+export function getPreview(values: ListViewSwipeProps<any>, isDarkMode: boolean): RowLayoutProps {
     const children: StructurePreviewProps[] = [
         {
             type: "Container",
@@ -42,4 +42,4 @@ export const getPreview = (values: ListViewSwipeProps<any>, isDarkMode: boolean)
         columnSize: "fixed",
         children
     };
-};
+}

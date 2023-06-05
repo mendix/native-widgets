@@ -1,7 +1,7 @@
 import { StructurePreviewProps, getColors } from "@mendix/piw-utils-internal";
 import { GalleryTextFilterPreviewProps } from "../typings/GalleryTextFilterProps";
 
-export const getPreview = (values: GalleryTextFilterPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(values: GalleryTextFilterPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     const colors = getColors(isDarkMode);
     return {
         type: "Container",
@@ -22,4 +22,4 @@ export const getPreview = (values: GalleryTextFilterPreviewProps, isDarkMode: bo
             }
         ]
     };
-};
+}

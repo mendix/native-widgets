@@ -22,7 +22,7 @@ function filterDataSourceProperties(sourceProperty: DatasourceEnum): ImageViewPr
     }
 }
 
-export const getProperties = (values: ImagePreviewProps, defaultProperties: Properties): Properties => {
+export function getProperties(values: ImagePreviewProps, defaultProperties: Properties): Properties {
     hidePropertiesIn(defaultProperties, values, filterDataSourceProperties(values.datasource));
 
     if (values.isBackgroundImage || values.imageIcon?.type === "glyph") {
@@ -62,9 +62,9 @@ export const getProperties = (values: ImagePreviewProps, defaultProperties: Prop
     }
 
     return defaultProperties;
-};
+}
 
-export const getPreview = (values: ImagePreviewProps, isDarkMode: boolean): StructurePreviewProps | null => {
+export function getPreview(values: ImagePreviewProps, isDarkMode: boolean): StructurePreviewProps | null {
     if (!values.isBackgroundImage) {
         return {
             type: "Image",
@@ -93,9 +93,9 @@ export const getPreview = (values: ImagePreviewProps, isDarkMode: boolean): Stru
         },
         isDarkMode
     );
-};
+}
 
-export const check = (values: ImagePreviewProps): Problem[] => {
+export function check(values: ImagePreviewProps): Problem[] {
     const errors: Problem[] = [];
 
     if (values.datasource === "image" && !values.imageObject) {
@@ -131,4 +131,4 @@ export const check = (values: ImagePreviewProps): Problem[] => {
     }
 
     return errors;
-};
+}

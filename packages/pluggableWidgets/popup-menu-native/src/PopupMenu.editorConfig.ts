@@ -9,7 +9,7 @@ import { hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { BasicItemsPreviewType, PopupMenuPreviewProps } from "../typings/PopupMenuProps";
 
-export const getPreview = (values: PopupMenuPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(values: PopupMenuPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     const content: StructurePreviewProps[] = [
         {
             type: "Container",
@@ -75,9 +75,9 @@ export const getPreview = (values: PopupMenuPreviewProps, isDarkMode: boolean): 
               })))
     ];
     return topBar("Pop-up menu", content, isDarkMode);
-};
+}
 
-export const getProperties = (values: PopupMenuPreviewProps, defaultProperties: Properties): Properties => {
+export function getProperties(values: PopupMenuPreviewProps, defaultProperties: Properties): Properties {
     if (values.renderMode === "basic") {
         hidePropertyIn(defaultProperties, values, "customItems");
 
@@ -92,4 +92,4 @@ export const getProperties = (values: PopupMenuPreviewProps, defaultProperties: 
         hidePropertyIn(defaultProperties, values, "basicItems");
     }
     return defaultProperties;
-};
+}

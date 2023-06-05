@@ -4,7 +4,7 @@ import paginationSVG from "./assets/pagination.svg";
 
 import { CarouselPreviewProps } from "../typings/CarouselProps";
 
-export const getPreview = (values: CarouselPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(values: CarouselPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     const paginationImageRowLayout: RowLayoutProps = {
         type: "RowLayout",
         columnSize: "grow",
@@ -36,4 +36,4 @@ export const getPreview = (values: CarouselPreviewProps, isDarkMode: boolean): S
     ];
 
     return topBar("Carousel", content, isDarkMode);
-};
+}

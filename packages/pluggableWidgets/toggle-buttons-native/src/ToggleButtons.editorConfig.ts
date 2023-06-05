@@ -2,7 +2,7 @@ import { RowLayoutProps, StructurePreviewProps, getColors } from "@mendix/piw-ut
 
 import { ToggleButtonsPreviewProps } from "../typings/ToggleButtonsProps";
 
-export const getPreview = (_: ToggleButtonsPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(_: ToggleButtonsPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     const colors = getColors(isDarkMode);
     const buttonWhiteFontColor = "#FFFFFF";
     const buttonBorderRadius = 4;
@@ -43,4 +43,4 @@ export const getPreview = (_: ToggleButtonsPreviewProps, isDarkMode: boolean): S
         columnSize: "fixed",
         children: [renderButton("Button 1", true), renderButton("Button 2"), renderButton("Button 3")]
     };
-};
+}

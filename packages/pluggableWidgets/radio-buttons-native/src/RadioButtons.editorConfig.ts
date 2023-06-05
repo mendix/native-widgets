@@ -7,7 +7,7 @@ import lightRadioIcon from "./assets/radioButton_light.svg";
 import lightUnselectedRadioIcon from "./assets/radioButton_unselected_light.svg";
 import darkUnselectedRadioIcon from "./assets/radioButton_unselected_dark.svg";
 
-export const getPreview = (values: RadioButtonsPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
+export function getPreview(values: RadioButtonsPreviewProps, isDarkMode: boolean): StructurePreviewProps {
     const colors = getColors(isDarkMode);
     const EditableFontColor = colors.text.primary;
     const readOnlyFontColor = colors.text.secondary;
@@ -128,11 +128,11 @@ export const getPreview = (values: RadioButtonsPreviewProps, isDarkMode: boolean
         padding: 4,
         children: [radioButtonContainer]
     };
-};
+}
 
-export const getProperties = (values: RadioButtonsPreviewProps, defaultProperties: Properties): Properties => {
+export function getProperties(values: RadioButtonsPreviewProps, defaultProperties: Properties): Properties {
     if (!values.showLabel) {
         hidePropertiesIn(defaultProperties, values, ["label"]);
     }
     return defaultProperties;
-};
+}
