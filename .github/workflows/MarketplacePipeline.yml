@@ -1,0 +1,60 @@
+name: Marketplace Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Package name to release (name in package.json)"
+        required: true
+
+jobs:
+  scope:
+    runs-on: ubuntu-latest
+    outputs:
+      scope: ${{ steps.scope.outputs._0 }}
+    steps:
+      - name: "Defining Environment Variables"
+        id: variables
+        run: echo "tag=$(git tag --points-at HEAD)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
+      - name: "Defining scope"
+        uses: jungwinter/split@c185fe95439c136a8788b7f700bd5275920d7109 # v1
+        id: scope
+        with:
+          msg: "${{ github.event.inputs.tag }}"
+          seperator: "-v"
+
+  resources:
+    needs: [scope]
+    runs-on: ubuntu-latest
+    steps:
+        - name: "Test"
+          run: echo ${{ needs.scope.outputs.scope }}
+      # - name: "Check out code"
+      #   uses: actions/checkout@v3.4.0
+      #   with:
+      #     fetch-depth: 0
+      # - name: "Set up node"
+      #   uses: actions/setup-node@v3.6.0
+      #   with:
+      #     node-version-file: .nvmrc
+      #     cache: yarn
+      # - name: "Install dependencies"
+      #   run: yarn
+
+  # unit-test:
+  #   name: "Unit test"
+  #   runs-on: ubuntu-latest
+
+  # build:
+  #   needs: [unit-test]
+  #   name: "Build"
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: "Build"
+  #       uses: ./.github/actions/build
+
+  native_pipeline:
+    needs: [resources]
+    name: "Marketplace Release"
+    runs-on: ubuntu-latest

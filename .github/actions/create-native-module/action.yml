@@ -1,0 +1,6 @@
+name: "Create native module"
+
+inputs:
+  tag:
+    required: true
+    
