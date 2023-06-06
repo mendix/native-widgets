@@ -58,3 +58,6 @@ jobs:
     needs: [resources]
     name: "Marketplace Release"
     runs-on: ubuntu-latest
+    steps:
+    - name: "test"
+      run: echo "test"
