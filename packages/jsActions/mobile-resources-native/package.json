@@ -14,7 +14,7 @@
   },
   "testProject": {
     "githubUrl": "https://github.com/mendix/native-mobile-resources",
-    "branchName": "main"
+    "branchName": "moo/feat/js-actions-new-icons"
   },
   "scripts": {
     "prestart": "rimraf ./dist/tsc",
