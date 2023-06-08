@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.0] Nanoflow Commons - 2023-6-8
 ### Added
 
 -   We changed the JS actions and widgets icons.
