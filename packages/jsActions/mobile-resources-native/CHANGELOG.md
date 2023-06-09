@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.0.0] Native Mobile Resources - 2023-6-9
 ### Added
 
 -   We changed the JS actions and widgets icons.
