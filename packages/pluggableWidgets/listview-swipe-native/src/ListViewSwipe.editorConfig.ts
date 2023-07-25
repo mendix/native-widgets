@@ -1,11 +1,11 @@
-import { StructurePreviewProps, RowLayoutProps, ContainerProps } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps, RowLayoutProps, ContainerProps, getColors } from "@mendix/piw-utils-internal";
 import { ReactNode } from "react";
 import { ListViewSwipeProps } from "../typings/ListViewSwipeProps";
 
 const swipeContentContainer = (property: ReactNode, isDarkMode: boolean): ContainerProps => ({
     type: "Container",
     borders: true,
-    backgroundColor: isDarkMode ? "#4F4F4F" : "#F5F5F5",
+    backgroundColor: getColors(isDarkMode).background.topBar.standard,
     children: [
         {
             type: "DropZone",
