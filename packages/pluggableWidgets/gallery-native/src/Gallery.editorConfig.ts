@@ -1,4 +1,11 @@
-import { ContainerProps, DropZoneProps, RowLayoutProps, StructurePreviewProps } from "@mendix/piw-utils-internal";
+import {
+    ContainerProps,
+    DropZoneProps,
+    RowLayoutProps,
+    StructurePreviewProps,
+    topBar,
+    getColors
+} from "@mendix/piw-utils-internal";
 import { Problem, hidePropertyIn, Properties } from "@mendix/pluggable-widgets-tools";
 import { GalleryPreviewProps } from "../typings/GalleryProps";
 
@@ -59,27 +66,6 @@ export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): St
         ]
     } as RowLayoutProps;
 
-    const titleHeader: RowLayoutProps = {
-        type: "RowLayout",
-        columnSize: "fixed",
-        backgroundColor: isDarkMode ? "#3B5C8F" : "#DAEFFB",
-        borders: true,
-        borderWidth: 1,
-        children: [
-            {
-                type: "Container",
-                padding: 4,
-                children: [
-                    {
-                        type: "Text",
-                        content: "Gallery",
-                        fontColor: isDarkMode ? "#6DB1FE" : "#2074C8"
-                    }
-                ]
-            }
-        ]
-    };
-
     const content = {
         type: "Container",
         borders: true,
@@ -114,7 +100,7 @@ export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): St
                                     "Column",
                                     values.tabletColumns!
                                 )}, Phone ${values.phoneColumns} ${getSingularPlural("Column", values.phoneColumns!)}`,
-                                fontColor: isDarkMode ? "#DEDEDE" : "#899499"
+                                fontColor: getColors(isDarkMode).text.secondary
                             }
                         ]
                     },
@@ -143,10 +129,7 @@ export function getPreview(values: GalleryPreviewProps, isDarkMode: boolean): St
         } as RowLayoutProps
     ];
 
-    return {
-        type: "Container",
-        children: [titleHeader, ...(values.filterList.length > 0 ? [filters] : []), content, ...footer]
-    };
+    return topBar("Gallery", [...(values.filterList.length > 0 ? [filters] : []), content, ...footer], isDarkMode);
 }
 
 function getSingularPlural(word: string, elements: number): string {

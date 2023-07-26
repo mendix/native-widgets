@@ -1,9 +1,9 @@
-import { DropZoneProps, RowLayoutProps, StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { DropZoneProps, StructurePreviewProps, topBar } from "@mendix/piw-utils-internal";
 import { hidePropertiesIn, hidePropertyIn, Problem, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { DatasourceEnum, ImagePreviewProps } from "../typings/ImageProps";
-import StructurePreviewImageSvg from "./assets/placeholder.svg";
-import StructurePreviewImageDarkSvg from "./assets/placeholderDark.svg";
+import StructurePreviewImageSvg from "./assets/Image.light.svg";
+import StructurePreviewImageDarkSvg from "./assets/Image.dark.svg";
 
 type ImageViewPreviewPropsKey = keyof ImagePreviewProps;
 
@@ -74,52 +74,25 @@ export function getPreview(values: ImagePreviewProps, isDarkMode: boolean): Stru
                     ""
                 )
             ),
-            height: 100,
-            width: 100
+            height: 162,
+            width: 193
         };
     }
-    const titleHeader: RowLayoutProps = {
-        type: "RowLayout",
-        columnSize: "fixed",
-        backgroundColor: isDarkMode ? "#4F4F4F" : "#daeffb",
-        borders: true,
-        borderWidth: 1,
-        children: [
-            {
-                type: "Container",
-                padding: 4,
-                children: [
-                    {
-                        type: "Text",
-                        content: "Image",
-                        fontColor: isDarkMode ? "#DEDEDE" : "#2074c8"
-                    }
-                ]
-            }
-        ]
-    };
-    return {
-        type: "Container",
-        children: [
-            titleHeader,
-            {
-                type: "RowLayout",
-                children: [
-                    {
-                        type: "Container",
-                        borders: true,
-                        children: [
-                            {
-                                type: "DropZone",
-                                property: values.children,
-                                placeholder: "Content: Place widgets here"
-                            } as DropZoneProps
-                        ]
-                    }
-                ]
-            } as RowLayoutProps
-        ]
-    };
+    return topBar(
+        "Image",
+        {
+            type: "Container",
+            borders: true,
+            children: [
+                {
+                    type: "DropZone",
+                    property: values.children,
+                    placeholder: "Content: Place widgets here"
+                } as DropZoneProps
+            ]
+        },
+        isDarkMode
+    );
 }
 
 export function check(values: ImagePreviewProps): Problem[] {
