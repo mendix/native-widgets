@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.0.1] Native Mobile Resources - 2023-7-31
+
+
+## [3.0.2] BarChart
+### Fixed
+
+-   We fixed an issue when running with Mx10 crashes the app.
+
 ## [5.0.0] Native Mobile Resources - 2023-6-9
 
 ### Added
