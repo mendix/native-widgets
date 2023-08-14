@@ -61,7 +61,7 @@ export async function RequestLocationPermission(): Promise<boolean> {
             });
     };
 
-    const hasPermissionAndroid = async (): Promise<boolean | undefined> => {
+    const hasPermissionAndroidFine = async (): Promise<boolean | undefined> => {
         if (typeof reactNativeModule?.Platform?.Version === "number" && reactNativeModule?.Platform?.Version < 23) {
             return true;
         }
@@ -97,6 +97,43 @@ export async function RequestLocationPermission(): Promise<boolean> {
         );
     };
 
+    const hasPermissionAndroidCoarse = async (): Promise<boolean | undefined> => {
+        if (typeof reactNativeModule?.Platform?.Version === "number" && reactNativeModule?.Platform?.Version < 23) {
+            return true;
+        }
+
+        const androidLocationPermission = reactNativeModule?.PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION;
+
+        if (!androidLocationPermission) {
+            return false;
+        }
+
+        return reactNativeModule?.PermissionsAndroid.check(androidLocationPermission).then(hasPermission =>
+            hasPermission
+                ? true
+                : reactNativeModule?.PermissionsAndroid?.request(androidLocationPermission).then(status => {
+                      if (status === reactNativeModule?.PermissionsAndroid.RESULTS.GRANTED) {
+                          return true;
+                      }
+
+                      if (status === reactNativeModule?.PermissionsAndroid.RESULTS.DENIED) {
+                          reactNativeModule.ToastAndroid.show(
+                              "Location permission denied by user.",
+                              reactNativeModule.ToastAndroid.LONG
+                          );
+                      } else if (status === reactNativeModule?.PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+                          reactNativeModule.ToastAndroid.show(
+                              "Location permission revoked by user.",
+                              reactNativeModule.ToastAndroid.LONG
+                          );
+                      }
+
+                      return false;
+                  })
+        );
+    };
+
+
     const hasLocationPermission = async (): Promise<boolean> => {
         if (reactNativeModule?.Platform.OS === "ios") {
             const hasPermission = await hasPermissionIOS();
@@ -104,16 +141,38 @@ export async function RequestLocationPermission(): Promise<boolean> {
         }
 
         if (reactNativeModule?.Platform.OS === "android") {
-            const hasPermission = await hasPermissionAndroid();
+            const hasPermission = await hasPermissionAndroidFine() || await  hasPermissionAndroidCoarse();
             return hasPermission ?? false;
         }
 
         return Promise.reject(new Error("Unsupported platform"));
     };
 
-    const hasLocationPermissionForOldLibrary = async (): Promise<boolean | undefined> => {
+    const hasLocationPermissionForOldLibraryFine = async (): Promise<boolean | undefined> => {
         if (reactNativeModule?.Platform.OS === "android") {
             const locationPermission = reactNativeModule.PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION;
+
+            return reactNativeModule.PermissionsAndroid.check(locationPermission).then(hasPermission =>
+                hasPermission
+                    ? true
+                    : reactNativeModule?.PermissionsAndroid.request(locationPermission).then(
+                          status => status === reactNativeModule?.PermissionsAndroid.RESULTS.GRANTED
+                      )
+            );
+        } else if (geolocationModule && (geolocationModule as GeolocationStatic).requestAuthorization) {
+            try {
+                (geolocationModule as GeolocationStatic).requestAuthorization();
+                return Promise.resolve(true);
+            } catch (error) {
+                return Promise.reject(error);
+            }
+        }
+
+        return false;
+    };
+    const hasLocationPermissionForOldLibraryCoarse = async (): Promise<boolean | undefined> => {
+        if (reactNativeModule?.Platform.OS === "android") {
+            const locationPermission = reactNativeModule.PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION;
 
             return reactNativeModule.PermissionsAndroid.check(locationPermission).then(hasPermission =>
                 hasPermission
@@ -146,7 +205,7 @@ export async function RequestLocationPermission(): Promise<boolean> {
             return hasLocationPermission();
         } else if (reactNativeModule.NativeModules.RNCGeolocation) {
             geolocationModule = Geolocation;
-            return (await hasLocationPermissionForOldLibrary()) ?? false;
+            return (await hasLocationPermissionForOldLibraryFine() || await hasLocationPermissionForOldLibraryCoarse() ) ?? false;
         } else {
             return Promise.reject(new Error("Geolocation module could not be found"));
         }
