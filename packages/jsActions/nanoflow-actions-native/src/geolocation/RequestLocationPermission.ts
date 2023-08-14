@@ -141,7 +141,7 @@ export async function RequestLocationPermission(): Promise<boolean> {
         }
 
         if (reactNativeModule?.Platform.OS === "android") {
-            const hasPermission = await hasPermissionAndroidFine() || await  hasPermissionAndroidCoarse();
+            const hasPermission = await hasPermissionAndroidCoarse() || await  hasPermissionAndroidFine();
             return hasPermission ?? false;
         }
 
@@ -205,7 +205,7 @@ export async function RequestLocationPermission(): Promise<boolean> {
             return hasLocationPermission();
         } else if (reactNativeModule.NativeModules.RNCGeolocation) {
             geolocationModule = Geolocation;
-            return (await hasLocationPermissionForOldLibraryFine() || await hasLocationPermissionForOldLibraryCoarse() ) ?? false;
+            return (await hasLocationPermissionForOldLibraryCoarse() || await hasLocationPermissionForOldLibraryFine() ) ?? false;
         } else {
             return Promise.reject(new Error("Geolocation module could not be found"));
         }
