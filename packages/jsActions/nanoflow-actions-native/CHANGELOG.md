@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Minimum mx version set to 9.21.0
+
 ## [2.6.1] Nanoflow Commons - 2022-9-23
 
 ### Fixed
