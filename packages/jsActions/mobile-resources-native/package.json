@@ -9,7 +9,7 @@
     "url": "https://github.com/mendix/native-widgets.git"
   },
   "marketplace": {
-    "minimumMXVersion": "9.21.0.59661",
+    "minimumMXVersion": "9.24.1.4658",
     "marketplaceId": 109513
   },
   "testProject": {

@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   Minimum mx version set to 9.21.0
+-   Minimum mx version set to 9.24.1
 
 ## [2.6.1] Nanoflow Commons - 2022-9-23
 
