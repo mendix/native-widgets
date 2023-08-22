@@ -6,113 +6,139 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Minimum mx version set to 9.24.1
+-   We updated the default presentation mode for both "Take Picture" and "Take Picture Advanced" to full screen.
+
 ## [4.0.3] Native Mobile Resources - 2023-5-24
+
 ### Fixed
 
 -   We've updated react-native-device-info library.
 
 ## [3.2.2] BottomSheet
+
 ### Fixed
 
 -   We've updated react-native-device-info library.
 
 ## [1.0.2] Gallery
+
 ### Fixed
 
 -   We've updated react-native-device-info library.
 
 ## [3.2.3] IntroScreen
+
 ### Fixed
 
 -   We've updated react-native-device-info library.
 
 ## [4.0.2] Native Mobile Resources - 2023-5-17
 
-
 ## [3.0.1] BarChart
+
 ### Fixed
 
 -   We fixed an issue where height or width with a value of 0 crash the app.
 
 ## [2.0.1] ColumnChart
+
 ### Fixed
 
 -   We fixed an issue where height or width with a value of 0 crash the app.
 
 ## [3.0.1] LineChart
+
 ### Fixed
 
 -   We fixed an issue where height or width with a value of 0 crash the app.
 
 ## [2.0.1] PieDoughnutChart
+
 ### Fixed
 
 -   We fixed an issue where height or width with a value of 0 crash the app.
 
 ## [4.0.0] Native Mobile Resources - 2023-3-28
+
 undefined
 
 ## [4.0.0] AppEvents
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [3.0.0] BarChart
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [4.0.0] BarcodeScanner
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [3.0.0] Carousel
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [2.0.0] ColorPicker
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [2.0.0] ColumnChart
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [4.0.0] FloatingActionButton
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [3.0.0] LineChart
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [3.0.0] ListViewSwipe
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [4.0.0] Maps
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [4.0.0] Notifications
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [2.0.0] PieDoughnutChart
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [3.0.0] PopupMenu
+
 ### Added
 
 -   Added id for testing
@@ -122,41 +148,49 @@ undefined
 -   We made the widget compatible with React Native 0.70.7
 
 ## [4.2.1] ProgressBar
+
 ### Changed
 
 -   Bumped react-native-progress dependency
 
 ## [3.1.1] ProgressCircle
+
 ### Changed
 
 -   Bumped react-native-progress dependency
 
 ## [3.0.0] Rating
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [2.0.0] Signature
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [3.0.0] Slider
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [4.0.0] VideoPlayer
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [4.0.0] WebView
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.70.7
 
 ## [3.13.1] Native Mobile Resources - 2022-12-28
+
 ### Changed
 
 -   We reduced the widget file size by reducing the dependencies list file size.
