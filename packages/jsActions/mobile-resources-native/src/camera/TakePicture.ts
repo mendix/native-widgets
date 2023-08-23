@@ -77,7 +77,7 @@ export async function TakePicture(
 
     function takePicture(): Promise<string | undefined> {
         return new Promise((resolve, reject) => {
-            const options = nativeVersionMajor === 2 ? getOptionsV2() : getOptionsV4();
+            const options = nativeVersionMajor === 2 ? getOptionsV2() : getOptions();
             getPictureMethod()
                 .then(method =>
                     method(options, (response: ImagePickerV2Response | ImagePickerResponse) => {
@@ -241,9 +241,10 @@ export async function TakePicture(
         };
     }
 
-    function getOptionsV4(): CameraOptions | ImageLibraryOptions {
+    function getOptions(): CameraOptions | ImageLibraryOptions {
         const { maxWidth, maxHeight } = getPictureQuality();
         return {
+            presentationStyle: "fullScreen",
             mediaType: "photo" as const,
             maxWidth,
             maxHeight

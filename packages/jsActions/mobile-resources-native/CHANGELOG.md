@@ -6,10 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We updated the default presentation mode for both "Take Picture" and "Take Picture Advanced" to full screen.
+
 ## [5.0.1] Native Mobile Resources - 2023-7-31
 
-
 ## [3.0.2] BarChart
+
 ### Fixed
 
 -   We fixed an issue when running with Mx10 crashes the app.
