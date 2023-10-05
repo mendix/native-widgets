@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
+-   We fixed and issue when request notification permission for Android SDK 33.
+
+### Fixed
+
 -   We updated the default presentation mode for both "Take Picture" and "Take Picture Advanced" to full screen.
 
 ## [5.0.1] Native Mobile Resources - 2023-7-31
