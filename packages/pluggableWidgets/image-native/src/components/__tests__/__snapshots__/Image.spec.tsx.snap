@@ -2,6 +2,7 @@
 
 exports[`Widget Dynamic Image SVG renders the structure 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -191,6 +192,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
 exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
 [
   <View
+    accessibilityRole="image"
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -271,6 +273,8 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
     </RNSVGSvgView>
   </View>,
   <Modal
+    accessibilityRole="image"
+    accessible={true}
     animationType="fade"
     hardwareAccelerated={false}
     onDismiss={[Function]}
@@ -394,6 +398,7 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
 
 exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -477,6 +482,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
 
 exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -560,6 +566,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
 
 exports[`Widget Dynamic Image renders the structure 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -874,6 +881,7 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
 exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
 [
   <View
+    accessibilityRole="image"
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -947,6 +955,8 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
     </View>
   </View>,
   <Modal
+    accessibilityRole="image"
+    accessible={true}
     animationType="fade"
     hardwareAccelerated={false}
     onDismiss={[Function]}
@@ -1060,6 +1070,7 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
 
 exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1133,6 +1144,7 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
 
 exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1206,6 +1218,7 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
 
 exports[`Widget Icon type: icon/glyph renders the structure with an icon and default color 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1259,6 +1272,7 @@ exports[`Widget Icon type: icon/glyph renders the structure with an icon and def
 
 exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1333,6 +1347,7 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
 exports[`Widget Icon type: image/staticImage renders the structure inside a modal 1`] = `
 [
   <View
+    accessibilityRole="image"
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -1403,6 +1418,8 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
     </View>
   </View>,
   <Modal
+    accessibilityRole="image"
+    accessible={true}
     animationType="fade"
     hardwareAccelerated={false}
     onDismiss={[Function]}
@@ -1516,6 +1533,7 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
 
 exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1590,6 +1608,7 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
 
 exports[`Widget Static Image SVG renders the structure 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -1960,6 +1979,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
 exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
 [
   <View
+    accessibilityRole="image"
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -2048,6 +2068,8 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
     </RNSVGSvgView>
   </View>,
   <Modal
+    accessibilityRole="image"
+    accessible={true}
     animationType="fade"
     hardwareAccelerated={false}
     onDismiss={[Function]}
@@ -2175,6 +2197,7 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
 
 exports[`Widget Static Image SVG renders the structure with custom height 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2262,6 +2285,7 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
 
 exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2349,6 +2373,7 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
 
 exports[`Widget Static Image renders the structure 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2663,6 +2688,7 @@ exports[`Widget Static Image renders the structure as a background image with a 
 exports[`Widget Static Image renders the structure inside a modal 1`] = `
 [
   <View
+    accessibilityRole="image"
     accessible={true}
     collapsable={false}
     focusable={true}
@@ -2736,6 +2762,8 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
     </View>
   </View>,
   <Modal
+    accessibilityRole="image"
+    accessible={true}
     animationType="fade"
     hardwareAccelerated={false}
     onDismiss={[Function]}
@@ -2849,6 +2877,7 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
 
 exports[`Widget Static Image renders the structure with custom height 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -2922,6 +2951,7 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
 
 exports[`Widget Static Image renders the structure with custom width 1`] = `
 <View
+  accessibilityRole="image"
   accessible={true}
   collapsable={false}
   focusable={true}

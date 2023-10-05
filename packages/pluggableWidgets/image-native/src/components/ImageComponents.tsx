@@ -6,8 +6,15 @@ import { OnClickTypeEnum } from "../../typings/ImageProps";
 import { CustomImageObjectProps, onLayoutSetDimensions } from "../utils/imageUtils";
 import { DimensionsType, ImageIconSVG } from "./ImageIconSVG";
 import { DefaultImageStyle } from "../ui/Styles.js";
+import { DynamicValue } from "mendix";
 
-interface ImageViewerBaseProps {
+interface AccessibilityProps {
+    accessible: boolean;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
+}
+
+interface ImageViewerBaseProps extends AccessibilityProps {
     name?: string;
     source: CustomImageObjectProps;
     customWidth?: number;
@@ -38,6 +45,9 @@ interface GetImageDimensionsComponentProps extends ImageViewerBaseProps {
 export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
     const [enlarged, setEnlarged] = useState(false);
     const {
+        accessible,
+        screenReaderCaption,
+        screenReaderHint,
         source,
         initialDimensions,
         setInitialDimensions,
@@ -54,6 +64,9 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
         <Fragment>
             <ImageSmall
                 name={name}
+                accessible={accessible}
+                screenReaderCaption={screenReaderCaption}
+                screenReaderHint={screenReaderHint}
                 source={source}
                 customWidth={customWidth}
                 customHeight={customHeight}
@@ -64,12 +77,18 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
             />
             <GetImageDimensionsComponent
                 name={name}
+                accessible={accessible}
+                screenReaderCaption={screenReaderCaption}
+                screenReaderHint={screenReaderHint}
                 source={source}
                 initialDimensions={initialDimensions}
                 setInitialDimensions={setInitialDimensions}
             />
             <ImageEnlarged
                 name={name}
+                accessible={accessible}
+                screenReaderCaption={screenReaderCaption}
+                screenReaderHint={screenReaderHint}
                 visible={enlarged}
                 setEnlarged={setEnlarged}
                 source={source}
@@ -81,7 +100,8 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
 };
 
 export const GetImageDimensionsComponent: FunctionComponent<GetImageDimensionsComponentProps> = props => {
-    const { source, initialDimensions, setInitialDimensions, name } = props;
+    const { source, initialDimensions, setInitialDimensions, name, accessible, screenReaderCaption, screenReaderHint } =
+        props;
 
     const onLayoutSetInitialDimensions = useCallback(
         ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
@@ -113,6 +133,10 @@ export const GetImageDimensionsComponent: FunctionComponent<GetImageDimensionsCo
             pointerEvents={source.image === "this/is/a/fake/path.svg" ? "auto" : "none"}
         >
             <SvgUri
+                accessible={accessible}
+                accessibilityLabel={screenReaderCaption?.value}
+                accessibilityHint={screenReaderHint?.value}
+                accessibilityRole="image"
                 testID={`${name}$SvgUriTemporary`}
                 uri={source.image as string}
                 onLayout={onLayoutSetInitialDimensions}
@@ -125,7 +149,19 @@ export const GetImageDimensionsComponent: FunctionComponent<GetImageDimensionsCo
 };
 
 export const ImageSmall: FunctionComponent<ImageSmallProps> = props => {
-    const { source, initialDimensions, customWidth, customHeight, iconSize, onClick, styles, name } = props;
+    const {
+        source,
+        initialDimensions,
+        customWidth,
+        customHeight,
+        iconSize,
+        onClick,
+        styles,
+        name,
+        accessible,
+        screenReaderCaption,
+        screenReaderHint
+    } = props;
     const [dimensions, setDimensions] = useState<DimensionsType>();
     const [svgProps] = extractStyles(styles.image as ImageStyle, ["width", "height"]);
     const dimensionsNotSet =
@@ -145,6 +181,10 @@ export const ImageSmall: FunctionComponent<ImageSmallProps> = props => {
 
     return source.type === "icon" || (initialDimensions?.width && initialDimensions?.height) ? (
         <Pressable
+            accessible={accessible}
+            accessibilityLabel={screenReaderCaption?.value}
+            accessibilityHint={screenReaderHint?.value}
+            accessibilityRole="image"
             testID={`${name}$ImageSmallPressable`}
             onPress={onClick}
             onLayout={dimensionsNotSet ? onLayoutSetDimensionsCallback : undefined}
@@ -170,7 +210,17 @@ export const ImageSmall: FunctionComponent<ImageSmallProps> = props => {
 
 export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
     const [dimensions, setDimensions] = useState<DimensionsType>();
-    const { visible, setEnlarged, source, initialDimensions, styles, name } = props;
+    const {
+        visible,
+        setEnlarged,
+        source,
+        initialDimensions,
+        styles,
+        name,
+        accessible,
+        screenReaderCaption,
+        screenReaderHint
+    } = props;
     const [svgProps] = extractStyles(styles.image as ImageStyle, ["width", "height"]);
     const onLayoutSetDimensionsCallback = useCallback(
         ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
@@ -181,6 +231,10 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
 
     return visible && initialDimensions?.width && initialDimensions?.height ? (
         <Modal
+            accessible={accessible}
+            accessibilityLabel={screenReaderCaption?.value}
+            accessibilityHint={screenReaderHint?.value}
+            accessibilityRole="image"
             visible={visible}
             onRequestClose={() => setEnlarged(false)}
             onDismiss={() => setEnlarged(false)}
