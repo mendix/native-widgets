@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed and issue when request notification permission for Android SDK 33.
+
 ### Changed
 
 -   Minimum mx version set to 9.24.1
