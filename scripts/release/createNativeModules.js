@@ -25,7 +25,7 @@ main().catch(e => {
 });
 
 async function main() {
-    const modules = ["mobile-resources-native", "nanoflow-actions-native", "atlas-content-native"];
+    const modules = ["mobile-resources-native", "atlas-content-native"];
     if (!modules.includes(moduleFolderNameInRepo) || !version) {
         return;
     }
@@ -33,9 +33,6 @@ async function main() {
     switch (moduleFolderNameInRepo) {
         case "mobile-resources-native":
             await createNativeMobileResourcesModule();
-            break;
-        case "nanoflow-actions-native":
-            await createNanoflowCommonsModule();
             break;
         case "atlas-content-native":
             await createAtlasNativeContentModule();
