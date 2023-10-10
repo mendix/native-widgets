@@ -25,7 +25,7 @@ main().catch(e => {
 });
 
 async function main() {
-    const modules = ["mobile-resources-native", "nanoflow-actions-native", "atlas-content-native"];
+    const modules = ["mobile-resources-native", "atlas-content-native"];
     if (!modules.includes(moduleFolderNameInRepo) || !version) {
         return;
     }
@@ -33,9 +33,6 @@ async function main() {
     switch (moduleFolderNameInRepo) {
         case "mobile-resources-native":
             await createNativeMobileResourcesModule();
-            break;
-        case "nanoflow-actions-native":
-            await createNanoflowCommonsModule();
             break;
         case "atlas-content-native":
             await createAtlasNativeContentModule();
@@ -64,33 +61,6 @@ async function createNativeMobileResourcesModule() {
     await updateNativeComponentsTestProject(moduleInfo, tmpFolder, nativeWidgetFolders);
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
     await exportModuleWithWidgets(moduleInfo.moduleNameInModeler, mpkOutput, nativeWidgetFolders);
-    await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
-    if (process.env.CI !== "true") {
-        try {
-            await execShellCommand(`rm -rf ${tmpFolder}`);
-        } catch (e) {
-            console.error("Failed to remove the temporary folder");
-        }
-    }
-    console.log("Done.");
-}
-
-async function createNanoflowCommonsModule() {
-    console.log("Creating the Nanoflow Commons module.");
-    const moduleFolder = join(repoRootPath, "packages/jsActions", moduleFolderNameInRepo);
-    const tmpFolder = join(repoRootPath, "tmp", moduleFolderNameInRepo);
-    let moduleInfo = {
-        ...(await getPackageInfo(moduleFolder)),
-        moduleNameInModeler: "NanoflowCommons",
-        moduleFolderNameInModeler: "nanoflowcommons"
-    };
-    moduleInfo = await bumpVersionInPackageJson(moduleFolder, moduleInfo);
-
-    await githubAuthentication(moduleInfo);
-    const moduleChangelogs = await updateModuleChangelogs(moduleInfo);
-    await commitAndCreatePullRequest(moduleInfo);
-    await updateNativeComponentsTestProject(moduleInfo, tmpFolder);
-    const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
     await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
     if (process.env.CI !== "true") {
         try {
