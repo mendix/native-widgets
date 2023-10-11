@@ -39,7 +39,7 @@ async function main() {
     execSync("yarn workspaces foreach run release --since origin/master");
 
     packages.forEach(({ name, location }) => {
-        if (["mobile-resources-native", "nanoflow-actions-native"].includes(name)) {
+        if (["mobile-resources-native"].includes(name)) {
             // for js actions
             const path = name === "mobile-resources-native" ? "nativemobileresources" : "nanoflowcommons";
             const jsActionsPath = `${projectDir}/javascriptsource/${path}/actions`;

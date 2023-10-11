@@ -3118,16 +3118,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/geolocation@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@react-native-community/geolocation@npm:2.0.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: b072e740d0a3bd05f6166d66a5ab268d248092ab812b215539667ce0d4b01a078faed9a1bb45ac654e6aae976115f5b8c68dcab9de02e1a811b30cc5bb2e7d36
-  languageName: node
-  linkType: hard
-
 "@react-native-community/netinfo@npm:5.9.7":
   version: 5.9.7
   resolution: "@react-native-community/netinfo@npm:5.9.7"
@@ -10916,13 +10906,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-base64@npm:~3.7.2":
-  version: 3.7.2
-  resolution: "js-base64@npm:3.7.2"
-  checksum: 573f28e9a27c3df60096d4d3f551bcb4fcb6d49161cf83396e9bad9b76f94736a70bb70b8808fe834dff2a388f76604ba09d6e153bbf181646e407720139fa5b
-  languageName: node
-  linkType: hard
-
 "js-priority-queue@npm:^0.1.5":
   version: 0.1.5
   resolution: "js-priority-queue@npm:0.1.5"
@@ -12828,22 +12811,6 @@ __metadata:
   checksum: ec609aeaf7e68b76592a3ba96b372aa7f5df5b056c1e37410b0f1deefbab5a57a922061e2c5b369bae9c7c6b5e6eecf4ad2dac8833a1a7d3a751e0a7c7f849ed
   languageName: node
   linkType: hard
-
-"nanoflow-actions-native@workspace:packages/jsActions/nanoflow-actions-native":
-  version: 0.0.0-use.local
-  resolution: "nanoflow-actions-native@workspace:packages/jsActions/nanoflow-actions-native"
-  dependencies:
-    "@mendix/pluggable-widgets-tools": ^9.0.0
-    "@react-native-community/async-storage": 1.12.1
-    "@react-native-community/geolocation": 2.0.2
-    eslint: ^7.20.0
-    invariant: ^2.2.4
-    js-base64: ~3.7.2
-    react-native-geocoder: 0.5.0
-    react-native-geolocation-service: 5.2.0
-    rollup: ^2.68.0
-  languageName: unknown
-  linkType: soft
 
 "nanoid@npm:^3.3.4":
   version: 3.3.4
@@ -14877,13 +14844,6 @@ __metadata:
   version: 0.5.0
   resolution: "react-native-geocoder@npm:0.5.0"
   checksum: 6a9f0cdcc54cc5e88e53f6bea1bdf9c0715b35f42cc445364c8c16bb095cda0e2bccc0c216b3c87e47ec612da61a61486b8a85a1aa32690eda548818fd3821e5
-  languageName: node
-  linkType: hard
-
-"react-native-geolocation-service@npm:5.2.0":
-  version: 5.2.0
-  resolution: "react-native-geolocation-service@npm:5.2.0"
-  checksum: 80bdeb521023114f253290d28dfa0ae6acf7db7b37360672e78be7669e2a326ffdfbd8a476d931b3a23fec6b453f3aa8b39a885aa2bb020a11e20170493c00a9
   languageName: node
   linkType: hard
 
