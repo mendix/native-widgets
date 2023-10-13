@@ -11,11 +11,11 @@ import { Base64 } from "js-base64";
 // END EXTRA CODE
 
 /**
- * @param {string} string
+ * @param {string} base64
  * @returns {Promise.<string>}
  */
-export async function Base64Encode(string: string): Promise<string> {
+export async function Base64Encode(base64: string): Promise<string> {
     // BEGIN USER CODE
-    return Base64.encode(string);
+    return Base64.encode(base64);
     // END USER CODE
 }
