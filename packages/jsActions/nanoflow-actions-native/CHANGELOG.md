@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Resolve studio warning CW9503
+
 ## [4.0.0] Nanoflow Commons - 2023-6-9
 
 ### Added
