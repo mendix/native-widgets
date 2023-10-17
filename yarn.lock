@@ -12731,7 +12731,7 @@ __metadata:
     fbjs: 3.0.4
     mime: 3.0.0
     react-native-blob-util: 0.16.2
-    react-native-device-info: 8.7.1
+    react-native-device-info: 10.11.0
     react-native-file-viewer: 2.1.5
     react-native-image-picker: 5.0.1
     react-native-inappbrowser-reborn: 3.4.0
@@ -14841,6 +14841,15 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: b2e72fcc20a11adaa4014b9dc7abee9ec2d809542dda1e639ecb9b1bc5a0f0d7ac646257cb899b5d96324775a8da951f8d432d2e47c611ebae8aa0cfd2095cf2
+  languageName: node
+  linkType: hard
+
+"react-native-device-info@npm:10.11.0":
+  version: 10.11.0
+  resolution: "react-native-device-info@npm:10.11.0"
+  peerDependencies:
+    react-native: "*"
+  checksum: 3f2de34df4e95e87291673fe69b09d3b96f9088177a8dadd92eccec86549cea63ca08ab82f120d4150eb0302ac721ad8a5e4b3a8136c9f54f0212e4c055762b0
   languageName: node
   linkType: hard
 
