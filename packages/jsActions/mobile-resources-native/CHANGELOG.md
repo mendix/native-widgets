@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.1.1] Native Mobile Resources - 2023-10-24
+
+
+## [4.0.1] FloatingActionButton
+### Fixed
+
+- We have fixed an error related to useNativeDriver.
+
 ## [5.1.0] Native Mobile Resources - 2023-10-11
 
 
