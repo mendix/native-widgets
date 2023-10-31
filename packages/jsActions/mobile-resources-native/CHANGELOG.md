@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 -   We updated the default presentation mode for both "Take Picture" and "Take Picture Advanced" to full screen.
+-   We have added push notification permission request support for Android API level>=33.
 
 ## [2.0.2] ColumnChart
 ### Fixed
