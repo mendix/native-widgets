@@ -52,6 +52,9 @@ export const Image: FunctionComponent<ImageProps<Style>> = props => {
     return !props.isBackgroundImage ? (
         <ImageViewer
             name={props.name}
+            accessible={props.accessible === "yes"}
+            screenReaderCaption={props.screenReaderCaption}
+            screenReaderHint={props.screenReaderHint}
             source={source}
             onClick={onClick}
             onClickType={props.onClickType}
@@ -65,6 +68,9 @@ export const Image: FunctionComponent<ImageProps<Style>> = props => {
     ) : (
         <BackgroundImage
             name={props.name}
+            accessible={props.accessible === "yes"}
+            screenReaderCaption={props.screenReaderCaption}
+            screenReaderHint={props.screenReaderHint}
             source={source}
             initialDimensions={initialDimensions}
             resizeMode={props.resizeMode}

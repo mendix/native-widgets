@@ -14,6 +14,8 @@ export type WidthUnitEnum = "auto" | "points";
 
 export type HeightUnitEnum = "auto" | "points";
 
+export type AccessibleEnum = "yes" | "no";
+
 export type OnClickTypeEnum = "action" | "enlarge";
 
 export interface ImageProps<Style> {
@@ -33,6 +35,9 @@ export interface ImageProps<Style> {
     heightUnit: HeightUnitEnum;
     customHeight: number;
     iconSize: number;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     onClickType: OnClickTypeEnum;
     onClick?: ActionValue;
 }
@@ -60,6 +65,9 @@ export interface ImagePreviewProps {
     heightUnit: HeightUnitEnum;
     customHeight: number | null;
     iconSize: number | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     onClickType: OnClickTypeEnum;
     onClick: {} | null;
 }

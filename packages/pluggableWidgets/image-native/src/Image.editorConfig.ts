@@ -61,6 +61,11 @@ export function getProperties(values: ImagePreviewProps, defaultProperties: Prop
         hidePropertyIn(defaultProperties, values, "customHeight");
     }
 
+    if (values.accessible === "no") {
+        hidePropertyIn(defaultProperties, values, "screenReaderCaption");
+        hidePropertyIn(defaultProperties, values, "screenReaderHint");
+    }
+
     return defaultProperties;
 }
 
@@ -97,6 +102,13 @@ export function getPreview(values: ImagePreviewProps, isDarkMode: boolean): Stru
 
 export function check(values: ImagePreviewProps): Problem[] {
     const errors: Problem[] = [];
+
+    if (!values.isBackgroundImage && values.accessible === "yes" && !values.screenReaderCaption) {
+        errors.push({
+            property: "screenReaderCaption",
+            message: "Screen reader caption cannot be empty."
+        });
+    }
 
     if (values.datasource === "image" && !values.imageObject) {
         errors.push({

@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.0] - 2023-10-11
+
+### Added
+
+-   Added accessibility.
+
 ## [1.0.2] - 2022-9-20
 
 ### Changed

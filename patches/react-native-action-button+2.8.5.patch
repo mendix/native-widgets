@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-action-button/ActionButton.js b/node_modules/react-native-action-button/ActionButton.js
-index b8306c2efb2460d4aa110e83d2e5410588f280de..1a25a8e3ee766581ec23388f15ce244791e683be 100644
+index b8306c2efb2460d4aa110e83d2e5410588f280de..890003d30fa5400f4778f5bb2dffa10e70fbe3ee 100644
 --- a/node_modules/react-native-action-button/ActionButton.js
 +++ b/node_modules/react-native-action-button/ActionButton.js
 @@ -16,6 +16,7 @@ import {
@@ -10,6 +10,54 @@ index b8306c2efb2460d4aa110e83d2e5410588f280de..1a25a8e3ee766581ec23388f15ce2447
 
  export default class ActionButton extends Component {
    constructor(props) {
+@@ -39,11 +40,11 @@ export default class ActionButton extends Component {
+     clearTimeout(this.timeout);
+   }
+
+-  componentWillReceiveProps(nextProps) {
++  UNSAFE_componentWillReceiveProps(nextProps) {
+     if (nextProps.resetToken !== this.state.resetToken) {
+       if (nextProps.active === false && this.state.active === true) {
+         if (this.props.onReset) this.props.onReset();
+-        Animated.spring(this.anim, { toValue: 0 }).start();
++        Animated.spring(this.anim, { toValue: 0, useNativeDriver: false }).start();
+         setTimeout(
+           () =>
+             this.setState({ active: false, resetToken: nextProps.resetToken }),
+@@ -53,7 +54,7 @@ export default class ActionButton extends Component {
+       }
+
+       if (nextProps.active === true && this.state.active === false) {
+-        Animated.spring(this.anim, { toValue: 1 }).start();
++        Animated.spring(this.anim, { toValue: 1, useNativeDriver: false }).start();
+         this.setState({ active: true, resetToken: nextProps.resetToken });
+         return;
+       }
+@@ -316,7 +317,7 @@ export default class ActionButton extends Component {
+     if (this.state.active) return this.reset();
+
+     if (animate) {
+-      Animated.spring(this.anim, { toValue: 1 }).start();
++      Animated.spring(this.anim, { toValue: 1, useNativeDriver: false }).start();
+     } else {
+       this.anim.setValue(1);
+     }
+@@ -328,14 +329,14 @@ export default class ActionButton extends Component {
+     if (this.props.onReset) this.props.onReset();
+
+     if (animate) {
+-      Animated.spring(this.anim, { toValue: 0 }).start();
++      Animated.spring(this.anim, { toValue: 0, useNativeDriver: false }).start();
+     } else {
+       this.anim.setValue(0);
+     }
+
+     setTimeout(() => {
+       if (this.mounted) {
+         this.setState({ active: false, resetToken: this.state.resetToken });
+       }
+     }, 250);
+   }
 @@ -363,7 +364,7 @@ ActionButton.propTypes = {
    bgColor: PropTypes.string,
    bgOpacity: PropTypes.number,
