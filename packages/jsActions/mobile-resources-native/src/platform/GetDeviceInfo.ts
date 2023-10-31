@@ -30,7 +30,8 @@ export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
         DeviceInfo.getUserAgent(),
         DeviceInfo.getUniqueId(),
         DeviceInfo.isEmulator(),
-        DeviceInfo.isLandscape()
+        DeviceInfo.isLandscape(),
+        DeviceInfo.getDeviceName()
     ]).then(
         async ([
             mxObject,
@@ -44,7 +45,8 @@ export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
             userAgent,
             uniqueId,
             isEmulator,
-            isLandscape
+            isLandscape,
+            deviceName
         ]) => {
             const locales = getLocales();
             mxObject.set("ApplicationName", DeviceInfo.getApplicationName());
@@ -74,6 +76,7 @@ export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
             mxObject.set("IsTablet", DeviceInfo.isTablet());
             mxObject.set("IsLandscape", isLandscape);
             mxObject.set("HasNotch", DeviceInfo.hasNotch());
+            mxObject.set("DeviceName", deviceName);
 
             return mxObject;
         }
