@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We have added push notification permission request support for Android API level>=33.
+
 ## [4.0.4] Native Mobile Resources - 2023-8-22
+
 ### Changed
 
 -   Minimum mx version set to 9.24.1
