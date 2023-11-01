@@ -6,29 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [5.1.1] Native Mobile Resources - 2023-10-24
+## [5.1.2] Native Mobile Resources - 2023-10-31
 
-
-## [4.0.1] FloatingActionButton
 ### Fixed
 
-- We have fixed an error related to useNativeDriver.
+-   We have added push notification permission request support for Android API level>=33.
+
+## [5.1.1] Native Mobile Resources - 2023-10-24
+
+## [4.0.1] FloatingActionButton
+
+### Fixed
+
+-   We have fixed an error related to useNativeDriver.
 
 ## [5.1.0] Native Mobile Resources - 2023-10-11
 
-
 ## [1.1.0] Image
+
 ### Added
 
 -   Added accessibility.
 
 ## [5.0.2] Native Mobile Resources - 2023-8-22
+
 ### Fixed
 
 -   We updated the default presentation mode for both "Take Picture" and "Take Picture Advanced" to full screen.
--   We have added push notification permission request support for Android API level>=33.
 
 ## [2.0.2] ColumnChart
+
 ### Fixed
 
 -   We fixed an issue when running with Mx10 crashes the app.
