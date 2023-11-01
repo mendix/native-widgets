@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.5] Native Mobile Resources - 2023-11-1
 ### Fixed
 
 -   We have added push notification permission request support for Android API level>=33.
