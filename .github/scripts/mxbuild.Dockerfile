@@ -20,9 +20,9 @@ RUN \
     apt-get clean && \
 \
     echo "#!/bin/bash -x" >/bin/mxbuild && \
-    echo "mono /tmp/mxbuild/modeler/mxbuild.exe --java-home=/usr/lib/jvm/jdk-11.0.2 --java-exe-path=/usr/lib/jvm/jdk-11.0.2/bin/java \$@" >>/bin/mxbuild && \
+    echo "/tmp/mxbuild/modeler/mxbuild --java-home=/usr/lib/jvm/jdk-11.0.2 --java-exe-path=/usr/lib/jvm/jdk-11.0.2/bin/java \$@" >>/bin/mxbuild && \
     chmod +x /bin/mxbuild && \
 \
     echo "#!/bin/bash -x" >/bin/mx && \
-    echo "mono /tmp/mxbuild/modeler/mx.exe \$@" >>/bin/mx && \
+    echo "/tmp/mxbuild/modeler/mx \$@" >>/bin/mx && \
     chmod +x /bin/mx
