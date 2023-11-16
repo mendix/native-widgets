@@ -108,6 +108,10 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix-version }}
     steps:
+      - name: "Make sure curl is installed"
+        run: |
+          apt update && apt upgrade -y
+          apt install curl -y
       - name: "Download test project"
         run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
       - name: "Extract test project"
