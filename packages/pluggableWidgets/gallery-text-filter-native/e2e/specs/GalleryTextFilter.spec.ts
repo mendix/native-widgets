@@ -7,7 +7,7 @@ import {
     tapMenuItem
 } from "../../../../../detox/src/helpers";
 
-describe("Gallery", () => {
+describe("Gallery Text Filter", () => {
     beforeEach(async () => {
         await launchApp();
         await tapMenuItem("Gallery");
