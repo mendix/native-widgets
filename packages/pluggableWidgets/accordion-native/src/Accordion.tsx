@@ -42,14 +42,18 @@ export function Accordion(props: Props): ReactElement | null {
     const onPressGroupHeader = useCallback(
         (group: GroupsType, index: number): void => {
             const expanded = expandedGroups.includes(index);
+            let newExpandedGroup: number[] = []; // use new expanded group, as we need to state before we call execute action.
             if (expanded) {
+                newExpandedGroup = expandedGroups.filter(i => i !== index);
                 collapseGroup(index);
             } else {
+                newExpandedGroup = props.collapseBehavior === "singleExpanded" ? [index] : [...expandedGroups, index];
                 expandGroup(index);
             }
+            props.groups.forEach((g, i) => g.groupCollapsedAttribute?.setValue(!newExpandedGroup.includes(i)));
             executeAction(group.groupOnChange);
         },
-        [expandedGroups, expandGroup, collapseGroup]
+        [expandedGroups, props.groups, props.collapseBehavior, collapseGroup, expandGroup]
     );
 
     const checkPropertyValues = (group: GroupsType, i: number): void => {
