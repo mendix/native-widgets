@@ -3,7 +3,6 @@ import { View, Pressable, Text } from "react-native";
 import { DynamicValue, NativeIcon } from "mendix";
 
 import { GroupIcon } from "./GroupIcon";
-import { AnimatedCollapsibleView } from "./CollapsibleView";
 import { GroupsType, IconEnum } from "../../typings/AccordionProps";
 import { AccordionGroupStyle } from "../ui/Styles";
 
@@ -54,9 +53,9 @@ export function AccordionGroup({
                     />
                 ) : null}
             </Pressable>
-            <AnimatedCollapsibleView isExpanded={isExpanded} style={style.content}>
-                {group.content}
-            </AnimatedCollapsibleView>
+            <View style={{ overflow: "hidden" }}>
+                {isExpanded && <View style={style.content}>{group.content}</View>}
+            </View>
         </View>
     ) : null;
 }
