@@ -27,3 +27,5 @@ mendixProject
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.java-version
