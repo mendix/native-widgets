@@ -3,7 +3,6 @@
 exports[`Animation renders 1`] = `
 <View
   collapsable={false}
-  forwardedRef={[Function]}
   style={{}}
   testID="animation-test"
 >
