@@ -63,6 +63,7 @@ exports[`Intro Screen renders 1`] = `
       >
         <View>
           <View
+            onFocusCapture={[Function]}
             onLayout={[Function]}
             style={
               [
@@ -120,6 +121,23 @@ exports[`Intro Screen renders 1`] = `
           }
         />
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           focusable={true}
           nativeBackgroundAndroid={
@@ -233,6 +251,7 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
       >
         <View>
           <View
+            onFocusCapture={[Function]}
             onLayout={[Function]}
             style={
               [
@@ -305,6 +324,23 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
             }
           >
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               focusable={true}
               nativeBackgroundAndroid={
@@ -417,6 +453,7 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
       >
         <View>
           <View
+            onFocusCapture={[Function]}
             onLayout={[Function]}
             style={
               [
@@ -489,6 +526,23 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
             }
           >
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               focusable={true}
               nativeBackgroundAndroid={
@@ -601,6 +655,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
       >
         <View>
           <View
+            onFocusCapture={[Function]}
             onLayout={[Function]}
             style={
               [
@@ -658,6 +713,23 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           }
         />
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           focusable={true}
           nativeBackgroundAndroid={

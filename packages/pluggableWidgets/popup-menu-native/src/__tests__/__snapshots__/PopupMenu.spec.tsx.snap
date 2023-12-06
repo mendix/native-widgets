@@ -6,6 +6,23 @@ exports[`Popup menu renders 1`] = `
 >
   <View>
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       focusable={true}
       nativeBackgroundAndroid={
@@ -46,6 +63,15 @@ exports[`Popup menu renders 1`] = `
     visible={false}
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={false}
       focusable={true}
       onClick={[Function]}
@@ -102,6 +128,14 @@ exports[`Popup menu renders 1`] = `
               accessibilityState={
                 {
                   "disabled": false,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
                 }
               }
               accessible={true}
@@ -175,6 +209,23 @@ exports[`Popup menu renders custom items 1`] = `
 >
   <View>
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       focusable={true}
       nativeBackgroundAndroid={
@@ -215,6 +266,15 @@ exports[`Popup menu renders custom items 1`] = `
     visible={false}
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={false}
       focusable={true}
       onClick={[Function]}
@@ -268,6 +328,23 @@ exports[`Popup menu renders custom items 1`] = `
             testID="popup-menu_menu"
           >
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               focusable={true}
               nativeBackgroundAndroid={
