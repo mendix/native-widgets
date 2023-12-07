@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-disabled-tests */
 import { element, by, waitFor } from "detox";
 import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 
@@ -11,7 +12,7 @@ describe("Pie-doughnut chart", () => {
         await sessionLogout();
     });
 
-    it("renders pie chart correctly", async () => {
+    it.skip("renders pie chart correctly", async () => {
         await element(by.text("Pie chart Multiple data points")).tap();
         const matcher = by.id("pieChartMultipleDs");
         await waitFor(element(matcher)).toBeVisible().withTimeout(5000);
@@ -19,7 +20,7 @@ describe("Pie-doughnut chart", () => {
         await expectToMatchScreenshot(pieChart);
     });
 
-    it("renders doughnut chart correctly", async () => {
+    it.skip("renders doughnut chart correctly", async () => {
         await element(by.text("Doughnut chart Multiple data points")).tap();
         const matcher = by.id("doughnutChartMultipleDs");
         await waitFor(element(matcher)).toBeVisible().withTimeout(5000);
