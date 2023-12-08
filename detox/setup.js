@@ -28,7 +28,7 @@ expect.extend({
             customDiffDir,
             customSnapshotsDir,
             customReceivedDir,
-            storeReceivedOnFailure: true,
+            storeReceivedOnFailure: false,
             failureThreshold: 10,
             failureThresholdType: "pixel",
             customSnapshotIdentifier: snapshotInfo => `${snapshotInfo.currentTestName} ${snapshotInfo.counter}`,
