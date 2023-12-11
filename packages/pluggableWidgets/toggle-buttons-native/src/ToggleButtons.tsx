@@ -30,9 +30,7 @@ export class ToggleButtons extends Component<Props> {
                     selectedIndex={selectedIndex}
                     enabled={enabled}
                     onTabPress={this.onChangeHandler}
-                    {...(typeof this.styles.container.borderRadius === "number" && {
-                        borderRadius: this.styles.container.borderRadius
-                    })}
+                    borderRadius={Number(this.styles.container.borderRadius)}
                     tabStyle={this.styles.button}
                     tabTextStyle={this.styles.text}
                     activeTabStyle={this.styles.activeButton}
