@@ -267,6 +267,7 @@ jobs:
       - name: "Install Node dependencies"
         working-directory: native-template
         run: npm i
+
       - name: "Setup Pods cache"
         uses: actions/cache@v3.3.1
         with:
@@ -421,6 +422,13 @@ jobs:
         uses: actions/download-artifact@v3.0.2
         with:
           name: mda
+      # Used when new xCode version of simulator should be created
+      - name: Update Xcode
+        run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+      - name: "Clean detox framework cache"
+        run: npx detox clean-framework-cache
+      - name: "Build detox framework cache"
+        run: npx detox build-framework-cache
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
@@ -439,6 +447,14 @@ jobs:
         run: |
           brew tap wix/brew
           brew install applesimutils
+      - name: Check available runtimes
+        run: xcrun simctl list runtimes
+      - name: Check avialble device types
+        run: xcrun simctl list devicetypes
+      # - name: Create iOS 16.0 simulator for iPhone 14
+      #   run: xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-16-0
+      - name: List supported iOS devices
+        run: applesimutils --list
       - name: "Run tests"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test:e2e:ios
       - name: "Archive runtime logs"
