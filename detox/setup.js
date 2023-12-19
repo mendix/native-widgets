@@ -13,12 +13,13 @@ expect.extend({
         let type;
         let sdk;
         if (platform === "ios") {
-            type = config.IOS_DEVICE_TYPE;
+            type = "iPhone";
             sdk = config.IOS_SDK_VERSION;
         } else {
             type = config.ANDROID_DEVICE_TYPE;
             sdk = config.ANDROID_SDK_VERSION;
         }
+
         const customSnapshotsDir = join(resolve("./"), "e2e", "images", "expected", platform, sdk, type);
         const customDiffDir = join(resolve("./"), "e2e", "images", "diffs", platform, sdk, type);
         const customReceivedDir = join(resolve("./"), "e2e", "images", "actual", platform, sdk, type);
