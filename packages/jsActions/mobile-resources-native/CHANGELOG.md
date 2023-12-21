@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### BREAKING
+
+-   We have upgrade React Native to version 0.72.7
+
 ## [5.1.2] Native Mobile Resources - 2023-10-31
 
 ### Fixed
