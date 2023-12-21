@@ -15011,13 +15011,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-system-navigation-bar@npm:1.0.2":
-  version: 1.0.2
-  resolution: "react-native-system-navigation-bar@npm:1.0.2"
+"react-native-system-navigation-bar@npm:2.6.3":
+  version: 2.6.3
+  resolution: "react-native-system-navigation-bar@npm:2.6.3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 12a1788e6358097981a72bdaf161a6823807bb04f01409b645f4ea1b6cdd062258220bc013b21aef34ccea1b1a0fa261c782bd2899f0a1a323cd6cecdfd49017
+  checksum: e29305f9071de24feb1493361098e8e02e719fa7b8db2cf0b79c726c4553376b1cfb60243bee4460ad41ea1aa983e18e31c9e231d20a5dd694b634d4f1190aa4
   languageName: node
   linkType: hard
 
@@ -18037,7 +18037,7 @@ __metadata:
     "@types/react-native-video": ^5.0.4
     deprecated-react-native-prop-types: ^4.0.0
     eslint: ^7.20.0
-    react-native-system-navigation-bar: 1.0.2
+    react-native-system-navigation-bar: 2.6.3
     react-native-vector-icons: 9.1.0
     react-native-video: 5.2.1
   languageName: unknown

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## BREAKING
+
+-   We have upgraded react-native-system-navigation-bar to version 2.6.3
+
 ## [4.0.0] - 2023-3-28
 
 ## BREAKING
