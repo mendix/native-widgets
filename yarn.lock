@@ -15186,6 +15186,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-webview@npm:13.6.4":
+  version: 13.6.4
+  resolution: "react-native-webview@npm:13.6.4"
+  dependencies:
+    escape-string-regexp: 2.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 72df9422ededdcf2de6232629bb447932e63c824904ef5eba0aa0a082d0899148f4e5bda713de931336d23204c7dd025b80221aa8c9bc10306f3d8948ebd0dcb
+  languageName: node
+  linkType: hard
+
 "react-native@npm:0.70.7":
   version: 0.70.7
   resolution: "react-native@npm:0.70.7"
@@ -18387,7 +18400,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": ^9.0.0
     detox: ^19.7.1
     eslint: ^7.20.0
-    react-native-webview: 11.26.1
+    react-native-webview: 13.6.4
   languageName: unknown
   linkType: soft
 
