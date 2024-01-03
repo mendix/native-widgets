@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated dependency `react-native-webview` from version 11.26.1 to 13.6.4
+
 ## [4.0.0] - 2023-3-28
 
 ## BREAKING
