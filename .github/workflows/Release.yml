@@ -12,12 +12,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
 
     steps:
       - name: "Checking changed files"
         id: files
-        uses: softprops/diffset@d5947696689a571f7a984a52505e2649eead5c22 # v1
+        uses: softprops/diffset@db8c4e13f5cc3f8ab666ba2cb6998b688058a41c # v1
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         with:
           base: main
@@ -26,7 +26,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: "Checking-out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
       - name: "Fetching main to compare"
@@ -41,20 +41,10 @@ jobs:
         id: variablesWindows
         run: echo "arg=$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since' } Else { echo '' })" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining node version"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@d86ebcd40b3cb50b156bfa44dd277faf38282d12 # v4
         with:
           node-version-file: ".nvmrc"
           cache: "yarn"
-      - name: "Get yarn cache directory path"
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
-      - name: "Defining cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - name: "Installing dependencies"
         run: yarn install
       - name: "Running release for production"

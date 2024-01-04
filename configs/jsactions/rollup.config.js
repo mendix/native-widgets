@@ -85,14 +85,20 @@ export default async args => {
                                   mkdirSync(path, { recursive: true });
                                   await copyAsync(
                                       join(dirname(require.resolve("fbjs")), "lib", "invariant.js"),
-                                      join(path, "invariant.js")
+                                      join(path, "invariant.js"),
+                                      {
+                                          overwrite: true
+                                      }
                                   );
                               } else if (args.configProject === "nanoflowcommons") {
                                   // `invariant` is being used silently by @react-native-community/geolocation; it is not listed as a dependency nor peerDependency.
                                   // https://github.dev/react-native-geolocation/react-native-geolocation/blob/1786929f2be581da91082ff857c2393da5e597b3/js/implementation.native.js#L13
                                   await copyAsync(
                                       dirname(require.resolve("invariant")),
-                                      join(outDir, "node_modules", "invariant")
+                                      join(outDir, "node_modules", "invariant"),
+                                      {
+                                          overwrite: true
+                                      }
                                   );
                               }
 
