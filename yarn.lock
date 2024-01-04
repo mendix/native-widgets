@@ -5704,7 +5704,7 @@ __metadata:
     "@types/react-native-modal": ^4.1.1
     eslint: ^7.20.0
     react-native-actionsheet: ^2.4.2
-    react-native-device-info: 8.7.1
+    react-native-device-info: 10.12.0
     react-native-modal: ^11.5.4
     react-native-reanimated: ^1.0.1
     reanimated-bottom-sheet: ^1.0.0-alpha.19
@@ -8705,7 +8705,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": ^9.0.0
     detox: ^19.7.1
     eslint: ^7.20.0
-    react-native-device-info: 8.7.1
+    react-native-device-info: 10.12.0
   languageName: unknown
   linkType: soft
 
@@ -9323,7 +9323,7 @@ __metadata:
     eslint: ^7.20.0
     react-native-fast-image: 8.3.2
     react-native-svg: ^12.3.0
-    react-native-vector-icons: 9.1.0
+    react-native-vector-icons: 10.0.3
   languageName: unknown
   linkType: soft
 
@@ -9484,7 +9484,7 @@ __metadata:
     "@react-native-community/async-storage": 1.12.1
     detox: ^19.7.1
     eslint: ^7.20.0
-    react-native-device-info: 8.7.1
+    react-native-device-info: 10.12.0
   languageName: unknown
   linkType: soft
 
@@ -12676,7 +12676,7 @@ __metadata:
     fbjs: 3.0.4
     mime: 3.0.0
     react-native-blob-util: 0.16.2
-    react-native-device-info: 8.7.1
+    react-native-device-info: 10.12.0
     react-native-file-viewer: 2.1.5
     react-native-image-picker: 5.0.1
     react-native-inappbrowser-reborn: 3.4.0
@@ -14733,12 +14733,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-device-info@npm:8.7.1":
-  version: 8.7.1
-  resolution: "react-native-device-info@npm:8.7.1"
+"react-native-device-info@npm:10.12.0":
+  version: 10.12.0
+  resolution: "react-native-device-info@npm:10.12.0"
   peerDependencies:
     react-native: "*"
-  checksum: ada819913315958bd8297059682d2345e410104930ce928acd373eba71f2e683a05f1ddb19ea6b3f511b641a85f3c6d6d6fa3d830026ee9edf17fdb61f4a69b0
+  checksum: dc3a4ada40f0de960f652f1e7962c5f2b538695cad5ad11ca85a6ab445a7f01a7123dceeb7ead234dd110a54935cb9c10fccc648cfd0d6f157041e9299075f74
   languageName: node
   linkType: hard
 
@@ -15025,6 +15025,21 @@ __metadata:
   version: 4.4.1
   resolution: "react-native-touch-id@npm:4.4.1"
   checksum: 885126da3bc9c7956bca1e5176db4fac7b129bd91bc6071d629fc9d2fc6b7cb6527d5c569fc05b79fc2e8539f7651175559071f2dd41041cdf696a0bbc97229d
+  languageName: node
+  linkType: hard
+
+"react-native-vector-icons@npm:10.0.3":
+  version: 10.0.3
+  resolution: "react-native-vector-icons@npm:10.0.3"
+  dependencies:
+    prop-types: ^15.7.2
+    yargs: ^16.1.1
+  bin:
+    fa-upgrade.sh: bin/fa-upgrade.sh
+    fa5-upgrade: bin/fa5-upgrade.sh
+    fa6-upgrade: bin/fa6-upgrade.sh
+    generate-icon: bin/generate-icon.js
+  checksum: 77f22804b0217b4b21e8f4baaee6d33d09429bf55a31e07347fb5ab0af395b0d9adc0cbc3abd46f689ccaf07b953dc909eba95213bce7e03b562801fe4fd0768
   languageName: node
   linkType: hard
 
@@ -18038,7 +18053,7 @@ __metadata:
     deprecated-react-native-prop-types: ^4.0.0
     eslint: ^7.20.0
     react-native-system-navigation-bar: 2.6.3
-    react-native-vector-icons: 9.1.0
+    react-native-vector-icons: 10.0.3
     react-native-video: 5.2.1
   languageName: unknown
   linkType: soft
