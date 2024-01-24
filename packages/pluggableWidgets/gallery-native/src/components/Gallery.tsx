@@ -1,5 +1,5 @@
 import { createElement, ReactElement, ReactNode } from "react";
-import { Text, FlatList, Pressable, View, Platform, TouchableOpacity } from "react-native";
+import { Text, FlatList, Pressable, View, ViewProps, Platform, TouchableOpacity } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
 import { GalleryStyle } from "../ui/Styles";
@@ -41,7 +41,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
 
     const renderItem = (item: { item: T }): ReactElement =>
         props.itemRenderer((children, onPress) => {
-            const listItemWrapperProps = {
+            const listItemWrapperProps: ViewProps = {
                 style: isScrollDirectionVertical && { width: `${100 / numColumns}%` },
                 testID: `${props.name}-list-item-${item.item.id}`
             };
