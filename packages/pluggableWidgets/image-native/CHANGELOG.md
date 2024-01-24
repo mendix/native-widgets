@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.0.0] - 2023-01-24
+
 ## BREAKING
 
 -   We made the widget compatible with React Native 0.72.7
