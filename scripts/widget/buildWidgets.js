@@ -43,7 +43,7 @@ const deleteDistFolders = () => {
         }
 
         log.info("Deleting 'dist' folders in 'packages/pluggableWidgets/*'...");
-        const distFolderPath = path.join(__dirname, "..", "packages", "pluggableWidgets");
+        const distFolderPath = path.join(__dirname, "..", "..", "packages", "pluggableWidgets");
         fs.readdir(distFolderPath, { withFileTypes: true }, (err, files) => {
             if (err) {
                 log.error(`Error reading directories: ${err}`);
@@ -101,8 +101,11 @@ const runYarnBuild = () => {
 const copyMPKFiles = () => {
     return new Promise((resolve, reject) => {
         log.info("Copying '.mpk' files to 'dist/pluggableWidgets'...");
-        const widgetsFolderPath = path.join(__dirname, "..", "packages", "pluggableWidgets");
-        const destinationFolderPath = path.join(__dirname, "..", "dist", "pluggableWidgets");
+        const widgetsFolderPath = path.join(__dirname, "..", "..", "packages", "pluggableWidgets");
+        const destinationFolderPath = path.join(__dirname, "..", "..", "dist", "pluggableWidgets");
+
+        console.log("widgetsFolderPath", widgetsFolderPath);
+        console.log("destinationFolderPath", destinationFolderPath);
 
         if (!fs.existsSync(destinationFolderPath)) {
             fs.mkdirSync(destinationFolderPath, { recursive: true });
@@ -138,10 +141,8 @@ const copyMPKFiles = () => {
                                         files.forEach(file => {
                                             if (path.extname(file) === ".mpk") {
                                                 const sourceFile = path.join(mpkFolderPath, file);
-                                                const destinationFile = path.join(
-                                                    destinationFolderPath,
-                                                    widget.name + "_" + file
-                                                );
+                                                const destinationFile = path.join(destinationFolderPath, file);
+
                                                 fs.copyFileSync(sourceFile, destinationFile);
                                                 log.success(
                                                     `Copied '${widget.name}/${file}' to 'dist/pluggableWidgets'`
