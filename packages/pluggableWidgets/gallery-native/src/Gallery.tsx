@@ -115,7 +115,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
             pagination={props.pagination}
             loadMoreButtonCaption={props.loadMoreButtonCaption}
             phoneColumns={props.phoneColumns}
-            pullDown={pullDown}
+            pullDown={props.pullDown && pullDown}
             pullDownIsExecuting={props.pullDown?.isExecuting ?? false}
             scrollDirection={props.scrollDirection}
             style={styles}
