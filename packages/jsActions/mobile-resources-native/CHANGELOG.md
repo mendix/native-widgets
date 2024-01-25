@@ -6,9 +6,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-### BREAKING
+## [6.0.0] Native Mobile Resources - 2024-01-24
+
+## BREAKING
 
 -   We have upgrade React Native to version 0.72.7
+
+## [2.0.0] Image
+
+## BREAKING
+
+-   We made the widget compatible with React Native 0.72.7
+
+### Changed
+
+-   Updated dependency `react-native-vector-icons` from version 9.1.0 to 10.0.3
+
+## [4.0.0] Rating
+
+## BREAKING
+
+-   We made the widget compatible with React Native 0.72.7
+
+## [5.0.0] - VideoPlayer
+
+### Changed
+
+-   Updated dependency `react-native-vector-icons` from version 9.1.0 to 10.0.3
+
+## BREAKING
+
+-   We have upgraded react-native-system-navigation-bar to version 2.6.3
 
 ## [5.1.2] Native Mobile Resources - 2023-10-31
 
