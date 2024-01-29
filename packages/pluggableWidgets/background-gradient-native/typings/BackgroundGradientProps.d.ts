@@ -35,6 +35,6 @@ export interface BackgroundGradientPreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     colorList: ColorListPreviewType[];
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     onClick: {} | null;
 }

@@ -65,7 +65,13 @@ async function createNativeMobileResourcesModule() {
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
     await exportModuleWithWidgets(moduleInfo.moduleNameInModeler, mpkOutput, nativeWidgetFolders);
     await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
-    await execShellCommand(`rm -rf ${tmpFolder}`);
+    if (process.env.CI !== "true") {
+        try {
+            await execShellCommand(`rm -rf ${tmpFolder}`);
+        } catch (e) {
+            console.error("Failed to remove the temporary folder");
+        }
+    }
     console.log("Done.");
 }
 
@@ -86,7 +92,13 @@ async function createNanoflowCommonsModule() {
     await updateNativeComponentsTestProject(moduleInfo, tmpFolder);
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
     await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
-    await execShellCommand(`rm -rf ${tmpFolder}`);
+    if (process.env.CI !== "true") {
+        try {
+            await execShellCommand(`rm -rf ${tmpFolder}`);
+        } catch (e) {
+            console.error("Failed to remove the temporary folder");
+        }
+    }
     console.log("Done.");
 }
 

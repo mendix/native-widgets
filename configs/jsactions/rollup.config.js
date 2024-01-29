@@ -22,7 +22,6 @@ export default async args => {
     const posixPath = join(cwd, "src", "**/*.ts").split(sep).join(posix.sep); // Always use forward slashes
     const files = await fg([posixPath]); // fast-glob only works with forward slashes
     const outDir = join(cwd, "dist");
-    const isWeb = args.configEnv === "web";
 
     const nodeResolvePlugin = nodeResolve({ preferBuiltins: false, mainFields: ["module", "browser", "main"] });
     const typescriptPlugin = typescript({
@@ -31,7 +30,10 @@ export default async args => {
         inlineSources: false,
         target: "es2019",
         types: ["mendix-client", "react-native"],
-        allowSyntheticDefaultImports: true
+        allowSyntheticDefaultImports: true,
+        compilerOptions: {
+            newLine: "CRLF"
+        }
     });
 
     const copyAsync = promisify(copy);
@@ -50,7 +52,7 @@ export default async args => {
             plugins: [
                 i === 0 ? clear({ targets: [outDir] }) : null,
                 collectDependencies({
-                    copyJsModules: !isWeb,
+                    copyJsModules: true,
                     onlyNative: false,
                     outputDir: outDir,
                     widgetName: fileOutput,
@@ -76,24 +78,28 @@ export default async args => {
                     ? command([
                           async () => copyLicenseFile(cwd, outDir),
                           async () => {
-                              if (!isWeb) {
-                                  if (args.configProject === "nativemobileresources") {
-                                      // `fbjs/lib/invariant` is being used silently by @react-native-community/cameraroll; it is not listed as a dependency nor peerDependency.
-                                      // https://github.dev/react-native-cameraroll/react-native-cameraroll/blob/7c269a837d095a2cb5f4ce13b54ab3060455b17f/js/CameraRoll.js#L14
-                                      const path = join(outDir, "node_modules", "fbjs", "lib");
-                                      mkdirSync(path, { recursive: true });
-                                      await copyAsync(
-                                          join(dirname(require.resolve("fbjs")), "lib", "invariant.js"),
-                                          join(path, "invariant.js")
-                                      );
-                                  } else if (args.configProject === "nanoflowcommons") {
-                                      // `invariant` is being used silently by @react-native-community/geolocation; it is not listed as a dependency nor peerDependency.
-                                      // https://github.dev/react-native-geolocation/react-native-geolocation/blob/1786929f2be581da91082ff857c2393da5e597b3/js/implementation.native.js#L13
-                                      await copyAsync(
-                                          dirname(require.resolve("invariant")),
-                                          join(outDir, "node_modules", "invariant")
-                                      );
-                                  }
+                              if (args.configProject === "nativemobileresources") {
+                                  // `fbjs/lib/invariant` is being used silently by @react-native-community/cameraroll; it is not listed as a dependency nor peerDependency.
+                                  // https://github.dev/react-native-cameraroll/react-native-cameraroll/blob/7c269a837d095a2cb5f4ce13b54ab3060455b17f/js/CameraRoll.js#L14
+                                  const path = join(outDir, "node_modules", "fbjs", "lib");
+                                  mkdirSync(path, { recursive: true });
+                                  await copyAsync(
+                                      join(dirname(require.resolve("fbjs")), "lib", "invariant.js"),
+                                      join(path, "invariant.js"),
+                                      {
+                                          overwrite: true
+                                      }
+                                  );
+                              } else if (args.configProject === "nanoflowcommons") {
+                                  // `invariant` is being used silently by @react-native-community/geolocation; it is not listed as a dependency nor peerDependency.
+                                  // https://github.dev/react-native-geolocation/react-native-geolocation/blob/1786929f2be581da91082ff857c2393da5e597b3/js/implementation.native.js#L13
+                                  await copyAsync(
+                                      dirname(require.resolve("invariant")),
+                                      join(outDir, "node_modules", "invariant"),
+                                      {
+                                          overwrite: true
+                                      }
+                                  );
                               }
 
                               // this is helpful to copy the files and folders to a test project path for dev/testing purposes.

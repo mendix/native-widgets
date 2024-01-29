@@ -1,4 +1,4 @@
-import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps, getColors } from "@mendix/piw-utils-internal";
 import { Properties, hidePropertiesIn } from "@mendix/pluggable-widgets-tools";
 
 import { RadioButtonsPreviewProps } from "../typings/RadioButtonsProps";
@@ -7,9 +7,10 @@ import lightRadioIcon from "./assets/radioButton_light.svg";
 import lightUnselectedRadioIcon from "./assets/radioButton_unselected_light.svg";
 import darkUnselectedRadioIcon from "./assets/radioButton_unselected_dark.svg";
 
-export function getPreview(values: RadioButtonsPreviewProps, isDark: boolean): StructurePreviewProps {
-    const EditableFontColor = isDark ? "#D6D6D6" : "#0A1324";
-    const readOnlyFontColor = "#9DA1A8";
+export function getPreview(values: RadioButtonsPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+    const colors = getColors(isDarkMode);
+    const EditableFontColor = colors.text.primary;
+    const readOnlyFontColor = colors.text.secondary;
     const fontColor = values.readOnly ? readOnlyFontColor : EditableFontColor;
     const radioButtonLabel: StructurePreviewProps = {
         type: "Container",
@@ -29,7 +30,7 @@ export function getPreview(values: RadioButtonsPreviewProps, isDark: boolean): S
 
     const selectedRadioButtonImage: StructurePreviewProps = {
         type: "Image",
-        document: decodeURIComponent((isDark ? darkRadioIcon : lightRadioIcon).replace("data:image/svg+xml,", "")),
+        document: decodeURIComponent((isDarkMode ? darkRadioIcon : lightRadioIcon).replace("data:image/svg+xml,", "")),
         width: 16,
         height: 16
     };
@@ -37,7 +38,7 @@ export function getPreview(values: RadioButtonsPreviewProps, isDark: boolean): S
     const unselectedRadioButtonImage: StructurePreviewProps = {
         type: "Image",
         document: decodeURIComponent(
-            (isDark ? darkUnselectedRadioIcon : lightUnselectedRadioIcon).replace("data:image/svg+xml,", "")
+            (isDarkMode ? darkUnselectedRadioIcon : lightUnselectedRadioIcon).replace("data:image/svg+xml,", "")
         ),
         width: 16,
         height: 16

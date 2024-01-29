@@ -1,16 +1,17 @@
-import { RowLayoutProps, StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { RowLayoutProps, StructurePreviewProps, getColors } from "@mendix/piw-utils-internal";
 
 import { ToggleButtonsPreviewProps } from "../typings/ToggleButtonsProps";
 
 export function getPreview(_: ToggleButtonsPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+    const colors = getColors(isDarkMode);
     const buttonWhiteFontColor = "#FFFFFF";
     const buttonBorderRadius = 4;
-    const buttonFontColor: string = isDarkMode ? buttonWhiteFontColor : "#000000";
+    const buttonFontColor: string = colors.text.primary;
 
     const renderButton = (content: string, isActive = false): RowLayoutProps => ({
         type: "RowLayout",
         columnSize: "grow",
-        ...(isActive ? { borderRadius: buttonBorderRadius, backgroundColor: isDarkMode ? "#344BCE" : "#264AE5" } : {}),
+        ...(isActive ? { borderRadius: buttonBorderRadius, backgroundColor: colors.text.data } : {}),
         children: [
             {
                 type: "Container",
@@ -37,7 +38,7 @@ export function getPreview(_: ToggleButtonsPreviewProps, isDarkMode: boolean): S
 
     return {
         type: "RowLayout",
-        backgroundColor: isDarkMode ? "#646464" : "#CED0D3",
+        backgroundColor: colors.background.shade,
         borderRadius: buttonBorderRadius,
         columnSize: "fixed",
         children: [renderButton("Button 1", true), renderButton("Button 2"), renderButton("Button 3")]

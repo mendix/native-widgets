@@ -47,6 +47,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -100,6 +101,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -192,6 +194,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -245,6 +248,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -286,6 +290,23 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -358,6 +379,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -411,6 +433,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -452,6 +475,23 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         }
       >
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -524,6 +564,7 @@ exports[`Gallery rendering renders correctly 1`] = `
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -577,6 +618,7 @@ exports[`Gallery rendering renders correctly 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -669,6 +711,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
           [
@@ -697,6 +740,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
           [
@@ -725,6 +769,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={
           [
@@ -868,6 +913,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
   >
     <View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >
@@ -921,6 +967,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
         </View>
       </View>
       <View
+        onFocusCapture={[Function]}
         onLayout={[Function]}
         style={null}
       >

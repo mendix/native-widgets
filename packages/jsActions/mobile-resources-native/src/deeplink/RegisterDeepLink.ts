@@ -8,6 +8,7 @@
 import { Linking } from "react-native";
 
 type Nanoflow = (params: Record<string, any>) => Promise<void>;
+
 // BEGIN EXTRA CODE
 // END EXTRA CODE
 

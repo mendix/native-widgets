@@ -237,11 +237,11 @@ async function createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput) {
     });
 }
 
-async function createGithubReleaseFrom({ title, body, tag, mpkOutput, isDraft = false }) {
+async function createGithubReleaseFrom({ title, body = "", tag, mpkOutput, isDraft = false }) {
     const command = [
         `gh release create`,
         `--title '${title}'`,
-        `--notes '${body}'`,
+        `--notes '${body.replaceAll("'", "`")}'`,
         isDraft ? "--draft" : "",
         `'${tag}'`,
         `'${mpkOutput}'`

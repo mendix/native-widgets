@@ -33,8 +33,8 @@ export interface GroupsPreviewType {
     headerRenderMode: HeaderRenderModeEnum;
     headerTextRenderMode: HeaderTextRenderModeEnum;
     headerText: string;
-    headerContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    headerContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     visible: string;
     groupCollapsed: GroupCollapsedEnum;
     groupCollapsedDynamic: string;
@@ -66,6 +66,6 @@ export interface AccordionPreviewProps {
     collapsible: boolean;
     collapseBehavior: CollapseBehaviorEnum;
     icon: IconEnum;
-    iconCollapsed: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
-    iconExpanded: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    iconCollapsed: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    iconExpanded: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
 }

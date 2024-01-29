@@ -6,7 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.0] - 2023-01-24
+
+## BREAKING
+
+-   We made the widget compatible with React Native 0.72.7
+
 ## [3.0.0] - 2023-3-28
+
+### Changed
+
+-   Updated dependency `react-native-vector-icons` from version 9.1.0 to 10.0.3
 
 ## BREAKING
 

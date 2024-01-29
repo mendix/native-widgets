@@ -177,7 +177,8 @@ async function copyJsModule(moduleSourcePath, to) {
             "!**/{android,ios,windows,mac,jest,github,gradle,__*__,docs,jest,example*}/**/*",
             "!**/*.{config,setup}.*",
             "!**/*.{podspec,flow}"
-        ]
+        ],
+        overwrite: true
     });
 }
 

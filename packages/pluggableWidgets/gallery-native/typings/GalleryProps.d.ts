@@ -46,17 +46,17 @@ export interface GalleryPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    datasource: {} | { type: string } | null;
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    datasource: {} | { caption: string } | { type: string } | null;
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     scrollDirection: ScrollDirectionEnum;
     tabletColumns: number | null;
     phoneColumns: number | null;
     pageSize: number | null;
     pagination: PaginationEnum;
     loadMoreButtonCaption: string;
-    emptyPlaceholder: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    emptyPlaceholder: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     onClick: {} | null;
     pullDown: {} | null;
     filterList: FilterListPreviewType[];
-    filtersPlaceholder: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    filtersPlaceholder: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
 }

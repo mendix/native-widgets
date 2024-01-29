@@ -54,10 +54,10 @@ export interface BottomSheetPreviewProps {
     modalRendering: ModalRenderingEnum;
     itemsBasic: ItemsBasicPreviewType[];
     nativeImplementation: boolean;
-    smallContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
-    largeContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    smallContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    largeContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     showFullscreenContent: boolean;
-    fullscreenContent: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    fullscreenContent: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     onOpen: {} | null;
     onClose: {} | null;
 }

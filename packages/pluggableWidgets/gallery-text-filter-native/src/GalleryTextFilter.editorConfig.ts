@@ -1,23 +1,11 @@
-import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps, getColors } from "@mendix/piw-utils-internal";
 import { GalleryTextFilterPreviewProps } from "../typings/GalleryTextFilterProps";
 
-export function getPreview(values: GalleryTextFilterPreviewProps, isDark: boolean): StructurePreviewProps {
-    const style: { borderColor: string; backgroundColor: string; textColor: string } = {
-        dark: {
-            borderColor: "#6B707B",
-            backgroundColor: "#3E3E3E",
-            textColor: "#DEDEDE"
-        },
-        light: {
-            borderColor: "#6B707B",
-            backgroundColor: "#FFFFFF",
-            textColor: "#6B707B"
-        }
-    }[isDark ? "dark" : "light"];
-
+export function getPreview(values: GalleryTextFilterPreviewProps, isDarkMode: boolean): StructurePreviewProps {
+    const colors = getColors(isDarkMode);
     return {
         type: "Container",
-        backgroundColor: style.backgroundColor,
+        backgroundColor: colors.background.topBar.standard,
         children: [
             {
                 type: "Container",
@@ -28,7 +16,7 @@ export function getPreview(values: GalleryTextFilterPreviewProps, isDark: boolea
                     {
                         type: "Text",
                         content: values.placeholder,
-                        fontColor: style.textColor
+                        fontColor: colors.text.primary
                     }
                 ]
             }

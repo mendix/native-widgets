@@ -1,44 +1,23 @@
-import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps, topBar } from "@mendix/piw-utils-internal";
 import { BackgroundGradientPreviewProps } from "../typings/BackgroundGradientProps";
 import { Problem } from "@mendix/pluggable-widgets-tools";
 
-export const getPreview = (values: BackgroundGradientPreviewProps, isDarkMode: boolean): StructurePreviewProps => ({
-    type: "Container",
-    borders: true,
-    children: [
-        {
-            type: "RowLayout",
-            columnSize: "grow",
-            borders: true,
-            padding: 0,
-            backgroundColor: isDarkMode ? "#454545" : "#F5F5F5",
-            children: [
-                {
-                    type: "Container",
-                    children: [
-                        {
-                            type: "Text",
-                            fontSize: 10,
-                            fontColor: isDarkMode ? "#DEDEDE" : "#6B707B",
-                            content: "Background gradient"
-                        }
-                    ]
-                }
-            ]
-        },
+export const getPreview = (values: BackgroundGradientPreviewProps, isDarkMode: boolean): StructurePreviewProps =>
+    topBar(
+        "Background gradient",
         {
             type: "DropZone",
             property: values.content as object,
             placeholder: "Configure your background gradient ( Content )"
-        }
-    ]
-});
+        },
+        isDarkMode
+    );
 
 function checkTwoDecimalDigits(number: number): boolean {
     return number?.toString().length < 5;
 }
 
-export function check(values: BackgroundGradientPreviewProps): Problem[] {
+export const check = (values: BackgroundGradientPreviewProps): Problem[] => {
     const errors: Problem[] = [];
     const { colorList } = values;
 
@@ -56,9 +35,9 @@ export function check(values: BackgroundGradientPreviewProps): Problem[] {
     } else if (colorList && colorList.some(item => !checkTwoDecimalDigits(item.offset || 0))) {
         errors.push({
             property: "colorList",
-            message: "​​The offset is limited to 2 decimal places"
+            message: "The offset is limited to 2 decimal places"
         });
     }
 
     return errors;
-}
+};

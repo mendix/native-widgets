@@ -44,7 +44,7 @@ export interface AnimationPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     animationType: AnimationTypeEnum;
     animationIn: AnimationInEnum;
     animationAttention: AnimationAttentionEnum;

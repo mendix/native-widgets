@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.0.2] - 2023-7-31
+
+### Fixed
+
+-   We fixed an issue when running with Mx10 crashes the app.
+
+## [3.0.1] - 2023-5-17
+
+### Fixed
+
+-   We fixed an issue where height or width with a value of 0 crash the app.
+
 ## [3.0.0] - 2023-3-28
 
 ## BREAKING
