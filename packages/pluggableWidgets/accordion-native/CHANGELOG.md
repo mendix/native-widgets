@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Fixed a bug where the accordion state was not updating correctly when the "Collapsed" attribute was selected.
+
+-   Resolved an issue where the accordion's dynamic content was not updating its height after the initial render.
+
 ## [2.2.0] - 2022-04-07
 
 ### Added
