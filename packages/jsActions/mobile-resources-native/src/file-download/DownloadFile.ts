@@ -8,8 +8,6 @@
 import { Platform } from "react-native";
 import RNBlobUtil from "react-native-blob-util";
 import FileViewer from "react-native-file-viewer";
-import mimeTypes from "mime";
-
 // BEGIN EXTRA CODE
 function formatPath(...pathArgs: string[]): string {
     return pathArgs.filter(arg => !!arg).join("/");
@@ -51,24 +49,17 @@ export async function DownloadFile(file: mendix.lib.MxObject, openWithOS: boolea
 
     const dirs = RNBlobUtil.fs.dirs;
     const fileName = file.get("Name") as string;
-    const mimeType = mimeTypes.getType(fileName);
     const sanitizedFileName = sanitizeFileName(fileName);
     const baseDir = Platform.OS === "ios" ? dirs.DocumentDir : dirs.DownloadDir;
     const filePath = mx.data.getDocumentUrl(file.getGuid(), Number(file.get("changedDate")));
-    let accessiblePath;
+    const accessiblePath = await getUniqueFilePath(baseDir, sanitizedFileName);
+
     if (Platform.OS === "ios") {
-        accessiblePath = await getUniqueFilePath(baseDir, sanitizedFileName);
         await RNBlobUtil.fs.cp(filePath, accessiblePath);
     } else {
-        accessiblePath = await RNBlobUtil.MediaCollection.copyToMediaStore(
-            {
-                name: sanitizedFileName,
-                mimeType: mimeType ?? "*",
-                parentFolder: ""
-            },
-            "Download",
-            filePath
-        );
+        const base64Data = await mx.readFileBlob(filePath);
+        const base64Content = base64Data?.split(",")[1];
+        await RNBlobUtil.fs.createFile(accessiblePath, base64Content, "base64");
     }
     if (openWithOS) {
         await FileViewer.open(accessiblePath, {
