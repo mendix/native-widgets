@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   fixed an Android issue in Download file action.
+
 ## [6.0.0] Native Mobile Resources - 2024-01-24
 
 ## BREAKING
