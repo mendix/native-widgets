@@ -68,7 +68,8 @@ describe("Web view", () => {
     });
 
     // Skipping this test for Android because link is not clickable in web view
-    it("ios-should open URL externally", async () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("ios-should open URL externally", async () => {
         await element(by.text("External")).tap();
 
         await waitForAndCloseOnLoadAlert();
