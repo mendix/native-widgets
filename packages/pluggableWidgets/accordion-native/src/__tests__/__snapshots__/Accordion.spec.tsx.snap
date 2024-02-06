@@ -101,29 +101,12 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       </View>
     </View>
     <View
-      collapsable={false}
-      onLayout={[Function]}
       style={
         {
-          "height": undefined,
-          "overflow": undefined,
+          "overflow": "hidden",
         }
       }
-    >
-      <View
-        style={
-          {
-            "paddingBottom": 24,
-            "paddingHorizontal": 16,
-            "paddingTop": 8,
-          }
-        }
-      >
-        <Text>
-          Content
-        </Text>
-      </View>
-    </View>
+    />
   </View>
   <View
     style={
@@ -209,12 +192,9 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       </View>
     </View>
     <View
-      collapsable={false}
-      onLayout={[Function]}
       style={
         {
-          "height": undefined,
-          "overflow": undefined,
+          "overflow": "hidden",
         }
       }
     >
