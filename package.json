@@ -34,7 +34,7 @@
     "setup-android": "node ./detox/scripts/setup-android.js",
     "setup-ios": "node ./detox/scripts/setup-ios.js",
     "patch-package": "./scripts/patch/patch-package.sh",
-    "build:widgets": "node ./scripts/buildWidgets.js"
+    "build:widgets": "node ./scripts/widget/buildWidgets.js"
   },
   "workspaces": {
     "packages": [
