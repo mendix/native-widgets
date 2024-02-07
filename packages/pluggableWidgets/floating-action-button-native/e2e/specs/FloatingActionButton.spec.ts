@@ -2,7 +2,7 @@ import { Alert } from "../../../../../detox/src/Alert";
 import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
 import { expect, element, by } from "detox";
 
-describe("Badge", () => {
+describe("Floating action button", () => {
     beforeEach(async () => {
         await launchApp();
         await tapMenuItem("Floating action button");

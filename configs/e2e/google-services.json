@@ -1,0 +1,82 @@
+{
+    "project_info": {
+        "project_number": "1017638629070",
+        "project_id": "nativecomponentstestproject",
+        "storage_bucket": "nativecomponentstestproject.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:1017638629070:android:f3193906dba6745e67aa9f",
+                "android_client_info": {
+                    "package_name": "com.mendix.nativecomponentstestproject"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "1017638629070-0gdfkf7ui3aer0sni74hlvbn74ot2ql0.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "fake"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "1017638629070-0gdfkf7ui3aer0sni74hlvbn74ot2ql0.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "1017638629070-r3ft9epl0c94mioagkg7ri9rahvf1bo3.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "com.mendix.nativecomponentstestproject"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:1017638629070:android:560a907ff405f95c67aa9f",
+                "android_client_info": {
+                    "package_name": "com.mendix.nativecomponentstestproject.developerapp"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "1017638629070-0gdfkf7ui3aer0sni74hlvbn74ot2ql0.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "fake"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "1017638629070-0gdfkf7ui3aer0sni74hlvbn74ot2ql0.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "1017638629070-r3ft9epl0c94mioagkg7ri9rahvf1bo3.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "com.mendix.nativecomponentstestproject"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}

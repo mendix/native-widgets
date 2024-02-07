@@ -1,6 +1,6 @@
 const ANDROID_SDK_VERSION = "30"; // Set to 30 because: https://github.com/wix/Detox/issues/3071
 const ANDROID_DEVICE_TYPE = "pixel";
-const IOS_SDK_VERSION = "16.2";
+const IOS_SDK_VERSION = "16.0";
 const IOS_DEVICE_TYPE = "iPhone 14";
 
 module.exports = {
@@ -8,18 +8,18 @@ module.exports = {
     ANDROID_DEVICE_TYPE,
     IOS_SDK_VERSION,
     IOS_DEVICE_TYPE,
-    "test-runner": "jest",
+    "test-runner": `${__dirname}/../node_modules/.bin/jest`,
     "runner-config": `${__dirname}/jest.config.js`,
     skipLegacyWorkersInjection: true,
     apps: {
         "ios.developerapp": {
             type: "ios.app",
-            binaryPath: `${__dirname}/apps/DeveloperApp.app`
+            binaryPath: `${__dirname}/apps/NativeTemplate.app`
         },
         "android.developerapp": {
             type: "android.apk",
-            binaryPath: `${__dirname}/apps/app-dev-debug.apk`,
-            testBinaryPath: `${__dirname}/apps/app-dev-debug-androidTest.apk`
+            binaryPath: `${__dirname}/apps/app-appstore-debug.apk`,
+            testBinaryPath: `${__dirname}/apps/app-appstore-debug-androidTest.apk`
         }
     },
     devices: {
@@ -56,6 +56,28 @@ module.exports = {
                     exposeGlobals: false,
                     reinstallApp: process.env.CI !== "true"
                 }
+            }
+        }
+    },
+    artifacts: {
+        rootDir: "artifacts",
+        plugins: {
+            instruments: { enabled: false },
+            log: { enabled: true },
+            uiHierarchy: "enabled",
+            screenshot: {
+                enabled: true,
+                shouldTakeAutomaticSnapshots: true,
+                keepOnlyFailedTestsArtifacts: true,
+                takeWhen: {
+                    testStart: true,
+                    testDone: true,
+                    appNotReady: true
+                }
+            },
+            video: {
+                enabled: true,
+                keepOnlyFailedTestsArtifacts: true
             }
         }
     }

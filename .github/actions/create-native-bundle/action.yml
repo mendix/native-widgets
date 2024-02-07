@@ -1,0 +1,47 @@
+name: "Create native bundle"
+description: "Create a native bundle for android / iOS"
+inputs:
+  platform:
+    description: "Target platform (android or ios)"
+    required: true
+  mda-file:
+    description: "Path to the deployment package"
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: "Make sure curl is installed"
+      run: |
+        apt update && apt upgrade -y
+        apt install curl -y
+      shell: bash
+    - name: "Download test project"
+      run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+      shell: bash
+    - name: "Extract test project"
+      uses: montudor/action-zip@v1.0.0
+      with:
+        args: unzip -qq project.zip
+    - name: "Extract deployment package"
+      uses: montudor/action-zip@v1.0.0
+      with:
+        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-main/deployment
+    - name: "Create bundle for ${{ inputs.platform }}"
+      run: |
+        mkdir -p ${{ inputs.platform }}/assets
+        cd Native-Mobile-Resources-main/deployment/native && \
+        /tmp/mxbuild/modeler/tools/node/linux-x64/node \
+        /tmp/mxbuild/modeler/tools/node/node_modules/react-native/local-cli/cli.js \
+        bundle --verbose --platform ${{ inputs.platform }} --dev false \
+        --config "$PWD/metro.config.json" \
+        --bundle-output $GITHUB_WORKSPACE/${{ inputs.platform }}/index.${{ inputs.platform }}.bundle \
+        --assets-dest $GITHUB_WORKSPACE/${{ inputs.platform }}/assets/ \
+        --entry-file ./index.js
+      shell: bash
+      env:
+        NODE_OPTIONS: --max_old_space_size=6144
+    - name: "Upload bundle for ${{ inputs.platform }}"
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: ${{ inputs.platform }}-bundle
+        path: ${{ inputs.platform }}
