@@ -6,8 +6,10 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Platform } from "react-native";
-import RNBlobUtil from "react-native-blob-util";
+import RNBlobUtil, { Mediatype } from "react-native-blob-util";
 import FileViewer from "react-native-file-viewer";
+import mimeTypes from "mime";
+
 // BEGIN EXTRA CODE
 function formatPath(...pathArgs: string[]): string {
     return pathArgs.filter(arg => !!arg).join("/");
@@ -52,14 +54,28 @@ export async function DownloadFile(file: mendix.lib.MxObject, openWithOS: boolea
     const sanitizedFileName = sanitizeFileName(fileName);
     const baseDir = Platform.OS === "ios" ? dirs.DocumentDir : dirs.DownloadDir;
     const filePath = mx.data.getDocumentUrl(file.getGuid(), Number(file.get("changedDate")));
-    const accessiblePath = await getUniqueFilePath(baseDir, sanitizedFileName);
+    let accessiblePath;
 
     if (Platform.OS === "ios") {
+        accessiblePath = await getUniqueFilePath(baseDir, sanitizedFileName);
         await RNBlobUtil.fs.cp(filePath, accessiblePath);
     } else {
+        const tempPath = await getUniqueFilePath(baseDir, sanitizedFileName);
         const base64Data = await mx.readFileBlob(filePath);
         const base64Content = base64Data?.split(",")[1];
-        await RNBlobUtil.fs.createFile(accessiblePath, base64Content, "base64");
+        await RNBlobUtil.fs.createFile(tempPath, base64Content, "base64");
+        const mimeType = mimeTypes.getType(fileName) as Mediatype;
+        accessiblePath = await RNBlobUtil.MediaCollection.copyToMediaStore(
+            {
+                name: sanitizedFileName,
+                mimeType: mimeType ?? "*",
+                parentFolder: ""
+            },
+            "Download",
+            tempPath
+        );
+
+        RNBlobUtil.fs.unlink(tempPath);
     }
     if (openWithOS) {
         await FileViewer.open(accessiblePath, {
