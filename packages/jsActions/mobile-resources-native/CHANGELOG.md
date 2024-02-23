@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.6] Native Mobile Resources - 2024-2-12
+
+
+## [1.0.3] Gallery
+### Fixed
+
+-   We've resolved an issue where the loading indicator was triggered when pulling down the list, even in the absence of a pull-down event.
+
 ## [4.0.5] Native Mobile Resources - 2023-11-1
 ### Fixed
 
