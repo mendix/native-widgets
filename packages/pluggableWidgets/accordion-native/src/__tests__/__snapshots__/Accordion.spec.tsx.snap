@@ -20,6 +20,23 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -84,29 +101,12 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       </View>
     </View>
     <View
-      collapsable={false}
-      onLayout={[Function]}
       style={
         {
-          "height": undefined,
-          "overflow": undefined,
+          "overflow": "hidden",
         }
       }
-    >
-      <View
-        style={
-          {
-            "paddingBottom": 24,
-            "paddingHorizontal": 16,
-            "paddingTop": 8,
-          }
-        }
-      >
-        <Text>
-          Content
-        </Text>
-      </View>
-    </View>
+    />
   </View>
   <View
     style={
@@ -117,6 +117,23 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -175,12 +192,9 @@ exports[`Accordion in collapsible & single expanded group mode renders correctly
       </View>
     </View>
     <View
-      collapsable={false}
-      onLayout={[Function]}
       style={
         {
-          "height": undefined,
-          "overflow": undefined,
+          "overflow": "hidden",
         }
       }
     >

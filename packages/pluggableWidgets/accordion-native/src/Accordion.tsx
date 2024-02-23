@@ -1,5 +1,5 @@
 import { createElement, ReactElement, useState, useCallback, useEffect } from "react";
-import { View } from "react-native";
+import { View, LayoutAnimation, Platform, UIManager } from "react-native";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { ValueStatus } from "mendix";
@@ -9,6 +9,10 @@ import { defaultAccordionStyle, AccordionStyle } from "./ui/Styles";
 import { AccordionGroup } from "./components/AccordionGroup";
 
 export type Props = AccordionProps<AccordionStyle>;
+
+if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export function Accordion(props: Props): ReactElement | null {
     const styles = flattenStyles(defaultAccordionStyle, props.style);
@@ -41,15 +45,20 @@ export function Accordion(props: Props): ReactElement | null {
 
     const onPressGroupHeader = useCallback(
         (group: GroupsType, index: number): void => {
+            LayoutAnimation.easeInEaseOut();
             const expanded = expandedGroups.includes(index);
+            let newExpandedGroup: number[] = [];
             if (expanded) {
+                newExpandedGroup = expandedGroups.filter(i => i !== index);
                 collapseGroup(index);
             } else {
+                newExpandedGroup = props.collapseBehavior === "singleExpanded" ? [index] : [...expandedGroups, index];
                 expandGroup(index);
             }
+            props.groups.forEach((g, i) => g.groupCollapsedAttribute?.setValue(!newExpandedGroup.includes(i)));
             executeAction(group.groupOnChange);
         },
-        [expandedGroups, expandGroup, collapseGroup]
+        [expandedGroups, props.groups, props.collapseBehavior, collapseGroup, expandGroup]
     );
 
     const checkPropertyValues = (group: GroupsType, i: number): void => {
