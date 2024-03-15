@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We have fixed an issue in base64encode action.
+
 ## [3.0.2] Nanoflow Commons - 2024-1-17
+
 ### Removed
 
 -   Removed the constant holding the version number from within the module.
