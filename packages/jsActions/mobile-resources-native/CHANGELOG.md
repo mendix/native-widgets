@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   fixed an Android issue in Download file action.
+
 ## [4.0.7] Native Mobile Resources - 2024-2-26
 
 
@@ -25,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We've resolved an issue where the loading indicator was triggered when pulling down the list, even in the absence of a pull-down event.
 
 ## [4.0.5] Native Mobile Resources - 2023-11-1
+
 ### Fixed
 
 -   We have added push notification permission request support for Android API level>=33.
@@ -88,7 +93,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [4.0.0] Native Mobile Resources - 2023-3-28
 
-undefined
+-   We made widgets compatible with React Native 0.70.7
 
 ## [4.0.0] AppEvents
 
