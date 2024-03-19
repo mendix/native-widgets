@@ -6,7 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Platform } from "react-native";
-import RNBlobUtil, { Mediatype } from "react-native-blob-util";
+import RNBlobUtil from "react-native-blob-util";
 import FileViewer from "react-native-file-viewer";
 import mimeTypes from "mime";
 
@@ -15,12 +15,12 @@ function formatPath(...pathArgs: string[]): string {
     return pathArgs.filter(arg => !!arg).join("/");
 }
 
-function sanitizeFileName(name: string) {
+function sanitizeFileName(name: string): string {
     /* eslint-disable-next-line no-control-regex */
     return name.replace(/[<>"?:|*/\\\u0000-\u001F\u007F]/g, "_");
 }
 
-async function getUniqueFilePath(path: string, fileName: string) {
+async function getUniqueFilePath(path: string, fileName: string): Promise<string> {
     const insertionIndex = fileName.lastIndexOf(".");
     const fileNameWithoutExtension = fileName.substring(0, insertionIndex);
     const extension = fileName.substring(insertionIndex);
@@ -33,6 +33,22 @@ async function getUniqueFilePath(path: string, fileName: string) {
     }
 
     return uniqueFilePath;
+}
+
+function createCopyToMediaStoreFunction(
+    fileName: string,
+    mimeType: string | null
+): (filePath: string) => Promise<string> {
+    return (filePath: string) =>
+        RNBlobUtil.MediaCollection.copyToMediaStore(
+            {
+                name: fileName,
+                mimeType: mimeType ?? "*",
+                parentFolder: ""
+            },
+            "Download",
+            filePath
+        );
 }
 
 // END EXTRA CODE
@@ -60,22 +76,19 @@ export async function DownloadFile(file: mendix.lib.MxObject, openWithOS: boolea
         accessiblePath = await getUniqueFilePath(baseDir, sanitizedFileName);
         await RNBlobUtil.fs.cp(filePath, accessiblePath);
     } else {
-        const tempPath = await getUniqueFilePath(baseDir, sanitizedFileName);
-        const base64Data = await mx.readFileBlob(filePath);
-        const base64Content = base64Data?.split(",")[1];
-        await RNBlobUtil.fs.createFile(tempPath, base64Content, "base64");
-        const mimeType = mimeTypes.getType(fileName) as Mediatype;
-        accessiblePath = await RNBlobUtil.MediaCollection.copyToMediaStore(
-            {
-                name: sanitizedFileName,
-                mimeType: mimeType ?? "*",
-                parentFolder: ""
-            },
-            "Download",
-            tempPath
-        );
-
-        RNBlobUtil.fs.unlink(tempPath);
+        const mimeType = mimeTypes.getType(fileName);
+        const copyToMediaStore = createCopyToMediaStoreFunction(sanitizedFileName, mimeType);
+        if (typeof mx.readFileBlob === "function") {
+            const tempPath = await getUniqueFilePath(baseDir, sanitizedFileName);
+            const base64Data = await mx.readFileBlob(filePath);
+            const base64Content = base64Data?.split(",")[1];
+            await RNBlobUtil.fs.createFile(tempPath, base64Content, "base64");
+            accessiblePath = await copyToMediaStore(tempPath);
+            RNBlobUtil.fs.unlink(tempPath);
+        } else {
+            // this code block is for backward compatibility
+            accessiblePath = await copyToMediaStore(filePath);
+        }
     }
     if (openWithOS) {
         await FileViewer.open(accessiblePath, {
