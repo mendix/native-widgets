@@ -174,19 +174,46 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
           <View
             style={
               [
-                {},
+                {
+                  "backgroundColor": "#e74c3c",
+                  "elevation": 5,
+                  "rippleColor": "rgba(0, 0, 0, 0.4)",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.3,
+                  "shadowRadius": 3,
+                  "size": 54,
+                },
                 {
                   "alignItems": "center",
-                  "flexShrink": 1,
+                  "borderRadius": 27,
+                  "height": 54,
                   "justifyContent": "center",
+                  "width": 54,
                 },
               ]
             }
             testID="FloatingAction$IconView"
           >
             <View
-              testId="icon"
-            />
+              style={
+                [
+                  {},
+                  {
+                    "alignItems": "center",
+                    "flexShrink": 1,
+                    "justifyContent": "center",
+                  },
+                ]
+              }
+            >
+              <View
+                testId="icon"
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -369,19 +396,46 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
           <View
             style={
               [
-                {},
+                {
+                  "backgroundColor": "#e74c3c",
+                  "elevation": 5,
+                  "rippleColor": "rgba(0, 0, 0, 0.4)",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.3,
+                  "shadowRadius": 3,
+                  "size": 54,
+                },
                 {
                   "alignItems": "center",
-                  "flexShrink": 1,
+                  "borderRadius": 27,
+                  "height": 54,
                   "justifyContent": "center",
+                  "width": 54,
                 },
               ]
             }
             testID="FloatingAction$IconView"
           >
             <View
-              testId="icon"
-            />
+              style={
+                [
+                  {},
+                  {
+                    "alignItems": "center",
+                    "flexShrink": 1,
+                    "justifyContent": "center",
+                  },
+                ]
+              }
+            >
+              <View
+                testId="icon"
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -564,19 +618,46 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
           <View
             style={
               [
-                {},
+                {
+                  "backgroundColor": "#e74c3c",
+                  "elevation": 5,
+                  "rippleColor": "rgba(0, 0, 0, 0.4)",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.3,
+                  "shadowRadius": 3,
+                  "size": 54,
+                },
                 {
                   "alignItems": "center",
-                  "flexShrink": 1,
+                  "borderRadius": 27,
+                  "height": 54,
                   "justifyContent": "center",
+                  "width": 54,
                 },
               ]
             }
             testID="FloatingAction$IconView"
           >
             <View
-              testId="icon"
-            />
+              style={
+                [
+                  {},
+                  {
+                    "alignItems": "center",
+                    "flexShrink": 1,
+                    "justifyContent": "center",
+                  },
+                ]
+              }
+            >
+              <View
+                testId="icon"
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -759,19 +840,46 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
           <View
             style={
               [
-                {},
+                {
+                  "backgroundColor": "#e74c3c",
+                  "elevation": 5,
+                  "rippleColor": "rgba(0, 0, 0, 0.4)",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.3,
+                  "shadowRadius": 3,
+                  "size": 54,
+                },
                 {
                   "alignItems": "center",
-                  "flexShrink": 1,
+                  "borderRadius": 27,
+                  "height": 54,
                   "justifyContent": "center",
+                  "width": 54,
                 },
               ]
             }
             testID="FloatingAction$IconView"
           >
             <View
-              testId="icon"
-            />
+              style={
+                [
+                  {},
+                  {
+                    "alignItems": "center",
+                    "flexShrink": 1,
+                    "justifyContent": "center",
+                  },
+                ]
+              }
+            >
+              <View
+                testId="icon"
+              />
+            </View>
           </View>
         </View>
       </View>
