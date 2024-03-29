@@ -8,10 +8,11 @@ When running the build script, all widgets are built individually within their r
 
 ## Usage
 
-The script supports two parameters:
+The script supports these parameters:
 
-1. `--delete-dist`: Deletes the dist folders within each widget's directory. This is useful to prevent conflicts in case multiple versions of a widget are present in the same `dist` directory.
+1. `--delete-dist`: Deletes the `dist` folders within each widget's directory. This is useful to prevent conflicts in case multiple versions of a widget are present in the same `dist` directory.
 2. `--skip-build`: Skips the build process for widgets. This is helpful when there are already built widgets, and you want to avoid rebuilding them.
+3. `--dev`: Specifies the build to be in development mode.
 
 ## Running the Script
 

@@ -5,6 +5,8 @@ const readline = require("readline");
 
 const deleteDist = process.argv.includes("--delete-dist");
 const skipYarnBuild = process.argv.includes("--skip-build");
+const devMode = process.argv.includes("--dev");
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -69,14 +71,15 @@ const deleteDistFolders = () => {
 
 const runYarnBuild = () => {
     return new Promise((resolve, reject) => {
+        const buildCommand = devMode ? "build" : "release";
         if (skipYarnBuild) {
-            log.warning("Skipping 'yarn build'...");
+            log.warning(`Skipping 'yarn ${buildCommand}'...`);
             resolve();
             return;
         }
-        log.info("Running 'yarn build'...");
+        log.info(`Running 'yarn ${buildCommand}'...`);
 
-        const buildProcess = spawn("yarn", ["build"], { stdio: "pipe", shell: true });
+        const buildProcess = spawn("yarn", [buildCommand], { stdio: "pipe", shell: true });
 
         buildProcess.stdout.on("data", data => {
             process.stdout.write(`\r${colors.yellow}Building widgets... ${data.toString().trim()}${colors.reset}`);
@@ -88,11 +91,11 @@ const runYarnBuild = () => {
 
         buildProcess.on("close", code => {
             if (code !== 0) {
-                log.error(`'yarn build' failed with code ${code}`);
+                log.error(`'yarn ${buildCommand}' failed with code ${code}`);
                 resolve();
                 return;
             }
-            log.success("\n'yarn build' completed.");
+            log.success(`\n'yarn ${buildCommand}' completed.`);
             resolve();
         });
     });
@@ -173,7 +176,7 @@ const main = async () => {
             );
             if (answer.toLowerCase() !== "yes") {
                 console.log("Operation cancelled.");
-                return;
+                process.exit(1);
             }
         }
 
@@ -183,8 +186,10 @@ const main = async () => {
 
         await copyMPKFiles();
         console.log("Script completed successfully!");
+        process.exit(0);
     } catch (error) {
         console.error("Script error:", error);
+        process.exit(1);
     }
 };
 
