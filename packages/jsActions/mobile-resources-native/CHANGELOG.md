@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.9] Native Mobile Resources - 2024-4-4
+
+
+## [4.0.1] FloatingActionButton
+### Fixed
+
+-   We have fixed an issue where icons within Floating Action Buttons were not properly centered.
+
 ## [4.0.8] Native Mobile Resources - 2024-3-29
 ### Changed
 
