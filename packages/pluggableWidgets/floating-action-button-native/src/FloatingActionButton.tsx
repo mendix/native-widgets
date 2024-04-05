@@ -62,10 +62,13 @@ export class FloatingActionButton extends Component<FloatingActionButtonProps<Fl
         const isActive = this.state.active && this.props.secondaryButtons.length > 0;
         const source = isActive ? activeIconSource : iconSource;
         const style = isActive ? { transform: [{ rotate: "-180deg" }] } : {};
+        const buttonContainerStyle = [this.styles.button, this.styles.buttonContainer];
 
         return (
-            <View testID={"FloatingAction$IconView"} style={[style, this.styles.buttonIconContainer]}>
-                <Icon icon={source} size={this.styles.buttonIcon.size} color={this.styles.buttonIcon.color} />
+            <View testID={"FloatingAction$IconView"} style={buttonContainerStyle}>
+                <View style={[style, this.styles.buttonIconContainer]}>
+                    <Icon icon={source} size={this.styles.buttonIcon.size} color={this.styles.buttonIcon.color} />
+                </View>
             </View>
         );
     }
