@@ -1,4 +1,4 @@
-import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps, topBar, getColors } from "@mendix/piw-utils-internal";
 import {
     changePropertyIn,
     hidePropertiesIn,
@@ -10,84 +10,67 @@ import {
 import { BottomSheetPreviewProps } from "../typings/BottomSheetProps";
 
 export function getPreview(values: BottomSheetPreviewProps, isDarkMode: boolean): StructurePreviewProps {
-    const contentFontColor = isDarkMode ? "#DEDEDE" : "#6B707B";
-    return {
-        type: "Container",
-        borders: true,
-        children: [
-            {
-                type: "Container",
-                backgroundColor: isDarkMode ? "#454545" : "#F5F5F5",
+    let content: StructurePreviewProps[] | null = null;
+
+    if (values.type === "modal") {
+        if (values.modalRendering === "custom") {
+            content = [
+                {
+                    type: "DropZone",
+                    property: values.largeContent,
+                    placeholder: "Content"
+                }
+            ] as StructurePreviewProps[];
+        } else {
+            content = values.itemsBasic.map((value, index) => ({
+                type: "RowLayout",
+                columnSize: "grow",
+                padding: 12,
+                borders: true,
                 children: [
                     {
                         type: "Container",
-                        padding: 4,
-                        children: [
-                            {
-                                type: "Text",
-                                fontColor: contentFontColor,
-                                content: "Bottom sheet"
-                            }
-                        ]
+                        grow: 1
+                    },
+                    {
+                        type: "Text",
+                        fontColor: getColors(isDarkMode).text.secondary,
+                        content: value.caption || `[Item ${index + 1}]`
+                    },
+                    {
+                        type: "Container",
+                        grow: 1
                     }
                 ]
+            }));
+        }
+    } else {
+        content = [
+            {
+                type: "DropZone",
+                property: values.smallContent,
+                placeholder: "Always visible"
             },
-            ...((values.type === "modal"
-                ? values.modalRendering === "custom"
-                    ? [
-                          {
-                              type: "DropZone",
-                              property: values.largeContent,
-                              placeholder: "Content"
-                          }
-                      ]
-                    : values.itemsBasic.map((value, index) => ({
-                          type: "RowLayout",
-                          columnSize: "grow",
-                          padding: 12,
-                          borders: true,
-                          children: [
-                              {
-                                  type: "Container",
-                                  grow: 1
-                              },
-                              {
-                                  type: "Text",
-                                  fontColor: contentFontColor,
-                                  content: value.caption || `[Item ${index + 1}]`
-                              },
-                              {
-                                  type: "Container",
-                                  grow: 1
-                              }
-                          ]
-                      }))
-                : [
+            {
+                type: "DropZone",
+                property: values.largeContent,
+                placeholder: "Visible on first drag"
+            },
+            ...(values.showFullscreenContent
+                ? [
                       {
                           type: "DropZone",
-                          property: values.smallContent,
-                          placeholder: "Always visible"
-                      },
-                      {
-                          type: "DropZone",
-                          property: values.largeContent,
-                          placeholder: "Visible on first drag"
-                      },
-                      ...(values.showFullscreenContent
-                          ? [
-                                {
-                                    type: "DropZone",
-                                    property: values.fullscreenContent,
-                                    placeholder: "Visible on drag to top of screen"
-                                }
-                            ]
-                          : [])
-                  ]) as StructurePreviewProps[])
-        ]
-    };
+                          property: values.fullscreenContent,
+                          placeholder: "Visible on drag to top of screen"
+                      }
+                  ]
+                : [])
+        ] as StructurePreviewProps[];
+    }
+    return topBar("Bottom sheet", content, isDarkMode);
 }
 
-export function getProperties(values: any, defaultProperties: Properties): Properties {
+export const getProperties = (values: any, defaultProperties: Properties): Properties => {
     if (values.type === "modal") {
         if (values.modalRendering === "basic") {
             hidePropertiesIn(defaultProperties, values, ["smallContent", "largeContent", "fullscreenContent"]);
@@ -113,9 +96,9 @@ export function getProperties(values: any, defaultProperties: Properties): Prope
         }
     }
     return defaultProperties;
-}
+};
 
-export function check(values: any): Problem[] {
+export const check = (values: any): Problem[] => {
     const errors: Problem[] = [];
     if (values.type === "modal") {
         if (!values.triggerAttribute) {
@@ -147,4 +130,4 @@ export function check(values: any): Problem[] {
         }
     }
     return errors;
-}
+};

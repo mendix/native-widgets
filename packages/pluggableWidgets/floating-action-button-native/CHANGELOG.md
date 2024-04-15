@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We have fixed an issue where icons within Floating Action Buttons were not properly centered.
+
+## [4.0.1] - 2023-10-24
+
+### Fixed
+
+-   We have fixed an error related to useNativeDriver.
+
 ## [4.0.0] - 2023-3-28
 
 ## BREAKING

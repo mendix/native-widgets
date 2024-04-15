@@ -6,6 +6,7 @@ import { FloatingActionButton } from "../FloatingActionButton";
 import { actionValue, dynamicValue } from "@mendix/piw-utils-internal";
 import { NativeIcon } from "mendix";
 import { Icon } from "mendix/components/native/Icon";
+import { ReactTestInstance } from "react-test-renderer";
 
 describe("FloatingActionButton", () => {
     let defaultProps: FloatingActionButtonProps<FloatingActionButtonStyle>;
@@ -116,7 +117,7 @@ describe("FloatingActionButton", () => {
         );
         const transformStyle = [{ transform: [{ rotate: "-180deg" }] }];
 
-        const iconView = getByTestId("FloatingAction$IconView");
+        const iconView = getByTestId("FloatingAction$IconView").children[0] as ReactTestInstance;
         const iconComponent = iconView.findByType(Icon);
         expect(iconComponent.props.icon).toEqual(icon.value);
         expect(iconView.props.style).not.toEqual(expect.arrayContaining(transformStyle));

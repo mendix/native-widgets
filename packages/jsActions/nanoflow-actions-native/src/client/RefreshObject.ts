@@ -6,6 +6,9 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 
+// BEGIN EXTRA CODE
+// END EXTRA CODE
+
 /**
  * @param {MxObject} objectToRefresh - Object which will be refreshed.
  * @returns {Promise.<void>}

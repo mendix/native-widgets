@@ -1,14 +1,15 @@
-import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps, getColors } from "@mendix/piw-utils-internal";
 
 import { NotificationsPreviewProps } from "../typings/NotificationsProps";
 
 export const getPreview = (values: NotificationsPreviewProps, isDarkMode: boolean): StructurePreviewProps => {
-    const textColor: string = isDarkMode ? "#C5C5C5" : "#2F3646";
+    const colors = getColors(isDarkMode);
+    const textColor: string = colors.text.primary;
     return {
         type: "RowLayout",
         borders: true,
         borderRadius: 4,
-        backgroundColor: isDarkMode ? "#4F4F4F" : "#E7E7E9",
+        backgroundColor: colors.background.topBar.standard,
         columnSize: "grow",
         children: [
             {

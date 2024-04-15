@@ -1,4 +1,4 @@
-import { RowLayoutProps, StructurePreviewProps, TextProps } from "@mendix/piw-utils-internal";
+import { RowLayoutProps, StructurePreviewProps, TextProps, getColors } from "@mendix/piw-utils-internal";
 
 import { AppEventsPreviewProps } from "../typings/AppEventsProps";
 
@@ -9,22 +9,23 @@ export const getPreview = (values: AppEventsPreviewProps, isDarkMode: boolean): 
         {
             type: "Container",
             borders: false,
-            backgroundColor: isDarkMode ? "#454545" : "#F5F5F5",
+            backgroundColor: getColors(isDarkMode).background.topBar.standard,
             children: [
                 {
                     type: "Container",
                     borders: false,
                     padding: 4,
-                    children: renderTextActionList(values)
+                    children: renderTextActionList(values, isDarkMode)
                 }
             ]
         }
     ]
 });
 
-const renderTextActionList = (values: AppEventsPreviewProps): TextProps[] | RowLayoutProps[] => {
+const renderTextActionList = (values: AppEventsPreviewProps, isDarkMode: boolean): TextProps[] | RowLayoutProps[] => {
     const textBase: TextProps = {
         type: "Text",
+        fontColor: getColors(isDarkMode).text.primary,
         content: ""
     };
 

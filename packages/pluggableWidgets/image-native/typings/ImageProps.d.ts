@@ -14,6 +14,8 @@ export type WidthUnitEnum = "auto" | "points";
 
 export type HeightUnitEnum = "auto" | "points";
 
+export type AccessibleEnum = "yes" | "no";
+
 export type OnClickTypeEnum = "action" | "enlarge";
 
 export interface ImageProps<Style> {
@@ -33,6 +35,9 @@ export interface ImageProps<Style> {
     heightUnit: HeightUnitEnum;
     customHeight: number;
     iconSize: number;
+    accessible: AccessibleEnum;
+    screenReaderCaption?: DynamicValue<string>;
+    screenReaderHint?: DynamicValue<string>;
     onClickType: OnClickTypeEnum;
     onClick?: ActionValue;
 }
@@ -50,9 +55,9 @@ export interface ImagePreviewProps {
     imageObject: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
     defaultImageDynamic: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
     imageUrl: string;
-    imageIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    imageIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     isBackgroundImage: boolean;
-    children: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    children: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     resizeMode: ResizeModeEnum;
     opacity: number | null;
     widthUnit: WidthUnitEnum;
@@ -60,6 +65,9 @@ export interface ImagePreviewProps {
     heightUnit: HeightUnitEnum;
     customHeight: number | null;
     iconSize: number | null;
+    accessible: AccessibleEnum;
+    screenReaderCaption: string;
+    screenReaderHint: string;
     onClickType: OnClickTypeEnum;
     onClick: {} | null;
 }

@@ -7,12 +7,15 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Base64 } from "js-base64";
 
+// BEGIN EXTRA CODE
+// END EXTRA CODE
+
 /**
- * @param {string} string
+ * @param {string} stringToEncode
  * @returns {Promise.<string>}
  */
-export async function Base64Encode(string: string): Promise<string> {
+export async function Base64Encode(stringToEncode: string): Promise<string> {
     // BEGIN USER CODE
-    return Base64.encode(string);
+    return Base64.encode(stringToEncode);
     // END USER CODE
 }

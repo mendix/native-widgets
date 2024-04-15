@@ -1,4 +1,4 @@
-import { RowLayoutProps, StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { RowLayoutProps, StructurePreviewProps, topBar } from "@mendix/piw-utils-internal";
 
 import paginationSVG from "./assets/pagination.svg";
 
@@ -26,33 +26,14 @@ export function getPreview(values: CarouselPreviewProps, isDarkMode: boolean): S
         ]
     };
 
-    return {
-        type: "Container",
-        borders: true,
-        children: [
-            {
-                type: "Container",
-                backgroundColor: isDarkMode ? "#454545" : "#F5F5F5",
-                children: [
-                    {
-                        type: "Container",
-                        padding: 4,
-                        children: [
-                            {
-                                type: "Text",
-                                fontColor: isDarkMode ? "#DEDEDE" : "#6B707B",
-                                content: "Carousel"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                type: "DropZone",
-                placeholder: "Place content here",
-                property: values.content
-            },
-            ...(values.showPagination ? [paginationImageRowLayout] : [])
-        ]
-    };
+    const content: StructurePreviewProps[] = [
+        {
+            type: "DropZone",
+            placeholder: "Place content here",
+            property: values.content
+        },
+        ...(values.showPagination ? [paginationImageRowLayout] : [])
+    ];
+
+    return topBar("Carousel", content, isDarkMode);
 }

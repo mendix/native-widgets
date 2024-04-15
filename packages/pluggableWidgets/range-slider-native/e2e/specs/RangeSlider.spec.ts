@@ -8,7 +8,7 @@ import {
 import { Alert } from "../../../../../detox/src/Alert";
 import { expect, element, by } from "detox";
 
-describe("Slider", () => {
+describe("Range Slider", () => {
     beforeEach(async () => {
         await launchApp();
         await tapMenuItem("Range slider");

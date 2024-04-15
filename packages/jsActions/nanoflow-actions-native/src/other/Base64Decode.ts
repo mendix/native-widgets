@@ -7,6 +7,9 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Base64 } from "js-base64";
 
+// BEGIN EXTRA CODE
+// END EXTRA CODE
+
 /**
  * @param {string} base64
  * @returns {Promise.<string>}

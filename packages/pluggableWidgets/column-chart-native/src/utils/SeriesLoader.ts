@@ -196,12 +196,12 @@ function extractDataPoints(series: ColumnSeriesType, dataSourceItems?: ObjectIte
     const dataPointsExtraction: DataPointsExtraction = { dataPoints: [] };
 
     for (const item of dataSourceItems) {
-        const x = (series.dataSet === "static" ? ensure(series.staticXAttribute) : ensure(series.dynamicXAttribute))(
-            item
-        );
-        const y = (series.dataSet === "static" ? ensure(series.staticYAttribute) : ensure(series.dynamicYAttribute))(
-            item
-        );
+        const x = (
+            series.dataSet === "static" ? ensure(series.staticXAttribute) : ensure(series.dynamicXAttribute)
+        ).get(item);
+        const y = (
+            series.dataSet === "static" ? ensure(series.staticYAttribute) : ensure(series.dynamicYAttribute)
+        ).get(item);
 
         if (!x.value || !y.value) {
             return null;

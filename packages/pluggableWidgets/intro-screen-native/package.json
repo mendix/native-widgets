@@ -1,7 +1,7 @@
 {
   "name": "intro-screen-native",
   "widgetName": "IntroScreen",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -16,10 +16,10 @@
     "release": "pluggable-widgets-tools release:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "test": "pluggable-widgets-tools test:unit:native",
-    "test:e2e:local:android": "detox test --configuration android.emulator.developerapp",
-    "test:e2e:local:ios": "detox test --configuration ios.simulator.developerapp",
-    "debug:e2e:local:android": "detox test --record-logs all -l trace --configuration android.emulator.developerapp",
-    "debug:e2e:local:ios": "detox test --record-logs all -l trace --configuration ios.simulator.developerapp",
+    "test:e2e:android": "detox test --configuration android.emulator.developerapp",
+    "test:e2e:ios": "detox test --configuration ios.simulator.developerapp",
+    "debug:e2e:android": "detox test --record-logs all -l trace --configuration android.emulator.developerapp",
+    "debug:e2e:ios": "detox test --record-logs all -l trace --configuration ios.simulator.developerapp",
     "test:e2e:android:update-snapshot": "detox test --updateSnapshot --configuration android.emulator.developerapp",
     "test:e2e:ios:update-snapshot": "detox test --updateSnapshot --configuration ios.simulator.developerapp",
     "version": "yarn release"
@@ -28,11 +28,11 @@
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
     "@react-native-community/async-storage": "1.12.1",
-    "react-native-device-info": "8.0.1"
+    "react-native-device-info": "8.7.1"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "detox": "^19.7.1",
+    "detox": "^19.13.0",
     "eslint": "^7.20.0"
   }
 }

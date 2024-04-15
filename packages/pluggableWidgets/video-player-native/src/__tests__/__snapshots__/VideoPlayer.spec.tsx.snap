@@ -21,6 +21,15 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
     }
   >
     <Video
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={true}
       controls={true}
       focusable={true}
@@ -53,6 +62,23 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
       useTextureView={false}
     />
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -125,6 +151,15 @@ exports[`VideoPlayer VideoPlayerAndroid render video without controls if showCon
     }
   >
     <Video
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={true}
       controls={false}
       focusable={true}
@@ -181,6 +216,15 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
     }
   >
     <Video
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={true}
       controls={true}
       focusable={true}
@@ -214,6 +258,23 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
       useTextureView={false}
     />
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -285,6 +346,15 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
     }
   >
     <Video
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={true}
       controls={true}
       focusable={true}
@@ -319,6 +389,23 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
       useTextureView={false}
     />
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -391,6 +478,15 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
     }
   >
     <Video
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={true}
       controls={true}
       focusable={true}
@@ -423,6 +519,23 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
       useTextureView={false}
     />
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}
@@ -499,6 +612,15 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
       size="large"
     />
     <Video
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
       accessible={true}
       controls={true}
       focusable={true}
@@ -531,6 +653,23 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
       useTextureView={false}
     />
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
       accessible={true}
       collapsable={false}
       focusable={true}

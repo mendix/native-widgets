@@ -1,4 +1,10 @@
-import { expectToMatchScreenshot, launchApp, sessionLogout, tapMenuItem } from "../../../../../detox/src/helpers";
+import {
+    expectToMatchScreenshot,
+    launchApp,
+    sessionLogout,
+    sleep,
+    tapMenuItem
+} from "../../../../../detox/src/helpers";
 import { expect, element, by } from "detox";
 import { Alert } from "../../../../../detox/src/Alert";
 
@@ -16,7 +22,7 @@ describe("Accordion", () => {
         await element(by.text("Single")).tap();
 
         await element(by.text("Header 2")).tap();
-
+        await sleep(2000);
         await expectToMatchScreenshot(element(by.id("accordionSingle")));
     });
 

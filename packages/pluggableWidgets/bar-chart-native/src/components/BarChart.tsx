@@ -192,11 +192,13 @@ export function BarChart({
     const yAxisLabelComponent = <Text style={axisLabelStyles.yAxisLabelStyle}>{yAxisLabel}</Text>;
 
     const updateChartDimensions = useCallback(
-        (event: LayoutChangeEvent) =>
+        (event: LayoutChangeEvent) => {
+            const { height, width } = event.nativeEvent.layout;
             setChartDimensions({
-                height: event.nativeEvent.layout.height,
-                width: event.nativeEvent.layout.width
-            }),
+                height: height <= 0 ? -1 : height,
+                width: width <= 0 ? -1 : width
+            });
+        },
         [setChartDimensions]
     );
 

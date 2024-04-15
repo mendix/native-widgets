@@ -1,7 +1,7 @@
 {
   "name": "nanoflow-actions-native",
   "moduleName": "Nanoflow Commons",
-  "version": "3.0.0",
+  "version": "4.0.3",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -9,7 +9,7 @@
     "url": "https://github.com/mendix/native-widgets.git"
   },
   "marketplace": {
-    "minimumMXVersion": "9.24.0.2965",
+    "minimumMXVersion": "10.6.0.23934",
     "marketplaceId": 109515
   },
   "testProject": {
@@ -17,6 +17,7 @@
     "branchName": "main"
   },
   "scripts": {
+    "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nanoflowcommons",
     "build": "rollup --config ../../../configs/jsactions/rollup.config.js --configProject nanoflowcommons",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "release": "yarn build",

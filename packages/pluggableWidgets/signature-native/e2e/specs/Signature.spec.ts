@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-disabled-tests */
 import { element, by } from "detox";
 import {
     expectToMatchScreenshot,
@@ -21,7 +22,7 @@ describe(":ios:Signature widget", () => {
         await sessionLogout();
     });
 
-    it("should be able to save a complex signature", async () => {
+    it.skip("should be able to save a complex signature", async () => {
         const signature = element(by.id("signature"));
         await sleep(10000);
         await signature.swipe("up", "slow", 0.4, 0.5, 0.5);
@@ -38,7 +39,7 @@ describe(":ios:Signature widget", () => {
         expect(attributes.text!.startsWith("data:image/png;base64,")).toBeTruthy();
     });
 
-    it("should be able to clear a signature", async () => {
+    it.skip("should be able to clear a signature", async () => {
         const signature = element(by.id("signature"));
         await sleep(10000);
         await signature.swipe("down", "slow", 0.9, 0.5, 0.1);

@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.3] Nanoflow Commons - 2024-3-19
+### Fixed
+
+-   We have fixed an issue in base64encode action.
+
+## [4.0.2] Nanoflow Commons - 2024-1-17
+
+### Removed
+
+-   Removed the constant holding the version number from within the module.
+
+## [4.0.1] Nanoflow Commons - 2023-10-13
+
+### Fixed
+
+-   Resolve studio warning CW9503
+
+## [4.0.0] Nanoflow Commons - 2023-6-9
+
+### Added
+
+-   We changed the JS actions and widgets icons.
+
+## [3.0.0] Native Mobile Resources - 2023-3-28
+
+-   We made widgets compatible with React Native 0.70.7
+
 ## [2.6.1] Nanoflow Commons - 2022-9-23
 
 ### Fixed

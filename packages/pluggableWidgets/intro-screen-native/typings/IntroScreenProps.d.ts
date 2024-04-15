@@ -20,7 +20,7 @@ export type SlideIndicatorsEnum = "between" | "above" | "never";
 
 export interface SlidesPreviewType {
     name: string;
-    content: { widgetCount: number; renderer: ComponentType<{ caption?: string }> };
+    content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
 }
 
 export interface IntroScreenProps<Style> {
@@ -62,13 +62,13 @@ export interface IntroScreenPreviewProps {
     hideIndicatorLastSlide: boolean;
     identifier: string;
     skipCaption: string;
-    skipIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    skipIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     previousCaption: string;
-    previousIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    previousIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     nextCaption: string;
-    nextIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    nextIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     doneCaption: string;
-    doneIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; } | null;
+    doneIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     activeSlideAttribute: string;
     onSlideChange: {} | null;
     onDone: {} | null;
