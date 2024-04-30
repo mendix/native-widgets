@@ -10,6 +10,7 @@ export interface SignatureProps<Style> {
     name: string;
     style: Style[];
     imageAttribute: EditableValue<string>;
+    showButtons: boolean;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
     onClear?: ActionValue;
@@ -28,6 +29,7 @@ export interface SignaturePreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     imageAttribute: string;
+    showButtons: boolean;
     buttonCaptionClear: string;
     buttonCaptionSave: string;
     onClear: {} | null;
