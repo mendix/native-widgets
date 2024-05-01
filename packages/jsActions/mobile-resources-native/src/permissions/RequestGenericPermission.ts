@@ -5,31 +5,76 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Alert, Platform } from "react-native";
-import { check, request, RESULTS, openSettings, PERMISSIONS, Permission } from "react-native-permissions";
+import { Alert, Platform, NativeModules } from "react-native";
+import {
+    check,
+    request,
+    RESULTS,
+    openSettings,
+    Permission,
+    PERMISSIONS as RNPermissions
+} from "react-native-permissions";
+import { getPermission } from "react-native-schedule-exact-alarm-permission";
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
 
 // BEGIN EXTRA CODE
 
+const PERMISSIONS = {
+    ANDROID: {
+        ...RNPermissions.ANDROID,
+        SCHEDULE_EXACT_ALARM: "android.permission.SCHEDULE_EXACT_ALARM"
+    },
+    IOS: RNPermissions.IOS
+};
+
 function handleBlockedPermission(permission: string): void {
     const permissionName = permission.replace(/_IOS|_ANDROID/, "");
-    Alert.alert("", `Please allow ${permissionName} access`, [
-        { text: "go to settings", onPress: () => openSettings() },
-        { text: "cancel" }
-    ]);
+
+    if (permissionName === "SCHEDULE_EXACT_ALARM") {
+        Alert.alert("", "Please allow setting alarms and reminders", [
+            { text: "Go to alarm settings", onPress: () => getPermission(), isPreferred: true },
+            { text: "Cancel", style: "cancel" }
+        ]);
+    } else {
+        Alert.alert("", `Please allow ${permissionName} access`, [
+            { text: "Go to settings", onPress: () => openSettings(), isPreferred: true },
+            { text: "Cancel", style: "cancel" }
+        ]);
+    }
 }
 
-function mapPermissionName(permissionName: string): Permission | undefined {
+function mapPermissionName(permissionName: string): Permission | "android.permission.SCHEDULE_EXACT_ALARM" | undefined {
     if (Platform.OS === "ios") {
         const nameWithoutSuffix = permissionName.replace("_IOS", "") as IOSPermissionName;
 
-        return PERMISSIONS.IOS[nameWithoutSuffix];
-    } else if (Platform.OS === "android") {
-        const nameWithoutSuffix = permissionName.replace("_ANDROID", "") as ANDROIDPermissionName;
-
-        return PERMISSIONS.ANDROID[nameWithoutSuffix];
+        return PERMISSIONS.IOS[nameWithoutSuffix] as Permission;
     }
+
+    const nameWithoutSuffix = permissionName.replace("_ANDROID", "") as ANDROIDPermissionName;
+
+    return PERMISSIONS.ANDROID[nameWithoutSuffix] as Permission;
 }
+
+async function checkScheduleAlarm(): Promise<"granted" | "blocked"> {
+    if (NativeModules && !NativeModules.ScheduleEA) {
+        return Promise.reject(new Error("ScheduleEA module is not available in your app"));
+    }
+
+    if (Platform.OS !== "android") {
+        return Promise.resolve("granted");
+    }
+
+    const checkPermissionPromise = new Promise(resolve => {
+        NativeModules.ScheduleEA.checkPermission((isEnabled: boolean) => {
+            resolve(isEnabled);
+        });
+    });
+
+    return checkPermissionPromise.then(result => {
+        return Promise.resolve(result ? "granted" : "blocked");
+    });
+}
+
 // END EXTRA CODE
 
 /**
@@ -44,11 +89,16 @@ export async function RequestGenericPermission(
         return Promise.reject(new Error("Input parameter 'permission' is required"));
     }
     const mappedPermissionName = mapPermissionName(permission);
+
     if (!mappedPermissionName) {
         console.error(`${permission} permission is not found`);
         return Promise.resolve("unavailable");
     }
-    const permissionStatus = await check(mappedPermissionName);
+
+    const permissionStatus =
+        mappedPermissionName === PERMISSIONS.ANDROID.SCHEDULE_EXACT_ALARM
+            ? await checkScheduleAlarm()
+            : await check(mappedPermissionName as Permission);
 
     switch (permissionStatus) {
         case RESULTS.GRANTED:
@@ -59,7 +109,7 @@ export async function RequestGenericPermission(
             handleBlockedPermission(permission);
             return RESULTS.BLOCKED;
         case RESULTS.DENIED:
-            return request(mappedPermissionName);
+            return request(mappedPermissionName as Permission);
     }
     // END USER CODE
 }
