@@ -6,11 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Platform, NativeModules } from "react-native";
-import {
-    check,
-    Permission,
-    PERMISSIONS as RNPermissions
-} from "react-native-permissions";
+import { check, Permission, PERMISSIONS as RNPermissions } from "react-native-permissions";
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
 
 // BEGIN EXTRA CODE
@@ -75,9 +71,8 @@ export async function CheckGenericPermission(
         return Promise.resolve("unavailable");
     }
 
-
     return mappedPermissionName === PERMISSIONS.ANDROID.SCHEDULE_EXACT_ALARM
-            ? await checkScheduleAlarm()
-            : await check(mappedPermissionName as Permission);
+        ? checkScheduleAlarm()
+        : check(mappedPermissionName as Permission);
     // END USER CODE
 }
