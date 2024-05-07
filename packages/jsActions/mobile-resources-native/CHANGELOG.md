@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Added CheckGenericPermission and updated RequestGenericPermission to support SCHEDULE_EXACT_ALARM_ANDROID permission for Android (relevant for Android 14).
+
 ## [4.0.9] Native Mobile Resources - 2024-4-4
 
 
