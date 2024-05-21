@@ -20,4 +20,4 @@ jobs:
         with:
           submodules: false
       - name: "Ensure SHA pinned actions"
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@5c6142ee95066fc1ae17c5e2713712f5876d0689 # v1.1.2
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@0b552a197e44b819629237e065d781f5ca691460 # v1.1.1
