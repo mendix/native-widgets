@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checking-out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@b44b924715cf27938426f1e1b8ed5fe31492eb67 # v4
         with:
           submodules: false
       - name: "Ensure SHA pinned actions"
