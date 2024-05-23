@@ -146,7 +146,7 @@ jobs:
             mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Build test project"
-        run: mxbuild -o --loose-version-check automation.mda Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+        run: mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
