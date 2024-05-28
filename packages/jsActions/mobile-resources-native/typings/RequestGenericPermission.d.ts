@@ -50,4 +50,5 @@ export type ANDROIDPermissionName =
     | "WRITE_CALENDAR"
     | "WRITE_CALL_LOG"
     | "WRITE_CONTACTS"
-    | "WRITE_EXTERNAL_STORAGE";
+    | "WRITE_EXTERNAL_STORAGE"
+    | "SCHEDULE_EXACT_ALARM";

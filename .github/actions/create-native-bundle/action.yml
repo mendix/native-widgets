@@ -41,7 +41,7 @@ runs:
       env:
         NODE_OPTIONS: --max_old_space_size=6144
     - name: "Upload bundle for ${{ inputs.platform }}"
-      uses: actions/upload-artifact@v3.1.2
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: ${{ inputs.platform }}-bundle
         path: ${{ inputs.platform }}
