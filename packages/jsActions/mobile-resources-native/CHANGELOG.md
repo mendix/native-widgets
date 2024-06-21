@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### BREAKING
+
+-   We have upgraded React Native to version 0.73.8.
+-   We have upgraded React Native Device Info to version 11.1.0.
+
+## [6.1.0] Native Mobile Resources - 2024-05-28
+
 ### Changed
 
 -   Added CheckGenericPermission and updated RequestGenericPermission to support SCHEDULE_EXACT_ALARM_ANDROID permission for Android (relevant for Android 14).
