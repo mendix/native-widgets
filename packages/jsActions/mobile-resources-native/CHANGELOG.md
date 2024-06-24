@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [4.1.0] Native Mobile Resources - 2024-5-28
+-   We have fixed an issue with checking blocked permissions on iOS
 
+## [4.1.0] Native Mobile Resources - 2024-5-28
 
 ### Changed
 
@@ -15,21 +16,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [4.0.9] Native Mobile Resources - 2024-4-4
 
-
 ## [4.0.1] FloatingActionButton
+
 ### Fixed
 
 -   We have fixed an issue where icons within Floating Action Buttons were not properly centered.
 
 ## [4.0.8] Native Mobile Resources - 2024-3-29
+
 ### Changed
 
 -   fixed an Android issue in Download file action.
 
 ## [4.0.7] Native Mobile Resources - 2024-2-26
 
-
 ## [2.2.1] Accordion
+
 ### Fixed
 
 -   Fixed a bug where the accordion state was not updating correctly when the "Collapsed" attribute was selected.
@@ -38,8 +40,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [4.0.6] Native Mobile Resources - 2024-2-12
 
-
 ## [1.0.3] Gallery
+
 ### Fixed
 
 -   We've resolved an issue where the loading indicator was triggered when pulling down the list, even in the absence of a pull-down event.
