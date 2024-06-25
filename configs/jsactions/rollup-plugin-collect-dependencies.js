@@ -166,7 +166,7 @@ async function getTransitiveDependencies(packagePath, isExternal) {
     return Array.from(result);
 }
 
-export async function copyJsModule(moduleSourcePath, to) {
+async function copyJsModule(moduleSourcePath, to) {
     if (existsSync(to)) {
         return;
     }

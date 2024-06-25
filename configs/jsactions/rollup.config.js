@@ -10,7 +10,7 @@ import command from "rollup-plugin-command";
 import { promisify } from "util";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import { collectDependencies, copyJsModule } from "./rollup-plugin-collect-dependencies";
+import { collectDependencies } from "./rollup-plugin-collect-dependencies";
 import { licenseCustomTemplate, copyLicenseFile } from "./rollup-helper";
 import { bigJsImportReplacer } from "./rollup-plugin-bigjs-import-replacer";
 
@@ -86,18 +86,6 @@ export default async args => {
                                   await copyAsync(
                                       join(dirname(require.resolve("fbjs")), "lib", "invariant.js"),
                                       join(path, "invariant.js")
-                                  );
-
-                                  // We dynamically import react-native-schedule-exact-alarm-permission as it works only on Android
-                                  // so we need to copy it here as collectDependencies won't detect it.
-                                  await copyJsModule(
-                                      // require returns a path to commonjs index.js file
-                                      join(
-                                          dirname(require.resolve("react-native-schedule-exact-alarm-permission")),
-                                          "../",
-                                          "../"
-                                      ),
-                                      join(outDir, "node_modules", "react-native-schedule-exact-alarm-permission")
                                   );
                               } else if (args.configProject === "nanoflowcommons") {
                                   // `invariant` is being used silently by @react-native-community/geolocation; it is not listed as a dependency nor peerDependency.
