@@ -26,11 +26,11 @@ const PERMISSIONS = {
     IOS: RNPermissions.IOS
 };
 
-async function handleBlockedPermission(permission: string): Promise<void> {
+function handleBlockedPermission(permission: string): void {
     const permissionName = permission.replace(/_IOS|_ANDROID/, "");
 
     if (permissionName === "SCHEDULE_EXACT_ALARM") {
-        const RNExactAlarmPermission = await import("react-native-schedule-exact-alarm-permission");
+        const RNExactAlarmPermission = require("react-native-schedule-exact-alarm-permission");
 
         Alert.alert("", "Please allow setting alarms and reminders", [
             { text: "Go to alarm settings", onPress: () => RNExactAlarmPermission.getPermission(), isPreferred: true },
@@ -107,7 +107,7 @@ export async function RequestGenericPermission(
         case RESULTS.LIMITED:
             return permissionStatus;
         case RESULTS.BLOCKED:
-            await handleBlockedPermission(permission);
+            handleBlockedPermission(permission);
             return RESULTS.BLOCKED;
         case RESULTS.DENIED:
             return request(mappedPermissionName as Permission);
