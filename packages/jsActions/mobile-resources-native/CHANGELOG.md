@@ -6,13 +6,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [6.1.0] Native Mobile Resources - 2024-05-28
+
 ### Changed
 
 -   Added CheckGenericPermission and updated RequestGenericPermission to support SCHEDULE_EXACT_ALARM_ANDROID permission for Android (relevant for Android 14).
 
+## [6.0.3] Native Mobile Resources - 2024-04-05
+
+## [4.0.1] FloatingActionButton
+
+### Fixed
+
+-   We have fixed an issue where icons within Floating Action Buttons were not properly centered.
+
+## [6.0.2] Native Mobile Resources - 2024-03-29
+
+### Fixed
+
+-   Fixed an Android issue in Download file action with encrypted files enabled projects.
+
+## [6.0.1] Native Mobile Resources - 2024-02-05
+
 ### Changed
 
--   fixed an Android issue in Download file action.
+## [2.2.1] - Accordion
+
+### Fixed
+
+-   Fixed a bug where the accordion state was not updating correctly when the "Collapsed" attribute was selected.
+
+-   Resolved an issue where the accordion's dynamic content was not updating its height after the initial render.
+
+## [1.0.3] - Gallery
+
+### Fixed
+
+-   We've resolved an issue where the loading indicator was triggered when pulling down the list, even in the absence of a pull-down event.
 
 ## [6.0.0] Native Mobile Resources - 2024-01-24
 
