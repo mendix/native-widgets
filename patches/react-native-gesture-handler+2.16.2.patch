@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-gesture-handler/lib/typescript/components/GestureButtons.d.ts b/node_modules/react-native-gesture-handler/lib/typescript/components/GestureButtons.d.ts
-index 0c10368..b12d5ac 100644
+index f647d2e..4a2491a 100644
 --- a/node_modules/react-native-gesture-handler/lib/typescript/components/GestureButtons.d.ts
 +++ b/node_modules/react-native-gesture-handler/lib/typescript/components/GestureButtons.d.ts
 @@ -1,4 +1,5 @@
@@ -8,9 +8,9 @@ index 0c10368..b12d5ac 100644
  import { StyleProp, ViewStyle } from 'react-native';
  import { NativeViewGestureHandlerProps } from '../handlers/NativeViewGestureHandler';
  export interface RawButtonProps extends NativeViewGestureHandlerProps {
-@@ -28,7 +29,7 @@ export declare class BaseButton extends React.Component<BaseButtonProps> {
+@@ -98,7 +99,7 @@ export declare class BaseButton extends React.Component<BaseButtonProps> {
      private onGestureEvent;
-     render(): JSX.Element;
+     render(): React.JSX.Element;
  }
 -export declare class RectButton extends React.Component<RectButtonProps> {
 +export declare class RectButton extends React.Component<PropsWithChildren<RectButtonProps>> {
@@ -18,7 +18,7 @@ index 0c10368..b12d5ac 100644
          activeOpacity: number;
          underlayColor: string;
 diff --git a/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts b/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts
-index 60237c7..95aece3 100644
+index 03ffef8..4786164 100644
 --- a/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts
 +++ b/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts
 @@ -1,5 +1,5 @@
@@ -26,9 +26,9 @@ index 60237c7..95aece3 100644
 -import { Component } from 'react';
 +import { Component, PropsWithChildren } from 'react';
  import { Animated, StyleProp, ViewStyle } from 'react-native';
- import { PanGestureHandlerProps } from '../handlers/gestureHandlers';
- declare type SwipeableExcludes = Exclude<keyof PanGestureHandlerProps, 'onGestureEvent' | 'onHandlerStateChange'>;
-@@ -54,7 +54,7 @@ declare type SwipeableState = {
+ import { PanGestureHandlerProps } from '../handlers/PanGestureHandler';
+ type SwipeableExcludes = Exclude<keyof PanGestureHandlerProps, 'onGestureEvent' | 'onHandlerStateChange'>;
+@@ -148,7 +148,7 @@ type SwipeableState = {
      rightOffset?: number;
      rowWidth?: number;
  };
