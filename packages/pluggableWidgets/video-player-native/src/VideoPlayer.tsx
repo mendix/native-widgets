@@ -6,11 +6,11 @@ import {
     StatusBar,
     Text,
     TouchableOpacity,
-    TouchableWithoutFeedback,
     View,
     Appearance,
     Modal,
-    NativeModules
+    NativeModules,
+    Pressable
 } from "react-native";
 import Video, { OnProgressData, VideoProperties } from "react-native-video";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -126,7 +126,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                     statusBarTranslucent
                 >
                     <View style={styles.fullScreenVideoPlayer}>
-                        <TouchableWithoutFeedback onPress={onVideoPressHandler} testID="fullscreen-overlay">
+                        <Pressable onPress={onVideoPressHandler} testID="fullscreen-overlay">
                             <Video
                                 {...videoProps}
                                 ref={fullScreenPlayerRef}
@@ -139,7 +139,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                                 testID={`${props.name}-fullscreen`}
                                 style={styles.fullScreenVideoStyle}
                             />
-                        </TouchableWithoutFeedback>
+                        </Pressable>
                         {showControls && (
                             <TouchableOpacity
                                 style={styles.controlBtnContainerStyle}
@@ -164,7 +164,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                 {status === StatusEnum.LOADING && <ActivityIndicator color={styles.indicator.color} size="large" />}
                 {errorText}
                 {!fullScreen && (
-                    <TouchableWithoutFeedback style={styles.container} onPress={onVideoPressHandler}>
+                    <Pressable style={styles.container} onPress={onVideoPressHandler}>
                         <Video
                             {...videoProps}
                             paused={!props.autoStart && !currentPlayTime}
@@ -176,7 +176,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                             ref={playerRef}
                             style={status !== StatusEnum.READY ? { height: 0 } : styles.video}
                         />
-                    </TouchableWithoutFeedback>
+                    </Pressable>
                 )}
                 {isAndroid && showControls && (
                     <TouchableOpacity
