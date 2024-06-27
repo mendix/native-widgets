@@ -6,7 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [6.1.1] Native Mobile Resources - 2024-6-27
 -   We have fixed an issue with checking blocked permissions on iOS
+
+## [2.2.1] Accordion
+### Fixed
+
+-   Fixed a bug where the accordion state was not updating correctly when the "Collapsed" attribute was selected.
+
+-   Resolved an issue where the accordion's dynamic content was not updating its height after the initial render.
+
+## [1.0.3] Gallery
+### Fixed
+
+-   We've resolved an issue where the loading indicator was triggered when pulling down the list, even in the absence of a pull-down event.
 
 ## [6.1.0] Native Mobile Resources - 2024-05-28
 
