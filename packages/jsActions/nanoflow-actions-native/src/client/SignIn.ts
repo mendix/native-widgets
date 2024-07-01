@@ -36,7 +36,7 @@ export async function SignIn(username?: string, password?: string, useAuthToken?
         if (typeof useAuthToken === "undefined") {
             mx.login(username, password, onSuccess, onError as any);
         } else {
-            mx.login2(username, password, Boolean(useAuthToken), onSuccess, onError as any);
+            mx.login2(username, password, useAuthToken, onSuccess, onError as any);
         }
     });
     // END USER CODE
