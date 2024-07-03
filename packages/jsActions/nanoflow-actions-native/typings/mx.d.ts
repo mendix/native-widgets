@@ -11,5 +11,12 @@ declare namespace mx {
     }
     interface MxInterface {
         reload: () => void;
+        login2(
+            username: string,
+            password: string,
+            useAuthToken: boolean,
+            onSuccess: () => void,
+            onError: () => void
+        ): void;
     }
 }
