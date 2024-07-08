@@ -25,6 +25,7 @@ export interface GalleryProps<Style> {
     datasource: ListValue;
     content?: ListWidgetValue;
     scrollDirection: ScrollDirectionEnum;
+    showScrollIndicator: boolean;
     tabletColumns: number;
     phoneColumns: number;
     pageSize: number;
@@ -49,6 +50,7 @@ export interface GalleryPreviewProps {
     datasource: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     scrollDirection: ScrollDirectionEnum;
+    showScrollIndicator: boolean;
     tabletColumns: number | null;
     phoneColumns: number | null;
     pageSize: number | null;
