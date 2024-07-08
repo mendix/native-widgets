@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [6.1.1] Native Mobile Resources - 2024-06-27
+
+### Fixed
+
 -   We have fixed an issue with checking blocked permissions on iOS
 
 ## [6.1.0] Native Mobile Resources - 2024-05-28
