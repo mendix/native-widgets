@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [7.0.0] Native Mobile Resources - 2024-07-08
+
 -   We have fixed an issue with checking blocked permissions on iOS
 -   We have fixed an issue with `useNavigation` support in widgets.
 
