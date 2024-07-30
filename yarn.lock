@@ -3073,7 +3073,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@npm:^9.24.0":
+"@mendix/pluggable-widgets-tools@npm:9.24.0":
   version: 9.24.0
   resolution: "@mendix/pluggable-widgets-tools@npm:9.24.0"
   dependencies:
