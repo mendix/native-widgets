@@ -1,0 +1,13 @@
+diff --git a/node_modules/@prettier/plugin-xml/dist/plugin.js b/node_modules/@prettier/plugin-xml/dist/plugin.js
+index 8b3dbb8..48800bd 100644
+--- a/node_modules/@prettier/plugin-xml/dist/plugin.js
++++ b/node_modules/@prettier/plugin-xml/dist/plugin.js
+@@ -37,7 +37,7 @@ const options = {
+ // it's not present so that it gets respected.
+ if (!prettier_1.default
+     .getSupportInfo()
+-    .options.some((opt) => opt.name === "bracketSameLine")) {
++    .options?.some((opt) => opt.name === "bracketSameLine")) {
+     options.bracketSameLine = {
+         type: "boolean",
+         category: "Global",
