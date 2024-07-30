@@ -5189,13 +5189,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prettier/plugin-xml@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@prettier/plugin-xml@npm:1.2.0"
+"@prettier/plugin-xml@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@prettier/plugin-xml@npm:2.2.0"
   dependencies:
+<<<<<<< HEAD
     "@xml-tools/parser": "npm:^1.0.11"
     prettier: "npm:>=2.3"
   checksum: 10/d5a800f29dea271950605900ae1cd0bf28d21283a99d49440c076f2a553c268694d07fc8fb8aa1923e715544e88d0b84ad3862dc4f968082b5634f71a9cf41cf
+=======
+    "@xml-tools/parser": ^1.0.11
+    prettier: ">=2.4.0"
+  checksum: 480fb67fe711463ab6b5678ce996486873b4d6440c31338af3f8dd5054c7ae9539dd81621637c85eed904727cfe17b7213e717d451df2fee56c8c50251f6bb69
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
   languageName: node
   linkType: hard
 
@@ -6520,13 +6526,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minimatch@npm:^3.0.3":
-  version: 3.0.5
-  resolution: "@types/minimatch@npm:3.0.5"
-  checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
-  languageName: node
-  linkType: hard
-
 "@types/minimist@npm:^1.2.0":
   version: 1.2.2
   resolution: "@types/minimist@npm:1.2.2"
@@ -7825,6 +7824,7 @@ __metadata:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "array-differ@npm:^3.0.0":
   version: 3.0.0
   resolution: "array-differ@npm:3.0.0"
@@ -7843,6 +7843,8 @@ __metadata:
   linkType: hard
 
 >>>>>>> 37ab4b65 (fix: fix prettier)
+=======
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
 "array-find-index@npm:^1.0.2":
   version: 1.0.2
   resolution: "array-find-index@npm:1.0.2"
@@ -7991,6 +7993,7 @@ __metadata:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "arrify@npm:^2.0.1":
   version: 2.0.1
   resolution: "arrify@npm:2.0.1"
@@ -8009,6 +8012,8 @@ __metadata:
   linkType: hard
 
 >>>>>>> 37ab4b65 (fix: fix prettier)
+=======
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
 "asap@npm:~2.0.3, asap@npm:~2.0.6":
   version: 2.0.6
   resolution: "asap@npm:2.0.6"
@@ -11392,6 +11397,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-prettier@npm:4.2.1":
+  version: 4.2.1
+  resolution: "eslint-plugin-prettier@npm:4.2.1"
+  dependencies:
+    prettier-linter-helpers: ^1.0.0
+  peerDependencies:
+    eslint: ">=7.28.0"
+    prettier: ">=2.0.0"
+  peerDependenciesMeta:
+    eslint-config-prettier:
+      optional: true
+  checksum: b9e839d2334ad8ec7a5589c5cb0f219bded260839a857d7a486997f9870e95106aa59b8756ff3f37202085ebab658de382b0267cae44c3a7f0eb0bcc03a4f6d6
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-prettier@npm:^3.3.1":
   version: 3.4.1
   resolution: "eslint-plugin-prettier@npm:3.4.1"
@@ -11678,7 +11698,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^4.0.0, execa@npm:^4.1.0":
+"execa@npm:^4.1.0":
   version: 4.1.0
   resolution: "execa@npm:4.1.0"
   dependencies:
@@ -13249,6 +13269,7 @@ __metadata:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "ignore@npm:^5.1.4, ignore@npm:^5.2.0":
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
@@ -13258,6 +13279,9 @@ __metadata:
 =======
 "ignore@npm:^5.1.4, ignore@npm:^5.2.0":
 >>>>>>> 37ab4b65 (fix: fix prettier)
+=======
+"ignore@npm:^5.2.0, ignore@npm:^5.3.0":
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
   version: 5.3.1
   resolution: "ignore@npm:5.3.1"
   checksum: 71d7bb4c1dbe020f915fd881108cbe85a0db3d636a0ea3ba911393c53946711d13a9b1143c7e70db06d571a5822c0a324a6bcde5c9904e7ca5047f01f1bf8cd3
@@ -17686,7 +17710,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mri@npm:^1.1.5":
+"mri@npm:^1.2.0":
   version: 1.2.0
   resolution: "mri@npm:1.2.0"
   checksum: 10/6775a1d2228bb9d191ead4efc220bd6be64f943ad3afd4dcb3b3ac8fc7b87034443f666e38805df38e8d047b29f910c3cc7810da0109af83e42c82c73bd3f6bc
@@ -17714,6 +17738,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -17745,6 +17770,8 @@ __metadata:
   linkType: hard
 
 >>>>>>> 37ab4b65 (fix: fix prettier)
+=======
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
 "mv@npm:~2":
   version: 2.1.1
   resolution: "mv@npm:2.1.1"
@@ -17867,6 +17894,7 @@ __metadata:
     deepmerge: ^4.2.2
     detox: ^19.13.0
     eslint: ^7.20.0
+    eslint-plugin-prettier: 4.2.1
     husky: ^7.0.0
     identity-obj-proxy: ^3.0.0
     image-js: ^0.33.0
@@ -17876,8 +17904,8 @@ __metadata:
     lint-staged: ^10.5.0
     mendix-client: ^7.15.8
     patch-package: ^6.4.7
-    prettier: 2.5.1
-    pretty-quick: 3.1.0
+    prettier: ^2.5.1
+    pretty-quick: ^3.1.0
     recursive-copy: ^2.0.11
     ts-node: ^10.9.1
 >>>>>>> 5a4c068e (Adding missing @testing-library/react)
@@ -18853,6 +18881,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picomatch@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "picomatch@npm:3.0.1"
+  checksum: b7fe18174bcc05bbf0ea09cc85623ae395676b3e6bc25636d4c20db79a948586237e429905453bf1ba385bc7a7aa5b56f1b351680e650d2b5c305ceb98dfc914
+  languageName: node
+  linkType: hard
+
 "pie-doughnut-chart-native@workspace:packages/pluggableWidgets/pie-doughnut-chart-native":
   version: 0.0.0-use.local
   resolution: "pie-doughnut-chart-native@workspace:packages/pluggableWidgets/pie-doughnut-chart-native"
@@ -19564,16 +19599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.5.1":
-  version: 2.5.1
-  resolution: "prettier@npm:2.5.1"
-  bin:
-    prettier: bin-prettier.js
-  checksum: 21b9408476ea1c544b0e45d51ceb94a84789ff92095abb710942d780c862d0daebdb29972d47f6b4d0f7ebbfb0ffbf56cc2cfa3e3e9d1cca54864af185b15b66
-  languageName: node
-  linkType: hard
-
-"prettier@npm:>=2.3":
+"prettier@npm:>=2.4.0":
   version: 3.3.3
   resolution: "prettier@npm:3.3.3"
   bin:
@@ -19666,10 +19692,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-quick@npm:3.1.0":
-  version: 3.1.0
-  resolution: "pretty-quick@npm:3.1.0"
+"pretty-quick@npm:^3.1.0":
+  version: 3.3.1
+  resolution: "pretty-quick@npm:3.3.1"
   dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     chalk: "npm:^3.0.0"
@@ -19695,9 +19722,19 @@ __metadata:
     mri: ^1.1.5
     multimatch: ^4.0.0
 >>>>>>> 37ab4b65 (fix: fix prettier)
+=======
+    execa: ^4.1.0
+    find-up: ^4.1.0
+    ignore: ^5.3.0
+    mri: ^1.2.0
+    picocolors: ^1.0.0
+    picomatch: ^3.0.1
+    tslib: ^2.6.2
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
   peerDependencies:
-    prettier: ">=2.0.0"
+    prettier: ^2.0.0
   bin:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     pretty-quick: bin/pretty-quick.js
@@ -19709,6 +19746,10 @@ __metadata:
     pretty-quick: bin/pretty-quick.js
   checksum: a0f6823ff3807c9ac15555509eafcd869c603851ba84b605d5cf77cf1c90e4ffe27ac96c2405c5ac173bb0159e76664c2979c72e47c58aa9974a5ab684692335
 >>>>>>> 37ab4b65 (fix: fix prettier)
+=======
+    pretty-quick: dist/cli.js
+  checksum: ce6af6e0818916ec52b24bffa5f45b8623c0ab1e5d0855eb8e8d42a42e396be3ff8c400f7661097eed77d7638f4ad279cd86c6f5996384c7178c202c85f845ed
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
   languageName: node
   linkType: hard
 
@@ -23225,6 +23266,7 @@ __metadata:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "tslib@npm:^2, tslib@npm:^2.1.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
@@ -23241,6 +23283,9 @@ __metadata:
 =======
 "tslib@npm:^2, tslib@npm:^2.0.1, tslib@npm:^2.1.0":
 >>>>>>> 37ab4b65 (fix: fix prettier)
+=======
+"tslib@npm:^2, tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.6.2":
+>>>>>>> 2e32a900 (fix: fix prettier and lint)
   version: 2.6.3
   resolution: "tslib@npm:2.6.3"
   checksum: 74fce0e100f1ebd95b8995fbbd0e6c91bdd8f4c35c00d4da62e285a3363aaa534de40a80db30ecfd388ed7c313c42d930ee0eaf108e8114214b180eec3dbe6f5
