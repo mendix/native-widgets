@@ -44,6 +44,7 @@
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
+    "@prettier/plugin-xml": "^2.2.0",
     "@testing-library/jest-native": "^5.4.1",
     "@testing-library/react": "^16.0.0",
     "@testing-library/react-native": "^11.5.1",
