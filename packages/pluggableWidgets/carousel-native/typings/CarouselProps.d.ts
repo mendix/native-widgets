@@ -4,7 +4,7 @@
  * @author Mendix Widgets Framework Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
-import { ListValue, ListWidgetValue } from "mendix";
+import { DynamicValue, ListValue, ListWidgetValue, ReferenceValue } from "mendix";
 
 export type LayoutEnum = "card" | "fullWidth";
 
@@ -15,6 +15,8 @@ export interface CarouselProps<Style> {
     style: Style[];
     contentSource: ListValue;
     content: ListWidgetValue;
+    activeSelection?: ReferenceValue;
+    animateExpression?: DynamicValue<boolean>;
     layout: LayoutEnum;
     showPagination: boolean;
     activeSlideAlignment: ActiveSlideAlignmentEnum;
@@ -31,7 +33,10 @@ export interface CarouselPreviewProps {
     readOnly: boolean;
     contentSource: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    activeSelection: string;
+    animateExpression: string;
     layout: LayoutEnum;
     showPagination: boolean;
     activeSlideAlignment: ActiveSlideAlignmentEnum;
+    onChangeAction: {} | null;
 }
