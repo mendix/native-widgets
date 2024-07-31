@@ -1522,10 +1522,14 @@ __metadata:
   linkType: hard
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4d2ce83a (chore: update pluggable-widgets-tools and add explicit scrollEventThrottle prop)
 "@babel/plugin-proposal-private-methods@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/plugin-proposal-private-methods@npm:7.18.6"
   dependencies:
+<<<<<<< HEAD
     "@babel/helper-create-class-features-plugin": "npm:^7.18.6"
     "@babel/helper-plugin-utils": "npm:^7.18.6"
   peerDependencies:
@@ -1561,6 +1565,16 @@ __metadata:
 =======
 =======
 >>>>>>> 3f3d6b43 (fix: update test snapshots)
+=======
+    "@babel/helper-create-class-features-plugin": ^7.18.6
+    "@babel/helper-plugin-utils": ^7.18.6
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 22d8502ee96bca99ad2c8393e8493e2b8d4507576dd054490fd8201a36824373440106f5b098b6d821b026c7e72b0424ff4aeca69ed5f42e48f029d3a156d5ad
+  languageName: node
+  linkType: hard
+
+>>>>>>> 4d2ce83a (chore: update pluggable-widgets-tools and add explicit scrollEventThrottle prop)
 "@babel/plugin-proposal-private-property-in-object@npm:7.21.0-placeholder-for-preset-env.2":
   version: 7.21.0-placeholder-for-preset-env.2
   resolution: "@babel/plugin-proposal-private-property-in-object@npm:7.21.0-placeholder-for-preset-env.2"
@@ -2845,7 +2859,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-react-jsx@npm:^7.0.0, @babel/plugin-transform-react-jsx@npm:^7.24.7":
+"@babel/plugin-transform-react-jsx@npm:^7.0.0, @babel/plugin-transform-react-jsx@npm:^7.22.3, @babel/plugin-transform-react-jsx@npm:^7.24.7":
   version: 7.25.2
   resolution: "@babel/plugin-transform-react-jsx@npm:7.25.2"
   dependencies:
@@ -4939,9 +4953,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@npm:9.24.0":
-  version: 9.24.0
-  resolution: "@mendix/pluggable-widgets-tools@npm:9.24.0"
+"@mendix/pluggable-widgets-tools@npm:9.24.1":
+  version: 9.24.1
+  resolution: "@mendix/pluggable-widgets-tools@npm:9.24.1"
   dependencies:
 <<<<<<< HEAD
     "@babel/core": "npm:^7.12.3"
@@ -5031,6 +5045,8 @@ __metadata:
 =======
     "@babel/core": ^7.12.3
     "@babel/plugin-proposal-class-properties": ^7.18.6
+    "@babel/plugin-proposal-private-methods": ^7.18.6
+    "@babel/plugin-transform-react-jsx": ^7.22.3
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
     "@cfaester/enzyme-adapter-react-18": ^0.6.0
@@ -5081,8 +5097,10 @@ __metadata:
     jest-jasmine2: ^29.0.3
     jest-junit: ^13.0.0
     jest-react-hooks-shallow: ^1.5.1
+    make-dir: ^3.1.0
     mendix: ^9.24.2965
     metro-react-native-babel-preset: ^0.74.1
+    mime: ^3.0.0
     node-fetch: ^2.6.1
     postcss: ^8.3.11
     postcss-import: ^14.0.2
@@ -5113,11 +5131,15 @@ __metadata:
   bin:
     pluggable-widgets-tools: bin/mx-scripts.js
 <<<<<<< HEAD
+<<<<<<< HEAD
   checksum: cbf3569f594f9aa0154cf56bb21bdac1f5df08effa73e506fab0edb056294e10369df7d5847b88b5e9ddf75eae03b4d2ae4e4c9dfff4b7d07aa842cea8aa7bdd
 >>>>>>> f547c561 (chore: update gesture handler patch)
 =======
   checksum: 4b058a6ac5f36cd58d4ca6764762e227c2c1b519b29a97a171c2d700c6ae1836246fb6048d7b0d264dab82482869b3ffc08543be431130a2a59874d0d3478f2a
 >>>>>>> 3f3d6b43 (fix: update test snapshots)
+=======
+  checksum: cbf3569f594f9aa0154cf56bb21bdac1f5df08effa73e506fab0edb056294e10369df7d5847b88b5e9ddf75eae03b4d2ae4e4c9dfff4b7d07aa842cea8aa7bdd
+>>>>>>> 4d2ce83a (chore: update pluggable-widgets-tools and add explicit scrollEventThrottle prop)
   languageName: node
   linkType: hard
 
@@ -17090,7 +17112,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime@npm:3.0.0":
+"mime@npm:3.0.0, mime@npm:^3.0.0":
   version: 3.0.0
   resolution: "mime@npm:3.0.0"
   bin:

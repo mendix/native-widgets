@@ -92,7 +92,7 @@
     "node": ">=20"
   },
   "resolutions": {
-    "@mendix/pluggable-widgets-tools": "9.24.0",
+    "@mendix/pluggable-widgets-tools": "9.24.1",
     "@types/react": "^18",
     "@types/react-native": "0.72.7",
     "react": "18.2.0",
