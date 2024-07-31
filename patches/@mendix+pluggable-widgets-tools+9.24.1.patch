@@ -25,3 +25,15 @@ index ec507d5..f5bf176
  
      if (args.indexOf("--subprojectPath") > -1) {
          args.splice(args.indexOf("--subprojectPath"), 2);
+diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
+index 85165f8..aabe7af 100644
+--- a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
++++ b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
+@@ -277,6 +277,6 @@ const nativeExternal = [
+     /^react-native-fast-image($|\/)/,
+     /^react-native-svg($|\/)/,
+     /^react-native-vector-icons($|\/)/,
+-    /^react-navigation($|\/)/,
++    /^@?react-navigation($|\/)/,
+     /^react-native-safe-area-context($|\/)/
+ ];
