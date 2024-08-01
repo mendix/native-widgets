@@ -6844,13 +6844,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native@npm:0.72.7":
-  version: 0.72.7
-  resolution: "@types/react-native@npm:0.72.7"
+"@types/react-native@npm:*":
+  version: 0.72.8
+  resolution: "@types/react-native@npm:0.72.8"
   dependencies:
+<<<<<<< HEAD
     "@react-native/virtualized-lists": "npm:^0.72.4"
     "@types/react": "npm:*"
   checksum: 10/6560af8b6150136f54f1d7500d28498d73335766326ff740acb4a49c9c42feb3fcef252f22fdb900eb522a26a93774801457928335650f4dd70e9979f53ebc97
+=======
+    "@react-native/virtualized-lists": ^0.72.4
+    "@types/react": "*"
+  checksum: a9fdf0a11ed42f800eb646d038702d3652d0732aa017ecd8203fb2aee77a782fa7ef388433e5cfcb6ab658a1642e1286698fecedcbc379547e4aeefa681ed685
+  languageName: node
+  linkType: hard
+
+"@types/react-native@npm:^0.70, @types/react-native@npm:^0.70.0, @types/react-native@npm:~0.70.2":
+  version: 0.70.19
+  resolution: "@types/react-native@npm:0.70.19"
+  dependencies:
+    "@types/react": "*"
+  checksum: 79b504fa56340631079e7c20ea0d9412ec14147b76d0ce189f4403936f529ef1e6fd031383afab117846c5ae039123bcf3afc948bae4432269c6780282726f71
+>>>>>>> 313b486e (chore: remove RN types and regenerate snapshots in BottomSheet and IntroScreen)
   languageName: node
   linkType: hard
 
@@ -17907,7 +17922,6 @@ __metadata:
     "@types/node": ^16.11.19
     "@types/react": ~18.0.0
     "@types/react-dom": ~18.0.0
-    "@types/react-native": 0.72.7
     "@types/react-native-vector-icons": ^6.4.9
     "@types/react-test-renderer": ~18.0.0
     "@types/shelljs": ^0.8.9
