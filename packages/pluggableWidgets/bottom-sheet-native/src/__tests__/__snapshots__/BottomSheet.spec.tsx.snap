@@ -1,14 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Bottom sheet renders a custom bottom action sheet for ios (Basic modal) with custom style 1`] = `
-<Modal
-  animationType="none"
-  hardwareAccelerated={false}
-  onRequestClose={[Function]}
-  transparent={true}
-  visible={false}
-/>
-`;
+exports[`Bottom sheet renders a custom bottom action sheet for ios (Basic modal) with custom style 1`] = `null`;
 
 exports[`Bottom sheet renders a custom modal 1`] = `
 <View

@@ -780,10 +780,4 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
 </Modal>
 `;
 
-exports[`Intro Screen renders with async storage identifier 1`] = `
-<Modal
-  hardwareAccelerated={false}
-  transparent={false}
-  visible={false}
-/>
-`;
+exports[`Intro Screen renders with async storage identifier 1`] = `null`;

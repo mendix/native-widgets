@@ -1,6 +1,6 @@
 import { actionValue } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
-import { AppStateStatus } from "react-native";
+import { AppStateStatus, AppState } from "react-native";
 import { render } from "@testing-library/react-native";
 
 import { AppEvents, Props } from "../AppEvents";
@@ -11,16 +11,6 @@ let connectionChangeHandler: ((result: { isConnected: boolean }) => void) | unde
 function flushMicrotasksQueue() {
     return new Promise(resolve => setImmediate(resolve));
 }
-
-jest.mock("react-native", () => ({
-    AppState: {
-        currentState: "active",
-        addEventListener: jest.fn((_type, listener) => {
-            appStateChangeHandler = listener;
-            return { remove: jest.fn(() => (appStateChangeHandler = undefined)) };
-        })
-    }
-}));
 
 jest.mock("@react-native-community/netinfo", () => ({
     fetch: jest.fn(() => Promise.resolve({ isConnected: true })),
@@ -43,10 +33,27 @@ const defaultProps: Props = {
 };
 
 describe("AppEvents", () => {
+    let oldAppStateState: any;
+    let oldAppStateEventListener: any;
+
+    beforeAll(() => {
+        oldAppStateState = AppState.currentState;
+        oldAppStateEventListener = AppState.addEventListener;
+        AppState.currentState = "active";
+        AppState.addEventListener = jest.fn((_type, listener) => {
+            appStateChangeHandler = listener;
+            return { remove: jest.fn(() => (appStateChangeHandler = undefined)) };
+        });
+    });
+
+    afterAll(() => {
+        AppState.currentState = oldAppStateState;
+        AppState.addEventListener = oldAppStateEventListener;
+    });
+
     afterEach(() => {
         appStateChangeHandler = undefined;
         connectionChangeHandler = undefined;
-        // setTimeout(); NodeJS.Timeout;
     });
 
     it("does not render anything", () => {

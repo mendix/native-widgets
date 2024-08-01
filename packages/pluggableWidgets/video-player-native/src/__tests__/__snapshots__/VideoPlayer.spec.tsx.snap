@@ -1,15 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
-[
-  <Modal
-    hardwareAccelerated={false}
-    onRequestClose={[Function]}
-    statusBarTranslucent={true}
-    testID="fullscreen-modal"
-    visible={false}
-  />,
+<View
+  style={
+    {
+      "alignItems": "center",
+      "aspectRatio": undefined,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       {
         "alignItems": "center",
@@ -21,30 +53,12 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
     }
   >
     <Video
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessible={true}
       controls={true}
-      focusable={true}
       muted={false}
-      onClick={[Function]}
       onError={[Function]}
       onLoad={[Function]}
       onLoadStart={[Function]}
       onProgress={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       paused={true}
       repeat={false}
       resizeMode="stretch"
@@ -61,85 +75,117 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
       testID="video-player-test"
       useTextureView={false}
     />
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0,0,0,0.5)",
+        "borderRadius": 1,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 2,
+        "position": "absolute",
+        "right": 10,
+        "top": "10%",
+      }
+    }
+    testID="btn-fullscreen"
+  >
+    <Text
+      allowFontScaling={false}
+      selectable={false}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.5)",
-          "borderRadius": 1,
-          "justifyContent": "center",
-          "opacity": 1,
-          "padding": 2,
-          "position": "absolute",
-          "right": 10,
-          "top": "10%",
-        }
+        [
+          {
+            "color": "white",
+            "fontSize": 22,
+          },
+          undefined,
+          {
+            "fontFamily": "MaterialIcons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          {},
+        ]
       }
-      testID="btn-fullscreen"
     >
-      <Text
-        allowFontScaling={false}
-        selectable={false}
-        style={
-          [
-            {
-              "color": "white",
-              "fontSize": 22,
-            },
-            undefined,
-            {
-              "fontFamily": "MaterialIcons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            {},
-          ]
-        }
-      >
-        
-      </Text>
-    </View>
-  </View>,
-]
+      
+    </Text>
+  </View>
+</View>
 `;
 
 exports[`VideoPlayer VideoPlayerAndroid render video without controls if showControls is set to false 1`] = `
-[
-  <Modal
-    hardwareAccelerated={false}
-    onRequestClose={[Function]}
-    statusBarTranslucent={true}
-    testID="fullscreen-modal"
-    visible={false}
-  />,
+<View
+  style={
+    {
+      "alignItems": "center",
+      "aspectRatio": undefined,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       {
         "alignItems": "center",
@@ -151,30 +197,12 @@ exports[`VideoPlayer VideoPlayerAndroid render video without controls if showCon
     }
   >
     <Video
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessible={true}
       controls={false}
-      focusable={true}
       muted={false}
-      onClick={[Function]}
       onError={[Function]}
       onLoad={[Function]}
       onLoadStart={[Function]}
       onProgress={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       paused={true}
       repeat={false}
       resizeMode="stretch"
@@ -191,20 +219,52 @@ exports[`VideoPlayer VideoPlayerAndroid render video without controls if showCon
       testID="video-player-test"
       useTextureView={false}
     />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`VideoPlayer hides the loading indicator after load 1`] = `
-[
-  <Modal
-    hardwareAccelerated={false}
-    onRequestClose={[Function]}
-    statusBarTranslucent={true}
-    testID="fullscreen-modal"
-    visible={false}
-  />,
+<View
+  style={
+    {
+      "alignItems": "center",
+      "aspectRatio": undefined,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       {
         "alignItems": "center",
@@ -216,30 +276,12 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
     }
   >
     <Video
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessible={true}
       controls={true}
-      focusable={true}
       muted={false}
-      onClick={[Function]}
       onError={[Function]}
       onLoad={[Function]}
       onLoadStart={[Function]}
       onProgress={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       paused={true}
       repeat={false}
       resizeMode="stretch"
@@ -257,85 +299,116 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
       testID="video-player-test"
       useTextureView={false}
     />
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0,0,0,0.5)",
+        "borderRadius": 1,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 2,
+        "position": "absolute",
+        "right": 10,
+        "top": "10%",
+      }
+    }
+    testID="btn-fullscreen"
+  >
+    <Text
+      allowFontScaling={false}
+      selectable={false}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.5)",
-          "borderRadius": 1,
-          "justifyContent": "center",
-          "opacity": 1,
-          "padding": 2,
-          "position": "absolute",
-          "right": 10,
-          "top": "10%",
-        }
+        [
+          {
+            "color": "white",
+            "fontSize": 22,
+          },
+          undefined,
+          {
+            "fontFamily": "MaterialIcons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          {},
+        ]
       }
-      testID="btn-fullscreen"
     >
-      <Text
-        allowFontScaling={false}
-        selectable={false}
-        style={
-          [
-            {
-              "color": "white",
-              "fontSize": 22,
-            },
-            undefined,
-            {
-              "fontFamily": "MaterialIcons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            {},
-          ]
-        }
-      >
-        
-      </Text>
-    </View>
-  </View>,
-]
+      
+    </Text>
+  </View>
+</View>
 `;
 
 exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
-[
-  <Modal
-    hardwareAccelerated={false}
-    onRequestClose={[Function]}
-    statusBarTranslucent={true}
-    testID="fullscreen-modal"
-    visible={false}
-  />,
+<View
+  style={
+    {
+      "alignItems": "center",
+      "aspectRatio": 1.9494584837545126,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+    }
+  }
+>
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       {
         "alignItems": "center",
@@ -346,30 +419,12 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
     }
   >
     <Video
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessible={true}
       controls={true}
-      focusable={true}
       muted={false}
-      onClick={[Function]}
       onError={[Function]}
       onLoad={[Function]}
       onLoadStart={[Function]}
       onProgress={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       paused={true}
       repeat={false}
       resizeMode="contain"
@@ -388,85 +443,117 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
       testID="video-player-test"
       useTextureView={false}
     />
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0,0,0,0.5)",
+        "borderRadius": 1,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 2,
+        "position": "absolute",
+        "right": 10,
+        "top": "10%",
+      }
+    }
+    testID="btn-fullscreen"
+  >
+    <Text
+      allowFontScaling={false}
+      selectable={false}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.5)",
-          "borderRadius": 1,
-          "justifyContent": "center",
-          "opacity": 1,
-          "padding": 2,
-          "position": "absolute",
-          "right": 10,
-          "top": "10%",
-        }
+        [
+          {
+            "color": "white",
+            "fontSize": 22,
+          },
+          undefined,
+          {
+            "fontFamily": "MaterialIcons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          {},
+        ]
       }
-      testID="btn-fullscreen"
     >
-      <Text
-        allowFontScaling={false}
-        selectable={false}
-        style={
-          [
-            {
-              "color": "white",
-              "fontSize": 22,
-            },
-            undefined,
-            {
-              "fontFamily": "MaterialIcons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            {},
-          ]
-        }
-      >
-        
-      </Text>
-    </View>
-  </View>,
-]
+      
+    </Text>
+  </View>
+</View>
 `;
 
 exports[`VideoPlayer renders a loading indicator 1`] = `
-[
-  <Modal
-    hardwareAccelerated={false}
-    onRequestClose={[Function]}
-    statusBarTranslucent={true}
-    testID="fullscreen-modal"
-    visible={false}
-  />,
+<View
+  style={
+    {
+      "alignItems": "center",
+      "aspectRatio": undefined,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       {
         "alignItems": "center",
@@ -478,30 +565,12 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
     }
   >
     <Video
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessible={true}
       controls={true}
-      focusable={true}
       muted={false}
-      onClick={[Function]}
       onError={[Function]}
       onLoad={[Function]}
       onLoadStart={[Function]}
       onProgress={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       paused={true}
       repeat={false}
       resizeMode="stretch"
@@ -518,85 +587,121 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
       testID="video-player-test"
       useTextureView={false}
     />
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0,0,0,0.5)",
+        "borderRadius": 1,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 2,
+        "position": "absolute",
+        "right": 10,
+        "top": "10%",
+      }
+    }
+    testID="btn-fullscreen"
+  >
+    <Text
+      allowFontScaling={false}
+      selectable={false}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.5)",
-          "borderRadius": 1,
-          "justifyContent": "center",
-          "opacity": 1,
-          "padding": 2,
-          "position": "absolute",
-          "right": 10,
-          "top": "10%",
-        }
+        [
+          {
+            "color": "white",
+            "fontSize": 22,
+          },
+          undefined,
+          {
+            "fontFamily": "MaterialIcons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          {},
+        ]
       }
-      testID="btn-fullscreen"
     >
-      <Text
-        allowFontScaling={false}
-        selectable={false}
-        style={
-          [
-            {
-              "color": "white",
-              "fontSize": 22,
-            },
-            undefined,
-            {
-              "fontFamily": "MaterialIcons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            {},
-          ]
-        }
-      >
-        
-      </Text>
-    </View>
-  </View>,
-]
+      
+    </Text>
+  </View>
+</View>
 `;
 
 exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
-[
-  <Modal
-    hardwareAccelerated={false}
-    onRequestClose={[Function]}
-    statusBarTranslucent={true}
-    testID="fullscreen-modal"
-    visible={false}
-  />,
+<View
+  style={
+    {
+      "alignItems": "center",
+      "aspectRatio": undefined,
+      "backgroundColor": "black",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <ActivityIndicator
+    color="white"
+    size="large"
+  />
   <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       {
         "alignItems": "center",
@@ -607,35 +712,13 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
       }
     }
   >
-    <ActivityIndicator
-      color="white"
-      size="large"
-    />
     <Video
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessible={true}
       controls={true}
-      focusable={true}
       muted={false}
-      onClick={[Function]}
       onError={[Function]}
       onLoad={[Function]}
       onLoadStart={[Function]}
       onProgress={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       paused={true}
       repeat={false}
       resizeMode="stretch"
@@ -652,71 +735,71 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
       testID="video-player-test"
       useTextureView={false}
     />
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0,0,0,0.5)",
+        "borderRadius": 1,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 2,
+        "position": "absolute",
+        "right": 10,
+        "top": "10%",
+      }
+    }
+    testID="btn-fullscreen"
+  >
+    <Text
+      allowFontScaling={false}
+      selectable={false}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.5)",
-          "borderRadius": 1,
-          "justifyContent": "center",
-          "opacity": 1,
-          "padding": 2,
-          "position": "absolute",
-          "right": 10,
-          "top": "10%",
-        }
+        [
+          {
+            "color": "white",
+            "fontSize": 22,
+          },
+          undefined,
+          {
+            "fontFamily": "MaterialIcons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          {},
+        ]
       }
-      testID="btn-fullscreen"
     >
-      <Text
-        allowFontScaling={false}
-        selectable={false}
-        style={
-          [
-            {
-              "color": "white",
-              "fontSize": 22,
-            },
-            undefined,
-            {
-              "fontFamily": "MaterialIcons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            {},
-          ]
-        }
-      >
-        
-      </Text>
-    </View>
-  </View>,
-]
+      
+    </Text>
+  </View>
+</View>
 `;

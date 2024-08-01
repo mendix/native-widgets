@@ -2,7 +2,7 @@
 // has an outdated dependency (react-native-vector-icons) that we now managed here in this widget.
 import { ClassicComponentClass, Component, createElement } from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
-import { AnimatableProperties, View as AnimatableView } from "react-native-animatable";
+import { AnimatableProps, View as AnimatableView } from "react-native-animatable";
 import type { StarRatingProps } from "react-native-star-rating";
 
 import StarButton, { iconSets } from "./StarButton";
@@ -67,7 +67,7 @@ interface AnimationProps {
 
 class StarRating extends Component<Props> {
     static defaultProps: typeof defaultProps;
-    starRef: Array<ClassicComponentClass<AnimatableProperties<ViewStyle>> & AnimationProps>;
+    starRef: Array<ClassicComponentClass<AnimatableProps<ViewStyle>> & AnimationProps>;
 
     constructor(props: Props) {
         super(props);
@@ -128,9 +128,7 @@ class StarRating extends Component<Props> {
                     key={i}
                     ref={node => {
                         if (node) {
-                            this.starRef[i] = node as unknown as ClassicComponentClass<
-                                AnimatableProperties<ViewStyle>
-                            > &
+                            this.starRef[i] = node as unknown as ClassicComponentClass<AnimatableProps<ViewStyle>> &
                                 AnimationProps;
                         }
                     }}

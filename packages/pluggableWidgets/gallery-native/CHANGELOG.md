@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   We have upgraded React Native Device Info to version 11.1.0.
+
 ### Fixed
 
 -   We've resolved an issue where the loading indicator was triggered when pulling down the list, even in the absence of a pull-down event.
