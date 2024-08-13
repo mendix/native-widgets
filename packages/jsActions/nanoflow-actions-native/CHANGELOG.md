@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.4] Nanoflow Commons - 2024-8-8
 - We've added support for the token-based authentication with the SignIn action. This authentication method allows users to remain signed in until the expiration time of the token. You can read more about this behavior on this documentation page https://docs.mendix.com/refguide/session-management/#2-authentication-token
 
 To enable it you can set the new SignIn action parameter `useAuthToken` to `true`.
