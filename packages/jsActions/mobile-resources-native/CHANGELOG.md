@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ## [4.1.2] Native Mobile Resources - 2024-6-25
+
 -   We have fixed an issue with missing react-native-schedule-exact-alarm-permission dependency
 
 ## [4.1.1] Native Mobile Resources - 2024-6-25
