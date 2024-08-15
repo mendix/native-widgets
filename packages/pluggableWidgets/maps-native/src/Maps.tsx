@@ -75,7 +75,7 @@ export class Maps extends Component<Props, State> {
                 {this.state.status !== Status.LoadingMarkers ? (
                     <MapView
                         ref={this.mapViewRef}
-                        provider={this.props.provider === "default" ? null : this.props.provider}
+                        provider={this.props.provider === "default" ? undefined : this.props.provider}
                         mapType={this.props.mapType}
                         showsUserLocation={this.props.showsUserLocation}
                         showsMyLocationButton={this.props.showsUserLocation}
@@ -111,8 +111,8 @@ export class Maps extends Component<Props, State> {
             <MarkerView
                 key={key}
                 coordinate={coordinate}
-                title={this.props.interactive ? props.title : ""}
-                description={this.props.interactive ? props.description : ""}
+                title={this.props.interactive ? props.title : undefined}
+                description={this.props.interactive ? props.description : undefined}
                 onPress={this.props.interactive ? () => onMarkerPress(props.onClick) : undefined}
                 pinColor={props.iconColor || this.styles.marker.color}
                 opacity={this.styles.marker.opacity}
