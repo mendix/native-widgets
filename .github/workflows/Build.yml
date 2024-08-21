@@ -51,6 +51,6 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Running build for development"
-        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} --parallel run build
+        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} --all run build
         env:
           NODE_OPTIONS: --max_old_space_size=8192

@@ -27,7 +27,7 @@
     "victory-native": "^36.6.8"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.0.0",
+    "@mendix/pluggable-widgets-tools": "^10.0.0",
     "detox": "^19.13.0",
     "eslint": "^7.20.0"
   }

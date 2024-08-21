@@ -12,6 +12,7 @@ export enum FormatterType {
 
 export class EditableValueBuilder<T extends string | boolean | Date | Big> {
     private readonly editableValue: Writable<EditableValue<T>> = {
+        isList: false,
         value: undefined,
         displayValue: "",
         status: ValueStatus.Available,

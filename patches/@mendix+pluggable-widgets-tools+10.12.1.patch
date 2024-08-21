@@ -1,0 +1,25 @@
+diff --git a/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js b/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
+index ec507d5..f5bf176 100755
+--- a/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
++++ b/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
+@@ -1,6 +1,6 @@
+ #! /usr/bin/env node
+ const { execSync, spawnSync } = require("child_process");
+-const { existsSync } = require("fs");
++const { existsSync, lstatSync } = require("fs");
+ const { delimiter, dirname, join, parse } = require("path");
+ const { checkMigration } = require("../utils/migration");
+ const { red } = require("ansi-colors");
+@@ -14,9 +14,10 @@ checkNodeVersion();
+     }
+ 
+     const [, currentScriptPath, cmd, ...args] = process.argv;
+-    const toolsRoot = currentScriptPath.endsWith("pluggable-widgets-tools")
++    const isSymlink = lstatSync(currentScriptPath).isSymbolicLink();
++    const toolsRoot = currentScriptPath.endsWith("pluggable-widgets-tools") && !isSymlink
+         ? join(dirname(currentScriptPath), "../@mendix/pluggable-widgets-tools")
+-        : join(dirname(currentScriptPath), "..");
++        : isSymlink ? join(__dirname, "../") : join(dirname(currentScriptPath), "..");
+ 
+     if (args.indexOf("--subprojectPath") > -1) {
+         args.splice(args.indexOf("--subprojectPath"), 2);

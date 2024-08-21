@@ -27,10 +27,10 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-webview": "11.26.1"
+    "@types/react-native": "0.72.7"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.0.0",
+    "@mendix/pluggable-widgets-tools": "^10.0.0",
     "detox": "^19.13.0",
     "eslint": "^7.20.0"
   }
