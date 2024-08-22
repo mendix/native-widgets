@@ -48,6 +48,6 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Running release for production"
-        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} --all run release
+        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} --all --parallel run release
         env:
           NODE_OPTIONS: --max_old_space_size=8192

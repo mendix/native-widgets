@@ -24,7 +24,7 @@
     "react-native-gesture-handler": "1.10.3"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^10.0.0",
+    "@mendix/pluggable-widgets-tools": "9.24.0",
     "eslint": "^7.20.0"
   }
 }

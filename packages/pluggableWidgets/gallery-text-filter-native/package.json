@@ -29,7 +29,7 @@
     "react-native-svg": "^12.3.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^10.0.0",
+    "@mendix/pluggable-widgets-tools": "9.24.0",
     "detox": "^19.13.0",
     "eslint": "^7.20.0"
   }
