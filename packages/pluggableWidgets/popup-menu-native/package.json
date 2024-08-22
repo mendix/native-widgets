@@ -28,7 +28,7 @@
     "react-native-material-menu": "~1.2.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "9.24.0",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@types/react-native-material-menu": "^1.0.6",
     "detox": "^19.13.0",
     "eslint": "^7.20.0"

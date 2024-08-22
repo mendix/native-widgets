@@ -31,7 +31,7 @@
     "react-native-vector-icons": "10.0.3"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "9.24.0",
+    "@mendix/pluggable-widgets-tools": "^9.0.0",
     "@types/react-native-star-rating": "^1.1.2",
     "detox": "^19.13.0",
     "eslint": "^7.20.0"
