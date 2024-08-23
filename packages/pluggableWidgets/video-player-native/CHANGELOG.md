@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We have updated both `react-native-video` to 6.4.5.
+
 ## [5.0.0] - 2023-01-24
 
 ### Changed
