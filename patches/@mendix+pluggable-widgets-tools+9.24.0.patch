@@ -12,7 +12,7 @@ index ec507d5..f5bf176 100755
  const { red } = require("ansi-colors");
 @@ -14,9 +14,10 @@ checkNodeVersion();
      }
- 
+
      const [, currentScriptPath, cmd, ...args] = process.argv;
 -    const toolsRoot = currentScriptPath.endsWith("pluggable-widgets-tools")
 +    const isSymlink = lstatSync(currentScriptPath).isSymbolicLink();
@@ -20,7 +20,7 @@ index ec507d5..f5bf176 100755
          ? join(dirname(currentScriptPath), "../@mendix/pluggable-widgets-tools")
 -        : join(dirname(currentScriptPath), "..");
 +        : isSymlink ? join(__dirname, "../") : join(dirname(currentScriptPath), "..");
- 
+
      if (args.indexOf("--subprojectPath") > -1) {
          args.splice(args.indexOf("--subprojectPath"), 2);
 diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
@@ -54,7 +54,7 @@ index ac385ec..63b3871 100644
 @@ -5,6 +5,8 @@ const enableHooks = require("jest-react-hooks-shallow").default;
  configureEnzyme({ adapter: new Adapter() });
  enableHooks(jest);
- 
+
 +global.setImmediate = global.setTimeout;
 +
  const origConsole = console.error;

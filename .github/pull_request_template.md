@@ -2,7 +2,7 @@
 
 -   Contains unit tests ✅ ❌
 -   Contains breaking changes ✅ ❌
--   Compatible with: MX 7️⃣, 8️⃣, 9️⃣
+-   Compatible with: MX 8, 9, 10
 -   Did you update version and changelog? ✅ ❌
 -   PR title properly formatted (`[XX-000]: description`)? ✅ ❌
 -   Works in Android ✅ ❌

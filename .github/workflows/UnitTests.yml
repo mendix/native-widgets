@@ -50,6 +50,6 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Linting code"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run lint
+        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --all --parallel run lint
       - name: "Running unit tests"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run test
+        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --all --parallel run test
