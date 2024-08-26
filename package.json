@@ -8,8 +8,8 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "prepare": "npx husky install && yarn workspaces foreach --all --parallel run prepare",
-    "postinstall": "patch-package --use-yarn && yarn workspaces foreach --all --parallel run postinstall",
+    "prepare": "npx husky install && yarn workspaces foreach --all run prepare",
+    "postinstall": "patch-package --use-yarn && yarn workspaces foreach --all run postinstall",
     "reinstall": "yarn cache clean && git clean -dfx && find . -type dir -name node_modules | xargs rm -rf && yarn && yarn run postinstall",
     "prettier": "prettier --config \"./prettier.config.js\" --write \"**/*.{js,jsx,ts,tsx,scss,html,xml,yml,yaml}\"",
     "format": "pretty-quick --staged --config \"./prettier.config.js\" --pattern \"**/{src,script,typings,test,**}/**/*.{js,jsx,ts,tsx,scss,html,xml,md,json}\"",
