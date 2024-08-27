@@ -51,7 +51,6 @@ describe("AppEvents", () => {
     afterEach(() => {
         appStateChangeHandler = undefined;
         connectionChangeHandler = undefined;
-        // setTimeout(); NodeJS.Timeout;
     });
 
     it("does not render anything", () => {
