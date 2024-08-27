@@ -34,7 +34,7 @@ describe("Rating", () => {
         fireEvent(starButton.findByType(TouchableOpacity), "press");
 
         expect(actionValue.execute).toHaveBeenCalledTimes(1);
-        const actual = (rating.container.props.ratingAttribute as EditableValue<Big>).value;
+        const actual = (rating.UNSAFE_root.props.ratingAttribute as EditableValue<Big>).value;
         const expected = new Big(3);
         expect(actual).toStrictEqual(expected);
     });
