@@ -66,7 +66,7 @@ describe("Popup menu", () => {
 
         it("triggers action", () => {
             const component = render(<PopupMenu {...defaultProps} />);
-            const basicItem = component.container.findByType(MenuItem);
+            const basicItem = component.UNSAFE_root.findByType(MenuItem);
             expect(basicItem).toBeDefined();
             expect(basicItem.props.testID).toBe(basicItemTestId);
 
