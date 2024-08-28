@@ -328,6 +328,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
                 style={styles.flatList}
                 renderItem={renderItem}
                 onMomentumScrollEnd={onMomentumScrollEnd}
+                scrollEventThrottle={50}
                 extraData={width}
                 onLayout={onLayout}
                 keyExtractor={(_: any, index: number) => "screen_key_" + index}

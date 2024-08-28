@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We have fixed an issue where the video player was not functioning on iOS devices.
+
 ## [5.0.0] - 2023-01-24
 
 ### Changed

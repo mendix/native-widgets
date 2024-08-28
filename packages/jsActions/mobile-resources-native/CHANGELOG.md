@@ -6,10 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [8.0.0] Native Mobile Resources - 2024-07-30
+
+### BREAKING
+
+-   We have upgraded React Native to version 0.73.8.
+
 ## [7.0.0] Native Mobile Resources - 2024-07-08
 
 -   We have fixed an issue with checking blocked permissions on iOS
 -   We have fixed an issue with `useNavigation` support in widgets.
+
+### BREAKING
+
+-   We have upgraded React Native Device Info to version 11.1.0.
 
 ## [6.1.0] Native Mobile Resources - 2024-05-28
 

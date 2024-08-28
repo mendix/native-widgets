@@ -24,6 +24,24 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
         {
           "id": "33",
         },
+        {
+          "id": "44",
+        },
+        {
+          "id": "55",
+        },
+        {
+          "id": "66",
+        },
+        {
+          "id": "77",
+        },
+        {
+          "id": "88",
+        },
+        {
+          "id": "99",
+        },
       ]
     }
     getItem={[Function]}
@@ -125,11 +143,173 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
                 [
                   undefined,
                   false,
-                  undefined,
+                  false,
                 ]
               }
             >
               33
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-44"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              44
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-55"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              55
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-66"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              66
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-77"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              77
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-88"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              88
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-99"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  undefined,
+                ]
+              }
+            >
+              99
             </View>
           </View>
         </View>
@@ -171,6 +351,24 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         {
           "id": "33",
         },
+        {
+          "id": "44",
+        },
+        {
+          "id": "55",
+        },
+        {
+          "id": "66",
+        },
+        {
+          "id": "77",
+        },
+        {
+          "id": "88",
+        },
+        {
+          "id": "99",
+        },
       ]
     }
     getItem={[Function]}
@@ -272,11 +470,173 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
                 [
                   undefined,
                   false,
-                  undefined,
+                  false,
                 ]
               }
             >
               33
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-44"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              44
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-55"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              55
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-66"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              66
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-77"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              77
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-88"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              88
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-99"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  undefined,
+                ]
+              }
+            >
+              99
             </View>
           </View>
         </View>
@@ -356,6 +716,24 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         {
           "id": "33",
         },
+        {
+          "id": "44",
+        },
+        {
+          "id": "55",
+        },
+        {
+          "id": "66",
+        },
+        {
+          "id": "77",
+        },
+        {
+          "id": "88",
+        },
+        {
+          "id": "99",
+        },
       ]
     }
     getItem={[Function]}
@@ -457,11 +835,173 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
                 [
                   undefined,
                   false,
-                  undefined,
+                  false,
                 ]
               }
             >
               33
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-44"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              44
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-55"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              55
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-66"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              66
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-77"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              77
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-88"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              88
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-99"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  undefined,
+                ]
+              }
+            >
+              99
             </View>
           </View>
         </View>
@@ -541,6 +1081,24 @@ exports[`Gallery rendering renders correctly 1`] = `
         {
           "id": "33",
         },
+        {
+          "id": "44",
+        },
+        {
+          "id": "55",
+        },
+        {
+          "id": "66",
+        },
+        {
+          "id": "77",
+        },
+        {
+          "id": "88",
+        },
+        {
+          "id": "99",
+        },
       ]
     }
     getItem={[Function]}
@@ -642,11 +1200,173 @@ exports[`Gallery rendering renders correctly 1`] = `
                 [
                   undefined,
                   false,
-                  undefined,
+                  false,
                 ]
               }
             >
               33
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-44"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              44
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-55"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              55
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-66"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              66
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-77"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              77
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-88"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              88
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-99"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  undefined,
+                ]
+              }
+            >
+              99
             </View>
           </View>
         </View>
@@ -687,6 +1407,24 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         },
         {
           "id": "33",
+        },
+        {
+          "id": "44",
+        },
+        {
+          "id": "55",
+        },
+        {
+          "id": "66",
+        },
+        {
+          "id": "77",
+        },
+        {
+          "id": "88",
+        },
+        {
+          "id": "99",
         },
       ]
     }
@@ -789,11 +1527,185 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
               [
                 undefined,
                 false,
-                undefined,
+                false,
               ]
             }
           >
             33
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={false}
+          testID="gallery-test-list-item-44"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            44
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={false}
+          testID="gallery-test-list-item-55"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            55
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={false}
+          testID="gallery-test-list-item-66"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            66
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={false}
+          testID="gallery-test-list-item-77"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            77
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={false}
+          testID="gallery-test-list-item-88"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            88
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          style={false}
+          testID="gallery-test-list-item-99"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                undefined,
+              ]
+            }
+          >
+            99
           </View>
         </View>
       </View>
@@ -889,6 +1801,24 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
         },
         {
           "id": "33",
+        },
+        {
+          "id": "44",
+        },
+        {
+          "id": "55",
+        },
+        {
+          "id": "66",
+        },
+        {
+          "id": "77",
+        },
+        {
+          "id": "88",
+        },
+        {
+          "id": "99",
         },
       ]
     }
@@ -991,11 +1921,173 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
                 [
                   undefined,
                   false,
-                  undefined,
+                  false,
                 ]
               }
             >
               33
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-44"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              44
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-55"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              55
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-66"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              66
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-77"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              77
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-88"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  false,
+                ]
+              }
+            >
+              88
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "width": "50%",
+              }
+            }
+            testID="gallery-test-list-item-99"
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  false,
+                  undefined,
+                ]
+              }
+            >
+              99
             </View>
           </View>
         </View>

@@ -17,7 +17,17 @@ const itemWrapperFunction =
 const defaultProps: GalleryProps<ObjectItem> = {
     hasMoreItems: true,
     itemRenderer: itemWrapperFunction({}),
-    items: [{ id: "11" as GUID }, { id: "22" as GUID }, { id: "33" as GUID }],
+    items: [
+        { id: "11" as GUID },
+        { id: "22" as GUID },
+        { id: "33" as GUID },
+        { id: "44" as GUID },
+        { id: "55" as GUID },
+        { id: "66" as GUID },
+        { id: "77" as GUID },
+        { id: "88" as GUID },
+        { id: "99" as GUID }
+    ],
     loadMoreItems: jest.fn(),
     name: "gallery-test",
     pagination: "virtualScrolling",
@@ -127,42 +137,14 @@ describe("Gallery", () => {
         it("triggers load more items events on end reached", () => {
             const gallery = render(<Gallery {...defaultProps} />);
             const galleryList = gallery.getByTestId("gallery-test-list");
-            fireEvent.scroll(galleryList, {
-                nativeEvent: {
-                    contentOffset: {
-                        y: 500
-                    },
-                    contentSize: {
-                        height: 500,
-                        width: 100
-                    },
-                    layoutMeasurement: {
-                        height: 100,
-                        width: 100
-                    }
-                }
-            });
+            fireEvent(galleryList, "onEndReached");
             expect(defaultProps.loadMoreItems).toBeCalledTimes(1);
         });
 
         it("it shouldn't triggers the load more items event when item list empty", () => {
             const gallery = render(<Gallery {...defaultProps} items={[]} hasMoreItems={false} />);
             const galleryList = gallery.getByTestId("gallery-test-list");
-            fireEvent.scroll(galleryList, {
-                nativeEvent: {
-                    contentOffset: {
-                        y: 500
-                    },
-                    contentSize: {
-                        height: 500,
-                        width: 100
-                    },
-                    layoutMeasurement: {
-                        height: 100,
-                        width: 100
-                    }
-                }
-            });
+            fireEvent(galleryList, "onEndReached");
             expect(defaultProps.loadMoreItems).not.toBeCalled();
         });
 
