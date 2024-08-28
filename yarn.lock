@@ -7633,7 +7633,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deprecated-react-native-prop-types@npm:^2.2.0, deprecated-react-native-prop-types@npm:^2.3.0":
+"deprecated-react-native-prop-types@npm:^2.3.0":
   version: 2.3.0
   resolution: "deprecated-react-native-prop-types@npm:2.3.0"
   dependencies:
@@ -7922,13 +7922,6 @@ __metadata:
   version: 1.5.13
   resolution: "electron-to-chromium@npm:1.5.13"
   checksum: 10/b3de6dbca66e399eacd4f7e2b7603394c8949c9e724d838a45e092725005ff435aabfbf00f738e45451eb23147684f7f9251a5ed75619a539642b2bccea20b45
-  languageName: node
-  linkType: hard
-
-"eme-encryption-scheme-polyfill@npm:^2.0.1":
-  version: 2.1.1
-  resolution: "eme-encryption-scheme-polyfill@npm:2.1.1"
-  checksum: 10/312fab39d5f2d59fcca97148c9f85c50081591b465f6f43b6ab30dc0cab27609ce32a59b67849a8b9316bdcc25b3ff7ebb1f923ae470d10c3136ba95e5496371
   languageName: node
   linkType: hard
 
@@ -11754,13 +11747,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keymirror@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "keymirror@npm:0.1.1"
-  checksum: 10/be8f0bc5ff7d561d729f935ef55b4dbbea7b56a4714f044a2212088730f4d52f73935c38c5a9604e0f1157611725ee493cb7d08d1f3eb34151c0aa999236206a
-  languageName: node
-  linkType: hard
-
 "kind-of@npm:^5.0.0":
   version: 5.1.0
   resolution: "kind-of@npm:5.1.0"
@@ -15574,15 +15560,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-video@npm:5.2.1":
-  version: 5.2.1
-  resolution: "react-native-video@npm:5.2.1"
-  dependencies:
-    deprecated-react-native-prop-types: "npm:^2.2.0"
-    keymirror: "npm:^0.1.1"
-    prop-types: "npm:^15.7.2"
-    shaka-player: "npm:^2.5.9"
-  checksum: 10/bd44c45bbcfa13209bf317ec7e5bf63aa73778ab38a7868d74ea1e4b9b7d781fd155cbc8612d5cd1579f89ae324e3c7956de47a20645c026cf91784b9db7d714
+"react-native-video@npm:6.4.5":
+  version: 6.4.5
+  resolution: "react-native-video@npm:6.4.5"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10/dfaf802c5dbde81d022528e325babd443bd0d08e77eef3cc959c7c2a9087632dd4b7b35efa2ba92dab202f2f3aeb52aa97334d2499b532d13cfd78d6599a787e
   languageName: node
   linkType: hard
 
@@ -16666,15 +16650,6 @@ __metadata:
   version: 1.2.0
   resolution: "setprototypeof@npm:1.2.0"
   checksum: 10/fde1630422502fbbc19e6844346778f99d449986b2f9cdcceb8326730d2f3d9964dbcb03c02aaadaefffecd0f2c063315ebea8b3ad895914bf1afc1747fc172e
-  languageName: node
-  linkType: hard
-
-"shaka-player@npm:^2.5.9":
-  version: 2.5.23
-  resolution: "shaka-player@npm:2.5.23"
-  dependencies:
-    eme-encryption-scheme-polyfill: "npm:^2.0.1"
-  checksum: 10/985ec3baaeb239d68e8af6a631eed53cb7a3d7b2eb877c95954cf645ef9d946421c94fc52fc4a305ce7fce1931426f26c401278a27e87a9479d82ddb729d1fa8
   languageName: node
   linkType: hard
 
@@ -18624,7 +18599,7 @@ __metadata:
     eslint: "npm:^7.20.0"
     react-native-system-navigation-bar: "npm:2.6.3"
     react-native-vector-icons: "npm:10.0.3"
-    react-native-video: "npm:5.2.1"
+    react-native-video: "npm:6.4.5"
   languageName: unknown
   linkType: soft
 
