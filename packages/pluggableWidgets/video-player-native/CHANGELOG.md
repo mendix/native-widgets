@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.1] - 2024-8-28
+
+### Changed
+
+-   We have updated both `react-native-video` to 6.3.0
+
 ## [4.0.0] - 2023-3-28
 
 ## BREAKING
