@@ -18,32 +18,40 @@ import messaging from "@react-native-firebase/messaging";
  */
 export async function RequestNotificationPermission(): Promise<boolean> {
     // BEGIN USER CODE
-    // Documentation https://rnfirebase.io/docs/v5.x.x/notifications/receiving-notifications
+    // Documentation https://rnfirebase.io/messaging/usage
 
     if (NativeModules && !NativeModules.RNFBMessagingModule) {
         return Promise.reject(new Error("Firebase module is not available in your app"));
     }
 
     if (Platform.OS === "android") {
-        return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS)
-            .then(() => {
-                return true;
-            })
-            .catch(() => {
-                return false;
-            });
+        try {
+            const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+            return granted === PermissionsAndroid.RESULTS.GRANTED;
+        } catch (error) {
+            console.error("Failed to request permission on Android", error);
+            return false;
+        }
     }
 
-    return messaging()
-        .requestPermission()
-        .then(() =>
-            Platform.OS === "ios" && !messaging().isDeviceRegisteredForRemoteMessages
-                ? messaging()
-                      .registerDeviceForRemoteMessages()
-                      .then(() => true)
-                : true
-        )
-        .catch(() => false);
+    try {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        if (!enabled) {
+            return false;
+        }
+
+        if (!messaging().isDeviceRegisteredForRemoteMessages) {
+            await messaging().registerDeviceForRemoteMessages();
+            return true;
+        }
+        return true;
+    } catch (error) {
+        console.error("Failed to request permission on iOS", error);
+        return false;
+    }
 
     // END USER CODE
 }
