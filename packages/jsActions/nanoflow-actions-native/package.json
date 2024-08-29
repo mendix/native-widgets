@@ -14,7 +14,7 @@
   },
   "testProject": {
     "githubUrl": "https://github.com/mendix/native-mobile-resources",
-    "branchName": "main"
+    "branchName": "mx/10.12.x"
   },
   "scripts": {
     "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nanoflowcommons",

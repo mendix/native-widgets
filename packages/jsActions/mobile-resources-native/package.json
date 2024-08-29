@@ -14,7 +14,7 @@
   },
   "testProject": {
     "githubUrl": "https://github.com/mendix/native-mobile-resources",
-    "branchName": "main"
+    "branchName": "mx/10.12.x"
   },
   "scripts": {
     "prestart": "rimraf ./dist/tsc",
