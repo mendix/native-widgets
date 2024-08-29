@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.1] - 2024-8-29
+
 ### Fixed
 
 -   We Resolved an issue where an empty marker callout box would appear in Apple Maps on iOS when no content was provided for the marker.
