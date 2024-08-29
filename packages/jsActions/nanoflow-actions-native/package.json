@@ -9,12 +9,12 @@
     "url": "https://github.com/mendix/native-widgets.git"
   },
   "marketplace": {
-    "minimumMXVersion": "10.6.0.23934",
+    "minimumMXVersion": "10.6.13.43489",
     "marketplaceId": 109515
   },
   "testProject": {
     "githubUrl": "https://github.com/mendix/native-mobile-resources",
-    "branchName": "main"
+    "branchName": "mx/10.6.x"
   },
   "scripts": {
     "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nanoflowcommons",

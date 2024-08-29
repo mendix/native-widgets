@@ -9,12 +9,12 @@
     "url": "https://github.com/mendix/native-widgets.git"
   },
   "marketplace": {
-    "minimumMXVersion": "10.6.9.36429",
+    "minimumMXVersion": "10.6.13.43489",
     "marketplaceId": 109513
   },
   "testProject": {
     "githubUrl": "https://github.com/mendix/native-mobile-resources",
-    "branchName": "main"
+    "branchName": "mx/10.6.x"
   },
   "scripts": {
     "prestart": "rimraf ./dist/tsc",
