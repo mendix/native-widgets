@@ -31,7 +31,7 @@ jobs:
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - name: "Defining environment variables"
         id: variables
-        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo ''; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
+        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo '--all'; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining node version"
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
@@ -50,6 +50,6 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Linting code"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --all --parallel run lint
+        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run lint
       - name: "Running unit tests"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --all --parallel run test
+        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run test

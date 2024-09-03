@@ -31,9 +31,9 @@ jobs:
       - name: "Installing dependencies"
         run: yarn install
       - name: "Building native widgets and js actions"
-        run: yarn workspaces foreach run release
+        run: yarn workspaces foreach --all run release
       - name: "Updating Native Mobile Resources project"
-        run: yarn workspaces foreach run create-modules
+        run: yarn workspaces foreach --all run create-modules
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
