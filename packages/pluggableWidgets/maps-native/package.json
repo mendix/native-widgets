@@ -1,7 +1,7 @@
 {
   "name": "maps-native",
   "widgetName": "Maps",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "@mendix/piw-utils-internal": "*",
     "prop-types": "^15.7.2",
     "react-native-geocoder": "0.5.0",
-    "react-native-maps": "0.31.1"
+    "react-native-maps": "1.14.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
