@@ -23,11 +23,16 @@ jobs:
       - name: "Determine scope"
         id: scope
         run: |
-          if [ ${{ github.event_name }} == 'pull_request' ]; then
+          echo "Event name: '${{ github.event_name }}'"
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
-          elif [ {{ github.event_name }} != 'pull_request' ]; then
+          else
             echo "scope=--include '*-native'" >> $GITHUB_OUTPUT
           fi
+
+      - name: "Debug Scope Output"
+        run: |
+          echo "Scope is: ${{ steps.scope.outputs.scope }}"
   mendix-version:
     runs-on: ubuntu-22.04
     steps:
