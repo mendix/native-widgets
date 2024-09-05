@@ -4509,10 +4509,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/geojson@npm:^7946.0.7":
-  version: 7946.0.10
-  resolution: "@types/geojson@npm:7946.0.10"
-  checksum: 10/12c407c2dc93ecb26c08af533ee732f1506a9b29456616ba7ba1d525df96206c28ddf44a528f6a5415d7d22893e9d967420940a9c095ee5e539c1eba5fefc1f4
+"@types/geojson@npm:^7946.0.13":
+  version: 7946.0.14
+  resolution: "@types/geojson@npm:7946.0.14"
+  checksum: 10/ae511bee6488ae3bd5a3a3347aedb0371e997b14225b8983679284e22fa4ebd88627c6e3ff8b08bf4cc35068cb29310c89427311ffc9322c255615821a922e71
   languageName: node
   linkType: hard
 
@@ -7633,7 +7633,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deprecated-react-native-prop-types@npm:^2.2.0, deprecated-react-native-prop-types@npm:^2.3.0":
+"deprecated-react-native-prop-types@npm:^2.2.0":
   version: 2.3.0
   resolution: "deprecated-react-native-prop-types@npm:2.3.0"
   dependencies:
@@ -12297,7 +12297,7 @@ __metadata:
     eslint: "npm:^7.20.0"
     prop-types: "npm:^15.7.2"
     react-native-geocoder: "npm:0.5.0"
-    react-native-maps: "npm:0.31.1"
+    react-native-maps: "npm:1.14.0"
   languageName: unknown
   linkType: soft
 
@@ -15358,20 +15358,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-maps@npm:0.31.1":
-  version: 0.31.1
-  resolution: "react-native-maps@npm:0.31.1"
+"react-native-maps@npm:1.14.0":
+  version: 1.14.0
+  resolution: "react-native-maps@npm:1.14.0"
   dependencies:
-    "@types/geojson": "npm:^7946.0.7"
-    deprecated-react-native-prop-types: "npm:^2.3.0"
+    "@types/geojson": "npm:^7946.0.13"
   peerDependencies:
-    react: ">= 16.0"
-    react-native: ">= 0.51"
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
     react-native-web: ">= 0.11"
   peerDependenciesMeta:
     react-native-web:
       optional: true
-  checksum: 10/ee324e77d597dcb9334ea9579b2a15f7a9f84b1bd86a7860eb7c59b0c686b9494ed0887ec3f3448d05dc2200b68d2496dd0832439a247f79d7516b83ff94506c
+  checksum: 10/1059b1db941a85fe984cb9220a5d72623dd9c745cecb9591dc2b069cadbe1404c650464df9cc1efe482333faa3dce4782a84de087361804e80fd124e8e36c9bf
   languageName: node
   linkType: hard
 

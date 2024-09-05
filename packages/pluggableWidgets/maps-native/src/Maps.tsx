@@ -3,7 +3,7 @@ import { ActionValue, ValueStatus, Option } from "mendix";
 import { Icon } from "mendix/components/native/Icon";
 import { Component, createElement, createRef } from "react";
 import { ActivityIndicator, Platform, View } from "react-native";
-import MapView, { LatLng, Marker as MarkerView } from "react-native-maps";
+import MapView, { Callout, LatLng, Marker as MarkerView } from "react-native-maps";
 import { Big } from "big.js";
 
 import { DefaultZoomLevelEnum, DynamicMarkersType, MapsProps, MarkersType } from "../typings/MapsProps";
@@ -75,7 +75,7 @@ export class Maps extends Component<Props, State> {
                 {this.state.status !== Status.LoadingMarkers ? (
                     <MapView
                         ref={this.mapViewRef}
-                        provider={this.props.provider === "default" ? null : this.props.provider}
+                        provider={this.props.provider === "default" ? undefined : this.props.provider}
                         mapType={this.props.mapType}
                         showsUserLocation={this.props.showsUserLocation}
                         showsMyLocationButton={this.props.showsUserLocation}
@@ -107,6 +107,7 @@ export class Maps extends Component<Props, State> {
     }
 
     private renderMarker({ key, props, coordinate }: Marker): JSX.Element {
+        const isFilled = props.description || props.title;
         return (
             <MarkerView
                 key={key}
@@ -117,6 +118,7 @@ export class Maps extends Component<Props, State> {
                 pinColor={props.iconColor || this.styles.marker.color}
                 opacity={this.styles.marker.opacity}
             >
+                {isFilled ? null : <Callout tooltip />}
                 {props.icon && (
                     <Icon icon={props.icon} color={props.iconColor || this.styles.marker.color} size={props.iconSize} />
                 )}
