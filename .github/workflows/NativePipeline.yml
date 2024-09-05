@@ -8,10 +8,51 @@ on:
         required: false
         type: string
 
-      workspaces:
-        description: "Add comma-separated list of workspaces to run (animation-native,video-player-native, etc..)"
-        required: false
+      workspace:
+        description: "Select a widget to test (Default will run all)"
+        required: true
         default: "*-native"
+        type: choice
+        options:
+          - "*-native"
+          - accordion-native
+          - activity-indicator-native
+          - animation-native
+          - app-events-native
+          - background-gradient-native
+          - background-image-native
+          - badge-native
+          - bar-chart-native
+          - barcode-scanner-native
+          - bottom-sheet-native
+          - carousel-native
+          - color-picker-native
+          - column-chart-native
+          - feedback-native
+          - floating-action-button-native
+          - gallery-native
+          - gallery-text-filter-native
+          - image-native
+          - intro-screen-native
+          - line-chart-native
+          - listview-swipe-native
+          - maps-native
+          - notifications-native
+          - pie-doughnut-chart-native
+          - popup-menu-native
+          - progress-bar-native
+          - qr-code-native
+          - radio-buttons-native
+          - range-slider-native
+          - rating-native
+          - repeater-native
+          - safe-area-view-native
+          - signature-native
+          - slider-native
+          - switch-native
+          - toggle-buttons-native
+          - video-player-native
+          - web-view-native
 
   # schedule:
   #   - cron: "0 6 * * *"
@@ -34,17 +75,15 @@ jobs:
       - name: "Determine scope"
         id: scope
         run: |
-          if [ "${{ github.event.inputs.workspaces }}" != "*-native" ]; then
-            selected_workspaces=$(echo "${{ github.event.inputs.workspaces }}" | sed 's/,/ /g')
-            echo "scope=--include '${selected_workspaces}'" >> $GITHUB_OUTPUT
-            echo "workspaces=${selected_workspaces}" >> $GITHUB_OUTPUT
+          if [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
+            selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
+            echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
           else
             if [ "${{ github.event_name }}" == "pull_request" ]; then
               echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
             else
               echo "scope=--include '*-native' --all" >> $GITHUB_OUTPUT
             fi
-            echo "workspaces=''" >> $GITHUB_OUTPUT
           fi
 
       - name: "Debug Scope Output"
@@ -113,29 +152,9 @@ jobs:
       - name: "Install dependencies"
         run: yarn install --immutable
       - name: "Unit test"
-        run: |
-          if [ -n "${{ steps.scope.outputs.workspaces }}" ]; then
-            # Loop through each workspace and run tests
-            for workspace in ${{ steps.scope.outputs.workspaces }}; do
-              echo "Running tests in workspace: $workspace"
-              yarn workspace $workspace run test
-            done
-          else
-            echo "Running tests based on scope: ${{ steps.scope.outputs.scope }}"
-            yarn workspaces foreach ${{ steps.scope.outputs.scope }} run test
-          fi
+        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
       - name: "Run build for development"
-        run: |
-          if [ -n "${{ steps.scope.outputs.workspaces }}" ]; then
-            # Loop through each workspace and run build
-            for workspace in ${{ steps.scope.outputs.workspaces }}; do
-                cho "Running build in workspace: $workspace"
-              yarn workspace $workspace run build
-            done
-          else
-            echo "Running build based on scope: ${{ steps.scope.outputs.scope }}"
-            yarn workspaces foreach ${{ steps.scope.outputs.scope }} run build
-          fi
+        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
         env:
           NODE_OPTIONS: --max_old_space_size=6144
       - name: "Upload resources artifact"
