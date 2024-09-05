@@ -1,6 +1,17 @@
 name: Run Native Pipeline
 on:
   workflow_dispatch:
+    inputs:
+      nt_branch:
+        description: "Native Template branch to use (default: master)"
+        default: "master"
+        required: false
+        type: string
+
+      workspaces:
+        description: "Add comma-separated list of workspaces to run (animation-native,video-player-native, etc..)"
+        required: false
+        default: "*-native"
 
   # schedule:
   #   - cron: "0 6 * * *"
@@ -23,16 +34,23 @@ jobs:
       - name: "Determine scope"
         id: scope
         run: |
-          echo "Event name: '${{ github.event_name }}'"
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
+          if [ "${{ github.event.inputs.workspaces }}" != "*-native" ]; then
+            selected_workspaces=$(echo "${{ github.event.inputs.workspaces }}" | sed 's/,/ /g')
+            echo "scope=--include '${selected_workspaces}'" >> $GITHUB_OUTPUT
+            echo "workspaces=${selected_workspaces}" >> $GITHUB_OUTPUT
           else
-            echo "scope=--include '*-native'" >> $GITHUB_OUTPUT
+            if [ "${{ github.event_name }}" == "pull_request" ]; then
+              echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
+            else
+              echo "scope=--include '*-native' --all" >> $GITHUB_OUTPUT
+            fi
+            echo "workspaces=''" >> $GITHUB_OUTPUT
           fi
 
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
+
   mendix-version:
     runs-on: ubuntu-22.04
     steps:
@@ -95,9 +113,29 @@ jobs:
       - name: "Install dependencies"
         run: yarn install --immutable
       - name: "Unit test"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
+        run: |
+          if [ -n "${{ steps.scope.outputs.workspaces }}" ]; then
+            # Loop through each workspace and run tests
+            for workspace in ${{ steps.scope.outputs.workspaces }}; do
+              echo "Running tests in workspace: $workspace"
+              yarn workspace $workspace run test
+            done
+          else
+            echo "Running tests based on scope: ${{ steps.scope.outputs.scope }}"
+            yarn workspaces foreach ${{ steps.scope.outputs.scope }} run test
+          fi
       - name: "Run build for development"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
+        run: |
+          if [ -n "${{ steps.scope.outputs.workspaces }}" ]; then
+            # Loop through each workspace and run build
+            for workspace in ${{ steps.scope.outputs.workspaces }}; do
+                cho "Running build in workspace: $workspace"
+              yarn workspace $workspace run build
+            done
+          else
+            echo "Running build based on scope: ${{ steps.scope.outputs.scope }}"
+            yarn workspaces foreach ${{ steps.scope.outputs.scope }} run build
+          fi
         env:
           NODE_OPTIONS: --max_old_space_size=6144
       - name: "Upload resources artifact"
@@ -197,7 +235,7 @@ jobs:
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           repository: mendix/native-template
-          ref: master
+          ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -246,7 +284,7 @@ jobs:
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           repository: mendix/native-template
-          ref: master
+          ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
