@@ -2,7 +2,7 @@ import { dynamicValue } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
 import { Modal, View } from "react-native";
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
-import { VideoProperties } from "react-native-video";
+import { ReactVideoProps } from "react-native-video";
 
 import { VideoPlayer } from "../VideoPlayer";
 import { VideoPlayerProps } from "../../typings/VideoPlayerProps";
@@ -38,7 +38,7 @@ describe("VideoPlayer", () => {
 
     it("passes the right props to the video player", () => {
         const component = render(<VideoPlayer {...defaultProps} />);
-        const props = component.getByTestId("video-player-test").props as VideoProperties;
+        const props = component.getByTestId("video-player-test").props as ReactVideoProps;
 
         expect(props.source).toEqual({ uri: "https://mendix.com/video.mp4" });
         expect(props.paused).toBe(true);
