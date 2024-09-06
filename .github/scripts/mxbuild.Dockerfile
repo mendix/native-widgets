@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/runtime:8.0
 ARG MENDIX_VERSION
+ARG MENDIX_VERSION_URL
 
 RUN \
     echo "Installing Java..." && \
@@ -10,8 +11,13 @@ RUN \
     tar xfz /tmp/openjdk.tar.gz --directory /usr/lib/jvm && \
     rm /tmp/openjdk.tar.gz 
 RUN \
-    echo "Downloading mxbuild ${MENDIX_VERSION}..." && \
-    wget -q https://cdn.mendix.com/runtime/mxbuild-${MENDIX_VERSION}.tar.gz -O /tmp/mxbuild.tar.gz && \
+    if [ -z "$MENDIX_VERSION_URL" ]; then \
+      echo "Downloading mxbuild ${MENDIX_VERSION}..." && \
+      wget -q https://cdn.mendix.com/runtime/mxbuild-${MENDIX_VERSION}.tar.gz -O /tmp/mbuild.tar.gz; \
+    else \
+      echo "Downloading mxbuild from provided URL..." && \
+      wget -q $MENDIX_VERSION_URL -O /tmp/mbuild.tar.gz; \
+    fi && \
     mkdir /tmp/mxbuild && \
     tar xfz /tmp/mxbuild.tar.gz --directory /tmp/mxbuild && \
     rm /tmp/mxbuild.tar.gz 

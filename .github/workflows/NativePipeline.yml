@@ -2,6 +2,11 @@ name: Run Native Pipeline
 on:
   workflow_dispatch:
     inputs:
+      mendix_version_url:
+        description: "Provide the url of SP to be used in job (Full path to mxbuild.tar.gz)"
+        required: false
+        default: ""
+
       nt_branch:
         description: "Native Template branch to use (default: master)"
         default: "master"
@@ -54,12 +59,6 @@ on:
           - video-player-native
           - web-view-native
 
-  # schedule:
-  #   - cron: "0 6 * * *"
-
-  # push:
-  #   branches: [master]
-
   pull_request:
   #   branches: [master]
 
@@ -97,17 +96,24 @@ jobs:
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       - name: "Get Mendix version"
         id: get-mendix-version
+        if: ${{ github.event.inputs.mendix_version_url == '' }}
         uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
         with:
           path: configs/e2e/mendix-versions.json
           prop_path: latest
-    outputs:
-      mendix-version: ${{ steps.get-mendix-version.outputs.prop }}
+
+      - name: Use provided mx version
+        id: use-provided-mx-version
+        run: |
+          if [[ -z "${{ github.event.inputs.mendix_version_url }}" ]]; then
+            echo "MENDIX_VERSION=${{ steps.get-mendix-version.outputs.prop }}" >> $GITHUB_ENV
+          else
+            echo "MENDIX_VERSION_URL=${{ github.event.inputs.mendix_version_url }}" >> $GITHUB_ENV
+          fi
+
   docker-images:
     needs: mendix-version
     runs-on: ubuntu-22.04
-    env:
-      MENDIX_VERSION: ${{ needs.mendix-version.outputs.mendix-version }}
     steps:
       - name: "Login to GitHub Container Registry"
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
@@ -117,7 +123,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Check if docker image already exists"
         run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ env.MENDIX_VERSION }} || EXIT_CODE=$?
+          docker manifest inspect ghcr.io/m/native-widgets/mxbuild:${{ env.MENDIX_VERSION }} || EXIT_CODE=$?
           echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -130,6 +136,7 @@ jobs:
           context: ./.github/scripts
           build-args: |
             MENDIX_VERSION=${{ env.MENDIX_VERSION }}
+            MENDIX_VERSION_URL=${{ env.MENDIX_VERSION_URL }}
           push: true
           tags: ghcr.io/mendix/native-widgets/mxbuild:${{ env.MENDIX_VERSION }}
           secrets: GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
