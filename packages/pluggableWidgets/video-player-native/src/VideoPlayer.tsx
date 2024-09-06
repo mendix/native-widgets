@@ -12,7 +12,7 @@ import {
     NativeModules,
     Pressable
 } from "react-native";
-import Video, { OnProgressData, VideoProperties } from "react-native-video";
+import Video, { OnProgressData, ReactVideoProps, VideoRef } from "react-native-video";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { VideoPlayerProps } from "../typings/VideoPlayerProps";
 import { defaultVideoStyle, VideoStyle } from "./ui/Styles";
@@ -29,8 +29,8 @@ const enum StatusEnum {
 export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     const [styles, setStyles] = useState(flattenStyles(defaultVideoStyle, props.style));
     const timeoutRef = useRef<NodeJS.Timeout>();
-    const playerRef = useRef<Video>(null);
-    const fullScreenPlayerRef = useRef<Video>(null);
+    const playerRef = useRef<VideoRef>(null);
+    const fullScreenPlayerRef = useRef<VideoRef>(null);
     const [status, setStatus] = useState(StatusEnum.NOT_READY);
     const [videoAspectRatio, setVideoAspectRatio] = useState(0);
     const [fullScreen, setFullScreen] = useState(false);
@@ -100,7 +100,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
         }
     }
 
-    const videoProps: VideoProperties = {
+    const videoProps: ReactVideoProps = {
         testID: props.name,
         source: { uri: isAvailable(props.videoUrl) ? props.videoUrl.value : undefined },
         muted: props.muted,
