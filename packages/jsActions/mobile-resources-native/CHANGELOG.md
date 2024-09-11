@@ -6,12 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   We have upgraded React Native Permissions to 4.5.1
+
 ## [8.0.1] Native Mobile Resources - 2024-8-29
+
 ### Fixed
 
 -   We fixed an issue where the `RequestNotificationPermission` action incorrectly returned 'true' after the user previously selected 'Don't Allow' on iOS and Android.
 
 ## [2.2.1] Accordion
+
 ### Fixed
 
 -   Fixed a bug where the accordion state was not updating correctly when the "Collapsed" attribute was selected.
@@ -19,11 +25,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Resolved an issue where the accordion's dynamic content was not updating its height after the initial render.
 
 ## [3.3.0] BottomSheet
+
 ### Added
 
 -   We have upgraded React Native Device Info to version 11.1.0.
 
 ## [1.1.0] Gallery
+
 ### Added
 
 -   We have upgraded React Native Device Info to version 11.1.0.
@@ -33,16 +41,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We've resolved an issue where the loading indicator was triggered when pulling down the list, even in the absence of a pull-down event.
 
 ## [3.3.0] IntroScreen
+
 ### Added
 
 -   We have upgraded React Native Device Info to version 11.1.0.
 
 ## [3.1.0] ListViewSwipe
+
 ### Added
 
 -   We have upgraded React Native Gesture Handler to version 2.16.2.
 
 ## [5.0.1] Rating
+
 ### Changed
 
 -   We have updated the rating native widget to replace the use of AnimatableProps from the react-native-animatable library with AnimatableProperties.
@@ -52,6 +63,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We made the widget compatible with React Native 0.73.8
 
 ## [5.0.1] VideoPlayer
+
 ### Fixed
 
 -   We have fixed an issue where the video player was not functioning on iOS devices.

@@ -1,6 +1,6 @@
 export type IOSPermissionName =
     | "APP_TRACKING_TRANSPARENCY"
-    | "BLUETOOTH_PERIPHERAL"
+    | "BLUETOOTH"
     | "CALENDARS"
     | "CAMERA"
     | "CONTACTS"
@@ -15,6 +15,7 @@ export type IOSPermissionName =
     | "REMINDERS"
     | "SIRI"
     | "SPEECH_RECOGNITION"
+    | "CALENDARS_WRITE_ONLY"
     | "STOREKIT";
 
 export type ANDROIDPermissionName =
@@ -51,4 +52,10 @@ export type ANDROIDPermissionName =
     | "WRITE_CALL_LOG"
     | "WRITE_CONTACTS"
     | "WRITE_EXTERNAL_STORAGE"
-    | "SCHEDULE_EXACT_ALARM";
+    | "SCHEDULE_EXACT_ALARM"
+    | "BODY_SENSORS_BACKGROUND"
+    | "NEARBY_WIFI_DEVICES"
+    | "READ_MEDIA_AUDIO"
+    | "READ_MEDIA_IMAGES"
+    | "READ_MEDIA_VIDEO"
+    | "READ_MEDIA_VISUAL_USER_SELECTED";
