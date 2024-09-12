@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   We have updated `react-native-permissions` to version `3.6.1`
+
 ## [4.1.3] Native Mobile Resources - 2024-8-29
+
 ### Fixed
 
 -   We fixed an issue where the `RequestNotificationPermission` action incorrectly returned 'true' after the user previously selected 'Don't Allow' on iOS and Android.
 
 ## [4.0.1] Maps
+
 ### Fixed
 
 -   We Resolved an issue where an empty marker callout box would appear in Apple Maps on iOS when no content was provided for the marker.
