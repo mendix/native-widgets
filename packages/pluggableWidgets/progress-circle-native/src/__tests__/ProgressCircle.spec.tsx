@@ -1,7 +1,7 @@
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 import { createElement } from "react";
-import { Text } from "react-native";
+import { PixelRatio, Text } from "react-native";
 import { Circle } from "react-native-progress";
 import { render } from "@testing-library/react-native";
 
@@ -9,6 +9,7 @@ import { ProgressCircle, Props } from "../ProgressCircle";
 
 describe("ProgressCircle", () => {
     it("renders", () => {
+        jest.spyOn(PixelRatio, "getFontScale").mockReturnValue(1);
         const component = render(<ProgressCircle {...createProps(50, 0, 100)} />);
         expect(component.toJSON()).toMatchSnapshot();
         expect(component.UNSAFE_getByType(Circle).props.progress).toBe(0.5);
