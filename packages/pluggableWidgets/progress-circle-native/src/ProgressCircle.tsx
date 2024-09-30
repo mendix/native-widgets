@@ -1,6 +1,6 @@
 import { available, flattenStyles, unavailable } from "@mendix/piw-native-utils-internal";
 import { Component, createElement } from "react";
-import { Text, View } from "react-native";
+import { Text, View, PixelRatio } from "react-native";
 import { Circle } from "react-native-progress";
 
 import { ProgressCircleProps } from "../typings/ProgressCircleProps";
@@ -15,7 +15,6 @@ export class ProgressCircle extends Component<Props> {
         const validationMessages = this.validate();
         const progress = validationMessages.length === 0 ? this.calculateProgress() : 0;
         const showsText = this.props.circleText !== "none";
-
         return (
             <View style={this.styles.container}>
                 <Circle
@@ -23,7 +22,8 @@ export class ProgressCircle extends Component<Props> {
                     progress={progress}
                     textStyle={this.styles.text}
                     color={this.styles.fill.backgroundColor}
-                    size={Number(this.styles.circle.size)}
+                    // Update the progress size based on the device's font scale
+                    size={Number(this.styles.circle.size) * PixelRatio.getFontScale()}
                     borderWidth={this.styles.circle.borderWidth}
                     borderColor={this.styles.circle.borderColor}
                     thickness={this.styles.fill.width}
