@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.1.5] Native Mobile Resources - 2024-10-1
 -   We have updated `react-native-permissions` to version `3.6.1`
+
+## [3.1.2] ProgressCircle
+### Added
+
+-   Support device font size for responsive progress circle sizing.
 
 ## [4.1.3] Native Mobile Resources - 2024-8-29
 
