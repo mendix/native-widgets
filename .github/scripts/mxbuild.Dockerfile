@@ -10,25 +10,31 @@ RUN \
     mkdir /usr/lib/jvm && \
     tar xfz /tmp/openjdk.tar.gz --directory /usr/lib/jvm && \
     rm /tmp/openjdk.tar.gz 
+
 RUN \
-    if [ -z "$MENDIX_VERSION_URL" ]; then \
-      echo "Downloading mxbuild ${MENDIX_VERSION}..." && \
-      wget -q https://cdn.mendix.com/runtime/mxbuild-${MENDIX_VERSION}.tar.gz -O /tmp/mbuild.tar.gz; \
-    else \
+    if [ -n "$MENDIX_VERSION_URL" ]; then \
       echo "Downloading mxbuild from provided URL..." && \
-      wget -q $MENDIX_VERSION_URL -O /tmp/mbuild.tar.gz; \
+      wget -q $MENDIX_VERSION_URL -O /tmp/mxbuild.tar.gz; \
+    else \
+      echo "Downloading mxbuild ${MENDIX_VERSION}..." && \
+      wget -q https://cdn.mendix.com/runtime/mxbuild-${MENDIX_VERSION}.tar.gz -O /tmp/mxbuild.tar.gz; \
     fi && \
     mkdir /tmp/mxbuild && \
     tar xfz /tmp/mxbuild.tar.gz --directory /tmp/mxbuild && \
     rm /tmp/mxbuild.tar.gz 
+
 RUN \
     apt-get -qq remove -y wget && \
     apt-get clean 
+
 RUN \
     echo "#!/bin/bash -x" >/bin/mxbuild && \
     echo "dotnet /tmp/mxbuild/modeler/mxbuild.dll --java-home=/usr/lib/jvm/jdk-11.0.2 --java-exe-path=/usr/lib/jvm/jdk-11.0.2/bin/java \$@" >>/bin/mxbuild && \
     chmod +x /bin/mxbuild 
+
 RUN \
     echo "#!/bin/bash -x" >/bin/mx && \
     echo "dotnet /tmp/mxbuild/modeler/mx.dll \$@" >>/bin/mx && \
     chmod +x /bin/mx
+
+ENV M2EE_TOOLS_JAR=/tmp/mxbuild/modeler/tools/m2ee-tools.jar

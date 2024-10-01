@@ -91,68 +91,77 @@ jobs:
 
   mendix-version:
     runs-on: ubuntu-22.04
+    outputs:
+      mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
+      mendix_version_url: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION_URL }}
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-      - name: "Get Mendix version"
+        uses: actions/checkout@v3
+      - name: "Get Mendix version from JSON"
         id: get-mendix-version
         if: ${{ github.event.inputs.mendix_version_url == '' }}
-        uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
+        uses: notiz-dev/github-action-json-property@v0.2.0
         with:
           path: configs/e2e/mendix-versions.json
           prop_path: latest
-
-      - name: Use provided mx version
-        id: use-provided-mx-version
+      - name: Set Mendix version and URL
+        id: set-mendix-version
         run: |
-          if [[ -z "${{ github.event.inputs.mendix_version_url }}" ]]; then
-            echo "MENDIX_VERSION=${{ steps.get-mendix-version.outputs.prop }}" >> $GITHUB_ENV
+          if [[ -n "${{ github.event.inputs.mendix_version_url }}" ]]; then
+            MENDIX_VERSION=$(basename ${{ github.event.inputs.mendix_version_url }} | sed 's/mxbuild-\(.*\)\.tar\.gz/\1/')
+            echo "MENDIX_VERSION=${MENDIX_VERSION}" >> $GITHUB_OUTPUT
+            echo "MENDIX_VERSION_URL=${{ github.event.inputs.mendix_version_url }}" >> $GITHUB_OUTPUT
           else
-            echo "MENDIX_VERSION_URL=${{ github.event.inputs.mendix_version_url }}" >> $GITHUB_ENV
+            MENDIX_VERSION="${{ steps.get-mendix-version.outputs.prop }}"
+            echo "MENDIX_VERSION=${MENDIX_VERSION}" >> $GITHUB_OUTPUT
+            echo "MENDIX_VERSION_URL=https://cdn.mendix.com/runtime/mxbuild-${MENDIX_VERSION}.tar.gz" >> $GITHUB_OUTPUT
           fi
+      - name: "Debug Mendix Version"
+        run: |
+          echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
+          echo "Mendix Version URL: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION_URL }}"
 
   docker-images:
     needs: mendix-version
     runs-on: ubuntu-22.04
     steps:
       - name: "Login to GitHub Container Registry"
-        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
+        uses: docker/login-action@v3.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Check if docker image already exists"
         run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ env.MENDIX_VERSION }} || EXIT_CODE=$?
+          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
           echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v3
         if: ${{ env.IMAGE_MISSING != 0 }}
       - name: "Build mxbuild image"
         if: ${{ env.IMAGE_MISSING != 0 }}
-        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+        uses: docker/build-push-action@v5.3.0
         with:
           file: ./.github/scripts/mxbuild.Dockerfile
           context: ./.github/scripts
           build-args: |
-            MENDIX_VERSION=${{ env.MENDIX_VERSION }}
-            MENDIX_VERSION_URL=${{ env.MENDIX_VERSION_URL }}
+            MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
+            MENDIX_VERSION_URL=${{ needs.mendix-version.outputs.mendix_version_url }}
           push: true
-          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ env.MENDIX_VERSION }}
-          secrets: GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
   resources:
-    needs: scope
+    needs: [scope, mendix-version]
     runs-on: ubuntu-22.04
     permissions:
       packages: read
       contents: read
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -165,7 +174,7 @@ jobs:
         env:
           NODE_OPTIONS: --max_old_space_size=6144
       - name: "Upload resources artifact"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v3
         with:
           name: resources
           path: |
@@ -175,7 +184,11 @@ jobs:
   project:
     needs: [resources, mendix-version]
     runs-on: ubuntu-22.04
-    container: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix-version }}
+    container:
+      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Make sure curl is installed"
         run: |
@@ -184,14 +197,16 @@ jobs:
       - name: "Download test project"
         run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
       - name: "Extract test project"
-        uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
+        uses: montudor/action-zip@v1
         with:
-          args: unzip -qq project.zip
+          args: unzip -qq project.zip -d .
       - name: "Download resources artifact"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        uses: actions/download-artifact@v3
         with:
           name: resources
           path: resources
+      - name: "List resources"
+        run: ls -R resources
       - name: "Move widgets"
         shell: bash
         run: |
@@ -224,7 +239,11 @@ jobs:
   android-bundle:
     needs: [project, mendix-version]
     runs-on: ubuntu-22.04
-    container: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix-version }}
+    container:
+      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -240,7 +259,11 @@ jobs:
   ios-bundle:
     needs: [project, mendix-version]
     runs-on: ubuntu-22.04
-    container: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix-version }}
+    container:
+      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -408,7 +431,7 @@ jobs:
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix-version }}
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Download Android app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -502,7 +525,7 @@ jobs:
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix-version }}
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
