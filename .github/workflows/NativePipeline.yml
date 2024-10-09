@@ -1,12 +1,63 @@
 name: Run Native Pipeline
 on:
   workflow_dispatch:
+    inputs:
+      mendix_version:
+        description: "Provide the SP version to be used (e.g., 10.14.0.43709) - has to be a released version (Default: latest from Mendix versions.json)"
+        required: false
+        default: ""
 
-  # schedule:
-  #   - cron: "0 6 * * *"
+      nt_branch:
+        description: "Native Template branch to use (Default: master)"
+        default: "master"
+        required: false
+        type: string
 
-  # push:
-  #   branches: [master]
+      workspace:
+        description: "Select a widget to test (Default will run all)"
+        required: true
+        default: "*-native"
+        type: choice
+        options:
+          - "*-native"
+          - accordion-native
+          - activity-indicator-native
+          - animation-native
+          - app-events-native
+          - background-gradient-native
+          - background-image-native
+          - badge-native
+          - bar-chart-native
+          - barcode-scanner-native
+          - bottom-sheet-native
+          - carousel-native
+          - color-picker-native
+          - column-chart-native
+          - feedback-native
+          - floating-action-button-native
+          - gallery-native
+          - gallery-text-filter-native
+          - image-native
+          - intro-screen-native
+          - line-chart-native
+          - listview-swipe-native
+          - maps-native
+          - notifications-native
+          - pie-doughnut-chart-native
+          - popup-menu-native
+          - progress-bar-native
+          - qr-code-native
+          - radio-buttons-native
+          - range-slider-native
+          - rating-native
+          - repeater-native
+          - safe-area-view-native
+          - signature-native
+          - slider-native
+          - switch-native
+          - toggle-buttons-native
+          - video-player-native
+          - web-view-native
 
   pull_request:
   #   branches: [master]
@@ -23,34 +74,49 @@ jobs:
       - name: "Determine scope"
         id: scope
         run: |
-          echo "Event name: '${{ github.event_name }}'"
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
+          if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
+            selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
+            echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
           else
-            echo "scope=--include '*-native'" >> $GITHUB_OUTPUT
+            if [ "${{ github.event_name }}" == "pull_request" ]; then
+              echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
+            else
+              echo "scope=--all--include '*-native'" >> $GITHUB_OUTPUT
+            fi
           fi
 
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
+
   mendix-version:
     runs-on: ubuntu-22.04
+    outputs:
+      mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-      - name: "Get Mendix version"
+      - name: "Get Mendix version from JSON"
         id: get-mendix-version
         uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
         with:
           path: configs/e2e/mendix-versions.json
           prop_path: latest
-    outputs:
-      mendix-version: ${{ steps.get-mendix-version.outputs.prop }}
+      - name: Set Mendix version
+        id: set-mendix-version
+        run: |
+          if [[ -n "${{ github.event.inputs.mendix_version }}" ]]; then
+            echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> $GITHUB_OUTPUT
+          else
+            echo "MENDIX_VERSION=${{ steps.get-mendix-version.outputs.prop }}" >> $GITHUB_OUTPUT
+          fi
+      - name: "Debug Mendix Version"
+        run: |
+          echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
+
   docker-images:
     needs: mendix-version
     runs-on: ubuntu-22.04
-    env:
-      MENDIX_VERSION: ${{ needs.mendix-version.outputs.mendix-version }}
     steps:
       - name: "Login to GitHub Container Registry"
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
@@ -60,7 +126,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Check if docker image already exists"
         run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ env.MENDIX_VERSION }} || EXIT_CODE=$?
+          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
           echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -72,12 +138,11 @@ jobs:
           file: ./.github/scripts/mxbuild.Dockerfile
           context: ./.github/scripts
           build-args: |
-            MENDIX_VERSION=${{ env.MENDIX_VERSION }}
+            MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
           push: true
-          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ env.MENDIX_VERSION }}
-          secrets: GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
   resources:
-    needs: scope
+    needs: [scope, mendix-version]
     runs-on: ubuntu-22.04
     permissions:
       packages: read
@@ -111,7 +176,11 @@ jobs:
   project:
     needs: [resources, mendix-version]
     runs-on: ubuntu-22.04
-    container: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix-version }}
+    container:
+      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Make sure curl is installed"
         run: |
@@ -122,12 +191,14 @@ jobs:
       - name: "Extract test project"
         uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
         with:
-          args: unzip -qq project.zip
+          args: unzip -qq project.zip -d .
       - name: "Download resources artifact"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: resources
           path: resources
+      - name: "List resources"
+        run: ls -R resources
       - name: "Move widgets"
         shell: bash
         run: |
@@ -160,7 +231,11 @@ jobs:
   android-bundle:
     needs: [project, mendix-version]
     runs-on: ubuntu-22.04
-    container: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix-version }}
+    container:
+      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -176,7 +251,11 @@ jobs:
   ios-bundle:
     needs: [project, mendix-version]
     runs-on: ubuntu-22.04
-    container: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix-version }}
+    container:
+      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -197,7 +276,7 @@ jobs:
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           repository: mendix/native-template
-          ref: master
+          ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -246,7 +325,7 @@ jobs:
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           repository: mendix/native-template
-          ref: master
+          ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -344,7 +423,7 @@ jobs:
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix-version }}
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Download Android app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -438,7 +517,7 @@ jobs:
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix-version }}
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
