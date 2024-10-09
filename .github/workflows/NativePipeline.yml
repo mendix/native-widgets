@@ -3,12 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       mendix_version:
-        description: "Provide the SP version to be used (e.g., 10.14.0.43709). If empty, latest defined version from Mendix versions.json will be used."
+        description: "Provide the SP version to be used (e.g., 10.14.0.43709) - has to be a released version (Default: latest from Mendix versions.json)"
         required: false
         default: ""
 
       nt_branch:
-        description: "Native Template branch to use (default: master)"
+        description: "Native Template branch to use (Default: master)"
         default: "master"
         required: false
         type: string

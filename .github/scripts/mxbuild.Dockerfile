@@ -2,13 +2,14 @@ FROM mcr.microsoft.com/dotnet/runtime:8.0
 ARG MENDIX_VERSION
 
 RUN \
-    echo "Installing Java..." && \
+    echo "Installing Java 17..." && \
     apt-get -qq update && \
     apt-get -qq install -y wget libgdiplus && \
-    wget -q https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz -O /tmp/openjdk.tar.gz && \
-    mkdir /usr/lib/jvm && \
+    wget -q https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz -O /tmp/openjdk.tar.gz && \
+    mkdir -p /usr/lib/jvm && \
     tar xfz /tmp/openjdk.tar.gz --directory /usr/lib/jvm && \
-    rm /tmp/openjdk.tar.gz 
+    mv /usr/lib/jvm/jdk-17.0.2 /usr/lib/jvm/java-17-openjdk && \
+    rm /tmp/openjdk.tar.gz  
 
 RUN \
     echo "Downloading mxbuild ${MENDIX_VERSION}..." && \
@@ -23,8 +24,8 @@ RUN \
 
 RUN \
     echo "#!/bin/bash -x" >/bin/mxbuild && \
-    echo "dotnet /tmp/mxbuild/modeler/mxbuild.dll --java-home=/usr/lib/jvm/jdk-11.0.2 --java-exe-path=/usr/lib/jvm/jdk-11.0.2/bin/java \$@" >>/bin/mxbuild && \
-    chmod +x /bin/mxbuild 
+    echo "dotnet /tmp/mxbuild/modeler/mxbuild.dll --java-home=/usr/lib/jvm/java-17-openjdk --java-exe-path=/usr/lib/jvm/java-17-openjdk/bin/java \$@" >>/bin/mxbuild && \
+    chmod +x /bin/mxbuild  
 
 RUN \
     echo "#!/bin/bash -x" >/bin/mx && \
