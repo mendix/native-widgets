@@ -26,7 +26,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-svg": "^12.3.0"
+    "react-native-svg": "15.7.1"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "^9.0.0",
