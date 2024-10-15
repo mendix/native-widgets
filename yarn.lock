@@ -3859,15 +3859,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/async-storage@npm:1.12.1":
-  version: 1.12.1
-  resolution: "@react-native-community/async-storage@npm:1.12.1"
+"@react-native-async-storage/async-storage@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@react-native-async-storage/async-storage@npm:2.0.0"
   dependencies:
-    deep-assign: "npm:^3.0.0"
+    merge-options: "npm:^3.0.4"
   peerDependencies:
-    react: ^16.8
-    react-native: ">=0.59"
-  checksum: 10/a4549c930e47fc1cbdb5c45fe6ca4d8487ecd94ce17c76109ed710845ba42f21e78653ecea142dbedfd9e4687995237a9e1585d7400ed8fd5efe0d0c4f2a017e
+    react-native: ^0.0.0-0 || >=0.65 <1.0
+  checksum: 10/cd00a7fac584bfce350c0ad56a542e19c5aa77bec41a211f004c87343e971819d38c5483470fd11116e0271a5e1321ce656cc0bb66d2aa0852f74bc23be61a77
   languageName: node
   linkType: hard
 
@@ -6433,7 +6432,7 @@ __metadata:
     "@types/react-native-modal": "npm:^4.1.1"
     eslint: "npm:^7.32.0"
     react-native-actionsheet: "npm:^2.4.2"
-    react-native-device-info: "npm:11.1.0"
+    react-native-device-info: "npm:13.0.0"
     react-native-modal: "npm:^11.5.4"
     react-native-reanimated: "npm:^1.0.1"
     reanimated-bottom-sheet: "npm:^1.0.0-alpha.19"
@@ -7940,15 +7939,6 @@ __metadata:
   version: 0.7.0
   resolution: "dedent@npm:0.7.0"
   checksum: 10/87de191050d9a40dd70cad01159a0bcf05ecb59750951242070b6abf9569088684880d00ba92a955b4058804f16eeaf91d604f283929b4f614d181cd7ae633d2
-  languageName: node
-  linkType: hard
-
-"deep-assign@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "deep-assign@npm:3.0.0"
-  dependencies:
-    is-obj: "npm:^1.0.0"
-  checksum: 10/9041ccc72ae1980f014d4b745d6135d8f0e71d60ac433397550789c27e6b4d14bc0de2af69777e09f97e1d0da3007a8d78de36f7bf9df931c9968b68fc9546ab
   languageName: node
   linkType: hard
 
@@ -9578,8 +9568,13 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
+<<<<<<< HEAD
     eslint: "npm:^7.32.0"
     react-native-device-info: "npm:11.1.0"
+=======
+    eslint: "npm:^7.20.0"
+    react-native-device-info: "npm:13.0.0"
+>>>>>>> 4e026329 (chore: update native dependencies)
   languageName: unknown
   linkType: soft
 
@@ -9591,8 +9586,13 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
+<<<<<<< HEAD
     eslint: "npm:^7.32.0"
     react-native-svg: "npm:^12.3.0"
+=======
+    eslint: "npm:^7.20.0"
+    react-native-svg: "npm:15.7.1"
+>>>>>>> 4e026329 (chore: update native dependencies)
   languageName: unknown
   linkType: soft
 
@@ -10276,8 +10276,8 @@ __metadata:
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
     react-native-fast-image: "npm:8.3.2"
-    react-native-svg: "npm:^12.3.0"
-    react-native-vector-icons: "npm:10.0.3"
+    react-native-svg: "npm:15.7.1"
+    react-native-vector-icons: "npm:10.2.0"
   languageName: unknown
   linkType: soft
 
@@ -10434,11 +10434,19 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
+<<<<<<< HEAD
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@react-native-community/async-storage": "npm:1.12.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
     react-native-device-info: "npm:11.1.0"
+=======
+    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@react-native-async-storage/async-storage": "npm:2.0.0"
+    detox: "npm:^19.13.0"
+    eslint: "npm:^7.20.0"
+    react-native-device-info: "npm:13.0.0"
+>>>>>>> 4e026329 (chore: update native dependencies)
   languageName: unknown
   linkType: soft
 
@@ -10675,7 +10683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-obj@npm:^1.0.0, is-obj@npm:^1.0.1":
+"is-obj@npm:^1.0.1":
   version: 1.0.1
   resolution: "is-obj@npm:1.0.1"
   checksum: 10/3ccf0efdea12951e0b9c784e2b00e77e87b2f8bd30b42a498548a8afcc11b3287342a2030c308e473e93a7a19c9ea7854c99a8832a476591c727df2a9c79796c
@@ -12880,6 +12888,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"merge-options@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "merge-options@npm:3.0.4"
+  dependencies:
+    is-plain-obj: "npm:^2.1.0"
+  checksum: 10/d86ddb3dd6e85d558dbf25dc944f3527b6bacb944db3fdda6e84a3f59c4e4b85231095f58b835758b9a57708342dee0f8de0dffa352974a48221487fe9f4584f
+  languageName: node
+  linkType: hard
+
 "merge-stream@npm:^2.0.0":
   version: 2.0.0
   resolution: "merge-stream@npm:2.0.0"
@@ -13686,11 +13703,11 @@ __metadata:
     mendix: "npm:~10.0.9976"
     mime: "npm:3.0.0"
     react-native-blob-util: "npm:0.16.2"
-    react-native-device-info: "npm:11.1.0"
+    react-native-device-info: "npm:13.0.0"
     react-native-file-viewer: "npm:2.1.5"
     react-native-image-picker: "npm:5.0.1"
     react-native-inappbrowser-reborn: "npm:3.4.0"
-    react-native-localize: "npm:1.4.2"
+    react-native-localize: "npm:3.2.1"
     react-native-permissions: "npm:4.1.5"
     react-native-push-notification: "npm:8.1.1"
     react-native-schedule-exact-alarm-permission: "npm:^0.1.3"
@@ -13784,8 +13801,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nanoflow-actions-native@workspace:packages/jsActions/nanoflow-actions-native"
   dependencies:
+<<<<<<< HEAD
     "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
     "@react-native-community/async-storage": "npm:1.12.1"
+=======
+    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@react-native-async-storage/async-storage": "npm:2.0.0"
+>>>>>>> 4e026329 (chore: update native dependencies)
     "@react-native-community/geolocation": "npm:2.0.2"
     eslint: "npm:^7.32.0"
     invariant: "npm:^2.2.4"
@@ -15539,7 +15561,7 @@ __metadata:
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
     react-native-qrcode-svg: "npm:6.0.6"
-    react-native-svg: "npm:^12.3.0"
+    react-native-svg: "npm:15.7.1"
   languageName: unknown
   linkType: soft
 
@@ -15667,7 +15689,7 @@ __metadata:
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
     react-native-animatable: "npm:^1.3.2"
-    react-native-vector-icons: "npm:10.0.3"
+    react-native-vector-icons: "npm:10.2.0"
   languageName: unknown
   linkType: soft
 
@@ -15807,12 +15829,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-device-info@npm:11.1.0":
-  version: 11.1.0
-  resolution: "react-native-device-info@npm:11.1.0"
+"react-native-device-info@npm:13.0.0":
+  version: 13.0.0
+  resolution: "react-native-device-info@npm:13.0.0"
   peerDependencies:
     react-native: "*"
-  checksum: 10/bfed9b513af471e1ecca578403695a78df4d05619cb85a075ecbc29ac380eb469bccafd08d681c9b14d61c31ff75824cc9eaa2a03801af4ac41151615c5295ab
+  checksum: 10/56cf41aa1d533d81b182973939cc3663285c7a6a93e6465b88feedefc1a7809a5d937f3588e145a445a1e0a74eda8242a46e1e67b33753909ad71e3e1216aeb1
   languageName: node
   linkType: hard
 
@@ -15905,12 +15927,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-localize@npm:1.4.2":
-  version: 1.4.2
-  resolution: "react-native-localize@npm:1.4.2"
+"react-native-localize@npm:3.2.1":
+  version: 3.2.1
+  resolution: "react-native-localize@npm:3.2.1"
   peerDependencies:
-    react-native: ">=0.56.0"
-  checksum: 10/0b3ed298d8e045101693f1dfbe2aafcb86d247a110f02f68c6c55efce0ad8a7fa419f66b4da6d84635cd98e6ab48593d91fbb0ffac8be99d1881e21e01edac8c
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+    react-native-macos: ">=0.70.0"
+  peerDependenciesMeta:
+    react-native-macos:
+      optional: true
+  checksum: 10/8b34c53341679400de1081c5064123c08e4f54bba1311cf98de5a1cb52607bbf415608b100de1a85a35415e009f60e64ceab799eda5a7991632747cd3ef3ed4e
   languageName: node
   linkType: hard
 
@@ -16084,16 +16111,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:^12.3.0":
-  version: 12.5.1
-  resolution: "react-native-svg@npm:12.5.1"
+"react-native-svg@npm:15.7.1":
+  version: 15.7.1
+  resolution: "react-native-svg@npm:15.7.1"
   dependencies:
     css-select: "npm:^5.1.0"
     css-tree: "npm:^1.1.3"
+    warn-once: "npm:0.1.1"
   peerDependencies:
     react: "*"
-    react-native: ">=0.50.0"
-  checksum: 10/cb7e56c5034c8e7cfa17cbe4ec6012ac475fbbbd6d565835f7883b1743743a5b66cbefe334c00a31a8c200c0274dafa6e6382048ba63a5506d6fb59e1ed1c373
+    react-native: "*"
+  checksum: 10/343d2603b0bd54d24303a09c37698612e208b83e449c92d108aaa6d7826a7ac39fe2bad0b439bff789a24d5f54280e3eb218202006658b8a7e117b2d1d8ccfeb
   languageName: node
   linkType: hard
 
@@ -16114,9 +16142,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-vector-icons@npm:10.0.3":
-  version: 10.0.3
-  resolution: "react-native-vector-icons@npm:10.0.3"
+"react-native-vector-icons@npm:10.2.0":
+  version: 10.2.0
+  resolution: "react-native-vector-icons@npm:10.2.0"
   dependencies:
     prop-types: "npm:^15.7.2"
     yargs: "npm:^16.1.1"
@@ -16125,7 +16153,7 @@ __metadata:
     fa5-upgrade: bin/fa5-upgrade.sh
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
-  checksum: 10/44f33eeb58fac685a301ea191ef4424dda3f30a20c826bf26f7eee93bb58d90f5075ba7577f3ed09841a0abfe25578735a4778960cba5734eb35e96a5eb969e6
+  checksum: 10/ac3b05bb353807d0ed94256bd6de4291e8261afb320ce69c06270fba3be2ed3c7b3a81ecbda29191cfe906e89bf853d4b4f016465b6b56a428315c7b6630eff1
   languageName: node
   linkType: hard
 
@@ -19270,7 +19298,7 @@ __metadata:
     deprecated-react-native-prop-types: "npm:^4.0.0"
     eslint: "npm:^7.32.0"
     react-native-system-navigation-bar: "npm:2.6.3"
-    react-native-vector-icons: "npm:10.0.3"
+    react-native-vector-icons: "npm:10.2.0"
     react-native-video: "npm:6.4.5"
   languageName: unknown
   linkType: soft
@@ -19304,6 +19332,13 @@ __metadata:
   dependencies:
     makeerror: "npm:1.0.12"
   checksum: 10/ad7a257ea1e662e57ef2e018f97b3c02a7240ad5093c392186ce0bcf1f1a60bbadd520d073b9beb921ed99f64f065efb63dfc8eec689a80e569f93c1c5d5e16c
+  languageName: node
+  linkType: hard
+
+"warn-once@npm:0.1.1":
+  version: 0.1.1
+  resolution: "warn-once@npm:0.1.1"
+  checksum: 10/e6a5a1f5a8dba7744399743d3cfb571db4c3947897875d4962a7c5b1bf2195ab4518c838cb4cea652e71729f21bba2e98dc75686f5fccde0fabbd894e2ed0c0d
   languageName: node
   linkType: hard
 
