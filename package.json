@@ -92,7 +92,8 @@
     "node": ">=20"
   },
   "resolutions": {
-    "@mendix/pluggable-widgets-tools": "9.24.1",
+    "@mendix/pluggable-widgets-tools": "~10.0.1",
+    "mendix": "~10.0.9976",
     "@types/react": "^18",
     "react": "18.2.0",
     "react-dom": "18.2.0",

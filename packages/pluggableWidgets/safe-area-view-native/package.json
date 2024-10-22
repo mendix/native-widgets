@@ -23,7 +23,7 @@
     "@mendix/piw-utils-internal": "*"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "eslint": "^7.20.0"
+    "@mendix/pluggable-widgets-tools": "~10.0.1",
+    "eslint": "^7.32.0"
   }
 }

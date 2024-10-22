@@ -3340,7 +3340,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mendix/piw-utils-internal@workspace:packages/tools/piw-utils-internal"
   dependencies:
-    "@mendix/pluggable-widgets-tools": "npm:^9.24.1"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@testing-library/react": "npm:^16.0.1"
     eslint: "npm:^7.32.0"
     rimraf: "npm:^4.4.1"
@@ -3348,9 +3348,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@npm:9.24.1":
-  version: 9.24.1
-  resolution: "@mendix/pluggable-widgets-tools@npm:9.24.1"
+"@mendix/pluggable-widgets-tools@npm:~10.0.1":
+  version: 10.0.1
+  resolution: "@mendix/pluggable-widgets-tools@npm:10.0.1"
   dependencies:
     "@babel/core": "npm:^7.12.3"
     "@babel/plugin-proposal-class-properties": "npm:^7.18.6"
@@ -3407,7 +3407,7 @@ __metadata:
     jest-junit: "npm:^13.0.0"
     jest-react-hooks-shallow: "npm:^1.5.1"
     make-dir: "npm:^3.1.0"
-    mendix: "npm:^9.24.2965"
+    mendix: "npm:^10.0.9976"
     metro-react-native-babel-preset: "npm:^0.74.1"
     mime: "npm:^3.0.0"
     node-fetch: "npm:^2.6.1"
@@ -3439,7 +3439,7 @@ __metadata:
     zip-a-folder: "npm:^0.0.12"
   bin:
     pluggable-widgets-tools: bin/mx-scripts.js
-  checksum: 10/f825dbd4e59ba2a3a67cd24ac61a91e444b9ce76dcd3b3d0ea45c7e3d26fea5e28fe7f9a85bc4dd31714257573fdfe25c6c471f2aacea49f5dcf14fa03be976d
+  checksum: 10/56ccd2dea747671e67cd2458f921b6050dea1d1224574c2ff9e7a040a0632d960c14837780609887fdcb1bbaf792fab84f8c14349a6e2c7e20c20b398f58c71d
   languageName: node
   linkType: hard
 
@@ -5228,7 +5228,7 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
   languageName: unknown
   linkType: soft
@@ -5301,9 +5301,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -5379,8 +5379,8 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
-    eslint: "npm:^7.20.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
+    eslint: "npm:^7.32.0"
     react-native-animatable: "npm:^1.3.2"
   languageName: unknown
   linkType: soft
@@ -5481,10 +5481,10 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@react-native-community/netinfo": "npm:5.9.7"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -5948,9 +5948,9 @@ __metadata:
   resolution: "background-gradient-native@workspace:packages/pluggableWidgets/background-gradient-native"
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-linear-gradient: "npm:2.5.6"
   languageName: unknown
   linkType: soft
@@ -5961,9 +5961,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:1.0.0"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -5973,9 +5973,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -5991,9 +5991,9 @@ __metadata:
   resolution: "bar-chart-native@workspace:packages/pluggableWidgets/bar-chart-native"
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     victory-native: "npm:^36.6.8"
   languageName: unknown
   linkType: soft
@@ -6004,9 +6004,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     deprecated-react-native-prop-types: "npm:^4.0.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-barcode-mask: "npm:^1.2.4"
     react-native-camera: "npm:3.40.0"
   languageName: unknown
@@ -6085,10 +6085,10 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@types/react-native-actionsheet": "npm:^2.4.1"
     "@types/react-native-modal": "npm:^4.1.1"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-actionsheet: "npm:^2.4.2"
     react-native-device-info: "npm:11.1.0"
     react-native-modal: "npm:^11.5.4"
@@ -6407,11 +6407,11 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@types/react-native-snap-carousel": "npm:^3.7.4"
     deprecated-react-native-prop-types: "npm:^4.0.0"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-snap-carousel: "npm:^3.9.1"
   languageName: unknown
   linkType: soft
@@ -6752,11 +6752,11 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@types/tinycolor2": "npm:^1.4.1"
     deprecated-react-native-prop-types: "npm:^4.0.0"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-color: "npm:^0.0.10"
     react-native-slider: "npm:^0.11.0"
     tinycolor2: "npm:^1.4.1"
@@ -6805,9 +6805,9 @@ __metadata:
   resolution: "column-chart-native@workspace:packages/pluggableWidgets/column-chart-native"
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     victory-native: "npm:^36.6.8"
   languageName: unknown
   linkType: soft
@@ -8842,11 +8842,11 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:1.0.0"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@types/querystringify": "npm:^2.0.0"
     "@types/react-native-dialog": "npm:^5.5.0"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     querystringify: "npm:^2.1.1"
     react-native-dialog: "npm:9.2.2"
     react-native-view-shot: "npm:3.1.2"
@@ -8988,10 +8988,10 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     deprecated-react-native-prop-types: "npm:^4.0.0"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-action-button: "npm:^2.8.5"
   languageName: unknown
   linkType: soft
@@ -9186,9 +9186,9 @@ __metadata:
   resolution: "gallery-native@workspace:packages/pluggableWidgets/gallery-native"
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-device-info: "npm:11.1.0"
   languageName: unknown
   linkType: soft
@@ -9199,9 +9199,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-svg: "npm:^12.3.0"
   languageName: unknown
   linkType: soft
@@ -9891,9 +9891,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-fast-image: "npm:8.3.2"
     react-native-svg: "npm:^12.3.0"
     react-native-vector-icons: "npm:10.0.3"
@@ -10053,10 +10053,10 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@react-native-community/async-storage": "npm:1.12.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-device-info: "npm:11.1.0"
   languageName: unknown
   linkType: soft
@@ -11909,9 +11909,9 @@ __metadata:
   resolution: "line-chart-native@workspace:packages/pluggableWidgets/line-chart-native"
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     victory-native: "npm:^36.6.8"
   languageName: unknown
   linkType: soft
@@ -11975,8 +11975,8 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
-    eslint: "npm:^7.20.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
+    eslint: "npm:^7.32.0"
     react-native-gesture-handler: "npm:2.16.2"
   languageName: unknown
   linkType: soft
@@ -12394,9 +12394,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     prop-types: "npm:^15.7.2"
     react-native-geocoder: "npm:0.5.0"
     react-native-maps: "npm:1.14.0"
@@ -12453,14 +12453,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mendix@npm:^9.24.2965":
-  version: 9.24.42913
-  resolution: "mendix@npm:9.24.42913"
+"mendix@npm:~10.0.9976":
+  version: 10.0.9976
+  resolution: "mendix@npm:10.0.9976"
   dependencies:
     "@types/big.js": "npm:^6.0.0"
     "@types/react": "npm:~18.0.21"
     "@types/react-native": "npm:~0.70.2"
-  checksum: 10/c1158097eb980d9421d71960490ebfbaf154c03705c62949ea01f2e161ea85058e0d9f954dc47259a5df16491783360f1bedaea6abc4aee3a766df2167a393e9
+  checksum: 10/8723cf3b04be80fdfe181838afb583177e4a82d55b5336d3ed3fab827e9f9dea794df397a4d33d4d2c847bd2187076c975a381d1c927d70fba96384acb6f3afc
   languageName: node
   linkType: hard
 
@@ -13685,10 +13685,10 @@ __metadata:
   resolution: "notifications-native@workspace:packages/pluggableWidgets/notifications-native"
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@react-native-firebase/app": "npm:17.3.0"
     "@react-native-firebase/messaging": "npm:17.3.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-push-notification: "npm:8.1.1"
   languageName: unknown
   linkType: soft
@@ -14246,9 +14246,9 @@ __metadata:
   resolution: "pie-doughnut-chart-native@workspace:packages/pluggableWidgets/pie-doughnut-chart-native"
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     victory-native: "npm:^36.6.8"
   languageName: unknown
   linkType: soft
@@ -14363,10 +14363,10 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@types/react-native-material-menu": "npm:^1.0.6"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-material-menu: "npm:~1.2.0"
   languageName: unknown
   linkType: soft
@@ -14960,9 +14960,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:1.0.0"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-progress: "npm:^5.0.0"
   languageName: unknown
   linkType: soft
@@ -14973,9 +14973,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-progress: "npm:^5.0.0"
   languageName: unknown
   linkType: soft
@@ -15119,10 +15119,10 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:1.0.0"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
-    react-native-qrcode-svg: "npm:6.0.6"
+    eslint: "npm:^7.32.0"
+    react-native-qrcode-svg: "npm:6.0.7"
     react-native-svg: "npm:^12.3.0"
   languageName: unknown
   linkType: soft
@@ -15177,9 +15177,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -15231,11 +15231,11 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@ptomasroos/react-native-multi-slider": "npm:^1.0.0"
     "@types/ptomasroos__react-native-multi-slider": "npm:^0.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     prop-types: "npm:^15.7.2"
   languageName: unknown
   linkType: soft
@@ -15246,7 +15246,7 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.24.1"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@types/react-native-star-rating": "npm:^1.1.6"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
@@ -15585,9 +15585,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-qrcode-svg@npm:6.0.6":
-  version: 6.0.6
-  resolution: "react-native-qrcode-svg@npm:6.0.6"
+"react-native-qrcode-svg@npm:6.0.7":
+  version: 6.0.7
+  resolution: "react-native-qrcode-svg@npm:6.0.7"
   dependencies:
     prop-types: "npm:^15.5.10"
     qrcode: "npm:^1.3.2"
@@ -15595,7 +15595,7 @@ __metadata:
     react: "*"
     react-native: ">=0.59.0"
     react-native-svg: ^9.6.4
-  checksum: 10/7f0ac413d9c3a02b1d1647105bbf72122258adf0768ea8fe001c77ea6f3345af6cc5db5db3e22373f2b16f523ef597c245e028a2104d9f167c0803788e3ee143
+  checksum: 10/4412a288d5fc1dbc0d218ed603914cf09549c5e7efa6d4308c90a3ea7681ea33bd0d8552368c8a048e10d4a6971596229e5f90097d9d0865752eacf835504847
   languageName: node
   linkType: hard
 
@@ -16116,9 +16116,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -16557,8 +16557,8 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
-    eslint: "npm:^7.20.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -16918,9 +16918,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-signature-canvas: "npm:3.4.0"
     react-native-webview: "npm:11.26.1"
   languageName: unknown
@@ -17004,11 +17004,11 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@ptomasroos/react-native-multi-slider": "npm:^1.0.0"
     "@types/ptomasroos__react-native-multi-slider": "npm:^0.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     prop-types: "npm:^15.7.2"
   languageName: unknown
   linkType: soft
@@ -17528,9 +17528,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
   languageName: unknown
   linkType: soft
 
@@ -17781,9 +17781,9 @@ __metadata:
     "@babel/plugin-transform-flow-strip-types": "npm:^7.4.4"
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-segmented-control-tab: "npm:^3.4.0"
   languageName: unknown
   linkType: soft
@@ -18792,10 +18792,10 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:1.0.0"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@types/react-native-video": "npm:^5.0.4"
     deprecated-react-native-prop-types: "npm:^4.0.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-system-navigation-bar: "npm:2.6.3"
     react-native-vector-icons: "npm:10.0.3"
     react-native-video: "npm:6.4.5"
@@ -18849,9 +18849,9 @@ __metadata:
   dependencies:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     react-native-webview: "npm:11.26.1"
   languageName: unknown
   linkType: soft

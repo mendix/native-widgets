@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
-    "react-native-qrcode-svg": "6.0.6",
+    "react-native-qrcode-svg": "6.0.7",
     "react-native-svg": "^12.3.0"
   },
   "devDependencies": {
     "@mendix/piw-utils-internal": "1.0.0",
-    "@mendix/pluggable-widgets-tools": "^9.0.0",
+    "@mendix/pluggable-widgets-tools": "~10.0.1",
     "detox": "^19.13.0",
-    "eslint": "^7.20.0"
+    "eslint": "^7.32.0"
   }
 }

@@ -22,7 +22,7 @@
     "postinstall": "yarn build"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.24.1",
+    "@mendix/pluggable-widgets-tools": "~10.0.1",
     "@testing-library/react": "^16.0.1",
     "eslint": "^7.32.0",
     "rimraf": "^4.4.1",
