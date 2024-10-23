@@ -1,14 +1,12 @@
 diff --git a/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js b/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
-old mode 100755
-new mode 100644
-index ec507d5..4ecc6b3
+index ec507d5..4bd8306 100755
 --- a/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
 +++ b/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
 @@ -1,6 +1,6 @@
  #! /usr/bin/env node
  const { execSync, spawnSync } = require("child_process");
 -const { existsSync } = require("fs");
-+const {  existsSync, lstatSync } = require("fs");
++const { existsSync, lstatSync } = require("fs");
  const { delimiter, dirname, join, parse } = require("path");
  const { checkMigration } = require("../utils/migration");
  const { red } = require("ansi-colors");
@@ -25,6 +23,15 @@ index ec507d5..4ecc6b3
  
      if (args.indexOf("--subprojectPath") > -1) {
          args.splice(args.indexOf("--subprojectPath"), 2);
+@@ -104,7 +105,7 @@ function getRealCommand(cmd, toolsRoot) {
+ }
+ 
+ function findNodeModulesBin() {
+-    let parentDir = join(__dirname, "..");
++    let parentDir = join(__dirname, "../..");
+     while (parse(parentDir).root !== parentDir) {
+         const candidate = join(parentDir, "node_modules/.bin");
+         if (existsSync(candidate)) {
 diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
 index 85165f8..8564df9 100644
 --- a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
