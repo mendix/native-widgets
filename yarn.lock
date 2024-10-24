@@ -3348,7 +3348,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@npm:~10.0.1":
+"@mendix/pluggable-widgets-tools@npm:10.0.1":
   version: 10.0.1
   resolution: "@mendix/pluggable-widgets-tools@npm:10.0.1"
   dependencies:
@@ -4051,7 +4051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-typescript@npm:^8.3.0":
+"@rollup/plugin-typescript@npm:^8.3.0, @rollup/plugin-typescript@npm:^8.5.0":
   version: 8.5.0
   resolution: "@rollup/plugin-typescript@npm:8.5.0"
   dependencies:
@@ -8031,11 +8031,11 @@ __metadata:
   linkType: hard
 
 "envinfo@npm:^7.10.0":
-  version: 7.13.0
-  resolution: "envinfo@npm:7.13.0"
+  version: 7.14.0
+  resolution: "envinfo@npm:7.14.0"
   bin:
     envinfo: dist/cli.js
-  checksum: 10/450c962053880f46852119cf89f4412cabd6d465ff5b74cf64e74e9da3a27ebd9e901944a5c4b0bf62950ad25025552282cbde6c00a5a9af0980dd001720fcbb
+  checksum: 10/0d9d711f2b6ae02dec89dd768a3390acbcb99ac50d07f20e635a8d2db68447703476db535483592d1ed4656c3d36eee4883032d71a5118c917b4973e2d4fa027
   languageName: node
   linkType: hard
 
@@ -8755,13 +8755,13 @@ __metadata:
   linkType: hard
 
 "fast-xml-parser@npm:^4.0.12, fast-xml-parser@npm:^4.2.4":
-  version: 4.4.1
-  resolution: "fast-xml-parser@npm:4.4.1"
+  version: 4.5.0
+  resolution: "fast-xml-parser@npm:4.5.0"
   dependencies:
     strnum: "npm:^1.0.5"
   bin:
     fxparser: src/cli/cli.js
-  checksum: 10/0c05ab8703630d8c857fafadbd78d0020d3a8e54310c3842179cd4a0d9d97e96d209ce885e91241f4aa9dd8dfc2fd924a682741a423d65153cad34da2032ec44
+  checksum: 10/dc9571c10e7b57b5be54bcd2d92f50c446eb42ea5df347d253e94dd14eb99b5300a6d172e840f151e0721933ca2406165a8d9b316a6d777bf0596dc4fe1df756
   languageName: node
   linkType: hard
 
@@ -12453,7 +12453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mendix@npm:~10.0.9976":
+"mendix@npm:10.0.9976":
   version: 10.0.9976
   resolution: "mendix@npm:10.0.9976"
   dependencies:
@@ -13277,15 +13277,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "mobile-resources-native@workspace:packages/jsActions/mobile-resources-native"
   dependencies:
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
     "@react-native-community/cameraroll": "npm:4.0.1"
     "@react-native-community/push-notification-ios": "npm:1.10.1"
     "@react-native-firebase/messaging": "npm:17.3.0"
     "@types/querystringify": "npm:^2.0.0"
     "@types/react-native-push-notification": "npm:8.1.1"
     "@types/url-parse": "npm:^1.4.3"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     fbjs: "npm:3.0.4"
+    mendix: "npm:~10.0.9976"
     mime: "npm:3.0.0"
     react-native-blob-util: "npm:0.16.2"
     react-native-device-info: "npm:11.1.0"
@@ -13298,8 +13299,8 @@ __metadata:
     react-native-schedule-exact-alarm-permission: "npm:^0.1.3"
     react-native-sound: "npm:0.11.0"
     react-native-touch-id: "npm:4.4.1"
-    rimraf: "npm:^2.7.1"
-    rollup: "npm:^2.68.0"
+    rimraf: "npm:^4.4.1"
+    rollup: "npm:^2.79.2"
     url-parse: "npm:^1.4.7"
   languageName: unknown
   linkType: soft
@@ -13386,15 +13387,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nanoflow-actions-native@workspace:packages/jsActions/nanoflow-actions-native"
   dependencies:
-    "@mendix/pluggable-widgets-tools": "npm:^9.0.0"
+    "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
     "@react-native-community/async-storage": "npm:1.12.1"
     "@react-native-community/geolocation": "npm:2.0.2"
-    eslint: "npm:^7.20.0"
+    eslint: "npm:^7.32.0"
     invariant: "npm:^2.2.4"
     js-base64: "npm:~3.7.2"
+    mendix: "npm:~10.0.9976"
     react-native-geocoder: "npm:0.5.0"
     react-native-geolocation-service: "npm:5.2.0"
-    rollup: "npm:^2.68.0"
+    rollup: "npm:^2.79.2"
   languageName: unknown
   linkType: soft
 
@@ -13414,6 +13416,7 @@ __metadata:
     "@commitlint/cli": "npm:^18.6.1"
     "@commitlint/config-conventional": "npm:^18.6.3"
     "@rollup/plugin-node-resolve": "npm:^13.3.0"
+    "@rollup/plugin-typescript": "npm:^8.5.0"
     "@testing-library/jest-native": "npm:^5.4.3"
     "@testing-library/react": "npm:^16.0.1"
     "@testing-library/react-native": "npm:^11.5.4"

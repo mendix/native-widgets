@@ -45,6 +45,7 @@
     "@commitlint/cli": "^18.6.1",
     "@commitlint/config-conventional": "^18.6.3",
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.5.0",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react": "^16.0.1",
     "@testing-library/react-native": "^11.5.4",
@@ -92,8 +93,8 @@
     "node": ">=20"
   },
   "resolutions": {
-    "@mendix/pluggable-widgets-tools": "~10.0.1",
-    "mendix": "~10.0.9976",
+    "@mendix/pluggable-widgets-tools": "10.0.1",
+    "mendix": "10.0.9976",
     "@types/react": "^18",
     "react": "18.2.0",
     "react-dom": "18.2.0",
