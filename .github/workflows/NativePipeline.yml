@@ -81,7 +81,7 @@ jobs:
             if [ "${{ github.event_name }}" == "pull_request" ]; then
               echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
             else
-              echo "scope=--all--include '*-native'" >> $GITHUB_OUTPUT
+              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
             fi
           fi
 
