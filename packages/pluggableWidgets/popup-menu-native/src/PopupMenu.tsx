@@ -18,7 +18,7 @@ import Menu, { MenuDivider, MenuItem } from "react-native-material-menu";
 const TouchableItem: ComponentType<TouchableNativeFeedbackProps | TouchableHighlightProps> =
     Platform.OS === "android" ? TouchableNativeFeedback : TouchableHighlight;
 
-const TouchableButton: ComponentType<TouchableNativeFeedbackProps | TouchableOpacity> =
+const TouchableButton: ComponentType<TouchableNativeFeedbackProps | typeof TouchableOpacity> =
     Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
 
 export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {

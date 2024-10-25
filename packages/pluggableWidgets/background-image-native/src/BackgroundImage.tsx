@@ -29,7 +29,6 @@ export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle
             : typeof image.value === "string"
             ? { width: "100%", height: "100%" }
             : undefined,
-        styles.image,
         { opacity, resizeMode }
     ] as StyleProp<SvgImageStyle>;
 
