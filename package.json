@@ -93,14 +93,12 @@
     "node": ">=20"
   },
   "resolutions": {
-    "@mendix/pluggable-widgets-tools": "10.0.1",
-    "mendix": "10.0.9976",
+    "@mendix/pluggable-widgets-tools": "10.15.0",
+    "mendix": "10.15.46408",
     "@types/react": "^18",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.75.4",
-    "typescript": "^4.9.5",
-    "ts-node": "^10.9.2",
     "@prettier/plugin-xml": "2.2.0",
     "@types/react-native": "0.73.0"
   },

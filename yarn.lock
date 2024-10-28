@@ -3698,9 +3698,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mendix/pluggable-widgets-tools@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@mendix/pluggable-widgets-tools@npm:10.0.1"
+"@mendix/pluggable-widgets-tools@npm:10.15.0":
+  version: 10.15.0
+  resolution: "@mendix/pluggable-widgets-tools@npm:10.15.0"
   dependencies:
     "@babel/core": "npm:^7.12.3"
     "@babel/plugin-proposal-class-properties": "npm:^7.18.6"
@@ -3723,9 +3723,9 @@ __metadata:
     "@testing-library/jest-dom": "npm:^5.16.5"
     "@testing-library/react": "npm:^13.4.0"
     "@testing-library/user-event": "npm:^14.4.3"
-    "@types/react": "npm:^18.0.0"
-    "@types/react-dom": "npm:^18.0.0"
-    "@types/react-native": "npm:^0.70.0"
+    "@types/react": "npm:^18.2.0"
+    "@types/react-dom": "npm:^18.2.0"
+    "@types/react-native": "npm:^0.72.7"
     "@types/testing-library__jest-dom": "npm:^5.14.5"
     "@typescript-eslint/eslint-plugin": "npm:^5.8.1"
     "@typescript-eslint/parser": "npm:^5.8.1"
@@ -3757,7 +3757,7 @@ __metadata:
     jest-junit: "npm:^13.0.0"
     jest-react-hooks-shallow: "npm:^1.5.1"
     make-dir: "npm:^3.1.0"
-    mendix: "npm:^10.0.9976"
+    mendix: "npm:^10.15.46408"
     metro-react-native-babel-preset: "npm:^0.74.1"
     mime: "npm:^3.0.0"
     node-fetch: "npm:^2.6.1"
@@ -3765,9 +3765,6 @@ __metadata:
     postcss-import: "npm:^14.0.2"
     postcss-url: "npm:^10.1.0"
     prettier: "npm:^2.5.1"
-    react: "npm:18.2.0"
-    react-dom: "npm:18.2.0"
-    react-native: "npm:0.70.7"
     react-test-renderer: "npm:18.2.0"
     recursive-copy: "npm:^2.0.11"
     resolve: "npm:^1.19.0"
@@ -3782,14 +3779,15 @@ __metadata:
     sass: "npm:^1.43.4"
     semver: "npm:^7.3.2"
     shelljs: "npm:^0.8.4"
+    shx: "npm:^0.3.3"
     ts-jest: "npm:^29.0.0"
     ts-node: "npm:^9.0.0"
     typescript: "npm:4.9.5"
-    xml2js: "npm:^0.4.23"
+    xml2js: "npm:^0.6.2"
     zip-a-folder: "npm:^0.0.12"
   bin:
     pluggable-widgets-tools: bin/mx-scripts.js
-  checksum: 10/56ccd2dea747671e67cd2458f921b6050dea1d1224574c2ff9e7a040a0632d960c14837780609887fdcb1bbaf792fab84f8c14349a6e2c7e20c20b398f58c71d
+  checksum: 10/ea456463b23de3c1822957e156db371d481a392d898b826ce3b798acc83cbf2b8f0e38c8f075a43c5db5dd9798fe498aa1fc6f7a39f922bc33a13a49cdc65465
   languageName: node
   linkType: hard
 
@@ -5079,6 +5077,15 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: 10/fbc4ea2eb2e5fff8716bd323f850904f3aec1cbb257bf0799a23111b6d98b83c5b7e58b96c4bdd11033004668424672fd29f7412160bb0cdf2305066de1ce300
+  languageName: node
+  linkType: hard
+
+"@types/react-dom@npm:^18.2.0":
+  version: 18.3.1
+  resolution: "@types/react-dom@npm:18.3.1"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10/33f9ba79b26641ddf00a8699c30066b7e3573ab254e97475bf08f82fab83a6d3ce8d4ebad86afeb49bb8df3374390a9ba93125cece33badc4b3e8f7eac3c84d8
   languageName: node
   linkType: hard
 
@@ -12836,14 +12843,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mendix@npm:10.0.9976":
-  version: 10.0.9976
-  resolution: "mendix@npm:10.0.9976"
+"mendix@npm:10.15.46408":
+  version: 10.15.46408
+  resolution: "mendix@npm:10.15.46408"
   dependencies:
     "@types/big.js": "npm:^6.0.0"
-    "@types/react": "npm:~18.0.21"
+    "@types/react": "npm:~18.0.0"
     "@types/react-native": "npm:~0.70.2"
-  checksum: 10/8723cf3b04be80fdfe181838afb583177e4a82d55b5336d3ed3fab827e9f9dea794df397a4d33d4d2c847bd2187076c975a381d1c927d70fba96384acb6f3afc
+  checksum: 10/50d66f33a2a7d23a2a6823fb8f0b70046da5299555a21f22ed39c96af920faec6e836019e314086ded8c5e197d3ad8aa8b5c9261a1a296070f18d8d101501dcc
   languageName: node
   linkType: hard
 
@@ -13311,6 +13318,13 @@ __metadata:
   version: 1.2.7
   resolution: "minimist@npm:1.2.7"
   checksum: 10/0202378a8eb1a9d98a44f623f43c89793a095f4bde6981bda29f6ae61e82a15c18b1690b5efc4c66ddbd402a3e9b7175e6ebdabb2b28037c279ac823b7360e00
+  languageName: node
+  linkType: hard
+
+"minimist@npm:^1.2.3":
+  version: 1.2.8
+  resolution: "minimist@npm:1.2.8"
+  checksum: 10/908491b6cc15a6c440ba5b22780a0ba89b9810e1aea684e253e43c4e3b8d56ec1dcdd7ea96dde119c29df59c936cde16062159eae4225c691e19c70b432b6e6f
   languageName: node
   linkType: hard
 
@@ -15675,18 +15689,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10/ca5e7762ec8c17a472a3605b6f111895c9f87ac7d43a610ab7024f68cd833d08eda0625ce02ec7178cc1f3c957cf0b9273cdc17aa2cd02da87544331c43b1d21
-  languageName: node
-  linkType: hard
-
 "react-fast-compare@npm:^3.2.0":
   version: 3.2.0
   resolution: "react-fast-compare@npm:3.2.0"
@@ -17305,7 +17307,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shelljs@npm:^0.8.4":
+"shelljs@npm:^0.8.4, shelljs@npm:^0.8.5":
   version: 0.8.5
   resolution: "shelljs@npm:0.8.5"
   dependencies:
@@ -17315,6 +17317,18 @@ __metadata:
   bin:
     shjs: bin/shjs
   checksum: 10/f2178274b97b44332bbe9ddb78161137054f55ecf701c7a99db9552cb5478fe279ad5f5131d8a7c2f0730e01ccf0c629d01094143f0541962ce1a3d0243d23f7
+  languageName: node
+  linkType: hard
+
+"shx@npm:^0.3.3":
+  version: 0.3.4
+  resolution: "shx@npm:0.3.4"
+  dependencies:
+    minimist: "npm:^1.2.3"
+    shelljs: "npm:^0.8.5"
+  bin:
+    shx: lib/cli.js
+  checksum: 10/5271b60f7e322540799102ad6935121f10c857a995a1321357a7bffd1628674a4758a602153dc5cc126d8dc94d3489586587d3dee54dc3cac0222ca08a78e33a
   languageName: node
   linkType: hard
 
@@ -17482,7 +17496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.16, source-map-support@npm:~0.5.20":
+"source-map-support@npm:^0.5.16, source-map-support@npm:^0.5.17, source-map-support@npm:~0.5.20":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
@@ -18291,7 +18305,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.2":
+"ts-node@npm:^10.9.1, ts-node@npm:^10.9.2":
   version: 10.9.2
   resolution: "ts-node@npm:10.9.2"
   dependencies:
@@ -18326,6 +18340,27 @@ __metadata:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: 10/a91a15b3c9f76ac462f006fa88b6bfa528130dcfb849dd7ef7f9d640832ab681e235b8a2bc58ecde42f72851cc1d5d4e22c901b0c11aa51001ea1d395074b794
+  languageName: node
+  linkType: hard
+
+"ts-node@npm:^9.0.0":
+  version: 9.1.1
+  resolution: "ts-node@npm:9.1.1"
+  dependencies:
+    arg: "npm:^4.1.0"
+    create-require: "npm:^1.1.0"
+    diff: "npm:^4.0.1"
+    make-error: "npm:^1.1.1"
+    source-map-support: "npm:^0.5.17"
+    yn: "npm:3.1.1"
+  peerDependencies:
+    typescript: ">=2.7"
+  bin:
+    ts-node: dist/bin.js
+    ts-node-script: dist/bin-script.js
+    ts-node-transpile-only: dist/bin-transpile.js
+    ts-script: dist/bin-script-deprecated.js
+  checksum: 10/7fd8da71dd528f0490daf771a185572b485cb7f6be354c4d675011aee63bdb291f919e68c340cc92863c450e685b7f7300bd81ec158c3881a8c3f0e2f1cc10fe
   languageName: node
   linkType: hard
 
@@ -18449,7 +18484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.9.5":
+"typescript@npm:4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
   bin:
@@ -18459,7 +18494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^4.9.5#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>::version=4.9.5&hash=289587"
   bin:
@@ -19540,13 +19575,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml2js@npm:0.4.23, xml2js@npm:^0.4.23":
+"xml2js@npm:0.4.23":
   version: 0.4.23
   resolution: "xml2js@npm:0.4.23"
   dependencies:
     sax: "npm:>=0.6.0"
     xmlbuilder: "npm:~11.0.0"
   checksum: 10/52896ef39429f860f32471dd7bb2b89ef25b7e15528e3a4366de0bd5e55a251601565e7814763e70f9e75310c3afe649a42b8826442b74b41eff8a0ae333fccc
+  languageName: node
+  linkType: hard
+
+"xml2js@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "xml2js@npm:0.6.2"
+  dependencies:
+    sax: "npm:>=0.6.0"
+    xmlbuilder: "npm:~11.0.0"
+  checksum: 10/df29de8eeedb762c367d87945c39bcf54db19a2c522607491c266ed6184b5a749e37ff29cfaed0ac149da9ba332ac3dcf8e5ff2bd0a206be3343eca95faa941d
   languageName: node
   linkType: hard
 

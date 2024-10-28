@@ -1,0 +1,15 @@
+diff --git a/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js b/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
+old mode 100755
+new mode 100644
+index ec507d5..b460f0d
+--- a/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
++++ b/node_modules/@mendix/pluggable-widgets-tools/bin/mx-scripts.js
+@@ -104,7 +104,7 @@ function getRealCommand(cmd, toolsRoot) {
+ }
+ 
+ function findNodeModulesBin() {
+-    let parentDir = join(__dirname, "..");
++    let parentDir = join(__dirname, "../..");
+     while (parse(parentDir).root !== parentDir) {
+         const candidate = join(parentDir, "node_modules/.bin");
+         if (existsSync(candidate)) {
