@@ -13810,7 +13810,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "native-widgets@workspace:."
   dependencies:
-    "@babel/plugin-proposal-private-methods": "npm:^7.18.6"
     "@commitlint/cli": "npm:^18.6.1"
     "@commitlint/config-conventional": "npm:^18.6.3"
     "@rollup/plugin-node-resolve": "npm:^13.3.0"
