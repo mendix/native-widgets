@@ -49,6 +49,7 @@ export interface BottomSheetPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     type: TypeEnum;
     triggerAttribute: string;
     modalRendering: ModalRenderingEnum;

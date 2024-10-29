@@ -7,7 +7,18 @@ import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue, NativeImage } from "mendix";
 import { Big } from "big.js";
 
-export type AnimationEnum = "pulse" | "bounce" | "flash" | "jello" | "rotate" | "rubberBand" | "shake" | "swing" | "tada" | "wobble" | "none";
+export type AnimationEnum =
+    | "pulse"
+    | "bounce"
+    | "flash"
+    | "jello"
+    | "rotate"
+    | "rubberBand"
+    | "shake"
+    | "swing"
+    | "tada"
+    | "wobble"
+    | "none";
 
 export type EditableEnum = "default" | "never";
 
@@ -32,9 +43,10 @@ export interface RatingPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     ratingAttribute: string;
-    emptyIcon: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
-    icon: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
+    emptyIcon: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    icon: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
     maximumValue: number | null;
     animation: AnimationEnum;
     editable: EditableEnum;

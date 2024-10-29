@@ -43,6 +43,7 @@ export interface PieDoughnutChartPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     presentation: PresentationEnum;
     series: SeriesPreviewType[];
     sortOrder: SortOrderEnum;

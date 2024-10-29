@@ -21,5 +21,6 @@ export interface QRCodePreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     value: string;
 }

@@ -29,6 +29,7 @@ export interface SliderPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     valueAttribute: string;
     editable: EditableEnum;
     minimumValue: string;

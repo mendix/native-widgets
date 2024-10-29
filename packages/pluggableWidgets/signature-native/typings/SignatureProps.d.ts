@@ -27,6 +27,7 @@ export interface SignaturePreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     imageAttribute: string;
     buttonCaptionClear: string;
     buttonCaptionSave: string;
