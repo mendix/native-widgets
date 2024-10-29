@@ -40,7 +40,7 @@ export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
     );
 
     let menuOptions: ReactElement[];
-    if (props.renderMode === "basic") {
+    if (props.popupRenderMode === "basic") {
         menuOptions = props.basicItems.map((item, index) => {
             const itemStyle = styles.basic?.itemStyle && styles.basic?.itemStyle[item.styleClass];
             return item.itemType === "divider" ? (

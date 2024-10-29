@@ -6,7 +6,7 @@
 import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ActionValue } from "mendix";
 
-export type RenderModeEnum = "basic" | "custom";
+export type PopupRenderModeEnum = "basic" | "custom";
 
 export type ItemTypeEnum = "item" | "divider";
 
@@ -40,7 +40,7 @@ export interface PopupMenuProps<Style> {
     name: string;
     style: Style[];
     menuTriggerer?: ReactNode;
-    renderMode: RenderModeEnum;
+    popupRenderMode: PopupRenderModeEnum;
     basicItems: BasicItemsType[];
     customItems: CustomItemsType[];
 }
@@ -54,8 +54,9 @@ export interface PopupMenuPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     menuTriggerer: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
-    renderMode: RenderModeEnum;
+    popupRenderMode: PopupRenderModeEnum;
     basicItems: BasicItemsPreviewType[];
     customItems: CustomItemsPreviewType[];
 }

@@ -24,7 +24,7 @@ describe("Popup menu", () => {
     beforeEach(() => {
         dummyActionValue = actionValue();
         defaultProps = {
-            renderMode: "basic",
+            popupRenderMode: "basic",
             name: "popup-menu",
             style: [],
             menuTriggerer: <Text>Menu Triggerer</Text>,
@@ -46,7 +46,7 @@ describe("Popup menu", () => {
     });
 
     it("renders custom items", () => {
-        const component = render(<PopupMenu {...defaultProps} renderMode="custom" />);
+        const component = render(<PopupMenu {...defaultProps} popupRenderMode="custom" />);
 
         expect(component.toJSON()).toMatchSnapshot();
     });
@@ -98,7 +98,7 @@ describe("Popup menu", () => {
 
     describe("in custom mode", () => {
         beforeEach(() => {
-            defaultProps.renderMode = "custom";
+            defaultProps.popupRenderMode = "custom";
         });
 
         it("renders only custom items", () => {
