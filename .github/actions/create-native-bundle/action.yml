@@ -16,16 +16,18 @@ runs:
         apt install curl -y
       shell: bash
     - name: "Download test project"
-      run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+      run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/10-17.zip
       shell: bash
     - name: "Extract test project"
-      uses: montudor/action-zip@v1.0.0
+      uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
       with:
-        args: unzip -qq project.zip
+        args: unzip -qq project.zip -d /Users/nikola.simsic/Documents/Projects/native-widgets/project
+
     - name: "Extract deployment package"
       uses: montudor/action-zip@v1.0.0
       with:
-        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-main/deployment
+        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-10-17/deployment
+
     - name: "Create bundle for ${{ inputs.platform }}"
       run: |
         mkdir -p ${{ inputs.platform }}/assets

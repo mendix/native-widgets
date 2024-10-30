@@ -13,7 +13,7 @@ RUN \
 
 RUN \
     echo "Downloading mxbuild ${MENDIX_VERSION}..." && \
-    wget -q https://cdn.mendix.com/runtime/mxbuild-${MENDIX_VERSION}.tar.gz -O /tmp/mxbuild.tar.gz && \
+    wget -q https://appdev-ci.rnd.mendix.com/job/AppStudio5.0-Build/48897/artifact/artifacts/mxbuild-10.16.0.48897.tar.gz -O /tmp/mxbuild.tar.gz && \
     mkdir /tmp/mxbuild && \
     tar xfz /tmp/mxbuild.tar.gz --directory /tmp/mxbuild && \
     rm /tmp/mxbuild.tar.gz 

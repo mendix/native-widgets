@@ -5,7 +5,7 @@ on:
       mendix_version:
         description: "Provide the SP version to be used (e.g., 10.14.0.43709) - has to be a released version (Default: latest from Mendix versions.json)"
         required: false
-        default: ""
+        default: "10.16.0.48897"
 
       nt_branch:
         description: "Native Template branch to use (Default: master)"
@@ -89,173 +89,191 @@ jobs:
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
 
-  mendix-version:
-    runs-on: ubuntu-22.04
-    outputs:
-      mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-      - name: "Get Mendix version from JSON"
-        id: get-mendix-version
-        uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
-        with:
-          path: configs/e2e/mendix-versions.json
-          prop_path: latest
-      - name: Set Mendix version
-        id: set-mendix-version
-        run: |
-          if [[ -n "${{ github.event.inputs.mendix_version }}" ]]; then
-            echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> $GITHUB_OUTPUT
-          else
-            echo "MENDIX_VERSION=${{ steps.get-mendix-version.outputs.prop }}" >> $GITHUB_OUTPUT
-          fi
-      - name: "Debug Mendix Version"
-        run: |
-          echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
+  # mendix-version:
+  #   runs-on: ubuntu-22.04
+  #   outputs:
+  #     mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
+  #   steps:
+  #     - name: "Check out code"
+  #       uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+  #     - name: "Get Mendix version from JSON"
+  #       id: get-mendix-version
+  #       uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
+  #       with:
+  #         path: configs/e2e/mendix-versions.json
+  #         prop_path: latest
+  #     - name: Set Mendix version
+  #       id: set-mendix-version
+  #       run: |
+  #         if [[ -n "${{ github.event.inputs.mendix_version }}" ]]; then
+  #           echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> $GITHUB_OUTPUT
+  #         else
+  #           echo "MENDIX_VERSION=${{ steps.get-mendix-version.outputs.prop }}" >> $GITHUB_OUTPUT
+  #         fi
+  #     - name: "Debug Mendix Version"
+  #       run: |
+  #         echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
 
-  docker-images:
-    needs: mendix-version
-    runs-on: ubuntu-22.04
-    steps:
-      - name: "Login to GitHub Container Registry"
-        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Check if docker image already exists"
-        run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
-          echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-        if: ${{ env.IMAGE_MISSING != 0 }}
-      - name: "Build mxbuild image"
-        if: ${{ env.IMAGE_MISSING != 0 }}
-        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
-        with:
-          file: ./.github/scripts/mxbuild.Dockerfile
-          context: ./.github/scripts
-          build-args: |
-            MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
-          push: true
-          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-  resources:
-    needs: [scope, mendix-version]
-    runs-on: ubuntu-22.04
-    permissions:
-      packages: read
-      contents: read
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-        with:
-          fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: yarn install --immutable
-      - name: "Unit test"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
-      - name: "Run build for development"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
-        env:
-          NODE_OPTIONS: --max_old_space_size=6144
-      - name: "Upload resources artifact"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        with:
-          name: resources
-          path: |
-            packages/pluggableWidgets/**/dist/*/*.mpk
-            packages/jsActions/mobile-resources-native/dist/**/*
-            packages/jsActions/nanoflow-actions-native/dist/**/*
+  # docker-images:
+  #   needs: mendix-version
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: "Login to GitHub Container Registry"
+  #       uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: "Check if docker image already exists"
+  #       run: |
+  #         docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
+  #         echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
+  #     - name: "Check out code"
+  #       uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+  #       if: ${{ env.IMAGE_MISSING != 0 }}
+  #     - name: "Build mxbuild image"
+  #       if: ${{ env.IMAGE_MISSING != 0 }}
+  #       uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+  #       with:
+  #         file: ./.github/scripts/mxbuild.Dockerfile
+  #         context: ./.github/scripts
+  #         build-args: |
+  #           MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
+  #         push: false
+  #         tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+  # resources:
+  #   needs: [scope, mendix-version]
+  #   runs-on: ubuntu-22.04
+  #   permissions:
+  #     packages: read
+  #     contents: read
+  #   steps:
+  #     - name: Install Yarn
+  #       run: |
+  #         npm install -g yarn
+  #         yarn set version stable
+
+  #     - name: Check Yarn Version
+  #       run: yarn --version
+
+  #     - name: "Check out code"
+  #       uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+  #       with:
+  #         fetch-depth: 0
+  #     - name: "Set up node"
+  #       uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+  #       with:
+  #         node-version-file: .nvmrc
+  # cache: yarn
+  # - name: "Install dependencies"
+  #   run: yarn install --immutable
+  # - name: "Unit test"
+  #   run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
+  # - name: "Run build for development"
+  #   run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
+  #   env:
+  #     NODE_OPTIONS: --max_old_space_size=6144
+  # - name: "Upload resources artifact"
+  #   uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+  #   with:
+  #     name: resources
+  #     path: |
+  #       packages/pluggableWidgets/**/dist/*/*.mpk
+  #       packages/jsActions/mobile-resources-native/dist/**/*
+  #       packages/jsActions/nanoflow-actions-native/dist/**/*
   project:
-    needs: [resources, mendix-version]
     runs-on: ubuntu-22.04
     container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      image: mxbuild:49758
+      # credentials:
+      #   username: ${{ github.actor }}
+      #   password: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: "Make sure curl is installed"
-        run: |
-          apt update && apt upgrade -y
-          apt install curl -y
+      # - name: "Make sure curl is installed"
+      #   run: |
+      #     apt update && apt upgrade -y
+      #     apt install curl -y
+      # - name: "Install Node.js"
+      #   run: |
+      #     curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+      #     apt-get install -y nodejs
+      # - name: "Setup node"
+      #   uses: actions/setup-node@v4
       - name: "Download test project"
-        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/10-17.zip
       - name: "Extract test project"
         uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
         with:
-          args: unzip -qq project.zip -d .
-      - name: "Download resources artifact"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: resources
-          path: resources
-      - name: "List resources"
-        run: ls -R resources
+          args: unzip -qq project.zip -d /Users/nikola.simsic/Documents/Projects/native-widgets/project
+      # - name: "List extracted files"
+      #   run: |
+      #     ls -la /Users/nikola.simsic/Documents/Projects/native-widgets/
+      #     ls -la /Users/nikola.simsic/Documents/Projects/native-widgets/project/
+
+      # - name: "Download resources artifact"
+      #   uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+      #   with:
+      #     name: resources
+      #     path: resources
+      # # - name: "List resources"
+      # #   run: ls -R resources
       - name: "Move widgets"
         shell: bash
         run: |
-          if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
-            for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
-              mv -f $oldPath $newPath
+          if compgen -G 'resources/pluggableWidgets/*.mpk' > /dev/null; then
+            for oldPath in resources/pluggableWidgets/*.mpk; do
+              newPath=project/Native-Mobile-Resources-10-17/widgets/$(basename $oldPath)
+              cp -f $oldPath $newPath
             done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+            mx update-widgets --loose-version-check project/Native-Mobile-Resources-10-17/NativeComponentsTestProject.mpr
           fi
       - name: "Move mobile-resources"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
+            cp -f resources/jsActions/mobile-resources-native/* project/Native-Mobile-Resources-10-17/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
+            cp -f resources/jsActions/nanoflow-actions-native/* project/Native-Mobile-Resources-10-17/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Build test project"
-        run: mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
-      - name: "Upload MDA"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        with:
-          name: mda
-          path: automation.mda
+        run: mxbuild -o automation.mda --loose-version-check project/Native-Mobile-Resources-10-17/NativeComponentsTestProject.mpr
+      # - name: "Upload MDA"
+      #   uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      #   with:
+      #     name: mda
+      #     path: automation.mda
   android-bundle:
-    needs: [project, mendix-version]
+    needs: [project]
     runs-on: ubuntu-22.04
     container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      image: mxbuild:49758
+      # credentials:
+      #   username: ${{ github.actor }}
+      #   password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-      - name: "Download deployment package"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: mda
+      # - name: "Download deployment package"
+      # uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+      # with:
+      #   name: mda
       - name: "Create Android bundle"
         uses: ./.github/actions/create-native-bundle
         with:
           platform: android
           mda-file: automation.mda
   ios-bundle:
-    needs: [project, mendix-version]
+    needs: [project]
     runs-on: ubuntu-22.04
     container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      image: mxbuild:49758
+      # credentials:
+      #   username: ${{ github.actor }}
+      #   password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -401,7 +419,7 @@ jobs:
           disable-animations: true
           script: echo "AVD created"
   android-tests:
-    needs: [scope, mendix-version, project, android-app, android-avd]
+    needs: [scope, project, android-app, android-avd]
     runs-on: macos-12
     steps:
       - name: "Check out code"
@@ -423,7 +441,6 @@ jobs:
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Download Android app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -488,7 +505,7 @@ jobs:
           path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
   ios-tests:
-    needs: [scope, mendix-version, project, ios-app]
+    needs: [scope, project, ios-app]
     runs-on: macos-12
     steps:
       - name: "Check out code"
@@ -517,7 +534,6 @@ jobs:
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
