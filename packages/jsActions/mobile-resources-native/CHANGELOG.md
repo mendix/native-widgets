@@ -6,9 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [8.0.3] Native Mobile Resources - 2024-10-2
 ### Added
 
 -   We have upgraded React Native Permissions to 4.5.1
+
+## [5.0.0] Maps
+### Changed
+
+-   We updated the `react-native-maps` version to `1.14.0`
+
+## [3.1.2] ProgressCircle
+### Added
+
+-   Support device font size for responsive progress circle sizing.
+
+## [6.0.0] VideoPlayer
+### Changed
+
+-   We have updated `react-native-video` version to 6.4.5
 
 ## [8.0.1] Native Mobile Resources - 2024-8-29
 
