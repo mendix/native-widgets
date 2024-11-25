@@ -14,6 +14,7 @@ import { FilterCondition } from "mendix/filters";
 import { Gallery as GalleryComponent, GalleryProps as GalleryComponentProps } from "./components/Gallery";
 import { GalleryProps } from "../typings/GalleryProps";
 import { ObjectItem } from "mendix";
+import DeviceInfo from "react-native-device-info";
 
 export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const viewStateFilters = useRef<FilterCondition | undefined>(undefined);
@@ -23,9 +24,11 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const styles = all<GalleryStyle>([defaultGalleryStyle, ...props.style]);
     const currentPage = props.datasource.limit / props.pageSize;
 
+    const columnSize = Math.max(DeviceInfo.isTablet() ? props.tabletColumns : props.phoneColumns, 1);
+
     useEffect(() => {
         if (props.datasource.limit === Number.POSITIVE_INFINITY) {
-            props.datasource.setLimit(props.pageSize);
+            props.datasource.setLimit(props.pageSize * columnSize);
         }
     }, [props.datasource, props.pageSize]);
 
@@ -65,7 +68,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     }
 
     const loadMoreItems = useCallback(() => {
-        props.datasource.setLimit((currentPage + 1) * props.pageSize);
+        props.datasource.setLimit((currentPage + 1) * props.pageSize * columnSize);
     }, [currentPage, props.datasource, props.pageSize]);
 
     const itemRenderer: GalleryComponentProps<ObjectItem>["itemRenderer"] = useCallback(
