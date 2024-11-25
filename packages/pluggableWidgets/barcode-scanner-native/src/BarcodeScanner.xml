@@ -25,6 +25,16 @@
                     <description />
                 </property>
             </propertyGroup>
+            <propertyGroup caption="Camera">
+                <property key="cameraType" type="enumeration" required="true" defaultValue="back">
+                    <caption>Camera type</caption>
+                    <description>Select camera to use for the scanner.</description>
+                    <enumerationValues>
+                        <enumerationValue key="front">Front</enumerationValue>
+                        <enumerationValue key="back">Back</enumerationValue>
+                    </enumerationValues>
+                </property>
+            </propertyGroup>
             <propertyGroup caption="Events">
                 <property key="onDetect" type="action" required="false">
                     <caption>On detect</caption>
