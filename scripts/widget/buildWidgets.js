@@ -183,8 +183,10 @@ const main = async () => {
 
         await copyMPKFiles();
         console.log("Script completed successfully!");
+        process.exit(0);
     } catch (error) {
         console.error("Script error:", error);
+        process.exit(1);
     }
 };
 
