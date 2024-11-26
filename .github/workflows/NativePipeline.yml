@@ -128,25 +128,25 @@ jobs:
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
+              newPath=Native-Mobile-Resources-mx-10.12.x/widgets/$(basename $oldPath)
               mv -f $oldPath $newPath
             done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+            mx update-widgets --loose-version-check Native-Mobile-Resources-mx-10.12.x/NativeComponentsTestProject.mpr
           fi
       - name: "Move mobile-resources"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
+            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-mx-10.12.x/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
+            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-mx-10.12.x/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Build test project"
-        run: mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+        run: mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-mx-10.12.x/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
