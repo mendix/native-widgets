@@ -670,6 +670,14 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
           accessible={true}
           collapsable={false}
           focusable={true}
+          nativeBackgroundAndroid={
+            {
+              "borderless": false,
+              "color": 855638016,
+              "rippleRadius": undefined,
+              "type": "RippleAndroid",
+            }
+          }
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -1035,6 +1043,14 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
           accessible={true}
           collapsable={false}
           focusable={true}
+          nativeBackgroundAndroid={
+            {
+              "borderless": false,
+              "color": 855638016,
+              "rippleRadius": undefined,
+              "type": "RippleAndroid",
+            }
+          }
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}

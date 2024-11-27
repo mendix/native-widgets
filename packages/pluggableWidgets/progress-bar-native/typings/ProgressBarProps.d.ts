@@ -24,6 +24,7 @@ export interface ProgressBarPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     progressValue: string;
     minimumValue: string;
     maximumValue: string;

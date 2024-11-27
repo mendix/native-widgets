@@ -24,6 +24,7 @@ export interface BarcodeScannerPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     barcode: string;
     showMask: boolean;
     showAnimatedLine: boolean;

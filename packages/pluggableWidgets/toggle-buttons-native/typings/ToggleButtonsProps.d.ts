@@ -25,6 +25,7 @@ export interface ToggleButtonsPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     enum: string;
     editable: EditableEnum;
     onChange: {} | null;

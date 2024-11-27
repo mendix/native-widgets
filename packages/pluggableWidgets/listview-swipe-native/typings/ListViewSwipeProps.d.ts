@@ -31,6 +31,7 @@ export interface ListViewSwipePreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     left: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     leftRenderMode: LeftRenderModeEnum;

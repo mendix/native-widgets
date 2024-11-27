@@ -28,6 +28,7 @@ export interface WebViewPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     url: string;
     content: string;
     onLoad: {} | null;

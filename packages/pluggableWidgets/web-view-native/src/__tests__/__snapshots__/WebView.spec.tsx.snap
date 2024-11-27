@@ -46,6 +46,11 @@ exports[`WebView renders a web view when a url is provided 1`] = `
       setBuiltInZoomControls={true}
       setDisplayZoomControls={false}
       setSupportMultipleWindows={true}
+      source={
+        {
+          "uri": "https://mendix.com",
+        }
+      }
       style={
         [
           {
@@ -114,6 +119,11 @@ exports[`WebView renders a web view when html content is provided 1`] = `
       setBuiltInZoomControls={true}
       setDisplayZoomControls={false}
       setSupportMultipleWindows={true}
+      source={
+        {
+          "html": "Hello, world!",
+        }
+      }
       style={
         [
           {

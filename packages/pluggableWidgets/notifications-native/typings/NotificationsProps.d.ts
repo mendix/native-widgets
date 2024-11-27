@@ -38,6 +38,7 @@ export interface NotificationsPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     actions: ActionsPreviewType[];
     guid: string;
     title: string;

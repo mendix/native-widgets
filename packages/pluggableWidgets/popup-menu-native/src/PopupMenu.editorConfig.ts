@@ -23,7 +23,7 @@ export function getPreview(values: PopupMenuPreviewProps, isDarkMode: boolean): 
             ]
         },
         { type: "Container", padding: 4 },
-        ...(values.renderMode === "basic"
+        ...(values.popupRenderMode === "basic"
             ? values.basicItems.map<ContainerProps>((value, index) => ({
                   type: "Container",
                   children: [
@@ -78,7 +78,7 @@ export function getPreview(values: PopupMenuPreviewProps, isDarkMode: boolean): 
 }
 
 export function getProperties(values: PopupMenuPreviewProps, defaultProperties: Properties): Properties {
-    if (values.renderMode === "basic") {
+    if (values.popupRenderMode === "basic") {
         hidePropertyIn(defaultProperties, values, "customItems");
 
         values.basicItems.forEach((item: BasicItemsPreviewType, index: number) => {
