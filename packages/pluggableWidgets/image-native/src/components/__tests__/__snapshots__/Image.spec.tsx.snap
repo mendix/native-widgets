@@ -43,11 +43,11 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RNSVGSvgView
+  <RNSVGSvgViewAndroid
     align="xMidYMid"
     bbHeight={9999}
     bbWidth={9999}
-    color={-16777216}
+    color="#000"
     focusable={false}
     height={9999}
     id="Layer_1"
@@ -80,7 +80,7 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
       ]
     }
     testID="Image1$SvgUri"
-    tintColor={-16777216}
+    tintColor="#000"
     uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
@@ -92,12 +92,25 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        {
+          "payload": -16777216,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
       />
     </RNSVGGroup>
-  </RNSVGSvgView>
+  </RNSVGSvgViewAndroid>
 </View>
 `;
 
@@ -250,11 +263,11 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
     }
     testID="Image1$ImageSmallPressable"
   >
-    <RNSVGSvgView
+    <RNSVGSvgViewAndroid
       align="xMidYMid"
       bbHeight={9999}
       bbWidth={9999}
-      color={-16777216}
+      color="#000"
       focusable={false}
       height={9999}
       id="Layer_1"
@@ -287,7 +300,7 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
         ]
       }
       testID="Image1$SvgUri"
-      tintColor={-16777216}
+      tintColor="#000"
       uri="file:///this/is/a/fake/path.svg"
       vbHeight={9999}
       vbWidth={9999}
@@ -299,12 +312,25 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
+      >
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+          fill={
+            {
+              "payload": -16777216,
+              "type": 0,
+            }
+          }
         />
       </RNSVGGroup>
-    </RNSVGSvgView>
+    </RNSVGSvgViewAndroid>
   </View>,
   <Modal
     accessibilityRole="image"
@@ -403,11 +429,11 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
           }
         }
       >
-        <RNSVGSvgView
+        <RNSVGSvgViewAndroid
           align="xMidYMid"
           bbHeight={9999}
           bbWidth={9999}
-          color={-16777216}
+          color="#000"
           focusable={false}
           height={9999}
           id="Layer_1"
@@ -440,7 +466,7 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
             ]
           }
           testID="Image1$SvgUri"
-          tintColor={-16777216}
+          tintColor="#000"
           uri="file:///this/is/a/fake/path.svg"
           vbHeight={9999}
           vbWidth={9999}
@@ -452,12 +478,25 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
           xmlnsXlink="http://www.w3.org/1999/xlink"
           y="0px"
         >
-          <RNSVGGroup>
+          <RNSVGGroup
+            fill={
+              {
+                "payload": -16777216,
+                "type": 0,
+              }
+            }
+          >
             <RNSVGPath
               d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+              fill={
+                {
+                  "payload": -16777216,
+                  "type": 0,
+                }
+              }
             />
           </RNSVGGroup>
-        </RNSVGSvgView>
+        </RNSVGSvgViewAndroid>
       </View>
     </View>
   </Modal>,
@@ -507,11 +546,11 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RNSVGSvgView
+  <RNSVGSvgViewAndroid
     align="xMidYMid"
     bbHeight={100}
     bbWidth={100}
-    color={-16777216}
+    color="#000"
     focusable={false}
     height={100}
     id="Layer_1"
@@ -544,7 +583,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
       ]
     }
     testID="Image1$SvgUri"
-    tintColor={-16777216}
+    tintColor="#000"
     uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
@@ -556,12 +595,25 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        {
+          "payload": -16777216,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
       />
     </RNSVGGroup>
-  </RNSVGSvgView>
+  </RNSVGSvgViewAndroid>
 </View>
 `;
 
@@ -608,11 +660,11 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RNSVGSvgView
+  <RNSVGSvgViewAndroid
     align="xMidYMid"
     bbHeight={100}
     bbWidth={100}
-    color={-16777216}
+    color="#000"
     focusable={false}
     height={100}
     id="Layer_1"
@@ -645,7 +697,7 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
       ]
     }
     testID="Image1$SvgUri"
-    tintColor={-16777216}
+    tintColor="#000"
     uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
@@ -657,12 +709,25 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        {
+          "payload": -16777216,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
       />
     </RNSVGGroup>
-  </RNSVGSvgView>
+  </RNSVGSvgViewAndroid>
 </View>
 `;
 
@@ -1955,11 +2020,11 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RNSVGSvgView
+  <RNSVGSvgViewAndroid
     align="xMidYMid"
     bbHeight={15}
     bbWidth={15}
-    color={-16777216}
+    color="#000"
     focusable={false}
     height={15}
     id="Layer_1"
@@ -1992,7 +2057,7 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
       ]
     }
     testID="Image1$SvgXml"
-    tintColor={-16777216}
+    tintColor="#000"
     vbHeight={15}
     vbWidth={15}
     version={1.1}
@@ -2008,12 +2073,25 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        {
+          "payload": -16777216,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
       />
     </RNSVGGroup>
-  </RNSVGSvgView>
+  </RNSVGSvgViewAndroid>
 </View>
 `;
 
@@ -2045,11 +2123,11 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
       }
     }
   >
-    <RNSVGSvgView
+    <RNSVGSvgViewAndroid
       align="xMidYMid"
       bbHeight={15}
       bbWidth={15}
-      color={-16777216}
+      color="#000"
       focusable={false}
       height={15}
       id="Layer_1"
@@ -2082,7 +2160,7 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={-16777216}
+      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2098,12 +2176,25 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
+      >
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+          fill={
+            {
+              "payload": -16777216,
+              "type": 0,
+            }
+          }
         />
       </RNSVGGroup>
-    </RNSVGSvgView>
+    </RNSVGSvgViewAndroid>
   </View>
   <Text>
     Background Image
@@ -2139,11 +2230,11 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       }
     }
   >
-    <RNSVGSvgView
+    <RNSVGSvgViewAndroid
       align="xMidYMid"
       bbHeight={15}
       bbWidth={15}
-      color={-16777216}
+      color="#000"
       focusable={false}
       height={15}
       id="Layer_1"
@@ -2176,7 +2267,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={-16777216}
+      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2192,12 +2283,25 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
+      >
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+          fill={
+            {
+              "payload": -16777216,
+              "type": 0,
+            }
+          }
         />
       </RNSVGGroup>
-    </RNSVGSvgView>
+    </RNSVGSvgViewAndroid>
   </View>
   <Text>
     Background Image
@@ -2233,11 +2337,11 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       }
     }
   >
-    <RNSVGSvgView
+    <RNSVGSvgViewAndroid
       align="xMidYMid"
       bbHeight={15}
       bbWidth={15}
-      color={-16777216}
+      color="#000"
       focusable={false}
       height={15}
       id="Layer_1"
@@ -2270,7 +2374,7 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={-16777216}
+      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2286,12 +2390,25 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
+      >
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+          fill={
+            {
+              "payload": -16777216,
+              "type": 0,
+            }
+          }
         />
       </RNSVGGroup>
-    </RNSVGSvgView>
+    </RNSVGSvgViewAndroid>
   </View>
   <Text>
     Background Image
@@ -2349,11 +2466,11 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
     }
     testID="Image1$ImageSmallPressable"
   >
-    <RNSVGSvgView
+    <RNSVGSvgViewAndroid
       align="xMidYMid"
       bbHeight="100%"
       bbWidth="100%"
-      color={-16777216}
+      color="#000"
       focusable={false}
       id="Layer_1"
       meetOrSlice={0}
@@ -2385,7 +2502,7 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
         ]
       }
       testID="Image1$SvgXml"
-      tintColor={-16777216}
+      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2400,12 +2517,25 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
       xmlnsXlink="http://www.w3.org/1999/xlink"
       y="0px"
     >
-      <RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
+      >
         <RNSVGPath
           d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+          fill={
+            {
+              "payload": -16777216,
+              "type": 0,
+            }
+          }
         />
       </RNSVGGroup>
-    </RNSVGSvgView>
+    </RNSVGSvgViewAndroid>
   </View>,
   <Modal
     accessibilityRole="image"
@@ -2504,11 +2634,11 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
           }
         }
       >
-        <RNSVGSvgView
+        <RNSVGSvgViewAndroid
           align="xMidYMid"
           bbHeight={15}
           bbWidth={15}
-          color={-16777216}
+          color="#000"
           focusable={false}
           height={15}
           id="Layer_1"
@@ -2541,7 +2671,7 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
             ]
           }
           testID="Image1$SvgXml"
-          tintColor={-16777216}
+          tintColor="#000"
           vbHeight={15}
           vbWidth={15}
           version={1.1}
@@ -2557,12 +2687,25 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
           xmlnsXlink="http://www.w3.org/1999/xlink"
           y="0px"
         >
-          <RNSVGGroup>
+          <RNSVGGroup
+            fill={
+              {
+                "payload": -16777216,
+                "type": 0,
+              }
+            }
+          >
             <RNSVGPath
               d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+              fill={
+                {
+                  "payload": -16777216,
+                  "type": 0,
+                }
+              }
             />
           </RNSVGGroup>
-        </RNSVGSvgView>
+        </RNSVGSvgViewAndroid>
       </View>
     </View>
   </Modal>,
@@ -2612,11 +2755,11 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RNSVGSvgView
+  <RNSVGSvgViewAndroid
     align="xMidYMid"
     bbHeight={15}
     bbWidth={15}
-    color={-16777216}
+    color="#000"
     focusable={false}
     height={15}
     id="Layer_1"
@@ -2649,7 +2792,7 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
       ]
     }
     testID="Image1$SvgXml"
-    tintColor={-16777216}
+    tintColor="#000"
     vbHeight={15}
     vbWidth={15}
     version={1.1}
@@ -2665,12 +2808,25 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        {
+          "payload": -16777216,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
       />
     </RNSVGGroup>
-  </RNSVGSvgView>
+  </RNSVGSvgViewAndroid>
 </View>
 `;
 
@@ -2717,11 +2873,11 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RNSVGSvgView
+  <RNSVGSvgViewAndroid
     align="xMidYMid"
     bbHeight={15}
     bbWidth={15}
-    color={-16777216}
+    color="#000"
     focusable={false}
     height={15}
     id="Layer_1"
@@ -2754,7 +2910,7 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
       ]
     }
     testID="Image1$SvgXml"
-    tintColor={-16777216}
+    tintColor="#000"
     vbHeight={15}
     vbWidth={15}
     version={1.1}
@@ -2770,12 +2926,25 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
     xmlnsXlink="http://www.w3.org/1999/xlink"
     y="0px"
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        {
+          "payload": -16777216,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGPath
         d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
       />
     </RNSVGGroup>
-  </RNSVGSvgView>
+  </RNSVGSvgViewAndroid>
 </View>
 `;
 
