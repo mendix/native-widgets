@@ -31,8 +31,8 @@
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
     "react-native-fast-image": "8.3.2",
-    "react-native-svg": "^12.3.0",
-    "react-native-vector-icons": "10.0.3"
+    "react-native-svg": "15.7.1",
+    "react-native-vector-icons": "10.2.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",

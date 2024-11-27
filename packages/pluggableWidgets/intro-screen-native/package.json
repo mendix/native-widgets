@@ -27,8 +27,8 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "@react-native-community/async-storage": "1.12.1",
-    "react-native-device-info": "11.1.0"
+    "@react-native-async-storage/async-storage": "2.0.0",
+    "react-native-device-info": "13.0.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",
