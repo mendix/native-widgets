@@ -9569,7 +9569,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
-    react-native-device-info: "npm:11.1.0"
+    react-native-device-info: "npm:13.0.0"
   languageName: unknown
   linkType: soft
 
@@ -9582,7 +9582,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
-    react-native-svg: "npm:^12.3.0"
+    react-native-svg: "npm:15.7.1"
   languageName: unknown
   linkType: soft
 
@@ -10425,10 +10425,10 @@ __metadata:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
-    "@react-native-community/async-storage": "npm:1.12.1"
+    "@react-native-async-storage/async-storage": "npm:2.0.0"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
-    react-native-device-info: "npm:11.1.0"
+    react-native-device-info: "npm:13.0.0"
   languageName: unknown
   linkType: soft
 
@@ -13784,7 +13784,7 @@ __metadata:
   resolution: "nanoflow-actions-native@workspace:packages/jsActions/nanoflow-actions-native"
   dependencies:
     "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
-    "@react-native-community/async-storage": "npm:1.12.1"
+    "@react-native-async-storage/async-storage": "npm:2.0.0"
     "@react-native-community/geolocation": "npm:2.0.2"
     eslint: "npm:^7.32.0"
     invariant: "npm:^2.2.4"
