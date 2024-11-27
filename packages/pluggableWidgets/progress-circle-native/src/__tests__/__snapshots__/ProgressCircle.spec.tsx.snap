@@ -17,7 +17,7 @@ exports[`ProgressCircle renders 1`] = `
     }
     testID="progress-circle-test"
   >
-    <RNSVGSvgView
+    <RNSVGSvgViewAndroid
       bbHeight={100}
       bbWidth={100}
       collapsable={false}
@@ -39,10 +39,23 @@ exports[`ProgressCircle renders 1`] = `
       }
       width={100}
     >
-      <RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": -16777216,
+            "type": 0,
+          }
+        }
+      >
         <RNSVGPath
           d="M50 2.5
           A47.5 47.5 0 0 1 50.00000000000001 97.5"
+          fill={
+            {
+              "payload": -16777216,
+              "type": 0,
+            }
+          }
           propList={
             [
               "stroke",
@@ -50,7 +63,12 @@ exports[`ProgressCircle renders 1`] = `
               "strokeLinecap",
             ]
           }
-          stroke={-10354450}
+          stroke={
+            {
+              "payload": -10354450,
+              "type": 0,
+            }
+          }
           strokeLinecap={2}
           strokeWidth={3}
         />
@@ -58,6 +76,12 @@ exports[`ProgressCircle renders 1`] = `
           d="M50 0.5
             a49.5 49.5 0 0 1 0 99
             a49.5 49.5 0 0 1 0 -99"
+          fill={
+            {
+              "payload": -16777216,
+              "type": 0,
+            }
+          }
           propList={
             [
               "stroke",
@@ -65,12 +89,17 @@ exports[`ProgressCircle renders 1`] = `
               "strokeLinecap",
             ]
           }
-          stroke={-10354450}
+          stroke={
+            {
+              "payload": -10354450,
+              "type": 0,
+            }
+          }
           strokeLinecap={2}
           strokeWidth={1}
         />
       </RNSVGGroup>
-    </RNSVGSvgView>
+    </RNSVGSvgViewAndroid>
     <View
       style={
         {
