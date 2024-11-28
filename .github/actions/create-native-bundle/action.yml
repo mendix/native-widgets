@@ -25,11 +25,11 @@ runs:
     - name: "Extract deployment package"
       uses: montudor/action-zip@v1.0.0
       with:
-        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-main/deployment
+        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-mx-10.12.x/deployment
     - name: "Create bundle for ${{ inputs.platform }}"
       run: |
         mkdir -p ${{ inputs.platform }}/assets
-        cd Native-Mobile-Resources-main/deployment/native && \
+        cd Native-Mobile-Resources-mx-10.12.x/deployment/native && \
         /tmp/mxbuild/modeler/tools/node/linux-x64/node \
         /tmp/mxbuild/modeler/tools/node/node_modules/react-native/local-cli/cli.js \
         bundle --verbose --platform ${{ inputs.platform }} --dev false \
