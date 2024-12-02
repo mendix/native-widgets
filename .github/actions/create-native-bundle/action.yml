@@ -16,7 +16,7 @@ runs:
         apt install curl -y
       shell: bash
     - name: "Download test project"
-      run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+      run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/mx/10.12.x.zip
       shell: bash
     - name: "Extract test project"
       uses: montudor/action-zip@v1.0.0
