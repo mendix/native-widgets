@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+
 ## [3.2.2] - 2022-10-5
 
 ### Fixed

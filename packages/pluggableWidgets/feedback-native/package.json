@@ -1,7 +1,7 @@
 {
   "name": "feedback-native",
   "widgetName": "Feedback",
-  "version": "3.2.2",
+  "version": "3.3.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
