@@ -29,6 +29,7 @@ export interface ColorPickerPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     color: string;
     format: FormatEnum;
     showPreview: boolean;

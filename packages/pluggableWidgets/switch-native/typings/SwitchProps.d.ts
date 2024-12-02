@@ -27,6 +27,7 @@ export interface SwitchPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     booleanAttribute: string;
     onChange: {} | null;
     showLabel: boolean;

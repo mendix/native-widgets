@@ -29,6 +29,7 @@ export interface CarouselPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     contentSource: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     layout: LayoutEnum;

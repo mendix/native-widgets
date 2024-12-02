@@ -30,6 +30,7 @@ export interface RangeSliderPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     lowerValueAttribute: string;
     upperValueAttribute: string;
     editable: EditableEnum;

@@ -26,6 +26,7 @@ export interface VideoPlayerPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     videoUrl: string;
     autoStart: boolean;
     muted: boolean;

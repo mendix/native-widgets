@@ -56,7 +56,11 @@ export interface MarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    icon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     iconSize: number | null;
     iconColor: string;
 }
@@ -70,7 +74,11 @@ export interface DynamicMarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    icon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     iconSize: number | null;
     iconColor: string;
 }
@@ -102,6 +110,7 @@ export interface MapsPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     markers: MarkersPreviewType[];
     dynamicMarkers: DynamicMarkersPreviewType[];
     fitToMarkers: boolean;

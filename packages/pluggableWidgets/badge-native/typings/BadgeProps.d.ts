@@ -22,6 +22,7 @@ export interface BadgePreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     caption: string;
     onClick: {} | null;
 }

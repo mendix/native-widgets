@@ -24,7 +24,7 @@
     "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "1.12.1",
+    "@react-native-async-storage/async-storage": "2.0.0",
     "@react-native-community/geolocation": "2.0.2",
     "invariant": "^2.2.4",
     "js-base64": "~3.7.2",
@@ -32,8 +32,9 @@
     "react-native-geolocation-service": "5.2.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^9.0.0",
-    "eslint": "^7.20.0",
-    "rollup": "^2.68.0"
+    "@mendix/pluggable-widgets-tools": "^10.0.1",
+    "eslint": "^7.32.0",
+    "mendix": "~10.0.9976",
+    "rollup": "^2.79.2"
   }
 }

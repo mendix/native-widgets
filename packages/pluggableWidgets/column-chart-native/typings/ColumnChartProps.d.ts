@@ -64,6 +64,7 @@ export interface ColumnChartPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
+    renderMode?: "design" | "xray" | "structure";
     presentation: PresentationEnum;
     columnSeries: ColumnSeriesPreviewType[];
     sortOrder: SortOrderEnum;

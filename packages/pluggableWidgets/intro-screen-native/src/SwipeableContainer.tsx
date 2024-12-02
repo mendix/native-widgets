@@ -1,14 +1,4 @@
-import {
-    ComponentClass,
-    createElement,
-    Fragment,
-    ReactElement,
-    ReactNode,
-    useCallback,
-    useEffect,
-    useRef,
-    useState
-} from "react";
+import { createElement, Fragment, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
     FlatList,
     I18nManager,
@@ -56,7 +46,7 @@ interface SwipeableContainerProps {
 declare type Option<T> = T | undefined;
 
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === "android";
-const Touchable: ComponentClass<any> = Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
+const Touchable = Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
 
 const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: EditableValue<Big>): number => {
     if (activeSlide && activeSlide.status === ValueStatus.Available && slides && slides.length > 0) {
