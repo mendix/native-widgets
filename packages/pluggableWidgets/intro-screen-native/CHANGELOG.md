@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+
+### BREAKING
+
+-   Updated react-native-svg from version v12.3.0 to v15.7.1.
+-   Updated react-native-device-info from version v11.1.0 to v13.0.0.
+-   Switched from @react-native-community/async-storage to @react-native-async-storage/async-storage.
+
 ## [3.3.0] - 2024-8-29
 
 ### Added

@@ -6,12 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+
+### BREAKING
+
+-   Updated react-native from version 0.73.8 to 0.75.4.
+-   Updated react-native-device-info from version v11.1.0 to v13.0.0.
+-   Updated react-native-localize from version v1.4.2 to v3.2.1.
+
 ## [4.0.4] Nanoflow Commons - 2024-8-8
-- We've added support for the token-based authentication with the SignIn action. This authentication method allows users to remain signed in until the expiration time of the token. You can read more about this behavior on this documentation page https://docs.mendix.com/refguide/session-management/#2-authentication-token
+
+-   We've added support for the token-based authentication with the SignIn action. This authentication method allows users to remain signed in until the expiration time of the token. You can read more about this behavior on this documentation page https://docs.mendix.com/refguide/session-management/#2-authentication-token
 
 To enable it you can set the new SignIn action parameter `useAuthToken` to `true`.
 
 ## [4.0.3] Nanoflow Commons - 2024-3-19
+
 ### Fixed
 
 -   We have fixed an issue in base64encode action.

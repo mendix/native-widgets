@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+-   Updated react-native-vector-icons from version v10.0.3 to v10.2.0.
+
+### Changed
+
 -   We have updated `react-native-video` version to 6.4.5
 
 ## [5.0.1] - 2024-8-29
