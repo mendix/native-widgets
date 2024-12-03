@@ -17,11 +17,7 @@ export interface SecondaryButtonsType {
 }
 
 export interface SecondaryButtonsPreviewType {
-    icon:
-        | { type: "glyph"; iconClass: string }
-        | { type: "image"; imageUrl: string; iconUrl: string }
-        | { type: "icon"; iconClass: string }
-        | undefined;
+    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     caption: string;
     onClick: {} | null;
 }
@@ -47,16 +43,8 @@ export interface FloatingActionButtonPreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     renderMode?: "design" | "xray" | "structure";
-    icon:
-        | { type: "glyph"; iconClass: string }
-        | { type: "image"; imageUrl: string; iconUrl: string }
-        | { type: "icon"; iconClass: string }
-        | undefined;
-    iconActive:
-        | { type: "glyph"; iconClass: string }
-        | { type: "image"; imageUrl: string; iconUrl: string }
-        | { type: "icon"; iconClass: string }
-        | undefined;
+    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    iconActive: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
     horizontalPosition: HorizontalPositionEnum;
     verticalPosition: VerticalPositionEnum;
     onClick: {} | null;
