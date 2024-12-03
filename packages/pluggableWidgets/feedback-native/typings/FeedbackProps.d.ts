@@ -26,5 +26,5 @@ export interface FeedbackPreviewProps {
     renderMode?: "design" | "xray" | "structure";
     sprintrapp: string;
     allowScreenshot: boolean;
-    logo: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    logo: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
 }

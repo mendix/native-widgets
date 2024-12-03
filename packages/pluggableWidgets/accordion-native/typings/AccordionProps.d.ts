@@ -67,14 +67,6 @@ export interface AccordionPreviewProps {
     collapsible: boolean;
     collapseBehavior: CollapseBehaviorEnum;
     icon: IconEnum;
-    iconCollapsed:
-        | { type: "glyph"; iconClass: string }
-        | { type: "image"; imageUrl: string; iconUrl: string }
-        | { type: "icon"; iconClass: string }
-        | undefined;
-    iconExpanded:
-        | { type: "glyph"; iconClass: string }
-        | { type: "image"; imageUrl: string; iconUrl: string }
-        | { type: "icon"; iconClass: string }
-        | undefined;
+    iconCollapsed: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    iconExpanded: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
 }
