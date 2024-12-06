@@ -309,8 +309,40 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: gradle
+
       - name: "Check Java Version"
         run: java -version
+      - name: "Check JAVA_HOME"
+        run: echo $JAVA_HOME
+
+      - name: "Install Android SDK Command-Line Tools"
+        run: |
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          cd $HOME/android-sdk/cmdline-tools
+          curl -O https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
+          unzip commandlinetools-linux-7583922_latest.zip
+          rm commandlinetools-linux-7583922_latest.zip
+          mv cmdline-tools latest
+
+      - name: "Set up Android SDK environment variables"
+        run: |
+          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+
+      - name: "Accept Android SDK licenses"
+        run: |
+          yes | sdkmanager --licenses
+
+      - name: "Install Android SDK components"
+        run: |
+          sdkmanager "platform-tools" "platforms;android-34"
+
+      - name: "Check Android SDK Tools Version"
+        run: sdkmanager --version
+
+      - name: "List Installed SDK Packages"
+        run: sdkmanager --list
+
       - name: "Build Android app"
         working-directory: native-template/android
         run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
@@ -449,7 +481,7 @@ jobs:
         with:
           api-level: 34
           target: default
-          arch: x86_64
+          arch: arm64-v8a
           profile: pixel
           cores: 3
           ram-size: 4096M
@@ -547,8 +579,8 @@ jobs:
         run: xcrun simctl list runtimes
       - name: Check avialble device types
         run: xcrun simctl list devicetypes
-      # - name: Create iOS 16.0 simulator for iPhone 14
-      #   run: xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-16-0
+      - name: Create iOS 17.5 simulator for iPhone 14
+        run: xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-17-5
       - name: List supported iOS devices
         run: applesimutils --list
       - name: "Run tests"
