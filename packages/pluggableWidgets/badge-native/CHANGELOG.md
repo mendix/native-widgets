@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
 
 ## [2.2.0] - 2022-02-21
 
