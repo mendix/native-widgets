@@ -17,12 +17,12 @@ runs:
     - name: "Install Python dependencies"
       run: pip install pyaml httplib2
       shell: bash
-    - name: "Setup Java 11"
-      id: setup-java
-      uses: actions/setup-java@v3.10.0
-      with:
-        distribution: "temurin"
-        java-version: "11"
+    - name: "Setup Java 17"
+       id: setup-java
+       uses: actions/setup-java@v4
+       with:
+         distribution: "temurin"
+         java-version: "17"
     - name: "Extract deployment package"
       run: |
         mkdir project
