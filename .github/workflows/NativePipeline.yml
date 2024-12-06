@@ -306,7 +306,7 @@ jobs:
       - name: "Setup JDK "
         uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
         with:
-          java-version: 21
+          java-version: 17
           distribution: temurin
           cache: gradle
       - name: "Build Android app"
@@ -509,6 +509,9 @@ jobs:
       - name: "Check available Xcode versions"
         run: |
           ls /Applications
+      - name: "Check available devices"
+        run: |
+          applesimutils --list
       # Used when new xCode version of simulator should be created
       - name: Update Xcode
         run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
