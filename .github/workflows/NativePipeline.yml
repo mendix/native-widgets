@@ -319,7 +319,7 @@ jobs:
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
     needs: [ios-bundle]
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -371,7 +371,7 @@ jobs:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
   android-avd:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -402,7 +402,7 @@ jobs:
           script: echo "AVD created"
   android-tests:
     needs: [scope, mendix-version, project, android-app, android-avd]
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -489,7 +489,7 @@ jobs:
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -506,9 +506,12 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      - name: "Check available Xcode versions"
+        run: |
+          ls /Applications
       # Used when new xCode version of simulator should be created
-      # - name: Update Xcode
-      #   run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+      - name: Update Xcode
+        run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
       - name: "Clean detox framework cache"
         run: npx detox clean-framework-cache
       - name: "Build detox framework cache"
