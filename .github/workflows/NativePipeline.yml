@@ -315,34 +315,6 @@ jobs:
       - name: "Check JAVA_HOME"
         run: echo $JAVA_HOME
 
-      - name: "Install Android SDK Command-Line Tools"
-        run: |
-          mkdir -p $HOME/android-sdk/cmdline-tools
-          cd $HOME/android-sdk/cmdline-tools
-          curl -O https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
-          unzip commandlinetools-linux-7583922_latest.zip
-          rm commandlinetools-linux-7583922_latest.zip
-          mv cmdline-tools latest
-
-      - name: "Set up Android SDK environment variables"
-        run: |
-          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
-          echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
-
-      - name: "Accept Android SDK licenses"
-        run: |
-          yes | sdkmanager --licenses
-
-      - name: "Install Android SDK components"
-        run: |
-          sdkmanager "platform-tools" "platforms;android-34"
-
-      - name: "Check Android SDK Tools Version"
-        run: sdkmanager --version
-
-      - name: "List Installed SDK Packages"
-        run: sdkmanager --list
-
       - name: "Build Android app"
         working-directory: native-template/android
         run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
