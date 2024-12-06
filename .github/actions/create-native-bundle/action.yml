@@ -31,7 +31,7 @@ runs:
         mkdir -p ${{ inputs.platform }}/assets
         cd Native-Mobile-Resources-main/deployment/native && \
         /tmp/mxbuild/modeler/tools/node/linux-x64/node \
-        /tmp/mxbuild/modeler/tools/node/node_modules/react-native/cli.js \
+        /tmp/mxbuild/modeler/tools/node/node_modules/@react-native-community/cli \
         bundle --verbose --platform ${{ inputs.platform }} --dev false \
         --config "$PWD/metro.config.js" \
         --bundle-output $GITHUB_WORKSPACE/${{ inputs.platform }}/index.${{ inputs.platform }}.bundle \
