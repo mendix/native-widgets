@@ -309,6 +309,13 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: gradle
+      - name: "Check Java Version"
+        run: java -version
+
+      - name: "Install Android SDK"
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-30" # Adjust as needed
       - name: "Build Android app"
         working-directory: native-template/android
         run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
