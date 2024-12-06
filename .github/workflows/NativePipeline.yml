@@ -509,12 +509,16 @@ jobs:
       - name: "Check available Xcode versions"
         run: |
           ls /Applications
+      - name: "Install applesimutils"
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
       - name: "Check available devices"
         run: |
           applesimutils --list
       # Used when new xCode version of simulator should be created
       - name: Update Xcode
-        run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+        run: sudo xcode-select --switch /Applications/Xcode_15.0.1.app
       - name: "Clean detox framework cache"
         run: npx detox clean-framework-cache
       - name: "Build detox framework cache"
