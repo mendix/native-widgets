@@ -31,6 +31,7 @@ export function RadioButton({
             ]}
             onPress={() => onSelect(name)}
             testID={`radio-button-${name}`}
+            accessibilityRole="radio"
         >
             <View style={[styles.circularButtonStyle, disabled && styles.circularBtnDisabledStyle]}>
                 {active && <View style={styles.activeButtonStyle} />}
