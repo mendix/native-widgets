@@ -1,6 +1,6 @@
-const ANDROID_SDK_VERSION = "30"; // Set to 30 because: https://github.com/wix/Detox/issues/3071
+const ANDROID_SDK_VERSION = "34";
 const ANDROID_DEVICE_TYPE = "pixel";
-const IOS_SDK_VERSION = "16.0";
+const IOS_SDK_VERSION = "17.5";
 const IOS_DEVICE_TYPE = "iPhone 14";
 
 module.exports = {
