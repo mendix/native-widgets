@@ -23,6 +23,7 @@ export interface GalleryProps<T extends ObjectItem> {
     pullDown?: () => void;
     pullDownIsExecuting?: boolean;
     scrollDirection: ScrollDirectionEnum;
+    showScrollIndicator: boolean;
     style: GalleryStyle;
     tabletColumns: number;
 }
@@ -131,6 +132,8 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 renderItem={renderItem}
                 style={props.style.list}
                 testID={`${props.name}-list`}
+                showsHorizontalScrollIndicator={!isScrollDirectionVertical && props.showScrollIndicator}
+                showsVerticalScrollIndicator={isScrollDirectionVertical && props.showScrollIndicator}
             />
         </View>
     );
