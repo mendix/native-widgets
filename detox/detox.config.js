@@ -1,7 +1,7 @@
 const ANDROID_SDK_VERSION = "34";
 const ANDROID_DEVICE_TYPE = "pixel";
 const IOS_SDK_VERSION = "17.5";
-const IOS_DEVICE_TYPE = "iPhone 14";
+const IOS_DEVICE_TYPE = "iPhone 15";
 
 module.exports = {
     ANDROID_SDK_VERSION,
