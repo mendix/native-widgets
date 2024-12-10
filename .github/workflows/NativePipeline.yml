@@ -124,15 +124,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Check out code"
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       - name: "Check if docker image already exists"
         run: |
           docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
           echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-        if: ${{ env.IMAGE_MISSING != 0 }}
       - name: "Build mxbuild image"
-        if: ${{ env.IMAGE_MISSING != 0 }}
+        # if: ${{ env.IMAGE_MISSING != 0 }}
         uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
         with:
           file: ./.github/scripts/mxbuild.Dockerfile
@@ -159,6 +158,9 @@ jobs:
           cache: yarn
       - name: "Install dependencies"
         run: yarn install --immutable
+      - name: "Force rebuild resources"
+        run: |
+          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build # Ensure all resources are rebuilt
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
       - name: "Run build for development"
@@ -221,8 +223,9 @@ jobs:
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
             mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
-      - name: "Build test project"
-        run: mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      - name: "Force rebuild test project"
+        run: |
+          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr # Ensure the project is rebuilt
       - name: "Upload MDA"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
@@ -317,7 +320,16 @@ jobs:
 
       - name: "Build Android app"
         working-directory: native-template/android
-        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
+        run: |
+          ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
+          if [ $? -ne 0 ]; then
+            echo "Build failed!"
+            exit 1
+          fi
+      - name: "List APK files"
+        run: |
+          echo "Listing APK files in the output directory:"
+          ls -R native-template/android/app/build/outputs/apk/
       - name: "Archive Android app"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
@@ -359,7 +371,7 @@ jobs:
         run: npm i
 
       - name: "Setup Pods cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
+        uses: actions/cache@v3
         with:
           path: native-template/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -382,7 +394,7 @@ jobs:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       - name: "Setup AVD cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
+        uses: actions/cache@v3
         id: avd-cache
         with:
           path: |
@@ -438,12 +450,19 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      - name: "List contents of android-app directory"
+      - name: "List contents of working directory before downloading Android app"
+        run: ls -R
+      - name: "Download Android app"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        with:
+          name: android-app
+          path: android-app
+      - name: "List contents of android-app directory after download"
         run: ls -R android-app
       - name: "Check if Android app APK exists"
         run: |
-          if [ ! -f "android-app/app-appstore-debug.apk" ]; then
-            echo "Error: Android app APK not found at path: android-app/app-appstore-debug.apk"
+          if [ ! -f "android-app/appstore/debug/app-appstore-debug.apk" ]; then
+            echo "Error: Android app APK not found at path: android-app/appstore/debug/app-appstore-debug.apk"
             exit 1
           fi
       - name: "Start runtime"
@@ -451,24 +470,23 @@ jobs:
         with:
           mda-file: automation.mda
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Download Android app"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: android-app
-          path: android-app
       - name: "Move android apps to correct location"
         run: |
           mkdir -p detox/apps
           find android-app -type f -iname "*.apk" -exec mv {} detox/apps/ \;
-      - name: "Setup AVD cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
-        id: avd-cache
-        with:
-          path: |
-            /Users/runner/.android/avd/*
-            /Users/runner/.android/adb*
-            /Users/runner/Library/Android/sdk/system-images/**/*
-          key: new_avd_default_3core_and_system_images
+      - name: "Check if APK files are present"
+        run: |
+          echo "Listing APK files in detox/apps directory:"
+          ls -R detox/apps
+      # - name: "Setup AVD cache"
+      #   uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
+      #   id: avd-cache
+      #   with:
+      #     path: |
+      #       /Users/runner/.android/avd/*
+      #       /Users/runner/.android/adb*
+      #       /Users/runner/Library/Android/sdk/system-images/**/*
+      #     key: new_avd_default_3core_and_system_images
       - name: "Run tests"
         uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # v2.30.1
         with:
@@ -480,14 +498,14 @@ jobs:
           ram-size: 4096M
           heap-size: 1024M
           avd-name: NATIVE_pixel_34
-          force-avd-creation: false
+          force-avd-creation: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
             adb shell "rm -fr /data/local/tmp/detox"
             adb shell "mkdir -p /data/local/tmp/detox"
-            adb push "/Users/runner/work/native-widgets/native-widgets/detox/apps/app-appstore-debug.apk" "/data/local/tmp/detox/Application.apk"
-            adb push "/Users/runner/work/native-widgets/native-widgets/detox/apps/app-appstore-debug-androidTest.apk" "/data/local/tmp/detox/Test.apk"
+            adb push "detox/apps/app-appstore-debug.apk" "/data/local/tmp/detox/Application.apk"
+            adb push "detox/apps/app-appstore-debug-androidTest.apk" "/data/local/tmp/detox/Test.apk"
             adb shell pm install -r -g -t /data/local/tmp/detox/Application.apk 2>/dev/null
             adb shell pm install -r -g -t /data/local/tmp/detox/Test.apk 2>/dev/null
             yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test:e2e:android
@@ -547,39 +565,41 @@ jobs:
         with:
           name: ios-app
           path: ios-app
+      - name: "List contents of ios-app directory"
+        run: |
+          echo "Listing contents of ios-app directory:"
+          ls -R ios-app
       - name: "Move iOS app to correct location"
         run: |
           mkdir -p detox/apps
           find ios-app -type d -iname "*.app" -exec cp -R {} detox/apps/ \;
-      # - name: "Check if app is running and terminate if necessary"
-      #   run: |
-      #     if xcrun simctl list apps | grep -q "com.mendix.native.template"; then
-      #       xcrun simctl terminate F8BAF834-0C86-4B68-B1BE-64167CF51C2B com.mendix.native.template || echo "No app to terminate"
-      #     else
-      #       echo "App is not running"
-      #     fi
 
       - name: "List contents of apps directory"
-        run: ls -R /Users/runner/work/native-widgets/native-widgets/apps
+        run: |
+          echo "Listing contents of detox/apps directory:"
+          ls -R detox/apps
+
       - name: "Check if iOS app exists"
         run: |
-          if [ ! -d "/Users/runner/work/native-widgets/native-widgets/apps/NativeTemplate.app" ]; then
-            echo "App not found at path: /Users/runner/work/native-widgets/native-widgets/apps/NativeTemplate.app"
-            exit 1
+          APP_PATH="detox/apps/NativeTemplate.app"
+          if [ ! -d "$APP_PATH" ]; then
+            echo "App not found at path: $APP_PATH"
+          else
+            echo "App found at path: $APP_PATH"
           fi
 
       - name: Install Detox Dependencies
         run: |
           brew tap wix/brew 
           brew install applesimutils
-      - name: Check available runtimes
-        run: xcrun simctl list runtimes
-      - name: Check available device types
-        run: xcrun simctl list devicetypes
+      # - name: Check available runtimes
+      #   run: xcrun simctl list runtimes
+      # - name: Check available device types
+      #   run: xcrun simctl list devicetypes
       - name: Create iOS 17.5 simulator for iPhone 15
         run: xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-17-5
-      - name: List supported iOS devices
-        run: applesimutils --list
+      # - name: List supported iOS devices
+      #   run: applesimutils --list
       - name: Boot Simulator
         run: xcrun simctl boot "iPhone 15"
       - name: Wait for Simulator to Boot
@@ -595,9 +615,6 @@ jobs:
             exit 1
           fi
 
-      # - name: "Install iOS app"
-      #   run: |
-      #     xcrun simctl install "iPhone 15" path/to/your/app.app || echo "Failed to install app"
       - name: "List installed apps"
         run: xcrun simctl listapps "iPhone 15"
 
@@ -609,11 +626,16 @@ jobs:
           if xcrun simctl list apps | grep -q "com.mendix.native.template"; then
             xcrun simctl terminate "iPhone 15" com.mendix.native.template || echo "No app to terminate"
           fi
-      - name: "Check if app exists"
+
+      - name: "Check if iOS app exists"
         run: |
-          if [ ! -d "${{ github.workspace }}/apps/NativeTemplate.app" ]; then
-            echo "App not found at path: ${{ github.workspace }}/apps/NativeTemplate.app"
-            exit 1
+          BINARY_PATH="/Users/runner/work/native-widgets/native-widgets/detox/apps/NativeTemplate.app"
+          if [ ! -d "$BINARY_PATH" ]; then
+            echo "App not found at path: $BINARY_PATH"
+            echo "Listing contents of the apps directory:"
+            ls -R /Users/runner/work/native-widgets/native-widgets/detox/apps # List contents of the apps directory for debugging
+          else
+            echo "App found at path: $BINARY_PATH"
           fi
 
       - name: "Run tests"
