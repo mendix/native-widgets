@@ -310,10 +310,10 @@ jobs:
           distribution: temurin
           cache: gradle
 
-      - name: "Check Java Version"
-        run: java -version
-      - name: "Check JAVA_HOME"
-        run: echo $JAVA_HOME
+      # - name: "Check Java Version"
+      #   run: java -version
+      # - name: "Check JAVA_HOME"
+      #   run: echo $JAVA_HOME
 
       - name: "Build Android app"
         working-directory: native-template/android
@@ -377,7 +377,7 @@ jobs:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
   android-avd:
-    runs-on: macos-13
+    runs-on: ubuntu-22.04
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -389,39 +389,39 @@ jobs:
             /Users/runner/.android/avd/*
             /Users/runner/.android/adb*
             /Users/runner/Library/Android/sdk/system-images/**/*
-          key: pixel_34_arm64_v8a_default_3core_and_system_images
-      - name: "Kill existing emulator instances"
-        run: |
-          adb devices | grep emulator | awk '{print $1}' | xargs -r adb -s kill-server
+          key: new_avd_default_3core_and_system_images
+      # - name: "Kill existing emulator instances"
+      #   run: |
+      #     adb devices | grep emulator | awk '{print $1}' | xargs -r adb -s kill-server
       - name: "Create AVD and generate snapshot for caching"
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # v2.30.1
+        # if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
           api-level: 34
           target: default
-          arch: arm64-v8a
+          arch: x86_64
           profile: pixel
           cores: 3
           ram-size: 4096M
           heap-size: 1024M
           avd-name: NATIVE_pixel_34
-          force-avd-creation: false
+          force-avd-creation: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
             echo "AVD created"
             sleep 5
-      - name: "List available AVDs"
-        run: |
-          echo "Available AVDs:"
-          emulator -list-avds
-      - name: "Check AVD logs"
-        run: |
-          echo "AVD logs:"
-          cat /Users/runner/.android/avd/NATIVE_pixel_34.avd/*.log || echo "No logs found"
+      # - name: "List available AVDs"
+      #   run: |
+      #     echo "Available AVDs:"
+      #     emulator -list-avds
+      # - name: "Check AVD logs"
+      #   run: |
+      #     echo "AVD logs:"
+      #     cat /Users/runner/.android/avd/NATIVE_pixel_34.avd/*.log || echo "No logs found"
   android-tests:
     needs: [scope, mendix-version, project, android-app, android-avd]
-    runs-on: macos-14
+    runs-on: ubuntu-22.04
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -438,6 +438,14 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      - name: "List contents of android-app directory"
+        run: ls -R android-app
+      - name: "Check if Android app APK exists"
+        run: |
+          if [ ! -f "android-app/app-appstore-debug.apk" ]; then
+            echo "Error: Android app APK not found at path: android-app/app-appstore-debug.apk"
+            exit 1
+          fi
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
@@ -460,17 +468,17 @@ jobs:
             /Users/runner/.android/avd/*
             /Users/runner/.android/adb*
             /Users/runner/Library/Android/sdk/system-images/**/*
-          key: pixel_30_arm64_v8a_default_3core_and_system_images
+          key: new_avd_default_3core_and_system_images
       - name: "Run tests"
         uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # v2.30.1
         with:
           api-level: 34
           target: default
-          arch: arm64-v8a
+          arch: x86_64
           profile: pixel
           cores: 3
           ram-size: 4096M
-          heap-size: 512M
+          heap-size: 1024M
           avd-name: NATIVE_pixel_34
           force-avd-creation: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
@@ -543,13 +551,23 @@ jobs:
         run: |
           mkdir -p detox/apps
           find ios-app -type d -iname "*.app" -exec cp -R {} detox/apps/ \;
-      - name: "Check if app is running and terminate if necessary"
+      # - name: "Check if app is running and terminate if necessary"
+      #   run: |
+      #     if xcrun simctl list apps | grep -q "com.mendix.native.template"; then
+      #       xcrun simctl terminate F8BAF834-0C86-4B68-B1BE-64167CF51C2B com.mendix.native.template || echo "No app to terminate"
+      #     else
+      #       echo "App is not running"
+      #     fi
+
+      - name: "List contents of apps directory"
+        run: ls -R /Users/runner/work/native-widgets/native-widgets/apps
+      - name: "Check if iOS app exists"
         run: |
-          if xcrun simctl list apps | grep -q "com.mendix.native.template"; then
-            xcrun simctl terminate F8BAF834-0C86-4B68-B1BE-64167CF51C2B com.mendix.native.template || echo "No app to terminate"
-          else
-            echo "App is not running"
+          if [ ! -d "/Users/runner/work/native-widgets/native-widgets/apps/NativeTemplate.app" ]; then
+            echo "App not found at path: /Users/runner/work/native-widgets/native-widgets/apps/NativeTemplate.app"
+            exit 1
           fi
+
       - name: Install Detox Dependencies
         run: |
           brew tap wix/brew 
@@ -558,11 +576,49 @@ jobs:
         run: xcrun simctl list runtimes
       - name: Check available device types
         run: xcrun simctl list devicetypes
-      - name: Create iOS 17.5 simulator for iPhone 14
-        run: xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-17-5
+      - name: Create iOS 17.5 simulator for iPhone 15
+        run: xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-17-5
       - name: List supported iOS devices
         run: applesimutils --list
+      - name: Boot Simulator
+        run: xcrun simctl boot "iPhone 15"
+      - name: Wait for Simulator to Boot
+        run: |
+          while ! xcrun simctl list | grep "Booted"; do
+            echo "Waiting for simulator to boot..."
+            sleep 5
+          done
+      - name: "Check if simulator is booted"
+        run: |
+          if ! xcrun simctl list | grep -q "Booted"; then
+            echo "Simulator is not booted!"
+            exit 1
+          fi
+
+      # - name: "Install iOS app"
+      #   run: |
+      #     xcrun simctl install "iPhone 15" path/to/your/app.app || echo "Failed to install app"
+      - name: "List installed apps"
+        run: xcrun simctl listapps "iPhone 15"
+
+      - name: "Wait for app to be ready"
+        run: sleep 10
+
+      - name: "Terminate app if running"
+        run: |
+          if xcrun simctl list apps | grep -q "com.mendix.native.template"; then
+            xcrun simctl terminate "iPhone 15" com.mendix.native.template || echo "No app to terminate"
+          fi
+      - name: "Check if app exists"
+        run: |
+          if [ ! -d "${{ github.workspace }}/apps/NativeTemplate.app" ]; then
+            echo "App not found at path: ${{ github.workspace }}/apps/NativeTemplate.app"
+            exit 1
+          fi
+
       - name: "Run tests"
+        env:
+          DETOX_LOGLEVEL: trace
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test:e2e:ios
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
