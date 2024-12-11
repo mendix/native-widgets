@@ -59,8 +59,9 @@ on:
           - video-player-native
           - web-view-native
 
-  pull_request:
-  #   branches: [master]
+# Disable trigger on pull request for now
+# pull_request:
+# #   branches: [master]
 
 permissions:
   packages: write
@@ -551,10 +552,10 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      - name: "Clean detox framework cache"
-        run: npx detox clean-framework-cache
-      - name: "Build detox framework cache"
-        run: npx detox build-framework-cache
+      # - name: "Clean detox framework cache"
+      #   run: npx detox clean-framework-cache
+      # - name: "Build detox framework cache"
+      #   run: npx detox build-framework-cache
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
@@ -578,15 +579,6 @@ jobs:
         run: |
           echo "Listing contents of detox/apps directory:"
           ls -R detox/apps
-
-      - name: "Check if iOS app exists"
-        run: |
-          APP_PATH="detox/apps/NativeTemplate.app"
-          if [ ! -d "$APP_PATH" ]; then
-            echo "App not found at path: $APP_PATH"
-          else
-            echo "App found at path: $APP_PATH"
-          fi
 
       - name: Install Detox Dependencies
         run: |
@@ -615,19 +607,18 @@ jobs:
             exit 1
           fi
 
-      - name: "List installed apps"
-        run: xcrun simctl listapps "iPhone 15"
-
-      - name: "Wait for app to be ready"
-        run: sleep 10
-
-      - name: "Terminate app if running"
+      # - name: "List installed apps"
+      #   run: xcrun simctl listapps "iPhone 15"
+      - name: "Check if iOS app exists in detox/apps"
         run: |
-          if xcrun simctl list apps | grep -q "com.mendix.native.template"; then
-            xcrun simctl terminate "iPhone 15" com.mendix.native.template || echo "No app to terminate"
+          APP_PATH="detox/apps/NativeTemplate.app"
+          if [ ! -d "$APP_PATH" ]; then
+            echo "App not found at path: $APP_PATH"
+          else
+            echo "App found at path: $APP_PATH"
           fi
 
-      - name: "Check if iOS app exists"
+      - name: "Check if iOS app exists in full BINARY_PATH"
         run: |
           BINARY_PATH="/Users/runner/work/native-widgets/native-widgets/detox/apps/NativeTemplate.app"
           if [ ! -d "$BINARY_PATH" ]; then
@@ -637,6 +628,19 @@ jobs:
           else
             echo "App found at path: $BINARY_PATH"
           fi
+
+      - name: "Install app on simulator"
+        run: |
+          SIMULATOR_ID=$(xcrun simctl list devices | grep "iPhone 15" | grep "Booted" | awk -F '[()]' '{print $2}')
+          if [ -z "$SIMULATOR_ID" ]; then
+            echo "No booted simulator found for iPhone 15."
+            exit 1
+          fi
+          echo "Installing app on simulator with ID: $SIMULATOR_ID"
+          xcrun simctl install "$SIMULATOR_ID" "$BINARY_PATH"
+
+      - name: "Wait for app to be ready"
+        run: sleep 10
 
       - name: "Run tests"
         env:
