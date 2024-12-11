@@ -3,6 +3,8 @@ const ANDROID_DEVICE_TYPE = "pixel";
 const IOS_SDK_VERSION = "17.5";
 const IOS_DEVICE_TYPE = "iPhone 15";
 
+console.log("Current directory:", __dirname);
+
 module.exports = {
     ANDROID_SDK_VERSION,
     ANDROID_DEVICE_TYPE,
