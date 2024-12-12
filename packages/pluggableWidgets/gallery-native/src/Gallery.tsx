@@ -14,7 +14,6 @@ import { FilterCondition } from "mendix/filters";
 import { Gallery as GalleryComponent, GalleryProps as GalleryComponentProps } from "./components/Gallery";
 import { GalleryProps } from "../typings/GalleryProps";
 import { ObjectItem, ValueStatus } from "mendix";
-import DeviceInfo from "react-native-device-info";
 
 export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const viewStateFilters = useRef<FilterCondition | undefined>(undefined);
@@ -24,29 +23,17 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const styles = all<GalleryStyle>([defaultGalleryStyle, ...props.style]);
     const currentPage = props.datasource.limit / props.pageSize;
 
-    const columnSize = Math.max(DeviceInfo.isTablet() ? props.tabletColumns : props.phoneColumns, 1);
-
     useEffect(() => {
         if (props.datasource.limit === Number.POSITIVE_INFINITY) {
-            props.datasource.setLimit(props.pageSize * columnSize);
+            props.datasource.setLimit(props.pageSize);
         }
     }, [props.datasource, props.pageSize]);
 
     useEffect(() => {
         if (props.datasource.status === ValueStatus.Available) {
-            return;
-        }
-        const intervalId = setInterval(() => {
             props.datasource.reload();
-            if (props.datasource.status === ValueStatus.Available) {
-                clearInterval(intervalId); // Break the interval
-            }
-        }, 500);
-
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [props.datasource.items]);
+        }
+    }, [props.datasource.items, props.datasource.status]);
 
     useEffect(() => {
         if (props.datasource.filter && !filtered && !viewStateFilters.current) {
@@ -84,7 +71,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     }
 
     const loadMoreItems = useCallback(() => {
-        props.datasource.setLimit((currentPage + 1) * props.pageSize * columnSize);
+        props.datasource.setLimit((currentPage + 1) * props.pageSize);
     }, [currentPage, props.datasource, props.pageSize]);
 
     const itemRenderer: GalleryComponentProps<ObjectItem>["itemRenderer"] = useCallback(
