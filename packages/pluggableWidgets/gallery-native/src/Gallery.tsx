@@ -13,7 +13,7 @@ import { extractFilters } from "./utils/filters";
 import { FilterCondition } from "mendix/filters";
 import { Gallery as GalleryComponent, GalleryProps as GalleryComponentProps } from "./components/Gallery";
 import { GalleryProps } from "../typings/GalleryProps";
-import { ObjectItem, ValueStatus } from "mendix";
+import { ObjectItem } from "mendix";
 
 export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const viewStateFilters = useRef<FilterCondition | undefined>(undefined);
@@ -28,18 +28,6 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
             props.datasource.setLimit(props.pageSize);
         }
     }, [props.datasource, props.pageSize]);
-
-    useEffect(() => {
-        if (props.datasource.status === ValueStatus.Available) {
-            return;
-        }
-        const intervalId = setInterval(() => {
-            props.datasource.reload();
-            if (props.datasource.status === ValueStatus.Available) {
-                clearInterval(intervalId); // Break the interval
-            }
-        }, 1000);
-    }, [props.datasource.items]);
 
     useEffect(() => {
         if (props.datasource.filter && !filtered && !viewStateFilters.current) {
