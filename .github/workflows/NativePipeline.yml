@@ -636,6 +636,13 @@ jobs:
             echo "No booted simulator found for iPhone 15."
             exit 1
           fi
+          echo "Checking if app exists at path: $BINARY_PATH"
+          if [ ! -d "$BINARY_PATH" ]; then
+            echo "Error: App not found at path: $BINARY_PATH"
+            echo "Listing contents of the directory:"
+            ls -R "$(dirname "$BINARY_PATH")" # List contents of the parent directory
+            exit 1
+          fi
           echo "Installing app on simulator with ID: $SIMULATOR_ID"
           xcrun simctl install "$SIMULATOR_ID" "$BINARY_PATH"
 
