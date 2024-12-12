@@ -21,7 +21,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-safe-area-context": "^4.14.0"
+    "react-native-safe-area-context": "4.11.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",

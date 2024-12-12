@@ -16031,13 +16031,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^4.14.0":
-  version: 4.14.1
-  resolution: "react-native-safe-area-context@npm:4.14.1"
+"react-native-safe-area-context@npm:4.11.0":
+  version: 4.11.0
+  resolution: "react-native-safe-area-context@npm:4.11.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/20f744176b22b67b08b061ac8ea4d56c11539da672e80f766e48a8304a0a19c9ba0c9a903d92b94631888dd827701785b5ac49cec61c2994262708a479701a8d
+  checksum: 10/f2e616ad3087ebf1ad34f90f4eadc2d6865d3d56bba83bcfb9d04020b4344d892e347b7f55dcd996c4d2edf21b589a5ce710a52e62a7bd86597ed34d130599b2
   languageName: node
   linkType: hard
 
@@ -17004,7 +17004,7 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
-    react-native-safe-area-context: "npm:^4.14.0"
+    react-native-safe-area-context: "npm:4.11.0"
   languageName: unknown
   linkType: soft
 
