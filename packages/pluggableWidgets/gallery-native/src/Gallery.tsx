@@ -41,7 +41,11 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
             if (props.datasource.status === ValueStatus.Available) {
                 clearInterval(intervalId); // Break the interval
             }
-        }, 1000);
+        }, 500);
+
+        return () => {
+            clearInterval(intervalId);
+        };
     }, [props.datasource.items]);
 
     useEffect(() => {
