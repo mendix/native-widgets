@@ -1,0 +1,16 @@
+appId: "${APP_ID}"
+---
+- launchApp:
+    stopApp: true
+    clearState: true
+- extendedWaitUntil:
+    visible: "Widgets menu"
+    timeout: 50000
+- tapOn: "App events"
+- assertVisible:
+    text: "Event: Load"
+- assertVisible:
+    text: "Event: Timer 2s"
+- assertVisible:
+    text: "Event: Interval 10s"
+    delay: 15000
