@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [9.1.0] Native Mobile Resources - 2024-12-18
+
+
+## [1.2.0] RadioButtons
+### Fixed
+
+-   The accessibility role has been changed to radio.
+
+## [3.0.0] SafeAreaView
+## Fixed
+
+-   We fixed the issue where the user closed popup, safe area view wasn't working properly.
+
 ## [9.0.0] Native Mobile Resources - 2024-12-3
 
 ### Changed
