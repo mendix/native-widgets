@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.2.1] - 2024-12-19
+
 ### Fixed
 
 -   Fixed a bug where the accordion state was not updating correctly when the "Collapsed" attribute was selected.
