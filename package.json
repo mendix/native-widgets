@@ -66,7 +66,7 @@
     "@types/xml2js": "^0.4.14",
     "cross-env": "^7.0.3",
     "deepmerge": "^4.3.1",
-    "detox": "^19.13.0",
+    "detox": "^20.28.0",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "^8.0.3",

@@ -1,16 +1,23 @@
-const ANDROID_SDK_VERSION = "30"; // Set to 30 because: https://github.com/wix/Detox/issues/3071
+// const { testRunner } = require("./jest.config");
+
+const ANDROID_SDK_VERSION = "34";
 const ANDROID_DEVICE_TYPE = "pixel";
-const IOS_SDK_VERSION = "16.0";
-const IOS_DEVICE_TYPE = "iPhone 14";
+const IOS_SDK_VERSION = "18.1";
+const IOS_DEVICE_TYPE = "iPhone 16 Pro Max";
+
+console.log("Current directory:", __dirname);
 
 module.exports = {
     ANDROID_SDK_VERSION,
     ANDROID_DEVICE_TYPE,
     IOS_SDK_VERSION,
     IOS_DEVICE_TYPE,
-    "test-runner": `${__dirname}/../node_modules/.bin/jest`,
-    "runner-config": `${__dirname}/jest.config.js`,
-    skipLegacyWorkersInjection: true,
+    testRunner: {
+        $0: `${__dirname}/../node_modules/.bin/jest`,
+        args: {
+            config: `${__dirname}/jest.config.js`
+        }
+    },
     apps: {
         "ios.developerapp": {
             type: "ios.app",
