@@ -432,28 +432,28 @@ jobs:
       - name: "Create and start Android emulator"
         uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
-          api-level: 34
+          api-level: 30
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 2048 -accel off"
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 2048"
           disable-animations: true
           script: echo "Emulator ready!"
         env:
-          ADB_INSTALL_TIMEOUT: 30
-          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 180 # Increased wait time
+          ADB_INSTALL_TIMEOUT: 120
+          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 300
 
-      - name: "Restart ADB Server"
-        run: |
-          adb kill-server
-          adb start-server
-          adb devices
+      # - name: "Restart ADB Server"
+      #   run: |
+      #     adb kill-server
+      #     adb start-server
+      #     adb devices
 
-      - name: "Wait for Emulator to be Fully Ready"
-        run: |
-          echo "Waiting for emulator to become online..."
-          adb -s emulator-5554 wait-for-device
-          adb devices
+      # - name: "Wait for Emulator to be Fully Ready"
+      #   run: |
+      #     echo "Waiting for emulator to become online..."
+      #     adb -s emulator-5554 wait-for-device
+      #     adb devices
 
       - name: "Verify Emulator is Running"
         run: |
@@ -572,11 +572,16 @@ jobs:
 
       - name: Install Maestro
         run: |
-          curl -Ls "https://get.maestro.dev" | bash
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Check if maestro is installed
-        run: ls $HOME/.local/bin
+      - name: Verify Installation
+        run: |
+          which maestro || echo "Maestro binary not found in PATH"
+          ls -l $HOME/.local/bin/maestro || echo "Maestro binary not found in $HOME/.local/bin"
 
       - name: Check PATH
         run: echo $PATH
