@@ -423,6 +423,21 @@ jobs:
         with:
           name: android-app
           path: android-app
+      - name: "Start runtime"
+        uses: ./.github/actions/start-runtime
+        with:
+          mda-file: automation.mda
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+
+      - name: "Install Maestro"
+        run: |
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Verify maestro
+        run: $HOME/.local/bin/maestro/bin/maestro --version
 
       - name: Enable KVM
         run: |
@@ -432,70 +447,18 @@ jobs:
       - name: "Create and start Android emulator"
         uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
-          api-level: 34
+          api-level: 30
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 2048 -accel off"
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 2048"
           disable-animations: true
-          script: echo "Emulator ready!"
-        env:
-          ADB_INSTALL_TIMEOUT: 30
-          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 180 # Increased wait time
+          script: |
+            chmod +x maestro/prepare_android.sh
+            chmod +x maestro/run_maestro.sh
+            bash maestro/prepare_android.sh
+            bash maestro/run_maestro.sh android
 
-      - name: "Restart ADB Server"
-        run: |
-          adb kill-server
-          adb start-server
-          adb devices
-
-      - name: "Wait for Emulator to be Fully Ready"
-        run: |
-          echo "Waiting for emulator to become online..."
-          adb -s emulator-5554 wait-for-device
-          adb devices
-
-      - name: "Verify Emulator is Running"
-        run: |
-          adb devices
-          adb shell getprop ro.product.model
-
-      - name: Check APK Path
-        run: ls android-app/appstore/debug
-
-      - name: "Install Android app on emulator"
-        run: adb install android-app/appstore/debug/app-appstore-debug.apk
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
-        with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Move android apps to correct location"
-        run: |
-          mkdir -p maestro/apps
-          find android-app -type f -iname "*.apk" -exec mv {} maestro/apps/ \;
-      - name: "Check if APK files are present"
-        run: |
-          echo "Listing APK files in maestro/apps directory:"
-          ls -R maestro/apps
-      - name: "Install Maestro"
-        run: |
-          curl -Ls "https://get.maestro.dev" | bash
-      - name: "Make run_maestro.sh Executable"
-        run: chmod +x maestro/run_maestro.sh
-
-      - name: Debug Maestro Script
-        run: |
-          echo "Maestro script content:"
-          cat maestro/run_maestro.sh
-
-      - name: Debug Maestro Installation
-        run: |
-          which maestro
-          maestro --help
-
-      - name: "Run Maestro Script"
-        run: maestro/run_maestro.sh android
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         if: always()
@@ -527,22 +490,27 @@ jobs:
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           fetch-depth: 0
+
       - name: "Set up node"
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version-file: .nvmrc
           cache: yarn
+
       - name: "Install dependencies"
         run: yarn install --immutable
+
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -552,8 +520,23 @@ jobs:
       - name: Check iOS App Path
         run: ls ios-app
 
-      # - name: "Set Xcode CLI Tools"
-      #   run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      - name: "Verify Xcode CLI Tools"
+        run: |
+          if ! xcode-select --print-path; then
+            echo "Xcode CLI tools not set. Setting them now."
+            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          else
+            echo "Xcode CLI tools are already configured."
+          fi
+
+      - name: "Build iOS Project"
+        run: |
+          xcodebuild -workspace ios-app/NativeTemplate.xcworkspace \
+            -scheme NativeTemplate \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 14' \
+            clean build
 
       - name: "List Available Simulators"
         run: xcrun simctl list devices
@@ -570,24 +553,30 @@ jobs:
       - name: "Install iOS app on simulator"
         run: xcrun simctl install booted ios-app/Debug-iphonesimulator/NativeTemplate.app
 
-      - name: Install Maestro
+      - name: "Verify Installed App"
+        run: xcrun simctl get_app_container booted com.mendix.native.template
+
+      - name: "Launch iOS App"
+        run: xcrun simctl launch booted com.mendix.native.template
+
+      - name: "Install Maestro"
         run: |
-          curl -Ls "https://get.maestro.dev" | bash
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Check if maestro is installed
-        run: ls $HOME/.local/bin
-
-      - name: Check PATH
-        run: echo $PATH
-
-      - name: "Make run_maestro.sh Executable"
-        run: chmod +x maestro/run_maestro.sh
       - name: Verify maestro
-        run: $HOME/.local/bin/maestro --version
+        run: $HOME/.local/bin/maestro/bin/maestro --version
+
+      - name: "Chmod run_maestro.sh"
+        run: chmod +x maestro/run_maestro.sh
 
       - name: "Run Maestro Script"
-        run: $HOME/.local/bin/maestro run maestro/run_maestro.sh ios
+        run: bash maestro/run_maestro.sh ios
+        env:
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: 60000
 
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
@@ -596,6 +585,7 @@ jobs:
           name: ios-runtime-logs
           path: log/*.log
           if-no-files-found: ignore
+
       - name: "Archive test screenshot diff results"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         if: failure()
@@ -605,6 +595,7 @@ jobs:
             ${{ github.workspace }}/packages/**/e2e/images/diffs/**/*.png
             ${{ github.workspace }}/packages/**/e2e/images/actual/**/*.png
           if-no-files-found: ignore
+
       - name: "Archive artifacts"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         if: always()
