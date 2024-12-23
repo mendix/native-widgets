@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ "$1" == "android" ]; then
-  APP_ID="com.mendix.native.template"
+  APP_ID="com.mendix.nativetemplate"
 elif [ "$1" == "ios" ]; then
-  APP_ID="com.mendix.native.template"
+  APP_ID="com.mendix.nativetemplate"
 else
   echo "Usage: $0 [android|ios]"
   exit 1

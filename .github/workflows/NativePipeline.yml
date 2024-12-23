@@ -529,15 +529,6 @@ jobs:
             echo "Xcode CLI tools are already configured."
           fi
 
-      - name: "Build iOS Project"
-        run: |
-          xcodebuild -workspace ios-app/NativeTemplate.xcworkspace \
-            -scheme NativeTemplate \
-            -configuration Debug \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14' \
-            clean build
-
       - name: "List Available Simulators"
         run: xcrun simctl list devices
 
@@ -567,8 +558,18 @@ jobs:
           chmod +x $HOME/.local/bin/maestro/bin/maestro
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Verify maestro
+      - name: "Verify maestro"
         run: $HOME/.local/bin/maestro/bin/maestro --version
+
+      - name: "Kill maestro processes"
+        run: |
+          pids=$(pgrep -f maestro)
+          if [ -n "$pids" ]; then
+            echo "Killing maestro processes: $pids"
+            echo "$pids" | xargs kill
+          else
+            echo "No maestro processes found."
+          fi
 
       - name: "Chmod run_maestro.sh"
         run: chmod +x maestro/run_maestro.sh
@@ -576,7 +577,7 @@ jobs:
       - name: "Run Maestro Script"
         run: bash maestro/run_maestro.sh ios
         env:
-          MAESTRO_DRIVER_STARTUP_TIMEOUT: 60000
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: 600000
 
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
