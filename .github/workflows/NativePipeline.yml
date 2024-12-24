@@ -484,7 +484,7 @@ jobs:
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -534,7 +534,7 @@ jobs:
 
       - name: "Start iOS Simulator"
         run: |
-          xcrun simctl boot "iPhone 14" || echo "Simulator already booted"
+          xcrun simctl boot "iPhone 16" || echo "Simulator already booted"
           sleep 30
           xcrun simctl bootstatus || echo "Simulator booted successfully"
 
@@ -560,16 +560,6 @@ jobs:
 
       - name: "Verify maestro"
         run: $HOME/.local/bin/maestro/bin/maestro --version
-
-      - name: "Kill maestro processes"
-        run: |
-          pids=$(pgrep -f maestro)
-          if [ -n "$pids" ]; then
-            echo "Killing maestro processes: $pids"
-            echo "$pids" | xargs kill
-          else
-            echo "No maestro processes found."
-          fi
 
       - name: "Chmod run_maestro.sh"
         run: chmod +x maestro/run_maestro.sh
