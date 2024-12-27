@@ -1,0 +1,20 @@
+appId: "${APP_ID}"
+---
+- launchApp:
+    stopApp: true
+    clearState: true
+- extendedWaitUntil:
+    visible: "Widgets menu"
+    timeout: 60000
+- tapOn:
+    text: "Accordion"
+- tapOn:
+    text: "Custom"
+- assertVisible:
+    text: "Header 1 - Text 1"
+# Assert image is visible
+- assertVisible: ""
+# Assert button is visible
+- assertVisible: "Button "
+- assertNotVisible:
+    text: "Header 3 - Text 1"
