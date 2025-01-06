@@ -1,11 +1,7 @@
 appId: "${APP_ID}"
 ---
-- launchApp:
-    stopApp: true
-    clearState: true
-- extendedWaitUntil:
-    visible: "Widgets menu"
-    timeout: 60000
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
 - tapOn:
     text: "Accordion"
 - tapOn:

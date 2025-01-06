@@ -1,0 +1,13 @@
+appId: "${APP_ID}"
+---
+# Flow for activity indicator
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "Activity indicator"
+- assertVisible:
+    id: "activityIndicatorDefault"
+- assertNotVisible:
+    id: "activityIndicatorNoVisibility"
+- assertVisible:
+    id: "activityIndicatorCustomStyle"

@@ -10,6 +10,6 @@ else
 fi
 
 # Find all .yaml files under maestro/ folders within packages/ and execute
-find packages/ -type f -path "*/maestro/*.yaml" | while read -r yaml_file; do
-  $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID "$yaml_file"
+find packages/ -type f -path "*/maestro/*.yaml" | while read -r yaml_test_file; do
+  $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID "$yaml_test_file"
 done
