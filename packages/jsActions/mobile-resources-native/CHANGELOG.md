@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [7.2.0] Native Mobile Resources - 2025-1-6
+
+
+## [4.0.0] SafeAreaView
+## Reverted
+
+-   We reverted the change for safeAreaView since it was causing another issue.
+
 ## [7.1.0] Native Mobile Resources - 2024-12-20
 ### Fixed
 

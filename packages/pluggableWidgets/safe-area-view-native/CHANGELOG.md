@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.0] - 2025-1-6
+
 ## Reverted
 
 -   We reverted the change for safeAreaView since it was causing another issue.
