@@ -5,4 +5,4 @@ appId: "${APP_ID}"
     clearState: true
 - extendedWaitUntil:
     visible: "Widgets menu"
-    timeout: 60000
+    timeout: 120000

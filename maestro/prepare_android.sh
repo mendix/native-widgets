@@ -12,8 +12,8 @@ while [ "$RETRIES" -lt "$MAX_RETRIES" ]; do
     echo "Attempt $(($RETRIES + 1)) of $MAX_RETRIES: Installing APK..."
 
     adb install /home/runner/work/native-widgets/native-widgets/android-app/appstore/debug/app-appstore-debug.apk
-    echo "Checking installed packages..."
-    adb shell pm list packages
+    # echo "Checking installed packages..."
+    # adb shell pm list packages
 
     if adb shell pm list packages | grep -q "com.mendix.nativetemplate"; then
         echo "App installed successfully!"
