@@ -1,0 +1,14 @@
+appId: "${APP_ID}"
+---
+# Flow for animation
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "Animation"
+- assertVisible:
+    id: "image1"
+    index: 0
+- tapOn:
+    text: "Animate"
+- waitForAnimationToEnd:
+    timeout: 5000
