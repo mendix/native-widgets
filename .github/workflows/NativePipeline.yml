@@ -82,7 +82,7 @@ jobs:
             if [ "${{ github.event_name }}" == "pull_request" ]; then
               echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
             else
-              echo "scope=--all--include '*-native'" >> $GITHUB_OUTPUT
+              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
             fi
           fi
 
@@ -455,9 +455,9 @@ jobs:
           disable-animations: true
           script: |
             chmod +x maestro/prepare_android.sh
-            chmod +x maestro/run_maestro.sh
+            chmod +x maestro/run_maestro_tests.sh
             bash maestro/prepare_android.sh
-            bash maestro/run_maestro.sh android
+            bash maestro/run_maestro_tests.sh android
 
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
@@ -561,11 +561,10 @@ jobs:
       - name: "Verify maestro"
         run: $HOME/.local/bin/maestro/bin/maestro --version
 
-      - name: "Chmod run_maestro.sh"
-        run: chmod +x maestro/run_maestro.sh
-
       - name: "Run Maestro Script"
-        run: bash maestro/run_maestro.sh ios
+        run: |
+          chmod +x maestro/run_maestro_tests.sh
+          bash maestro/run_maestro_tests.sh ios
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 600000
 

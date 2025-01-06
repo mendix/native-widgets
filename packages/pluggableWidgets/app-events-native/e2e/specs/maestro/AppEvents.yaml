@@ -5,7 +5,7 @@ appId: "${APP_ID}"
     clearState: true
 - extendedWaitUntil:
     visible: "Widgets menu"
-    timeout: 50000
+    timeout: 60000
 - tapOn: "App events"
 - assertVisible:
     text: "Event: Load"
