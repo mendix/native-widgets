@@ -1,0 +1,15 @@
+appId: "${APP_ID}"
+---
+# Flow for background gradient
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Background gradient"
+- assertVisible:
+    id: "bgGradientOneColor"
+- tapOn:
+    id: "bgGradientTwoColors"
+- assertVisible:
+    text: "Clicked!"
