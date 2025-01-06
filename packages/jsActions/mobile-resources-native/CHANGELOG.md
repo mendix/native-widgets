@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.1.6] Native Mobile Resources - 2024-12-24
+
+
+## [1.0.1] RadioButtons
+### Fixed
+
+-   The accessibility role has been changed to radio.
+
 ## [4.1.4] Native Mobile Resources - 2024-9-30
 -   We have updated `react-native-permissions` to version `3.6.1`
 
