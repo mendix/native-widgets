@@ -27,7 +27,7 @@ find packages/ -type f -path "*/maestro/*.yaml" | while read -r yaml_test_file; 
   fi
 done
 
-# Print the contents of the arrays for debugging
+# Debug: Print the contents of the arrays for debugging
 echo
 echo "Passed Tests:"
 for test in "${passed_tests[@]}"; do
@@ -39,7 +39,6 @@ echo "Failed Tests:"
 for test in "${failed_tests[@]}"; do
   echo "  - $test"
 done
-
 
 # Print summary of test results
 echo
