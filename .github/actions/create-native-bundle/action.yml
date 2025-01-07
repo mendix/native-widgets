@@ -16,7 +16,7 @@ runs:
         apt install curl -y
       shell: bash
     - name: "Download test project"
-      run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+      run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/maestro-widgets.zip
       shell: bash
     - name: "Extract test project"
       uses: montudor/action-zip@v1.0.0
@@ -25,11 +25,11 @@ runs:
     - name: "Extract deployment package"
       uses: montudor/action-zip@v1.0.0
       with:
-        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-main/deployment
+        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-maestro-widgets/deployment
     - name: "Create bundle for ${{ inputs.platform }}"
       run: |
         mkdir -p ${{ inputs.platform }}/assets
-        cd Native-Mobile-Resources-main/deployment/native && \
+        cd Native-Mobile-Resources-maestro-widgets/deployment/native && \
         /tmp/mxbuild/modeler/tools/node/linux-x64/node \
         /tmp/mxbuild/modeler/tools/node/node_modules/react-native/cli.js \
         bundle --verbose --platform ${{ inputs.platform }} --dev false \

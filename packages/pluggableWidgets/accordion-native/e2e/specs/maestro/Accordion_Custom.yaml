@@ -11,6 +11,6 @@ appId: "${APP_ID}"
 # Assert image is visible
 - assertVisible: ""
 # Assert button is visible
-- assertVisible: "Button "
+- assertVisible: "Button"
 - assertNotVisible:
     text: "Header 3 - Text 1"
