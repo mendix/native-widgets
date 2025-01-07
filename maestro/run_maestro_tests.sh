@@ -31,7 +31,7 @@ echo "-----------------------"
 if [ ${#passed_tests[@]} -gt 0 ]; then
   echo "✅ Passed Tests:"
   for test in "${passed_tests[@]}"; do
-    echo "  - $test"
+    echo "  - $(basename "$test")"
   done
 else
   echo "No tests passed."
@@ -40,7 +40,7 @@ fi
 if [ ${#failed_tests[@]} -gt 0 ]; then
   echo "❌ Failed Tests:"
   for test in "${failed_tests[@]}"; do
-    echo "  - $test"
+    echo "  - $(basename "$test")"
   done
   exit 1  # Mark the workflow stage as failed if any tests fail
 else
