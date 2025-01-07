@@ -14,7 +14,8 @@ appId: "${APP_ID}"
     id: "staticImage"
 - assertNotVisible:
     text: "Header 3 - Text 1"
-- tapOn: "Header 3 "
+- tapOn:
+    text: "Header 3"
 - assertVisible:
     text: "Header 1 - Text 1"
 - assertVisible:

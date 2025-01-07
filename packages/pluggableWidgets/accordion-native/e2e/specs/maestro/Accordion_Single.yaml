@@ -15,13 +15,13 @@ appId: "${APP_ID}"
 - assertNotVisible:
     id: "staticImage"
 - tapOn:
-    text: "Header 2 "
+    text: "Header 2"
 - assertNotVisible:
     text: "Header 1 - Text 1"
 - assertVisible:
     id: "staticImage"
 - tapOn:
-    text: "Header 3 "
+    text: "Header 3"
 - assertNotVisible:
     text: "Header 1 - Text 1"
 - assertVisible:
