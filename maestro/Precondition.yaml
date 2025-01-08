@@ -1,8 +1,10 @@
 appId: "${APP_ID}"
 ---
-# Shared precondition for all tests
-- launchApp:
-    clearState: true
-- extendedWaitUntil:
-    visible: "Widgets menu"
-    timeout: 120000
+- retry:
+    maxRetries: 3
+    commands:
+      - launchApp:
+          clearState: true
+      - extendedWaitUntil:
+          visible: "Widgets menu"
+          timeout: 120000
