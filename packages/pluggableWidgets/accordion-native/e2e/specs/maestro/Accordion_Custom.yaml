@@ -8,9 +8,11 @@ appId: "${APP_ID}"
     text: "Custom"
 - assertVisible:
     text: "Header 1 - Text 1"
-# Assert image is visible
-- assertVisible: ""
-# Assert button is visible
-- assertVisible: "Button"
+- assertVisible:
+    id: "staticImage1"
+- assertVisible:
+    text: "Button"
 - assertNotVisible:
     text: "Header 3 - Text 1"
+- assertNotVisible:
+    id: "staticImage"
