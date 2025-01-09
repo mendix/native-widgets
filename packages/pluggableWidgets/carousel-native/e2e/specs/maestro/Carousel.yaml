@@ -1,0 +1,26 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "C"
+- tapOn:
+    text: "Carousel"
+- swipe:
+    from:
+      text: "Logo"
+    direction: LEFT
+- assertVisible:
+    text: "Office"
+- swipe:
+    from:
+      text: "Office"
+    direction: LEFT
+- assertVisible:
+    text: "Fish"
+# - tapOn:
+#     id: "image3$ImageSmallPressable"
+- tapOn:
+    point: "50%,30%"
+- assertVisible:
+    text: "You clicked the Fish image."

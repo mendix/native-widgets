@@ -1,0 +1,28 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Badge"
+# - tapOn:
+#     id: "textBoxBadge"
+- inputText:
+    text: "Detox"
+- pressKey: Enter # Has to be done this way in order to hide keyboard, since on iOS issue exists with - hideKeyboard command
+# renders the normal badge
+- assertVisible:
+    id: "badgeNormal"
+- assertVisible:
+    text: "Detox"
+    index: 1
+# does not render the badge with visibility set as false
+- assertNotVisible:
+    id: "badgeNoVisibility"
+# renders the badge with actions
+- tapOn:
+    text: "Detox"
+    index: 2
+- assertVisible:
+    text: "Action test: Detox"

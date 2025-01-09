@@ -5,6 +5,8 @@ appId: "${APP_ID}"
     commands:
       - launchApp:
           clearState: true
+          permissions:
+            camera: allow
       - extendedWaitUntil:
           visible: "Widgets menu"
-          timeout: 120000
+          timeout: 180000
