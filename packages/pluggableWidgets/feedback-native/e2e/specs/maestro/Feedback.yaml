@@ -1,0 +1,22 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "F"
+- tapOn:
+    text: "Feedback"
+- assertVisible:
+    text: ".*Lorem ipsum.*"
+- tapOn:
+    id: "feedback$button"
+- assertVisible:
+    text: "Send Feedback"
+- tapOn:
+    text: "Type your feedback here"
+- inputText:
+    text: "e2e test for feedback widget"
+- tapOn:
+    text: "Send"
+- assertVisible:
+    text: "Feedback successfully sent"

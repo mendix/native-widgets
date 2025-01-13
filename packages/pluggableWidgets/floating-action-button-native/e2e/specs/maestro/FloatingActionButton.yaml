@@ -1,0 +1,26 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "F"
+- tapOn:
+    text: "Floating action button"
+- tapOn:
+    id: "floatingActionButtonTopLeft"
+- tapOn:
+    text: "Music w/ action"
+- tapOn:
+    text: "OK"
+- tapOn:
+    id: "floatingActionButtonBottomLeft"
+- assertVisible:
+    text: "Zooooom"
+- tapOn:
+    id: "floatingActionButtonBottomRight"
+- assertVisible:
+    text: "Email"
+- tapOn:
+    id: "floatingActionButtonTopRight"
+- assertVisible:
+    text: "Hi!"
