@@ -6,8 +6,7 @@ appId: "${APP_ID}"
     text: "B"
 - tapOn:
     text: "Badge"
-# - tapOn:
-#     id: "textBoxBadge"
+# Input field set as autofocuss
 - inputText:
     text: "Detox"
 - pressKey: Enter # Has to be done this way in order to hide keyboard, since on iOS issue exists with - hideKeyboard command
