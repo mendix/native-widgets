@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We've updated the modal visibility according to the active status to ensure that other pages are not affected by this widget.
+
 ## [3.2.3] - 2023-5-24
 
 ### Fixed
