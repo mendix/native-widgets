@@ -8,8 +8,12 @@ appId: "${APP_ID}"
     text: "Gallery"
 - tapOn:
     text: "Gallery"
+- assertNotVisible:
+    text: ".*Title 5.*"
+- tapOn:
+    text: "Load more"
 - assertVisible:
-    text: ".*Lorem ipsum.*"
+    text: ".*Title 5.*"
 - swipe:
     from:
       text: ".*Title 3.*"
@@ -24,16 +28,5 @@ appId: "${APP_ID}"
       text: ".*Title 3.*"
     direction: UP
     duration: 1000
-- assertNotVisible:
-    text: ".*Title 7.*"
-- tapOn:
-    text: "Load more"
 - assertVisible:
-    text: ".*Title 7.*"
-- swipe:
-    from:
-      text: ".*Title 3.*"
-    direction: UP
-    duration: 1000
-- assertVisible:
-    text: "Load more"
+    text: ".*Title 9.*"
