@@ -1,0 +1,20 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "P"
+- tapOn:
+    text: "Popup menu"
+- tapOn:
+    text: "Basic"
+- tapOn:
+    text: "Alert"
+- assertVisible:
+    text: "beep boop"
+- tapOn:
+    text: "OK"
+- tapOn:
+    text: "Combinations"
+- assertVisible:
+    text: "Withcontainer"

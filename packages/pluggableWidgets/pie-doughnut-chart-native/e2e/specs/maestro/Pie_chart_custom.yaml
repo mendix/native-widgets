@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "P"
+- tapOn:
+    text: "Pie doughnut chart"
+- tapOn:
+    text: "Pie chart Custom style"
+- assertVisible:
+    text: "PieChart CustomStyle"

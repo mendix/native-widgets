@@ -1,0 +1,16 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "S"
+- tapOn:
+    text: "Safe area view"
+- tapOn:
+    text: "Maps"
+- assertVisible: "Google Map"
+- assertVisible: "Maps widget behind safe area view"
+- tapOn:
+    text: "Show expected behavior"
+- assertVisible:
+    text: "Maps widget is interactive, except behind the title and button UI component."
