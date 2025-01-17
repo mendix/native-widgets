@@ -1,0 +1,19 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "R"
+- tapOn:
+    text: "Repeater"
+- assertVisible:
+    text: "FirstName 1"
+    index: 0
+- assertVisible:
+    text: "Nested Repeater"
+- assertVisible:
+    text: "Hello"
+    index: 2
+- assertVisible:
+    text: "hello"
+    index: 7

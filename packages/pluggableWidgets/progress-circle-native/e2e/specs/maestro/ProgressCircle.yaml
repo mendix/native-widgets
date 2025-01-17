@@ -1,0 +1,20 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "P"
+- tapOn:
+    text: "Progress circle"
+- assertVisible:
+    text: "With default text:"
+- tapOn:
+    id: "textBoxProgressCircleValue"
+- eraseText
+- inputText:
+    text: "75"
+- pressKey: Enter
+- assertVisible:
+    text: "With default text:"
+- assertVisible:
+    id: "progressCircleSuccess"

@@ -1,0 +1,25 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "S"
+- tapOn:
+    text: "Safe area view"
+- tapOn:
+    text: "Container"
+- assertVisible: "Safe area view widget directly on a fullscreen page. The safe area has an orange background color, the page has a blue background color and the container with content has a white background color.\r
+
+    \r
+
+    Expected result: \r
+
+    \ - Safe area has horizontal and vertical padding\r
+
+    \ - Safe area has an orange background color\r
+
+    \ - Unsafe area has a blue background color\r
+
+    \ - White container with text located in the safe area\r
+
+    \ - White container uses all available space (flex 1)"

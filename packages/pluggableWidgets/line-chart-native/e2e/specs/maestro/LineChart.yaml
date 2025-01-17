@@ -1,0 +1,18 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "L"
+- tapOn:
+    text: "Line chart"
+# - assertVisible:
+#     text: "Active slide: 2"
+# - assertVisible:
+#     text: "Changes: 0"
+# - swipe:
+#     direction: LEFT
+# - assertVisible:
+#     text: "Active slide: 3"
+# - assertVisible:
+#     text: "Changes: 1"

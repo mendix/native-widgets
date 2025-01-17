@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "M"
+- tapOn:
+    text: "Maps"
+- tapOn:
+    text: "Maps Static markers"
+- assertVisible:
+    text: "Static Markers"

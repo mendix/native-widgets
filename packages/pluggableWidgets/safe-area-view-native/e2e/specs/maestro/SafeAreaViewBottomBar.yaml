@@ -1,0 +1,15 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "S"
+- tapOn:
+    text: "Safe area view"
+- tapOn:
+    text: "Bottom bar"
+- assertVisible: "Expected result:\r
+
+    \ - Safe area has an orange background color\r
+
+    \ - Bottom bar starts directly below safe area"

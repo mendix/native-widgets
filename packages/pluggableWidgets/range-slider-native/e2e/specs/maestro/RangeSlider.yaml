@@ -1,0 +1,28 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "R"
+- tapOn:
+    text: "Range slider"
+- tapOn:
+    id: "textBoxRangeSliderLower"
+- eraseText
+- inputText:
+    text: "5"
+- pressKey: Enter
+- swipe:
+    from:
+      text: "Dynamic ranges"
+    direction: UP
+- assertVisible: "The lower value must be less than the maximum value.
+
+    The upper value must be equal or less than the maximum value."
+# - tapOn:
+#     id: "rangeSliderOnChange$leftMarker"
+# - swipe:
+#     from:
+#       id: "rangeSliderOnChange$leftMarker"
+#     direction: LEFT
+# - assertVisible: "Lower: 2\nUpper: 75"

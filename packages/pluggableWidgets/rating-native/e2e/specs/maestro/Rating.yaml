@@ -1,0 +1,16 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "R"
+- tapOn:
+    text: "Rating"
+- tapOn:
+    id: "textBoxRating"
+- eraseText
+- inputText:
+    text: "5"
+- pressKey: Enter
+- assertVisible:
+    text: "Normal:"
