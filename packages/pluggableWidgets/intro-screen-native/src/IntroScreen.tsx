@@ -7,9 +7,11 @@ import { SwipeableContainer } from "./SwipeableContainer";
 import AsyncStorage from "@react-native-community/async-storage";
 import deepmerge from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
+import { useIsFocused } from "@react-navigation/core";
 
 export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Element {
     const [visible, setVisible] = useState(false);
+    const isFocused = useIsFocused();
     const customStyles = props.style ? props.style.filter(o => o != null) : [];
     const styles =
         customStyles.length > 0
@@ -57,7 +59,7 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
     const showNextDone = props.buttonPattern !== "none";
 
     return (
-        <Modal visible={visible} transparent={props.showMode === "popup"}>
+        <Modal visible={visible && isFocused} transparent={props.showMode === "popup"}>
             <View style={props.showMode === "fullscreen" ? styles.fullscreenContainer : styles.popupContainer}>
                 <SwipeableContainer
                     testID={props.name}
