@@ -53,7 +53,7 @@
             </property>
             <property key="headerList" type="object" isList="true" required="false">
                 <caption>Header list</caption>
-                <description>On Android, headers are only support with the GET method</description>
+                <description>On Android, header pass-through is only supported with the GET method</description>
                 <properties>
                     <propertyGroup caption="Header list group">
                         <property key="headerName" type="expression" required="true">
