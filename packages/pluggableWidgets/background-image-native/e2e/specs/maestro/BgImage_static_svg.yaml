@@ -1,0 +1,15 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Background image"
+- tapOn:
+    text: "Static SVG images"
+- assertVisible: "Static SVG image \r
+
+    without dark mode"
+- assertVisible: "Static SVG image \r\nwith dark mode"
+

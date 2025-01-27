@@ -1,0 +1,11 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "I"
+- tapOn:
+    text: "Image"
+- tapOn:
+    text: "Image static"
+- assertVisible: "Main as Icon; Event as Enlarge"

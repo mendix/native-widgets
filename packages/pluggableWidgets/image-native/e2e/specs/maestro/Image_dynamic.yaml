@@ -1,0 +1,15 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "I"
+- tapOn:
+    text: "Image"
+- tapOn:
+    text: "Image dynamic"
+- assertVisible: "Dynamic image auto synced to device\r
+
+    \r
+
+    Main as Dynamic Image; Default as Static; Background as Cover"
