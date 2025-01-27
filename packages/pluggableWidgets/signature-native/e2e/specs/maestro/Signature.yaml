@@ -1,0 +1,23 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "S"
+- tapOn:
+    text: "Signature"
+- swipe:  
+    start: 50%, 36% 
+    end: 10%, 50% 
+- tapOn:
+    text: "Save"
+- assertVisible: 
+    text: "Base64"
+- tapOn: "Go back"
+- swipe:  
+    start: 50%, 36% 
+    end: 10%, 50% 
+- tapOn:
+    text: "Clear"
+- assertVisible: 
+    text: "Signature"

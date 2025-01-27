@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Background image"
+- tapOn:
+    text: "Dynamic SVG image"
+- assertVisible: "Dynamic svg image auto synced to device"
+- assertVisible: "Dynamic Svg image"

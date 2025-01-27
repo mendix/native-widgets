@@ -1,0 +1,10 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "S"
+- tapOn:
+    text: "Slider"
+- assertVisible: 
+    text: "Dynamic ranges"
