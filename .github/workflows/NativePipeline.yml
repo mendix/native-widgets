@@ -401,7 +401,7 @@ jobs:
 
   android-tests:
     needs: [scope, mendix-version, project, android-app]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
