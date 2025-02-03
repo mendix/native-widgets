@@ -15378,7 +15378,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
-    react-native-progress: "npm:^5.0.0"
+    react-native-progress: "npm:^5.0.1"
   languageName: unknown
   linkType: soft
 
@@ -15391,7 +15391,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
-    react-native-progress: "npm:^5.0.0"
+    react-native-progress: "npm:^5.0.1"
   languageName: unknown
   linkType: soft
 
@@ -15984,14 +15984,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-progress@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "react-native-progress@npm:5.0.0"
+"react-native-progress@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-native-progress@npm:5.0.1"
   dependencies:
     prop-types: "npm:^15.7.2"
   peerDependencies:
     react-native-svg: "*"
-  checksum: 10/b55a4826fd5aa680a7cbbfc653ff4338230249f5b86f0c82d263f2d20737e19fadb04639e36d9f45cf61df524bb5875a27783d47374f39426ba6aecc471a1dcf
+  checksum: 10/902189578ce233bbc3cb3a85c13d4bcd439430e1a3da7bcf622e00ff6a2404155b22ce3c3350ccdb5b50952746b99f8522404a818531472250b60b75975a524c
   languageName: node
   linkType: hard
 
