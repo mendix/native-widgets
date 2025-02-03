@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   Updated react-native-modal from version v11.4.5 to v13.0.1.
+-   Updated react-native-modal from version v11.4.5 to v13.0.1 in order to fix random crashes in custom-bottom-sheet widget.
 
 ### Changed
 
