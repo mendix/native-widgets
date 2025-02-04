@@ -1,6 +1,5 @@
 import { createElement } from "react";
-import { View } from "react-native";
-import { SafeAreaView as ReactSaveAreaView } from "react-native-safe-area-context";
+import { SafeAreaView as ReactSaveAreaView, View } from "react-native";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 
 import { SafeAreaViewStyle, defaultSafeAreaViewStyle } from "./ui/Styles";
