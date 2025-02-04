@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## Fixed
+
+-   Missing SafeAreaProvider was causing the issue after replacing the third party package for SafeAreaView.
+
 ## [3.0.0] - 2024-12-18
 
 ## Fixed

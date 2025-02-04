@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import { View } from "react-native";
-import { SafeAreaView as ReactSaveAreaView } from "react-native-safe-area-context";
+import { SafeAreaView as ReactSaveAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 
 import { SafeAreaViewStyle, defaultSafeAreaViewStyle } from "./ui/Styles";
@@ -10,14 +10,16 @@ export const SafeAreaView = (props: SafeAreaViewProps<SafeAreaViewStyle>): JSX.E
     const styles = flattenStyles(defaultSafeAreaViewStyle, props.style);
 
     return (
-        <ReactSaveAreaView
-            style={{ flex: 1, ...{ backgroundColor: styles.container.backgroundColor } }}
-            pointerEvents={"box-none"}
-            testID={props.name}
-        >
-            <View style={styles.container} pointerEvents={"box-none"}>
-                {props.content}
-            </View>
-        </ReactSaveAreaView>
+        <SafeAreaProvider>
+            <ReactSaveAreaView
+                style={{ flex: 1, ...{ backgroundColor: styles.container.backgroundColor } }}
+                pointerEvents={"box-none"}
+                testID={props.name}
+            >
+                <View style={styles.container} pointerEvents={"box-none"}>
+                    {props.content}
+                </View>
+            </ReactSaveAreaView>
+        </SafeAreaProvider>
     );
 };
