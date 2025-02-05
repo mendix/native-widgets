@@ -34,7 +34,9 @@
     "setup-android": "node ./detox/scripts/setup-android.js",
     "setup-ios": "node ./detox/scripts/setup-ios.js",
     "patch-package": "sh ./scripts/patch/patch-package.sh",
-    "build:widgets": "node ./scripts/widget/buildWidgets.js"
+    "build:widgets": "node ./scripts/widget/buildWidgets.js",
+    "test:maestro:ios": "bash maestro/run_maestro_tests.sh ios",
+    "test:maestro:android": "bash maestro/run_maestro_tests.sh android"
   },
   "workspaces": {
     "packages": [
@@ -79,6 +81,8 @@
     "lint-staged": "^10.5.4",
     "mendix-client": "^7.15.8",
     "patch-package": "^8.0.0",
+    "pixelmatch": "^5.2.1",
+    "pngjs": "^6.0.0",
     "prettier": "^2.8.8",
     "pretty-quick": "^3.3.1",
     "react-dom": "18.2.0",

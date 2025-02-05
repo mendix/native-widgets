@@ -14107,6 +14107,8 @@ __metadata:
     lint-staged: "npm:^10.5.4"
     mendix-client: "npm:^7.15.8"
     patch-package: "npm:^8.0.0"
+    pixelmatch: "npm:^5.2.1"
+    pngjs: "npm:^6.0.0"
     prettier: "npm:^2.8.8"
     pretty-quick: "npm:^3.3.1"
     react-dom: "npm:18.2.0"
@@ -14975,7 +14977,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pixelmatch@npm:^5.1.0":
+"pixelmatch@npm:^5.1.0, pixelmatch@npm:^5.2.1":
   version: 5.3.0
   resolution: "pixelmatch@npm:5.3.0"
   dependencies:
