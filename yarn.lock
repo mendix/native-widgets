@@ -4500,6 +4500,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swan-io/react-native-browser@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@swan-io/react-native-browser@npm:0.4.1"
+  peerDependencies:
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+  checksum: 10/de3394f7be527a8be1b2415335744e3083a6a7973e72f4feac203b21d98840a3c893452311922eb7ef02070f7fe626c2f563c9f843b65b8affac7dcc433a3094
+  languageName: node
+  linkType: hard
+
 "@swiftcarrot/color-fns@npm:^3.2.0":
   version: 3.2.0
   resolution: "@swiftcarrot/color-fns@npm:3.2.0"
@@ -13677,6 +13687,7 @@ __metadata:
     "@react-native-community/cameraroll": "npm:4.0.1"
     "@react-native-community/push-notification-ios": "npm:1.10.1"
     "@react-native-firebase/messaging": "npm:17.3.0"
+    "@swan-io/react-native-browser": "npm:^0.4.1"
     "@types/querystringify": "npm:^2.0.0"
     "@types/react-native-push-notification": "npm:8.1.1"
     "@types/url-parse": "npm:^1.4.3"
