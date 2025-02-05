@@ -45,5 +45,5 @@ if [ ${#failed_tests[@]} -gt 0 ]; then
   exit 1  # Mark the workflow stage as failed if any tests fail
 else
   echo "All tests passed!"
-  exit 0  # Mark the workflow stage as successful if no failed tests
+  exit 0  # Mark the workflow stage as successful only if all tests pass
 fi
