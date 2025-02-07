@@ -19,6 +19,8 @@ describe("WebView", () => {
             name: "webview-test",
             style: [],
             url: dynamicValue("https://mendix.com"),
+            requestMethod: "GET",
+            headerList: [],
             userAgent: "",
             openLinksExternally: false
         };
@@ -26,6 +28,26 @@ describe("WebView", () => {
 
     it("renders a web view when a url is provided", () => {
         const component = render(<WebView {...defaultProps} />);
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("renders a web view when a url with POST method and body is provided", () => {
+        const component = render(
+            <WebView {...defaultProps} requestMethod="POST" postBody={dynamicValue('{ testKey: "testValue" }')} />
+        );
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("renders a web view when a url with headers is provided", () => {
+        const component = render(
+            <WebView
+                {...defaultProps}
+                headerList={[
+                    { headerName: dynamicValue("testName1"), headerValue: dynamicValue("testValue1") },
+                    { headerName: dynamicValue("testName2"), headerValue: dynamicValue("testValue2") }
+                ]}
+            />
+        );
         expect(component.toJSON()).toMatchSnapshot();
     });
 

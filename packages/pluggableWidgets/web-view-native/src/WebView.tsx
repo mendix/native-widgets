@@ -27,10 +27,25 @@ export class WebView extends Component<Props> {
             );
         }
 
+        const source = html
+            ? { html }
+            : {
+                  uri: uri!,
+                  method: this.props.requestMethod,
+                  ...(this.props.requestMethod === "POST" &&
+                      this.props.postBody && { body: this.props.postBody.value }),
+                  ...(this.props.headerList.length && {
+                      headers: Object.assign(
+                          {},
+                          ...this.props.headerList.map(h => ({ [h.headerName.value!]: h.headerValue.value }))
+                      )
+                  })
+              };
+
         return (
             <View style={this.styles.container} testID={this.props.name}>
                 <RNWebView
-                    source={html ? { html } : { uri: uri! }}
+                    source={source}
                     style={{
                         width: "100%",
                         height: "100%"
