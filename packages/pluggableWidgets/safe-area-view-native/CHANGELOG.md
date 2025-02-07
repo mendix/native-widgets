@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## Fixed
+
+-   We reverted latest SafeAreaView change since it was causing another issue which the SafeAreaView wasn't covering whole screen.
+
 ## [3.0.0] - 2024-12-18
 
 ## Fixed
