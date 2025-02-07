@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [9.2.1] Native Mobile Resources - 2025-2-7
+
+
+## [4.0.1] BottomSheet
+### Changed
+
+-   Updated react-native-modal from version v11.4.5 to v13.0.1 in order to fix random crashes in custom-bottom-sheet widget.
+
+## [9.2.0] Native Mobile Resources - 2025-2-7
+
+
+## [4.3.1] ProgressBar
+-   Bumped the version of the react-native-progress to fix black background issues.
+
+## [3.2.1] ProgressCircle
+-   Bumped the version of the react-native-progress to fix black background issues.
+
 ## [9.1.0] Native Mobile Resources - 2024-12-18
 
 

@@ -21,6 +21,7 @@ exports[`ProgressCircle renders 1`] = `
       bbHeight={100}
       bbWidth={100}
       collapsable={false}
+      fill="none"
       focusable={false}
       height={100}
       style={
@@ -40,11 +41,11 @@ exports[`ProgressCircle renders 1`] = `
       width={100}
     >
       <RNSVGGroup
-        fill={
-          {
-            "payload": -16777216,
-            "type": 0,
-          }
+        fill={null}
+        propList={
+          [
+            "fill",
+          ]
         }
       >
         <RNSVGPath
