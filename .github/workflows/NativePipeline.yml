@@ -81,7 +81,7 @@ jobs:
             if [ "${{ github.event_name }}" == "pull_request" ]; then
               echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
             else
-              echo "scope=--all--include '*-native'" >> $GITHUB_OUTPUT
+              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
             fi
           fi
 
@@ -124,15 +124,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Check out code"
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       - name: "Check if docker image already exists"
         run: |
           docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
           echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-        if: ${{ env.IMAGE_MISSING != 0 }}
       - name: "Build mxbuild image"
-        if: ${{ env.IMAGE_MISSING != 0 }}
+        # if: ${{ env.IMAGE_MISSING != 0 }}
         uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
         with:
           file: ./.github/scripts/mxbuild.Dockerfile
@@ -303,15 +302,24 @@ jobs:
       - name: "Install dependencies"
         working-directory: native-template
         run: npm i
-      - name: "Setup JDK 17"
-        uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
+      - name: "Setup JDK"
+        uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 21
           distribution: temurin
           cache: gradle
       - name: "Build Android app"
         working-directory: native-template/android
-        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
+        run: |
+          ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
+          if [ $? -ne 0 ]; then
+            echo "Build failed!"
+            exit 1
+          fi
+      - name: "List APK files"
+        run: |
+          echo "Listing APK files in the output directory:"
+          ls -R native-template/android/app/build/outputs/apk/
       - name: "Archive Android app"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
@@ -319,7 +327,7 @@ jobs:
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
     needs: [ios-bundle]
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -342,6 +350,14 @@ jobs:
           node-version-file: native-template/.nvmrc
           cache: npm
           cache-dependency-path: native-template/package-lock.json
+      - name: "Cache iOS Build"
+        uses: actions/cache@v3
+        with:
+          path: native-template/ios/build
+          key: ${{ runner.os }}-ios-build-${{ hashFiles('native-template/ios/**/*.swift', 'native-template/ios/**/*.h', 'native-template/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-ios-build-
+      
       - name: "Copy files to the right location"
         run: |
           mv bundles/ios/index.ios.bundle native-template/ios/Bundle/index.ios.bundle
@@ -353,7 +369,7 @@ jobs:
         run: npm i
 
       - name: "Setup Pods cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
+        uses: actions/cache@v3
         with:
           path: native-template/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -370,39 +386,10 @@ jobs:
         with:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
-  android-avd:
-    runs-on: macos-12
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-      - name: "Setup AVD cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
-        id: avd-cache
-        with:
-          path: |
-            /Users/runner/.android/avd/*
-            /Users/runner/.android/adb*
-            /Users/runner/Library/Android/sdk/system-images/**/*
-          key: pixel_30_x86_64_default_3core_and_system_images
-      - name: "Create AVD and generate snapshot for caching"
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # v2.30.1
-        with:
-          api-level: 30
-          target: default
-          arch: x86_64
-          profile: pixel
-          cores: 3
-          ram-size: 4096M
-          heap-size: 512M
-          avd-name: NATIVE_pixel_30
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: echo "AVD created"
+
   android-tests:
-    needs: [scope, mendix-version, project, android-app, android-avd]
-    runs-on: macos-12
+    needs: [scope, mendix-version, project, android-app]
+    runs-on: ubuntu-22.04
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -419,6 +406,8 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      - name: "List contents of working directory before downloading Android app"
+        run: ls -R
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
@@ -429,24 +418,26 @@ jobs:
         with:
           name: android-app
           path: android-app
+      - name: "List contents of android-app directory after download"
+        run: ls -R android-app
       - name: "Move android apps to correct location"
         run: |
           mkdir -p detox/apps
           find android-app -type f -iname "*.apk" -exec mv {} detox/apps/ \;
-      - name: "Setup AVD cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
-        id: avd-cache
-        with:
-          path: |
-            /Users/runner/.android/avd/*
-            /Users/runner/.android/adb*
-            /Users/runner/Library/Android/sdk/system-images/**/*
-          key: pixel_30_x86_64_default_3core_and_system_images
+      - name: "Check if APK files are present"
+        run: |
+          echo "Listing APK files in detox/apps directory:"
+          ls -R detox/apps
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - name: "Run tests"
-        uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # v2.30.1
+        uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
           api-level: 30
-          target: default
+          target: google_apis
           arch: x86_64
           profile: pixel
           cores: 3
@@ -459,8 +450,8 @@ jobs:
           script: |
             adb shell "rm -fr /data/local/tmp/detox"
             adb shell "mkdir -p /data/local/tmp/detox"
-            adb push "/Users/runner/work/native-widgets/native-widgets/detox/apps/app-appstore-debug.apk" "/data/local/tmp/detox/Application.apk"
-            adb push "/Users/runner/work/native-widgets/native-widgets/detox/apps/app-appstore-debug-androidTest.apk" "/data/local/tmp/detox/Test.apk"
+            adb push "detox/apps/app-appstore-debug.apk" "/data/local/tmp/detox/Application.apk"
+            adb push "detox/apps/app-appstore-debug-androidTest.apk" "/data/local/tmp/detox/Test.apk"
             adb shell pm install -r -g -t /data/local/tmp/detox/Application.apk 2>/dev/null
             adb shell pm install -r -g -t /data/local/tmp/detox/Test.apk 2>/dev/null
             yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test:e2e:android
@@ -489,7 +480,7 @@ jobs:
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
-    runs-on: macos-12
+    runs-on: macos-15
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -507,8 +498,8 @@ jobs:
         with:
           name: mda
       # Used when new xCode version of simulator should be created
-      - name: Update Xcode
-        run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+      # - name: Update Xcode
+      #   run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
       - name: "Clean detox framework cache"
         run: npx detox clean-framework-cache
       - name: "Build detox framework cache"
