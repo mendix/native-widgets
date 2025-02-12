@@ -11,12 +11,7 @@ jsEngine: graaljs
 #     text: "Bar chart"
 - takeScreenshot:
     path: "images/actual/bar_chart_actual"
-# - runScript:
-#     file: "../../../../../../maestro/compareScreenshots.js"
-#     env:
-#         expected: "bar_chart"
-- run:
-    name: "Compare Screenshots"
-    command: |
-      export EXPECTED="bar_chart"
-      /Users/nikola.simsic/Documents/Projects/native-widgets/maestro/compare_screenshots.sh
+- runScript:
+    file: "../../../../../../maestro/run_compare_screenshots.js"
+    env:
+      EXPECTED: "bar_chart"
