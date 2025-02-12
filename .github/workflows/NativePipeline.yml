@@ -502,6 +502,10 @@ jobs:
         run: npx detox clean-framework-cache
       - name: "Build detox framework cache"
         run: npx detox build-framework-cache
+      - name: Install Detox Dependencies
+        run: |
+          brew tap wix/brew 
+          brew install applesimutils
       
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
@@ -513,24 +517,27 @@ jobs:
         with:
           name: ios-app
           path: ios-app
+      # - name: "List contents of ios-app directory"
+      #   run: |
+      #     echo "Listing contents of ios-app directory:"
+      #     ls -R ios-app
       - name: "Move iOS app to correct location"
         run: |
           mkdir -p detox/apps
           find ios-app -type d -iname "*.app" -exec cp -R {} detox/apps/ \;
-      - name: Install Detox Dependencies
+      - name: "List contents of apps directory"
         run: |
-          brew tap wix/brew 
-          brew install applesimutils
-      
-      - name: Check available runtimes
-        run: xcrun simctl list runtimes
-      - name: Check avialble device types
-        run: xcrun simctl list devicetypes
-      # - name: Create iOS 18.1 simulator for iPhone 16
-      #   run: xcrun simctl create "iPhone 16" com.apple.CoreSimulator.SimDeviceType.iPhone-16 com.apple.CoreSimulator.SimRuntime.iOS-18-1
-      - name: List supported iOS devices
-        run: applesimutils --list
+          echo "Listing contents of detox/apps directory:"
+          ls -R detox/apps
 
+      # - name: Check available runtimes
+      #   run: xcrun simctl list runtimes
+      # - name: Check available device types
+      #   run: xcrun simctl list devicetypes
+      # - name: Create iOS 17.5 simulator for iPhone 15
+      #   run: xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-17-5
+      # - name: List supported iOS devices
+      #   run: applesimutils --list
       # - name: Boot Simulator
       #   run: xcrun simctl boot "iPhone 15"
       # - name: Wait for Simulator to Boot
@@ -539,20 +546,26 @@ jobs:
       #       echo "Waiting for simulator to boot..."
       #       sleep 5
       #     done
-
-      # - name: "Check if iOS app exists in detox/apps"
+      # - name: "Check if simulator is booted"
       #   run: |
-      #     APP_PATH="detox/apps/NativeTemplate.app"
-      #     if [ ! -d "$APP_PATH" ]; then
-      #       echo "App not found at path: $APP_PATH"
-      #     else
-      #       echo "App found at path: $APP_PATH"
-      #     fi
+      #     if ! xcrun simctl list | grep -q "Booted"; then
+      #       echo "Simulator is not booted!"
+      #       exit 1
+      # #     fi
+      # - name: "List installed apps"
+      #   run: xcrun simctl listapps "iPhone 15"
 
-      # - name: "Check if iOS app exists in full BINARY_PATH"
+      # - name: "Wait for app to be ready"
+      #   run: sleep 10
+
+      # - name: "Terminate app if running"
+      #   run: |
+      #     if xcrun simctl list apps | grep -q "com.mendix.native.template"; then
+      #       xcrun simctl terminate "iPhone 15" com.mendix.native.template || echo "No app to terminate"
+      #     fi
+      # - name: "Check if iOS app exists"
       #   run: |
       #     BINARY_PATH="/Users/runner/work/native-widgets/native-widgets/detox/apps/NativeTemplate.app"
-      #     echo "BINARY_PATH=$BINARY_PATH" >> $GITHUB_ENV
       #     if [ ! -d "$BINARY_PATH" ]; then
       #       echo "App not found at path: $BINARY_PATH"
       #       echo "Listing contents of the apps directory:"
@@ -560,22 +573,6 @@ jobs:
       #     else
       #       echo "App found at path: $BINARY_PATH"
       #     fi
-  
-      # - name: "List contents of the app bundle"
-      #   run: |
-      #     echo "Listing contents of the app bundle at $BINARY_PATH:"
-      #     ls -R "$BINARY_PATH"
-  
-      # - name: "Install app on simulator"
-      #   run: |
-      #     SIMULATOR_ID=$(xcrun simctl list devices | grep "iPhone 15" | grep "Booted" | awk -F '[()]' '{print $2}')
-      #     if [ -z "$SIMULATOR_ID" ]; then
-      #       echo "No booted simulator found for iPhone 15."
-      #       exit 1
-      #     fi
-      #     echo "Installing app on simulator with ID: $SIMULATOR_ID"
-      #     xcrun simctl install "$SIMULATOR_ID" "$BINARY_PATH"
-
       - name: "Run tests"
         env:
           DETOX_LOGLEVEL: trace
