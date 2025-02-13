@@ -517,10 +517,7 @@ jobs:
         with:
           name: ios-app
           path: ios-app
-      # - name: "List contents of ios-app directory"
-      #   run: |
-      #     echo "Listing contents of ios-app directory:"
-      #     ls -R ios-app
+
       - name: "Move iOS app to correct location"
         run: |
           mkdir -p detox/apps
