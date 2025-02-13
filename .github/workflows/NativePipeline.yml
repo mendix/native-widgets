@@ -438,14 +438,14 @@ jobs:
       - name: "Run tests"
         uses: reactivecircus/android-emulator-runner@v2.32.0
         with:
-          api-level: 30
+          api-level: 34
           target: google_apis
           arch: x86_64
           profile: pixel
           cores: 3
           ram-size: 4096M
           heap-size: 512M
-          avd-name: NATIVE_pixel_30
+          avd-name: NATIVE_pixel_34
           force-avd-creation: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
@@ -482,7 +482,7 @@ jobs:
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
-    runs-on: macos-15
+    runs-on: macos-13
     steps:
       - name: "Check out code"
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
@@ -499,6 +499,9 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      
+      - name: Update Xcode
+        run: sudo xcode-select --switch /Applications/Xcode_14.2.app
       
       - name: "Clean detox framework cache"
         run: npx detox clean-framework-cache
@@ -534,10 +537,10 @@ jobs:
       #   run: xcrun simctl list runtimes
       # - name: Check available device types
       #   run: xcrun simctl list devicetypes
-      # - name: Create iOS 17.5 simulator for iPhone 15
-      #   run: xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-17-5
-      # - name: List supported iOS devices
-      #   run: applesimutils --list
+      - name: Create iOS 16.2 simulator for iPhone 14
+        run: xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-16-2
+      - name: List supported iOS devices
+        run: applesimutils --list
       # - name: Boot Simulator
       #   run: xcrun simctl boot "iPhone 15"
       # - name: Wait for Simulator to Boot
