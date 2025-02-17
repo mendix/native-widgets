@@ -7,6 +7,8 @@ appId: "${APP_ID}"
     text: "B"
 - tapOn:
     text: "Background gradient"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/background_gradient"
 - assertVisible:
     id: "bgGradientOneColor"
 - tapOn:
