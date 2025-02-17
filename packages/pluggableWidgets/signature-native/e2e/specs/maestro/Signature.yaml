@@ -8,7 +8,7 @@ appId: "${APP_ID}"
     text: "Signature"
 - swipe:  
     start: 50%, 36% 
-    end: 10%, 50% 
+    end: 10%, 75% 
 - tapOn:
     text: "Save"
 - assertVisible: 

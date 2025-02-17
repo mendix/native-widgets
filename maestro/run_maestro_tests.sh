@@ -18,7 +18,7 @@ failed_tests=()
 
 # Determine the search path based on the widget selection
 if [ "$WIDGET" == "*-native" ]; then
-  search_path="packages/"
+  search_path="packages/pluggableWidgets"
 else
   search_path="packages/pluggableWidgets/$WIDGET"
 fi

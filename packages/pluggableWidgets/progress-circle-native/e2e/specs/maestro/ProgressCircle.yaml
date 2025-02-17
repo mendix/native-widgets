@@ -16,5 +16,5 @@ appId: "${APP_ID}"
 - pressKey: Enter
 - assertVisible:
     text: "With default text:"
-- assertVisible:
-    id: "progressCircleSuccess"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/progress_circle"

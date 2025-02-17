@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     text: "Pie chart Custom style"
 - assertVisible:
     text: "PieChart CustomStyle"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/pie_chart_custom"

@@ -16,7 +16,6 @@ appId: "${APP_ID}"
 - pressKey: Enter
 - assertVisible:
     id: "progressBarStatic"
-- assertVisible:
-    id: "progressBarSuccess"
-- assertNotVisible:
-    id: "progressBarNoVisibility"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/progress_bar"
+
