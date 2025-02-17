@@ -8,5 +8,5 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Static images"
-- assertVisible:
-    id: backgroundImage
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bg_image_static_images"

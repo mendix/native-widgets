@@ -1,5 +1,4 @@
 appId: "${APP_ID}"
-jsEngine: graaljs
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
@@ -9,9 +8,5 @@ jsEngine: graaljs
     text: "Bar chart"
 - assertVisible:
     text: "Bar chart"
-# - takeScreenshot:
-#     path: "images/actual/bar_chart_actual"
-# - runScript:
-#     file: "../../../../../../maestro/run_compare_screenshots.js"
-#     env:
-#       EXPECTED: "bar_chart"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bar_chart"

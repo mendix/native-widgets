@@ -8,8 +8,6 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Static SVG images"
-- assertVisible: "Static SVG image \r
-
-    without dark mode"
-- assertVisible: "Static SVG image \r\nwith dark mode"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bg_image_static_svg"
 

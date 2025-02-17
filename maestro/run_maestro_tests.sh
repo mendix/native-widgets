@@ -2,21 +2,32 @@
 
 if [ "$1" == "android" ]; then
   APP_ID="com.mendix.nativetemplate"
+  PLATFORM="android"
 elif [ "$1" == "ios" ]; then
   APP_ID="com.mendix.native.template"
+  PLATFORM="ios"
 else
-  echo "Usage: $0 [android|ios]"
+  echo "Usage: $0 [android|ios] [widget]"
   exit 1
 fi
+
+WIDGET=${2:-*}
 
 passed_tests=()
 failed_tests=()
 
-# Find all .yaml files under maestro/ folders within packages/ and execute them
-for yaml_test_file in $(find packages/ -type f -path "*/maestro/*.yaml"); do
+# Determine the search path based on the widget selection
+if [ "$WIDGET" == "*-native" ]; then
+  search_path="packages/"
+else
+  search_path="packages/pluggableWidgets/$WIDGET"
+fi
+
+# Find all .yaml files under the determined search path and execute them
+for yaml_test_file in $(find $search_path -type f -path "*/maestro/*.yaml"); do
   echo "Running test: $yaml_test_file"
 
-  if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID "$yaml_test_file"; then
+  if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM "$yaml_test_file"; then
     echo "✅ Test passed: $yaml_test_file"
     passed_tests+=("$yaml_test_file")
   else

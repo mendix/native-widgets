@@ -8,6 +8,8 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Clickable container"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bg_image_clickable_container"
 - tapOn:
     id: "clickableContainer"
 - assertVisible:

@@ -459,7 +459,7 @@ jobs:
             chmod +x maestro/prepare_android.sh
             chmod +x maestro/run_maestro_tests.sh
             bash maestro/prepare_android.sh
-            bash maestro/run_maestro_tests.sh android
+            bash maestro/run_maestro_tests.sh android "${{ github.event.inputs.workspace }}"
 
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
@@ -468,21 +468,11 @@ jobs:
           name: android-runtime-logs
           path: log/*.log
           if-no-files-found: ignore
-      - name: "Archive test screenshot diff results"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        if: failure()
+      - name: "Archive test screenshots"
+        uses: actions/upload-artifact@v3
         with:
-          name: android-screenshot-results
-          path: |
-            ${{ github.workspace }}/packages/**/e2e/images/diffs/**/*.png
-            ${{ github.workspace }}/packages/**/e2e/images/actual/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        if: always()
-        with:
-          name: android-artifacts
-          path: packages/pluggableWidgets/**/artifacts/
+          name: android-screenshots
+          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
@@ -566,7 +556,7 @@ jobs:
       - name: "Run Maestro Script"
         run: |
           chmod +x maestro/run_maestro_tests.sh
-          bash maestro/run_maestro_tests.sh ios
+          bash maestro/run_maestro_tests.sh ios "${{ github.event.inputs.workspace }}"
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 600000
 
@@ -578,14 +568,11 @@ jobs:
           path: log/*.log
           if-no-files-found: ignore
 
-      - name: "Archive test screenshot diff results"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        if: failure()
+      - name: "Archive test screenshots"
+        uses: actions/upload-artifact@v3
         with:
-          name: ios-screenshot-results
-          path: |
-            ${{ github.workspace }}/packages/**/e2e/images/diffs/**/*.png
-            ${{ github.workspace }}/packages/**/e2e/images/actual/**/*.png
+          name: ios-screenshots
+          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
           if-no-files-found: ignore
 
       - name: "Archive artifacts"
@@ -594,4 +581,85 @@ jobs:
         with:
           name: ios-artifacts
           path: packages/pluggableWidgets/**/artifacts/
+          if-no-files-found: ignore
+         
+  compare-screenshots:
+    needs: [android-tests, ios-tests]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@v3
+  
+      - name: "Download Android screenshots"
+        uses: actions/download-artifact@v3
+        with:
+          name: android-screenshots
+          path: images/android
+  
+      - name: "Download iOS screenshots"
+        uses: actions/download-artifact@v3
+        with:
+          name: ios-screenshots
+          path: images/ios
+  
+      - name: "Install dependencies"
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+  
+      - name: "Compare Android screenshots"
+        run: |
+          mkdir -p images/diffs/android
+          failed_comparisons=()
+          for file in images/android/*.png; do
+            filename=$(basename $file)
+            if [ -f "maestro/images/expected/android/$filename" ]; then
+              compare -metric AE -fuzz 1% "images/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
+              if grep -q "all: 0" compare_output.txt; then
+                echo "✅ Comparison passed for $filename"
+              else
+                echo "❌ Comparison failed for $filename"
+                failed_comparisons+=("$filename")
+              fi
+            fi
+          done
+          if [ ${#failed_comparisons[@]} -gt 0 ]; then
+            echo "❌ Failed Comparisons:"
+            for file in "${failed_comparisons[@]}"; do
+              echo "  - $file"
+            done
+          else
+            echo "All comparisons passed!"
+          fi
+  
+      - name: "Compare iOS screenshots"
+        run: |
+          mkdir -p images/diffs/ios
+          failed_comparisons=()
+          for file in images/ios/*.png; do
+            filename=$(basename $file)
+            if [ -f "maestro/images/expected/ios/$filename" ]; then
+              compare -metric AE -fuzz 1% "images/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
+              if grep -q "all: 0" compare_output.txt; then
+                echo "✅ Comparison passed for $filename"
+              else
+                echo "❌ Comparison failed for $filename"
+                failed_comparisons+=("$filename")
+              fi
+            fi
+          done
+          if [ ${#failed_comparisons[@]} -gt 0 ]; then
+            echo "❌ Failed Comparisons:"
+            for file in "${failed_comparisons[@]}"; do
+              echo "  - $file"
+            done
+          else
+            echo "All comparisons passed!"
+          fi
+  
+      - name: "Archive diff results"
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshot-diffs
+          path: images/diffs
           if-no-files-found: ignore

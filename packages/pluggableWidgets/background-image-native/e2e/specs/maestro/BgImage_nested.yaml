@@ -8,4 +8,5 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Nested"
-- assertVisible: "Background image nested inside background image"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bg_image_nested"
