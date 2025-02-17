@@ -453,7 +453,7 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 2048"
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
           disable-animations: true
           script: |
             chmod +x maestro/prepare_android.sh

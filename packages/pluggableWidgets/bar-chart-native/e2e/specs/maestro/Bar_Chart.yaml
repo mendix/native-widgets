@@ -1,17 +1,17 @@
 appId: "${APP_ID}"
 jsEngine: graaljs
 ---
-# - runFlow:
-#     file: "../../../../../../maestro/Precondition.yaml"
-# - tapOn:
-#     text: "B"
-# - tapOn:
-#     text: "Bar chart"
-# - assertVisible:
-#     text: "Bar chart"
-- takeScreenshot:
-    path: "images/actual/bar_chart_actual"
-- runScript:
-    file: "../../../../../../maestro/run_compare_screenshots.js"
-    env:
-      EXPECTED: "bar_chart"
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Bar chart"
+- assertVisible:
+    text: "Bar chart"
+# - takeScreenshot:
+#     path: "images/actual/bar_chart_actual"
+# - runScript:
+#     file: "../../../../../../maestro/run_compare_screenshots.js"
+#     env:
+#       EXPECTED: "bar_chart"
