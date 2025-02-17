@@ -6,11 +6,5 @@ appId: "${APP_ID}"
     text: "R"
 - tapOn:
     text: "Rating"
-- tapOn:
-    id: "textBoxRating"
-- eraseText
-- inputText:
-    text: "5"
-- pressKey: Enter
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/rating"

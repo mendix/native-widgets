@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     id: "Hybrid"
 - assertVisible: 
     text: "On change:"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/toggle_buttons"

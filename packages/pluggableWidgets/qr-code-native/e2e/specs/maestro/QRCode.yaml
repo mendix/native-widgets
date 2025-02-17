@@ -7,8 +7,6 @@ appId: "${APP_ID}"
 - tapOn:
     text: "QR code"
 - assertVisible:
-    text: "http://google.com"
-- assertVisible:
     id: "qRCodeNormal"
-- assertVisible:
-    id: "qRCodeCustomStyle"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/qr_code"

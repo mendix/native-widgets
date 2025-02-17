@@ -585,7 +585,7 @@ jobs:
          
   compare-screenshots:
     needs: [android-tests, ios-tests]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: "Check out code"
         uses: actions/checkout@v3
@@ -594,13 +594,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: android-screenshots
-          path: images/android
+          path: images/actual/android
   
       - name: "Download iOS screenshots"
         uses: actions/download-artifact@v3
         with:
           name: ios-screenshots
-          path: images/ios
+          path: images/actual/ios
   
       - name: "Install dependencies"
         run: |
@@ -611,10 +611,10 @@ jobs:
         run: |
           mkdir -p images/diffs/android
           failed_comparisons=()
-          for file in images/android/*.png; do
+          for file in images/actual/android/*.png; do
             filename=$(basename $file)
             if [ -f "maestro/images/expected/android/$filename" ]; then
-              compare -metric AE -fuzz 1% "images/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
+              compare -metric AE -fuzz 1% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
               if grep -q "all: 0" compare_output.txt; then
                 echo "✅ Comparison passed for $filename"
               else
@@ -636,10 +636,10 @@ jobs:
         run: |
           mkdir -p images/diffs/ios
           failed_comparisons=()
-          for file in images/ios/*.png; do
+          for file in images/actual/ios/*.png; do
             filename=$(basename $file)
             if [ -f "maestro/images/expected/ios/$filename" ]; then
-              compare -metric AE -fuzz 1% "images/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
+              compare -metric AE -fuzz 0.1% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
               if grep -q "all: 0" compare_output.txt; then
                 echo "✅ Comparison passed for $filename"
               else
