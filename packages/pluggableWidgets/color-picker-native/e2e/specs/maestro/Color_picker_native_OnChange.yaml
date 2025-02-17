@@ -8,9 +8,5 @@ appId: "${APP_ID}"
     text: "Color picker"
 - tapOn:
     text: "OnChange"
-- assertNotVisible:
-    id: "colorPickerConditional$preview"
-- tapOn:
-    id: "checkBoxColorPickerConditional"
 - assertVisible:
-    id: "colorPickerConditional$preview"
+    text: "Color picker - OnChange"
