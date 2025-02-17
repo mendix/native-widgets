@@ -33,7 +33,7 @@
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",
     "@types/ptomasroos__react-native-multi-slider": "^0.0.1",
-    "detox": "^20.33.0",
+    "detox": "^20.34.0",
     "eslint": "^7.32.0"
   }
 }

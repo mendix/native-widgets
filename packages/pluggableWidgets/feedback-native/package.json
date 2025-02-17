@@ -35,7 +35,7 @@
     "@mendix/pluggable-widgets-tools": "~10.0.1",
     "@types/querystringify": "^2.0.0",
     "@types/react-native-dialog": "^5.5.0",
-    "detox": "^20.33.0",
+    "detox": "^20.34.0",
     "eslint": "^7.32.0"
   }
 }
