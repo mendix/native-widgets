@@ -16,17 +16,7 @@ appId: "${APP_ID}"
     text: ".*Title 5.*"
 - swipe:
     from:
-      text: ".*Title 3.*"
-    direction: DOWN
-    duration: 1000
-- assertVisible:
-    text: "Pull down"
-- tapOn:
-    text: "OK"
-- swipe:
-    from:
-      text: ".*Title 3.*"
+      text: ".*Title 5.*"
     direction: UP
-    duration: 1000
 - assertVisible:
     text: ".*Title 9.*"

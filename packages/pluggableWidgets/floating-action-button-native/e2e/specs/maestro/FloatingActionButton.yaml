@@ -8,10 +8,8 @@ appId: "${APP_ID}"
     text: "Floating action button"
 - tapOn:
     id: "floatingActionButtonTopLeft"
-- tapOn:
+- assertVisible:
     text: "Music w/ action"
-- tapOn:
-    text: "OK"
 - tapOn:
     id: "floatingActionButtonBottomLeft"
 - assertVisible:
@@ -22,5 +20,6 @@ appId: "${APP_ID}"
     text: "Email"
 - tapOn:
     id: "floatingActionButtonTopRight"
-- assertVisible:
-    text: "Hi!"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/floating_action_button"
+

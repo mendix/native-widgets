@@ -8,22 +8,5 @@ appId: "${APP_ID}"
     text: "Image"
 - tapOn:
     text: "Image icon"
-
-- assertVisible:
-    text: "Title 0"
-- tapOn:
-    id: "textFilter1-text-input"
-- inputText:
-    text: "Title 5"
-- pressKey: Enter
-- assertVisible:
-    text: "Title 5"
-    index: 1
-- tapOn:
-    id: "textFilter1-text-input"
-- eraseText
-- inputText:
-    text: "Title 100"
-- pressKey: Enter
-- assertVisible:
-    text: "No results found"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/image_icon"

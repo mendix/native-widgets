@@ -8,8 +8,5 @@ appId: "${APP_ID}"
     text: "Image"
 - tapOn:
     text: "Image dynamic"
-- assertVisible: "Dynamic image auto synced to device\r
-
-    \r
-
-    Main as Dynamic Image; Default as Static; Background as Cover"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/image_dynamic"

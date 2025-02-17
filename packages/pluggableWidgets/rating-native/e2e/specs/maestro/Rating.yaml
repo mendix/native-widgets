@@ -12,5 +12,5 @@ appId: "${APP_ID}"
 - inputText:
     text: "5"
 - pressKey: Enter
-- assertVisible:
-    text: "Normal:"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/rating"

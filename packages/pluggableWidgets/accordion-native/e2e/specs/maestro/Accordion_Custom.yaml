@@ -6,13 +6,5 @@ appId: "${APP_ID}"
     text: "Accordion"
 - tapOn:
     text: "Custom"
-- assertVisible:
-    text: "Header 1 - Text 1"
-- assertVisible:
-    id: "staticImage1"
-- assertVisible:
-    text: "Button"
-- assertNotVisible:
-    text: "Header 3 - Text 1"
-- assertNotVisible:
-    id: "staticImage"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/accordion_custom"

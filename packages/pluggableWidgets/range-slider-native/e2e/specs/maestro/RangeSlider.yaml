@@ -19,10 +19,5 @@ appId: "${APP_ID}"
 - assertVisible: "The lower value must be less than the maximum value.
 
     The upper value must be equal or less than the maximum value."
-# - tapOn:
-#     id: "rangeSliderOnChange$leftMarker"
-# - swipe:
-#     from:
-#       id: "rangeSliderOnChange$leftMarker"
-#     direction: LEFT
-# - assertVisible: "Lower: 2\nUpper: 75"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/range_slider"

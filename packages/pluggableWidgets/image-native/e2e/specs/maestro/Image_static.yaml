@@ -8,4 +8,5 @@ appId: "${APP_ID}"
     text: "Image"
 - tapOn:
     text: "Image static"
-- assertVisible: "Main as Icon; Event as Enlarge"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/image_static"

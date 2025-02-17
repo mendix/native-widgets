@@ -6,5 +6,5 @@ appId: "${APP_ID}"
     text: "S"
 - tapOn:
     text: "Slider"
-- assertVisible: 
-    text: "Dynamic ranges"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/slider"

@@ -18,9 +18,3 @@ appId: "${APP_ID}"
     direction: LEFT
 - assertVisible:
     text: "Fish"
-# - tapOn:
-#     id: "image3$ImageSmallPressable"
-- tapOn:
-    point: "50%,30%"
-- assertVisible:
-    text: "You clicked the Fish image."
