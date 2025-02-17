@@ -45,7 +45,7 @@ async function setDemoMode(): Promise<void> {
     if (device.getPlatform() === "ios") {
         const type = device.name.substring(device.name.indexOf("(") + 1, device.name.lastIndexOf(")"));
         execSync(
-            `xcrun simctl status_bar "${type}" override --time "12:00" --batteryState charged --batteryLevel 100 --wifiBars 3`
+            `xcrun simctl status_bar "${type}" override --time "2023-01-01T12:00:00Z" --batteryState charged --batteryLevel 100 --wifiBars 3`
         );
     } else {
         const id = device.id;
