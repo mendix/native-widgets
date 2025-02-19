@@ -5,10 +5,8 @@ appId: "${APP_ID}"
 - tapOn:
     text: "T"
 - tapOn: 
-    text: "Satellite"
-- tapOn:
-    id: "Hybrid"
+    text: "Toggle buttons"
 - assertVisible: 
-    text: "On change:"
+    text: "Toggle buttons"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/toggle_buttons"
