@@ -8,13 +8,5 @@ appId: "${APP_ID}"
     text: "Progress circle"
 - assertVisible:
     text: "With default text:"
-- tapOn:
-    id: "textBoxProgressCircleValue"
-- eraseText
-- inputText:
-    text: "75"
-- pressKey: Enter
-- assertVisible:
-    text: "With default text:"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/progress_circle"

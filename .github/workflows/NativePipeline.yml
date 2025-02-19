@@ -474,7 +474,7 @@ jobs:
         if: always()
         with:
           name: android-screenshots
-          path: android-screenshots/${{ github.workspace }}/maestro/images/actual/android/**/*.png
+          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
@@ -577,7 +577,7 @@ jobs:
         if: always()
         with:
           name: ios-screenshots
-          path: ios-screenshots/${{ github.workspace }}/maestro/images/actual/ios/**/*.png
+          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
           if-no-files-found: ignore
 
       - name: "Archive artifacts"

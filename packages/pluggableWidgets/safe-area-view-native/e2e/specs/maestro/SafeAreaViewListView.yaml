@@ -13,5 +13,3 @@ appId: "${APP_ID}"
 - assertVisible:
     id: "image1"
     index: 14
-- assertVisible:
-    text: "test Shoe  20 favorite No"

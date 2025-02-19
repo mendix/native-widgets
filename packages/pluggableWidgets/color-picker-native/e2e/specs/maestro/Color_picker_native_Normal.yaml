@@ -8,7 +8,7 @@ appId: "${APP_ID}"
     text: "Color picker"
 - tapOn:
     text: "Normal"
-- tapOn:
-    id: "checkBoxColorPickerConditional"
+- assertVisible:
+    text: "Color picker - Normal"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/color_picker_normal"

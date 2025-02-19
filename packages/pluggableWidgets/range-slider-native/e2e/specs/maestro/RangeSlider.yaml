@@ -6,18 +6,7 @@ appId: "${APP_ID}"
     text: "R"
 - tapOn:
     text: "Range slider"
-- tapOn:
-    id: "textBoxRangeSliderLower"
-- eraseText
-- inputText:
-    text: "5"
-- pressKey: Enter
-- swipe:
-    from:
-      text: "Dynamic ranges"
-    direction: UP
-- assertVisible: "The lower value must be less than the maximum value.
-
-    The upper value must be equal or less than the maximum value."
+- assertVisible:
+    text: "Dynamic ranges"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/range_slider"

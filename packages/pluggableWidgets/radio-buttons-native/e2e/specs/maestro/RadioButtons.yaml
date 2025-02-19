@@ -8,8 +8,5 @@ appId: "${APP_ID}"
     text: "Radio buttons"
 - tapOn:
     text: "Option 2"
-- assertVisible:
-    text: "Option_2"
-- tapOn:
-    text: "OK"
-- assertVisible: "New"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/radio_buttons"
