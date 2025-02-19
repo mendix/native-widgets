@@ -23,10 +23,17 @@ else
   search_path="packages/pluggableWidgets/$WIDGET"
 fi
 
-# Find all .yaml files under the determined search path and execute them
-for yaml_test_file in $(find $search_path -type f -path "*/maestro/*.yaml"); do
-  echo "Running test: $yaml_test_file"
+# Find all .yaml files under the determined search path
+yaml_test_files=($(find $search_path -type f -path "*/maestro/*.yaml"))
+total_tests=${#yaml_test_files[@]}
+completed_tests=0
 
+# Execute each YAML test file
+for yaml_test_file in "${yaml_test_files[@]}"; do
+  echo "Running test: $yaml_test_file"
+  completed_tests=$((completed_tests + 1))
+  remaining_tests=$((total_tests - completed_tests))
+  
   if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM "$yaml_test_file"; then
     echo "✅ Test passed: $yaml_test_file"
     passed_tests+=("$yaml_test_file")
@@ -34,6 +41,8 @@ for yaml_test_file in $(find $search_path -type f -path "*/maestro/*.yaml"); do
     echo "❌ Test failed: $yaml_test_file"
     failed_tests+=("$yaml_test_file")
   fi
+  
+  echo "Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining."
 done
 
 echo
