@@ -471,6 +471,7 @@ jobs:
           if-no-files-found: ignore
       - name: "Archive test screenshots"
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: android-screenshots
           path: android-screenshots/${{ github.workspace }}/maestro/images/actual/android/**/*.png
@@ -573,6 +574,7 @@ jobs:
 
       - name: "Archive test screenshots"
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: ios-screenshots
           path: ios-screenshots/${{ github.workspace }}/maestro/images/actual/ios/**/*.png

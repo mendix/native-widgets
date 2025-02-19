@@ -10,4 +10,4 @@ appId: "${APP_ID}"
             notifications: allow
       - extendedWaitUntil:
           visible: "Widgets menu"
-          timeout: 180000 # A long timeout since app startup is quite unstable due to resources when executed on Github runners
+          timeout: 240000 # A long timeout since app startup is quite unstable due to resources when executed on Github runners
