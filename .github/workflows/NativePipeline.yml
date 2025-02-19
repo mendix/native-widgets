@@ -473,7 +473,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
+          path: android-screenshots/${{ github.workspace }}/maestro/images/actual/android/**/*.png
           if-no-files-found: ignore
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
@@ -491,7 +491,9 @@ jobs:
           cache: yarn
 
       - name: "Install dependencies"
-        run: yarn install --immutable
+        run: |
+          yarn cache clean
+          yarn install --immutable
 
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
@@ -573,7 +575,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ios-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
+          path: ios-screenshots/${{ github.workspace }}/maestro/images/actual/ios/**/*.png
           if-no-files-found: ignore
 
       - name: "Archive artifacts"
