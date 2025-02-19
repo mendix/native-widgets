@@ -169,7 +169,7 @@ jobs:
         env:
           NODE_OPTIONS: --max_old_space_size=6144
       - name: "Upload resources artifact"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v4
         with:
           name: resources
           path: |
@@ -228,7 +228,7 @@ jobs:
         run: |
           mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-maestro-widgets/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v4
         with:
           name: mda
           path: automation.mda
@@ -334,7 +334,7 @@ jobs:
           echo "Listing APK files in the output directory:"
           ls -R native-template/android/app/build/outputs/apk/
       - name: "Archive Android app"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v4
         with:
           name: android-app
           path: native-template/android/app/build/outputs/apk/**/*.apk
@@ -394,7 +394,7 @@ jobs:
         working-directory: native-template/ios
         run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
       - name: "Archive iOS app"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v4
         with:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
@@ -462,14 +462,14 @@ jobs:
             bash maestro/run_maestro_tests.sh android "${{ github.event.inputs.workspace }}"
 
       - name: "Archive runtime logs"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: android-runtime-logs
           path: log/*.log
           if-no-files-found: ignore
       - name: "Archive test screenshots"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-screenshots
           path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
@@ -561,7 +561,7 @@ jobs:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 600000
 
       - name: "Archive runtime logs"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ios-runtime-logs
@@ -569,14 +569,14 @@ jobs:
           if-no-files-found: ignore
 
       - name: "Archive test screenshots"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ios-screenshots
           path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
           if-no-files-found: ignore
 
       - name: "Archive artifacts"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ios-artifacts
@@ -588,16 +588,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check out code"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
   
       - name: "Download Android screenshots"
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: android-screenshots
           path: images/actual/android
   
       - name: "Download iOS screenshots"
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ios-screenshots
           path: images/actual/ios
@@ -658,7 +658,7 @@ jobs:
           fi
   
       - name: "Archive diff results"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: screenshot-diffs
           path: images/diffs
