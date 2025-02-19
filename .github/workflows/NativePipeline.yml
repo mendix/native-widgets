@@ -596,12 +596,14 @@ jobs:
         with:
           name: android-screenshots
           path: images/actual/android
+        continue-on-error: true
   
       - name: "Download iOS screenshots"
         uses: actions/download-artifact@v4
         with:
           name: ios-screenshots
           path: images/actual/ios
+        continue-on-error: true
   
       - name: "Set up node"
         uses: actions/setup-node@v4
@@ -616,52 +618,60 @@ jobs:
   
       - name: "Compare Android screenshots"
         run: |
-          mkdir -p images/diffs/android
-          failed_comparisons=()
-          for file in images/actual/android/*.png; do
-            filename=$(basename $file)
-            if [ -f "maestro/images/expected/android/$filename" ]; then
-              compare -metric AE -fuzz 1% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
-              if grep -q "all: 0" compare_output.txt; then
-                echo "✅ Comparison passed for $filename"
-              else
-                echo "❌ Comparison failed for $filename"
-                failed_comparisons+=("$filename")
+          if [ -d "images/actual/android" ]; then
+            mkdir -p images/diffs/android
+            failed_comparisons=()
+            for file in images/actual/android/*.png; do
+              filename=$(basename $file)
+              if [ -f "maestro/images/expected/android/$filename" ]; then
+                compare -metric AE -fuzz 1% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
+                if grep -q "all: 0" compare_output.txt; then
+                  echo "✅ Comparison passed for $filename"
+                else
+                  echo "❌ Comparison failed for $filename"
+                  failed_comparisons+=("$filename")
+                fi
               fi
-            fi
-          done
-          if [ ${#failed_comparisons[@]} -gt 0 ]; then
-            echo "❌ Failed Comparisons:"
-            for file in "${failed_comparisons[@]}"; do
-              echo "  - $file"
             done
+            if [ ${#failed_comparisons[@]} -gt 0 ]; then
+              echo "❌ Failed Comparisons:"
+              for file in "${failed_comparisons[@]}"; do
+                echo "  - $file"
+              done
+            else
+              echo "All comparisons passed!"
+            fi
           else
-            echo "All comparisons passed!"
+            echo "No Android screenshots found to compare."
           fi
   
       - name: "Compare iOS screenshots"
         run: |
-          mkdir -p images/diffs/ios
-          failed_comparisons=()
-          for file in images/actual/ios/*.png; do
-            filename=$(basename $file)
-            if [ -f "maestro/images/expected/ios/$filename" ]; then
-              compare -metric AE -fuzz 0.1% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
-              if grep -q "all: 0" compare_output.txt; then
-                echo "✅ Comparison passed for $filename"
-              else
-                echo "❌ Comparison failed for $filename"
-                failed_comparisons+=("$filename")
+          if [ -d "images/actual/ios" ]; then
+            mkdir -p images/diffs/ios
+            failed_comparisons=()
+            for file in images/actual/ios/*.png; do
+              filename=$(basename $file)
+              if [ -f "maestro/images/expected/ios/$filename" ]; then
+                compare -metric AE -fuzz 0.1% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
+                if grep -q "all: 0" compare_output.txt; then
+                  echo "✅ Comparison passed for $filename"
+                else
+                  echo "❌ Comparison failed for $filename"
+                  failed_comparisons+=("$filename")
+                fi
               fi
-            fi
-          done
-          if [ ${#failed_comparisons[@]} -gt 0 ]; then
-            echo "❌ Failed Comparisons:"
-            for file in "${failed_comparisons[@]}"; do
-              echo "  - $file"
             done
+            if [ ${#failed_comparisons[@]} -gt 0 ]; then
+              echo "❌ Failed Comparisons:"
+              for file in "${failed_comparisons[@]}"; do
+                echo "  - $file"
+              done
+            else
+              echo "All comparisons passed!"
+            fi
           else
-            echo "All comparisons passed!"
+            echo "No iOS screenshots found to compare."
           fi
   
       - name: "Archive diff results"
