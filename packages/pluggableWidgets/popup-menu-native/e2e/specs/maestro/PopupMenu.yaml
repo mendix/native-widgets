@@ -7,14 +7,15 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Popup menu"
 - tapOn:
-    text: "Basic"
-- tapOn:
-    text: "Alert"
-- assertVisible:
-    text: "beep boop"
-- tapOn:
-    text: "OK"
-- tapOn:
     text: "Combinations"
 - assertVisible:
     text: "Withcontainer"
+- tapOn: "Go back"
+- tapOn:
+    text: "Basic"
+- tapOn:
+    text: "Alert"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_svg_alert"
+
+

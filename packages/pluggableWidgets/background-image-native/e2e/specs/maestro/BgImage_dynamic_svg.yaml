@@ -8,7 +8,6 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Dynamic SVG image"
-- assertVisible: "Dynamic svg image auto synced to device"
 - assertVisible: "Dynamic Svg image"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_svg"

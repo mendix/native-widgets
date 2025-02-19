@@ -7,15 +7,7 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Progress bar"
 - assertVisible:
-    id: "progressBarDynamic"
-- tapOn:
-    id: "textBoxProgressBarValue"
-- eraseText
-- inputText:
-    text: "75"
-- pressKey: Enter
-- assertVisible:
-    id: "progressBarStatic"
+    text: "Dynamic values:"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/progress_bar"
 

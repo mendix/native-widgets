@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Update DEVICE_ID and path to the yaml file according to needs
+# Use command like: ./run_maestro_tests_local.sh android/ios proggress-circle-native
 
 if [ "$1" == "android" ]; then
-  APP_ID="myapp.nativecomponentstestproject"
-  #APP_ID="com.mendix.nativetemplate"
+  #APP_ID="myapp.nativecomponentstestproject"
+  APP_ID="com.mendix.nativetemplate"
   DEVICE_ID="emulator-5554"
   PLATFORM="android"
 elif [ "$1" == "ios" ]; then

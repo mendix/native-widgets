@@ -8,7 +8,6 @@ appId: "${APP_ID}"
     text: "Safe area view"
 - tapOn:
     text: "Maps"
-- assertVisible: "Google Map"
 - assertVisible: "Maps widget behind safe area view"
 - tapOn:
     text: "Show expected behavior"

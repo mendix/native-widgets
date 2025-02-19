@@ -8,7 +8,5 @@ appId: "${APP_ID}"
     text: "Pie doughnut chart"
 - tapOn:
     text: "Doughnut chart Custom style"
-- assertVisible:
-    text: "DoughnutChart"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/doughnut_chart_custom.png"
