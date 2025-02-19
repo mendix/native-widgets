@@ -96,7 +96,7 @@ jobs:
       mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
       - name: "Get Mendix version from JSON"
         id: get-mendix-version
         uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
@@ -126,7 +126,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
       - name: "Check if docker image already exists"
         run: |
           docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
@@ -149,11 +149,11 @@ jobs:
       contents: read
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -242,7 +242,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
       - name: "Download deployment package"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -262,7 +262,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -277,13 +277,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: "Check out Native Template for Native Components Test Project"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
         with:
           repository: mendix/native-template
           ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
         with:
           path: native-widgets
       - name: "Download Android bundle and assets"
@@ -292,7 +292,7 @@ jobs:
           name: android-bundle
           path: bundles/android
       - name: "Set up Node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
@@ -343,13 +343,13 @@ jobs:
     runs-on: macos-13
     steps:
       - name: "Check out Native Template for Native Components Test Project"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
         with:
           repository: mendix/native-template
           ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
         with:
           path: native-widgets
       - name: "Download iOS bundle and assets"
@@ -358,7 +358,7 @@ jobs:
           name: ios-bundle
           path: bundles/ios
       - name: "Set up Node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
@@ -404,11 +404,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -479,12 +479,12 @@ jobs:
     runs-on: macos-15
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -602,6 +602,12 @@ jobs:
           name: ios-screenshots
           path: images/actual/ios
   
+      - name: "Set up node"
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+          
       - name: "Install dependencies"
         run: |
           sudo apt-get update
@@ -663,3 +669,4 @@ jobs:
           name: screenshot-diffs
           path: images/diffs
           if-no-files-found: ignore
+
