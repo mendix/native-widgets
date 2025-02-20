@@ -40,6 +40,16 @@ restart_emulator() {
     sleep 60
 }
 
+# Function to restart the iOS simulator
+restart_simulator() {
+    echo "Restarting iOS Simulator..."
+    xcrun simctl shutdown "iPhone 16"
+    sleep 10
+    xcrun simctl boot "iPhone 16"
+    sleep 30
+    xcrun simctl bootstatus || echo "Simulator booted successfully"
+}
+
 # Execute each YAML test file
 for yaml_test_file in "${yaml_test_files[@]}"; do
   echo "🔄 Running test: $yaml_test_file"
@@ -60,7 +70,11 @@ for yaml_test_file in "${yaml_test_files[@]}"; do
       if [ "$RETRIES" -lt "$MAX_RETRIES" ]; then
         echo "Retrying in $RETRY_DELAY seconds..."
         sleep "$RETRY_DELAY"
-        restart_emulator
+        if [ "$PLATFORM" == "android" ]; then
+          restart_emulator
+        else
+          restart_simulator
+        fi
       fi
     fi
     

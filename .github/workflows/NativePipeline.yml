@@ -540,27 +540,29 @@ jobs:
       - name: "List Available Simulators"
         run: xcrun simctl list devices
 
-      - name: "Start iOS Simulator"
-        run: |
-          xcrun simctl boot "iPhone 16" || echo "Simulator already booted"
-          sleep 30
-          xcrun simctl bootstatus || echo "Simulator booted successfully"
+      # - name: "Start iOS Simulator"
+      #   run: |
+      #     xcrun simctl boot "iPhone 16" || echo "Simulator already booted"
+      #     sleep 30
+      #     xcrun simctl bootstatus || echo "Simulator booted successfully"
 
-      - name: "Verify Simulator"
-        run: xcrun simctl list
+      # - name: "Verify Simulator"
+      #   run: xcrun simctl list
 
-      - name: "Install iOS app on simulator"
-        run: xcrun simctl install booted ios-app/Debug-iphonesimulator/NativeTemplate.app
+      # - name: "Install iOS app on simulator"
+      #   run: xcrun simctl install booted ios-app/Debug-iphonesimulator/NativeTemplate.app
 
-      - name: "Verify Installed App"
-        run: xcrun simctl get_app_container booted com.mendix.native.template
+      # - name: "Verify Installed App"
+      #   run: xcrun simctl get_app_container booted com.mendix.native.template
 
-      - name: "Launch iOS App"
-        run: xcrun simctl launch booted com.mendix.native.template
+      # - name: "Launch iOS App"
+      #   run: xcrun simctl launch booted com.mendix.native.template
 
       - name: "Run Maestro Script"
         run: |
+          chmod +x maestro/prepare_ios.sh
           chmod +x maestro/run_maestro_tests.sh
+          bash maestro/prepare_ios.sh
           bash maestro/run_maestro_tests.sh ios "${{ github.event.inputs.workspace }}"
 
       - name: "Archive runtime logs"
