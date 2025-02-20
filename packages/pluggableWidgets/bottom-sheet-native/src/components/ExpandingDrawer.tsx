@@ -1,7 +1,8 @@
 import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
 import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -95,17 +96,15 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         return <View style={{ position: "absolute", bottom: -maxHeight }}>{renderContent()}</View>;
     }
 
-    // Calculate snap points similarly to your original logic.
     const snapPoints =
         props.fullscreenContent && heightContent
             ? [fullscreenHeight, heightContent, heightHeader]
             : props.fullscreenContent
-            ? [fullscreenHeight, heightHeader]
-            : isLargeContentValid
-            ? [heightContent, heightHeader]
-            : [heightHeader];
+                ? [fullscreenHeight, heightHeader]
+                : isLargeContentValid
+                    ? [heightContent, heightHeader]
+                    : [heightHeader];
 
-    // Determine the "collapsed" index (the lowest snap point)
     const collapsedIndex = snapPoints.length - 1;
 
     const handleSheetChanges = (index: number) => {
@@ -123,20 +122,20 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     };
 
     return (
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
-            {snapPoints.length > 1 && (
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={collapsedIndex}
-                    snapPoints={snapPoints}
-                    // Disabling content and handle panning gestures to mimic the original behavior
-                    enableContentPanningGesture={false}
-                    enableHandlePanningGesture={false}
-                    onChange={handleSheetChanges}
-                >
-                    {renderContent()}
-                </BottomSheet>
-            )}
-        </View>
+        <GestureHandlerRootView>
+            <BottomSheet
+                ref={bottomSheetRef}
+                index={collapsedIndex}
+                snapPoints={snapPoints}
+                enableContentPanningGesture={false}
+                enableHandlePanningGesture={false}
+                onChange={handleSheetChanges}
+                animateOnMount={true}
+            >
+                <BottomSheetView style={{ flex: 1 }}>
+                   {renderContent()}
+                </BottomSheetView>
+            </BottomSheet>
+        </GestureHandlerRootView>
     );
 };

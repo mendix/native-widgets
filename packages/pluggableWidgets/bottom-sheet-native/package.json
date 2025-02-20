@@ -25,6 +25,7 @@
     "@shopify/flash-list": "^1.7.3",
     "react-native-actionsheet": "^2.4.2",
     "react-native-device-info": "13.0.0",
+    "react-native-gesture-handler": "^2.24.0",
     "react-native-modal": "^13.0.1",
     "react-native-reanimated": "3.16.1"
   },
