@@ -613,7 +613,13 @@ jobs:
             for file in images/actual/android/*.png; do
               filename=$(basename $file)
               if [ -f "maestro/images/expected/android/$filename" ]; then
-                compare -metric AE -fuzz 1% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
+                # Detect the height of the status bar (assuming 50px height)
+                status_bar_height=50
+                actual_height=$(identify -format "%h" "images/actual/android/$filename")
+                cropped_height=$((actual_height - status_bar_height))
+                convert "images/actual/android/$filename" -crop +0+$status_bar_height "images/actual/android/cropped_$filename"
+                convert "maestro/images/expected/android/$filename" -crop +0+$status_bar_height "maestro/images/expected/android/cropped_$filename"
+                compare -metric AE -fuzz 0.3% "images/actual/android/cropped_$filename" "maestro/images/expected/android/cropped_$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
                 if grep -q "all: 0" compare_output.txt; then
                   echo "✅ Comparison passed for $filename"
                 else
@@ -642,7 +648,13 @@ jobs:
             for file in images/actual/ios/*.png; do
               filename=$(basename $file)
               if [ -f "maestro/images/expected/ios/$filename" ]; then
-                compare -metric AE -fuzz 1% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
+                # Detect the height of the status bar (assuming 50px height)
+                status_bar_height=50
+                actual_height=$(identify -format "%h" "images/actual/ios/$filename")
+                cropped_height=$((actual_height - status_bar_height))
+                convert "images/actual/ios/$filename" -crop +0+$status_bar_height "images/actual/ios/cropped_$filename"
+                convert "maestro/images/expected/ios/$filename" -crop +0+$status_bar_height "maestro/images/expected/ios/cropped_$filename"
+                compare -metric AE -fuzz 0.3% "images/actual/ios/cropped_$filename" "maestro/images/expected/ios/cropped_$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
                 if grep -q "all: 0" compare_output.txt; then
                   echo "✅ Comparison passed for $filename"
                 else
