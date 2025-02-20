@@ -23,8 +23,8 @@ else
   search_path="packages/pluggableWidgets/$WIDGET"
 fi
 
-# Find all .yaml files under the determined search path
-yaml_test_files=($(find $search_path -type f -path "*/maestro/*.yaml"))
+# Find all .yaml files under the determined search path, excluding platform-specific files
+yaml_test_files=($(find $search_path -type f -path "*/maestro/*.yaml" ! -name "*_ios.yaml" ! -name "*_android.yaml"))
 total_tests=${#yaml_test_files[@]}
 completed_tests=0
 

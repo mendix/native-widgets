@@ -590,6 +590,7 @@ jobs:
   compare-screenshots:
     needs: [android-tests, ios-tests]
     runs-on: ubuntu-latest
+    if: always()
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4

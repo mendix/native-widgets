@@ -27,8 +27,8 @@ else
   search_path="../packages/pluggableWidgets/$WIDGET"
 fi
 
-# Find all .yaml files under the determined search path and execute them
-for yaml_test_file in $(find $search_path -type f -path "*/maestro/*.yaml"); do
+# Find all .yaml files under the determined search path, excluding platform-specific files
+for yaml_test_file in $(find $search_path -type f -path "*/maestro/*.yaml" ! -name "*_ios.yaml" ! -name "*_android.yaml"); do
   echo "Running test: $yaml_test_file"
   maestro --device $DEVICE_ID test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM "$yaml_test_file"
 done
