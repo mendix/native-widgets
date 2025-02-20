@@ -29,12 +29,12 @@ yaml_test_files=($(find $search_path -type f -path "*/maestro/*.yaml" ! -name "*
 total_tests=${#yaml_test_files[@]}
 completed_tests=0
 
-MAX_RETRIES=3
+MAX_RETRIES=2
 RETRY_DELAY=10
 
 # Execute each YAML test file
 for yaml_test_file in "${yaml_test_files[@]}"; do
-  echo "🔄 Running test: $yaml_test_file"
+  echo "🧪 Testing: $yaml_test_file"
   RETRIES=0
 
   while [ "$RETRIES" -lt "$MAX_RETRIES" ]; do
@@ -50,22 +50,24 @@ for yaml_test_file in "${yaml_test_files[@]}"; do
       failed_tests+=("$yaml_test_file")
       RETRIES=$((RETRIES + 1))
       if [ "$RETRIES" -lt "$MAX_RETRIES" ]; then
-        echo "Retrying in $RETRY_DELAY seconds..."
+        echo "🔄 Retrying in $RETRY_DELAY seconds..."
         sleep "$RETRY_DELAY"
         if [ "$PLATFORM" == "android" ]; then
+          echo "🔄 Restarting emulator..."
           restart_emulator
         else
+          echo "🔄 Restarting iOS Simulator..."
           restart_simulator
         fi
       fi
     fi
     
-    echo "Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining. ✅ ${#passed_tests[@]} passed, ❌ ${#failed_tests[@]} failed."
+    echo "📊 Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining. ✅ ${#passed_tests[@]} passed, ❌ ${#failed_tests[@]} failed."
   done
 done
 
 echo
-echo "Test Execution Summary:"
+echo "📊 Test Execution Summary:"
 echo "-----------------------"
 if [ ${#passed_tests[@]} -gt 0 ]; then
   echo "✅ Passed Tests:"
@@ -89,7 +91,7 @@ fi
 
 # Function to restart the emulator
 restart_emulator() {
-    echo "Restarting emulator..."
+    echo "🔄 Restarting emulator..."
     adb -s emulator-5554 emu kill
     sleep 10
     nohup emulator -avd test -no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4 &
@@ -98,7 +100,7 @@ restart_emulator() {
 
 # Function to restart the iOS simulator
 restart_simulator() {
-    echo "Restarting iOS Simulator..."
+    echo "🔄 Restarting iOS Simulator..."
     xcrun simctl shutdown "$IOS_DEVICE"
     sleep 10
     xcrun simctl boot "$IOS_DEVICE"

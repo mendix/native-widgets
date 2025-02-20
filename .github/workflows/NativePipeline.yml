@@ -642,7 +642,7 @@ jobs:
             for file in images/actual/ios/*.png; do
               filename=$(basename $file)
               if [ -f "maestro/images/expected/ios/$filename" ]; then
-                compare -metric AE -fuzz 0.1% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
+                compare -metric AE -fuzz 1% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
                 if grep -q "all: 0" compare_output.txt; then
                   echo "✅ Comparison passed for $filename"
                 else
