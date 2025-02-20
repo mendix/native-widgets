@@ -11,5 +11,6 @@ appId: "${APP_ID}"
 - assertVisible: "Maps widget behind safe area view"
 - tapOn:
     text: "Show expected behavior"
-- assertVisible:
-    text: "Maps widget is interactive, except behind the title and button UI component."
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/SafeAreaViewMaps"
+
