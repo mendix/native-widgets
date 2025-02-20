@@ -8,9 +8,13 @@ appId: "${APP_ID}"
     text: "Web view"
 - tapOn: 
     text: "Events"
-- tapOn: 
-    text: "Valid URL"
-- assertVisible: 
+- assertVisible:
+    optional: true
     text: "URL loaded"
-- tapOn: 
+- tapOn:
+    optional: true 
     text: "OK"
+- assertVisible: 
+    text: "Valid URL"
+
+

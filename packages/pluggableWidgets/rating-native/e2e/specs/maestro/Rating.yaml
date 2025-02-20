@@ -6,5 +6,7 @@ appId: "${APP_ID}"
     text: "R"
 - tapOn:
     text: "Rating"
+- assertVisible:
+    text: "Normal:"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/rating"

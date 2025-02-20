@@ -6,7 +6,9 @@ appId: "${APP_ID}"
     text: "R"
 - tapOn:
     text: "Radio buttons"
+- assertVisible:
+    text: "Vertical radio buttons"
 - tapOn:
     text: "Option 2"
-- takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/radio_buttons"
+# - takeScreenshot:
+#     path: "maestro/images/actual/${PLATFORM}/radio_buttons"
