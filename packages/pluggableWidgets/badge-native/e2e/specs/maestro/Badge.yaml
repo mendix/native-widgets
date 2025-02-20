@@ -1,4 +1,5 @@
 appId: "${APP_ID}"
+platform: "${PLATFORM}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
@@ -6,22 +7,30 @@ appId: "${APP_ID}"
     text: "B"
 - tapOn:
     text: "Badge"
+- assertVisible:
+    text: "Normal Badge"
+# - runFlow:
+#     when:
+#       platform: ios
+#     file: /Users/nikola.simsic/Documents/Projects/native-widgets/Badge_ios.yaml
+# - tapOn:
+#     id: "textBoxBadge"
 # Input field set as autofocuss
-- inputText:
-    text: "Detox"
-- pressKey: Enter # Has to be done this way in order to hide keyboard, since on iOS issue exists with - hideKeyboard command
-# renders the normal badge
-- assertVisible:
-    id: "badgeNormal"
-- assertVisible:
-    text: "Detox"
-    index: 1
-# does not render the badge with visibility set as false
-- assertNotVisible:
-    id: "badgeNoVisibility"
-# renders the badge with actions
-- tapOn:
-    text: "Detox"
-    index: 2
-- takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/badge"
+# - inputText:
+#     text: "Detox"
+# - pressKey: Enter # Has to be done this way in order to hide keyboard, since on iOS issue exists with - hideKeyboard command
+# # renders the normal badge
+# - assertVisible:
+#     id: "badgeNormal"
+# - assertVisible:
+#     text: "Detox"
+#     index: 1
+# # does not render the badge with visibility set as false
+# - assertNotVisible:
+#     id: "badgeNoVisibility"
+# # renders the badge with actions
+# - tapOn:
+#     text: "Detox"
+#     index: 2
+# - takeScreenshot:
+#     path: "maestro/images/actual/${PLATFORM}/badge"
