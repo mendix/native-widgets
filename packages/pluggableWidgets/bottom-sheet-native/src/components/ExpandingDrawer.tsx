@@ -1,7 +1,7 @@
-import { BottomSheetStyle } from "../ui/Styles";
-import { createElement, ReactNode, useCallback, useState, ReactElement, Children } from "react";
-import BottomSheet from "reanimated-bottom-sheet";
+import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
 import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { BottomSheetStyle } from "../ui/Styles";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -17,16 +17,16 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     const [heightHeader, setHeightHeader] = useState(0);
     const [fullscreenHeight, setFullscreenHeight] = useState(0);
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const bottomSheetRef = useRef<BottomSheet>(null);
+
     const maxHeight = Dimensions.get("screen").height;
     const isSmallContentValid = Children.count(props.smallContent) > 0;
     const isLargeContentValid = Children.count(props.largeContent) > 0;
 
     const onLayoutHandlerHeader = (event: LayoutChangeEvent): void => {
         const height = event.nativeEvent.layout.height;
-        if (height > 0) {
-            if (height <= maxHeight) {
-                setHeightHeader(height);
-            }
+        if (height > 0 && height <= maxHeight) {
+            setHeightHeader(height);
         }
     };
 
@@ -65,6 +65,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 {props.largeContent}
             </View>
         );
+
         if (props.fullscreenContent) {
             return (
                 <View
@@ -94,6 +95,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         return <View style={{ position: "absolute", bottom: -maxHeight }}>{renderContent()}</View>;
     }
 
+    // Calculate snap points similarly to your original logic.
     const snapPoints =
         props.fullscreenContent && heightContent
             ? [fullscreenHeight, heightContent, heightHeader]
@@ -103,25 +105,37 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
             ? [heightContent, heightHeader]
             : [heightHeader];
 
+    // Determine the "collapsed" index (the lowest snap point)
+    const collapsedIndex = snapPoints.length - 1;
+
+    const handleSheetChanges = (index: number) => {
+        if (index === collapsedIndex) {
+            if (isOpen) {
+                props.onClose?.();
+            }
+            setIsOpen(false);
+        } else {
+            if (!isOpen) {
+                props.onOpen?.();
+            }
+            setIsOpen(true);
+        }
+    };
+
     return (
         <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
             {snapPoints.length > 1 && (
                 <BottomSheet
-                    enabledManualSnapping={false}
-                    enabledBottomInitialAnimation
-                    enabledContentTapInteraction={false}
-                    enabledHeaderGestureInteraction={false}
+                    ref={bottomSheetRef}
+                    index={collapsedIndex}
                     snapPoints={snapPoints}
-                    initialSnap={snapPoints.length - 1}
-                    renderContent={renderContent}
-                    enabledInnerScrolling={false}
-                    onOpenStart={props.onOpen}
-                    onOpenEnd={() => setIsOpen(true)}
-                    onCloseStart={() => {
-                        setIsOpen(false);
-                        props.onClose?.();
-                    }}
-                />
+                    // Disabling content and handle panning gestures to mimic the original behavior
+                    enableContentPanningGesture={false}
+                    enableHandlePanningGesture={false}
+                    onChange={handleSheetChanges}
+                >
+                    {renderContent()}
+                </BottomSheet>
             )}
         </View>
     );
