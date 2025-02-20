@@ -30,11 +30,11 @@ completed_tests=0
 
 # Execute each YAML test file
 for yaml_test_file in "${yaml_test_files[@]}"; do
-  echo "Running test: $yaml_test_file"
+  echo "🔄 Running test: $yaml_test_file"
   completed_tests=$((completed_tests + 1))
   remaining_tests=$((total_tests - completed_tests))
   
-  if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM "$yaml_test_file"; then
+  if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
     echo "✅ Test passed: $yaml_test_file"
     passed_tests+=("$yaml_test_file")
   else
@@ -42,7 +42,7 @@ for yaml_test_file in "${yaml_test_files[@]}"; do
     failed_tests+=("$yaml_test_file")
   fi
   
-  echo "Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining."
+  echo "Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining. ✅ ${#passed_tests[@]} passed, ❌ ${#failed_tests[@]} failed."
 done
 
 echo

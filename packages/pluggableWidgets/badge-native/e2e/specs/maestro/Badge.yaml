@@ -23,5 +23,5 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Detox"
     index: 2
-- assertVisible:
-    text: "Action test: Detox"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/badge"

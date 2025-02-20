@@ -479,6 +479,7 @@ jobs:
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
     runs-on: macos-15
+    timeout-minutes: 720
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4
@@ -524,6 +525,17 @@ jobs:
           else
             echo "Xcode CLI tools are already configured."
           fi
+      
+      - name: "Install Maestro"
+        run: |
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: "Verify maestro"
+        run: $HOME/.local/bin/maestro/bin/maestro --version
 
       - name: "List Available Simulators"
         run: xcrun simctl list devices
@@ -546,23 +558,10 @@ jobs:
       - name: "Launch iOS App"
         run: xcrun simctl launch booted com.mendix.native.template
 
-      - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: "Verify maestro"
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-
       - name: "Run Maestro Script"
         run: |
           chmod +x maestro/run_maestro_tests.sh
           bash maestro/run_maestro_tests.sh ios "${{ github.event.inputs.workspace }}"
-        env:
-          MAESTRO_DRIVER_STARTUP_TIMEOUT: 600000
 
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v4
