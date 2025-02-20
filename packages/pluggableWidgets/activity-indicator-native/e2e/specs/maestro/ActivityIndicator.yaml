@@ -5,11 +5,7 @@ appId: "${APP_ID}"
     file: "../../../../../../maestro/Precondition.yaml"
 - tapOn:
     text: "Activity indicator"
-# - assertVisible:
-#     id: "activityIndicatorDefault"
-# - assertNotVisible:
-#     id: "activityIndicatorNoVisibility"
-# - assertVisible:
-#     id: "activityIndicatorCustomStyle"
+- assertVisible:
+    text: "Default"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/activity_indicator"
