@@ -42,7 +42,6 @@ on:
           - line-chart-native
           - listview-swipe-native
           - maps-native
-          - notifications-native
           - pie-doughnut-chart-native
           - popup-menu-native
           - progress-bar-native
@@ -633,6 +632,7 @@ jobs:
               for file in "${failed_comparisons[@]}"; do
                 echo "  - $file"
               done
+              echo "ANDROID_COMPARISON_FAILED=true" >> $GITHUB_ENV
             else
               echo "All comparisons passed!"
             fi
@@ -668,6 +668,7 @@ jobs:
               for file in "${failed_comparisons[@]}"; do
                 echo "  - $file"
               done
+              echo "IOS_COMPARISON_FAILED=true" >> $GITHUB_ENV
             else
               echo "All comparisons passed!"
             fi
@@ -681,4 +682,11 @@ jobs:
           name: screenshot-diffs
           path: images/diffs
           if-no-files-found: ignore
+
+      - name: "Fail if comparisons failed"
+        run: |
+          if [ "$ANDROID_COMPARISON_FAILED" == "true" ] || [ "$IOS_COMPARISON_FAILED" == "true" ]; then
+            echo "One or more comparisons failed."
+            exit 1
+          fi
 
