@@ -9,7 +9,7 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Doughnut chart Multiple data points"
 - assertVisible:
-    text: "DoughnutChart Multiple DS"
+    text: "TextToAssert"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/doughnut_chart_multiple_data_points"
 
