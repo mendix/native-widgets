@@ -11,4 +11,4 @@ appId: "${APP_ID}"
 - assertVisible:
     text: "TextToAssert"
 - takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/doughnut_chart_custom.png"
+    path: "maestro/images/actual/${PLATFORM}/doughnut_chart_custom"
