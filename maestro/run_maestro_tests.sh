@@ -32,6 +32,22 @@ completed_tests=0
 MAX_RETRIES=2
 RETRY_DELAY=10
 
+# Function to restart the emulator
+restart_emulator() {
+    echo "🔄 Restarting emulator..."
+    adb -s emulator-5554 emu kill
+    sleep 10
+    ./maestro/prepare_android.sh
+}
+
+# Function to restart the iOS simulator
+restart_simulator() {
+    echo "🔄 Restarting iOS Simulator..."
+    xcrun simctl shutdown "$IOS_DEVICE"
+    sleep 10
+    ./maestro/prepare_ios.sh
+}
+
 # Execute each YAML test file
 for yaml_test_file in "${yaml_test_files[@]}"; do
   echo "🧪 Testing: $yaml_test_file"
@@ -53,10 +69,8 @@ for yaml_test_file in "${yaml_test_files[@]}"; do
         echo "🔄 Retrying in $RETRY_DELAY seconds..."
         sleep "$RETRY_DELAY"
         if [ "$PLATFORM" == "android" ]; then
-          echo "🔄 Restarting emulator..."
           restart_emulator
         else
-          echo "🔄 Restarting iOS Simulator..."
           restart_simulator
         fi
       fi
@@ -88,22 +102,3 @@ else
   echo "All tests passed!"
   exit 0  # Mark the workflow stage as successful only if all tests pass
 fi
-
-# Function to restart the emulator
-restart_emulator() {
-    echo "🔄 Restarting emulator..."
-    adb -s emulator-5554 emu kill
-    sleep 10
-    nohup emulator -avd test -no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4 &
-    sleep 60
-}
-
-# Function to restart the iOS simulator
-restart_simulator() {
-    echo "🔄 Restarting iOS Simulator..."
-    xcrun simctl shutdown "$IOS_DEVICE"
-    sleep 10
-    xcrun simctl boot "$IOS_DEVICE"
-    sleep 30
-    xcrun simctl bootstatus || echo "Simulator booted successfully"
-}

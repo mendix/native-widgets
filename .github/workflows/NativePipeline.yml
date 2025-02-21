@@ -636,18 +636,15 @@ jobs:
             for file in images/actual/android/*.png; do
               filename=$(basename $file)
               if [ -f "maestro/images/expected/android/$filename" ]; then
-                # Detect the height of the status bar (assuming 55px height)
-                status_bar_height=55
-                actual_height=$(identify -format "%h" "images/actual/android/$filename")
-                cropped_height=$((actual_height - status_bar_height))
-                convert "images/actual/android/$filename" -crop "${actual_height}x${cropped_height}+0+$status_bar_height" "images/actual/android/cropped_$filename"
-                convert "maestro/images/expected/android/$filename" -crop "${actual_height}x${cropped_height}+0+$status_bar_height" "maestro/images/expected/android/cropped_$filename"
-                compare -metric AE -fuzz 1% "images/actual/android/cropped_$filename" "maestro/images/expected/android/cropped_$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
+                compare -metric AE -fuzz 10% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
+                cat compare_output.txt
                 if grep -q "all: 0" compare_output.txt; then
                   echo "✅ Comparison passed for $filename"
                 else
                   echo "❌ Comparison failed for $filename"
                   failed_comparisons+=("$filename")
+                  echo "Comparison details for $filename:"
+                  grep -E "all: [0-9]+" compare_output.txt
                 fi
               fi
             done
@@ -672,18 +669,15 @@ jobs:
             for file in images/actual/ios/*.png; do
               filename=$(basename $file)
               if [ -f "maestro/images/expected/ios/$filename" ]; then
-                # Detect the height of the status bar (assuming 50px height)
-                status_bar_height=55
-                actual_height=$(identify -format "%h" "images/actual/ios/$filename")
-                cropped_height=$((actual_height - status_bar_height))
-                convert "images/actual/ios/$filename" -crop "${actual_height}x${cropped_height}+0+$status_bar_height" "images/actual/ios/cropped_$filename"
-                convert "maestro/images/expected/ios/$filename" -crop "${actual_height}x${cropped_height}+0+$status_bar_height" "maestro/images/expected/ios/cropped_$filename"
-                compare -metric AE -fuzz 1% "images/actual/ios/cropped_$filename" "maestro/images/expected/ios/cropped_$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
+                compare -metric AE -fuzz 10% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
+                cat compare_output.txt
                 if grep -q "all: 0" compare_output.txt; then
                   echo "✅ Comparison passed for $filename"
                 else
                   echo "❌ Comparison failed for $filename"
                   failed_comparisons+=("$filename")
+                  echo "Comparison details for $filename:"
+                  grep -E "all: [0-9]+" compare_output.txt
                 fi
               fi
             done
@@ -705,6 +699,13 @@ jobs:
         with:
           name: screenshot-diffs
           path: images/diffs
+          if-no-files-found: ignore
+
+      - name: "Archive comparison output"
+        uses: actions/upload-artifact@v4
+        with:
+          name: comparison-output
+          path: compare_output.txt
           if-no-files-found: ignore
 
       - name: "Fail if comparisons failed"

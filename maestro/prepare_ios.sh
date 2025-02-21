@@ -8,6 +8,12 @@ start_simulator() {
     xcrun simctl bootstatus || echo "Simulator booted successfully"
 }
 
+# Function to set the status bar on the iOS simulator
+set_status_bar() {
+    echo "Setting status bar on iOS Simulator..."
+    xcrun simctl status_bar "iPhone 16" override --time "11:01" --wifiBars 3 --cellularBars 4 --batteryState charged --batteryLevel 100
+}
+
 # Function to install the iOS app on the simulator
 install_ios_app() {
     echo "Installing iOS app on simulator..."
@@ -28,6 +34,7 @@ launch_ios_app() {
 
 # Prepare the iOS simulator and install the app
 start_simulator
+set_status_bar
 install_ios_app
 verify_installed_app
 launch_ios_app
