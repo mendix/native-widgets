@@ -48,37 +48,39 @@ restart_simulator() {
     ./maestro/prepare_ios.sh
 }
 
-# Execute each YAML test file
-for yaml_test_file in "${yaml_test_files[@]}"; do
-  echo "🧪 Testing: $yaml_test_file"
-  RETRIES=0
-
-  while [ "$RETRIES" -lt "$MAX_RETRIES" ]; do
-    completed_tests=$((completed_tests + 1))
-    remaining_tests=$((total_tests - completed_tests))
-    
+# Function to run tests
+run_tests() {
+  local test_files=("$@")
+  for yaml_test_file in "${test_files[@]}"; do
+    echo "🧪 Testing: $yaml_test_file"
     if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
       echo "✅ Test passed: $yaml_test_file"
       passed_tests+=("$yaml_test_file")
-      break
     else
       echo "❌ Test failed: $yaml_test_file"
       failed_tests+=("$yaml_test_file")
-      RETRIES=$((RETRIES + 1))
-      if [ "$RETRIES" -lt "$MAX_RETRIES" ]; then
-        echo "🔄 Retrying in $RETRY_DELAY seconds..."
-        sleep "$RETRY_DELAY"
-        if [ "$PLATFORM" == "android" ]; then
-          restart_emulator
-        else
-          restart_simulator
-        fi
-      fi
     fi
-    
+    completed_tests=$((completed_tests + 1))
+    remaining_tests=$((total_tests - completed_tests))
     echo "📊 Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining. ✅ ${#passed_tests[@]} passed, ❌ ${#failed_tests[@]} failed."
   done
-done
+}
+
+# Run all tests once
+run_tests "${yaml_test_files[@]}"
+
+# Retry failed tests
+if [ ${#failed_tests[@]} -gt 0 ]; then
+  echo "🔄 Retrying failed tests..."
+  for yaml_test_file in "${failed_tests[@]}"; do
+    if [ "$PLATFORM" == "android" ]; then
+      restart_emulator
+    else
+      restart_simulator
+    fi
+    run_tests "$yaml_test_file"
+  done
+fi
 
 echo
 echo "📊 Test Execution Summary:"

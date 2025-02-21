@@ -636,29 +636,27 @@ jobs:
             for file in images/actual/android/*.png; do
               filename=$(basename $file)
               if [ -f "maestro/images/expected/android/$filename" ]; then
-                compare -metric AE -fuzz 10% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1 | tee compare_output.txt
-                cat compare_output.txt
-                if grep -q "all: 0" compare_output.txt; then
+                compare_output=$(compare -metric AE -fuzz 10% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1)
+                echo "$compare_output" >> compare_output.txt
+                if echo "$compare_output" | grep -q "all: 0"; then
                   echo "✅ Comparison passed for $filename"
                 else
                   echo "❌ Comparison failed for $filename"
                   failed_comparisons+=("$filename")
-                  echo "Comparison details for $filename:"
-                  grep -E "all: [0-9]+" compare_output.txt
                 fi
               fi
             done
             if [ ${#failed_comparisons[@]} -gt 0 ]; then
-              echo "❌ Failed Comparisons:"
+              echo "❌ Failed Comparisons:" >> compare_output.txt
               for file in "${failed_comparisons[@]}"; do
-                echo "  - $file"
+                echo "  - $file" >> compare_output.txt
               done
               echo "ANDROID_COMPARISON_FAILED=true" >> $GITHUB_ENV
             else
-              echo "All comparisons passed!"
+              echo "All comparisons passed!" >> compare_output.txt
             fi
           else
-            echo "No Android screenshots found to compare."
+            echo "No Android screenshots found to compare." >> compare_output.txt
           fi
   
       - name: "Compare iOS screenshots"
@@ -669,29 +667,27 @@ jobs:
             for file in images/actual/ios/*.png; do
               filename=$(basename $file)
               if [ -f "maestro/images/expected/ios/$filename" ]; then
-                compare -metric AE -fuzz 10% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1 | tee compare_output.txt
-                cat compare_output.txt
-                if grep -q "all: 0" compare_output.txt; then
+                compare_output=$(compare -metric AE -fuzz 10% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1)
+                echo "$compare_output" >> compare_output.txt
+                if echo "$compare_output" | grep -q "all: 0"; then
                   echo "✅ Comparison passed for $filename"
                 else
                   echo "❌ Comparison failed for $filename"
                   failed_comparisons+=("$filename")
-                  echo "Comparison details for $filename:"
-                  grep -E "all: [0-9]+" compare_output.txt
                 fi
               fi
             done
             if [ ${#failed_comparisons[@]} -gt 0 ]; then
-              echo "❌ Failed Comparisons:"
+              echo "❌ Failed Comparisons:" >> compare_output.txt
               for file in "${failed_comparisons[@]}"; do
-                echo "  - $file"
+                echo "  - $file" >> compare_output.txt
               done
               echo "IOS_COMPARISON_FAILED=true" >> $GITHUB_ENV
             else
-              echo "All comparisons passed!"
+              echo "All comparisons passed!" >> compare_output.txt
             fi
           else
-            echo "No iOS screenshots found to compare."
+            echo "No iOS screenshots found to compare." >> compare_output.txt
           fi
   
       - name: "Archive diff results"
