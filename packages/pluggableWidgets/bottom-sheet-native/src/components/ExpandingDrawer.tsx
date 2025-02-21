@@ -12,6 +12,7 @@ interface ExpandingDrawerProps {
     onClose?: () => void;
     styles: BottomSheetStyle;
 }
+let lastIndexRef = -1;
 
 export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     const [heightContent, setHeightContent] = useState(0);
@@ -107,18 +108,19 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
 
     const collapsedIndex = snapPoints.length - 1;
 
-    const handleSheetChanges = (index: number) => {
-        if (index === collapsedIndex) {
-            if (isOpen) {
-                props.onClose?.();
-            }
-            setIsOpen(false);
-        } else {
-            if (!isOpen) {
-                props.onOpen?.();
-            }
+    const onChange = (index: number) => {
+        const hasOpened = lastIndexRef === -1 && index === 0;
+        const hasClosed = index === -1;
+    
+        if (hasOpened) {
+            props.onOpen?.();
             setIsOpen(true);
         }
+        if (hasClosed) {
+            props.onClose?.();
+            setIsOpen(false);
+        }
+        lastIndexRef = index;
     };
 
     return (
@@ -127,9 +129,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 ref={bottomSheetRef}
                 index={collapsedIndex}
                 snapPoints={snapPoints}
-                enableContentPanningGesture={false}
-                enableHandlePanningGesture={false}
-                onChange={handleSheetChanges}
+                onChange={onChange}
                 animateOnMount={true}
             >
                 <BottomSheetView style={{ flex: 1 }}>
