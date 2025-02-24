@@ -655,7 +655,7 @@ jobs:
 
       - name: "Create directory for iOS screenshots"
         run: mkdir -p images/actual/ios
-        
+
       - name: "Download iOS screenshots"
         if: env.artifacts_url != ''
         run: |
@@ -679,73 +679,26 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: yarn
-
+    
       - name: "Install dependencies"
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y imagemagick
+        run: yarn install
+
+      - name: "List current directory"
+        run: ls -R
   
+      - name: "List maestro directory"
+        run: ls -R maestro
+  
+      - name: "Find compare_screenshots.js"
+        run: find . -name compare_screenshots.js
+      
       - name: "Compare Android screenshots"
-        run: |
-          if [ -d "images/actual/android" ]; then
-            mkdir -p images/diffs/android
-            failed_comparisons=()
-            for file in images/actual/android/*.png; do
-              filename=$(basename $file)
-              if [ -f "maestro/images/expected/android/$filename" ]; then
-                compare_output=$(compare -metric AE -fuzz 10% "images/actual/android/$filename" "maestro/images/expected/android/$filename" "images/diffs/android/diff_$filename" 2>&1)
-                echo "$compare_output" >> compare_output.txt
-                if echo "$compare_output" | grep -q "all: 0"; then
-                  echo "✅ Comparison passed for $filename"
-                else
-                  echo "❌ Comparison failed for $filename"
-                  failed_comparisons+=("$filename")
-                fi
-              fi
-            done
-            if [ ${#failed_comparisons[@]} -gt 0 ]; then
-              echo "❌ Failed Comparisons:" >> compare_output.txt
-              for file in "${failed_comparisons[@]}"; do
-                echo "  - $file" >> compare_output.txt
-              done
-              echo "ANDROID_COMPARISON_FAILED=true" >> $GITHUB_ENV
-            else
-              echo "All comparisons passed!" >> compare_output.txt
-            fi
-          else
-            echo "No Android screenshots found to compare." >> compare_output.txt
-          fi
-  
+        # continue-on-error: true 
+        run: node ${{ github.workspace }}/maestro/compare_screenshots.js android
+
       - name: "Compare iOS screenshots"
-        run: |
-          if [ -d "images/actual/ios" ]; then
-            mkdir -p images/diffs/ios
-            failed_comparisons=()
-            for file in images/actual/ios/*.png; do
-              filename=$(basename $file)
-              if [ -f "maestro/images/expected/ios/$filename" ]; then
-                compare_output=$(compare -metric AE -fuzz 10% "images/actual/ios/$filename" "maestro/images/expected/ios/$filename" "images/diffs/ios/diff_$filename" 2>&1)
-                echo "$compare_output" >> compare_output.txt
-                if echo "$compare_output" | grep -q "all: 0"; then
-                  echo "✅ Comparison passed for $filename"
-                else
-                  echo "❌ Comparison failed for $filename"
-                  failed_comparisons+=("$filename")
-                fi
-              fi
-            done
-            if [ ${#failed_comparisons[@]} -gt 0 ]; then
-              echo "❌ Failed Comparisons:" >> compare_output.txt
-              for file in "${failed_comparisons[@]}"; do
-                echo "  - $file" >> compare_output.txt
-              done
-              echo "IOS_COMPARISON_FAILED=true" >> $GITHUB_ENV
-            else
-              echo "All comparisons passed!" >> compare_output.txt
-            fi
-          else
-            echo "No iOS screenshots found to compare." >> compare_output.txt
-          fi
+        # continue-on-error: true
+        run: node ${{ github.workspace }}/maestro/compare_screenshots.js ios
   
       - name: "Archive diff results"
         uses: actions/upload-artifact@v4
