@@ -89,149 +89,149 @@ jobs:
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
 
-  mendix-version:
-    runs-on: ubuntu-22.04
-    outputs:
-      mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@v4
-      - name: "Get Mendix version from JSON"
-        id: get-mendix-version
-        uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
-        with:
-          path: configs/e2e/mendix-versions.json
-          prop_path: latest
-      - name: Set Mendix version
-        id: set-mendix-version
-        run: |
-          if [[ -n "${{ github.event.inputs.mendix_version }}" ]]; then
-            echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> $GITHUB_OUTPUT
-          else
-            echo "MENDIX_VERSION=${{ steps.get-mendix-version.outputs.prop }}" >> $GITHUB_OUTPUT
-          fi
-      - name: "Debug Mendix Version"
-        run: |
-          echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
+  # mendix-version:
+  #   runs-on: ubuntu-22.04
+  #   outputs:
+  #     mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
+  #   steps:
+  #     - name: "Check out code"
+  #       uses: actions/checkout@v4
+  #     - name: "Get Mendix version from JSON"
+  #       id: get-mendix-version
+  #       uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
+  #       with:
+  #         path: configs/e2e/mendix-versions.json
+  #         prop_path: latest
+  #     - name: Set Mendix version
+  #       id: set-mendix-version
+  #       run: |
+  #         if [[ -n "${{ github.event.inputs.mendix_version }}" ]]; then
+  #           echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> $GITHUB_OUTPUT
+  #         else
+  #           echo "MENDIX_VERSION=${{ steps.get-mendix-version.outputs.prop }}" >> $GITHUB_OUTPUT
+  #         fi
+  #     - name: "Debug Mendix Version"
+  #       run: |
+  #         echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
 
-  docker-images:
-    needs: mendix-version
-    runs-on: ubuntu-22.04
-    steps:
-      - name: "Login to GitHub Container Registry"
-        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Check if docker image already exists"
-        run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
-          echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
-      - name: "Check out code"
-        uses: actions/checkout@v4
-        if: ${{ env.IMAGE_MISSING != 0 }}
-      - name: "Build mxbuild image"
-        if: ${{ env.IMAGE_MISSING != 0 }}
-        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
-        with:
-          file: ./.github/scripts/mxbuild.Dockerfile
-          context: ./.github/scripts
-          build-args: |
-            MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
-          push: true
-          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-  resources:
-    needs: [scope, mendix-version]
-    runs-on: ubuntu-22.04
-    permissions:
-      packages: read
-      contents: read
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: yarn install --immutable
-      - name: "Force rebuild resources"
-        run: |
-          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build # Ensure all resources are rebuilt
-      - name: "Unit test"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
-      - name: "Run build for development"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
-        env:
-          NODE_OPTIONS: --max_old_space_size=6144
-      - name: "Upload resources artifact"
-        uses: actions/upload-artifact@v4
-        with:
-          name: resources
-          path: |
-            packages/pluggableWidgets/**/dist/*/*.mpk
-            packages/jsActions/mobile-resources-native/dist/**/*
-            packages/jsActions/nanoflow-actions-native/dist/**/*
-  project:
-    needs: [resources, mendix-version]
-    runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: "Make sure curl is installed"
-        run: |
-          apt update && apt upgrade -y
-          apt install curl -y
-      - name: "Download test project"
-        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/maestro-widgets.zip
-      - name: "Extract test project"
-        uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
-        with:
-          args: unzip -qq project.zip -d .
-      - name: "Download resources artifact"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: resources
-          path: resources
-      - name: "List resources"
-        run: ls -R resources
-      - name: "Move widgets"
-        shell: bash
-        run: |
-          if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
-            for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-maestro-widgets/widgets/$(basename $oldPath)
-              mv -f $oldPath $newPath
-            done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-maestro-widgets/NativeComponentsTestProject.mpr
-          fi
-      - name: "Move mobile-resources"
-        shell: bash
-        run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-maestro-widgets/javascriptsource/nativemobileresources/actions/
-          fi
-      - name: "Move nanoflow-actions"
-        shell: bash
-        run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-maestro-widgets/javascriptsource/nanoflowcommons/actions/
-          fi
-      - name: "Force rebuild test project"
-        run: |
-          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-maestro-widgets/NativeComponentsTestProject.mpr
-      - name: "Upload MDA"
-        uses: actions/upload-artifact@v4
-        with:
-          name: mda
-          path: automation.mda
+  # docker-images:
+  #   needs: mendix-version
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: "Login to GitHub Container Registry"
+  #       uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: "Check if docker image already exists"
+  #       run: |
+  #         docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
+  #         echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
+  #     - name: "Check out code"
+  #       uses: actions/checkout@v4
+  #       if: ${{ env.IMAGE_MISSING != 0 }}
+  #     - name: "Build mxbuild image"
+  #       if: ${{ env.IMAGE_MISSING != 0 }}
+  #       uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+  #       with:
+  #         file: ./.github/scripts/mxbuild.Dockerfile
+  #         context: ./.github/scripts
+  #         build-args: |
+  #           MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
+  #         push: true
+  #         tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+  # resources:
+  #   needs: [scope, mendix-version]
+  #   runs-on: ubuntu-22.04
+  #   permissions:
+  #     packages: read
+  #     contents: read
+  #   steps:
+  #     - name: "Check out code"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - name: "Set up node"
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: .nvmrc
+  #         cache: yarn
+  #     - name: "Install dependencies"
+  #       run: yarn install --immutable
+  #     - name: "Force rebuild resources"
+  #       run: |
+  #         yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build # Ensure all resources are rebuilt
+  #     - name: "Unit test"
+  #       run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
+  #     - name: "Run build for development"
+  #       run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
+  #       env:
+  #         NODE_OPTIONS: --max_old_space_size=6144
+  #     - name: "Upload resources artifact"
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: resources
+  #         path: |
+  #           packages/pluggableWidgets/**/dist/*/*.mpk
+  #           packages/jsActions/mobile-resources-native/dist/**/*
+  #           packages/jsActions/nanoflow-actions-native/dist/**/*
+  # project:
+  #   needs: [resources, mendix-version]
+  #   runs-on: ubuntu-22.04
+  #   container:
+  #     image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+  #     credentials:
+  #       username: ${{ github.actor }}
+  #       password: ${{ secrets.GITHUB_TOKEN }}
+  #   steps:
+  #     - name: "Make sure curl is installed"
+  #       run: |
+  #         apt update && apt upgrade -y
+  #         apt install curl -y
+  #     - name: "Download test project"
+  #       run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/maestro-widgets.zip
+  #     - name: "Extract test project"
+  #       uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
+  #       with:
+  #         args: unzip -qq project.zip -d .
+  #     - name: "Download resources artifact"
+  #       uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+  #       with:
+  #         name: resources
+  #         path: resources
+  #     - name: "List resources"
+  #       run: ls -R resources
+  #     - name: "Move widgets"
+  #       shell: bash
+  #       run: |
+  #         if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
+  #           for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
+  #             newPath=Native-Mobile-Resources-maestro-widgets/widgets/$(basename $oldPath)
+  #             mv -f $oldPath $newPath
+  #           done
+  #           mx update-widgets --loose-version-check Native-Mobile-Resources-maestro-widgets/NativeComponentsTestProject.mpr
+  #         fi
+  #     - name: "Move mobile-resources"
+  #       shell: bash
+  #       run: |
+  #         if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
+  #           mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-maestro-widgets/javascriptsource/nativemobileresources/actions/
+  #         fi
+  #     - name: "Move nanoflow-actions"
+  #       shell: bash
+  #       run: |
+  #         if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
+  #           mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-maestro-widgets/javascriptsource/nanoflowcommons/actions/
+  #         fi
+  #     - name: "Force rebuild test project"
+  #       run: |
+  #         mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-maestro-widgets/NativeComponentsTestProject.mpr
+  #     - name: "Upload MDA"
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: mda
+  #         path: automation.mda
   # android-bundle:
   #   needs: [project, mendix-version]
   #   runs-on: ubuntu-22.04
@@ -399,27 +399,218 @@ jobs:
   #         name: ios-app
   #         path: native-template/ios/build/Build/Products/**/*.app
 
-  android-tests:
-    needs: [scope, mendix-version, project]
-    runs-on: ubuntu-22.04
-    timeout-minutes: 720
+  # android-tests:
+  #   needs: [scope, mendix-version, project]
+  #   runs-on: ubuntu-22.04
+  #   timeout-minutes: 720
+  #   steps:
+  #     - name: "Check out code"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - name: "Set up node"
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: .nvmrc
+  #         cache: yarn
+  #     - name: "Install dependencies"
+  #       run: yarn install --immutable
+  #     - name: "Download project MDA file"
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: mda
+      
+      
+  #     - name: "Install GitHub CLI"
+  #       run: |
+  #         curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+  #         sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+  #         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+  #         sudo apt update
+  #         sudo apt install gh
+  #     - name: "Authenticate GitHub CLI"
+  #       run: |
+  #         unset GITHUB_TOKEN
+  #         echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+  #     - name: "Fetch artifacts from run 676"
+  #       id: fetch-artifacts
+  #       run: |
+  #         artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "android-app") | .archive_download_url')
+  #         echo "Artifacts URL: $artifacts_url"
+  #         echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
+  #     - name: "Download Android app"
+  #       if: env.artifacts_url != ''
+  #       run: |
+  #         if [ -z "$artifacts_url" ]; then
+  #           echo "No artifacts URL found."
+  #           exit 1
+  #         fi
+  #         curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o android-app.zip "$artifacts_url"
+  #         unzip android-app.zip -d android-app
+      
+      
+  #     - name: "Start runtime"
+  #       uses: ./.github/actions/start-runtime
+  #       with:
+  #         mda-file: automation.mda
+  #         mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+  #     - name: "Install Maestro"
+  #       run: |
+  #         mkdir -p $HOME/.local/bin
+  #         curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+  #         unzip maestro.zip -d $HOME/.local/bin
+  #         chmod +x $HOME/.local/bin/maestro/bin/maestro
+  #         echo "$HOME/.local/bin" >> $GITHUB_PATH
+  #     - name: Verify maestro
+  #       run: $HOME/.local/bin/maestro/bin/maestro --version
+  #     - name: Enable KVM
+  #       run: |
+  #         echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+  #         sudo udevadm control --reload-rules
+  #         sudo udevadm trigger --name-match=kvm
+  #     - name: "Run the android tests"
+  #       uses: reactivecircus/android-emulator-runner@v2.32.0
+  #       with:
+  #         api-level: 30
+  #         target: google_apis
+  #         arch: x86_64
+  #         profile: pixel
+  #         emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+  #         disable-animations: true
+  #         script: |
+  #           chmod +x maestro/prepare_android.sh
+  #           chmod +x maestro/run_maestro_tests.sh
+  #           bash maestro/prepare_android.sh
+  #           bash maestro/run_maestro_tests.sh android "${{ github.event.inputs.workspace }}"
+  #     - name: "Archive runtime logs"
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: android-runtime-logs
+  #         path: log/*.log
+  #         if-no-files-found: ignore
+  #     - name: "Archive test screenshots"
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: android-screenshots
+  #         path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
+  #         if-no-files-found: ignore
+
+  # ios-tests:
+  #   needs: [scope, mendix-version, project]
+  #   runs-on: macos-15
+  #   timeout-minutes: 720
+  #   steps:
+  #     - name: "Check out code"
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - name: "Set up node"
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: .nvmrc
+  #         cache: yarn
+  #     - name: "Install dependencies"
+  #       run: |
+  #         yarn cache clean
+  #         yarn install --immutable
+  #     - name: "Download project MDA file"
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: mda
+  #     - name: "Start runtime"
+  #       uses: ./.github/actions/start-runtime
+  #       with:
+  #         mda-file: automation.mda
+  #         mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+  #     - name: "Install GitHub CLI"
+  #       run: |
+  #         brew install gh
+  #     - name: "Authenticate GitHub CLI"
+  #       run: |
+  #         unset GITHUB_TOKEN
+  #         echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+  #     - name: "Fetch artifacts from run 676"
+  #       id: fetch-artifacts
+  #       run: |
+  #         artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "ios-app") | .archive_download_url')
+  #         echo "Artifacts URL: $artifacts_url"
+  #         echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
+  #     - name: "Download iOS app"
+  #       if: env.artifacts_url != ''
+  #       run: |
+  #         if [ -z "$artifacts_url" ]; then
+  #           echo "No artifacts URL found."
+  #           exit 1
+  #         fi
+  #         curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o ios-app.zip "$artifacts_url"
+  #         unzip ios-app.zip -d ios-app
+  #     - name: Check iOS App Path
+  #       run: ls ios-app
+  #     - name: "Verify Xcode CLI Tools"
+  #       run: |
+  #         if ! xcode-select --print-path; then
+  #           echo "Xcode CLI tools not set. Setting them now."
+  #           sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+  #         else
+  #           echo "Xcode CLI tools are already configured."
+  #         fi
+  #     - name: "Install Maestro"
+  #       run: |
+  #         mkdir -p $HOME/.local/bin
+  #         curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+  #         unzip maestro.zip -d $HOME/.local/bin
+  #         chmod +x $HOME/.local/bin/maestro/bin/maestro
+  #         echo "$HOME/.local/bin" >> $GITHUB_PATH
+  #     - name: "Verify maestro"
+  #       run: $HOME/.local/bin/maestro/bin/maestro --version
+  #     - name: "List Available Simulators"
+  #       run: xcrun simctl list devices
+  #     - name: "Run Maestro Script"
+  #       run: |
+  #         chmod +x maestro/prepare_ios.sh
+  #         chmod +x maestro/run_maestro_tests.sh
+  #         bash maestro/prepare_ios.sh
+  #         bash maestro/run_maestro_tests.sh ios "${{ github.event.inputs.workspace }}"
+  #     - name: "Archive runtime logs"
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: ios-runtime-logs
+  #         path: log/*.log
+  #         if-no-files-found: ignore
+  #     - name: "Archive test screenshots"
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: ios-screenshots
+  #         path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
+  #         if-no-files-found: ignore
+  #     - name: "Archive artifacts"
+  #       uses: actions/upload-artifact@v4
+  #       if: always()
+  #       with:
+  #         name: ios-artifacts
+  #         path: packages/pluggableWidgets/**/artifacts/
+  #         if-no-files-found: ignore
+         
+  compare-screenshots:
+    # needs: [android-tests, ios-tests]
+    runs-on: ubuntu-latest
+    if: always()
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: yarn install --immutable
-      - name: "Download project MDA file"
-        uses: actions/download-artifact@v4
-        with:
-          name: mda
-      
+  
+      # - name: "Download Android screenshots"
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: android-screenshots
+      #     path: images/actual/android
+      #   continue-on-error: true
+
+
       
       - name: "Install GitHub CLI"
         run: |
@@ -428,194 +619,60 @@ jobs:
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
           sudo apt update
           sudo apt install gh
-      - name: "Authenticate GitHub CLI"
-        run: |
-          unset GITHUB_TOKEN
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-      - name: "Fetch artifacts from run 676"
-        id: fetch-artifacts
-        run: |
-          artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "android-app") | .archive_download_url')
-          echo "Artifacts URL: $artifacts_url"
-          echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
-      - name: "Download Android app"
-        if: env.artifacts_url != ''
-        run: |
-          if [ -z "$artifacts_url" ]; then
-            echo "No artifacts URL found."
-            exit 1
-          fi
-          curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o android-app.zip "$artifacts_url"
-          unzip android-app.zip -d android-app
-      
-      
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
-        with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - name: Verify maestro
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: Enable KVM
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-      - name: "Run the android tests"
-        uses: reactivecircus/android-emulator-runner@v2.32.0
-        with:
-          api-level: 30
-          target: google_apis
-          arch: x86_64
-          profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
-          disable-animations: true
-          script: |
-            chmod +x maestro/prepare_android.sh
-            chmod +x maestro/run_maestro_tests.sh
-            bash maestro/prepare_android.sh
-            bash maestro/run_maestro_tests.sh android "${{ github.event.inputs.workspace }}"
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: android-runtime-logs
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: android-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
-          if-no-files-found: ignore
 
-  ios-tests:
-    needs: [scope, mendix-version, project]
-    runs-on: macos-15
-    timeout-minutes: 720
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: |
-          yarn cache clean
-          yarn install --immutable
-      - name: "Download project MDA file"
-        uses: actions/download-artifact@v4
-        with:
-          name: mda
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
-        with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Install GitHub CLI"
-        run: |
-          brew install gh
       - name: "Authenticate GitHub CLI"
         run: |
-          unset GITHUB_TOKEN
+          # unset GITHUB_TOKEN
           echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-      - name: "Fetch artifacts from run 676"
-        id: fetch-artifacts
+
+      - name: "Fetch Android screenshots from previous run"
+        id: fetch-android-screenshots
         run: |
-          artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "ios-app") | .archive_download_url')
+          artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13495850274/artifacts" --jq '.artifacts[] | select(.name == "android-screenshots") | .archive_download_url')
           echo "Artifacts URL: $artifacts_url"
           echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
-      - name: "Download iOS app"
+    
+      - name: "Create directory for Android screenshots"
+        run: mkdir -p images/actual/android
+
+      - name: "Download Android screenshots"
         if: env.artifacts_url != ''
         run: |
           if [ -z "$artifacts_url" ]; then
             echo "No artifacts URL found."
             exit 1
           fi
-          curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o ios-app.zip "$artifacts_url"
-          unzip ios-app.zip -d ios-app
-      - name: Check iOS App Path
-        run: ls ios-app
-      - name: "Verify Xcode CLI Tools"
+          curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o android-screenshots.zip "$artifacts_url"
+          unzip android-screenshots.zip -d images/actual/android
+
+      
+      - name: "Fetch iOS screenshots from previous run"
+        id: fetch-ios-screenshots
         run: |
-          if ! xcode-select --print-path; then
-            echo "Xcode CLI tools not set. Setting them now."
-            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          else
-            echo "Xcode CLI tools are already configured."
-          fi
-      - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - name: "Verify maestro"
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: "List Available Simulators"
-        run: xcrun simctl list devices
-      - name: "Run Maestro Script"
-        run: |
-          chmod +x maestro/prepare_ios.sh
-          chmod +x maestro/run_maestro_tests.sh
-          bash maestro/prepare_ios.sh
-          bash maestro/run_maestro_tests.sh ios "${{ github.event.inputs.workspace }}"
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: ios-runtime-logs
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: ios-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: ios-artifacts
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
-         
-  compare-screenshots:
-    needs: [android-tests, ios-tests]
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@v4
-  
-      - name: "Download Android screenshots"
-        uses: actions/download-artifact@v4
-        with:
-          name: android-screenshots
-          path: images/actual/android
-        continue-on-error: true
-  
+          artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13495850274/artifacts" --jq '.artifacts[] | select(.name == "ios-screenshots") | .archive_download_url')
+          echo "Artifacts URL: $artifacts_url"
+          echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
+
+      - name: "Create directory for iOS screenshots"
+        run: mkdir -p images/actual/ios
+        
       - name: "Download iOS screenshots"
-        uses: actions/download-artifact@v4
-        with:
-          name: ios-screenshots
-          path: images/actual/ios
-        continue-on-error: true
+        if: env.artifacts_url != ''
+        run: |
+          if [ -z "$artifacts_url" ]; then
+            echo "No artifacts URL found."
+            exit 1
+          fi
+          curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o ios-screenshots.zip "$artifacts_url"
+          unzip ios-screenshots.zip -d images/actual/ios
+
+
+      # - name: "Download iOS screenshots"
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: ios-screenshots
+      #     path: images/actual/ios
+      #   continue-on-error: true
   
       - name: "Set up node"
         uses: actions/setup-node@v4
