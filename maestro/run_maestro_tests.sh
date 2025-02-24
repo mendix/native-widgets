@@ -37,6 +37,8 @@ restart_emulator() {
     echo "🔄 Restarting emulator..."
     adb -s emulator-5554 emu kill
     sleep 10
+    emulator -avd emulator-5554 -no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4 &
+    sleep 30
     ./maestro/prepare_android.sh
 }
 

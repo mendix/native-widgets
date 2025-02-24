@@ -8,5 +8,6 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Layout grid"
+- assertVisible: "Layout grid"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_layout_grid"

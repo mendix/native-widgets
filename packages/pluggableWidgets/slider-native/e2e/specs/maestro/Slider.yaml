@@ -6,5 +6,6 @@ appId: "${APP_ID}"
     text: "S"
 - tapOn:
     text: "Slider"
+- assertVisible: "Slider"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/slider"
