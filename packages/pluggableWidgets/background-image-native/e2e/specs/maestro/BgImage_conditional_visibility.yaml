@@ -8,6 +8,6 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Conditional visibility"
-- assertVisible: "Conditional visibility"
+- assertVisible: "Condtional visibility"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_conditional_visibility"

@@ -9,5 +9,9 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Dynamic image"
 - assertVisible: "Dynamic image auto synced to device"
+- extendedWaitUntil:
+    visible:
+        id: "dynamicBgImage"
+    timeout: 30000
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_image"

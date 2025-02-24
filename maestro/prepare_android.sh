@@ -8,17 +8,6 @@ RETRIES=0
 echo "Waiting for emulator to be ready..."
 sleep 30
 
-# Function to set the status bar on the Android emulator
-set_status_bar() {
-    echo "Setting status bar on Android Emulator..."
-    adb root
-    adb shell "date -u 11010000" # Set time to 11:01
-    adb shell svc wifi enable # Enable Wi-Fi
-    adb shell svc data enable # Enable mobile data
-    adb shell dumpsys battery set level 100 # Set battery level to 100%
-    adb shell dumpsys battery set status 2 # Set battery status to charging
-}
-
 # Function to install the Android app on the emulator
 install_android_app() {
     while [ "$RETRIES" -lt "$MAX_RETRIES" ]; do
@@ -41,5 +30,4 @@ install_android_app() {
 }
 
 # Prepare the Android emulator and install the app
-set_status_bar
 install_android_app

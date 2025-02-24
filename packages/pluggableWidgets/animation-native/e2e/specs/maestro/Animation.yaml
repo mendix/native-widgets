@@ -12,3 +12,5 @@ appId: "${APP_ID}"
     text: "Animate"
 - waitForAnimationToEnd:
     timeout: 5000
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/animation"

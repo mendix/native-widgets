@@ -8,5 +8,6 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Nested"
+- assertVisible: "Nested"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_nested"

@@ -32,16 +32,6 @@ completed_tests=0
 MAX_RETRIES=2
 RETRY_DELAY=10
 
-# Function to restart the emulator
-restart_emulator() {
-    echo "🔄 Restarting emulator..."
-    adb -s emulator-5554 emu kill
-    sleep 10
-    emulator -avd emulator-5554 -no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4 &
-    sleep 30
-    ./maestro/prepare_android.sh
-}
-
 # Function to restart the iOS simulator
 restart_simulator() {
     echo "🔄 Restarting iOS Simulator..."
@@ -50,11 +40,42 @@ restart_simulator() {
     ./maestro/prepare_ios.sh
 }
 
+# Function to set the status bar on the Android emulator
+set_status_bar() {
+    echo "Setting status bar on Android Emulator..."
+    adb root
+    adb shell "date -u 11010000" # Set time to 11:01
+    adb shell svc wifi enable # Enable Wi-Fi
+    adb shell svc data enable # Enable mobile data
+    adb shell dumpsys battery set level 100 # Set battery level to 100%
+    adb shell dumpsys battery set status 2 # Set battery status to charging
+    adb reverse tcp:8080 tcp:8080 # Reverse port 8080
+}
+
+# Function to ensure the emulator is ready
+ensure_emulator_ready() {
+    boot_completed=false
+    while [ "$boot_completed" == "false" ]; do
+        boot_completed=$(adb -s emulator-5554 shell getprop sys.boot_completed 2>/dev/null)
+        if [ "$boot_completed" == "1" ]; then
+            echo "Emulator is ready."
+            break
+        else
+            echo "Waiting for emulator to be ready..."
+            sleep 5
+        fi
+    done
+}
+
 # Function to run tests
 run_tests() {
   local test_files=("$@")
   for yaml_test_file in "${test_files[@]}"; do
     echo "🧪 Testing: $yaml_test_file"
+    if [ "$PLATFORM" == "android" ]; then
+      ensure_emulator_ready
+      set_status_bar
+    fi
     if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
       echo "✅ Test passed: $yaml_test_file"
       passed_tests+=("$yaml_test_file")
@@ -71,16 +92,24 @@ run_tests() {
 # Run all tests once
 run_tests "${yaml_test_files[@]}"
 
+final_failed_tests=()
+
 # Retry failed tests
 if [ ${#failed_tests[@]} -gt 0 ]; then
   echo "🔄 Retrying failed tests..."
   for yaml_test_file in "${failed_tests[@]}"; do
     if [ "$PLATFORM" == "android" ]; then
-      restart_emulator
+      ensure_emulator_ready
     else
       restart_simulator
     fi
-    run_tests "$yaml_test_file"
+    if run_tests "$yaml_test_file"; then
+      # Remove the test from failed_tests if it passes on retry
+      failed_tests=("${failed_tests[@]/$yaml_test_file}")
+    else
+      # Add to final_failed_tests if it still fails
+      final_failed_tests+=("$yaml_test_file")
+    fi
   done
 fi
 
@@ -96,9 +125,9 @@ else
   echo "No tests passed."
 fi
 
-if [ ${#failed_tests[@]} -gt 0 ]; then
+if [ ${#final_failed_tests[@]} -gt 0 ]; then
   echo "❌ Failed Tests:"
-  for test in "${failed_tests[@]}"; do
+  for test in "${final_failed_tests[@]}"; do
     echo "  - $(basename "$test")"
   done
   exit 1  # Mark the workflow stage as failed if any tests fail

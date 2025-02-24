@@ -452,6 +452,7 @@ jobs:
         with:
           mda-file: automation.mda
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      
       - name: "Install Maestro"
         run: |
           mkdir -p $HOME/.local/bin
@@ -461,6 +462,9 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Verify maestro
         run: $HOME/.local/bin/maestro/bin/maestro --version
+
+      - name: Set up Android SDK
+        run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -601,8 +605,6 @@ jobs:
       - name: "Check out code"
         uses: actions/checkout@v4
   
-      # - name: "Create directory for Android screenshots"
-      #   run: mkdir -p images/actual/android
       - name: "Download Android screenshots"
         uses: actions/download-artifact@v4
         with:
@@ -610,8 +612,6 @@ jobs:
           path: images/actual/android
         continue-on-error: true
       
-      # - name: "Create directory for iOS screenshots"
-      #   run: mkdir -p images/actual/ios
       - name: "Download iOS screenshots"
         uses: actions/download-artifact@v4
         with:
