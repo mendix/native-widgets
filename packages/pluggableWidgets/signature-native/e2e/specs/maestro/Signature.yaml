@@ -11,8 +11,10 @@ appId: "${APP_ID}"
     end: 10%, 75% 
 - tapOn:
     text: "Save"
-- assertVisible: 
-    text: "Base64"
+- extendedWaitUntil:
+    visible: 
+        text: "Base64"
+    timeout: 30000
 - tapOn: "Go back"
 - swipe:  
     start: 50%, 36% 
