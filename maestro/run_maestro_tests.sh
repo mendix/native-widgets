@@ -44,12 +44,32 @@ restart_simulator() {
 set_status_bar() {
     echo "Setting status bar on Android Emulator..."
     adb root
-    adb shell "date -u 11010000" # Set time to 11:01
+    adb shell "date -u 11010000" # Set time to 11:01 - due to some bug it always sets to 12:00
     adb shell svc wifi enable # Enable Wi-Fi
     adb shell svc data enable # Enable mobile data
     adb shell dumpsys battery set level 100 # Set battery level to 100%
     adb shell dumpsys battery set status 2 # Set battery status to charging
     adb reverse tcp:8080 tcp:8080 # Reverse port 8080
+
+    # Verify the status bar settings
+    retries=0
+    max_retries=5
+    while [ $retries -lt $max_retries ]; do
+        current_time=$(adb shell "date +%H:%M")
+        if [ "$current_time" == "00:00" ]; then
+            echo "Status bar set successfully."
+            break
+        else
+            echo "Retrying status bar settings..."
+            adb shell "date -u 11010000"
+            sleep 2
+            retries=$((retries + 1))
+        fi
+    done
+
+    if [ $retries -eq $max_retries ]; then
+        echo "Failed to set status bar after $max_retries attempts."
+    fi
 }
 
 # Function to ensure the emulator is ready

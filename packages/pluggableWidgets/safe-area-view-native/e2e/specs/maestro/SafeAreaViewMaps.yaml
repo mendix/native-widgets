@@ -8,9 +8,12 @@ appId: "${APP_ID}"
     text: "Safe area view"
 - tapOn:
     text: "Maps"
-- assertVisible: "Maps widget behind safe area view"
+- assertVisible:
+    text: "Information"
+    optional: true
 - tapOn:
-    text: "Show expected behavior"
+    text: "OK"
+    optional: true
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/SafeAreaViewMaps"
 

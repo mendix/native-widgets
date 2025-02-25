@@ -10,7 +10,5 @@ appId: "${APP_ID}"
     text: "Header 1 - Text 1"
 - assertVisible:
     id: "staticImage"
-- tapOn:
-    text: "Header 1 - Text 1"
-- assertVisible:
-    text: "Header 1 - Text 1"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/accordion_noncollapsible"

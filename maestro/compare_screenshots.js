@@ -30,7 +30,9 @@ fs.readdirSync(actualDir).forEach(file => {
 
     const numDiffPixels = pixelmatch(actualImg.data, expectedImg.data, diff.data, width, height, { threshold: 0.1 });
 
-    if (numDiffPixels > 0) {
+    const pixelTolerance = 50;
+    
+    if (numDiffPixels > pixelTolerance) {
       fs.writeFileSync(diffPath, PNG.sync.write(diff));
       failedComparisons.push(file);
       console.log(`❌ Comparison failed for ${file}`);

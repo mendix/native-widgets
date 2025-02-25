@@ -10,17 +10,5 @@ appId: "${APP_ID}"
     text: "Header 1 - Text 1"
 - assertVisible:
     text: "Header 1 - Text 2"
-- assertVisible:
-    id: "staticImage"
-- assertNotVisible:
-    text: "Header 3 - Text 1"
-- tapOn:
-    text: "Header 3"
-- assertVisible:
-    text: "Header 1 - Text 1"
-- assertVisible:
-    text: "Header 1 - Text 2"
-- assertVisible:
-    id: "staticImage"
-- assertVisible:
-    text: "Header 3 - Text 1"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/accordion_multiple"

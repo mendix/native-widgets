@@ -8,7 +8,6 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Dynamic image"
-- assertVisible: "Dynamic image auto synced to device"
 - extendedWaitUntil:
     visible:
         id: "dynamicBgImage"

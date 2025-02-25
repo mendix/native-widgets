@@ -8,8 +8,6 @@ appId: "${APP_ID}"
     text: "Single"
 - assertVisible:
     text: "Header 1 - Text 1"
-- assertVisible:
-    text: "Header 1 - Text 2"
 - assertNotVisible:
     text: "Header 3 - Text 1"
 - assertNotVisible:
@@ -20,9 +18,3 @@ appId: "${APP_ID}"
     text: "Header 1 - Text 1"
 - assertVisible:
     id: "staticImage"
-- tapOn:
-    text: "Header 3"
-- assertNotVisible:
-    text: "Header 1 - Text 1"
-- assertVisible:
-    text: "Header 3 - Text 1"

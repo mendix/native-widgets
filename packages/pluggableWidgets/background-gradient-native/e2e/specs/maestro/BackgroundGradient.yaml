@@ -7,10 +7,12 @@ appId: "${APP_ID}"
     text: "B"
 - tapOn:
     text: "Background gradient"
+- extendedWaitUntil:
+    visible:
+        id: "bgGradientOneColor"
+    timeout: 10000
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/background_gradient"
-- assertVisible:
-    id: "bgGradientOneColor"
 - tapOn:
     id: "bgGradientTwoColors"
 - assertVisible:
