@@ -76,3 +76,27 @@ run_tests() {
     echo "📊 Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining. ✅ ${#passed_tests[@]} passed, ❌ ${#failed_tests[@]} failed."
   done
 }
+
+# Function to rerun failed tests
+rerun_failed_tests() {
+  local retry_failed_tests=("$@")
+  local total_retries=${#retry_failed_tests[@]}
+  local retry_count=0
+  for yaml_test_file in "${retry_failed_tests[@]}"; do
+    retry_count=$((retry_count + 1))
+    echo "🧪 Retrying test $retry_count/$total_retries: $(basename "$yaml_test_file")"
+    if [ "$PLATFORM" == "android" ]; then
+      ensure_emulator_ready
+    else
+      restart_simulator
+    fi
+    if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
+      echo "✅ Test passed: $yaml_test_file"
+      passed_tests+=("$yaml_test_file")
+    else
+      echo "❌ Test failed: $yaml_test_file"
+      final_failed_tests+=("$yaml_test_file")
+    fi
+    echo "📊 Retry Progress: $retry_count/$total_retries tests completed, ${#passed_tests[@]} passed, ${#final_failed_tests[@]} failed."
+  done
+}

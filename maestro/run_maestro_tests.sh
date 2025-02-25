@@ -1,6 +1,13 @@
 #!/bin/bash
 
-source ./helpers/helpers.sh
+# Get the directory of the current script
+SCRIPT_DIR=$(dirname "$0")
+
+# Source the helpers.sh script from the script's directory
+source "$SCRIPT_DIR/helpers/helpers.sh" || { echo "Failed to source helpers.sh"; exit 1; }
+
+# Check if run_tests function is available
+command -v run_tests >/dev/null 2>&1 || { echo "run_tests function not found"; exit 1; }
 
 if [ "$1" == "android" ]; then
   APP_ID="com.mendix.nativetemplate"
@@ -18,6 +25,7 @@ WIDGET=${2:-*}
 
 passed_tests=()
 failed_tests=()
+final_failed_tests=()
 
 # Determine the search path based on the widget selection
 if [ "$WIDGET" == "*-native" ]; then
@@ -37,30 +45,36 @@ RETRY_DELAY=10
 # Run all tests once
 run_tests "${yaml_test_files[@]}"
 
-final_failed_tests=()
-
-# Retry failed tests
-if [ ${#failed_tests[@]} -gt 0 ]; then
-  echo "🔄 Retrying failed tests..."
-  for yaml_test_file in "${failed_tests[@]}"; do
-    if [ "$PLATFORM" == "android" ]; then
-      ensure_emulator_ready
-    else
-      restart_simulator
-    fi
-    if run_tests "$yaml_test_file"; then
-      # Remove the test from failed_tests if it passes on retry
-      failed_tests=("${failed_tests[@]/$yaml_test_file}")
-      passed_tests+=("$yaml_test_file")  # Add to passed_tests if it passes on retry
-    else
-      # Add to final_failed_tests if it still fails
-      final_failed_tests+=("$yaml_test_file")
-    fi
+# Display initial summary after first run of all tests
+echo
+echo "📊 Initial Test Execution Summary:"
+echo "-----------------------"
+if [ ${#passed_tests[@]} -gt 0 ]; then
+  echo "✅ Passed Tests:"
+  for test in "${passed_tests[@]}"; do
+    echo "  - $(basename "$test")"
   done
+else
+  echo "No tests passed."
 fi
 
+if [ ${#failed_tests[@]} -gt 0 ]; then
+  echo "❌ Failed Tests:"
+  for test in "${failed_tests[@]}"; do
+    echo "  - $(basename "$test")"
+  done
+else
+  echo "No tests failed."
+fi
+
+# Retry only failed tests
+if [ ${#failed_tests[@]} -gt 0 ]; then
+  rerun_failed_tests "${failed_tests[@]}"
+fi
+
+# Display final summary
 echo
-echo "📊 Test Execution Summary:"
+echo "📊 Final Test Execution Summary:"
 echo "-----------------------"
 if [ ${#passed_tests[@]} -gt 0 ]; then
   echo "✅ Passed Tests:"
@@ -76,8 +90,8 @@ if [ ${#final_failed_tests[@]} -gt 0 ]; then
   for test in "${final_failed_tests[@]}"; do
     echo "  - $(basename "$test")"
   done
-  exit 1  # Mark the workflow stage as failed if any tests fail
+  exit 1
 else
   echo "All tests passed!"
-  exit 0  # Mark the workflow stage as successful only if all tests pass
+  exit 0
 fi
