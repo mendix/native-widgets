@@ -7,9 +7,9 @@ const pixelmatch = require('pixelmatch');
 const core = require('@actions/core');
 
 const platform = process.argv[2];
-const actualDir = path.join(__dirname, `../images/actual/${platform}`);
-const expectedDir = path.join(__dirname, `../maestro/images/expected/${platform}`);
-const diffDir = path.join(__dirname, `../images/diffs/${platform}`);
+const actualDir = path.join(__dirname, `../../images/actual/${platform}`);
+const expectedDir = path.join(__dirname, `../../maestro/images/expected/${platform}`);
+const diffDir = path.join(__dirname, `../../images/diffs/${platform}`);
 
 if (!fs.existsSync(diffDir)) {
   fs.mkdirSync(diffDir, { recursive: true });
@@ -37,7 +37,7 @@ fs.readdirSync(actualDir).forEach(file => {
       failedComparisons.push(file);
       console.log(`❌ Comparison failed for ${file}`);
     } else {
-      fs.appendFileSync(path.join(__dirname, '../compare_output.txt'), `✅ Comparison passed for ${file}\n`);
+      fs.appendFileSync(path.join(__dirname, '../../compare_output.txt'), `✅ Comparison passed for ${file}\n`);
       console.log(`✅ Comparison passed for ${file}`);
     }
   } else {
@@ -46,13 +46,13 @@ fs.readdirSync(actualDir).forEach(file => {
 });
 
 if (failedComparisons.length > 0) {
-  fs.appendFileSync(path.join(__dirname, '../compare_output.txt'), `❌ Failed Comparisons:\n`);
+  fs.appendFileSync(path.join(__dirname, '../../compare_output.txt'), `❌ Failed Comparisons:\n`);
   failedComparisons.forEach(file => {
-    fs.appendFileSync(path.join(__dirname, '../compare_output.txt'), `  - ${file}\n`);
+    fs.appendFileSync(path.join(__dirname, '../../compare_output.txt'), `  - ${file}\n`);
   });
   console.log(`❌ Failed Comparisons: ${failedComparisons.join(', ')}`);
   core.exportVariable(`${platform.toUpperCase()}_COMPARISON_FAILED`, 'true');
 } else {
-  fs.appendFileSync(path.join(__dirname, '../compare_output.txt'), 'All comparisons passed!\n');
+  fs.appendFileSync(path.join(__dirname, '../../compare_output.txt'), 'All comparisons passed!\n');
   console.log('All comparisons passed!');
 }

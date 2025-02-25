@@ -480,9 +480,9 @@ jobs:
           emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
           disable-animations: true
           script: |
-            chmod +x maestro/prepare_android.sh
+            chmod +x maestro/helpers/prepare_android.sh
             chmod +x maestro/run_maestro_tests.sh
-            bash maestro/prepare_android.sh
+            bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_tests.sh android "${{ github.event.inputs.workspace }}"
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v4
@@ -571,9 +571,9 @@ jobs:
         run: xcrun simctl list devices
       - name: "Run Maestro Script"
         run: |
-          chmod +x maestro/prepare_ios.sh
+          chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_tests.sh
-          bash maestro/prepare_ios.sh
+          bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_tests.sh ios "${{ github.event.inputs.workspace }}"
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v4
@@ -630,11 +630,11 @@ jobs:
    
       - name: "Compare Android screenshots"
         continue-on-error: true 
-        run: node ${{ github.workspace }}/maestro/compare_screenshots.js android
+        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js android
 
       - name: "Compare iOS screenshots"
         continue-on-error: true
-        run: node ${{ github.workspace }}/maestro/compare_screenshots.js ios
+        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js ios
   
       - name: "Archive diff results"
         uses: actions/upload-artifact@v4
@@ -656,4 +656,3 @@ jobs:
             echo "One or more comparisons failed."
             exit 1
           fi
-
