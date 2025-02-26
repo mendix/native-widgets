@@ -5,7 +5,7 @@ restart_simulator() {
     echo "🔄 Restarting iOS Simulator..."
     xcrun simctl shutdown "$IOS_DEVICE"
     sleep 10
-    ./maestro/prepare_ios.sh
+    bash ./maestro/helpers/prepare_ios.sh
 }
 
 # Function to set the status bar on the Android emulator

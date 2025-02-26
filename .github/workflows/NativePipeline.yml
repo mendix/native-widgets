@@ -407,6 +407,7 @@ jobs:
     strategy:
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
+      fail-fast: false
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4
@@ -489,14 +490,14 @@ jobs:
         if: always()
         with:
           name: android-runtime-logs
-          path: log/*.log
+          path: log/android/${{ matrix.widget }}/*.log
           if-no-files-found: ignore
       - name: "Archive test screenshots"
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: android-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
+          path: ${{ github.workspace }}/maestro/images/actual/android/${{ matrix.widget }}/**/*.png
           if-no-files-found: ignore
 
   ios-tests:
@@ -505,6 +506,7 @@ jobs:
     strategy:
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
+      fail-fast: false
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4
@@ -582,14 +584,14 @@ jobs:
         if: always()
         with:
           name: ios-runtime-logs
-          path: log/*.log
+          path: log/ios/${{ matrix.widget }}/*.log
           if-no-files-found: ignore
       - name: "Archive test screenshots"
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ios-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
+          path: ${{ github.workspace }}/maestro/images/actual/ios/${{ matrix.widget }}/**/*.png
           if-no-files-found: ignore
       - name: "Archive artifacts"
         uses: actions/upload-artifact@v4
