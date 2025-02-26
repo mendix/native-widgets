@@ -45,6 +45,7 @@ on:
           - pie-doughnut-chart-native
           - popup-menu-native
           - progress-bar-native
+          - progress-circle-native
           - qr-code-native
           - radio-buttons-native
           - range-slider-native
@@ -502,7 +503,6 @@ jobs:
   ios-tests:
     needs: [scope, mendix-version, project]
     runs-on: macos-15
-    timeout-minutes: 720
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4

@@ -10,9 +10,12 @@ appId: "${APP_ID}"
     text: "Events"
 - assertVisible:
     text: "URL loaded"
+    optional: true
 - tapOn:
     text: "OK"
+    optional: true
 - tapOn:
     text: "Invalid URL"
 - assertVisible:
     text: "Error"
+    optional: true

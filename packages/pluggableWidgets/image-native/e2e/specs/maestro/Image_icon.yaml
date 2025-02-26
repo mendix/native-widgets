@@ -8,5 +8,7 @@ appId: "${APP_ID}"
     text: "Image"
 - tapOn:
     text: "Image icon"
+- assertVisible:
+    text: "Image Icon"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/image_icon"

@@ -20,7 +20,7 @@ else
   echo "Usage: $0 [android|ios] [widget]"
   exit 1
 fi
-
+# Read the widget name from the second argument, defaulting to all widgets
 WIDGET=${2:-*}
 
 passed_tests=()
