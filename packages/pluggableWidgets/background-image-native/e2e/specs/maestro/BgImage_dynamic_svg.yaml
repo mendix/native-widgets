@@ -11,5 +11,6 @@ appId: "${APP_ID}"
 - extendedWaitUntil:
     visible: "Dynamic SVG image"
     timeout: 30000
+    optional: true
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_svg"

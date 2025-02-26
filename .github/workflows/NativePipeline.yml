@@ -71,6 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       scope: ${{ steps.scope.outputs.scope }}
+      widgets: ${{ steps.scope.outputs.widgets }}
     steps:
       - name: "Determine scope"
         id: scope
@@ -78,17 +79,17 @@ jobs:
           if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
             selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
             echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
+            echo "widgets=[\"${{ github.event.inputs.workspace }}\"]" >> $GITHUB_OUTPUT
           else
-            if [ "${{ github.event_name }}" == "pull_request" ]; then
-              echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
-            else
-              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
-            fi
+            widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
+            echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
+            echo "widgets=${widgets}" >> $GITHUB_OUTPUT
           fi
 
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
+          echo "Widgets are: ${{ steps.scope.outputs.widgets }}"
 
   mendix-version:
     runs-on: ubuntu-22.04
@@ -403,6 +404,9 @@ jobs:
   android-tests:
     needs: [scope, mendix-version, project]
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        widget: ${{ fromJson(needs.scope.outputs.widgets) }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4
@@ -419,7 +423,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: mda
-      
       - name: "Install GitHub CLI"
         run: |
           curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
@@ -446,14 +449,11 @@ jobs:
           fi
           curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o android-app.zip "$artifacts_url"
           unzip android-app.zip -d android-app
-      
-      
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      
       - name: "Install Maestro"
         run: |
           mkdir -p $HOME/.local/bin
@@ -463,7 +463,6 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Verify maestro
         run: $HOME/.local/bin/maestro/bin/maestro --version
-
       - name: Set up Android SDK
         run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
       - name: Enable KVM
@@ -484,7 +483,7 @@ jobs:
             chmod +x maestro/helpers/prepare_android.sh
             chmod +x maestro/run_maestro_tests.sh
             bash maestro/helpers/prepare_android.sh
-            bash maestro/run_maestro_tests.sh android "${{ github.event.inputs.workspace }}"
+            bash maestro/run_maestro_tests.sh android "${{ matrix.widget }}"
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v4
         if: always()
@@ -503,6 +502,9 @@ jobs:
   ios-tests:
     needs: [scope, mendix-version, project]
     runs-on: macos-15
+    strategy:
+      matrix:
+        widget: ${{ fromJson(needs.scope.outputs.widgets) }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4
@@ -574,7 +576,7 @@ jobs:
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_tests.sh
           bash maestro/helpers/prepare_ios.sh
-          bash maestro/run_maestro_tests.sh ios "${{ github.event.inputs.workspace }}"
+          bash maestro/run_maestro_tests.sh ios "${{ matrix.widget }}"
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v4
         if: always()

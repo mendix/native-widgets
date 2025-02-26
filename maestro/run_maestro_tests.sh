@@ -20,78 +20,87 @@ else
   echo "Usage: $0 [android|ios] [widget]"
   exit 1
 fi
-# Read the widget name from the second argument, defaulting to all widgets
-WIDGET=${2:-*}
+
+# Read the widget names from the second argument, defaulting to all widgets
+IFS=',' read -r -a widgets <<< "${2:-*}"
 
 passed_tests=()
 failed_tests=()
 final_failed_tests=()
 
-# Determine the search path based on the widget selection
-if [ "$WIDGET" == "*-native" ]; then
-  search_path="packages/pluggableWidgets"
-else
-  search_path="packages/pluggableWidgets/$WIDGET"
-fi
-
-# Find all .yaml files under the determined search path, excluding platform-specific files
-yaml_test_files=($(find $search_path -type f -path "*/maestro/*.yaml" ! -name "*_ios.yaml" ! -name "*_android.yaml"))
-total_tests=${#yaml_test_files[@]}
-completed_tests=0
-
 MAX_RETRIES=2
 RETRY_DELAY=10
 
-# Run all tests once
-run_tests "${yaml_test_files[@]}"
+# Function to run tests for a specific widget
+run_widget_tests() {
+  local widget=$1
+  local search_path="packages/pluggableWidgets/$widget"
+  local yaml_test_files=($(find $search_path -type f -path "*/maestro/*.yaml" ! -name "*_ios.yaml" ! -name "*_android.yaml"))
+  total_tests=${#yaml_test_files[@]}  # Set total_tests here
+  local completed_tests=0
 
-# Display initial summary after first run of all tests
-echo
-echo "📊 Initial Test Execution Summary:"
-echo "-----------------------"
-if [ ${#passed_tests[@]} -gt 0 ]; then
-  echo "✅ Passed Tests:"
-  for test in "${passed_tests[@]}"; do
-    echo "  - $(basename "$test")"
-  done
-else
-  echo "No tests passed."
-fi
+  # Run all tests once
+  run_tests "${yaml_test_files[@]}"
 
-if [ ${#failed_tests[@]} -gt 0 ]; then
-  echo "❌ Failed Tests:"
-  for test in "${failed_tests[@]}"; do
-    echo "  - $(basename "$test")"
-  done
-else
-  echo "No tests failed."
-fi
+  # Display initial summary after first run of all tests
+  echo
+  echo "📊 Initial Test Execution Summary for $widget:"
+  echo "-----------------------"
+  if [ ${#passed_tests[@]} -gt 0 ]; then
+    echo "✅ Passed Tests:"
+    for test in "${passed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+  else
+    echo "No tests passed."
+  fi
 
-# Retry only failed tests
-if [ ${#failed_tests[@]} -gt 0 ]; then
-  rerun_failed_tests "${failed_tests[@]}"
-fi
+  if [ ${#failed_tests[@]} -gt 0 ]; then
+    echo "❌ Failed Tests:"
+    for test in "${failed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+  else
+    echo "No tests failed."
+  fi
 
-# Display final summary
-echo
-echo "📊 Final Test Execution Summary:"
-echo "-----------------------"
-if [ ${#passed_tests[@]} -gt 0 ]; then
-  echo "✅ Passed Tests:"
-  for test in "${passed_tests[@]}"; do
-    echo "  - $(basename "$test")"
-  done
-else
-  echo "No tests passed."
-fi
+  # Retry only failed tests
+  if [ ${#failed_tests[@]} -gt 0 ]; then
+    rerun_failed_tests "${failed_tests[@]}"
+  fi
 
-if [ ${#final_failed_tests[@]} -gt 0 ]; then
-  echo "❌ Failed Tests:"
-  for test in "${final_failed_tests[@]}"; do
-    echo "  - $(basename "$test")"
-  done
-  exit 1
-else
-  echo "All tests passed!"
-  exit 0
-fi
+  # Display final summary
+  echo
+  echo "📊 Final Test Execution Summary for $widget:"
+  echo "-----------------------"
+  if [ ${#passed_tests[@]} -gt 0 ]; then
+    echo "✅ Passed Tests:"
+    for test in "${passed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+  else
+    echo "No tests passed."
+  fi
+
+  if [ ${#final_failed_tests[@]} -gt 0 ]; then
+    echo "❌ Failed Tests:"
+    for test in "${final_failed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+    return 1
+  else
+    echo "All tests passed for $widget!"
+    return 0
+  fi
+}
+
+# Run tests for each widget
+for widget in "${widgets[@]}"; do
+  run_widget_tests "$widget"
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+done
+
+echo "All tests passed for all widgets!"
+exit 0
