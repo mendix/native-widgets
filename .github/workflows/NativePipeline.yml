@@ -424,6 +424,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: mda
+      
       - name: "Install GitHub CLI"
         run: |
           curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
@@ -450,11 +451,13 @@ jobs:
           fi
           curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o android-app.zip "$artifacts_url"
           unzip android-app.zip -d android-app
+      
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      
       - name: "Install Maestro"
         run: |
           mkdir -p $HOME/.local/bin
@@ -466,6 +469,7 @@ jobs:
         run: $HOME/.local/bin/maestro/bin/maestro --version
       - name: Set up Android SDK
         run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+      
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -485,19 +489,27 @@ jobs:
             chmod +x maestro/run_maestro_tests.sh
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_tests.sh android "${{ matrix.widget }}"
+      
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: android-runtime-logs
-          path: log/android/${{ matrix.widget }}/*.log
+          name: android-runtime-logs-${{ matrix.widget }}
+          path: log/*.log
           if-no-files-found: ignore
       - name: "Archive test screenshots"
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: android-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/android/${{ matrix.widget }}/**/*.png
+          name: android-screenshots-${{ matrix.widget }}
+          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
+          if-no-files-found: ignore
+      - name: "Archive artifacts"
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-artifacts-${{ matrix.widget }}
+          path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
 
   ios-tests:
@@ -562,6 +574,7 @@ jobs:
           else
             echo "Xcode CLI tools are already configured."
           fi
+      
       - name: "Install Maestro"
         run: |
           mkdir -p $HOME/.local/bin
@@ -573,55 +586,63 @@ jobs:
         run: $HOME/.local/bin/maestro/bin/maestro --version
       - name: "List Available Simulators"
         run: xcrun simctl list devices
+      
       - name: "Run Maestro Script"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_tests.sh
           bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_tests.sh ios "${{ matrix.widget }}"
+      
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ios-runtime-logs
-          path: log/ios/${{ matrix.widget }}/*.log
+          name: ios-runtime-logs-${{ matrix.widget }}
+          path: log/*.log
           if-no-files-found: ignore
       - name: "Archive test screenshots"
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ios-screenshots
-          path: ${{ github.workspace }}/maestro/images/actual/ios/${{ matrix.widget }}/**/*.png
+          name: ios-screenshots-${{ matrix.widget }}
+          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
           if-no-files-found: ignore
       - name: "Archive artifacts"
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ios-artifacts
+          name: ios-artifacts-${{ matrix.widget }}
           path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
-         
+
   compare-screenshots:
-    needs: [android-tests, ios-tests]
+    needs: [scope, android-tests, ios-tests]
     runs-on: ubuntu-latest
     if: always()
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@v4
   
       - name: "Download Android screenshots"
-        uses: actions/download-artifact@v4
-        with:
-          name: android-screenshots
-          path: images/actual/android
-        continue-on-error: true
+        run: |
+          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          for widget in $widgets; do
+            echo "Downloading android-screenshots-${widget}"
+            gh run download ${{ github.run_id }} --name android-screenshots-${widget} --dir images/actual/android/ || true
+            ls -l images/actual/android/
+          done
       
       - name: "Download iOS screenshots"
-        uses: actions/download-artifact@v4
-        with:
-          name: ios-screenshots
-          path: images/actual/ios
-        continue-on-error: true
+        run: |
+          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          for widget in $widgets; do
+            echo "Downloading ios-screenshots-${widget}"
+            gh run download ${{ github.run_id }} --name ios-screenshots-${widget} --dir images/actual/ios/ || true
+            ls -l images/actual/ios/
+          done
   
       - name: "Set up node"
         uses: actions/setup-node@v4

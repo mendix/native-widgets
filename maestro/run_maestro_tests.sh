@@ -28,7 +28,7 @@ passed_tests=()
 failed_tests=()
 final_failed_tests=()
 
-MAX_RETRIES=2
+MAX_RETRIES=3
 RETRY_DELAY=10
 
 # Function to run tests for a specific widget

@@ -17,42 +17,32 @@ if (!fs.existsSync(diffDir)) {
 
 const failedComparisons = [];
 
-fs.readdirSync(actualDir).forEach(widget => {
-  const widgetActualDir = path.join(actualDir, widget);
-  const widgetExpectedDir = path.join(expectedDir, widget);
-  const widgetDiffDir = path.join(diffDir, widget);
+fs.readdirSync(actualDir).forEach(file => {
+  const actualPath = path.join(actualDir, file);
+  const expectedPath = path.join(expectedDir, file);
+  const diffPath = path.join(diffDir, `diff_${file}`);
 
-  if (!fs.existsSync(widgetDiffDir)) {
-    fs.mkdirSync(widgetDiffDir, { recursive: true });
-  }
+  if (fs.existsSync(expectedPath)) {
+    const actualImg = PNG.sync.read(fs.readFileSync(actualPath));
+    const expectedImg = PNG.sync.read(fs.readFileSync(expectedPath));
+    const { width, height } = actualImg;
+    const diff = new PNG({ width, height });
 
-  fs.readdirSync(widgetActualDir).forEach(file => {
-    const actualPath = path.join(widgetActualDir, file);
-    const expectedPath = path.join(widgetExpectedDir, file);
-    const diffPath = path.join(widgetDiffDir, `diff_${file}`);
+    const numDiffPixels = pixelmatch(actualImg.data, expectedImg.data, diff.data, width, height, { threshold: 0.1 });
 
-    if (fs.existsSync(expectedPath)) {
-      const actualImg = PNG.sync.read(fs.readFileSync(actualPath));
-      const expectedImg = PNG.sync.read(fs.readFileSync(expectedPath));
-      const { width, height } = actualImg;
-      const diff = new PNG({ width, height });
-
-      const numDiffPixels = pixelmatch(actualImg.data, expectedImg.data, diff.data, width, height, { threshold: 0.1 });
-
-      const pixelTolerance = 50;
-      
-      if (numDiffPixels > pixelTolerance) {
-        fs.writeFileSync(diffPath, PNG.sync.write(diff));
-        failedComparisons.push(file);
-        console.log(`❌ Comparison failed for ${file}`);
-      } else {
-        fs.appendFileSync(path.join(__dirname, '../../compare_output.txt'), `✅ Comparison passed for ${file}\n`);
-        console.log(`✅ Comparison passed for ${file}`);
-      }
+    const pixelTolerance = 50;
+    
+    if (numDiffPixels > pixelTolerance) {
+      fs.writeFileSync(diffPath, PNG.sync.write(diff));
+      failedComparisons.push(file);
+      console.log(`❌ Comparison failed for ${file}`);
     } else {
-      console.log(`⚠️ Expected file not found for ${file}`);
+      fs.appendFileSync(path.join(__dirname, '../../compare_output.txt'), `✅ Comparison passed for ${file}\n`);
+      console.log(`✅ Comparison passed for ${file}`);
     }
-  });
+  } else {
+    console.log(`⚠️ Expected file not found for ${file}`);
+  }
 });
 
 if (failedComparisons.length > 0) {
