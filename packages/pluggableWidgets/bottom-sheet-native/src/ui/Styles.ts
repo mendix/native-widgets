@@ -42,3 +42,4 @@ const isiPhoneModelWithNotch = (): boolean => {
 
 export const defaultPaddings = { paddingBottom: isiPhoneModelWithNotch() ? 24 : 0 };
 export const defaultMargins = { marginBottom: isiPhoneModelWithNotch() ? 24 : 0 };
+export const padding = { paddingBottom: 24, paddingHorizontal: 16 };
