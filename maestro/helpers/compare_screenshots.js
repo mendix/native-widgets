@@ -16,11 +16,7 @@ if (!fs.existsSync(diffDir)) {
   fs.mkdirSync(diffDir, { recursive: true });
 }
 
-const ignoredAreas = [
-  { x: 0, y: actualImg.height - 35, width: actualImg.width, height: 35 } // Ignore bottom 35 pixels where is Home Indicator on iOS
-];
-
-function isIgnored(x, y) {
+function isIgnored(x, y, ignoredAreas) {
   return ignoredAreas.some(area => 
     x >= area.x && x < area.x + area.width && y >= area.y && y < area.y + area.height
   );
@@ -33,17 +29,24 @@ fs.readdirSync(actualDir).forEach(file => {
   const expectedPath = path.join(expectedDir, file);
   const diffPath = path.join(diffDir, `diff_${file}`);
 
-  if (fs.exists(expectedPath)) {
+  if (fs.existsSync(expectedPath)) {
     const actualImg = PNG.sync.read(fs.readFileSync(actualPath));
     const expectedImg = PNG.sync.read(fs.readFileSync(expectedPath));
     const { width, height } = actualImg;
     const diff = new PNG({ width, height });
 
+    let ignoredAreas = [];
+    if (platform === 'ios') {
+      ignoredAreas = [
+        { x: 0, y: height - 35, width, height: 35 } // Ignore bottom 35 pixels where is Home Indicator on iOS
+      ];
+    }
+
     const numDiffPixels = pixelmatch(actualImg.data, expectedImg.data, diff.data, width, height, { 
       threshold: 0.1,
       includeAA: false,
       diffMask: true
-    }, (x, y) => isIgnored(x, y));
+    }, (x, y) => isIgnored(x, y, ignoredAreas));
 
     const pixelTolerance = 50;
     
