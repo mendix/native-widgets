@@ -73,17 +73,41 @@ jobs:
       scope: ${{ steps.scope.outputs.scope }}
       widgets: ${{ steps.scope.outputs.widgets }}
     steps:
+      - name: "Check out code"
+        uses: actions/checkout@v4
+
       - name: "Determine scope"
         id: scope
         run: |
-          if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
-            selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
-            echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
-            echo "widgets=[\"${{ github.event.inputs.workspace }}\"]" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+            selected_workspaces=""
+            for file in $changed_files; do
+              if [[ $file == packages/pluggableWidgets/* ]]; then
+                widget=$(echo $file | cut -d'/' -f3)
+                if [[ ! $selected_workspaces =~ $widget ]]; then
+                  selected_workspaces="$selected_workspaces $widget"
+                fi
+              fi
+            done
+            if [[ -n "$selected_workspaces" ]]; then
+              echo "scope=--all --include '$selected_workspaces'" >> $GITHUB_OUTPUT
+              echo "widgets=[\"$selected_workspaces\"]" >> $GITHUB_OUTPUT
+            else
+              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
+              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
+              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
+            fi
           else
-            widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
-            echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
-            echo "widgets=${widgets}" >> $GITHUB_OUTPUT
+            if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
+              selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
+              echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
+              echo "widgets=[\"${{ github.event.inputs.workspace }}\"]" >> $GITHUB_OUTPUT
+            else
+              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
+              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
+              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
+            fi
           fi
 
       - name: "Debug Scope Output"
