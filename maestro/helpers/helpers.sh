@@ -1,5 +1,8 @@
 #!/bin/bash
 
+MAX_RETRIES=3
+RETRY_DELAY=10
+
 # Function to restart the iOS simulator
 restart_simulator() {
     echo "🔄 Restarting iOS Simulator..."
@@ -90,13 +93,23 @@ rerun_failed_tests() {
     else
       restart_simulator
     fi
-    if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
-      echo "✅ Test passed: $yaml_test_file"
-      passed_tests+=("$yaml_test_file")
-    else
-      echo "❌ Test failed: $yaml_test_file"
-      final_failed_tests+=("$yaml_test_file")
-    fi
+    local attempt=0
+    while [ $attempt -lt $MAX_RETRIES ]; do
+      if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
+        echo "✅ Test passed: $yaml_test_file"
+        passed_tests+=("$yaml_test_file")
+        break
+      else
+        echo "❌ Test failed: $yaml_test_file (Attempt $((attempt + 1))/$MAX_RETRIES)"
+        attempt=$((attempt + 1))
+        if [ $attempt -lt $MAX_RETRIES ]; then
+          echo "Retrying in $RETRY_DELAY seconds..."
+          sleep $RETRY_DELAY
+        else
+          final_failed_tests+=("$yaml_test_file")
+        fi
+      fi
+    done
     echo "📊 Retry Progress: $retry_count/$total_retries tests completed, ${#passed_tests[@]} passed, ${#final_failed_tests[@]} failed."
   done
 }

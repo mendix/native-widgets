@@ -28,9 +28,6 @@ passed_tests=()
 failed_tests=()
 final_failed_tests=()
 
-MAX_RETRIES=3
-RETRY_DELAY=10
-
 # Function to run tests for a specific widget
 run_widget_tests() {
   local widget=$1

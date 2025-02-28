@@ -27,14 +27,14 @@ verify_installed_app() {
 }
 
 # Function to launch the iOS app
-launch_ios_app() {
-    echo "Launching iOS app..."
-    xcrun simctl launch booted com.mendix.native.template
-}
+# launch_ios_app() {
+#     echo "Launching iOS app..."
+#     xcrun simctl launch booted com.mendix.native.template
+# }
 
 # Prepare the iOS simulator and install the app
 start_simulator
 set_status_bar
 install_ios_app
 verify_installed_app
-launch_ios_app
+# launch_ios_app
