@@ -1,8 +1,7 @@
 import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
-import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { BottomSheetStyle } from "../ui/Styles";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Dimensions, LayoutChangeEvent, Modal, SafeAreaView, StyleSheet, View } from "react-native";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
+import { BottomSheetStyle, padding } from "../ui/Styles";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -14,11 +13,13 @@ interface ExpandingDrawerProps {
 }
 let lastIndexRef = -1;
 
+const OFFSET_VALUE = 48;
+
 export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     const [heightContent, setHeightContent] = useState(0);
     const [heightHeader, setHeightHeader] = useState(0);
     const [fullscreenHeight, setFullscreenHeight] = useState(0);
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(true);
     const bottomSheetRef = useRef<BottomSheet>(null);
 
     const maxHeight = Dimensions.get("screen").height;
@@ -49,6 +50,10 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
             setFullscreenHeight(height);
         }
     };
+
+    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
+        <BottomSheetBackdrop {...backdropProps} opacity={0.3} appearsOnIndex={0} disappearsOnIndex={-1} />
+    );
 
     const renderContent = useCallback((): ReactNode => {
         const content = (
@@ -101,17 +106,17 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         props.fullscreenContent && heightContent
             ? [fullscreenHeight, heightContent, heightHeader]
             : props.fullscreenContent
-                ? [fullscreenHeight, heightHeader]
-                : isLargeContentValid
-                    ? [heightContent, heightHeader]
-                    : [heightHeader];
+            ? [fullscreenHeight, heightHeader]
+            : isLargeContentValid
+            ? [heightContent + OFFSET_VALUE, heightHeader]
+            : [heightHeader];
 
     const collapsedIndex = snapPoints.length - 1;
 
     const onChange = (index: number) => {
         const hasOpened = lastIndexRef === -1 && index === 0;
         const hasClosed = index === -1;
-    
+
         if (hasOpened) {
             props.onOpen?.();
             setIsOpen(true);
@@ -124,18 +129,18 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     };
 
     return (
-        <GestureHandlerRootView>
+        <Modal transparent visible={isOpen}>
             <BottomSheet
                 ref={bottomSheetRef}
-                index={collapsedIndex}
+                index={isOpen ? collapsedIndex : -1}
                 snapPoints={snapPoints}
                 onChange={onChange}
-                animateOnMount={true}
+                animateOnMount
+                backdropComponent={renderBackdrop}
+                backgroundStyle={props.styles.container}
             >
-                <BottomSheetView style={{ flex: 1 }}>
-                   {renderContent()}
-                </BottomSheetView>
+                <BottomSheetView style={[{ flex: 1 }, padding]}>{renderContent()}</BottomSheetView>
             </BottomSheet>
-        </GestureHandlerRootView>
+        </Modal>
     );
 };

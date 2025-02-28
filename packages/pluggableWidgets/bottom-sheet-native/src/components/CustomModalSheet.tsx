@@ -1,8 +1,8 @@
 import { createElement, ReactElement, ReactNode, useEffect, useRef, useState } from "react";
-import { InteractionManager, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
+import { InteractionManager, LayoutChangeEvent, Modal, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
-import { BottomSheetStyle, defaultPaddings } from "../ui/Styles";
+import { BottomSheetStyle, defaultPaddings, padding } from "../ui/Styles";
 
 interface CustomModalSheetProps {
     triggerAttribute?: EditableValue<boolean>;
@@ -44,20 +44,15 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         );
     }
 
+    const snapPoints = [height - Number(defaultPaddings.paddingBottom)];
+
     const isOpen =
         props.triggerAttribute &&
         props.triggerAttribute.status === ValueStatus.Available &&
         props.triggerAttribute.value;
 
-    const snapPoints = [height - Number(defaultPaddings.paddingBottom)];
-
     const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <BottomSheetBackdrop
-            {...backdropProps}
-            opacity={0.5}
-            appearsOnIndex={0}
-            disappearsOnIndex={-1}
-        />
+        <BottomSheetBackdrop {...backdropProps} opacity={0.3} appearsOnIndex={0} disappearsOnIndex={-1} />
     );
 
     const handleSheetChanges = (index: number) => {
@@ -77,22 +72,21 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
     };
 
     return (
-        <BottomSheet
-            ref={bottomSheetRef}
-            index={isOpen ? 0 : -1}
-            snapPoints={snapPoints}
-            enablePanDownToClose={true}
-            onChange={handleSheetChanges}
-            backdropComponent={renderBackdrop}
-            style={props.styles.modal}
-        >
-            <BottomSheetView style={[
-                props.styles.container,
-                defaultPaddings,
-                { maxHeight: height - Number(defaultPaddings.paddingBottom) }
-            ]}>
-                {props.content}
-            </BottomSheetView>
-        </BottomSheet>
+        <Modal transparent visible={isOpen}>
+            <BottomSheet
+                ref={bottomSheetRef}
+                index={isOpen ? 0 : -1}
+                snapPoints={snapPoints}
+                enablePanDownToClose
+                onChange={handleSheetChanges}
+                backdropComponent={renderBackdrop}
+                style={[props.styles.modal]}
+                backgroundStyle={props.styles.container}
+            >
+                <BottomSheetView style={[props.styles.container, defaultPaddings, padding]}>
+                    {props.content}
+                </BottomSheetView>
+            </BottomSheet>
+        </Modal>
     );
 };
