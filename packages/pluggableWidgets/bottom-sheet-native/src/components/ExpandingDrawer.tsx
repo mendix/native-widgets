@@ -1,5 +1,5 @@
 import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
-import { Dimensions, LayoutChangeEvent, Modal, SafeAreaView, StyleSheet, View } from "react-native";
+import { Dimensions, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle, padding } from "../ui/Styles";
 
@@ -52,16 +52,23 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     };
 
     const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} opacity={0.3} appearsOnIndex={0} disappearsOnIndex={-1} />
+        <Pressable style={{ flex: 1 }} onPress={close}>
+            <BottomSheetBackdrop
+                {...backdropProps}
+                pressBehavior={"close"}
+                opacity={0.3}
+                appearsOnIndex={0}
+                disappearsOnIndex={-1}
+            />
+        </Pressable>
     );
+
+    const containerStyle =
+        props.fullscreenContent && isOpen ? props.styles.containerWhenExpandedFullscreen : props.styles.container;
 
     const renderContent = useCallback((): ReactNode => {
         const content = (
-            <View
-                onLayout={onLayoutHandlerContent}
-                style={!props.fullscreenContent ? props.styles.container : {}}
-                pointerEvents="box-none"
-            >
+            <View onLayout={onLayoutHandlerContent} pointerEvents="box-none">
                 <View
                     onLayout={onLayoutHandlerHeader}
                     style={!isSmallContentValid ? { height: 20 } : {}}
@@ -75,13 +82,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
 
         if (props.fullscreenContent) {
             return (
-                <View
-                    style={[
-                        isOpen ? props.styles.containerWhenExpandedFullscreen : props.styles.container,
-                        { height: fullscreenHeight }
-                    ]}
-                    pointerEvents="box-none"
-                >
+                <View style={[{ height: fullscreenHeight }]} pointerEvents="box-none">
                     {content}
                     {props.fullscreenContent}
                 </View>
@@ -128,16 +129,21 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         lastIndexRef = index;
     };
 
+    const close = () => {
+        bottomSheetRef.current?.close();
+    };
+
     return (
-        <Modal transparent visible={isOpen}>
+        <Modal onRequestClose={close} transparent visible={isOpen}>
             <BottomSheet
                 ref={bottomSheetRef}
                 index={isOpen ? collapsedIndex : -1}
                 snapPoints={snapPoints}
+                onClose={() => setIsOpen(false)}
                 onChange={onChange}
                 animateOnMount
                 backdropComponent={renderBackdrop}
-                backgroundStyle={props.styles.container}
+                backgroundStyle={containerStyle}
             >
                 <BottomSheetView style={[{ flex: 1 }, padding]}>{renderContent()}</BottomSheetView>
             </BottomSheet>

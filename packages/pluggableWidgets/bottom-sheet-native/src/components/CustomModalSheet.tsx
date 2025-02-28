@@ -1,5 +1,5 @@
 import { createElement, ReactElement, ReactNode, useEffect, useRef, useState } from "react";
-import { InteractionManager, LayoutChangeEvent, Modal, SafeAreaView, StyleSheet, View } from "react-native";
+import { InteractionManager, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { BottomSheetStyle, defaultPaddings, padding } from "../ui/Styles";
@@ -52,7 +52,15 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         props.triggerAttribute.value;
 
     const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} opacity={0.3} appearsOnIndex={0} disappearsOnIndex={-1} />
+        <Pressable style={{ flex: 1 }} onPress={close}>
+            <BottomSheetBackdrop
+                {...backdropProps}
+                pressBehavior={"close"}
+                opacity={0.3}
+                appearsOnIndex={0}
+                disappearsOnIndex={-1}
+            />
+        </Pressable>
     );
 
     const handleSheetChanges = (index: number) => {
@@ -71,13 +79,18 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         }
     };
 
+    const close = () => {
+        bottomSheetRef.current?.close();
+    };
+
     return (
-        <Modal transparent visible={isOpen}>
+        <Modal onRequestClose={close} transparent visible={isOpen}>
             <BottomSheet
                 ref={bottomSheetRef}
                 index={isOpen ? 0 : -1}
                 snapPoints={snapPoints}
                 enablePanDownToClose
+                onClose={() => handleSheetChanges(-1)}
                 onChange={handleSheetChanges}
                 backdropComponent={renderBackdrop}
                 style={[props.styles.modal]}

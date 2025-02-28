@@ -2401,16 +2401,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lodev09/react-native-true-sheet@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@lodev09/react-native-true-sheet@npm:1.1.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/353735ffa9d09c6d497af75e1ba57f38601ca8e8fd57167dc478d467683772c289992ee6edbae387bca5c129a6877490dd470b771853e8af09f2d82285c721fd
-  languageName: node
-  linkType: hard
-
 "@mendix/piw-native-utils-internal@npm:*, @mendix/piw-native-utils-internal@workspace:packages/tools/piw-native-utils-internal":
   version: 0.0.0-use.local
   resolution: "@mendix/piw-native-utils-internal@workspace:packages/tools/piw-native-utils-internal"
@@ -5274,7 +5264,6 @@ __metadata:
   resolution: "bottom-sheet-native@workspace:packages/pluggableWidgets/bottom-sheet-native"
   dependencies:
     "@gorhom/bottom-sheet": "npm:^5.1.1"
-    "@lodev09/react-native-true-sheet": "npm:^1.1.1"
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"

@@ -1,11 +1,6 @@
 import { createElement, ReactElement, useCallback, useEffect, useRef } from "react";
-import { ActionSheetIOS, Appearance, Modal, Platform, StyleSheet, Text, View } from "react-native";
-import BottomSheet, {
-    BottomSheetBackdrop,
-    BottomSheetBackdropProps,
-    BottomSheetView,
-    TouchableOpacity
-} from "@gorhom/bottom-sheet";
+import { ActionSheetIOS, Appearance, Modal, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { ItemsBasicType } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle, ModalItemContainerStyle, padding } from "../ui/Styles";
@@ -73,6 +68,18 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         }
     };
 
+    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
+        <Pressable style={{ flex: 1 }} onPress={close}>
+            <BottomSheetBackdrop
+                {...backdropProps}
+                pressBehavior={"close"}
+                opacity={0.3}
+                appearsOnIndex={0}
+                disappearsOnIndex={-1}
+            />
+        </Pressable>
+    );
+
     const actionHandler = useCallback(
         (index: number) => {
             setTimeout(() => {
@@ -85,32 +92,6 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         [props.itemsBasic, props.triggerAttribute]
     );
 
-    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <BottomSheetBackdrop
-            {...backdropProps}
-            pressBehavior={"close"}
-            opacity={0.3}
-            appearsOnIndex={0}
-            disappearsOnIndex={-1}
-        />
-    );
-
-    // Render items with conditional style based on theme and platform.
-    const renderItem = (item: ItemsBasicType, index: number) => {
-        if (Platform.OS === "android" || !props.useNative) {
-            return (
-                <Text key={`${props.name}_item_${index}`} style={props.styles.modalItems[item.styleClass]}>
-                    {item.caption}
-                </Text>
-            );
-        }
-        return (
-            <Text key={`${props.name}_item_${index}`} style={nativeAndroidStyles.text}>
-                {item.caption}
-            </Text>
-        );
-    };
-
     const buttonContainerStyle = { ...props.styles.modalItems?.container } as ModalItemContainerStyle;
 
     const getButtonStyle = () => {
@@ -118,6 +99,28 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
             return [nativeAndroidStyles.buttonContainer];
         }
         return [styles.buttonContainer, buttonContainerStyle];
+    };
+
+    // Render items with conditional style based on theme and platform.
+    const renderItem = (item: ItemsBasicType, index: number) => {
+        if (Platform.OS === "android" || !props.useNative) {
+            return (
+                <Pressable onPress={() => actionHandler(index)}>
+                    <View style={[{ flex: 1 }, getButtonStyle()]}>
+                        <Text key={`${props.name}_item_${index}`} style={props.styles.modalItems[item.styleClass]}>
+                            {item.caption}
+                        </Text>
+                    </View>
+                </Pressable>
+            );
+        }
+        return (
+            <View style={{ flex: 1, backgroundColor: "red" }}>
+                <Text key={`${props.name}_item_${index}`} style={nativeAndroidStyles.text}>
+                    {item.caption}
+                </Text>
+            </View>
+        );
     };
 
     const getContainerStyle = () => {
@@ -147,29 +150,25 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         return <View></View>;
     }
 
+    const close = () => {
+        bottomSheetRef.current?.close();
+    };
+
     return (
-        <Modal transparent visible={isOpen}>
+        <Modal onRequestClose={close} transparent visible={isOpen}>
             <BottomSheet
                 ref={bottomSheetRef}
                 index={isOpen ? 0 : -1} // Start closed.
                 enablePanDownToClose
-                bottomInset={props.useNative ? 30 : 0}
                 animateOnMount
+                onClose={() => handleSheetChanges(-1)}
                 onChange={handleSheetChanges}
                 style={getContainerStyle()}
                 backdropComponent={renderBackdrop}
                 backgroundStyle={props.styles.container}
             >
                 <BottomSheetView style={[{ flex: 1 }, padding]}>
-                    {props.itemsBasic.map((item, index) => (
-                        <TouchableOpacity
-                            key={`${props.name}_item_${index}`}
-                            onPress={() => actionHandler(index)}
-                            style={getButtonStyle()}
-                        >
-                            {renderItem(item, index)}
-                        </TouchableOpacity>
-                    ))}
+                    {props.itemsBasic.map((item, index) => renderItem(item, index))}
                 </BottomSheetView>
             </BottomSheet>
         </Modal>
