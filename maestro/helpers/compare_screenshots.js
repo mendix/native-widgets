@@ -38,7 +38,7 @@ fs.readdirSync(actualDir).forEach(file => {
     let ignoredAreas = [];
     if (platform === 'ios') {
       ignoredAreas = [
-        { x: 0, y: height - 35, width, height: 35 } // Ignore bottom 35 pixels where is Home Indicator on iOS
+        { x: 0, y: height - 40, width, height: 40 } // Ignore bottom 40 pixels where is Home Indicator on iOS
       ];
     }
 
