@@ -216,7 +216,7 @@ jobs:
           apt update && apt upgrade -y
           apt install curl -y
       - name: "Download test project"
-        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/maestro-widgets.zip
+        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
       - name: "Extract test project"
         uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
         with:
@@ -233,26 +233,26 @@ jobs:
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-maestro-widgets/widgets/$(basename $oldPath)
+              newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
               mv -f $oldPath $newPath
             done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-maestro-widgets/NativeComponentsTestProject.mpr
+            mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
           fi
       - name: "Move mobile-resources"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-maestro-widgets/javascriptsource/nativemobileresources/actions/
+            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-maestro-widgets/javascriptsource/nanoflowcommons/actions/
+            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Force rebuild test project"
         run: |
-          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-maestro-widgets/NativeComponentsTestProject.mpr
+          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
         uses: actions/upload-artifact@v4
         with:

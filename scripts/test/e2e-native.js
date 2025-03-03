@@ -20,17 +20,14 @@ async function main() {
     const ip = nodeIp.address();
     const ghcr = process.env.CI && process.env.FORKED !== "true" ? "ghcr.io/mendix/native-widgets/" : "";
 
-    const testArchivePath = await getTestProject(
-        "https://github.com/mendix/Native-Mobile-Resources",
-        "maestro-widgets"
-    );
+    const testArchivePath = await getTestProject("https://github.com/mendix/Native-Mobile-Resources", "main");
     const root = process.cwd();
     const projectsRoot = join(root, "tests");
     const projectDir = join(root, "tests/testProject");
     try {
         mkdir("-p", projectsRoot);
         execSync(`unzip -o ${testArchivePath} -d ${projectsRoot}`);
-        mv(`${projectsRoot}/Native-Mobile-Resources-maestro-widgets`, projectDir);
+        mv(`${projectsRoot}/Native-Mobile-Resources-main`, projectDir);
         rm("-f", testArchivePath);
     } catch (e) {
         throw new Error("Failed to unzip the test project into testProject", e.message);
