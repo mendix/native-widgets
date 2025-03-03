@@ -22,6 +22,21 @@ function isIgnored(x, y, ignoredAreas) {
   );
 }
 
+function applyIgnoredAreas(img, ignoredAreas) {
+  const { width, height } = img;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (isIgnored(x, y, ignoredAreas)) {
+        const idx = (width * y + x) << 2;
+        img.data[idx] = 0;     // R
+        img.data[idx + 1] = 0; // G
+        img.data[idx + 2] = 0; // B
+        img.data[idx + 3] = 0; // A (transparent)
+      }
+    }
+  }
+}
+
 const failedComparisons = [];
 
 fs.readdirSync(actualDir).forEach(file => {
@@ -40,13 +55,20 @@ fs.readdirSync(actualDir).forEach(file => {
       ignoredAreas = [
         { x: 0, y: height - 40, width, height: 40 } // Ignore bottom 40 pixels where is Home Indicator on iOS
       ];
+    } else if (platform === 'android') {
+      ignoredAreas = [
+        { x: 0, y: 0, width, height: 50 } // Ignore top 40 pixels on Android
+      ];
     }
+
+    applyIgnoredAreas(actualImg, ignoredAreas);
+    applyIgnoredAreas(expectedImg, ignoredAreas);
 
     const numDiffPixels = pixelmatch(actualImg.data, expectedImg.data, diff.data, width, height, { 
       threshold: 0.1,
       includeAA: false,
       diffMask: true
-    }, (x, y) => isIgnored(x, y, ignoredAreas));
+    });
 
     const pixelTolerance = 50;
     
