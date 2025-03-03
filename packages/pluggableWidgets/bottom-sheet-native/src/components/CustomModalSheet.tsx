@@ -2,7 +2,7 @@ import { createElement, ReactElement, ReactNode, useEffect, useRef, useState } f
 import { InteractionManager, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
-import { BottomSheetStyle, defaultPaddings, padding } from "../ui/Styles";
+import { BottomSheetStyle, defaultPaddings } from "../ui/Styles";
 
 interface CustomModalSheetProps {
     triggerAttribute?: EditableValue<boolean>;
@@ -96,9 +96,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                 style={[props.styles.modal]}
                 backgroundStyle={props.styles.container}
             >
-                <BottomSheetView style={[props.styles.container, defaultPaddings, padding]}>
-                    {props.content}
-                </BottomSheetView>
+                <BottomSheetView style={[props.styles.container, defaultPaddings]}>{props.content}</BottomSheetView>
             </BottomSheet>
         </Modal>
     );

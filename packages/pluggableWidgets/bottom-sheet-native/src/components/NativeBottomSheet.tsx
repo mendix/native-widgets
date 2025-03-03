@@ -1,9 +1,19 @@
 import { createElement, ReactElement, useCallback, useEffect, useRef } from "react";
-import { ActionSheetIOS, Appearance, Modal, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+    ActionSheetIOS,
+    Appearance,
+    Modal,
+    Platform,
+    Pressable,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    View
+} from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { ItemsBasicType } from "../../typings/BottomSheetProps";
-import { BottomSheetStyle, ModalItemContainerStyle, padding } from "../ui/Styles";
+import { BottomSheetStyle, ModalItemContainerStyle } from "../ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
 
 interface NativeBottomSheetProps {
@@ -56,7 +66,7 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                 }
             );
         }
-    }, [props.useNative, isOpen, props.itemsBasic, props.triggerAttribute]);
+    }, [isOpen]);
 
     const manageBottomSheet = () => {
         if (props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available) {
@@ -105,21 +115,27 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
     const renderItem = (item: ItemsBasicType, index: number) => {
         if (Platform.OS === "android" || !props.useNative) {
             return (
-                <Pressable onPress={() => actionHandler(index)}>
-                    <View style={[{ flex: 1 }, getButtonStyle()]}>
-                        <Text key={`${props.name}_item_${index}`} style={props.styles.modalItems[item.styleClass]}>
-                            {item.caption}
-                        </Text>
+                <TouchableHighlight
+                    underlayColor="rgba(0, 0, 0, 0.25)"
+                    key={`${props.name}_item_${index}`}
+                    onPress={() => actionHandler(index)}
+                >
+                    <View style={[{ flex: 1, paddingHorizontal: 16 }, getButtonStyle()]}>
+                        <Text style={props.styles.modalItems[item.styleClass]}>{item.caption}</Text>
                     </View>
-                </Pressable>
+                </TouchableHighlight>
             );
         }
         return (
-            <View style={{ flex: 1, backgroundColor: "red" }}>
-                <Text key={`${props.name}_item_${index}`} style={nativeAndroidStyles.text}>
-                    {item.caption}
-                </Text>
-            </View>
+            <TouchableHighlight
+                underlayColor="rgba(0, 0, 0, 0.25)"
+                key={`${props.name}_item_${index}`}
+                onPress={() => actionHandler(index)}
+            >
+                <View style={[{ flex: 1, paddingHorizontal: 16 }, getButtonStyle()]}>
+                    <Text style={nativeAndroidStyles.text}>{item.caption}</Text>
+                </View>
+            </TouchableHighlight>
         );
     };
 
@@ -167,7 +183,7 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                 backdropComponent={renderBackdrop}
                 backgroundStyle={props.styles.container}
             >
-                <BottomSheetView style={[{ flex: 1 }, padding]}>
+                <BottomSheetView style={[{ flex: 1, paddingBottom: 16 }]}>
                     {props.itemsBasic.map((item, index) => renderItem(item, index))}
                 </BottomSheetView>
             </BottomSheet>
@@ -195,7 +211,9 @@ const nativeAndroidStyles = StyleSheet.create({
     buttonContainer: {
         borderBottomWidth: 0.5,
         borderBottomColor: "#eee",
-        height: 44
+        height: 44,
+        justifyContent: "center",
+        alignContent: "center"
     },
     text: {
         fontSize: 20,

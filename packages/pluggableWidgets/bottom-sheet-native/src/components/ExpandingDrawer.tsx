@@ -1,7 +1,7 @@
 import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
 import { Dimensions, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
-import { BottomSheetStyle, padding } from "../ui/Styles";
+import { BottomSheetStyle } from "../ui/Styles";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -145,7 +145,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 backdropComponent={renderBackdrop}
                 backgroundStyle={containerStyle}
             >
-                <BottomSheetView style={[{ flex: 1 }, padding]}>{renderContent()}</BottomSheetView>
+                <BottomSheetView style={[{ flex: 1 }]}>{renderContent()}</BottomSheetView>
             </BottomSheet>
         </Modal>
     );
