@@ -13699,7 +13699,6 @@ __metadata:
     react-native-device-info: "npm:13.0.0"
     react-native-file-viewer-turbo: "npm:^0.3.0"
     react-native-image-picker: "npm:5.0.1"
-    react-native-inappbrowser-reborn: "npm:3.4.0"
     react-native-localize: "npm:3.2.1"
     react-native-permissions: "npm:4.1.5"
     react-native-push-notification: "npm:8.1.1"
@@ -14313,7 +14312,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"opencollective-postinstall@npm:^2.0.1, opencollective-postinstall@npm:^2.0.2":
+"opencollective-postinstall@npm:^2.0.1":
   version: 2.0.3
   resolution: "opencollective-postinstall@npm:2.0.3"
   bin:
@@ -15892,18 +15891,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10/c8d8b7eb88c720569a677f56f295f0c447f8d51d64c22b12a3a8fcbdf5d10b21bca2eb8b6ea3451743798d9bee9d60d35e8322f43fcf414f836842b201d694ad
-  languageName: node
-  linkType: hard
-
-"react-native-inappbrowser-reborn@npm:3.4.0":
-  version: 3.4.0
-  resolution: "react-native-inappbrowser-reborn@npm:3.4.0"
-  dependencies:
-    invariant: "npm:^2.2.4"
-    opencollective-postinstall: "npm:^2.0.2"
-  peerDependencies:
-    react-native: ">=0.56"
-  checksum: 10/326f1100d6eb5a797e9fe0339b6adcfa2e3c320b7bad1288cb0b5e817b1e325d0548f7311fa144d28d0f1917944593b0316b9afdf08649472d94befde419152f
   languageName: node
   linkType: hard
 
