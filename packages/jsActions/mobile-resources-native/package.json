@@ -29,6 +29,7 @@
     "@react-native-community/cameraroll": "4.0.1",
     "@react-native-community/push-notification-ios": "1.10.1",
     "@react-native-firebase/messaging": "17.3.0",
+    "@swan-io/react-native-browser": "^0.4.1",
     "fbjs": "3.0.4",
     "mime": "3.0.0",
     "react-native-blob-util": "0.16.2",
