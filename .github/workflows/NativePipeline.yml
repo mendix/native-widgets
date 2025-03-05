@@ -57,11 +57,12 @@ on:
           - switch-native
           - toggle-buttons-native
           - video-player-native
-          - web-view-native
+          - web-view-native 
+  
+  # Trigger on PR
+  pull_request:
+    # branches: main
 
-# Disable trigger on every push to pull request for now
-# pull_request:
-# #   branches: [master]
 
 permissions:
   packages: write
