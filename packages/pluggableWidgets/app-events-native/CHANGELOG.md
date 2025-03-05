@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @react-native-community/netinfo from version v5.9.7 to v11.4.1.
+
 ## [4.1.0] - 2024-12-3
 
 ### Changed
