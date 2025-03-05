@@ -13,7 +13,7 @@
     "react-native-camera": "3.40.0",
     "react-native-view-shot": "4.0.3",
     "react-native-blob-util": "0.21.2",
-    "react-native-file-viewer": "2.1.5",
+    "react-native-file-viewer-turbo": "0.3.0",
     "react-native-localize": "3.2.1",
     "react-native-image-picker": "7.2.3",
     "react-native-permissions": "4.1.5",

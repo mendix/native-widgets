@@ -4066,7 +4066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/geolocation@npm:^3.4.0":
+"@react-native-community/geolocation@npm:3.4.0":
   version: 3.4.0
   resolution: "@react-native-community/geolocation@npm:3.4.0"
   peerDependencies:
@@ -13928,7 +13928,7 @@ __metadata:
   dependencies:
     "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
     "@react-native-async-storage/async-storage": "npm:2.0.0"
-    "@react-native-community/geolocation": "npm:^3.4.0"
+    "@react-native-community/geolocation": "npm:3.4.0"
     eslint: "npm:^7.32.0"
     invariant: "npm:^2.2.4"
     js-base64: "npm:~3.7.2"
