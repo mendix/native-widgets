@@ -3051,6 +3051,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@isaacs/cliui@npm:^8.0.2":
+  version: 8.0.2
+  resolution: "@isaacs/cliui@npm:8.0.2"
+  dependencies:
+    string-width: "npm:^5.1.2"
+    string-width-cjs: "npm:string-width@^4.2.0"
+    strip-ansi: "npm:^7.0.1"
+    strip-ansi-cjs: "npm:strip-ansi@^6.0.1"
+    wrap-ansi: "npm:^8.1.0"
+    wrap-ansi-cjs: "npm:wrap-ansi@^7.0.0"
+  checksum: 10/e9ed5fd27c3aec1095e3a16e0c0cf148d1fee55a38665c35f7b3f86a9b5d00d042ddaabc98e8a1cb7463b9378c15f22a94eb35e99469c201453eb8375191f243
+  languageName: node
+  linkType: hard
+
 "@isaacs/ttlcache@npm:^1.4.1":
   version: 1.4.1
   resolution: "@isaacs/ttlcache@npm:1.4.1"
@@ -3838,6 +3852,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pkgjs/parseargs@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@pkgjs/parseargs@npm:0.11.0"
+  checksum: 10/115e8ceeec6bc69dff2048b35c0ab4f8bbee12d8bb6c1f4af758604586d802b6e669dcb02dda61d078de42c2b4ddce41b3d9e726d7daa6b4b850f4adbf7333ff
+  languageName: node
+  linkType: hard
+
 "@prettier/plugin-xml@npm:2.2.0":
   version: 2.2.0
   resolution: "@prettier/plugin-xml@npm:2.2.0"
@@ -3870,13 +3891,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cameraroll@npm:4.0.1":
-  version: 4.0.1
-  resolution: "@react-native-community/cameraroll@npm:4.0.1"
+"@react-native-camera-roll/camera-roll@npm:7.4.0":
+  version: 7.4.0
+  resolution: "@react-native-camera-roll/camera-roll@npm:7.4.0"
   peerDependencies:
-    react: ^16.0
-    react-native: ">=0.57 <=0.62"
-  checksum: 10/072d441cb64c171d7fec0829c5ee8a27148baad18cd531a133d1b5497802aec062b99fff0113b2b16e2d49af31cb5eafd9e9e059e2f80890d14587f74035c6eb
+    react-native: ">=0.59"
+  checksum: 10/98e6a99bb8a93e711b8e420235558b99f0f51b21277ad89ac227519e90f2f01056d00ebeabf4539228b03cc93b0b6420b0e432977b274c348bedc153c88d9814
   languageName: node
   linkType: hard
 
@@ -4056,12 +4076,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/netinfo@npm:5.9.7":
-  version: 5.9.7
-  resolution: "@react-native-community/netinfo@npm:5.9.7"
+"@react-native-community/netinfo@npm:11.4.1":
+  version: 11.4.1
+  resolution: "@react-native-community/netinfo@npm:11.4.1"
   peerDependencies:
     react-native: ">=0.59"
-  checksum: 10/1849a77dff4dd8f426103ee054aea15aa7127e91b9e039bb12a44d2a55f6b9fb9d39bbcc4307c3f482263097c36b192cc5b12f7089d3cd721c6444baabbbfef2
+  checksum: 10/47f0d61072ca04a545784daaa44a5b1927eb788a3521dce5462184855733485c3b58c52d2a9b790b5c784e806fb342c83bc14e348cc7e55263b63d31e1862f9d
   languageName: node
   linkType: hard
 
@@ -5792,6 +5812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-regex@npm:^6.0.1":
+  version: 6.1.0
+  resolution: "ansi-regex@npm:6.1.0"
+  checksum: 10/495834a53b0856c02acd40446f7130cb0f8284f4a39afdab20d5dc42b2e198b1196119fe887beed8f9055c4ff2055e3b2f6d4641d0be018cdfb64fedf6fc1aac
+  languageName: node
+  linkType: hard
+
 "ansi-styles@npm:^3.2.0, ansi-styles@npm:^3.2.1":
   version: 3.2.1
   resolution: "ansi-styles@npm:3.2.1"
@@ -5817,6 +5844,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-styles@npm:^6.1.0":
+  version: 6.2.1
+  resolution: "ansi-styles@npm:6.2.1"
+  checksum: 10/70fdf883b704d17a5dfc9cde206e698c16bcd74e7f196ab821511651aee4f9f76c9514bdfa6ca3a27b5e49138b89cb222a28caf3afe4567570139577f991df32
+  languageName: node
+  linkType: hard
+
 "anymatch@npm:^3.0.3, anymatch@npm:~3.1.2":
   version: 3.1.2
   resolution: "anymatch@npm:3.1.2"
@@ -5834,7 +5868,7 @@ __metadata:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
-    "@react-native-community/netinfo": "npm:5.9.7"
+    "@react-native-community/netinfo": "npm:11.4.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
   languageName: unknown
@@ -6368,6 +6402,13 @@ __metadata:
   version: 0.1.0
   resolution: "base-64@npm:0.1.0"
   checksum: 10/5a42938f82372ab5392cbacc85a5a78115cbbd9dbef9f7540fa47d78763a3a8bd7d598475f0d92341f66285afd377509851a9bb5c67bbecb89686e9255d5b3eb
+  languageName: node
+  linkType: hard
+
+"base64-arraybuffer@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "base64-arraybuffer@npm:1.0.2"
+  checksum: 10/15e6400d2d028bf18be4ed97702b11418f8f8779fb8c743251c863b726638d52f69571d4cc1843224da7838abef0949c670bde46936663c45ad078e89fee5c62
   languageName: node
   linkType: hard
 
@@ -7579,12 +7620,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-spawn@npm:^7.0.6":
+  version: 7.0.6
+  resolution: "cross-spawn@npm:7.0.6"
+  dependencies:
+    path-key: "npm:^3.1.0"
+    shebang-command: "npm:^2.0.0"
+    which: "npm:^2.0.1"
+  checksum: 10/0d52657d7ae36eb130999dffff1168ec348687b48dd38e2ff59992ed916c88d328cf1d07ff4a4a10bc78de5e1c23f04b306d569e42f7a2293915c081e4dfee86
+  languageName: node
+  linkType: hard
+
 "css-declaration-sorter@npm:^6.3.0":
   version: 6.3.1
   resolution: "css-declaration-sorter@npm:6.3.1"
   peerDependencies:
     postcss: ^8.0.9
   checksum: 10/638284daf2500eb70c414e2b1742d0b696f1b484cf6758ee93cc5781730fdbe9b3895481234d8e750e2d3628d3a33da22cdf06fc02258ec59ce7d31b55086e95
+  languageName: node
+  linkType: hard
+
+"css-line-break@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "css-line-break@npm:2.1.0"
+  dependencies:
+    utrie: "npm:^1.0.2"
+  checksum: 10/e75cae40de511026228d4fa69e8d464895714f8899880b8268a446b57f0faa84b490ba1bdda5ed9e7f38f99ab947c6bc941bb505d8119c49072db079c1cacea5
   languageName: node
   linkType: hard
 
@@ -8303,6 +8364,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eastasianwidth@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "eastasianwidth@npm:0.2.0"
+  checksum: 10/9b1d3e1baefeaf7d70799db8774149cef33b97183a6addceeba0cf6b85ba23ee2686f302f14482006df32df75d32b17c509c143a3689627929e4a8efaf483952
+  languageName: node
+  linkType: hard
+
 "ee-first@npm:1.1.1":
   version: 1.1.1
   resolution: "ee-first@npm:1.1.1"
@@ -8342,6 +8410,13 @@ __metadata:
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
   checksum: 10/c72d67a6821be15ec11997877c437491c313d924306b8da5d87d2a2bcc2cec9903cb5b04ee1a088460501d8e5b44f10df82fdc93c444101a7610b80c8b6938e1
+  languageName: node
+  linkType: hard
+
+"emoji-regex@npm:^9.2.2":
+  version: 9.2.2
+  resolution: "emoji-regex@npm:9.2.2"
+  checksum: 10/915acf859cea7131dac1b2b5c9c8e35c4849e325a1d114c30adb8cd615970f6dca0e27f64f3a4949d7d6ed86ecd79a1c5c63f02e697513cddd7b5835c90948b8
   languageName: node
   linkType: hard
 
@@ -8618,17 +8693,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-string-regexp@npm:2.0.0, escape-string-regexp@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "escape-string-regexp@npm:2.0.0"
-  checksum: 10/9f8a2d5743677c16e85c810e3024d54f0c8dea6424fad3c79ef6666e81dd0846f7437f5e729dfcdac8981bc9e5294c39b4580814d114076b8d36318f46ae4395
-  languageName: node
-  linkType: hard
-
 "escape-string-regexp@npm:^1.0.5":
   version: 1.0.5
   resolution: "escape-string-regexp@npm:1.0.5"
   checksum: 10/6092fda75c63b110c706b6a9bfde8a612ad595b628f0bd2147eea1d3406723020810e591effc7db1da91d80a71a737a313567c5abb3813e8d9c71f4aa595b410
+  languageName: node
+  linkType: hard
+
+"escape-string-regexp@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "escape-string-regexp@npm:2.0.0"
+  checksum: 10/9f8a2d5743677c16e85c810e3024d54f0c8dea6424fad3c79ef6666e81dd0846f7437f5e729dfcdac8981bc9e5294c39b4580814d114076b8d36318f46ae4395
   languageName: node
   linkType: hard
 
@@ -9246,7 +9321,7 @@ __metadata:
     eslint: "npm:^7.32.0"
     querystringify: "npm:^2.1.1"
     react-native-dialog: "npm:9.2.2"
-    react-native-view-shot: "npm:3.1.2"
+    react-native-view-shot: "npm:4.0.3"
   languageName: unknown
   linkType: soft
 
@@ -9427,6 +9502,16 @@ __metadata:
   dependencies:
     for-in: "npm:^1.0.1"
   checksum: 10/233238f6e9060f61295a7f7c7e3e9de11aaef57e82a108e7f350dc92ae84fe2189848077ac4b8db47fd8edd45337ed8d9f66bd0b1efa4a6a1b3f38aa21b7ab2e
+  languageName: node
+  linkType: hard
+
+"foreground-child@npm:^3.1.0":
+  version: 3.3.1
+  resolution: "foreground-child@npm:3.3.1"
+  dependencies:
+    cross-spawn: "npm:^7.0.6"
+    signal-exit: "npm:^4.0.1"
+  checksum: 10/427b33f997a98073c0424e5c07169264a62cda806d8d2ded159b5b903fdfc8f0a1457e06b5fc35506497acb3f1e353f025edee796300209ac6231e80edece835
   languageName: node
   linkType: hard
 
@@ -9774,6 +9859,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:^10.3.10":
+  version: 10.4.5
+  resolution: "glob@npm:10.4.5"
+  dependencies:
+    foreground-child: "npm:^3.1.0"
+    jackspeak: "npm:^3.1.2"
+    minimatch: "npm:^9.0.4"
+    minipass: "npm:^7.1.2"
+    package-json-from-dist: "npm:^1.0.0"
+    path-scurry: "npm:^1.11.1"
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: 10/698dfe11828b7efd0514cd11e573eaed26b2dff611f0400907281ce3eab0c1e56143ef9b35adc7c77ecc71fba74717b510c7c223d34ca8a98ec81777b293d4ac
+  languageName: node
+  linkType: hard
+
 "glob@npm:^6.0.1":
   version: 6.0.4
   resolution: "glob@npm:6.0.4"
@@ -10083,6 +10184,16 @@ __metadata:
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: 10/034d74029dcca544a34fb6135e98d427acd73019796ffc17383eaa3ec2fe1c0471dcbbc8f8ed39e46e86d43ccd753a160631615e4048285e313569609b66d5b7
+  languageName: node
+  linkType: hard
+
+"html2canvas@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "html2canvas@npm:1.4.1"
+  dependencies:
+    css-line-break: "npm:^2.1.0"
+    text-segmentation: "npm:^1.0.3"
+  checksum: 10/595790810557a1d4287f07b6ead49aed4f169f08eb00e20c1f030b93344003e84797d28cd8a220e8ec1b78641d460ca6add11b8531960725526f11a7b9fa9900
   languageName: node
   linkType: hard
 
@@ -10921,6 +11032,19 @@ __metadata:
     html-escaper: "npm:^2.0.0"
     istanbul-lib-report: "npm:^3.0.0"
   checksum: 10/1fc20a133f6dbd846e7bf3dc6d85edf2b3c047c47142cd796c38717aef976195d2c0fb0399dd609c3ffac2ca43244dc15ce4ac34064d21e2d34d387df747dafb
+  languageName: node
+  linkType: hard
+
+"jackspeak@npm:^3.1.2":
+  version: 3.4.3
+  resolution: "jackspeak@npm:3.4.3"
+  dependencies:
+    "@isaacs/cliui": "npm:^8.0.2"
+    "@pkgjs/parseargs": "npm:^0.11.0"
+  dependenciesMeta:
+    "@pkgjs/parseargs":
+      optional: true
+  checksum: 10/96f8786eaab98e4bf5b2a5d6d9588ea46c4d06bbc4f2eb861fdd7b6b182b16f71d8a70e79820f335d52653b16d4843b29dd9cdcf38ae80406756db9199497cf3
   languageName: node
   linkType: hard
 
@@ -13303,6 +13427,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^9.0.4":
+  version: 9.0.5
+  resolution: "minimatch@npm:9.0.5"
+  dependencies:
+    brace-expansion: "npm:^2.0.1"
+  checksum: 10/dd6a8927b063aca6d910b119e1f2df6d2ce7d36eab91de83167dd136bb85e1ebff97b0d3de1cb08bd1f7e018ca170b4962479fefab5b2a69e2ae12cb2edc8348
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:~3.0.4":
   version: 3.0.8
   resolution: "minimatch@npm:3.0.8"
@@ -13404,7 +13537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass@npm:^5.0.0 || ^6.0.2 || ^7.0.0":
+"minipass@npm:^5.0.0 || ^6.0.2 || ^7.0.0, minipass@npm:^7.1.2":
   version: 7.1.2
   resolution: "minipass@npm:7.1.2"
   checksum: 10/c25f0ee8196d8e6036661104bacd743785b2599a21de5c516b32b3fa2b83113ac89a2358465bc04956baab37ffb956ae43be679b2262bf7be15fce467ccd7950
@@ -13684,7 +13817,7 @@ __metadata:
   resolution: "mobile-resources-native@workspace:packages/jsActions/mobile-resources-native"
   dependencies:
     "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
-    "@react-native-community/cameraroll": "npm:4.0.1"
+    "@react-native-camera-roll/camera-roll": "npm:7.4.0"
     "@react-native-community/push-notification-ios": "npm:1.10.1"
     "@react-native-firebase/messaging": "npm:17.3.0"
     "@swan-io/react-native-browser": "npm:^0.4.1"
@@ -13695,10 +13828,10 @@ __metadata:
     fbjs: "npm:3.0.4"
     mendix: "npm:~10.0.9976"
     mime: "npm:3.0.0"
-    react-native-blob-util: "npm:0.16.2"
+    react-native-blob-util: "npm:0.21.2"
     react-native-device-info: "npm:13.0.0"
     react-native-file-viewer-turbo: "npm:^0.3.0"
-    react-native-image-picker: "npm:5.0.1"
+    react-native-image-picker: "npm:7.2.3"
     react-native-localize: "npm:3.2.1"
     react-native-permissions: "npm:4.1.5"
     react-native-push-notification: "npm:8.1.1"
@@ -14466,6 +14599,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"package-json-from-dist@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "package-json-from-dist@npm:1.0.1"
+  checksum: 10/58ee9538f2f762988433da00e26acc788036914d57c71c246bf0be1b60cdbd77dd60b6a3e1a30465f0b248aeb80079e0b34cb6050b1dfa18c06953bb1cbc7602
+  languageName: node
+  linkType: hard
+
 "package-name-regex@npm:~2.0.6":
   version: 2.0.6
   resolution: "package-name-regex@npm:2.0.6"
@@ -14606,7 +14746,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-scurry@npm:^1.6.1":
+"path-scurry@npm:^1.11.1, path-scurry@npm:^1.6.1":
   version: 1.11.1
   resolution: "path-scurry@npm:1.11.1"
   dependencies:
@@ -15779,16 +15919,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-blob-util@npm:0.16.2":
-  version: 0.16.2
-  resolution: "react-native-blob-util@npm:0.16.2"
+"react-native-blob-util@npm:0.21.2":
+  version: 0.21.2
+  resolution: "react-native-blob-util@npm:0.21.2"
   dependencies:
     base-64: "npm:0.1.0"
-    glob: "npm:^7.1.6"
+    glob: "npm:^10.3.10"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/90845488a3a832546472378102c9ab7aff9918e74186dd103d1fb69528cbc8df38baa22dcdd25716eb048ef9c1df5c80ab71aa194e6c2070698e9e991636804c
+  checksum: 10/8ef768e795edaf7a02eaf84be47adf1461294cd8e9a91f5a015625d2bd1759bb2b2b1203deac065771c49f9a592874953528831dfbae8553056389deb74afc81
   languageName: node
   linkType: hard
 
@@ -15876,13 +16016,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-image-picker@npm:5.0.1":
-  version: 5.0.1
-  resolution: "react-native-image-picker@npm:5.0.1"
+"react-native-image-picker@npm:7.2.3":
+  version: 7.2.3
+  resolution: "react-native-image-picker@npm:7.2.3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/c8d8b7eb88c720569a677f56f295f0c447f8d51d64c22b12a3a8fcbdf5d10b21bca2eb8b6ea3451743798d9bee9d60d35e8322f43fcf414f836842b201d694ad
+  checksum: 10/62c6cc3c88edb29f2b17b4cdaa098b32efd23a5faf4380171c2ccfb1706c732a50553f2ce447e1df1ea48197dde3af42dd67584c60e2c4577ee1b7769152475d
   languageName: node
   linkType: hard
 
@@ -16122,26 +16262,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-view-shot@npm:3.1.2":
-  version: 3.1.2
-  resolution: "react-native-view-shot@npm:3.1.2"
+"react-native-view-shot@npm:4.0.3":
+  version: 4.0.3
+  resolution: "react-native-view-shot@npm:4.0.3"
+  dependencies:
+    html2canvas: "npm:^1.4.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/da3280c3615651b19a86c87b6aa2efb5f2cf8d4bcd9b50c47bd7668de50190a360e9ab0dcf0b8c671b9d4eaf3ef5a15b3a37796af54361dc4cfbf5c4f92019a5
+  checksum: 10/5e4f133a69754cd5fd29bf762bfa5bf399f4c0b192972808cf4194e4775ac5d4415e01079e52be7d31bc5b25fe7efbd5e95f4a33967bab0f36725d4cc8903345
   languageName: node
   linkType: hard
 
-"react-native-webview@npm:11.26.1":
-  version: 11.26.1
-  resolution: "react-native-webview@npm:11.26.1"
+"react-native-webview@npm:13.13.2":
+  version: 13.13.2
+  resolution: "react-native-webview@npm:13.13.2"
   dependencies:
-    escape-string-regexp: "npm:2.0.0"
+    escape-string-regexp: "npm:^4.0.0"
     invariant: "npm:2.2.4"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/d64123c73e7795096434135a1bec2aef5caf71a4c1c95b1416cc528bc55f5c4a89df2d311ad3637594f120e864b5798e2c4ea4eb7153bf938ad167c54e7a7e61
+  checksum: 10/1e0e7b036910c751ad7ae95da37694a808ad92aff3645e7eee88f7969ed721b18e4c62a436129b1766135b2262d6568198eb83ef1e8cc1e68ca6cd708f6dc33f
   languageName: node
   linkType: hard
 
@@ -17347,6 +17489,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"signal-exit@npm:^4.0.1":
+  version: 4.1.0
+  resolution: "signal-exit@npm:4.1.0"
+  checksum: 10/c9fa63bbbd7431066174a48ba2dd9986dfd930c3a8b59de9c29d7b6854ec1c12a80d15310869ea5166d413b99f041bfa3dd80a7947bcd44ea8e6eb3ffeabfa1f
+  languageName: node
+  linkType: hard
+
 "signature-native@workspace:packages/pluggableWidgets/signature-native":
   version: 0.0.0-use.local
   resolution: "signature-native@workspace:packages/pluggableWidgets/signature-native"
@@ -17357,7 +17506,7 @@ __metadata:
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
     react-native-signature-canvas: "npm:3.4.0"
-    react-native-webview: "npm:11.26.1"
+    react-native-webview: "npm:13.13.2"
   languageName: unknown
   linkType: soft
 
@@ -17719,7 +17868,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string-width@npm:^1.0.2 || 2 || 3 || 4, string-width@npm:^4.1.0, string-width@npm:^4.2.0, string-width@npm:^4.2.3":
+"string-width-cjs@npm:string-width@^4.2.0, string-width@npm:^1.0.2 || 2 || 3 || 4, string-width@npm:^4.1.0, string-width@npm:^4.2.0, string-width@npm:^4.2.3":
   version: 4.2.3
   resolution: "string-width@npm:4.2.3"
   dependencies:
@@ -17727,6 +17876,17 @@ __metadata:
     is-fullwidth-code-point: "npm:^3.0.0"
     strip-ansi: "npm:^6.0.1"
   checksum: 10/e52c10dc3fbfcd6c3a15f159f54a90024241d0f149cf8aed2982a2d801d2e64df0bf1dc351cf8e95c3319323f9f220c16e740b06faecd53e2462df1d2b5443fb
+  languageName: node
+  linkType: hard
+
+"string-width@npm:^5.0.1, string-width@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "string-width@npm:5.1.2"
+  dependencies:
+    eastasianwidth: "npm:^0.2.0"
+    emoji-regex: "npm:^9.2.2"
+    strip-ansi: "npm:^7.0.1"
+  checksum: 10/7369deaa29f21dda9a438686154b62c2c5f661f8dda60449088f9f980196f7908fc39fdd1803e3e01541970287cf5deae336798337e9319a7055af89dafa7193
   languageName: node
   linkType: hard
 
@@ -17808,6 +17968,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1, strip-ansi@npm:^6.0.0, strip-ansi@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "strip-ansi@npm:6.0.1"
+  dependencies:
+    ansi-regex: "npm:^5.0.1"
+  checksum: 10/ae3b5436d34fadeb6096367626ce987057713c566e1e7768818797e00ac5d62023d0f198c4e681eae9e20701721980b26a64a8f5b91238869592a9c6800719a2
+  languageName: node
+  linkType: hard
+
 "strip-ansi@npm:^5.0.0, strip-ansi@npm:^5.2.0":
   version: 5.2.0
   resolution: "strip-ansi@npm:5.2.0"
@@ -17817,12 +17986,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-ansi@npm:^6.0.0, strip-ansi@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "strip-ansi@npm:6.0.1"
+"strip-ansi@npm:^7.0.1":
+  version: 7.1.0
+  resolution: "strip-ansi@npm:7.1.0"
   dependencies:
-    ansi-regex: "npm:^5.0.1"
-  checksum: 10/ae3b5436d34fadeb6096367626ce987057713c566e1e7768818797e00ac5d62023d0f198c4e681eae9e20701721980b26a64a8f5b91238869592a9c6800719a2
+    ansi-regex: "npm:^6.0.1"
+  checksum: 10/475f53e9c44375d6e72807284024ac5d668ee1d06010740dec0b9744f2ddf47de8d7151f80e5f6190fc8f384e802fdf9504b76a7e9020c9faee7103623338be2
   languageName: node
   linkType: hard
 
@@ -18094,6 +18263,15 @@ __metadata:
   version: 2.4.0
   resolution: "text-extensions@npm:2.4.0"
   checksum: 10/9bdbc9959e004ccc86a6ec076d6c5bb6765978263e9d0d5febb640d7675c09919ea912f3fe9d50b68c3c7c43cc865610a7cb24954343abb31f74c205fbae4e45
+  languageName: node
+  linkType: hard
+
+"text-segmentation@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "text-segmentation@npm:1.0.3"
+  dependencies:
+    utrie: "npm:^1.0.2"
+  checksum: 10/86191de83f09b96f356628c3dbaf6d281eda46a4dd4c94c3827495428871b9dd44ead4ef4cdf06a188b08a3b83e3943c5911841422b55286b121ba9e04c846dd
   languageName: node
   linkType: hard
 
@@ -18690,6 +18868,15 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: 10/5d6949693d58cb2e636a84f3ee1c6e7b2f9c16cb1d42d0ecb386d8c025c69e327205aa1c69e2868cc06a01e5e20681fbba55a4e0ed0cce913d60334024eae798
+  languageName: node
+  linkType: hard
+
+"utrie@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "utrie@npm:1.0.2"
+  dependencies:
+    base64-arraybuffer: "npm:^1.0.2"
+  checksum: 10/0c9458380bf3113f425a268e3d605aef163bfbaea62bf24de517b62b6e6744394d8ef1cdd9b07423359aec5ed402baab4bb2c5beec64f674ec635dc2f8dbd4bf
   languageName: node
   linkType: hard
 
@@ -19315,7 +19502,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
-    react-native-webview: "npm:11.26.1"
+    react-native-webview: "npm:13.13.2"
   languageName: unknown
   linkType: soft
 
@@ -19448,6 +19635,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0, wrap-ansi@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "wrap-ansi@npm:7.0.0"
+  dependencies:
+    ansi-styles: "npm:^4.0.0"
+    string-width: "npm:^4.1.0"
+    strip-ansi: "npm:^6.0.0"
+  checksum: 10/cebdaeca3a6880da410f75209e68cd05428580de5ad24535f22696d7d9cab134d1f8498599f344c3cf0fb37c1715807a183778d8c648d6cc0cb5ff2bb4236540
+  languageName: node
+  linkType: hard
+
 "wrap-ansi@npm:^6.2.0":
   version: 6.2.0
   resolution: "wrap-ansi@npm:6.2.0"
@@ -19459,14 +19657,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrap-ansi@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "wrap-ansi@npm:7.0.0"
+"wrap-ansi@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "wrap-ansi@npm:8.1.0"
   dependencies:
-    ansi-styles: "npm:^4.0.0"
-    string-width: "npm:^4.1.0"
-    strip-ansi: "npm:^6.0.0"
-  checksum: 10/cebdaeca3a6880da410f75209e68cd05428580de5ad24535f22696d7d9cab134d1f8498599f344c3cf0fb37c1715807a183778d8c648d6cc0cb5ff2bb4236540
+    ansi-styles: "npm:^6.1.0"
+    string-width: "npm:^5.0.1"
+    strip-ansi: "npm:^7.0.1"
+  checksum: 10/7b1e4b35e9bb2312d2ee9ee7dc95b8cb5f8b4b5a89f7dde5543fe66c1e3715663094defa50d75454ac900bd210f702d575f15f3f17fa9ec0291806d2578d1ddf
   languageName: node
   linkType: hard
 
