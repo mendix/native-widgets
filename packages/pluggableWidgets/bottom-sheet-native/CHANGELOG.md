@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Rewrote all bottomsheet widgets (customModalSheet, ExpandingDrawer, and NativeBottomSheet) using @gorhom/bottom-sheet.
+
 ## [4.0.1] - 2025-2-7
 
 ### Changed
