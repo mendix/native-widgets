@@ -75,12 +75,20 @@ jobs:
     steps:
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-
+        with:
+          fetch-depth: 2 # Fetch the latest two commits and its parent commit
+  
       - name: "Determine scope"
         id: scope
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+            if git cat-file -e ${{ github.event.before }} 2>/dev/null; then
+              changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+            else
+              echo "Previous commit not found, using HEAD~1 as fallback"
+              changed_files=$(git diff --name-only HEAD~1 ${{ github.sha }})
+            fi
+
             selected_workspaces=""
             for file in $changed_files; do
               if [[ $file == packages/pluggableWidgets/* ]]; then
@@ -90,6 +98,7 @@ jobs:
                 fi
               fi
             done
+
             if [[ -n "$selected_workspaces" ]]; then
               echo "scope=--all --include '$selected_workspaces'" >> $GITHUB_OUTPUT
               echo "widgets=[\"$selected_workspaces\"]" >> $GITHUB_OUTPUT
