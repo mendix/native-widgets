@@ -1,7 +1,7 @@
+import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
+import { Dimensions, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
-import { createElement, ReactNode, useCallback, useState, ReactElement, Children } from "react";
-import BottomSheet from "reanimated-bottom-sheet";
-import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -11,22 +11,25 @@ interface ExpandingDrawerProps {
     onClose?: () => void;
     styles: BottomSheetStyle;
 }
+let lastIndexRef = -1;
+
+const OFFSET_VALUE = 48;
 
 export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     const [heightContent, setHeightContent] = useState(0);
     const [heightHeader, setHeightHeader] = useState(0);
     const [fullscreenHeight, setFullscreenHeight] = useState(0);
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(true);
+    const bottomSheetRef = useRef<BottomSheet>(null);
+
     const maxHeight = Dimensions.get("screen").height;
     const isSmallContentValid = Children.count(props.smallContent) > 0;
     const isLargeContentValid = Children.count(props.largeContent) > 0;
 
     const onLayoutHandlerHeader = (event: LayoutChangeEvent): void => {
         const height = event.nativeEvent.layout.height;
-        if (height > 0) {
-            if (height <= maxHeight) {
-                setHeightHeader(height);
-            }
+        if (height > 0 && height <= maxHeight) {
+            setHeightHeader(height);
         }
     };
 
@@ -48,13 +51,24 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         }
     };
 
+    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
+        <Pressable style={{ flex: 1 }} onPress={close}>
+            <BottomSheetBackdrop
+                {...backdropProps}
+                pressBehavior={"close"}
+                opacity={0.3}
+                appearsOnIndex={0}
+                disappearsOnIndex={-1}
+            />
+        </Pressable>
+    );
+
+    const containerStyle =
+        props.fullscreenContent && isOpen ? props.styles.containerWhenExpandedFullscreen : props.styles.container;
+
     const renderContent = useCallback((): ReactNode => {
         const content = (
-            <View
-                onLayout={onLayoutHandlerContent}
-                style={!props.fullscreenContent ? props.styles.container : {}}
-                pointerEvents="box-none"
-            >
+            <View onLayout={onLayoutHandlerContent} pointerEvents="box-none">
                 <View
                     onLayout={onLayoutHandlerHeader}
                     style={!isSmallContentValid ? { height: 20 } : {}}
@@ -65,15 +79,10 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 {props.largeContent}
             </View>
         );
+
         if (props.fullscreenContent) {
             return (
-                <View
-                    style={[
-                        isOpen ? props.styles.containerWhenExpandedFullscreen : props.styles.container,
-                        { height: fullscreenHeight }
-                    ]}
-                    pointerEvents="box-none"
-                >
+                <View style={[{ height: fullscreenHeight }]} pointerEvents="box-none">
                     {content}
                     {props.fullscreenContent}
                 </View>
@@ -100,29 +109,44 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
             : props.fullscreenContent
             ? [fullscreenHeight, heightHeader]
             : isLargeContentValid
-            ? [heightContent, heightHeader]
+            ? [heightContent + OFFSET_VALUE, heightHeader]
             : [heightHeader];
 
+    const collapsedIndex = snapPoints.length - 1;
+
+    const onChange = (index: number) => {
+        const hasOpened = lastIndexRef === -1 && index === 0;
+        const hasClosed = index === -1;
+
+        if (hasOpened) {
+            props.onOpen?.();
+            setIsOpen(true);
+        }
+        if (hasClosed) {
+            props.onClose?.();
+            setIsOpen(false);
+        }
+        lastIndexRef = index;
+    };
+
+    const close = () => {
+        bottomSheetRef.current?.close();
+    };
+
     return (
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
-            {snapPoints.length > 1 && (
-                <BottomSheet
-                    enabledManualSnapping={false}
-                    enabledBottomInitialAnimation
-                    enabledContentTapInteraction={false}
-                    enabledHeaderGestureInteraction={false}
-                    snapPoints={snapPoints}
-                    initialSnap={snapPoints.length - 1}
-                    renderContent={renderContent}
-                    enabledInnerScrolling={false}
-                    onOpenStart={props.onOpen}
-                    onOpenEnd={() => setIsOpen(true)}
-                    onCloseStart={() => {
-                        setIsOpen(false);
-                        props.onClose?.();
-                    }}
-                />
-            )}
-        </View>
+        <Modal onRequestClose={close} transparent visible={isOpen}>
+            <BottomSheet
+                ref={bottomSheetRef}
+                index={isOpen ? collapsedIndex : -1}
+                snapPoints={snapPoints}
+                onClose={() => setIsOpen(false)}
+                onChange={onChange}
+                animateOnMount
+                backdropComponent={renderBackdrop}
+                backgroundStyle={containerStyle}
+            >
+                <BottomSheetView style={[{ flex: 1 }]}>{renderContent()}</BottomSheetView>
+            </BottomSheet>
+        </Modal>
     );
 };
