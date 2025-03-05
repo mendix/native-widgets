@@ -7,7 +7,3 @@ appId: "${APP_ID}"
     text: "Activity indicator"
 - assertVisible:
     text: "Default"
-# - assertVisible:
-#     id: "activityIndicatorDefault"
-# - takeScreenshot:
-#     path: "maestro/images/actual/${PLATFORM}/activity_indicator"
