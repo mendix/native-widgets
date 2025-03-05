@@ -9,7 +9,7 @@ import type {
     watchPosition,
     clearWatch,
     stopObserving
-} from "react-native-geolocation-service";
+} from "@react-native-community/geolocation";
 
 type GeolocationServiceStatic = {
     getCurrentPosition: typeof getCurrentPosition;

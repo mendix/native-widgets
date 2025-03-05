@@ -4046,13 +4046,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/geolocation@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@react-native-community/geolocation@npm:2.0.2"
+"@react-native-community/geolocation@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@react-native-community/geolocation@npm:3.4.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/4722abdbc963cd392c38d6712612a55cf6c933e6c87d523196ca62761ecd9764dd7a6906c7fa4850ea5a2ea35b1997fd09322aff6eac5690d335692c8e83d915
+  checksum: 10/e8f9c487dbea6ae0540185f07d92aca68a1efc823ef572492776b7533be9eebe0234374b9a34f1837899a15e98dbd7673e906380442c19313405bccf7f3e42b1
   languageName: node
   linkType: hard
 
@@ -13795,13 +13795,12 @@ __metadata:
   dependencies:
     "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
     "@react-native-async-storage/async-storage": "npm:2.0.0"
-    "@react-native-community/geolocation": "npm:2.0.2"
+    "@react-native-community/geolocation": "npm:^3.4.0"
     eslint: "npm:^7.32.0"
     invariant: "npm:^2.2.4"
     js-base64: "npm:~3.7.2"
     mendix: "npm:~10.0.9976"
     react-native-geocoder: "npm:0.5.0"
-    react-native-geolocation-service: "npm:5.2.0"
     rollup: "npm:^2.79.2"
   languageName: unknown
   linkType: soft
@@ -15858,13 +15857,6 @@ __metadata:
   version: 0.5.0
   resolution: "react-native-geocoder@npm:0.5.0"
   checksum: 10/95f11aa4e19d0ad348f6bc54314fb8742dc7bc923a8b755ec80c15995b0968b2e0efe08e4ebe8459024a9638f2a814ff8aeb374deea5edc7f7840c7ffd54911b
-  languageName: node
-  linkType: hard
-
-"react-native-geolocation-service@npm:5.2.0":
-  version: 5.2.0
-  resolution: "react-native-geolocation-service@npm:5.2.0"
-  checksum: 10/4562ba419c63fa2f4c375ad3aeb3c3f845f5814c7f80fa4eb7f5b875c9296d2615f06a0cd576cf55553baa509007ab2f439fb1f2f2fceb47df15644d7a16ab21
   languageName: node
   linkType: hard
 

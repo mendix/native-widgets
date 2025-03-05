@@ -23,7 +23,7 @@ export async function RequestLocationPermission(): Promise<boolean> {
     let geolocationModule:
         | Geolocation
         | GeolocationStatic
-        | typeof import("react-native-geolocation-service")
+        | typeof import("@react-native-community/geolocation")
         | undefined;
 
     const hasPermissionIOS = async (): Promise<boolean> => {
@@ -142,7 +142,7 @@ export async function RequestLocationPermission(): Promise<boolean> {
         }
 
         if (reactNativeModule.NativeModules.RNFusedLocation) {
-            geolocationModule = (await import("react-native-geolocation-service")).default;
+            geolocationModule = (await import("@react-native-community/geolocation")).default;
             return hasLocationPermission();
         } else if (reactNativeModule.NativeModules.RNCGeolocation) {
             geolocationModule = Geolocation;

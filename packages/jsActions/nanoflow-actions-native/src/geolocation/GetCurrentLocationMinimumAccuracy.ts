@@ -48,7 +48,7 @@ export async function GetCurrentLocationMinimumAccuracy(
     let geolocationModule:
         | Geolocation
         | GeolocationStatic
-        | typeof import("react-native-geolocation-service")
+        | typeof import("@react-native-community/geolocation")
         | undefined;
 
     if (navigator && navigator.product === "ReactNative") {
@@ -59,7 +59,7 @@ export async function GetCurrentLocationMinimumAccuracy(
         }
 
         if (reactNativeModule.NativeModules.RNFusedLocation) {
-            geolocationModule = (await import("react-native-geolocation-service")).default;
+            geolocationModule = (await import("@react-native-community/geolocation")).default;
         } else if (reactNativeModule.NativeModules.RNCGeolocation) {
             geolocationModule = Geolocation;
         } else {
