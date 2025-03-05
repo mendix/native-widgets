@@ -1,0 +1,16 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Barcode scanner"
+- assertVisible:
+    id: "text2" # History:
+- tapOn:
+    text: "Scan"
+- extendedWaitUntil:
+    visible: 
+        text: "Scan"
+    timeout: 30000

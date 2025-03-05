@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn: "App events"
+- assertVisible:
+    text: "Event: Load"
+- assertVisible:
+    text: "Event: Timer 2s"
+- assertVisible:
+    text: "Event: Interval 10s"
+    delay: 15000

@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "Q"
+- tapOn:
+    text: "QR code"
+- assertVisible:
+    id: "qRCodeNormal"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/qr_code"

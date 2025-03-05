@@ -2,8 +2,7 @@
     "extends": "@mendix/pluggable-widgets-tools/configs/tsconfig.base",
     "baseUrl": "./",
     "compilerOptions": {
-        "typeRoots": ["node_modules/@types", "../../../node_modules/@types"],
-        "types": ["jest-image-snapshot"]
+        "typeRoots": ["node_modules/@types", "../../../node_modules/@types"]
     },
     "include": ["./src", "./typings"]
 }

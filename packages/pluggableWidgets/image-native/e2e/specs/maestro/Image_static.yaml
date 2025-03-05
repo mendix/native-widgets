@@ -1,0 +1,14 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "I"
+- tapOn:
+    text: "Image"
+- tapOn:
+    text: "Image static"
+- assertVisible:
+    text: "Image Static"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/image_static"

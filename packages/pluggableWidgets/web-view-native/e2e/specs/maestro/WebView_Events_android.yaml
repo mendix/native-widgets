@@ -1,0 +1,21 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "W"
+- tapOn: 
+    text: "Web view"
+- tapOn: 
+    text: "Events"
+- assertVisible:
+    text: "URL loaded"
+    optional: true
+- tapOn:
+    text: "OK"
+    optional: true
+- tapOn:
+    text: "Invalid URL"
+- assertVisible:
+    text: "Error"
+    optional: true

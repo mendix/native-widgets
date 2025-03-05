@@ -1,0 +1,25 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Badge"
+- tapOn:
+    id: "textBoxBadge"
+- inputText:
+    text: "Maestro"
+- pressKey: Enter
+- assertVisible:
+    text: "Maestro"
+    index: 1
+# does not render the badge with visibility set as false
+- assertNotVisible:
+    id: "badgeNoVisibility"
+# renders the badge with actions
+- tapOn:
+    text: "Maestro"
+    index: 2
+- assertVisible:
+    text: "Action test: Maestro"

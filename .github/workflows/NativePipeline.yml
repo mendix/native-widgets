@@ -42,10 +42,10 @@ on:
           - line-chart-native
           - listview-swipe-native
           - maps-native
-          - notifications-native
           - pie-doughnut-chart-native
           - popup-menu-native
           - progress-bar-native
+          - progress-circle-native
           - qr-code-native
           - radio-buttons-native
           - range-slider-native
@@ -59,8 +59,9 @@ on:
           - video-player-native
           - web-view-native
 
-  pull_request:
-  #   branches: [master]
+# Disable trigger on every push to pull request for now
+# pull_request:
+# #   branches: [master]
 
 permissions:
   packages: write
@@ -70,24 +71,49 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       scope: ${{ steps.scope.outputs.scope }}
+      widgets: ${{ steps.scope.outputs.widgets }}
     steps:
+      - name: "Check out code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
       - name: "Determine scope"
         id: scope
         run: |
-          if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
-            selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
-            echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
-          else
-            if [ "${{ github.event_name }}" == "pull_request" ]; then
-              echo "scope=--since --include '*-native'" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+            selected_workspaces=""
+            for file in $changed_files; do
+              if [[ $file == packages/pluggableWidgets/* ]]; then
+                widget=$(echo $file | cut -d'/' -f3)
+                if [[ ! $selected_workspaces =~ $widget ]]; then
+                  selected_workspaces="$selected_workspaces $widget"
+                fi
+              fi
+            done
+            if [[ -n "$selected_workspaces" ]]; then
+              echo "scope=--all --include '$selected_workspaces'" >> $GITHUB_OUTPUT
+              echo "widgets=[\"$selected_workspaces\"]" >> $GITHUB_OUTPUT
             else
-              echo "scope=--all--include '*-native'" >> $GITHUB_OUTPUT
+              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
+              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
+              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
+            fi
+          else
+            if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
+              selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
+              echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
+              echo "widgets=[\"${{ github.event.inputs.workspace }}\"]" >> $GITHUB_OUTPUT
+            else
+              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
+              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
+              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
             fi
           fi
 
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
+          echo "Widgets are: ${{ steps.scope.outputs.widgets }}"
 
   mendix-version:
     runs-on: ubuntu-22.04
@@ -95,7 +121,7 @@ jobs:
       mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: "Get Mendix version from JSON"
         id: get-mendix-version
         uses: notiz-dev/github-action-json-property@7a701887f4b568b23eb7b78bb0fc49aaeb1b68d3 # v0.2.0
@@ -129,7 +155,7 @@ jobs:
           docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
           echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         if: ${{ env.IMAGE_MISSING != 0 }}
       - name: "Build mxbuild image"
         if: ${{ env.IMAGE_MISSING != 0 }}
@@ -149,16 +175,19 @@ jobs:
       contents: read
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
       - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:
           node-version-file: .nvmrc
           cache: yarn
       - name: "Install dependencies"
         run: yarn install --immutable
+      - name: "Force rebuild resources"
+        run: |
+          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build # Ensure all resources are rebuilt
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
       - name: "Run build for development"
@@ -166,7 +195,7 @@ jobs:
         env:
           NODE_OPTIONS: --max_old_space_size=6144
       - name: "Upload resources artifact"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
           name: resources
           path: |
@@ -221,10 +250,11 @@ jobs:
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
             mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
-      - name: "Build test project"
-        run: mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      - name: "Force rebuild test project"
+        run: |
+          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
           name: mda
           path: automation.mda
@@ -238,7 +268,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: "Download deployment package"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -258,7 +288,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -273,13 +303,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: "Check out Native Template for Native Components Test Project"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
           ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           path: native-widgets
       - name: "Download Android bundle and assets"
@@ -288,11 +318,18 @@ jobs:
           name: android-bundle
           path: bundles/android
       - name: "Set up Node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
           cache-dependency-path: native-template/package-lock.json
+      - name: "Cache Android Build"
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+        with:
+          path: native-template/android/app/build
+          key: ${{ runner.os }}-android-build-${{ hashFiles('native-template/android/app/src/**/*.java', 'native-template/android/app/src/**/*.kt', 'native-template/android/app/build.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-android-build-
       - name: "Copy files to the right location"
         run: |
           mv bundles/android/index.android.bundle native-template/android/app/src/main/assets/index.android.bundle
@@ -303,32 +340,42 @@ jobs:
       - name: "Install dependencies"
         working-directory: native-template
         run: npm i
-      - name: "Setup JDK 17"
-        uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
+      - name: "Setup JDK "
+        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 #v4
         with:
-          java-version: 17
+          java-version: 21
           distribution: temurin
           cache: gradle
+
       - name: "Build Android app"
         working-directory: native-template/android
-        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
+        run: |
+          ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
+          if [ $? -ne 0 ]; then
+            echo "Build failed!"
+            exit 1
+          fi
+      - name: "List APK files"
+        run: |
+          echo "Listing APK files in the output directory:"
+          ls -R native-template/android/app/build/outputs/apk/
       - name: "Archive Android app"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
           name: android-app
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
     needs: [ios-bundle]
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       - name: "Check out Native Template for Native Components Test Project"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
           ref: ${{ github.event.inputs.nt_branch || 'master' }}
           path: native-template
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           path: native-widgets
       - name: "Download iOS bundle and assets"
@@ -337,11 +384,18 @@ jobs:
           name: ios-bundle
           path: bundles/ios
       - name: "Set up Node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
           cache-dependency-path: native-template/package-lock.json
+      - name: "Cache iOS Build"
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+        with:
+          path: native-template/ios/build
+          key: ${{ runner.os }}-ios-build-${{ hashFiles('native-template/ios/**/*.swift', 'native-template/ios/**/*.h', 'native-template/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-ios-build-
       - name: "Copy files to the right location"
         run: |
           mv bundles/ios/index.ios.bundle native-template/ios/Bundle/index.ios.bundle
@@ -353,7 +407,7 @@ jobs:
         run: npm i
 
       - name: "Setup Pods cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
         with:
           path: native-template/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -366,50 +420,25 @@ jobs:
         working-directory: native-template/ios
         run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
       - name: "Archive iOS app"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
-  android-avd:
-    runs-on: macos-12
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-      - name: "Setup AVD cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
-        id: avd-cache
-        with:
-          path: |
-            /Users/runner/.android/avd/*
-            /Users/runner/.android/adb*
-            /Users/runner/Library/Android/sdk/system-images/**/*
-          key: pixel_30_x86_64_default_3core_and_system_images
-      - name: "Create AVD and generate snapshot for caching"
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # v2.30.1
-        with:
-          api-level: 30
-          target: default
-          arch: x86_64
-          profile: pixel
-          cores: 3
-          ram-size: 4096M
-          heap-size: 512M
-          avd-name: NATIVE_pixel_30
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: echo "AVD created"
+
   android-tests:
-    needs: [scope, mendix-version, project, android-app, android-avd]
-    runs-on: macos-12
+    needs: [scope, mendix-version, project, android-app]
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        widget: ${{ fromJson(needs.scope.outputs.widgets) }}
+      fail-fast: false
     steps:
       - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
       - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -419,148 +448,279 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
-        with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      
+      # USED ONLY FOR TESTING PURPOSE - TO SKIP APP BUILD PART AND DOWNLOAD FROM SPECIFIC RUN
+      # - name: "Install GitHub CLI"
+      #   run: |
+      #     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+      #     sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+      #     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+      #     sudo apt update
+      #     sudo apt install gh
+      # - name: "Authenticate GitHub CLI"
+      #   run: |
+      #     unset GITHUB_TOKEN
+      #     echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+      # - name: "Fetch artifacts from run 676"
+      #   id: fetch-artifacts
+      #   run: |
+      #     artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "android-app") | .archive_download_url')
+      #     echo "Artifacts URL: $artifacts_url"
+      #     echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
+      # - name: "Download Android app"
+      #   if: env.artifacts_url != ''
+      #   run: |
+      #     if [ -z "$artifacts_url" ]; then
+      #       echo "No artifacts URL found."
+      #       exit 1
+      #     fi
+      #     curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o android-app.zip "$artifacts_url"
+      #     unzip android-app.zip -d android-app
+      
       - name: "Download Android app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: android-app
           path: android-app
-      - name: "Move android apps to correct location"
-        run: |
-          mkdir -p detox/apps
-          find android-app -type f -iname "*.apk" -exec mv {} detox/apps/ \;
-      - name: "Setup AVD cache"
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # v2
-        id: avd-cache
-        with:
-          path: |
-            /Users/runner/.android/avd/*
-            /Users/runner/.android/adb*
-            /Users/runner/Library/Android/sdk/system-images/**/*
-          key: pixel_30_x86_64_default_3core_and_system_images
-      - name: "Run tests"
-        uses: reactivecircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2 # v2.30.1
-        with:
-          api-level: 30
-          target: default
-          arch: x86_64
-          profile: pixel
-          cores: 3
-          ram-size: 4096M
-          heap-size: 512M
-          avd-name: NATIVE_pixel_30
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: |
-            adb shell "rm -fr /data/local/tmp/detox"
-            adb shell "mkdir -p /data/local/tmp/detox"
-            adb push "/Users/runner/work/native-widgets/native-widgets/detox/apps/app-appstore-debug.apk" "/data/local/tmp/detox/Application.apk"
-            adb push "/Users/runner/work/native-widgets/native-widgets/detox/apps/app-appstore-debug-androidTest.apk" "/data/local/tmp/detox/Test.apk"
-            adb shell pm install -r -g -t /data/local/tmp/detox/Application.apk 2>/dev/null
-            adb shell pm install -r -g -t /data/local/tmp/detox/Test.apk 2>/dev/null
-            yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test:e2e:android
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        if: always()
-        with:
-          name: android-runtime-logs
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshot diff results"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        if: failure()
-        with:
-          name: android-screenshot-results
-          path: |
-            ${{ github.workspace }}/packages/**/e2e/images/diffs/**/*.png
-            ${{ github.workspace }}/packages/**/e2e/images/actual/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        if: always()
-        with:
-          name: android-artifacts
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
-  ios-tests:
-    needs: [scope, mendix-version, project, ios-app]
-    runs-on: macos-12
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
-        with:
-          fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: yarn install --immutable
-      - name: "Download project MDA file"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: mda
-      # Used when new xCode version of simulator should be created
-      - name: Update Xcode
-        run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
-      - name: "Clean detox framework cache"
-        run: npx detox clean-framework-cache
-      - name: "Build detox framework cache"
-        run: npx detox build-framework-cache
+      
       - name: "Start runtime"
         uses: ./.github/actions/start-runtime
         with:
           mda-file: automation.mda
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      
+      - name: "Install Maestro"
+        run: |
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Verify maestro
+        run: $HOME/.local/bin/maestro/bin/maestro --version
+      - name: Set up Android SDK
+        run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+      
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: "Run the android tests"
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.0.0
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          profile: pixel
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          disable-animations: true
+          script: |
+            chmod +x maestro/helpers/prepare_android.sh
+            chmod +x maestro/run_maestro_tests.sh
+            bash maestro/helpers/prepare_android.sh
+            bash maestro/run_maestro_tests.sh android "${{ matrix.widget }}"
+      
+      - name: "Archive runtime logs"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: android-runtime-logs-${{ matrix.widget }}
+          path: log/*.log
+          if-no-files-found: ignore
+      - name: "Archive test screenshots"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: android-screenshots-${{ matrix.widget }}
+          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
+          if-no-files-found: ignore
+      - name: "Archive artifacts"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: android-artifacts-${{ matrix.widget }}
+          path: packages/pluggableWidgets/**/artifacts/
+          if-no-files-found: ignore
+
+  ios-tests:
+    needs: [scope, mendix-version, project, ios-app]
+    runs-on: macos-15
+    strategy:
+      matrix:
+        widget: ${{ fromJson(needs.scope.outputs.widgets) }}
+      fail-fast: false
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+      - name: "Set up node"
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+      - name: "Install dependencies"
+        run: |
+          yarn cache clean
+          yarn install --immutable
+      - name: "Download project MDA file"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        with:
+          name: mda
+
+      
+      # USED ONLY FOR TESTING PURPOSE - TO SKIP APP BUILD PART AND DOWNLOAD APP FROM SPECIFIC RUN
+      # - name: "Install GitHub CLI"
+      #   run: |
+      #     brew install gh
+      # - name: "Authenticate GitHub CLI"
+      #   run: |
+      #     unset GITHUB_TOKEN
+      #     echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+      # - name: "Fetch artifacts from run 676"
+      #   id: fetch-artifacts
+      #   run: |
+      #     artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "ios-app") | .archive_download_url')
+      #     echo "Artifacts URL: $artifacts_url"
+      #     echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
+      # - name: "Download iOS app"
+      #   if: env.artifacts_url != ''
+      #   run: |
+      #     if [ -z "$artifacts_url" ]; then
+      #       echo "No artifacts URL found."
+      #       exit 1
+      #     fi
+      #     curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o ios-app.zip "$artifacts_url"
+      #     unzip ios-app.zip -d ios-app
+
+      - name: "Start runtime"
+        uses: ./.github/actions/start-runtime
+        with:
+          mda-file: automation.mda
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ios-app
           path: ios-app
-      - name: "Move iOS app to correct location"
+      - name: Check iOS App Path
+        run: ls ios-app
+
+      - name: "Verify Xcode CLI Tools"
         run: |
-          mkdir -p detox/apps
-          find ios-app -type d -iname "*.app" -exec cp -R {} detox/apps/ \;
-      - name: Install Detox Dependencies
+          if ! xcode-select --print-path; then
+            echo "Xcode CLI tools not set. Setting them now."
+            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          else
+            echo "Xcode CLI tools are already configured."
+          fi
+      
+      - name: "Install Maestro"
         run: |
-          brew tap wix/brew
-          brew install applesimutils
-      - name: Check available runtimes
-        run: xcrun simctl list runtimes
-      - name: Check avialble device types
-        run: xcrun simctl list devicetypes
-      # - name: Create iOS 16.0 simulator for iPhone 14
-      #   run: xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-16-0
-      - name: List supported iOS devices
-        run: applesimutils --list
-      - name: "Run tests"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test:e2e:ios
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: "Verify maestro"
+        run: $HOME/.local/bin/maestro/bin/maestro --version
+      - name: "List Available Simulators"
+        run: xcrun simctl list devices
+      
+      - name: "Run Maestro Script"
+        run: |
+          chmod +x maestro/helpers/prepare_ios.sh
+          chmod +x maestro/run_maestro_tests.sh
+          bash maestro/helpers/prepare_ios.sh
+          bash maestro/run_maestro_tests.sh ios "${{ matrix.widget }}"
+      
       - name: "Archive runtime logs"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         if: always()
         with:
-          name: ios-runtime-logs
+          name: ios-runtime-logs-${{ matrix.widget }}
           path: log/*.log
           if-no-files-found: ignore
-      - name: "Archive test screenshot diff results"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        if: failure()
-        with:
-          name: ios-screenshot-results
-          path: |
-            ${{ github.workspace }}/packages/**/e2e/images/diffs/**/*.png
-            ${{ github.workspace }}/packages/**/e2e/images/actual/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      - name: "Archive test screenshots"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         if: always()
         with:
-          name: ios-artifacts
+          name: ios-screenshots-${{ matrix.widget }}
+          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
+          if-no-files-found: ignore
+      - name: "Archive artifacts"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: ios-artifacts-${{ matrix.widget }}
           path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
+
+  compare-screenshots:
+    needs: [scope, android-tests, ios-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+  
+      - name: "Download Android screenshots"
+        run: |
+          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          for widget in $widgets; do
+            echo "Downloading android-screenshots-${widget}"
+            gh run download ${{ github.run_id }} --name android-screenshots-${widget} --dir images/actual/android/ || true
+            ls -l images/actual/android/
+          done
+      
+      - name: "Download iOS screenshots"
+        run: |
+          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          for widget in $widgets; do
+            echo "Downloading ios-screenshots-${widget}"
+            gh run download ${{ github.run_id }} --name ios-screenshots-${widget} --dir images/actual/ios/ || true
+            ls -l images/actual/ios/
+          done
+
+    
+      - name: "Set up node"
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+    
+      - name: "Install dependencies"
+        run: yarn install
+  
+      - name: "Compare Android screenshots"
+        continue-on-error: true 
+        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js android
+
+      - name: "Compare iOS screenshots"
+        continue-on-error: true
+        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js ios
+  
+      - name: "Archive diff results"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        with:
+          name: screenshot-diffs
+          path: images/diffs
+          if-no-files-found: ignore
+
+      - name: "Archive comparison results"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        with:
+          name: comparison-results
+          path: compare_output.txt
+          if-no-files-found: ignore
+
+      - name: "Fail if comparisons failed"
+        run: |
+          if [ "$ANDROID_COMPARISON_FAILED" == "true" ] || [ "$IOS_COMPARISON_FAILED" == "true" ]; then
+            echo "One or more comparisons failed."
+            exit 1
+          fi

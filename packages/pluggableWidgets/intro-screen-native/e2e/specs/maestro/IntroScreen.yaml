@@ -1,0 +1,47 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "I"
+- tapOn:
+    text: "Intro screen"
+- assertVisible:
+    text: "Active slide: 2"
+- assertVisible:
+    text: "Changes: 0"
+- swipe:
+    direction: LEFT
+- assertVisible:
+    text: "Active slide: 3"
+- assertVisible:
+    text: "Changes: 1"
+- swipe:
+    direction: RIGHT
+- assertVisible:
+    text: "Active slide: 2"
+- assertVisible:
+    text: "Changes: 2"
+- tapOn:
+    text: "PREVIOUS"
+- assertVisible:
+    text: "Active slide: 1"
+- assertVisible:
+    text: "Changes: 3"
+- tapOn:
+    text: "SKIP"
+- assertVisible:
+    text: "Skipped"
+- tapOn:
+    text: "OK"
+- tapOn: "Go back"
+- tapOn:
+    text: "Intro screen"
+- assertVisible:
+    text: "Active slide: 2"
+- tapOn:
+    text: "NEXT"
+- tapOn:
+    text: "FINISH"
+- assertVisible:
+    text: "Done"

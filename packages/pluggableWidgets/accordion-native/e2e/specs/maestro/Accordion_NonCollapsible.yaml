@@ -1,0 +1,14 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "Accordion"
+- tapOn:
+    text: "NonCollapsible"
+- assertVisible:
+    text: "Header 1 - Text 1"
+- assertVisible:
+    id: "staticImage"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/accordion_noncollapsible"

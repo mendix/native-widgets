@@ -1,0 +1,16 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "C"
+- tapOn:
+    text: "Color picker"
+- tapOn:
+    text: "Conditional"
+- assertVisible:
+    text: "Color picker - Conditional"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/color_picker_conditional"
+
+

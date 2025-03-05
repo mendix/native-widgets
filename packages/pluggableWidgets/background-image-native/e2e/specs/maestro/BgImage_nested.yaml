@@ -1,0 +1,13 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "B"
+- tapOn:
+    text: "Background image"
+- tapOn:
+    text: "Nested"
+- assertVisible: "Nested"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bg_image_nested"

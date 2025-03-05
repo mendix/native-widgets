@@ -1,0 +1,13 @@
+appId: "${APP_ID}"
+---
+- retry:
+    maxRetries: 3
+    commands:
+      - launchApp:
+          clearState: true
+          permissions:
+            camera: allow
+            notifications: allow
+      - extendedWaitUntil:
+          visible: "Widgets menu"
+          timeout: 240000 # A long timeout since app startup is quite unstable due to resources when executed on Github runners

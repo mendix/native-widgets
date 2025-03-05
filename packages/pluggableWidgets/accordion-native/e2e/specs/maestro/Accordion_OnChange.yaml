@@ -1,0 +1,13 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "Accordion"
+- tapOn:
+    text: "OnChange"
+- assertVisible:
+    text: "Header 1 - Text 1"
+- tapOn: "Header 1"
+# - takeScreenshot:
+#     path: "maestro/images/actual/${PLATFORM}/accordion_on_change"
