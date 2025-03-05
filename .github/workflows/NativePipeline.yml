@@ -61,7 +61,6 @@ on:
   
   # Trigger on PR
   pull_request:
-    # branches: main
 
 
 permissions:
