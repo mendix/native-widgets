@@ -177,12 +177,12 @@ export function LineChart(props: LineChartProps): ReactElement | null {
     const xAxisLabelComponent = xAxisLabel ? <Text style={axisLabelStyles.xAxisLabelStyle}>{xAxisLabel}</Text> : null;
     const yAxisLabelComponent = yAxisLabel ? <Text style={axisLabelStyles.yAxisLabelStyle}>{yAxisLabel}</Text> : null;
 
-    const [chartDimensions, setChartDimensions] = useState<{ height: number; width: number }>();
+    const [chartDimensions, setChartDimensions] = useState<{ height?: number; width?: number }>();
 
     const updateChartDimensions = useCallback(
         (event: LayoutChangeEvent) => {
             const { height, width } = event.nativeEvent.layout;
-            setChartDimensions({ height: height <= 0 ? -1 : height, width: width <= 0 ? -1 : width });
+            setChartDimensions({ height: height <= 0 ? undefined : height, width: width <= 0 ? undefined : width });
         },
         [setChartDimensions]
     );
@@ -205,8 +205,8 @@ export function LineChart(props: LineChartProps): ReactElement | null {
                             <View onLayout={updateChartDimensions} style={{ flex: 1 }}>
                                 {chartDimensions ? (
                                     <VictoryChart
-                                        height={chartDimensions?.height}
-                                        width={chartDimensions?.width}
+                                        height={chartDimensions.height}
+                                        width={chartDimensions.width}
                                         padding={aggregateGridPadding(style.grid)}
                                         scale={
                                             dataTypesResult
