@@ -66,7 +66,7 @@ export function ColumnChart({
         return sortSeriesDataPoints(series, sortOrder, dataTypesResult);
     }, [sortOrder, series, dataTypesResult]);
 
-    const [chartDimensions, setChartDimensions] = useState<{ height: number; width: number }>();
+    const [chartDimensions, setChartDimensions] = useState<{ height?: number; width?: number }>();
 
     // Column Chart user-styling may be missing for certain series. A palette is passed, any missing colours
     // fallback to a colour from the palette.
@@ -153,8 +153,8 @@ export function ColumnChart({
         (event: LayoutChangeEvent) => {
             const { height, width } = event.nativeEvent.layout;
             setChartDimensions({
-                height: height <= 0 ? -1 : height,
-                width: width <= 0 ? -1 : width
+                height: height <= 0 ? undefined : height,
+                width: width <= 0 ? undefined : width
             });
         },
         [setChartDimensions]
@@ -178,10 +178,8 @@ export function ColumnChart({
                                 {chartDimensions ? (
                                     <VictoryChart
                                         domainPadding={{ x: style.domain?.padding?.x, y: style.domain?.padding?.y }}
-                                        // width and height can't be zero
-                                        // TODO: this needs to be checked for bar chart
-                                        height={chartDimensions?.height || undefined}
-                                        width={chartDimensions?.width || undefined}
+                                        height={chartDimensions.height}
+                                        width={chartDimensions.width}
                                         padding={aggregateGridPadding(style.grid)}
                                         scale={
                                             dataTypesResult

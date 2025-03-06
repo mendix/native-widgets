@@ -28,7 +28,7 @@ export interface Slice<X extends string, Y extends number> {
 
 export function PieDoughnutChart({ name, presentation, series, style, showLabels }: ChartProps): ReactElement | null {
     // due to the nature of the chart type, we only reply on the width, as the chart is always a square
-    const [chartDimensions, setChartDimensions] = useState<{ width: number }>();
+    const [chartDimensions, setChartDimensions] = useState<{ width?: number }>();
     // Chart user-styling may be missing for certain slices. A palette is passed, any missing colours
     // fallback to a colour from the palette or the default color.
     const normalizedSliceColors: string[] = useMemo(() => {
@@ -56,7 +56,7 @@ export function PieDoughnutChart({ name, presentation, series, style, showLabels
         (event: LayoutChangeEvent) => {
             const { width } = event.nativeEvent.layout;
             setChartDimensions({
-                width: width <= 0 ? -1 : width
+                width: width <= 0 ? undefined : width
             });
         },
         [setChartDimensions]
@@ -89,7 +89,7 @@ export function PieDoughnutChart({ name, presentation, series, style, showLabels
                         }}
                         labels={({ datum }) => (showLabels ? datum.x : undefined)}
                         innerRadius={
-                            presentation === "doughnut"
+                            presentation === "doughnut" && chartDimensions.width && chartDimensions.width > 0
                                 ? style.slices?.innerRadius ?? chartDimensions.width / DEFAULT_INNER_RADIUS_RATIO
                                 : undefined
                         }
