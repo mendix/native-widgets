@@ -9,8 +9,7 @@ import { Big } from "big.js";
 import Geolocation, {
     GeolocationError,
     GeolocationOptions,
-    GeolocationResponse,
-    GeolocationStatic
+    GeolocationResponse
 } from "@react-native-community/geolocation";
 
 import type { Platform, NativeModules } from "react-native";
@@ -41,11 +40,7 @@ export async function GetCurrentLocation(
     // BEGIN USER CODE
 
     let reactNativeModule: { NativeModules: typeof NativeModules; Platform: typeof Platform } | undefined;
-    let geolocationModule:
-        | Geolocation
-        | GeolocationStatic
-        | typeof import("@react-native-community/geolocation")
-        | undefined;
+    let geolocationModule;
 
     if (navigator && navigator.product === "ReactNative") {
         reactNativeModule = require("react-native");

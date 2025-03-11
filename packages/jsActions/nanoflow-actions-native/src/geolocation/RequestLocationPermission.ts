@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import Geolocation, { GeolocationStatic } from "@react-native-community/geolocation";
+import Geolocation, { GeolocationError } from "@react-native-community/geolocation";
 
 import type { GeolocationServiceStatic, AuthorizationResult } from "../../typings/Geolocation";
 
@@ -20,11 +20,7 @@ export async function RequestLocationPermission(): Promise<boolean> {
     // BEGIN USER CODE
 
     let reactNativeModule: typeof import("react-native") | undefined;
-    let geolocationModule:
-        | Geolocation
-        | GeolocationStatic
-        | typeof import("@react-native-community/geolocation")
-        | undefined;
+    let geolocationModule: typeof import("@react-native-community/geolocation").default;
 
     const hasPermissionIOS = async (): Promise<boolean> => {
         const openSetting = (): void => {
@@ -122,13 +118,15 @@ export async function RequestLocationPermission(): Promise<boolean> {
                           status => status === reactNativeModule?.PermissionsAndroid.RESULTS.GRANTED
                       )
             );
-        } else if (geolocationModule && (geolocationModule as GeolocationStatic).requestAuthorization) {
-            try {
-                (geolocationModule as GeolocationStatic).requestAuthorization();
-                return Promise.resolve(true);
-            } catch (error) {
-                return Promise.reject(error);
-            }
+        } else if (geolocationModule) {
+            geolocationModule.requestAuthorization(
+                () => {
+                    return Promise.resolve(true);
+                },
+                (err: GeolocationError) => {
+                    return Promise.reject(err);
+                }
+            );
         }
 
         return false;
