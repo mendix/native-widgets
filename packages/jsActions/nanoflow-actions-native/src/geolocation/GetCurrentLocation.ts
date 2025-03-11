@@ -40,7 +40,7 @@ export async function GetCurrentLocation(
     // BEGIN USER CODE
 
     let reactNativeModule: { NativeModules: typeof NativeModules; Platform: typeof Platform } | undefined;
-    let geolocationModule;
+        let geolocationModule: typeof import("@react-native-community/geolocation").default | Geolocation;
 
     if (navigator && navigator.product === "ReactNative") {
         reactNativeModule = require("react-native");
