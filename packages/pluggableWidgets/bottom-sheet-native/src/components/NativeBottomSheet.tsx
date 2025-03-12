@@ -182,6 +182,8 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                 style={getContainerStyle()}
                 backdropComponent={renderBackdrop}
                 backgroundStyle={props.styles.container}
+                handleComponent={null}
+                handleStyle={{ display: "none" }}
             >
                 <BottomSheetView style={[{ flex: 1, paddingBottom: 16 }]}>
                     {props.itemsBasic.map((item, index) => renderItem(item, index))}

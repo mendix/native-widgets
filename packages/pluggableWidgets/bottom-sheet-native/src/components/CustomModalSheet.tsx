@@ -89,12 +89,14 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                 ref={bottomSheetRef}
                 index={isOpen ? 0 : -1}
                 snapPoints={snapPoints}
-                enablePanDownToClose
                 onClose={() => handleSheetChanges(-1)}
                 onChange={handleSheetChanges}
                 backdropComponent={renderBackdrop}
                 style={[props.styles.modal]}
                 backgroundStyle={props.styles.container}
+                enablePanDownToClose={false}
+                handleComponent={null}
+                handleStyle={{ display: "none" }}
             >
                 <BottomSheetView style={[props.styles.container, defaultPaddings]}>{props.content}</BottomSheetView>
             </BottomSheet>

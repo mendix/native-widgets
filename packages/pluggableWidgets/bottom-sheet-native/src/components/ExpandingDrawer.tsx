@@ -1,5 +1,5 @@
 import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
-import { Dimensions, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
+import { Dimensions, LayoutChangeEvent, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
 
@@ -52,10 +52,10 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     };
 
     const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <Pressable style={{ flex: 1 }} onPress={close}>
+        <Pressable style={{ flex: 1 }}>
             <BottomSheetBackdrop
                 {...backdropProps}
-                pressBehavior={"close"}
+                pressBehavior={"none"}
                 opacity={0.3}
                 appearsOnIndex={0}
                 disappearsOnIndex={-1}
@@ -109,10 +109,10 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
             : props.fullscreenContent
             ? [fullscreenHeight, heightHeader]
             : isLargeContentValid
-            ? [heightContent + OFFSET_VALUE, heightHeader]
+            ? [heightContent, heightHeader]
             : [heightHeader];
 
-    const collapsedIndex = snapPoints.length - 1;
+    const collapsedIndex = 0;
 
     const onChange = (index: number) => {
         const hasOpened = lastIndexRef === -1 && index === 0;
@@ -129,24 +129,23 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         lastIndexRef = index;
     };
 
-    const close = () => {
-        bottomSheetRef.current?.close();
-    };
-
     return (
-        <Modal onRequestClose={close} transparent visible={isOpen}>
-            <BottomSheet
-                ref={bottomSheetRef}
-                index={isOpen ? collapsedIndex : -1}
-                snapPoints={snapPoints}
-                onClose={() => setIsOpen(false)}
-                onChange={onChange}
-                animateOnMount
-                backdropComponent={renderBackdrop}
-                backgroundStyle={containerStyle}
-            >
-                <BottomSheetView style={[{ flex: 1 }]}>{renderContent()}</BottomSheetView>
-            </BottomSheet>
-        </Modal>
+        <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+            {snapPoints.length > 1 && (
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    index={collapsedIndex}
+                    snapPoints={snapPoints.map((snapPoint: number) => snapPoint + OFFSET_VALUE)}
+                    onClose={() => setIsOpen(false)}
+                    enablePanDownToClose={false}
+                    onChange={onChange}
+                    animateOnMount
+                    backdropComponent={renderBackdrop}
+                    backgroundStyle={containerStyle}
+                >
+                    <BottomSheetView style={[{ flex: 1 }]}>{renderContent()}</BottomSheetView>
+                </BottomSheet>
+            )}
+        </View>
     );
 };
