@@ -7,7 +7,7 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Platform } from "react-native";
 import RNBlobUtil from "react-native-blob-util";
-import FileViewer from "react-native-file-viewer-turbo";
+import FileViewer from "react-native-file-viewer";
 import mimeTypes from "mime";
 
 // BEGIN EXTRA CODE
