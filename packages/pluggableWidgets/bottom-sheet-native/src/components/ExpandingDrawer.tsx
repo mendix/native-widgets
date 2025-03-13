@@ -1,6 +1,6 @@
 import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
-import { Dimensions, LayoutChangeEvent, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
+import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
 
 interface ExpandingDrawerProps {
@@ -13,7 +13,7 @@ interface ExpandingDrawerProps {
 }
 let lastIndexRef = -1;
 
-const OFFSET_VALUE = 48;
+const OFFSET_BOTTOM_SHEET = 25;
 
 export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     const [heightContent, setHeightContent] = useState(0);
@@ -50,18 +50,6 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
             setFullscreenHeight(height);
         }
     };
-
-    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <Pressable style={{ flex: 1 }}>
-            <BottomSheetBackdrop
-                {...backdropProps}
-                pressBehavior={"none"}
-                opacity={0.3}
-                appearsOnIndex={0}
-                disappearsOnIndex={-1}
-            />
-        </Pressable>
-    );
 
     const containerStyle =
         props.fullscreenContent && isOpen ? props.styles.containerWhenExpandedFullscreen : props.styles.container;
@@ -135,15 +123,14 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 <BottomSheet
                     ref={bottomSheetRef}
                     index={collapsedIndex}
-                    snapPoints={snapPoints.map((snapPoint: number) => snapPoint + OFFSET_VALUE)}
+                    snapPoints={snapPoints.map(p => p + OFFSET_BOTTOM_SHEET)}
                     onClose={() => setIsOpen(false)}
                     enablePanDownToClose={false}
                     onChange={onChange}
                     animateOnMount
-                    backdropComponent={renderBackdrop}
                     backgroundStyle={containerStyle}
                 >
-                    <BottomSheetView style={[{ flex: 1 }]}>{renderContent()}</BottomSheetView>
+                    <BottomSheetView style={{ height: heightHeader }}>{renderContent()}</BottomSheetView>
                 </BottomSheet>
             )}
         </View>
