@@ -99,6 +99,9 @@ jobs:
               fi
             done
 
+            # Trim leading and trailing spaces from selected_workspaces
+            selected_workspaces=$(echo $selected_workspaces | xargs)
+
             if [[ -n "$selected_workspaces" ]]; then
               echo "scope=--all --include '$selected_workspaces'" >> $GITHUB_OUTPUT
               echo "widgets=[\"$selected_workspaces\"]" >> $GITHUB_OUTPUT
