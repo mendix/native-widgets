@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.1.7] Native Mobile Resources - 2025-3-18
+
+
+## [3.0.2] BarChart
+### Fixed
+
+-   We have resolved an issue preventing Bar chart from rendering correctly.
+
+## [2.0.2] ColumnChart
+### Fixed
+
+-   We have resolved an issue preventing Column chart from rendering correctly
+
+## [3.0.2] LineChart
+### Fixed
+
+-   We have resolved an issue preventing Line chart from rendering correctly
+
+## [2.0.2] PieDoughnutChart
+### Fixed
+
+-   We have resolved an issue preventing Pie chart from rendering correctly
+
 ## [4.1.6] Native Mobile Resources - 2024-12-24
 
 
