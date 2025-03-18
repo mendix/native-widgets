@@ -58,7 +58,7 @@ export function BarChart({
     style,
     warningPrefix
 }: BarChartProps): ReactElement | null {
-    const [chartDimensions, setChartDimensions] = useState<{ height: number; width: number }>();
+    const [chartDimensions, setChartDimensions] = useState<{ height?: number; width?: number }>();
 
     const warningMessagePrefix = useMemo(() => (warningPrefix ? warningPrefix + "i" : "I"), [warningPrefix]);
 
@@ -133,16 +133,7 @@ export function BarChart({
         }
 
         return <VictoryStack colorScale={normalizedBarColors}>{bars}</VictoryStack>;
-    }, [
-        dataTypesResult,
-        series,
-        style,
-        warningMessagePrefix,
-        sortProps,
-        showLabels,
-        normalizedBarColors,
-        presentation
-    ]);
+    }, [dataTypesResult, series, style, sortProps, showLabels, normalizedBarColors, presentation]);
 
     const [firstSeries] = series;
 
@@ -195,8 +186,8 @@ export function BarChart({
         (event: LayoutChangeEvent) => {
             const { height, width } = event.nativeEvent.layout;
             setChartDimensions({
-                height: height <= 0 ? -1 : height,
-                width: width <= 0 ? -1 : width
+                height: height <= 0 ? undefined : height,
+                width: width <= 0 ? undefined : width
             });
         },
         [setChartDimensions]
@@ -222,8 +213,8 @@ export function BarChart({
                                     // horizontal charts.
                                     <VictoryChart
                                         domainPadding={{ x: style.domain?.padding?.y, y: style.domain?.padding?.x }}
-                                        height={chartDimensions?.height}
-                                        width={chartDimensions?.width}
+                                        height={chartDimensions.height}
+                                        width={chartDimensions.width}
                                         padding={aggregateGridPadding(style.grid)}
                                         scale={
                                             dataTypesResult
