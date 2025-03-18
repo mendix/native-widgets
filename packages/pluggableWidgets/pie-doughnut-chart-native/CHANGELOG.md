@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.1.1] - 2025-3-18
+
 ### Fixed
 
 -   We have resolved an issue preventing Pie chart from rendering correctly
