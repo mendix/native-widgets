@@ -6,6 +6,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [9.3.1] Native Mobile Resources - 2025-3-18
+
+
+## [3.1.1] BarChart
+### Fixed
+
+-   We have resolved an issue preventing Bar chart from rendering correctly.
+
+## [2.1.1] ColumnChart
+### Fixed
+
+-   We have resolved an issue preventing Column chart from rendering correctly
+
+## [3.1.1] LineChart
+### Fixed
+
+-   We have resolved an issue preventing Line chart from rendering correctly
+
+## [2.1.1] PieDoughnutChart
+### Fixed
+
+-   We have resolved an issue preventing Pie chart from rendering correctly
+
+## [3.0.1] SafeAreaView
+## Fixed
+
+-   We reverted latest SafeAreaView change since it was causing another issue which the SafeAreaView wasn't covering whole screen.
+
 ## [9.2.1] Native Mobile Resources - 2025-2-7
 
 
