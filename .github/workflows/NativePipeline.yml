@@ -683,6 +683,7 @@ jobs:
       - name: "Download Android screenshots"
         run: |
           widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          mkdir -p images/actual/android/
           for widget in $widgets; do
             echo "Downloading android-screenshots-${widget}"
             gh run download ${{ github.run_id }} --name android-screenshots-${widget} --dir images/actual/android/ || true
@@ -692,6 +693,7 @@ jobs:
       - name: "Download iOS screenshots"
         run: |
           widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          mkdir -p images/actual/ios/
           for widget in $widgets; do
             echo "Downloading ios-screenshots-${widget}"
             gh run download ${{ github.run_id }} --name ios-screenshots-${widget} --dir images/actual/ios/ || true
