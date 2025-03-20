@@ -6,6 +6,18 @@
 import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
+export type RequestMethodEnum = "GET" | "POST";
+
+export interface HeaderListType {
+    headerName: DynamicValue<string>;
+    headerValue: DynamicValue<string>;
+}
+
+export interface HeaderListPreviewType {
+    headerName: string;
+    headerValue: string;
+}
+
 export interface WebViewProps<Style> {
     name: string;
     style: Style[];
@@ -15,6 +27,9 @@ export interface WebViewProps<Style> {
     onError?: ActionValue;
     onMessage?: ActionValue;
     onMessageInput?: EditableValue<string>;
+    requestMethod: RequestMethodEnum;
+    postBody?: DynamicValue<string>;
+    headerList: HeaderListType[];
     userAgent: string;
     openLinksExternally: boolean;
 }
@@ -35,6 +50,9 @@ export interface WebViewPreviewProps {
     onError: {} | null;
     onMessage: {} | null;
     onMessageInput: string;
+    requestMethod: RequestMethodEnum;
+    postBody: string;
+    headerList: HeaderListPreviewType[];
     userAgent: string;
     openLinksExternally: boolean;
 }

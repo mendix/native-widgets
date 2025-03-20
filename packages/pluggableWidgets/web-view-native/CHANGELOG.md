@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   We added GET and POST request method selection for the url
+-   We added the option to pass a list of headers with the request
+
 ## [4.1.0] - 2024-12-3
 
 ### Changed
