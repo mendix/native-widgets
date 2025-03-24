@@ -6,60 +6,74 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [9.3.2] Native Mobile Resources - 2025-3-18
+
+## [5.1.1] Maps
+
+### Fixed
+
+-   We fixed an issue where non interactive map was flickering on Android platform
+
 ## [9.3.1] Native Mobile Resources - 2025-3-18
 
-
 ## [3.1.1] BarChart
+
 ### Fixed
 
 -   We have resolved an issue preventing Bar chart from rendering correctly.
 
 ## [2.1.1] ColumnChart
+
 ### Fixed
 
 -   We have resolved an issue preventing Column chart from rendering correctly
 
 ## [3.1.1] LineChart
+
 ### Fixed
 
 -   We have resolved an issue preventing Line chart from rendering correctly
 
 ## [2.1.1] PieDoughnutChart
+
 ### Fixed
 
 -   We have resolved an issue preventing Pie chart from rendering correctly
 
 ## [3.0.1] SafeAreaView
+
 ## Fixed
 
 -   We reverted latest SafeAreaView change since it was causing another issue which the SafeAreaView wasn't covering whole screen.
 
 ## [9.2.1] Native Mobile Resources - 2025-2-7
 
-
 ## [4.0.1] BottomSheet
+
 ### Changed
 
 -   Updated react-native-modal from version v11.4.5 to v13.0.1 in order to fix random crashes in custom-bottom-sheet widget.
 
 ## [9.2.0] Native Mobile Resources - 2025-2-7
 
-
 ## [4.3.1] ProgressBar
+
 -   Bumped the version of the react-native-progress to fix black background issues.
 
 ## [3.2.1] ProgressCircle
+
 -   Bumped the version of the react-native-progress to fix black background issues.
 
 ## [9.1.0] Native Mobile Resources - 2024-12-18
 
-
 ## [1.2.0] RadioButtons
+
 ### Fixed
 
 -   The accessibility role has been changed to radio.
 
 ## [3.0.0] SafeAreaView
+
 ## Fixed
 
 -   We fixed the issue where the user closed popup, safe area view wasn't working properly.
