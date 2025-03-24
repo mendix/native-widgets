@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [9.3.2] Native Mobile Resources - 2025-3-18
+## [9.3.2] Native Mobile Resources - 2025-3-24
 
 ## [5.1.1] Maps
 
