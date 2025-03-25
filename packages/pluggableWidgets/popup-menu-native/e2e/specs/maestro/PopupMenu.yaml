@@ -1,0 +1,21 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "P"
+- tapOn:
+    text: "Popup menu"
+- tapOn:
+    text: "Combinations"
+- assertVisible:
+    text: "Withcontainer"
+- tapOn: "Go back"
+- tapOn:
+    text: "Basic"
+- tapOn:
+    text: "Alert"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_svg_alert"
+
+

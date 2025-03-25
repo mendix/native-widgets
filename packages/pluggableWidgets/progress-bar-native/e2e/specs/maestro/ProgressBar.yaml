@@ -1,0 +1,13 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "P"
+- tapOn:
+    text: "Progress bar"
+- assertVisible:
+    text: "Dynamic values:"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/progress_bar"
+

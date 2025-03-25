@@ -1,0 +1,11 @@
+appId: "${APP_ID}"
+platform: "${PLATFORM}"
+---
+- runFlow:
+    when:
+      platform: ios
+    file: ../../../../../../packages/pluggableWidgets/badge-native/e2e/specs/maestro/Badge_ios.yaml
+- runFlow:
+    when:
+      platform: android
+    file: ../../../../../../packages/pluggableWidgets/badge-native/e2e/specs/maestro/Badge_android.yaml
