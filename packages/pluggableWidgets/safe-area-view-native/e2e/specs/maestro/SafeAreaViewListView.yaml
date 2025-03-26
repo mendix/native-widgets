@@ -1,0 +1,15 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "S"
+- tapOn:
+    text: "Safe area view"
+- tapOn:
+    text: "List view"
+- assertVisible:
+    text: "test Shoe  1 favorite No"
+- assertVisible:
+    id: "image1"
+    index: 14

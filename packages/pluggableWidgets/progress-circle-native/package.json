@@ -1,7 +1,7 @@
 {
   "name": "progress-circle-native",
   "widgetName": "ProgressCircle",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -24,12 +24,11 @@
   },
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
-    "react-native-progress": "^5.0.0"
+    "react-native-progress": "^5.0.1"
   },
   "devDependencies": {
     "@mendix/piw-utils-internal": "*",
     "@mendix/pluggable-widgets-tools": "~10.0.1",
-    "detox": "^19.13.0",
     "eslint": "^7.32.0"
   }
 }

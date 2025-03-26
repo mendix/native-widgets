@@ -1,0 +1,28 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "G"
+- tapOn:
+    text: "Gallery"
+- tapOn:
+    text: "Gallery text filter"
+- assertVisible:
+    text: "Title 0"
+- tapOn:
+    id: "textFilter1-text-input"
+- inputText:
+    text: "Title 5"
+- pressKey: Enter
+- assertVisible:
+    text: "Title 5"
+    index: 1
+- tapOn:
+    id: "textFilter1-text-input"
+- eraseText
+- inputText:
+    text: "Title 100"
+- pressKey: Enter
+- assertVisible:
+    text: "No results found"

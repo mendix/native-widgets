@@ -6,9 +6,69 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [9.3.1] Native Mobile Resources - 2025-3-18
+
+
+## [3.1.1] BarChart
+### Fixed
+
+-   We have resolved an issue preventing Bar chart from rendering correctly.
+
+## [2.1.1] ColumnChart
+### Fixed
+
+-   We have resolved an issue preventing Column chart from rendering correctly
+
+## [3.1.1] LineChart
+### Fixed
+
+-   We have resolved an issue preventing Line chart from rendering correctly
+
+## [2.1.1] PieDoughnutChart
+### Fixed
+
+-   We have resolved an issue preventing Pie chart from rendering correctly
+
+## [3.0.1] SafeAreaView
+## Fixed
+
+-   We reverted latest SafeAreaView change since it was causing another issue which the SafeAreaView wasn't covering whole screen.
+
+## [9.2.1] Native Mobile Resources - 2025-2-7
+
+
+## [4.0.1] BottomSheet
 ### Changed
 
--   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+-   Updated react-native-modal from version v11.4.5 to v13.0.1 in order to fix random crashes in custom-bottom-sheet widget.
+
+## [9.2.0] Native Mobile Resources - 2025-2-7
+
+
+## [4.3.1] ProgressBar
+-   Bumped the version of the react-native-progress to fix black background issues.
+
+## [3.2.1] ProgressCircle
+-   Bumped the version of the react-native-progress to fix black background issues.
+
+## [9.1.0] Native Mobile Resources - 2024-12-18
+
+
+## [1.2.0] RadioButtons
+### Fixed
+
+-   The accessibility role has been changed to radio.
+
+## [3.0.0] SafeAreaView
+## Fixed
+
+-   We fixed the issue where the user closed popup, safe area view wasn't working properly.
+
+## [9.0.0] Native Mobile Resources - 2024-12-3
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
 
 ### BREAKING
 
@@ -18,6 +78,285 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 -   We have upgraded React Native Permissions to 4.5.1
+
+## [2.3.0] Accordion
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.3.0] ActivityIndicator
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [3.2.0] Animation
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [4.1.0] AppEvents
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.1.0] BackgroundGradient
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.2.0] BackgroundImage
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.3.0] Badge
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [3.1.0] BarChart
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [4.1.0] BarcodeScanner
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [4.0.0] BottomSheet
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### BREAKING
+
+-   Updated react-native-device-info from version v11.1.0 to v13.0.0.
+
+## [3.1.0] Carousel
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.1.0] ColorPicker
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.1.0] ColumnChart
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [3.3.0] Feedback
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [4.1.0] FloatingActionButton
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.0.0] Gallery
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### BREAKING
+
+-   Updated react-native-device-info from version v11.1.0 to v13.0.0.
+
+## [2.0.0] GalleryTextFilter
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### BREAKING
+
+-   Updated react-native-svg from version v12.3.0 to v15.7.1.
+
+## [3.0.0] Image
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+-   Updated react-native-vector-icons from version v10.0.3 to v10.2.0.
+
+### BREAKING
+
+-   Updated react-native-svg from version v12.3.0 to v15.7.1.
+
+## [4.0.0] IntroScreen
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### BREAKING
+
+-   Updated react-native-svg from version v12.3.0 to v15.7.1.
+-   Updated react-native-device-info from version v11.1.0 to v13.0.0.
+-   Switched from @react-native-community/async-storage to @react-native-async-storage/async-storage.
+
+## [3.1.0] LineChart
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [3.2.0] ListViewSwipe
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [5.1.0] Maps
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### Changed
+
+-   We updated the `react-native-maps` version to `1.14.0`
+
+## [4.1.0] Notifications
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.1.0] PieDoughnutChart
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [4.0.0] PopupMenu
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### BREAKING
+
+-   We've renamed renderMode property to popupRenderMode in order to avoid conflicts with a newly introduced renderMode system option. To use the new version of the widget, update its property in Studio Pro.
+
+## [4.3.0] ProgressBar
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [3.2.0] ProgressCircle
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### Added
+
+-   Support device font size for responsive progress circle sizing.
+
+## [4.0.0] QRCode
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+### BREAKING
+
+-   Updated react-native-svg from version v12.3.0 to v15.7.1.
+
+## [1.1.0] RadioButtons
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.3.0] RangeSlider
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [5.1.0] Rating
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+-   Updated react-native-vector-icons from version v10.0.3 to v10.2.0.
+
+## [2.3.0] Repeater
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.3.0] SafeAreaView
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.1.0] Signature
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [3.1.0] Slider
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [1.1.0] Switch
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [2.3.0] ToggleButtons
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+
+## [6.1.0] VideoPlayer
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
+-   Updated react-native-vector-icons from version v10.0.3 to v10.2.0.
+
+### Changed
+
+-   We have updated `react-native-video` version to 6.4.5
+
+## [4.1.0] WebView
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
 
 ## [8.0.1] Native Mobile Resources - 2024-8-29
 

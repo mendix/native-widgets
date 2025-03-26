@@ -1,0 +1,20 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "W"
+- tapOn: 
+    text: "Web view"
+- tapOn: 
+    text: "Events"
+- extendedWaitUntil:
+    visible: "URL loaded"
+    timeout: 30000
+- tapOn: 
+    text: "OK"
+- tapOn: 
+    text: "Invalid URL"
+- extendedWaitUntil:
+    visible: "Error"
+    timeout: 30000

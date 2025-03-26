@@ -88,7 +88,7 @@ export class Maps extends Component<Props, State> {
                         zoomEnabled={this.props.interactive}
                         style={{ flex: 1, alignSelf: "stretch" }}
                         liteMode={!this.props.interactive}
-                        cacheEnabled={!this.props.interactive}
+                        cacheEnabled={false}
                         showsPointsOfInterest={false}
                         mapPadding={{ top: 48, right: 48, bottom: 48, left: 48 }}
                         onMapReady={this.onMapReadyHandler}

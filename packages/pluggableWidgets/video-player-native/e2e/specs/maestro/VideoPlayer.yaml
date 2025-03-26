@@ -1,0 +1,10 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "V"
+- tapOn: 
+    text: "Video player"
+- assertVisible: 
+    text: "Video player"

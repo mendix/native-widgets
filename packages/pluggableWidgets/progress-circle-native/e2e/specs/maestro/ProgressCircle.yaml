@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "P"
+- tapOn:
+    text: "Progress circle"
+- assertVisible:
+    text: "With default text:"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/progress_circle"

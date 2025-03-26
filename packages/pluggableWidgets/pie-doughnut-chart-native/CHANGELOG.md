@@ -6,9 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.1.1] - 2025-3-18
+
+### Fixed
+
+-   We have resolved an issue preventing Pie chart from rendering correctly
+
+## [2.1.0] - 2024-12-3
+
 ### Changed
 
--   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
 
 ## [2.0.1] - 2023-5-17
 

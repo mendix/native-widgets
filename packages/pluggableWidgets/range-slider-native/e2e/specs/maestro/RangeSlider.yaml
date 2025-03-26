@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "R"
+- tapOn:
+    text: "Range slider"
+- assertVisible:
+    text: "Dynamic ranges"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/range_slider"

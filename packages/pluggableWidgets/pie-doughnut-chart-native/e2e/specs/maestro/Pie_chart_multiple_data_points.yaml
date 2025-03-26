@@ -1,0 +1,14 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "P"
+- tapOn:
+    text: "Pie doughnut chart"
+- tapOn:
+    text: "Pie chart Multiple data points"
+- assertVisible:
+    text: "TextToAssert"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/pie_chart_multiple_data_points"

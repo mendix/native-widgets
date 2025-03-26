@@ -6,9 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.1] - 2025-2-7
+
 ### Changed
 
--   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
+-   Updated react-native-modal from version v11.4.5 to v13.0.1 in order to fix random crashes in custom-bottom-sheet widget.
+
+## [4.0.0] - 2024-12-3
+
+### Changed
+
+-   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.15.0.
 
 ### BREAKING
 

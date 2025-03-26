@@ -1,0 +1,22 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "G"
+- tapOn:
+    text: "Gallery"
+- tapOn:
+    text: "Gallery"
+- assertNotVisible:
+    text: ".*Title 5.*"
+- tapOn:
+    text: "Load more"
+- assertVisible:
+    text: ".*Title 5.*"
+- swipe:
+    from:
+      text: ".*Title 5.*"
+    direction: UP
+- assertVisible:
+    text: ".*Title 9.*"

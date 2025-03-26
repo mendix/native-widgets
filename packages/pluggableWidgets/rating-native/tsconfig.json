@@ -3,7 +3,6 @@
     "baseUrl": "./",
     "include": ["./typings", "./src"],
     "compilerOptions": {
-        "typeRoots": ["node_modules/@types", "../../../node_modules/@types"],
-        "types": ["jest-image-snapshot"]
+        "typeRoots": ["node_modules/@types", "../../../node_modules/@types"]
     }
 }

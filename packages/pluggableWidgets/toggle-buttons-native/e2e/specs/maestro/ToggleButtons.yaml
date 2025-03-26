@@ -1,0 +1,12 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "T"
+- tapOn: 
+    text: "Toggle buttons"
+- assertVisible: 
+    text: "Toggle buttons"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/toggle_buttons"
