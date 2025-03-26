@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We've updated @react-native-community/geolocation to version 3.4.0 to resolve location-related issues.
+
+## [5.0.0] Nanoflow Commons - 2024-12-3
+
 ### Changed
 
 -   Updated @mendix/pluggable-widgets-tools from version v9.0.0 to v10.0.1.
