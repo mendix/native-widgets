@@ -40,8 +40,8 @@ jobs:
           PACKAGE_JSON="${{ inputs.package_path }}/package.json"
           CURRENT_VERSION=$(node -p "require('./$PACKAGE_JSON').marketplace.minimumMXVersion")
           
-          # Convert current version to major.minor.x format
-          CURRENT_VERSION_X=$(echo $CURRENT_VERSION | sed -E 's/^([0-9]+)\.([0-9]+)\.[0-9]+/\1.\2.x/')
+          # Convert current version to major.minor.x format (ignoring build number)
+          CURRENT_VERSION_X=$(echo $CURRENT_VERSION | sed -E 's/^([0-9]+)\.([0-9]+)\.[0-9]+(\.[0-9]+)?/\1.\2.x/')
           
           # Create branch for minimumMXVersion update
           MIN_VERSION_BRANCH="update-min-version/${{ inputs.new_version }}"
@@ -121,6 +121,7 @@ jobs:
             *New Version:* ${{ inputs.new_version }}
             *PR:* <${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.update-version.outputs.min_version_branch }}|Create PR>
             *Branch:* ${{ steps.update-version.outputs.min_version_branch }}
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
       
       - name: Send Slack notification for second branch
         uses: ./.github/actions/slack-notification
@@ -133,3 +134,4 @@ jobs:
             *Current Version:* ${{ steps.update-version.outputs.current_version }}
             *New Version:* ${{ inputs.new_version }}
             *Branch:* ${{ steps.update-version.outputs.branch_name }}
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
