@@ -1,0 +1,38 @@
+name: Check for Docs PR Link
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-docs-link:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if PR body includes link to mendix/docs PR
+        id: check
+        run: |
+          echo "Checking PR body for docs PR link..."
+          echo "${{ github.event.pull_request.body }}" | grep -qE "https:\/\/github\.com\/mendix\/docs\/pull\/[0-9]+" && echo "FOUND=true" >> $GITHUB_OUTPUT || echo "FOUND=false" >> $GITHUB_OUTPUT
+
+      - name: Add 'missing-docs-pr' label if link is missing
+        if: steps.check.outputs.FOUND == 'false'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: missing-docs-pr
+
+      - name: Comment on PR if docs link is missing
+        if: steps.check.outputs.FOUND == 'false'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `⚠️ **Docs PR link is missing.**
+
+Please add a link to the corresponding pull request in [mendix/docs](https://github.com/mendix/docs) in this PR description to comply with our release process.`
+            })
