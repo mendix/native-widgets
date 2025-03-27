@@ -68,14 +68,15 @@ jobs:
           # Push branch
           git push origin $MIN_VERSION_BRANCH
           
-          # Create PR for minimumMXVersion update and capture the URL
-          PR_URL=$(gh pr create \
+          # Create PR for minimumMXVersion update
+          gh pr create \
             --title "chore: update minimumMXVersion to ${{ inputs.new_version }}" \
             --body "This PR updates the minimumMXVersion to ${{ inputs.new_version }} in ${{ inputs.package_path }}" \
             --base main \
-            --head $MIN_VERSION_BRANCH \
-            --json url \
-            --jq .url)
+            --head $MIN_VERSION_BRANCH
+          
+          # Get PR URL
+          PR_URL="${{ github.server_url }}/${{ github.repository }}/pull/new/$MIN_VERSION_BRANCH"
           
           # Switch back to main branch for creating the second branch
           git checkout main
