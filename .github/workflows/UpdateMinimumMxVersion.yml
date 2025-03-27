@@ -32,6 +32,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         
       - name: Update minimumMXVersion
+        id: update-version
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -74,20 +75,6 @@ jobs:
             --base main \
             --head $MIN_VERSION_BRANCH
           
-          # Send Slack notification for first PR
-          - name: Send Slack notification for first PR
-            uses: ./.github/actions/slack-notification
-            with:
-              channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-              message: |
-                🚀 *Minimum MX Version Update*
-                
-                *Package:* ${{ inputs.package_path }}
-                *Current Version:* $CURRENT_VERSION
-                *New Version:* ${{ inputs.new_version }}
-                *PR:* <${{ github.server_url }}/${{ github.repository }}/pull/new/$MIN_VERSION_BRANCH|Create PR>
-                *Branch:* $MIN_VERSION_BRANCH
-          
           # Switch back to main branch for creating the second branch
           git checkout main
           git pull origin main
@@ -117,15 +104,32 @@ jobs:
           # Push new branch
           git push origin $BRANCH_NAME
           
-          # Send Slack notification for second branch
-          - name: Send Slack notification for second branch
-            uses: ./.github/actions/slack-notification
-            with:
-              channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-              message: |
-                🔄 *Branch Name Update*
-                
-                *Package:* ${{ inputs.package_path }}
-                *Current Version:* $CURRENT_VERSION
-                *New Version:* ${{ inputs.new_version }}
-                *Branch:* $BRANCH_NAME
+          # Set outputs for other steps
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "min_version_branch=$MIN_VERSION_BRANCH" >> $GITHUB_OUTPUT
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+      
+      - name: Send Slack notification for first PR
+        uses: ./.github/actions/slack-notification
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          message: |
+            🚀 *Minimum MX Version Update*
+            
+            *Package:* ${{ inputs.package_path }}
+            *Current Version:* ${{ steps.update-version.outputs.current_version }}
+            *New Version:* ${{ inputs.new_version }}
+            *PR:* <${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.update-version.outputs.min_version_branch }}|Create PR>
+            *Branch:* ${{ steps.update-version.outputs.min_version_branch }}
+      
+      - name: Send Slack notification for second branch
+        uses: ./.github/actions/slack-notification
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          message: |
+            🔄 *Branch Name Update*
+            
+            *Package:* ${{ inputs.package_path }}
+            *Current Version:* ${{ steps.update-version.outputs.current_version }}
+            *New Version:* ${{ inputs.new_version }}
+            *Branch:* ${{ steps.update-version.outputs.branch_name }}
