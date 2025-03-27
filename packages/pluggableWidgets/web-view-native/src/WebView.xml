@@ -18,11 +18,11 @@
         <propertyGroup caption="Events">
             <property key="onLoad" type="action" required="false">
                 <caption>On load</caption>
-                <description/>
+                <description />
             </property>
             <property key="onError" type="action" required="false">
                 <caption>On error</caption>
-                <description/>
+                <description />
             </property>
         </propertyGroup>
         <propertyGroup caption="Callback">
@@ -34,11 +34,41 @@
                 <caption>Message attribute</caption>
                 <description>The attribute where the input message will be stored. This can be used to read the input in the onMessage event.</description>
                 <attributeTypes>
-                    <attributeType name="String"/>
+                    <attributeType name="String" />
                 </attributeTypes>
             </property>
         </propertyGroup>
         <propertyGroup caption="Advanced">
+            <property key="requestMethod" type="enumeration" defaultValue="GET">
+                <caption>Request method</caption>
+                <description>The method verb for the request</description>
+                <enumerationValues>
+                    <enumerationValue key="GET">GET</enumerationValue>
+                    <enumerationValue key="POST">POST</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="postBody" type="textTemplate" required="false">
+                <caption>POST Body</caption>
+                <description>The body that will be send in the POST request</description>
+            </property>
+            <property key="headerList" type="object" isList="true" required="false">
+                <caption>Header list</caption>
+                <description>On Android, header pass-through is only supported with the GET method</description>
+                <properties>
+                    <propertyGroup caption="Header list group">
+                        <property key="headerName" type="expression" required="true">
+                            <caption>Header name</caption>
+                            <description>Name of the header</description>
+                            <returnType type="String" />
+                        </property>
+                        <property key="headerValue" type="expression" required="true">
+                            <caption>Header value</caption>
+                            <description>Value of the header</description>
+                            <returnType type="String" />
+                        </property>
+                    </propertyGroup>
+                </properties>
+            </property>
             <property key="userAgent" type="string" required="false">
                 <caption>User agent</caption>
                 <description>A custom user agent string will be included with the request.</description>
