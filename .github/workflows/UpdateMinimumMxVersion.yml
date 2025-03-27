@@ -4,13 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       package_paths:
-        description: 'Select the packages to update'
+        description: 'Select the packages to update (comma-separated)'
         required: true
-        type: choice
-        multiple: true
-        options:
-          - packages/jsActions/mobile-resources-native
-          - packages/jsActions/nanoflow-actions-native
+        type: environment
+        default: 'packages/jsActions/mobile-resources-native,packages/jsActions/nanoflow-actions-native'
       new_version:
         description: 'New minimumMXVersion value'
         required: true
@@ -42,8 +39,11 @@ jobs:
           declare -a BRANCH_NAMES=()
           declare -a CURRENT_VERSIONS=()
           
-          # Loop through each package
-          for PACKAGE_PATH in ${{ inputs.package_paths }}; do
+          # Split package paths by comma and loop through each package
+          IFS=',' read -ra PACKAGES <<< "${{ inputs.package_paths }}"
+          for PACKAGE_PATH in "${PACKAGES[@]}"; do
+            # Trim whitespace
+            PACKAGE_PATH=$(echo "$PACKAGE_PATH" | xargs)
             echo "Processing package: $PACKAGE_PATH"
             
             # Read package.json file
