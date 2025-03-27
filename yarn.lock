@@ -2012,9 +2012,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^5.1.1":
-  version: 5.1.2
-  resolution: "@gorhom/bottom-sheet@npm:5.1.2"
+"@gorhom/bottom-sheet@npm:5.1.1":
+  version: 5.1.1
+  resolution: "@gorhom/bottom-sheet@npm:5.1.1"
   dependencies:
     "@gorhom/portal": "npm:1.0.14"
     invariant: "npm:^2.2.4"
@@ -2030,7 +2030,7 @@ __metadata:
       optional: true
     "@types/react-native":
       optional: true
-  checksum: 10/dee116bdb749643bde163dd88c7fb800988472d58cf38532bc1b034ca1153cb250f2c8c83f2c4b393e39019f6205ca28be018eed47ae4767c75ff4983de8a151
+  checksum: 10/6da29c3927f6a0b6d2a459e2a1cae48ce7c0fce41663b46b0aba98490af15199e31248f83ca18753eeb439faf2c1dd957f26e4eacc9796b4962df44170b1a2d3
   languageName: node
   linkType: hard
 
@@ -3359,17 +3359,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shopify/flash-list@npm:^1.7.3":
-  version: 1.7.6
-  resolution: "@shopify/flash-list@npm:1.7.6"
+"@shopify/flash-list@npm:1.7.3":
+  version: 1.7.3
+  resolution: "@shopify/flash-list@npm:1.7.3"
   dependencies:
-    recyclerlistview: "npm:4.2.3"
+    recyclerlistview: "npm:4.2.1"
     tslib: "npm:2.8.1"
   peerDependencies:
     "@babel/runtime": "*"
     react: "*"
     react-native: "*"
-  checksum: 10/2c635a3719013db2c8fd284593d6d5f6e495862c60bcafb5e56d0818e58cb8d202b19d80decb14df35041f957aa498223abcb76e642d91626e0a96056675c548
+  checksum: 10/bd1bc39afcc753b8018cfe1a7bc1874485c191b355155fe127682a90651f6691b11daf6db0fd398fa436cb24a0bfbb83989d3bf1d90063b5a620fce2ed791cb0
   languageName: node
   linkType: hard
 
@@ -5276,16 +5276,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bottom-sheet-native@workspace:packages/pluggableWidgets/bottom-sheet-native"
   dependencies:
-    "@gorhom/bottom-sheet": "npm:^5.1.1"
+    "@gorhom/bottom-sheet": "npm:5.1.1"
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
-    "@shopify/flash-list": "npm:^1.7.3"
+    "@shopify/flash-list": "npm:1.7.3"
     "@types/react-native-actionsheet": "npm:^2.4.1"
     "@types/react-native-modal": "npm:^4.1.1"
     eslint: "npm:^7.32.0"
     react-native-device-info: "npm:13.0.0"
-    react-native-gesture-handler: "npm:^2.24.0"
+    react-native-gesture-handler: "npm:2.24.0"
   languageName: unknown
   linkType: soft
 
@@ -10791,7 +10791,7 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
-    react-native-gesture-handler: "npm:2.16.2"
+    react-native-gesture-handler: "npm:2.24.0"
   languageName: unknown
   linkType: soft
 
@@ -14181,23 +14181,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gesture-handler@npm:2.16.2":
-  version: 2.16.2
-  resolution: "react-native-gesture-handler@npm:2.16.2"
-  dependencies:
-    "@egjs/hammerjs": "npm:^2.0.17"
-    hoist-non-react-statics: "npm:^3.3.0"
-    invariant: "npm:^2.2.4"
-    lodash: "npm:^4.17.21"
-    prop-types: "npm:^15.7.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/227799f5e16f9725d81db524fc06c1fbef226835a5ee989642d132748832f7543ebc750d4309e49bcaa0fb6d1e7dd6b74028785e4b755978ab7f66f05b414c18
-  languageName: node
-  linkType: hard
-
-"react-native-gesture-handler@npm:^2.24.0":
+"react-native-gesture-handler@npm:2.24.0":
   version: 2.24.0
   resolution: "react-native-gesture-handler@npm:2.24.0"
   dependencies:
@@ -14705,9 +14689,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recyclerlistview@npm:4.2.3":
-  version: 4.2.3
-  resolution: "recyclerlistview@npm:4.2.3"
+"recyclerlistview@npm:4.2.1":
+  version: 4.2.1
+  resolution: "recyclerlistview@npm:4.2.1"
   dependencies:
     lodash.debounce: "npm:4.0.8"
     prop-types: "npm:15.8.1"
@@ -14715,7 +14699,7 @@ __metadata:
   peerDependencies:
     react: ">= 15.2.1"
     react-native: ">= 0.30.0"
-  checksum: 10/a759db18297cb2dde362c448763983d84130b25b2bead2db4da525c0b79ce67ae8a6433f83a6f6cd32c42bbe7d78bc29a4d5f8b59da6eda27a49968588d9433b
+  checksum: 10/9c5080bfeb59a5b3127bf7b66338278b7fbc40a56aa1644add7e3de280a1f24458c49fdb08299058041f3afe49a085d06cfdfc997852345c4e9090ef48d27da6
   languageName: node
   linkType: hard
 
