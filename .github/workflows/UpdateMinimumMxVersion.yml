@@ -68,12 +68,14 @@ jobs:
           # Push branch
           git push origin $MIN_VERSION_BRANCH
           
-          # Create PR for minimumMXVersion update
-          gh pr create \
+          # Create PR for minimumMXVersion update and capture the URL
+          PR_URL=$(gh pr create \
             --title "chore: update minimumMXVersion to ${{ inputs.new_version }}" \
             --body "This PR updates the minimumMXVersion to ${{ inputs.new_version }} in ${{ inputs.package_path }}" \
             --base main \
-            --head $MIN_VERSION_BRANCH
+            --head $MIN_VERSION_BRANCH \
+            --json url \
+            --jq .url)
           
           # Switch back to main branch for creating the second branch
           git checkout main
@@ -108,6 +110,7 @@ jobs:
           echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
           echo "min_version_branch=$MIN_VERSION_BRANCH" >> $GITHUB_OUTPUT
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
       
       - name: Send Slack notification for first PR
         uses: ./.github/actions/slack-notification
@@ -119,7 +122,7 @@ jobs:
             *Package:* ${{ inputs.package_path }}
             *Current Version:* ${{ steps.update-version.outputs.current_version }}
             *New Version:* ${{ inputs.new_version }}
-            *PR:* <${{ github.server_url }}/${{ github.repository }}/pull/new/${{ steps.update-version.outputs.min_version_branch }}|Create PR>
+            *PR:* <${{ steps.update-version.outputs.pr_url }}|View PR>
             *Branch:* ${{ steps.update-version.outputs.min_version_branch }}
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
       
