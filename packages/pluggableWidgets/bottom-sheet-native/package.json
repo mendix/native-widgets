@@ -19,12 +19,12 @@
     "version": "yarn release"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^5.1.1",
+    "@gorhom/bottom-sheet": "5.1.1",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "@shopify/flash-list": "^1.7.3",
+    "@shopify/flash-list": "1.7.3",
     "react-native-device-info": "13.0.0",
-    "react-native-gesture-handler": "^2.24.0"
+    "react-native-gesture-handler": "2.24.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",
