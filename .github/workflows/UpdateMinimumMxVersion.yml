@@ -3,10 +3,11 @@ name: Update Minimum MX Version
 on:
   workflow_dispatch:
     inputs:
-      package_path:
-        description: 'Select the package to update'
+      package_paths:
+        description: 'Select the packages to update'
         required: true
         type: choice
+        multiple: true
         options:
           - packages/jsActions/mobile-resources-native
           - packages/jsActions/nanoflow-actions-native
@@ -36,105 +37,110 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Read package.json file
-          PACKAGE_JSON="${{ inputs.package_path }}/package.json"
-          CURRENT_VERSION=$(node -p "require('./$PACKAGE_JSON').marketplace.minimumMXVersion")
+          # Initialize arrays to store results
+          declare -a PR_URLS=()
+          declare -a BRANCH_NAMES=()
+          declare -a CURRENT_VERSIONS=()
           
-          # Convert current version to major.minor.x format (ignoring build number)
-          CURRENT_VERSION_X=$(echo $CURRENT_VERSION | sed -E 's/^([0-9]+)\.([0-9]+)\.[0-9]+(\.[0-9]+)?/\1.\2.x/')
-          
-          # Create branch for minimumMXVersion update
-          MIN_VERSION_BRANCH="update-min-version/${{ inputs.new_version }}"
-          git checkout -b $MIN_VERSION_BRANCH
-          
-          # Update package.json - only minimumMXVersion
-          node -e "
-            const fs = require('fs');
-            const path = require('path');
-            const packageJson = require('./$PACKAGE_JSON');
+          # Loop through each package
+          for PACKAGE_PATH in ${{ inputs.package_paths }}; do
+            echo "Processing package: $PACKAGE_PATH"
             
-            packageJson.marketplace.minimumMXVersion = '${{ inputs.new_version }}';
+            # Read package.json file
+            PACKAGE_JSON="$PACKAGE_PATH/package.json"
+            CURRENT_VERSION=$(node -p "require('./$PACKAGE_JSON').marketplace.minimumMXVersion")
             
-            fs.writeFileSync(
-              path.resolve('./$PACKAGE_JSON'),
-              JSON.stringify(packageJson, null, 2)
-            );
-          "
-          
-          # Commit changes
-          git add $PACKAGE_JSON
-          git commit -m "chore: update minimumMXVersion to ${{ inputs.new_version }}"
-          
-          # Push branch
-          git push origin $MIN_VERSION_BRANCH
-          
-          # Create PR for minimumMXVersion update and capture the URL
-          PR_URL=$(gh pr create \
-            --title "chore: update minimumMXVersion to ${{ inputs.new_version }}" \
-            --body "This PR updates the minimumMXVersion to ${{ inputs.new_version }} in ${{ inputs.package_path }}" \
-            --base main \
-            --head $MIN_VERSION_BRANCH \
-            --json url \
-            --jq .url)
-          
-          # Switch back to main branch for creating the second branch
-          git checkout main
-          git pull origin main
-          
-          # Create new branch for branchName update from main
-          BRANCH_NAME="version/$CURRENT_VERSION_X"
-          git checkout -b $BRANCH_NAME
-          
-          # Update package.json in new branch - only branchName
-          node -e "
-            const fs = require('fs');
-            const path = require('path');
-            const packageJson = require('./$PACKAGE_JSON');
+            # Convert current version to major.minor.x format (ignoring build number)
+            CURRENT_VERSION_X=$(echo $CURRENT_VERSION | sed -E 's/^([0-9]+)\.([0-9]+)\.[0-9]+(\.[0-9]+)?/\1.\2.x/')
             
-            packageJson.testProject.branchName = 'mx/$CURRENT_VERSION_X';
+            # Create branch for minimumMXVersion update
+            MIN_VERSION_BRANCH="update-min-version/${{ inputs.new_version }}-$(basename $PACKAGE_PATH)"
+            git checkout -b $MIN_VERSION_BRANCH
             
-            fs.writeFileSync(
-              path.resolve('./$PACKAGE_JSON'),
-              JSON.stringify(packageJson, null, 2)
-            );
-          "
-          
-          # Commit changes in new branch
-          git add $PACKAGE_JSON
-          git commit -m "chore: update branchName to mx/$CURRENT_VERSION_X"
-          
-          # Push new branch
-          git push origin $BRANCH_NAME
+            # Update package.json - only minimumMXVersion
+            node -e "
+              const fs = require('fs');
+              const path = require('path');
+              const packageJson = require('./$PACKAGE_JSON');
+              
+              packageJson.marketplace.minimumMXVersion = '${{ inputs.new_version }}';
+              
+              fs.writeFileSync(
+                path.resolve('./$PACKAGE_JSON'),
+                JSON.stringify(packageJson, null, 2)
+              );
+            "
+            
+            # Commit changes
+            git add $PACKAGE_JSON
+            git commit -m "chore: update minimumMXVersion to ${{ inputs.new_version }} in $PACKAGE_PATH"
+            
+            # Push branch
+            git push origin $MIN_VERSION_BRANCH
+            
+            # Create PR for minimumMXVersion update and capture the URL
+            PR_URL=$(gh pr create \
+              --title "chore: update minimumMXVersion to ${{ inputs.new_version }} in $PACKAGE_PATH" \
+              --body "This PR updates the minimumMXVersion to ${{ inputs.new_version }} in $PACKAGE_PATH" \
+              --base main \
+              --head $MIN_VERSION_BRANCH \
+              --json url \
+              --jq .url)
+            
+            # Store results
+            PR_URLS+=("$PR_URL")
+            CURRENT_VERSIONS+=("$CURRENT_VERSION")
+            
+            # Switch back to main branch for creating the second branch
+            git checkout main
+            git pull origin main
+            
+            # Create new branch for branchName update from main
+            BRANCH_NAME="version/$CURRENT_VERSION_X-$(basename $PACKAGE_PATH)"
+            git checkout -b $BRANCH_NAME
+            
+            # Update package.json in new branch - only branchName
+            node -e "
+              const fs = require('fs');
+              const path = require('path');
+              const packageJson = require('./$PACKAGE_JSON');
+              
+              packageJson.testProject.branchName = 'mx/$CURRENT_VERSION_X';
+              
+              fs.writeFileSync(
+                path.resolve('./$PACKAGE_JSON'),
+                JSON.stringify(packageJson, null, 2)
+              );
+            "
+            
+            # Commit changes in new branch
+            git add $PACKAGE_JSON
+            git commit -m "chore: update branchName to mx/$CURRENT_VERSION_X in $PACKAGE_PATH"
+            
+            # Push new branch
+            git push origin $BRANCH_NAME
+            
+            # Store branch name
+            BRANCH_NAMES+=("$BRANCH_NAME")
+          done
           
           # Set outputs for other steps
-          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
-          echo "min_version_branch=$MIN_VERSION_BRANCH" >> $GITHUB_OUTPUT
-          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
-          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+          echo "current_versions=${CURRENT_VERSIONS[*]}" >> $GITHUB_OUTPUT
+          echo "pr_urls=${PR_URLS[*]}" >> $GITHUB_OUTPUT
+          echo "branch_names=${BRANCH_NAMES[*]}" >> $GITHUB_OUTPUT
       
-      - name: Send Slack notification for first PR
+      - name: Send Slack notifications
         uses: ./.github/actions/slack-notification
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           message: |
             🚀 *Minimum MX Version Update*
             
-            *Package:* ${{ inputs.package_path }}
-            *Current Version:* ${{ steps.update-version.outputs.current_version }}
+            *Packages:* ${{ inputs.package_paths }}
+            *Current Versions:* ${{ steps.update-version.outputs.current_versions }}
             *New Version:* ${{ inputs.new_version }}
-            *PR:* <${{ steps.update-version.outputs.pr_url }}|View PR>
-            *Branch:* ${{ steps.update-version.outputs.min_version_branch }}
-          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-      
-      - name: Send Slack notification for second branch
-        uses: ./.github/actions/slack-notification
-        with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          message: |
-            🔄 *Branch Name Update*
-            
-            *Package:* ${{ inputs.package_path }}
-            *Current Version:* ${{ steps.update-version.outputs.current_version }}
-            *New Version:* ${{ inputs.new_version }}
-            *Branch:* ${{ steps.update-version.outputs.branch_name }}
+            *PRs:* 
+            ${{ steps.update-version.outputs.pr_urls }}
+            *Branches:* 
+            ${{ steps.update-version.outputs.branch_names }}
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
