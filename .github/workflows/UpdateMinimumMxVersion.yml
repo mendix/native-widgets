@@ -26,12 +26,6 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Install yarn
-        run: npm i -g yarn
-        
-      - name: Install dependencies
-        run: yarn install
-        
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
@@ -107,4 +101,4 @@ jobs:
           git commit -m "chore: update branchName to ${{ inputs.new_version }}"
           
           # Push new branch
-          git push origin $BRANCH_NAME 
+          git push origin $BRANCH_NAME
