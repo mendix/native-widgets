@@ -89,7 +89,7 @@ jobs:
             const path = require('path');
             const packageJson = require('./$PACKAGE_JSON');
             
-            packageJson.testProject.branchName = '${{ inputs.new_version }}';
+            packageJson.testProject.branchName = 'mx/$CURRENT_VERSION_X';
             
             fs.writeFileSync(
               path.resolve('./$PACKAGE_JSON'),
@@ -99,7 +99,7 @@ jobs:
           
           # Commit changes in new branch
           git add $PACKAGE_JSON
-          git commit -m "chore: update branchName to ${{ inputs.new_version }}"
+          git commit -m "chore: update branchName to mx/$CURRENT_VERSION_X"
           
           # Push new branch
           git push origin $BRANCH_NAME
