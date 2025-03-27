@@ -1,0 +1,103 @@
+name: Update Minimum MX Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_path:
+        description: 'Select the package to update'
+        required: true
+        type: choice
+        options:
+          - packages/jsActions/mobile-resources-native
+          - packages/jsActions/nanoflow-actions-native
+      new_version:
+        description: 'New minimumMXVersion value'
+        required: true
+        type: string
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Install yarn
+        run: npm i -g yarn
+        
+      - name: Install dependencies
+        run: yarn install
+        
+      - name: Update minimumMXVersion
+        run: |
+          # Read package.json file
+          PACKAGE_JSON="${{ inputs.package_path }}/package.json"
+          CURRENT_VERSION=$(node -p "require('./$PACKAGE_JSON').marketplace.minimumMXVersion")
+          
+          # Convert current version to x format (e.g., 10.17.0 -> 10.17.x)
+          CURRENT_VERSION_X=$(echo $CURRENT_VERSION | sed 's/\.[0-9]*$/.x/')
+          
+          # Create branch for minimumMXVersion update
+          MIN_VERSION_BRANCH="update-min-version/${{ inputs.new_version }}"
+          git checkout -b $MIN_VERSION_BRANCH
+          
+          # Update package.json - only minimumMXVersion
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const packageJson = require('./$PACKAGE_JSON');
+            
+            packageJson.marketplace.minimumMXVersion = '${{ inputs.new_version }}';
+            
+            fs.writeFileSync(
+              path.resolve('./$PACKAGE_JSON'),
+              JSON.stringify(packageJson, null, 2)
+            );
+          "
+          
+          # Commit changes
+          git add $PACKAGE_JSON
+          git commit -m "chore: update minimumMXVersion to ${{ inputs.new_version }}"
+          
+          # Push branch
+          git push origin $MIN_VERSION_BRANCH
+          
+          # Create PR for minimumMXVersion update
+          gh pr create \
+            --title "chore: update minimumMXVersion to ${{ inputs.new_version }}" \
+            --body "This PR updates the minimumMXVersion to ${{ inputs.new_version }} in ${{ inputs.package_path }}" \
+            --base main \
+            --head $MIN_VERSION_BRANCH
+          
+          # Switch back to main branch for creating the second branch
+          git checkout main
+          git pull origin main
+          
+          # Create new branch for branchName update from main
+          BRANCH_NAME="version/$CURRENT_VERSION_X"
+          git checkout -b $BRANCH_NAME
+          
+          # Update package.json in new branch - only branchName
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const packageJson = require('./$PACKAGE_JSON');
+            
+            packageJson.branchName = '${{ inputs.new_version }}';
+            
+            fs.writeFileSync(
+              path.resolve('./$PACKAGE_JSON'),
+              JSON.stringify(packageJson, null, 2)
+            );
+          "
+          
+          # Commit changes in new branch
+          git add $PACKAGE_JSON
+          git commit -m "chore: update branchName to ${{ inputs.new_version }}"
+          
+          # Push new branch
+          git push origin $BRANCH_NAME 
