@@ -10,6 +10,7 @@ export interface SignatureProps<Style> {
     name: string;
     style: Style[];
     imageAttribute: EditableValue<string>;
+    showButtons: boolean;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
     onClear?: ActionValue;
@@ -29,6 +30,7 @@ export interface SignaturePreviewProps {
     readOnly: boolean;
     renderMode?: "design" | "xray" | "structure";
     imageAttribute: string;
+    showButtons: boolean;
     buttonCaptionClear: string;
     buttonCaptionSave: string;
     onClear: {} | null;
