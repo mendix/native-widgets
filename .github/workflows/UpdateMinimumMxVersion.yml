@@ -38,6 +38,8 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         
       - name: Update minimumMXVersion
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Read package.json file
           PACKAGE_JSON="${{ inputs.package_path }}/package.json"
