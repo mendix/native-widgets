@@ -75,8 +75,8 @@ jobs:
             --base main \
             --head $MIN_VERSION_BRANCH
           
-          # Get PR URL
-          PR_URL="${{ github.server_url }}/${{ github.repository }}/pull/new/$MIN_VERSION_BRANCH"
+          # Get PR URL by listing PRs and finding the one with our branch
+          PR_URL=$(gh pr list --head $MIN_VERSION_BRANCH --json url --jq '.[0].url')
           
           # Switch back to main branch for creating the second branch
           git checkout main
