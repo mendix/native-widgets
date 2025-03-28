@@ -60,7 +60,7 @@ on:
           - web-view-native 
   
   # Trigger on PR
-  pull_request:
+  # pull_request:
 
 
 permissions:
