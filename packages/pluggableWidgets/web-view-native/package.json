@@ -27,7 +27,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-webview": "13.13.2"
+    "react-native-webview": "13.8.6"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",

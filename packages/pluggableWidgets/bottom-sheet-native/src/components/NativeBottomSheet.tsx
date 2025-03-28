@@ -35,6 +35,16 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         props.triggerAttribute.status === ValueStatus.Available &&
         props.triggerAttribute.value;
 
+    const manageBottomSheet = () => {
+        if (props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available) {
+            if (props.triggerAttribute.value) {
+                bottomSheetRef.current?.expand();
+            } else {
+                bottomSheetRef.current?.close();
+            }
+        }
+    };
+
     useEffect(() => {
         manageBottomSheet();
     }, [props.triggerAttribute]);
@@ -67,16 +77,6 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
             );
         }
     }, [isOpen]);
-
-    const manageBottomSheet = () => {
-        if (props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available) {
-            if (props.triggerAttribute.value) {
-                bottomSheetRef.current?.expand();
-            } else {
-                bottomSheetRef.current?.close();
-            }
-        }
-    };
 
     const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
         <Pressable style={{ flex: 1 }} onPress={close}>

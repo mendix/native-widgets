@@ -24,7 +24,8 @@
     "@mendix/piw-utils-internal": "*",
     "@shopify/flash-list": "1.7.3",
     "react-native-device-info": "13.0.0",
-    "react-native-gesture-handler": "2.24.0"
+    "react-native-gesture-handler": "2.24.0",
+    "react-native-reanimated": "3.16.1"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",
