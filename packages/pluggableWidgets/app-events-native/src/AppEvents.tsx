@@ -33,7 +33,7 @@ export class AppEvents extends Component<Props> {
         }
 
         if (this.props.onOnlineAction || this.props.onOfflineAction) {
-            this.isConnected = (await NetInfo.fetch()).isConnected;
+            this.isConnected = Boolean((await NetInfo.fetch()).isConnected);
             this.unsubscribeNetworkEventListener = NetInfo.addEventListener(this.onConnectionChangeHandler);
         }
 
@@ -94,7 +94,7 @@ export class AppEvents extends Component<Props> {
             this.lastOnOffline = Date.now();
         }
 
-        this.isConnected = nextState.isConnected;
+        this.isConnected = Boolean(nextState.isConnected);
     }
 }
 

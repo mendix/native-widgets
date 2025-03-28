@@ -15,8 +15,6 @@ jest.mock("react-native/Libraries/Utilities/Platform", () => ({
     select: jest.fn(dict => dict.ios)
 }));
 
-jest.mock("react-native-reanimated", () => jest.requireActual("react-native-reanimated/mock"));
-
 const defaultProps: BottomSheetProps<BottomSheetStyle> = {
     name: "bottom-sheet-test",
     style: [],

@@ -1,0 +1,20 @@
+diff --git a/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts b/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts
+index 0cbe84f..ed2a5a6 100644
+--- a/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts
++++ b/node_modules/react-native-gesture-handler/lib/typescript/components/Swipeable.d.ts
+@@ -1,5 +1,5 @@
+ import * as React from 'react';
+-import { Component } from 'react';
++import { Component, PropsWithChildren } from 'react';
+ import { Animated, StyleProp, ViewStyle } from 'react-native';
+ import { PanGestureHandlerProps } from '../handlers/PanGestureHandler';
+ type SwipeableExcludes = Exclude<keyof PanGestureHandlerProps, 'onGestureEvent' | 'onHandlerStateChange'>;
+@@ -153,7 +153,7 @@ type SwipeableState = {
+  *
+  * This component allows for implementing swipeable rows or similar interaction.
+  */
+-export default class Swipeable extends Component<SwipeableProps, SwipeableState> {
++export default class Swipeable extends Component<PropsWithChildren<SwipeableProps>, SwipeableState> {
+     static defaultProps: {
+         friction: number;
+         overshootFriction: number;

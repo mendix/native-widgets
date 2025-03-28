@@ -25,19 +25,26 @@ exports[`WebView renders a web view when a url is provided 1`] = `
     <RNCWebView
       allowFileAccess={false}
       allowsFullscreenVideo={false}
-      androidHardwareAccelerationDisabled={false}
       androidLayerType="none"
       cacheEnabled={true}
+      hasOnOpenWindowEvent={false}
+      hasOnScroll={false}
       javaScriptEnabled={true}
       messagingEnabled={true}
       messagingModuleName="WebViewMessageHandler1"
       nestedScrollEnabled={false}
+      newSource={
+        {
+          "uri": "https://mendix.com",
+        }
+      }
       onHttpError={[Function]}
       onLoadingError={[Function]}
       onLoadingFinish={[Function]}
       onLoadingProgress={[Function]}
       onLoadingStart={[Function]}
       onMessage={[Function]}
+      onOpenWindow={[Function]}
       onRenderProcessGone={[Function]}
       onShouldStartLoadWithRequest={[Function]}
       overScrollMode="always"
@@ -98,19 +105,26 @@ exports[`WebView renders a web view when html content is provided 1`] = `
     <RNCWebView
       allowFileAccess={false}
       allowsFullscreenVideo={false}
-      androidHardwareAccelerationDisabled={false}
       androidLayerType="none"
       cacheEnabled={true}
+      hasOnOpenWindowEvent={false}
+      hasOnScroll={false}
       javaScriptEnabled={true}
       messagingEnabled={true}
       messagingModuleName="WebViewMessageHandler2"
       nestedScrollEnabled={false}
+      newSource={
+        {
+          "html": "Hello, world!",
+        }
+      }
       onHttpError={[Function]}
       onLoadingError={[Function]}
       onLoadingFinish={[Function]}
       onLoadingProgress={[Function]}
       onLoadingStart={[Function]}
       onMessage={[Function]}
+      onOpenWindow={[Function]}
       onRenderProcessGone={[Function]}
       onShouldStartLoadWithRequest={[Function]}
       overScrollMode="always"
