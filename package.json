@@ -100,7 +100,8 @@
     "react-dom": "18.2.0",
     "react-native": "0.75.4",
     "@prettier/plugin-xml": "2.2.0",
-    "@types/react-native": "0.73.0"
+    "@types/react-native": "0.73.0",
+    "cheerio": "1.0.0-rc.12"
   },
   "packageManager": "yarn@4.5.1"
 }
