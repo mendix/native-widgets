@@ -1,7 +1,7 @@
 {
   "name": "signature-native",
   "widgetName": "Signature",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
     "react-native-signature-canvas": "3.4.0",
-    "react-native-webview": "11.26.1"
+    "react-native-webview": "13.8.6"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",

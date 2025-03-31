@@ -1,7 +1,7 @@
 {
   "name": "bottom-sheet-native",
   "widgetName": "BottomSheet",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -19,13 +19,13 @@
     "version": "yarn release"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "5.1.1",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-actionsheet": "^2.4.2",
+    "@shopify/flash-list": "1.7.3",
     "react-native-device-info": "13.0.0",
-    "react-native-modal": "^13.0.1",
-    "react-native-reanimated": "^1.0.1",
-    "reanimated-bottom-sheet": "^1.0.0-alpha.19"
+    "react-native-gesture-handler": "2.24.0",
+    "react-native-reanimated": "3.16.1"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",
