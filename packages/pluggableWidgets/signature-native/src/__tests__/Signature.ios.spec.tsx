@@ -1,5 +1,4 @@
-import { createElement, ReactElement } from "react";
-import { View } from "react-native";
+import { createElement } from "react";
 import SignatureScreen from "react-native-signature-canvas";
 import { fireEvent, render } from "@testing-library/react-native";
 
@@ -14,20 +13,8 @@ jest.mock("react-native", () => {
 
 jest.mock("react-native/Libraries/Utilities/Platform", () => {
     const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
-    Platform.OS = "android";
+    Platform.OS = "ios";
     return Platform;
-});
-
-jest.mock("react-native/Libraries/Components/Touchable/TouchableNativeFeedback", () => {
-    const TouchableNativeFeedback = (touchableNativeFeedback: any): ReactElement => {
-        const { children, ...rest } = touchableNativeFeedback;
-        return <View {...rest}>{children}</View>;
-    };
-    TouchableNativeFeedback.SelectableBackground = jest.fn(() => "SelectableBackground");
-    TouchableNativeFeedback.SelectableBackgroundBorderless = jest.fn(() => "SelectableBackgroundBorderless");
-    TouchableNativeFeedback.Ripple = jest.fn(() => "Ripple");
-    TouchableNativeFeedback.canUseNativeForeground = jest.fn(() => true);
-    return TouchableNativeFeedback;
 });
 
 const defaultProps: Props = {
@@ -38,7 +25,7 @@ const defaultProps: Props = {
     buttonCaptionSave: dynamicValue<string>("Save")
 };
 
-describe("Signature Android", () => {
+describe("Signature iOS", () => {
     it("renders with default styles", () => {
         const component = render(<Signature {...defaultProps} />);
 

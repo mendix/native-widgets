@@ -14442,19 +14442,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-webview@npm:13.12.5":
-  version: 13.12.5
-  resolution: "react-native-webview@npm:13.12.5"
-  dependencies:
-    escape-string-regexp: "npm:^4.0.0"
-    invariant: "npm:2.2.4"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/ea7d5a5f7df2a23cfa2d9afe9856d7d4bfef2502ee9f081b21cc9d0ae77dc2b7465e4007068fffce45256df4f6703a7b215158537885b1ba0c86f2953bec761e
-  languageName: node
-  linkType: hard
-
 "react-native-webview@npm:13.8.6":
   version: 13.8.6
   resolution: "react-native-webview@npm:13.8.6"
@@ -15693,7 +15680,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
     react-native-signature-canvas: "npm:3.4.0"
-    react-native-webview: "npm:13.12.5"
+    react-native-webview: "npm:13.8.6"
   languageName: unknown
   linkType: soft
 
