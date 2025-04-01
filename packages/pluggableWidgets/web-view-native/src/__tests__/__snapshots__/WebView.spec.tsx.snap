@@ -12,71 +12,24 @@ exports[`WebView renders a web view when a url is provided 1`] = `
   testID="webview-test"
 >
   <View
-    style={
-      [
-        {
-          "flex": 1,
-          "overflow": "hidden",
-        },
-        undefined,
-      ]
+    onError={[Function]}
+    onLoad={[Function]}
+    onMessage={[Function]}
+    onShouldStartLoadWithRequest={[Function]}
+    source={
+      {
+        "uri": "https://mendix.com",
+      }
     }
-  >
-    <RNCWebView
-      allowFileAccess={false}
-      allowsFullscreenVideo={false}
-      androidLayerType="none"
-      cacheEnabled={true}
-      hasOnOpenWindowEvent={false}
-      hasOnScroll={false}
-      javaScriptEnabled={true}
-      messagingEnabled={true}
-      messagingModuleName="WebViewMessageHandler1"
-      nestedScrollEnabled={false}
-      newSource={
-        {
-          "uri": "https://mendix.com",
-        }
+    style={
+      {
+        "height": "100%",
+        "width": "100%",
       }
-      onHttpError={[Function]}
-      onLoadingError={[Function]}
-      onLoadingFinish={[Function]}
-      onLoadingProgress={[Function]}
-      onLoadingStart={[Function]}
-      onMessage={[Function]}
-      onOpenWindow={[Function]}
-      onRenderProcessGone={[Function]}
-      onShouldStartLoadWithRequest={[Function]}
-      overScrollMode="always"
-      saveFormDataDisabled={false}
-      scalesPageToFit={true}
-      setBuiltInZoomControls={true}
-      setDisplayZoomControls={false}
-      setSupportMultipleWindows={true}
-      source={
-        {
-          "uri": "https://mendix.com",
-        }
-      }
-      style={
-        [
-          {
-            "flex": 1,
-            "overflow": "hidden",
-          },
-          {
-            "backgroundColor": "#ffffff",
-          },
-          {
-            "height": "100%",
-            "width": "100%",
-          },
-        ]
-      }
-      thirdPartyCookiesEnabled={true}
-      userAgent=""
-    />
-  </View>
+    }
+    testID="mockWebView"
+    userAgent=""
+  />
 </View>
 `;
 
@@ -92,71 +45,24 @@ exports[`WebView renders a web view when html content is provided 1`] = `
   testID="webview-test"
 >
   <View
-    style={
-      [
-        {
-          "flex": 1,
-          "overflow": "hidden",
-        },
-        undefined,
-      ]
+    onError={[Function]}
+    onLoad={[Function]}
+    onMessage={[Function]}
+    onShouldStartLoadWithRequest={[Function]}
+    source={
+      {
+        "html": "Hello, world!",
+      }
     }
-  >
-    <RNCWebView
-      allowFileAccess={false}
-      allowsFullscreenVideo={false}
-      androidLayerType="none"
-      cacheEnabled={true}
-      hasOnOpenWindowEvent={false}
-      hasOnScroll={false}
-      javaScriptEnabled={true}
-      messagingEnabled={true}
-      messagingModuleName="WebViewMessageHandler2"
-      nestedScrollEnabled={false}
-      newSource={
-        {
-          "html": "Hello, world!",
-        }
+    style={
+      {
+        "height": "100%",
+        "width": "100%",
       }
-      onHttpError={[Function]}
-      onLoadingError={[Function]}
-      onLoadingFinish={[Function]}
-      onLoadingProgress={[Function]}
-      onLoadingStart={[Function]}
-      onMessage={[Function]}
-      onOpenWindow={[Function]}
-      onRenderProcessGone={[Function]}
-      onShouldStartLoadWithRequest={[Function]}
-      overScrollMode="always"
-      saveFormDataDisabled={false}
-      scalesPageToFit={true}
-      setBuiltInZoomControls={true}
-      setDisplayZoomControls={false}
-      setSupportMultipleWindows={true}
-      source={
-        {
-          "html": "Hello, world!",
-        }
-      }
-      style={
-        [
-          {
-            "flex": 1,
-            "overflow": "hidden",
-          },
-          {
-            "backgroundColor": "#ffffff",
-          },
-          {
-            "height": "100%",
-            "width": "100%",
-          },
-        ]
-      }
-      thirdPartyCookiesEnabled={true}
-      userAgent=""
-    />
-  </View>
+    }
+    testID="mockWebView"
+    userAgent=""
+  />
 </View>
 `;
 

@@ -25,6 +25,16 @@ const defaultProps: Props = {
     buttonCaptionSave: dynamicValue<string>("Save")
 };
 
+jest.mock("react-native-webview", () => {
+    const { View } = require("react-native");
+
+    const WebView = (props: any) => {
+        return <View {...props} testID="mockWebView" />;
+    };
+
+    return { WebView };
+});
+
 describe("Signature iOS", () => {
     it("renders with default styles", () => {
         const component = render(<Signature {...defaultProps} />);

@@ -11,6 +11,16 @@ jest.mock("react-native", () => {
     return RN;
 });
 
+jest.mock("react-native-webview", () => {
+    const { View } = require("react-native");
+
+    const WebView = (props: any) => {
+        return <View {...props} testID="mockWebView" />;
+    };
+
+    return { WebView };
+});
+
 describe("WebView", () => {
     let defaultProps: Props;
 

@@ -18,6 +18,16 @@ jest.mock("react-native/Libraries/Utilities/Platform", () => {
     return Platform;
 });
 
+jest.mock("react-native-webview", () => {
+    const { View } = require("react-native");
+
+    const WebView = (props: any) => {
+        return <View {...props} testID="mockWebView" />;
+    };
+
+    return { WebView };
+});
+
 jest.mock("react-native/Libraries/Components/Touchable/TouchableNativeFeedback", () => {
     const TouchableNativeFeedback = (touchableNativeFeedback: any): ReactElement => {
         const { children, ...rest } = touchableNativeFeedback;
