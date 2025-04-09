@@ -165,7 +165,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         [props]
     );
 
-    const renderNextButton = ({ showNextButton, nextLabel, nextIcon, styles }: SwipeableContainerProps): ReactNode =>
+    const renderNextButton = ({
+        showNextButton = true,
+        nextLabel,
+        nextIcon,
+        styles
+    }: SwipeableContainerProps): ReactNode =>
         showNextButton &&
         renderButton(
             nextLabel,
@@ -193,7 +198,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         );
 
     const renderDoneButton = ({
-        showDoneButton,
+        showDoneButton = true,
         doneLabel,
         doneIcon,
         onDone,
@@ -326,11 +331,6 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             {renderPagination()}
         </View>
     );
-};
-
-SwipeableContainer.defaultProps = {
-    showDoneButton: true,
-    showNextButton: true
 };
 
 const styles = StyleSheet.create({
