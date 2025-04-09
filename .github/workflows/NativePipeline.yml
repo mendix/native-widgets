@@ -126,6 +126,10 @@ jobs:
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
           echo "Widgets are: ${{ steps.scope.outputs.widgets }}"
+      
+      - name: "Debug Native Template branch"
+        run: |
+          echo "nt_branch: ${{ github.event.inputs.nt_branch }}"
 
   mendix-version:
     runs-on: ubuntu-22.04
@@ -510,8 +514,25 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Verify maestro
         run: $HOME/.local/bin/maestro/bin/maestro --version
+
+      - name: Install Android Command-Line Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "PATH=$HOME/android-sdk/cmdline-tools/latest/bin:$HOME/android-sdk/platform-tools:$PATH" >> $GITHUB_ENV
+      
       - name: Set up Android SDK
         run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+      
+      - name: Install Android SDK components for API 36
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager --install "platforms;android-36" "build-tools;36.0.0" "platform-tools"
       
       - name: Enable KVM
         run: |
@@ -521,7 +542,7 @@ jobs:
       - name: "Run the android tests"
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.0.0
         with:
-          api-level: 30
+          api-level: 36
           target: google_apis
           arch: x86_64
           profile: pixel
