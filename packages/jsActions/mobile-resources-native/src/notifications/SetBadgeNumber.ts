@@ -7,7 +7,7 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
 import { NativeModules, Platform } from "react-native";
-import PushNotification from "react-native-push-notification";
+import notifee from "@notifee/react-native";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -18,7 +18,7 @@ import PushNotification from "react-native-push-notification";
  */
 export async function SetBadgeNumber(badgeNumber?: Big): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://github.com/zo0r/react-native-push-notification
+    // Documentation Documentation https://github.com/invertase/notifee
 
     const isIOS = Platform.OS === "ios";
     if (NativeModules && isIOS && !NativeModules.RNCPushNotificationIOS) {
@@ -33,7 +33,7 @@ export async function SetBadgeNumber(badgeNumber?: Big): Promise<void> {
         return Promise.reject(new Error("Input parameter 'Badge number' should be zero or greater"));
     }
 
-    return PushNotification.setApplicationIconBadgeNumber(Number(badgeNumber));
+    return notifee.setBadgeCount(badgeNumber as any as number);
 
     // END USER CODE
 }
