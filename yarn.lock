@@ -5137,7 +5137,7 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
-    expo-linear-gradient: "npm:14.0.2"
+    react-native-linear-gradient: "npm:3.0.0-alpha.1"
   languageName: unknown
   linkType: soft
 
@@ -7778,17 +7778,6 @@ __metadata:
     jest-message-util: "npm:^29.7.0"
     jest-util: "npm:^29.7.0"
   checksum: 10/63f97bc51f56a491950fb525f9ad94f1916e8a014947f8d8445d3847a665b5471b768522d659f5e865db20b6c2033d2ac10f35fcbd881a4d26407a4f6f18451a
-  languageName: node
-  linkType: hard
-
-"expo-linear-gradient@npm:14.0.2":
-  version: 14.0.2
-  resolution: "expo-linear-gradient@npm:14.0.2"
-  peerDependencies:
-    expo: "*"
-    react: "*"
-    react-native: "*"
-  checksum: 10/73471a435fa720137c5bb16ddc699c64181101db081cd4ff892b383e9f047db56039fd1235f3570dd2fccd099214230f98405963c9c8afc32891c43eabae2c60
   languageName: node
   linkType: hard
 
@@ -14169,6 +14158,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10/62c6cc3c88edb29f2b17b4cdaa098b32efd23a5faf4380171c2ccfb1706c732a50553f2ce447e1df1ea48197dde3af42dd67584c60e2c4577ee1b7769152475d
+  languageName: node
+  linkType: hard
+
+"react-native-linear-gradient@npm:3.0.0-alpha.1":
+  version: 3.0.0-alpha.1
+  resolution: "react-native-linear-gradient@npm:3.0.0-alpha.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10/95eef8707bf8c38b16d265c46d945ee9c10a27a0da8b64bdf00ea62d905e303d30e06c61a065f85aa27bbfa3faa124c172e8f95335363fd6cb089f939f62ba85
   languageName: node
   linkType: hard
 
