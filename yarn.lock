@@ -5137,7 +5137,7 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
-    react-native-linear-gradient: "npm:2.5.6"
+    expo-linear-gradient: "npm:14.0.2"
   languageName: unknown
   linkType: soft
 
@@ -7781,6 +7781,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-linear-gradient@npm:14.0.2":
+  version: 14.0.2
+  resolution: "expo-linear-gradient@npm:14.0.2"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10/73471a435fa720137c5bb16ddc699c64181101db081cd4ff892b383e9f047db56039fd1235f3570dd2fccd099214230f98405963c9c8afc32891c43eabae2c60
+  languageName: node
+  linkType: hard
+
 "exponential-backoff@npm:^3.1.1":
   version: 3.1.2
   resolution: "exponential-backoff@npm:3.1.2"
@@ -8947,7 +8958,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
     react-native-svg: "npm:15.7.1"
-    react-native-turbo-image: "npm:^1.22.3"
+    react-native-turbo-image: "npm:1.22.3"
     react-native-vector-icons: "npm:10.2.0"
   languageName: unknown
   linkType: soft
@@ -14161,15 +14172,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-linear-gradient@npm:2.5.6":
-  version: 2.5.6
-  resolution: "react-native-linear-gradient@npm:2.5.6"
-  peerDependencies:
-    react-native: ">=0.55"
-  checksum: 10/a3ab9806b99c68b697c1240a288117a48ea6e070f515fd17d39935d24fb046f0a99964158b995f3daecfbbcad16dfb63f13b3840fa830d36d7c47563aa563a08
-  languageName: node
-  linkType: hard
-
 "react-native-localize@npm:3.2.1":
   version: 3.2.1
   resolution: "react-native-localize@npm:3.2.1"
@@ -14373,7 +14375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-turbo-image@npm:^1.22.3":
+"react-native-turbo-image@npm:1.22.3":
   version: 1.22.3
   resolution: "react-native-turbo-image@npm:1.22.3"
   peerDependencies:

@@ -1,6 +1,6 @@
-import { ReactElement, createElement } from "react";
-import { Pressable, NativeModules, Alert } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+import { createElement, ReactElement } from "react";
+import { Pressable, View, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { all } from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
 import defaultStyle, { CustomStyle } from "./ui/Styles";
@@ -19,7 +19,6 @@ const opacityValidation = (opacity: number | undefined): number => {
     if (opacityVal < 0 || opacityVal > 100) {
         console.warn("Opacity must be between 0 and 100.");
     }
-
     return opacityVal / 100;
 };
 
@@ -31,15 +30,20 @@ const angleValidation = (angle: number | undefined): number => {
     if (isNaN(angleVal)) {
         throw new Error("Angle must be a number.");
     }
-
     return angleVal;
 };
 
-export function BackgroundGradient({ name, colorList, content, onClick, style }: props): ReactElement {
-    if (!("BVLinearGradient" in NativeModules.UIManager)) {
-        Alert.alert("", "The widget 'Background gradient' requires an updated 'Make It Native 9' application");
-    }
+// Convert angle to Expo's LinearGradient start/end points
+const angleToCoords = (angle: number) => {
+    const radians = (angle * Math.PI) / 180;
+    const x = Math.cos(radians);
+    const y = Math.sin(radians);
+    const start = { x: 0.5 - x / 2, y: 0.5 - y / 2 };
+    const end = { x: 0.5 + x / 2, y: 0.5 + y / 2 };
+    return { start, end };
+};
 
+export function BackgroundGradient({ name, colorList, content, onClick, style }: props): ReactElement {
     const styles = all<CustomStyle>([defaultStyle, ...style]);
     const angle = angleValidation(styles.angle);
     const opacity = opacityValidation(styles.opacity);
@@ -52,28 +56,31 @@ export function BackgroundGradient({ name, colorList, content, onClick, style }:
         throw new Error("The color list could not be empty.");
     }
 
-    // checking if the color list only have one color item , then we should duplicate it. one color list throws an exception on android.
     if (sortedColorList.length === 1) {
         sortedColorList = [...sortedColorList, ...sortedColorList];
     }
 
-    const colors = sortedColorList.map(colorsObject => colorsObject.color.toLowerCase());
-    const offsets = sortedColorList.map(colorsObject => Number(colorsObject.offset));
+    const colors = sortedColorList.map(c => c.color.toLowerCase()) as [string, string, ...string[]];
+    const locations = sortedColorList.map(c => Number(c.offset)) as [number, number, ...number[]];
+    const { start, end } = angleToCoords(angle);
 
     return (
         <Pressable
-            onPress={() => {
-                executeAction(onClick);
-            }}
+            onPress={() => executeAction(onClick)}
             testID={name}
             style={({ pressed }) => ({
                 flex: styles.container.flex,
                 opacity: onClick?.canExecute && pressed ? opacity * 0.3 : opacity
             })}
         >
-            <LinearGradient colors={colors} locations={offsets} useAngle angle={angle} style={styles.container}>
-                {content}
-            </LinearGradient>
+            <LinearGradient
+                colors={colors}
+                locations={locations}
+                start={start}
+                end={end}
+                style={[StyleSheet.absoluteFill, styles.container]}
+            />
+            <View style={[StyleSheet.absoluteFill, styles.container]}>{content}</View>
         </Pressable>
     );
 }
