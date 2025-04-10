@@ -33,7 +33,7 @@
     "fbjs": "3.0.4",
     "mime": "3.0.0",
     "react-native-blob-util": "0.21.2",
-    "react-native-device-info": "13.0.0",
+    "react-native-device-info": "14.0.4",
     "react-native-file-viewer": "2.1.5",
     "react-native-image-picker": "7.2.3",
     "react-native-localize": "3.2.1",
