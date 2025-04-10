@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Migrated react-native-fast-image to react-native-turbo-image to support react-native new architecture.
+
 ## [3.0.0] - 2024-12-3
 
 ### Changed
