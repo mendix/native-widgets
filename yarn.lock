@@ -8946,8 +8946,8 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
-    react-native-fast-image: "npm:8.3.2"
     react-native-svg: "npm:15.7.1"
+    react-native-turbo-image: "npm:^1.22.3"
     react-native-vector-icons: "npm:10.2.0"
   languageName: unknown
   linkType: soft
@@ -14121,16 +14121,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-fast-image@npm:8.3.2":
-  version: 8.3.2
-  resolution: "react-native-fast-image@npm:8.3.2"
-  peerDependencies:
-    react: ^16.8.6
-    react-native: ">=0.60.0"
-  checksum: 10/398def3b64af545cca5380087637026e873216c3f009146cf7da8bdb44ab9aca38d17b38cbf268c50125a4b282f67a7ae861531b5ee03832962e71efdf11279b
-  languageName: node
-  linkType: hard
-
 "react-native-file-viewer@npm:2.1.5":
   version: 2.1.5
   resolution: "react-native-file-viewer@npm:2.1.5"
@@ -14380,6 +14370,16 @@ __metadata:
   version: 4.4.1
   resolution: "react-native-touch-id@npm:4.4.1"
   checksum: 10/68973f838a42077fb3b7a7b5f1855f92d9aab82474f566c8f22a6354c9257fb489a221b2e4ff82d549bc2f2caa5335fbd196b23bdf0b197fa2eb27f1c90f6302
+  languageName: node
+  linkType: hard
+
+"react-native-turbo-image@npm:^1.22.3":
+  version: 1.22.3
+  resolution: "react-native-turbo-image@npm:1.22.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10/b09e4bbf95de81dee9c5929d87a216167f5d7bef0b9c0e898e2fe574f00b57437224eb32ea8380f75d9b4e5108ec2b6eac3830cde1ce9059feea66517e46c3e0
   languageName: node
   linkType: hard
 
