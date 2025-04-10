@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Migrated react-native-linear-gradient to expo-linear-gradient to support react-native new architecture.
+
 ## [2.1.0] - 2024-12-3
 
 ### Changed
