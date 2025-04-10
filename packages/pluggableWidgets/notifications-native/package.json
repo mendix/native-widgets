@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
+    "@notifee/react-native": "9.1.8",
     "@react-native-firebase/app": "17.3.0",
-    "@react-native-firebase/messaging": "17.3.0",
-    "react-native-push-notification": "8.1.1"
+    "@react-native-firebase/messaging": "17.3.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",

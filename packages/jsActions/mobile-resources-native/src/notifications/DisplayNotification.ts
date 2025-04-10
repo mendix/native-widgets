@@ -5,8 +5,8 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { NativeModules, Platform } from "react-native";
-import PushNotification, { PushNotificationObject } from "react-native-push-notification";
+import { Platform } from "react-native";
+import notifee, { AndroidChannel, AndroidImportance, Notification } from "@notifee/react-native";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -32,59 +32,56 @@ export async function DisplayNotification(
     actionGuid?: string
 ): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://github.com/zo0r/react-native-push-notification
-
-    const isIOS = Platform.OS === "ios";
-    if (NativeModules && isIOS && !NativeModules.RNCPushNotificationIOS) {
-        return Promise.reject(new Error("Notifications module is not available in your app"));
-    }
-
     if (!body) {
-        return Promise.reject(new Error("Input parameter 'Body' is required"));
+        throw new Error("Input parameter 'Body' is required");
     }
 
-    const notification = { message: body } as PushNotificationObject;
+    const channelId = "mendix-local-notifications";
+    await createNotificationChannelIfNeeded(channelId);
 
-    if (!isIOS) {
-        const channelId = "mendix-local-notifications";
-        const channelExists = await new Promise(resolve =>
-            PushNotification.channelExists(channelId, (exists: boolean) => resolve(exists))
-        );
-        if (!channelExists) {
-            const channel = await new Promise(resolve =>
-                PushNotification.createChannel(
-                    {
-                        channelId,
-                        channelName: "Local notifications"
-                    },
-                    created => resolve(created)
-                )
-            );
-            if (!channel) {
-                return Promise.reject(new Error("Could not create the local notifications channel"));
-            }
+    const notification: Notification = {
+        title: title || undefined,
+        body,
+        android: {
+            channelId,
+            // smallIcon: "ic_notification",
+            sound: playSound ? "default" : undefined
+        },
+        ios: {
+            sound: playSound ? "default" : undefined
         }
-        notification.channelId = channelId;
+    };
+
+    // Add subtitle for iOS (if provided)
+    if (subtitle && Platform.OS === "ios") {
+        notification.subtitle = subtitle;
     }
 
-    if (title) {
-        notification.title = title;
-    }
-
-    if (subtitle && !isIOS) {
-        notification.subText = subtitle;
-    }
-
-    notification.playSound = !!playSound;
-
+    // Add custom data (actionName and actionGuid) to the notification
     if (actionName || actionGuid) {
-        notification.userInfo = {
-            actionName,
-            guid: actionGuid
+        notification.data = {
+            actionName: actionName || null,
+            guid: actionGuid || null
         };
     }
 
-    PushNotification.localNotification(notification);
+    await notifee.displayNotification(notification);
+
+    async function createNotificationChannelIfNeeded(channelId: string): Promise<void> {
+        if (Platform.OS === "android") {
+            const channels = await notifee.getChannels();
+            const isChannelExist = channels.some(c => c.name === channelId);
+            if (!isChannelExist) {
+                const channel: AndroidChannel = {
+                    id: channelId,
+                    name: "Local Notifications",
+                    importance: AndroidImportance.HIGH
+                };
+                await notifee.createChannel(channel);
+            }
+        }
+    }
+
     return Promise.resolve();
     // END USER CODE
 }
