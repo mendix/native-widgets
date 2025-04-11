@@ -30,7 +30,7 @@
                     <caption>Show Default Caption</caption>
                     <description>e.g 70%</description>
                 </property>
-                <property key="progressCaption" type="textTemplate">
+                <property key="progressCaption" type="textTemplate" required="false">
                     <caption>Custom progress caption</caption>
                     <description />
                 </property>
