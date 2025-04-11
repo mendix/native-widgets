@@ -10,9 +10,14 @@ import { Big } from "big.js";
 export interface ProgressBarProps<Style> {
     name: string;
     style: Style[];
-    progressValue: DynamicValue<Big>;
     minimumValue: DynamicValue<Big>;
     maximumValue: DynamicValue<Big>;
+    progressValue: DynamicValue<Big>;
+    showProgressCaption: boolean;
+    showDefaultProgressCaption: boolean;
+    progressCaption: DynamicValue<string>;
+    useDefaulMendixColor: boolean;
+    customColor: string;
 }
 
 export interface ProgressBarPreviewProps {
@@ -25,7 +30,12 @@ export interface ProgressBarPreviewProps {
     styleObject?: CSSProperties;
     readOnly: boolean;
     renderMode?: "design" | "xray" | "structure";
-    progressValue: string;
     minimumValue: string;
     maximumValue: string;
+    progressValue: string;
+    showProgressCaption: boolean;
+    showDefaultProgressCaption: boolean;
+    progressCaption: string;
+    useDefaulMendixColor: boolean;
+    customColor: string;
 }

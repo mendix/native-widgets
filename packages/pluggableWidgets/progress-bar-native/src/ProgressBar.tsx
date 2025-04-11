@@ -52,21 +52,50 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
 
     const validationMessages = validate();
     const progress = calculateProgress();
-
+    const { showProgressCaption, showDefaultProgressCaption,progressCaption,useDefaulMendixColor,customColor} = props;
     return (
         <View style={styles.container}>
+    
             <Bar
                 testID={props.name}
                 height={Number(styles.bar.height)}
                 width={null}
                 progress={progress}
-                color={styles.fill.backgroundColor}
+                color={useDefaulMendixColor ? styles.fill.backgroundColor : customColor}
                 borderWidth={styles.bar.borderWidth}
                 style={styles.bar}
             />
+            {showProgressCaption && (
+            <View
+                style={{
+                    position: "absolute",
+                    left: `${progress <0.98 ? (progress * 100) : (progress * 100)-7}%`,
+                    transform: [{ translateX: -10 }],
+                    top: -6 
+                }}
+            >
+                <View
+        style={{
+            backgroundColor: useDefaulMendixColor ? styles.fill.backgroundColor : customColor, // blue
+            borderRadius: 5,
+            paddingHorizontal: 8,
+            paddingVertical: 2,
+            minWidth: 40,
+            alignItems: "center",
+            justifyContent: "center"
+        }}
+    >
+                <Text  style={{
+                color: "#fff", // White caption text
+                fontWeight:"bold"
+            }}>
+                    { showDefaultProgressCaption ?(progress * 100)+'%' :progressCaption.value}
+                </Text>
+            </View>
             {validationMessages.length > 0 && (
                 <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>
             )}
+        </View> )}
         </View>
     );
 }
