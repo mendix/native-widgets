@@ -21,7 +21,7 @@ export async function IsBiometricAuthenticationSupported(): Promise<boolean> {
 
     return rnBiometrics
         .isSensorAvailable()
-        .then(() => true)
+        .then(result => result.available)
         .catch(() => false);
 
     // END USER CODE
