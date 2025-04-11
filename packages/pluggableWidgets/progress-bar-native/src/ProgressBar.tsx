@@ -89,7 +89,7 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
                 color: "#fff", // White caption text
                 fontWeight:"bold"
             }}>
-                    { showDefaultProgressCaption ?(progress * 100)+'%' :progressCaption.value}
+                    { showDefaultProgressCaption ?(progress * 100)+'%' :progressCaption?.value}
                 </Text>
             </View>
             {validationMessages.length > 0 && (

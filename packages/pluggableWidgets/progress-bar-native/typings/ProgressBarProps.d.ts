@@ -15,7 +15,7 @@ export interface ProgressBarProps<Style> {
     progressValue: DynamicValue<Big>;
     showProgressCaption: boolean;
     showDefaultProgressCaption: boolean;
-    progressCaption: DynamicValue<string>;
+    progressCaption?: DynamicValue<string>;
     useDefaulMendixColor: boolean;
     customColor: string;
 }
