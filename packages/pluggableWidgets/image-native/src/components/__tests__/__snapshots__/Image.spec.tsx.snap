@@ -796,16 +796,15 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
       source={
         {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
+          "height": 1111,
+          "width": 2222,
         }
       }
       style={
@@ -873,16 +872,15 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="contain"
         source={
           {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
+            "height": 1111,
+            "width": 2222,
           }
         }
         style={
@@ -954,16 +952,15 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="contain"
         source={
           {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
+            "height": 1111,
+            "width": 2222,
           }
         }
         style={
@@ -1035,16 +1032,15 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="cover"
         source={
           {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
+            "height": 1111,
+            "width": 2222,
           }
         }
         style={
@@ -1135,16 +1131,15 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="contain"
         source={
           {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
+            "height": 1111,
+            "width": 2222,
           }
         }
         style={
@@ -1279,16 +1274,15 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
                   "minWidth": 8,
                 },
               ],
-              undefined,
             ]
           }
         >
-          <TurboImageView
+          <FastImageView
             resizeMode="contain"
             source={
               {
-                "name": "image.png",
-                "uri": "file:///[object Object]",
+                "height": 1111,
+                "width": 2222,
               }
             }
             style={
@@ -1374,16 +1368,15 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
       source={
         {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
+          "height": 1111,
+          "width": 2222,
         }
       }
       style={
@@ -1466,16 +1459,15 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
       source={
         {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
+          "height": 1111,
+          "width": 2222,
         }
       }
       style={
@@ -1629,13 +1621,17 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
-      source={1}
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
       style={
         {
           "bottom": 0,
@@ -1717,13 +1713,17 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="contain"
-        source={1}
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
         style={
           {
             "bottom": 0,
@@ -1856,13 +1856,17 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
                   "minWidth": 8,
                 },
               ],
-              undefined,
             ]
           }
         >
-          <TurboImageView
+          <FastImageView
             resizeMode="contain"
-            source={1}
+            source={
+              {
+                "height": 1111,
+                "width": 2222,
+              }
+            }
             style={
               {
                 "bottom": 0,
@@ -1947,13 +1951,17 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
-      source={1}
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
       style={
         {
           "bottom": 0,
@@ -3005,13 +3013,17 @@ exports[`Widget Static Image renders the structure 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
-      source={1}
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
       style={
         {
           "bottom": 0,
@@ -3077,13 +3089,17 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="contain"
-        source={1}
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
         style={
           {
             "bottom": 0,
@@ -3153,13 +3169,17 @@ exports[`Widget Static Image renders the structure as a background image with 50
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="contain"
-        source={1}
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
         style={
           {
             "bottom": 0,
@@ -3229,13 +3249,17 @@ exports[`Widget Static Image renders the structure as a background image with a 
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="cover"
-        source={1}
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
         style={
           {
             "bottom": 0,
@@ -3324,13 +3348,17 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
               "minWidth": 8,
             },
           ],
-          undefined,
         ]
       }
     >
-      <TurboImageView
+      <FastImageView
         resizeMode="contain"
-        source={1}
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
         style={
           {
             "bottom": 0,
@@ -3463,13 +3491,17 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
                   "minWidth": 8,
                 },
               ],
-              undefined,
             ]
           }
         >
-          <TurboImageView
+          <FastImageView
             resizeMode="contain"
-            source={1}
+            source={
+              {
+                "height": 1111,
+                "width": 2222,
+              }
+            }
             style={
               {
                 "bottom": 0,
@@ -3553,13 +3585,17 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
-      source={1}
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
       style={
         {
           "bottom": 0,
@@ -3640,13 +3676,17 @@ exports[`Widget Static Image renders the structure with custom width 1`] = `
             "minWidth": 8,
           },
         ],
-        undefined,
       ]
     }
   >
-    <TurboImageView
+    <FastImageView
       resizeMode="contain"
-      source={1}
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
       style={
         {
           "bottom": 0,
