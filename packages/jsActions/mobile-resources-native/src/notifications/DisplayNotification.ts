@@ -45,10 +45,10 @@ export async function DisplayNotification(
         android: {
             channelId,
             // smallIcon: "ic_notification",
-            sound: playSound ? "default" : undefined
+            ...(playSound ? { sound: "default" } : {})
         },
         ios: {
-            sound: playSound ? "default" : undefined
+            ...(playSound ? { sound: "default" } : {})
         }
     };
 

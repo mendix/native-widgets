@@ -58,10 +58,10 @@ export async function ScheduleNotification(
         android: {
             channelId,
             smallIcon: "ic_notification",
-            sound: playSound ? "default" : undefined
+            ...(playSound ? { sound: "default" } : {})
         },
         ios: {
-            sound: !!playSound
+            ...(playSound ? { sound: "default" } : {})
         }
     };
 

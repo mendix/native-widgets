@@ -8946,8 +8946,8 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
+    react-native-fast-image: "npm:8.3.2"
     react-native-svg: "npm:15.7.1"
-    react-native-turbo-image: "npm:1.22.3"
     react-native-vector-icons: "npm:10.2.0"
   languageName: unknown
   linkType: soft
@@ -12136,7 +12136,7 @@ __metadata:
     react-native-localize: "npm:3.2.1"
     react-native-permissions: "npm:4.1.5"
     react-native-schedule-exact-alarm-permission: "npm:^0.1.3"
-    react-native-sound: "npm:0.11.0"
+    react-native-track-player: "npm:^4.1.1"
     rimraf: "npm:^4.4.1"
     rollup: "npm:^2.79.2"
     url-parse: "npm:^1.4.7"
@@ -14130,6 +14130,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-fast-image@npm:8.3.2":
+  version: 8.3.2
+  resolution: "react-native-fast-image@npm:8.3.2"
+  peerDependencies:
+    react: ^16.8.6
+    react-native: ">=0.60.0"
+  checksum: 10/398def3b64af545cca5380087637026e873216c3f009146cf7da8bdb44ab9aca38d17b38cbf268c50125a4b282f67a7ae861531b5ee03832962e71efdf11279b
+  languageName: node
+  linkType: hard
+
 "react-native-file-viewer@npm:2.1.5":
   version: 2.1.5
   resolution: "react-native-file-viewer@npm:2.1.5"
@@ -14343,15 +14353,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-sound@npm:0.11.0":
-  version: 0.11.0
-  resolution: "react-native-sound@npm:0.11.0"
-  peerDependencies:
-    react-native: ">=0.8.0"
-  checksum: 10/17eff55af971ef6d76d678a8de5b556cffaeced38e7c64277d441e78a55773fd5b34e986c545b8d42059e22bb66070a5ccbacd237496d9f3c9fed7ec8f3776c3
-  languageName: node
-  linkType: hard
-
 "react-native-svg@npm:15.7.1":
   version: 15.7.1
   resolution: "react-native-svg@npm:15.7.1"
@@ -14376,13 +14377,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-turbo-image@npm:1.22.3":
-  version: 1.22.3
-  resolution: "react-native-turbo-image@npm:1.22.3"
+"react-native-track-player@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "react-native-track-player@npm:4.1.1"
   peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10/b09e4bbf95de81dee9c5929d87a216167f5d7bef0b9c0e898e2fe574f00b57437224eb32ea8380f75d9b4e5108ec2b6eac3830cde1ce9059feea66517e46c3e0
+    react: ">=16.8.6"
+    react-native: ">=0.60.0-rc.2"
+    react-native-windows: ">=0.63.0"
+    shaka-player: ^4.7.9
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+    shaka-player:
+      optional: true
+  checksum: 10/6e755319a3f86d279e23392a2dc36ee0a55280526b5796f36f5d80da044a9b1de9b38d77b48259d815723c512e5a0a6bc5d4fda6f54b73d26f91b476c4cad9d2
   languageName: node
   linkType: hard
 
