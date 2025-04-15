@@ -1,12 +1,12 @@
 import { createElement, FunctionComponent, Fragment, useCallback } from "react";
 import { View } from "react-native";
 import { SvgUri, SvgXml } from "react-native-svg";
+import FastImageComponent, { Source } from "react-native-fast-image";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { CustomImageProps, GlyphIcon } from "../utils/imageUtils";
 import { GlyphIcon as GlyphIconComponent } from "./fonts/font";
 import { ResizeModeEnum } from "../../typings/ImageProps";
 import { getPositionFromSVG } from "../utils/svgUtils";
-import TurboImage, { Source } from "react-native-turbo-image";
 
 export interface DimensionsType {
     width?: number;
@@ -65,9 +65,9 @@ export const ImageIconSVG: FunctionComponent<ImageIconSVGProps> = props => {
 
     if (image && (type === "staticImage" || type === "dynamicImage")) {
         return (
-            <TurboImage
-                testID={`${name}$Image`}
-                source={image as Source}
+            <FastImageComponent
+                testID={`${name}$Image`} // Broken because of https://github.com/DylanVann/react-native-fast-image/issues/221
+                source={image as Source | number}
                 resizeMode={resizeMode || "contain"}
                 style={[
                     initialDimensions?.aspectRatio ? { aspectRatio: +initialDimensions.aspectRatio?.toFixed(2) } : {},
