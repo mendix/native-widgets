@@ -71,7 +71,7 @@ export function BackgroundGradient({ name, colorList, content, onClick, style }:
                 opacity: onClick?.canExecute && pressed ? opacity * 0.3 : opacity
             })}
         >
-            <LinearGradient colors={colors} locations={offsets} useAngle angle={angle} style={styles.container as any}>
+            <LinearGradient colors={colors} locations={offsets} useAngle angle={angle} style={styles.container}>
                 {content}
             </LinearGradient>
         </Pressable>
