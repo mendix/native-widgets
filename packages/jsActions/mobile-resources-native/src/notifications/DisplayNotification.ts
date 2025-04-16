@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Platform } from "react-native";
+import { NativeModules, Platform } from "react-native";
 import notifee, { AndroidChannel, AndroidImportance, Notification } from "@notifee/react-native";
 
 // BEGIN EXTRA CODE
@@ -36,6 +36,11 @@ export async function DisplayNotification(
         throw new Error("Input parameter 'Body' is required");
     }
 
+    // Documentation Documentation https://github.com/invertase/notifee
+    if (NativeModules && !NativeModules.NotifeeApiModule) {
+        return Promise.reject(new Error("Notifee native module is not available in your app"));
+    }
+
     const channelId = "mendix-local-notifications";
     await createNotificationChannelIfNeeded(channelId);
 
@@ -60,8 +65,8 @@ export async function DisplayNotification(
     // Add custom data (actionName and actionGuid) to the notification
     if (actionName || actionGuid) {
         notification.data = {
-            actionName: actionName || null,
-            guid: actionGuid || null
+            actionName: actionName ?? "",
+            guid: actionGuid ?? ""
         };
     }
 

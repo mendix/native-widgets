@@ -6,7 +6,13 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Platform } from "react-native";
-import notifee, { TimestampTrigger, TriggerType, AndroidChannel, AndroidImportance } from "@notifee/react-native";
+import notifee, {
+    TimestampTrigger,
+    TriggerType,
+    AndroidChannel,
+    AndroidImportance,
+    Notification
+} from "@notifee/react-native";
 // BEGIN EXTRA CODE
 // END EXTRA CODE
 
@@ -51,7 +57,7 @@ export async function ScheduleNotification(
         timestamp: date.getTime()
     };
 
-    const notification: any = {
+    const notification: Notification = {
         id: notificationId || undefined,
         title: title || undefined,
         body,
@@ -71,8 +77,8 @@ export async function ScheduleNotification(
 
     if (actionName || actionGuid) {
         notification.data = {
-            actionName: actionName || null,
-            guid: actionGuid || null
+            actionName: actionName ?? "",
+            guid: actionGuid ?? ""
         };
     }
 
