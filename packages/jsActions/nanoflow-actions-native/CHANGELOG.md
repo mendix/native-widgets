@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [6.0.0] Nanoflow Commons - 2025-4-17
 ### Changed
 
 -   We've updated the minimum Mendix version to 10.21.
