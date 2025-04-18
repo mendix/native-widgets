@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "react-native-linear-gradient": "3.0.0-alpha.1"
+    "react-native-linear-gradient": "2.8.3"
   }
 }
