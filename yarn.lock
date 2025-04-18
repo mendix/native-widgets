@@ -5137,7 +5137,7 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
-    react-native-linear-gradient: "npm:3.0.0-alpha.1"
+    react-native-linear-gradient: "npm:2.8.3"
   languageName: unknown
   linkType: soft
 
@@ -14180,13 +14180,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-linear-gradient@npm:3.0.0-alpha.1":
-  version: 3.0.0-alpha.1
-  resolution: "react-native-linear-gradient@npm:3.0.0-alpha.1"
+"react-native-linear-gradient@npm:2.8.3":
+  version: 2.8.3
+  resolution: "react-native-linear-gradient@npm:2.8.3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/95eef8707bf8c38b16d265c46d945ee9c10a27a0da8b64bdf00ea62d905e303d30e06c61a065f85aa27bbfa3faa124c172e8f95335363fd6cb089f939f62ba85
+  checksum: 10/db18c7ae4b68afe8b6f12c67defeeccda7a3cff4ee14a0b2d92ff2581d53bd2e65bf29837cf2828abb3d8d1f3cef3f808e8cc1c5d4c8da5dd6f1d09e2b9c2c55
   languageName: node
   linkType: hard
 
