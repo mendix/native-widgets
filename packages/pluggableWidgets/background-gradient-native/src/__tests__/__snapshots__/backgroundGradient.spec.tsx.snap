@@ -42,7 +42,7 @@ exports[`Background gradient render background gradient with custom style 1`] = 
   <View
     style={{}}
   >
-    <RNLinearGradient
+    <BVLinearGradient
       angle={0}
       borderRadii={
         [
@@ -63,10 +63,10 @@ exports[`Background gradient render background gradient with custom style 1`] = 
         ]
       }
       endPoint={
-        {
-          "x": 0.5,
-          "y": 1,
-        }
+        [
+          0.5,
+          1,
+        ]
       }
       locations={
         [
@@ -75,10 +75,10 @@ exports[`Background gradient render background gradient with custom style 1`] = 
         ]
       }
       startPoint={
-        {
-          "x": 0.5,
-          "y": 0,
-        }
+        [
+          0.5,
+          0,
+        ]
       }
       style={
         {
@@ -140,7 +140,7 @@ exports[`Background gradient render background gradient with one color 1`] = `
   <View
     style={{}}
   >
-    <RNLinearGradient
+    <BVLinearGradient
       angle={0}
       borderRadii={
         [
@@ -161,10 +161,10 @@ exports[`Background gradient render background gradient with one color 1`] = `
         ]
       }
       endPoint={
-        {
-          "x": 0.5,
-          "y": 1,
-        }
+        [
+          0.5,
+          1,
+        ]
       }
       locations={
         [
@@ -173,10 +173,10 @@ exports[`Background gradient render background gradient with one color 1`] = `
         ]
       }
       startPoint={
-        {
-          "x": 0.5,
-          "y": 0,
-        }
+        [
+          0.5,
+          0,
+        ]
       }
       style={
         {
@@ -238,7 +238,7 @@ exports[`Background gradient render correctly 1`] = `
   <View
     style={{}}
   >
-    <RNLinearGradient
+    <BVLinearGradient
       angle={0}
       borderRadii={
         [
@@ -259,10 +259,10 @@ exports[`Background gradient render correctly 1`] = `
         ]
       }
       endPoint={
-        {
-          "x": 0.5,
-          "y": 1,
-        }
+        [
+          0.5,
+          1,
+        ]
       }
       locations={
         [
@@ -271,10 +271,10 @@ exports[`Background gradient render correctly 1`] = `
         ]
       }
       startPoint={
-        {
-          "x": 0.5,
-          "y": 0,
-        }
+        [
+          0.5,
+          0,
+        ]
       }
       style={
         {
@@ -336,7 +336,7 @@ exports[`Background gradient render with undefined angle 1`] = `
   <View
     style={{}}
   >
-    <RNLinearGradient
+    <BVLinearGradient
       angle={0}
       borderRadii={
         [
@@ -357,10 +357,10 @@ exports[`Background gradient render with undefined angle 1`] = `
         ]
       }
       endPoint={
-        {
-          "x": 0.5,
-          "y": 1,
-        }
+        [
+          0.5,
+          1,
+        ]
       }
       locations={
         [
@@ -369,10 +369,10 @@ exports[`Background gradient render with undefined angle 1`] = `
         ]
       }
       startPoint={
-        {
-          "x": 0.5,
-          "y": 0,
-        }
+        [
+          0.5,
+          0,
+        ]
       }
       style={
         {
@@ -434,7 +434,7 @@ exports[`Background gradient render with undefined opacity 1`] = `
   <View
     style={{}}
   >
-    <RNLinearGradient
+    <BVLinearGradient
       angle={0}
       borderRadii={
         [
@@ -455,10 +455,10 @@ exports[`Background gradient render with undefined opacity 1`] = `
         ]
       }
       endPoint={
-        {
-          "x": 0.5,
-          "y": 1,
-        }
+        [
+          0.5,
+          1,
+        ]
       }
       locations={
         [
@@ -467,10 +467,10 @@ exports[`Background gradient render with undefined opacity 1`] = `
         ]
       }
       startPoint={
-        {
-          "x": 0.5,
-          "y": 0,
-        }
+        [
+          0.5,
+          0,
+        ]
       }
       style={
         {
