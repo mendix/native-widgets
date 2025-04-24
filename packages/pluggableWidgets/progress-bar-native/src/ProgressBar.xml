@@ -39,7 +39,11 @@
                     <description>Use mendix default progress color</description>
                 </property>
                 <property key="customColor" type="string" required="false">
-                    <caption>Custom Color Code</caption>
+                    <caption>Filled Color Code</caption>
+                    <description>HEX code e.g. #ff5733</description>
+                </property>
+                <property key="customUnfilledColor" type="string" required="false">
+                    <caption>UnFilled Color Code</caption>
                     <description>HEX code e.g. #ff5733</description>
                 </property>
             </propertyGroup>

@@ -18,6 +18,7 @@ export interface ProgressBarProps<Style> {
     progressCaption?: DynamicValue<string>;
     useDefaulMendixColor: boolean;
     customColor: string;
+    customUnfilledColor: string;
 }
 
 export interface ProgressBarPreviewProps {
@@ -38,4 +39,5 @@ export interface ProgressBarPreviewProps {
     progressCaption: string;
     useDefaulMendixColor: boolean;
     customColor: string;
+    customUnfilledColor: string;
 }
