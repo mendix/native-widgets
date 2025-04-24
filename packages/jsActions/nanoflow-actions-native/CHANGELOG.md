@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We've updated the minimum Mendix version to 10.21.
+
 ## [5.1.0] Nanoflow Commons - 2025-3-26
+
 ### Fixed
 
 -   We've updated @react-native-community/geolocation to version 3.4.0 to resolve location-related issues.
