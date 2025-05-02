@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import TrackPlayer, { Event, State } from "react-native-track-player";
+import TrackPlayer, { Event } from "react-native-track-player";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -34,16 +34,7 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
     const changedDate = audioFile.get("changedDate") as number;
     const url = mx.data.getDocumentUrl(guid, changedDate);
 
-    const isPlayerInitialized = async () => {
-        const currentTrack = await TrackPlayer.getActiveTrack();
-        return currentTrack !== null;
-    };
-
-    try {
-        if (!isPlayerInitialized()) {
-            await TrackPlayer.setupPlayer();
-        }
-
+    const play = async () => {
         await TrackPlayer.reset();
 
         await TrackPlayer.add({
@@ -58,9 +49,15 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
         const listener = TrackPlayer.addEventListener(Event.PlaybackQueueEnded, async () => {
             listener.remove(); // cleanup
         });
+    };
+
+    try {
+        await play();
     } catch (error) {
+        // it means the player wasn't initialized yet.
+        await TrackPlayer.setupPlayer();
+        await play();
         console.error("Playback failed", error);
-        throw new Error("Playback failed due to an audio encoding error");
     }
     // END USER CODE
 }
