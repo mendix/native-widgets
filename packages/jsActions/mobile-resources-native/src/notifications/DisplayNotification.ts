@@ -48,12 +48,7 @@ export async function DisplayNotification(
         title: title || undefined,
         body,
         android: {
-            channelId,
-            // smallIcon: "ic_notification",
-            ...(playSound ? { sound: "default" } : {})
-        },
-        ios: {
-            ...(playSound ? { sound: "default" } : {})
+            channelId
         }
     };
 
@@ -73,17 +68,20 @@ export async function DisplayNotification(
     await notifee.displayNotification(notification);
 
     async function createNotificationChannelIfNeeded(channelId: string): Promise<void> {
-        if (Platform.OS === "android") {
-            const channels = await notifee.getChannels();
-            const isChannelExist = channels.some(c => c.name === channelId);
-            if (!isChannelExist) {
-                const channel: AndroidChannel = {
-                    id: channelId,
-                    name: "Local Notifications",
-                    importance: AndroidImportance.HIGH
-                };
-                await notifee.createChannel(channel);
-            }
+        const existingChannel = await notifee.getChannel(channelId);
+        const sound = playSound ? "default" : undefined;
+        const channel: AndroidChannel = {
+            id: channelId,
+            name: "Local Notifications",
+            importance: AndroidImportance.HIGH,
+            ...(playSound ? { sound: "default" } : {})
+        };
+        if (existingChannel === null) {
+            await notifee.createChannel(channel);
+        }
+        if (existingChannel?.sound !== sound) {
+            await notifee.deleteChannel(channelId);
+            await notifee.createChannel(channel);
         }
     }
 
