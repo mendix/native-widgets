@@ -11,7 +11,8 @@ import notifee, {
     TriggerType,
     AndroidChannel,
     AndroidImportance,
-    Notification
+    Notification,
+    AlarmType
 } from "@notifee/react-native";
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -54,7 +55,8 @@ export async function ScheduleNotification(
 
     const trigger: TimestampTrigger = {
         type: TriggerType.TIMESTAMP,
-        timestamp: date.getTime()
+        timestamp: date.getTime(),
+        alarmManager: { allowWhileIdle: true, type: AlarmType.SET_EXACT_AND_ALLOW_WHILE_IDLE }
     };
 
     const notification: Notification = {
@@ -62,12 +64,7 @@ export async function ScheduleNotification(
         title: title || undefined,
         body,
         android: {
-            channelId,
-            smallIcon: "ic_notification",
-            ...(playSound ? { sound: "default" } : {})
-        },
-        ios: {
-            ...(playSound ? { sound: "default" } : {})
+            channelId
         }
     };
 
@@ -83,17 +80,20 @@ export async function ScheduleNotification(
     }
 
     async function createNotificationChannelIfNeeded(channelId: string): Promise<void> {
-        if (Platform.OS === "android") {
-            const channels = await notifee.getChannels();
-            const isChannelExist = channels.some(c => c.name === channelId);
-            if (!isChannelExist) {
-                const channel: AndroidChannel = {
-                    id: channelId,
-                    name: "Local Notifications",
-                    importance: AndroidImportance.HIGH
-                };
-                await notifee.createChannel(channel);
-            }
+        const existingChannel = await notifee.getChannel(channelId);
+        const sound = playSound ? "default" : undefined;
+        const channel: AndroidChannel = {
+            id: channelId,
+            name: "Local Notifications",
+            importance: AndroidImportance.HIGH,
+            ...(playSound ? { sound: "default" } : {})
+        };
+        if (existingChannel === null) {
+            await notifee.createChannel(channel);
+        }
+        if (existingChannel?.sound !== sound) {
+            await notifee.deleteChannel(channelId);
+            await notifee.createChannel(channel);
         }
     }
 
