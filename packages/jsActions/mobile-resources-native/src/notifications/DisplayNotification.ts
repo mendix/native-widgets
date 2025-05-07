@@ -52,12 +52,10 @@ export async function DisplayNotification(
         }
     };
 
-    // Add subtitle for iOS (if provided)
     if (subtitle && Platform.OS === "ios") {
         notification.subtitle = subtitle;
     }
 
-    // Add custom data (actionName and actionGuid) to the notification
     if (actionName || actionGuid) {
         notification.data = {
             actionName: actionName ?? "",
@@ -68,6 +66,9 @@ export async function DisplayNotification(
     await notifee.displayNotification(notification);
 
     async function createNotificationChannelIfNeeded(channelId: string): Promise<void> {
+        if (Platform.OS === "ios") {
+            return;
+        }
         const existingChannel = await notifee.getChannel(channelId);
         const sound = playSound ? "default" : undefined;
         const channel: AndroidChannel = {
