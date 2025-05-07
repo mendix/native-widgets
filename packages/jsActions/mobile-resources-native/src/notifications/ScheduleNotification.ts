@@ -80,6 +80,9 @@ export async function ScheduleNotification(
     }
 
     async function createNotificationChannelIfNeeded(channelId: string): Promise<void> {
+        if (Platform.OS === "ios") {
+            return;
+        }
         const existingChannel = await notifee.getChannel(channelId);
         const sound = playSound ? "default" : undefined;
         const channel: AndroidChannel = {
