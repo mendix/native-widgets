@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "@react-native-firebase/app": "17.3.0",
+    "@react-native-firebase/app": "17.4.3",
     "@react-native-firebase/messaging": "17.3.0",
     "react-native-push-notification": "8.1.1"
   },
