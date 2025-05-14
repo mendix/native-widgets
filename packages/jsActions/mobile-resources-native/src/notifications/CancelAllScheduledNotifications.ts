@@ -5,8 +5,8 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { NativeModules, Platform } from "react-native";
-import PushNotification from "react-native-push-notification";
+import { NativeModules } from "react-native";
+import notifee from "@notifee/react-native";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -17,13 +17,12 @@ import PushNotification from "react-native-push-notification";
  */
 export async function CancelAllScheduledNotifications(): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://github.com/zo0r/react-native-push-notification
-    const isIOS = Platform.OS === "ios";
-    if (NativeModules && isIOS && !NativeModules.RNCPushNotificationIOS) {
-        return Promise.reject(new Error("Notifications module is not available in your app"));
+    // Documentation https://github.com/invertase/notifee
+    if (NativeModules && !NativeModules.NotifeeApiModule) {
+        return Promise.reject(new Error("Notifee native module is not available in your app"));
     }
 
-    PushNotification.cancelAllLocalNotifications();
+    notifee.cancelAllNotifications();
     return Promise.resolve();
 
     // END USER CODE
