@@ -8,8 +8,8 @@ on:
         default: ""
 
       nt_branch:
-        description: "Native Template branch to use (Default: master)"
-        default: "master"
+        description: "Native Template branch/tag to use (Leave empty to auto-select based on Mendix version)"
+        default: ""
         required: false
         type: string
 
@@ -59,6 +59,9 @@ on:
           - video-player-native
           - web-view-native 
   
+  # Run at 0:00 UTC (2:00 AM CET time during summer, 1:00 AM during winter)
+  schedule:
+    - cron: '0 0 * * *'
   # Trigger on PR
   # pull_request:
 
@@ -152,8 +155,78 @@ jobs:
         run: |
           echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
 
+
+  determine-nt-version:
+    needs: [mendix-version]
+    runs-on: ubuntu-latest
+    outputs:
+      nt_branch: ${{ steps.determine-nt-branch.outputs.nt_branch }}
+    steps:
+      - name: "Check if nt_branch was specified"
+        id: check-input
+        run: |
+          if [[ -n "${{ github.event.inputs.nt_branch }}" ]]; then
+            echo "Using specified nt_branch: ${{ github.event.inputs.nt_branch }}"
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
+            echo "source=input" >> $GITHUB_OUTPUT
+          else
+            echo "No nt_branch specified, will determine from mendix_version"
+            echo "source=auto" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "Download mendix_version.json from native-template repo"
+        if: steps.check-input.outputs.source == 'auto'
+        run: |
+          curl -s -o mendix_version.json https://raw.githubusercontent.com/mendix/native-template/master/mendix_version.json
+          cat mendix_version.json
+
+      - name: "Determine Native Template version based on Mendix version"
+        if: steps.check-input.outputs.source == 'auto'
+        id: determine-nt-branch
+        run: |
+          mendix_version="${{ needs.mendix-version.outputs.mendix_version }}"
+          # Extract just the major.minor.patch part without any suffixes
+          mendix_version_base=$(echo $mendix_version | sed -E 's/([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+          
+          echo "Mendix version: $mendix_version"
+          echo "Mendix base version: $mendix_version_base"
+          
+          # Use jq to find the appropriate NT version
+          nt_version=$(jq -r --arg mv "$mendix_version_base" '
+            # Define version comparison function first
+            def version_to_int(v): v | split(".") | map(tonumber) | .[0]*1000000 + .[1]*1000 + .[2];
+            
+            # Convert input Mendix version to comparable format
+            ($mv | version_to_int) as $mv_int |
+            
+            # Find matching range
+            to_entries | 
+            map(
+              select(
+                (.value.min_mendix_version | version_to_int) <= $mv_int and
+                (if .value.max_mendix_version then (.value.max_mendix_version | version_to_int) >= $mv_int else true end)
+              )
+            ) |
+            
+            # Get the latest matching NT version
+            sort_by(.key | split(".") | map(tonumber)) |
+            last | 
+            if . then .key else "master" end
+          ' mendix_version.json)
+          
+          echo "Selected Native Template version: $nt_version"
+          echo "nt_branch=$nt_version" >> $GITHUB_OUTPUT
+
+      - name: "Set output nt_branch"
+        id: set-output
+        run: |
+          if [[ "${{ steps.check-input.outputs.source }}" == "input" ]]; then
+            echo "nt_branch=${{ steps.check-input.outputs.nt_branch }}" >> $GITHUB_OUTPUT
+          else
+            echo "nt_branch=${{ steps.determine-nt-branch.outputs.nt_branch }}" >> $GITHUB_OUTPUT
+          fi
   docker-images:
-    needs: mendix-version
+    needs: [mendix-version]
     runs-on: ubuntu-22.04
     steps:
       - name: "Login to GitHub Container Registry"
@@ -311,14 +384,14 @@ jobs:
           platform: ios
           mda-file: automation.mda
   android-app:
-    needs: [android-bundle]
+    needs: [android-bundle, determine-nt-version]
     runs-on: ubuntu-22.04
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
-          ref: ${{ github.event.inputs.nt_branch || 'master' }}
+          ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -377,14 +450,14 @@ jobs:
           name: android-app
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
-    needs: [ios-bundle]
+    needs: [ios-bundle, determine-nt-version]
     runs-on: macos-13
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
-          ref: ${{ github.event.inputs.nt_branch || 'master' }}
+          ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
