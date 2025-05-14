@@ -42,7 +42,7 @@ export async function ScheduleNotification(
     actionGuid?: string
 ): Promise<void> {
     // BEGIN USER CODE
-    const channelId = "mendix-local-notifications";
+    const channelId = playSound ? "mendix-local-notifications-withsound" : "mendix-local-notifications";
     await createNotificationChannelIfNeeded(channelId);
 
     if (!body) {
@@ -84,7 +84,6 @@ export async function ScheduleNotification(
             return;
         }
         const existingChannel = await notifee.getChannel(channelId);
-        const sound = playSound ? "default" : undefined;
         const channel: AndroidChannel = {
             id: channelId,
             name: "Local Notifications",
@@ -92,10 +91,6 @@ export async function ScheduleNotification(
             ...(playSound ? { sound: "default" } : {})
         };
         if (existingChannel === null) {
-            await notifee.createChannel(channel);
-        }
-        if (existingChannel?.sound !== sound) {
-            await notifee.deleteChannel(channelId);
             await notifee.createChannel(channel);
         }
     }

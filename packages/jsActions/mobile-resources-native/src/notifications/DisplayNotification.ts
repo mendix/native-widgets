@@ -41,15 +41,14 @@ export async function DisplayNotification(
         return Promise.reject(new Error("Notifee native module is not available in your app"));
     }
 
-    const channelId = "mendix-local-notifications";
+    const channelId = playSound ? "mendix-local-notifications-withsound" : "mendix-local-notifications";
     await createNotificationChannelIfNeeded(channelId);
 
     const notification: Notification = {
         title: title || undefined,
         body,
-        android: {
-            channelId
-        }
+        android: { channelId, sound: "default" },
+        ios: playSound ? { sound: "default" } : {}
     };
 
     if (subtitle && Platform.OS === "ios") {
@@ -70,7 +69,6 @@ export async function DisplayNotification(
             return;
         }
         const existingChannel = await notifee.getChannel(channelId);
-        const sound = playSound ? "default" : undefined;
         const channel: AndroidChannel = {
             id: channelId,
             name: "Local Notifications",
@@ -78,10 +76,6 @@ export async function DisplayNotification(
             ...(playSound ? { sound: "default" } : {})
         };
         if (existingChannel === null) {
-            await notifee.createChannel(channel);
-        }
-        if (existingChannel?.sound !== sound) {
-            await notifee.deleteChannel(channelId);
             await notifee.createChannel(channel);
         }
     }
