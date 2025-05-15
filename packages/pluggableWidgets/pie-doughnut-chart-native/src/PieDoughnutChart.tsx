@@ -7,7 +7,7 @@ import { ChartStyle, defaultStyle } from "./ui/Styles";
 import { useSeries } from "./utils/SeriesLoader";
 
 export function PieDoughnutChart(props: PieDoughnutChartProps<ChartStyle>): ReactElement | null {
-    const { series: chartSeries, style, name, sortOrder, ...rest } = props;
+    const { series: chartSeries, style, name, sortOrder,slicespace, ...rest } = props;
     const series = useSeries(chartSeries, name);
 
     if (!series) {
@@ -17,6 +17,7 @@ export function PieDoughnutChart(props: PieDoughnutChartProps<ChartStyle>): Reac
     return (
         <PieDoughnutChartComponent
             name={name}
+            slicespace = {slicespace}
             series={series
                 .flatMap(_series => _series.slices)
                 .sort((a, b) => (sortOrder === "ascending" ? a.y - b.y : b.y - a.y))}
