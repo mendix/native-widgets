@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.4.0] - 2025-5-16
+
+### Changed
+
+-   We added the option to add caption to the progress bar showing the percentatge of completetion with the ability to customize the filled and unfilled bar color
+
 ## [4.3.1] - 2025-2-7
 
 -   Bumped the version of the react-native-progress to fix black background issues.
