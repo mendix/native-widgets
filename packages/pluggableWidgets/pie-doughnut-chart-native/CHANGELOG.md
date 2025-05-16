@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-5-16
+
+### Changed
+
+-   We added the option to add spacing between slices.
+
 ## [2.1.1] - 2025-3-18
 
 ### Fixed
