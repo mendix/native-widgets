@@ -136,8 +136,8 @@ jobs:
         if: steps.check-input.outputs.source == 'auto'
         id: determine-nt-branch
         run: |
-          chmod +x ./.github/scripts/determine-nt-version.sh
-          ./.github/scripts/determine-nt-version.sh "${{ needs.mendix-version.outputs.mendix_version }}"
+          pip install requests packaging
+          python ./.github/scripts/determine-nt-version.py "${{ needs.mendix-version.outputs.mendix_version }}"
       - name: "Set output nt_branch"
         id: set-output
         run: |
