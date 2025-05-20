@@ -6,13 +6,11 @@ on:
         description: "Provide the SP version to be used (e.g., 10.14.0.43709) - has to be a released version (Default: latest from Mendix versions.json)"
         required: false
         default: ""
-
       nt_branch:
-        description: "Native Template branch to use (Default: master)"
-        default: "master"
+        description: "Native Template branch/tag to use (Leave empty to auto-select based on Mendix version)"
+        default: ""
         required: false
         type: string
-
       workspace:
         description: "Select a widget to test (Default will run all)"
         required: true
@@ -59,13 +57,13 @@ on:
           - video-player-native
           - web-view-native 
   
+  # Run at 0:00 UTC (2:00 AM CET time during summer, 1:00 AM during winter)
+  schedule:
+    - cron: '0 0 * * *'
   # Trigger on PR
   # pull_request:
-
-
 permissions:
   packages: write
-
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -77,56 +75,15 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 2 # Fetch the latest two commits and its parent commit
-  
       - name: "Determine scope"
         id: scope
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            if git cat-file -e ${{ github.event.before }} 2>/dev/null; then
-              changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-            else
-              echo "Previous commit not found, using HEAD~1 as fallback"
-              changed_files=$(git diff --name-only HEAD~1 ${{ github.sha }})
-            fi
-
-            selected_workspaces=""
-            for file in $changed_files; do
-              if [[ $file == packages/pluggableWidgets/* ]]; then
-                widget=$(echo $file | cut -d'/' -f3)
-                if [[ ! $selected_workspaces =~ $widget ]]; then
-                  selected_workspaces="$selected_workspaces $widget"
-                fi
-              fi
-            done
-
-            # Trim leading and trailing spaces from selected_workspaces
-            selected_workspaces=$(echo $selected_workspaces | xargs)
-
-            if [[ -n "$selected_workspaces" ]]; then
-              echo "scope=--all --include '$selected_workspaces'" >> $GITHUB_OUTPUT
-              echo "widgets=[\"$selected_workspaces\"]" >> $GITHUB_OUTPUT
-            else
-              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
-              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
-              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
-            fi
-          else
-            if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
-              selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
-              echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
-              echo "widgets=[\"${{ github.event.inputs.workspace }}\"]" >> $GITHUB_OUTPUT
-            else
-              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
-              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
-              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
-            fi
-          fi
-
+          chmod +x ./.github/scripts/determine-widget-scope.sh
+          ./.github/scripts/determine-widget-scope.sh "${{ github.event_name }}" "${{ github.event.inputs.workspace }}" "${{ github.event.before }}" "${{ github.sha }}"
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
           echo "Widgets are: ${{ steps.scope.outputs.widgets }}"
-
   mendix-version:
     runs-on: ubuntu-22.04
     outputs:
@@ -151,9 +108,49 @@ jobs:
       - name: "Debug Mendix Version"
         run: |
           echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
-
+  determine-nt-version:
+    needs: [mendix-version]
+    runs-on: ubuntu-latest
+    outputs:
+      nt_branch: ${{ steps.set-output.outputs.nt_branch }}
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: "Check if nt_branch was specified"
+        id: check-input
+        run: |
+          if [[ -n "${{ github.event.inputs.nt_branch }}" ]]; then
+            echo "Using specified nt_branch: ${{ github.event.inputs.nt_branch }}"
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
+            echo "source=input" >> $GITHUB_OUTPUT
+          else
+            echo "No nt_branch specified, will determine from mendix_version"
+            echo "source=auto" >> $GITHUB_OUTPUT
+          fi
+      - name: "Download mendix_version.json from native-template repo"
+        if: steps.check-input.outputs.source == 'auto'
+        run: |
+          curl -s -o mendix_version.json https://raw.githubusercontent.com/mendix/native-template/master/mendix_version.json
+          cat mendix_version.json
+      - name: "Determine Native Template version based on Mendix version"
+        if: steps.check-input.outputs.source == 'auto'
+        id: determine-nt-branch
+        run: |
+          pip install requests packaging
+          python ./.github/scripts/determine-nt-version.py "${{ needs.mendix-version.outputs.mendix_version }}"
+      - name: "Set output nt_branch"
+        id: set-output
+        run: |
+          if [[ "${{ steps.check-input.outputs.source }}" == "input" ]]; then
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
+          else
+            echo "nt_branch=${{ steps.determine-nt-branch.outputs.nt_branch }}" >> $GITHUB_OUTPUT
+          fi
+      - name: "Debug final branch output"
+        run: |
+          echo "Final nt_branch value: ${{ steps.set-output.outputs.nt_branch }}"
   docker-images:
-    needs: mendix-version
+    needs: [mendix-version]
     runs-on: ubuntu-22.04
     steps:
       - name: "Login to GitHub Container Registry"
@@ -311,14 +308,16 @@ jobs:
           platform: ios
           mda-file: automation.mda
   android-app:
-    needs: [android-bundle]
+    needs: [android-bundle, determine-nt-version]
     runs-on: ubuntu-22.04
     steps:
+      - name: Debug branch value
+        run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
-          ref: ${{ github.event.inputs.nt_branch || 'master' }}
+          ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -377,14 +376,14 @@ jobs:
           name: android-app
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
-    needs: [ios-bundle]
+    needs: [ios-bundle, determine-nt-version]
     runs-on: macos-13
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
-          ref: ${{ github.event.inputs.nt_branch || 'master' }}
+          ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
