@@ -20,4 +20,6 @@ appId: "${APP_ID}"
     text: "Email"
 - tapOn:
     id: "floatingActionButtonTopRight"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/floating_action_button"
 

@@ -640,7 +640,7 @@ jobs:
       - name: "List Available Simulators"
         run: xcrun simctl list devices
       
-      - name: "Run Maestro Script"
+      - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_tests.sh

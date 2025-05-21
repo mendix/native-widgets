@@ -8,5 +8,7 @@ appId: "${APP_ID}"
     text: "Line chart"
 - assertVisible:
     text: "Line chart"
+- assertVisible:
+    text: "TextToAssert"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/line_chart"
