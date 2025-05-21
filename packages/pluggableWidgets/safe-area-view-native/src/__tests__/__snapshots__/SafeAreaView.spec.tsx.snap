@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Safe area view renders with content 1`] = `
-<View
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
   pointerEvents="box-none"
   style={
     {
@@ -23,11 +31,19 @@ exports[`Safe area view renders with content 1`] = `
       Content
     </Text>
   </View>
-</View>
+</RNCSafeAreaView>
 `;
 
 exports[`Safe area view renders with custom styling 1`] = `
-<View
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
   pointerEvents="box-none"
   style={
     {
@@ -50,11 +66,19 @@ exports[`Safe area view renders with custom styling 1`] = `
       Content
     </Text>
   </View>
-</View>
+</RNCSafeAreaView>
 `;
 
 exports[`Safe area view renders without content 1`] = `
-<View
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
   pointerEvents="box-none"
   style={
     {
@@ -72,5 +96,5 @@ exports[`Safe area view renders without content 1`] = `
       }
     }
   />
-</View>
+</RNCSafeAreaView>
 `;

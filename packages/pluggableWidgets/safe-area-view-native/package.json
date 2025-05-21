@@ -1,7 +1,7 @@
 {
   "name": "safe-area-view-native",
   "widgetName": "SafeAreaView",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
-    "@mendix/piw-utils-internal": "*"
+    "@mendix/piw-utils-internal": "*",
+    "react-native-safe-area-context": "4.11.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",
