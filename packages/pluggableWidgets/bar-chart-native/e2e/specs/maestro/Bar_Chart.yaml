@@ -8,5 +8,8 @@ appId: "${APP_ID}"
     text: "Bar chart"
 - assertVisible:
     text: "Bar chart"
+- assertVisible:
+    id: "container1"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bar_chart"
+

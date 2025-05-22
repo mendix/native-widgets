@@ -9,9 +9,9 @@ if [ "$1" == "android" ]; then
   DEVICE_ID="emulator-5554"
   PLATFORM="android"
 elif [ "$1" == "ios" ]; then
-  # APP_ID="myapp.nativecomponentstestproject"
-  APP_ID="com.mendix.native.template"
-  DEVICE_ID="8006E26A-352B-4553-BA00-D8AE2DE23313"
+  APP_ID="myapp.nativecomponentstestproject"
+  # APP_ID="com.mendix.native.template"
+  DEVICE_ID="4293ECC5-CA5A-4820-9433-40562F7F6F5E"
   PLATFORM="ios"
 else
   echo "Usage: $0 [android|ios] [widget]"

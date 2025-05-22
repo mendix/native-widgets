@@ -9,6 +9,6 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Doughnut chart Custom style"
 - assertVisible:
-    text: "TextToAssert"
+    id: "container1"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/doughnut_chart_custom"
