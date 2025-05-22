@@ -9,6 +9,6 @@ appId: "${APP_ID}"
 - assertVisible:
     text: "Line chart"
 - assertVisible:
-    text: "TextToAssert"
+    id: "container1"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/line_chart"

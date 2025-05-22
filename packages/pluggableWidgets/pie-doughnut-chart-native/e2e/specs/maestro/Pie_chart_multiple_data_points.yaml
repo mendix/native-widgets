@@ -9,6 +9,6 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Pie chart Multiple data points"
 - assertVisible:
-    text: "TextToAssert"
+    id: "container1"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/pie_chart_multiple_data_points"
