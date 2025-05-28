@@ -33,8 +33,15 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
    const getCaptionStyle = (progress: number, barWidth: number): ViewStyle => {
     const labelWidth = 50; // estimate or measure dynamically
     const progressX = barWidth * progress;
-    const clampedLTR = Math.max(0, Math.min(progressX, barWidth - labelWidth));
-    const clampedRTL = Math.max(0, Math.min(barWidth - progressX, barWidth - labelWidth));
+    //const clampedLTR = Math.max(0, Math.min(progressX, barWidth - labelWidth));
+   // const clampedRTL = Math.max(0, Math.min(barWidth - progressX, barWidth - labelWidth));
+
+    // Center the label over the progress position
+const centeredX = progressX - labelWidth / 2;
+
+// Clamp to keep the label within bounds
+const clampedLTR = Math.max(0, Math.min(centeredX, barWidth - labelWidth));
+const clampedRTL = Math.max(0, Math.min(barWidth - progressX - labelWidth / 2, barWidth - labelWidth));
 
     return I18nManager.isRTL
         ? {
@@ -111,7 +118,7 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
                 color: "#fff", // White caption text
                 fontWeight:"bold"
             }}>
-                    { showDefaultProgressCaption ?(progress * 100)+'%' :progressCaption?.value}
+                    { showDefaultProgressCaption ? parseFloat((progress * 100).toFixed(2))+'%' :progressCaption?.value}
                 </Text>
             </View>
             {validationMessages.length > 0 && (
