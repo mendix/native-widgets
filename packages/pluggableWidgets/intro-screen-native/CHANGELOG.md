@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Updated react-native-device-info to latest version.
+
 ### Fixed
 
 -   We have fixed defaultProps deprecation warning.
