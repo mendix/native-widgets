@@ -32,6 +32,7 @@ export interface PieDoughnutChartProps<Style> {
     series: SeriesType[];
     sortOrder: SortOrderEnum;
     showLabels: boolean;
+    slicespace: number;
 }
 
 export interface PieDoughnutChartPreviewProps {
@@ -48,4 +49,5 @@ export interface PieDoughnutChartPreviewProps {
     series: SeriesPreviewType[];
     sortOrder: SortOrderEnum;
     showLabels: boolean;
+    slicespace: number | null;
 }
