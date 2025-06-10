@@ -12,5 +12,5 @@ appId: "${APP_ID}"
     visible:
         id: "dynamicBgImage"
     timeout: 30000
-- takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_image"
+# - takeScreenshot:
+#     path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_image"

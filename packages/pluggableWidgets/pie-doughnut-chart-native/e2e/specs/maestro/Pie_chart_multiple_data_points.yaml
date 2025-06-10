@@ -10,5 +10,7 @@ appId: "${APP_ID}"
     text: "Pie chart Multiple data points"
 - assertVisible:
     id: "container1"
+- assertVisible:
+    id: "innerView"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/pie_chart_multiple_data_points"
