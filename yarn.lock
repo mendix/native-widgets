@@ -14317,6 +14317,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-safe-area-context@npm:5.2.0":
+  version: 5.2.0
+  resolution: "react-native-safe-area-context@npm:5.2.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10/0972d6f1e2485b71c148aeabaf9f1bfbc533549c66de7d0ea617f92df0024646324c38dc9062ea0392761b72b0f7b6e605a784c09addce61e105e6737bbde7b0
+  languageName: node
+  linkType: hard
+
 "react-native-schedule-exact-alarm-permission@npm:^0.1.3":
   version: 0.1.5
   resolution: "react-native-schedule-exact-alarm-permission@npm:0.1.5"
@@ -15263,6 +15273,7 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
+    react-native-safe-area-context: "npm:5.2.0"
   languageName: unknown
   linkType: soft
 
