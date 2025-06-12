@@ -16,6 +16,7 @@ export interface ChartProps {
     style: ChartStyle;
     presentation: string;
     showLabels: boolean;
+    slicespace: number;
 }
 
 export type DataPoints = Array<Slice<string, number>>;
@@ -26,7 +27,7 @@ export interface Slice<X extends string, Y extends number> {
     stylingKey: Option<string>;
 }
 
-export function PieDoughnutChart({ name, presentation, series, style, showLabels }: ChartProps): ReactElement | null {
+export function PieDoughnutChart({ name, presentation, series, style, showLabels,slicespace }: ChartProps): ReactElement | null {
     // due to the nature of the chart type, we only reply on the width, as the chart is always a square
     const [chartDimensions, setChartDimensions] = useState<{ width?: number }>();
     // Chart user-styling may be missing for certain slices. A palette is passed, any missing colours
@@ -94,6 +95,7 @@ export function PieDoughnutChart({ name, presentation, series, style, showLabels
                                 : undefined
                         }
                         colorScale={normalizedSliceColors}
+                        padAngle={slicespace}
                     />
                 ) : null}
             </View>
