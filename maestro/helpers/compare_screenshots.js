@@ -57,7 +57,8 @@ fs.readdirSync(actualDir).forEach(file => {
       ];
     } else if (platform === 'android') {
       ignoredAreas = [
-        { x: 0, y: 0, width, height: 50 } // Ignore top 40 pixels on Android
+        { x: 0, y: 0, width, height: 50 }, // Ignore top 40 pixels on Android
+        { x: width - 15, y: 0, width: 15, height } // Ignore right 10 pixels on Android
       ];
     }
 
