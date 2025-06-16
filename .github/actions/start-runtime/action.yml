@@ -37,7 +37,6 @@ runs:
 
     - name: "Start mxruntime with retries"
       run: |
-        set -e
         MAX_RETRIES=3
         RETRY=0
         until bin/m2ee -c ${{ github.workspace }}/project/m2ee-native.yml --verbose --yolo start; do
