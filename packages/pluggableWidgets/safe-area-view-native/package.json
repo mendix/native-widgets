@@ -21,6 +21,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
+    "@react-navigation/bottom-tabs": "6.6.1",
     "react-native-safe-area-context": "5.2.0"
   },
   "devDependencies": {
