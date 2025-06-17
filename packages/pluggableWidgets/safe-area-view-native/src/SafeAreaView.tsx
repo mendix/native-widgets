@@ -6,9 +6,18 @@ import { SafeAreaView as SafeAreaViewComponent } from "react-native-safe-area-co
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
 
+export function useSafeBottomTabBarHeight(): number {
+    try {
+        const height = useBottomTabBarHeight();
+        return height;
+    } catch (e) {
+        return 0;
+    }
+}
+
 export const SafeAreaView = (props: SafeAreaViewProps<SafeAreaViewStyle>): JSX.Element => {
     const styles = flattenStyles(defaultSafeAreaViewStyle, props.style);
-    const tabBarHeight = useBottomTabBarHeight();
+    const tabBarHeight = useSafeBottomTabBarHeight();
 
     const isBottomBarActive = tabBarHeight > 0;
     return (
