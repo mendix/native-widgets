@@ -5,6 +5,10 @@ import { SafeAreaViewProps } from "../../typings/SafeAreaViewProps";
 import { SafeAreaViewStyle } from "../ui/Styles";
 import { Text } from "react-native";
 
+jest.mock("@react-navigation/bottom-tabs", () => ({
+    useBottomTabBarHeight: jest.fn(() => 50)
+}));
+
 describe("Safe area view", () => {
     let defaultProps: SafeAreaViewProps<SafeAreaViewStyle>;
 
