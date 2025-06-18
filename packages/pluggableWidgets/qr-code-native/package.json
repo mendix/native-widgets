@@ -1,7 +1,7 @@
 {
   "name": "qr-code-native",
   "widgetName": "QRCode",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "react-native-qrcode-svg": "6.0.6",
-    "react-native-svg": "15.7.1"
+    "react-native-svg": "15.12.0"
   },
   "devDependencies": {
     "@mendix/piw-utils-internal": "1.0.0",
