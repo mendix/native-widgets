@@ -80,7 +80,6 @@ exports[`Widget Dynamic Image SVG renders the structure 1`] = `
       ]
     }
     testID="Image1$SvgUri"
-    tintColor="#000"
     uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
@@ -300,7 +299,6 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
         ]
       }
       testID="Image1$SvgUri"
-      tintColor="#000"
       uri="file:///this/is/a/fake/path.svg"
       vbHeight={9999}
       vbWidth={9999}
@@ -466,7 +464,6 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
             ]
           }
           testID="Image1$SvgUri"
-          tintColor="#000"
           uri="file:///this/is/a/fake/path.svg"
           vbHeight={9999}
           vbWidth={9999}
@@ -583,7 +580,6 @@ exports[`Widget Dynamic Image SVG renders the structure with custom height 1`] =
       ]
     }
     testID="Image1$SvgUri"
-    tintColor="#000"
     uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
@@ -697,7 +693,6 @@ exports[`Widget Dynamic Image SVG renders the structure with custom width 1`] = 
       ]
     }
     testID="Image1$SvgUri"
-    tintColor="#000"
     uri="file:///this/is/a/fake/path.svg"
     vbHeight={9999}
     vbWidth={9999}
@@ -2057,7 +2052,6 @@ exports[`Widget Static Image SVG renders the structure 1`] = `
       ]
     }
     testID="Image1$SvgXml"
-    tintColor="#000"
     vbHeight={15}
     vbWidth={15}
     version={1.1}
@@ -2160,7 +2154,6 @@ exports[`Widget Static Image SVG renders the structure as a background image 1`]
         ]
       }
       testID="Image1$SvgXml"
-      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2267,7 +2260,6 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
         ]
       }
       testID="Image1$SvgXml"
-      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2374,7 +2366,6 @@ exports[`Widget Static Image SVG renders the structure as a background image wit
         ]
       }
       testID="Image1$SvgXml"
-      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2502,7 +2493,6 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
         ]
       }
       testID="Image1$SvgXml"
-      tintColor="#000"
       vbHeight={15}
       vbWidth={15}
       version={1.1}
@@ -2671,7 +2661,6 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
             ]
           }
           testID="Image1$SvgXml"
-          tintColor="#000"
           vbHeight={15}
           vbWidth={15}
           version={1.1}
@@ -2792,7 +2781,6 @@ exports[`Widget Static Image SVG renders the structure with custom height 1`] = 
       ]
     }
     testID="Image1$SvgXml"
-    tintColor="#000"
     vbHeight={15}
     vbWidth={15}
     version={1.1}
@@ -2910,7 +2898,6 @@ exports[`Widget Static Image SVG renders the structure with custom width 1`] = `
       ]
     }
     testID="Image1$SvgXml"
-    tintColor="#000"
     vbHeight={15}
     vbWidth={15}
     version={1.1}

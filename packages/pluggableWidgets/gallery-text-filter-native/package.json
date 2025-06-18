@@ -1,7 +1,7 @@
 {
   "name": "gallery-text-filter-native",
   "widgetName": "GalleryTextFilter",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -26,7 +26,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-svg": "15.7.1"
+    "react-native-svg": "15.12.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "~10.0.1",
