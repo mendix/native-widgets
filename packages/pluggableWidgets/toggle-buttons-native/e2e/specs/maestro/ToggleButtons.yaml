@@ -8,5 +8,10 @@ appId: "${APP_ID}"
     text: "Toggle buttons"
 - assertVisible: 
     text: "Default:"
+# Because the image loading can take some time due to resources on emulator, we need to wait for the image to be visible
+- extendedWaitUntil: 
+     visible: randText  # Any random text that does not exist in the UI
+     optional: true  # This should be true so that the test won't fail
+     timeout: 15000 # 15 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/toggle_buttons"

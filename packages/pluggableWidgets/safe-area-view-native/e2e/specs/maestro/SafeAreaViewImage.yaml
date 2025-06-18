@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     text: "Image"
 - assertVisible:
     id: "image1"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/safe_area_view_image"
