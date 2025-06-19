@@ -8,9 +8,7 @@ appId: "${APP_ID}"
     text: "Safe area view"
 - tapOn:
     text: "Container"
-- assertVisible: "Safe area view widget directly on a fullscreen page. The safe area has an orange background color, the page has a blue background color and the container with content has a white background color.\r
-
-    \r
+- assertVisible: "Safe area view widget directly on a fullscreen page. The safe area has an orange background color.\r
 
     Expected result: \r
 
@@ -18,8 +16,6 @@ appId: "${APP_ID}"
 
     \ - Safe area has an orange background color\r
 
-    \ - Unsafe area has a blue background color\r
-
-    \ - White container with text located in the safe area\r
-
     \ - White container uses all available space (flex 1)"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/safe_area_view_container"

@@ -13,3 +13,5 @@ appId: "${APP_ID}"
     \r
 
     Expected result: Text rendered in safe area and full blue background"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/safe_area_view_text"

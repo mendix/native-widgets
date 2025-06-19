@@ -8,9 +8,10 @@ appId: "${APP_ID}"
     text: "Background image"
 - tapOn:
     text: "Dynamic SVG image"
-- extendedWaitUntil:
-    visible: "Dynamic SVG image"
-    timeout: 30000
-    optional: true
+# Because the image loading can take some time due to resources on emulator, we need to wait for the image to be visible
+- extendedWaitUntil: 
+     visible: randText  # Any random text that does not exist in the UI
+     optional: true  # This should be true so that the test won't fail
+     timeout: 15000 # 15 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_svg"

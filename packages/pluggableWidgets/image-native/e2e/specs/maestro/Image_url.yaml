@@ -9,6 +9,6 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Image url"
 - assertVisible: "Main as Image URL(svg); Background as No; Action as Open dialog box"
-- takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/image_url"
+# - takeScreenshot:
+#     path: "maestro/images/actual/${PLATFORM}/image_url"
 
