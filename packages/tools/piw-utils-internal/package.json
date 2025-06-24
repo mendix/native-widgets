@@ -18,12 +18,11 @@
     "build": "tsc",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "prepare": "yarn build",
-    "test": "pluggable-widgets-tools test:unit:web",
+    "test": "pluggable-widgets-tools test:unit:native",
     "postinstall": "yarn build"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "~10.0.1",
-    "@testing-library/react": "^16.0.1",
+    "@mendix/pluggable-widgets-tools": "^10.15.0",
     "eslint": "^7.32.0",
     "rimraf": "^4.4.1",
     "typescript": "4.9.5"

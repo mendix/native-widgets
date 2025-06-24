@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { waitFor, render } from "@testing-library/react";
+import { waitFor, render } from "@testing-library/react-native";
 import { useScheduleUpdateOnce } from "../ReactLifecycleUtils";
 
 function TestComponent({ onRender, predicate }: { onRender: () => void; predicate: () => boolean }): null {

@@ -27,7 +27,8 @@ export interface RadioButtonsPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    renderMode?: "design" | "xray" | "structure";
+    renderMode: "design" | "xray" | "structure";
+    translate: (text: string) => string;
     orientation: OrientationEnum;
     enum: string;
     showLabel: boolean;
