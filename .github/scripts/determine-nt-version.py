@@ -37,51 +37,48 @@ for range_str, data in version_data.items():
 if best_match:
     print(f"Best matching range: {best_match}")
     
-    # Get the major version to look for in tags
+    # Get the major version to look for in releases
     max_pattern = version_data[best_match].get("max", "")
-    major_version = max_pattern.split('.')[0]
+    if max_pattern == "*":
+        major_version = None
+        print("Looking for latest available release (no major version restriction)")
+    else:
+        major_version = max_pattern.split('.')[0]
+        print(f"Looking for latest release with major version: {major_version}")
     
-    print(f"Looking for latest version with major version: {major_version}")
-    
-    # Get available tags from native-template repository
-    response = requests.get('https://api.github.com/repos/mendix/native-template/tags')
+    # Get available releases from native-template repository
+    response = requests.get('https://api.github.com/repos/mendix/native-template/releases')
     if response.status_code == 200:
-        all_tags = response.json()
-        tag_names = [tag['name'] for tag in all_tags]
-        print(f"Available tags: {tag_names}")
+        all_releases = response.json()
+        release_names = [release['tag_name'] for release in all_releases]
+        print(f"Available releases: {release_names}")
         
-        # Find the latest version matching the major version
-        matching_tags = []
+        # Find the latest release matching the major version
+        matching_releases = []
         
-        for tag in tag_names:
-            # Remove 'v' prefix if present for comparison
+        for release in all_releases:
+            tag = release['tag_name']
             clean_tag = tag[1:] if tag.startswith('v') else tag
-            
-            # Check if the tag starts with the major version
-            if clean_tag.startswith(f"{major_version}."):
-                try:
-                    # Try to parse as a version (this handles proper version numbers)
-                    tag_version = version.parse(clean_tag)
-                    matching_tags.append((tag, tag_version))
-                except:
-                    # Skip tags that don't parse as proper versions
-                    pass
+            try:
+                tag_version = version.parse(clean_tag)
+                if major_version is None or clean_tag.startswith(f"{major_version}."):
+                    matching_releases.append((tag, tag_version))
+            except:
+                pass
         
-        if matching_tags:
-            # Sort by version (highest last) and get the last one
-            matching_tags.sort(key=lambda x: x[1])
-            latest_version = matching_tags[-1][0]
-            print(f"Selected Native Template version: {latest_version}")
+        if matching_releases:
+            matching_releases.sort(key=lambda x: x[1])
+            latest_tag = matching_releases[-1][0]
+            print(f"Selected Native Template release: {latest_tag}")
             with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-                f.write(f"nt_branch={latest_version}\n")
+                f.write(f"nt_branch={latest_tag}\n")
         else:
-            # Fallback to min version if no matching tag found
             min_version = version_data[best_match].get("min", "")
-            print(f"No matching tag found, using minimum version: {min_version}")
+            print(f"No matching release found, using minimum version: {min_version}")
             with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
                 f.write(f"nt_branch={min_version}\n")
     else:
-        print(f"Failed to get tags: {response.status_code}")
+        print(f"Failed to get releases: {response.status_code}")
         print("Using master as fallback")
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
             f.write("nt_branch=master\n")

@@ -439,6 +439,7 @@ jobs:
   android-tests:
     needs: [scope, mendix-version, project, android-app]
     runs-on: ubuntu-22.04
+    timeout-minutes: 60
     strategy:
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
@@ -557,6 +558,7 @@ jobs:
   ios-tests:
     needs: [scope, mendix-version, project, ios-app]
     runs-on: macos-15
+    timeout-minutes: 60
     strategy:
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}

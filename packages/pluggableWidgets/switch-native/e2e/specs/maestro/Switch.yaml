@@ -6,6 +6,8 @@ appId: "${APP_ID}"
     text: "S"
 - tapOn:
     text: "Switch"
+- assertNotVisible: 
+    text: "I will present myself when the boolean is True"
 - tapOn:
     id: "switch1"
 - assertVisible: 
