@@ -4,12 +4,10 @@
 # Use command like: ./run_maestro_tests_local.sh android/ios proggress-circle-native
 
 if [ "$1" == "android" ]; then
-  #APP_ID="myapp.nativecomponentstestproject"
   APP_ID="com.mendix.nativetemplate"
   DEVICE_ID="emulator-5554"
   PLATFORM="android"
 elif [ "$1" == "ios" ]; then
-  #APP_ID="myapp.nativecomponentstestproject"
   APP_ID="com.mendix.native.template"
   DEVICE_ID="8CDB91BF-9D4A-4F1D-8952-A7ABBED10078"
   PLATFORM="ios"
