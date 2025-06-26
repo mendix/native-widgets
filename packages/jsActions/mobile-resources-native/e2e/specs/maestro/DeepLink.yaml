@@ -1,0 +1,18 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "J"
+- tapOn:
+    text: "Deep Link"
+- tapOn:
+    text: "Test Parse"
+- assertVisible: "Your Deeplink callback URL \"https://john.doe@www.example.com:123/forum/questions/?tag=networking&order=newest#top\"\ 
+
+    path 1 = forum
+
+    path 2 = questions"
+
+
+

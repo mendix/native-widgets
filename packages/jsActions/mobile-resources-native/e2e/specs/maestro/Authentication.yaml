@@ -1,0 +1,16 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "J"
+- tapOn:
+    text: "JS Actions"
+- tapOn:
+    text: "Authentication"
+- tapOn:
+    text: "Is biometric authentication supported?"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/authentication"
+
+

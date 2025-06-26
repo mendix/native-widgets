@@ -28,6 +28,79 @@ passed_tests=()
 failed_tests=()
 final_failed_tests=()
 
+# Function to run jsActions tests (mobile-resources-native and nanoflow-actions-native)
+run_jsactions_tests() {
+  local jsactions_paths=(
+    "packages/jsActions/mobile-resources-native/e2e/specs/maestro"
+    "packages/jsActions/nanoflow-actions-native/e2e/specs/maestro"
+  )
+  local all_yaml_files=()
+  for path in "${jsactions_paths[@]}"; do
+    if [ -d "$path" ]; then
+      local yaml_files=( $(find "$path" -type f -name "*.yaml" ! -name "*_ios.yaml" ! -name "*_android.yaml") )
+      all_yaml_files+=("${yaml_files[@]}")
+    fi
+  done
+  if [ ${#all_yaml_files[@]} -eq 0 ]; then
+    echo "No jsActions Maestro YAML tests found."
+    return 0
+  fi
+
+  passed_tests=()
+  failed_tests=()
+  final_failed_tests=()
+
+  run_tests "${all_yaml_files[@]}"
+
+  echo
+  echo "📊 Initial Test Execution Summary for jsActions:"
+  echo "-----------------------"
+  if [ ${#passed_tests[@]} -gt 0 ]; then
+    echo "✅ Passed Tests:"
+    for test in "${passed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+  else
+    echo "No tests passed."
+  fi
+
+  if [ ${#failed_tests[@]} -gt 0 ]; then
+    echo "❌ Failed Tests:"
+    for test in "${failed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+  else
+    echo "No tests failed."
+  fi
+
+  if [ ${#failed_tests[@]} -gt 0 ]; then
+    rerun_failed_tests "${failed_tests[@]}"
+  fi
+
+  echo
+  echo "📊 Final Test Execution Summary for jsActions:"
+  echo "-----------------------"
+  if [ ${#passed_tests[@]} -gt 0 ]; then
+    echo "✅ Passed Tests:"
+    for test in "${passed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+  else
+    echo "No tests passed."
+  fi
+
+  if [ ${#final_failed_tests[@]} -gt 0 ]; then
+    echo "❌ Failed Tests:"
+    for test in "${final_failed_tests[@]}"; do
+      echo "  - $(basename "$test")"
+    done
+    return 1
+  else
+    echo "All jsActions tests passed!"
+    return 0
+  fi
+}
+
 # Function to run tests for a specific widget
 run_widget_tests() {
   local widget=$1
@@ -90,6 +163,17 @@ run_widget_tests() {
     return 0
   fi
 }
+
+# Run jsActions tests first
+run_jsactions_tests
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+
+# # Only run jsActions tests if all widgets are being tested (i.e., argument is '*-native')
+# if [ "${2:-*-native}" = "*-native" ]; then
+#   run_jsactions_tests
+# fi
 
 # Run tests for each widget
 for widget in "${widgets[@]}"; do
