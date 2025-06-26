@@ -33,7 +33,8 @@ export interface AppEventsPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    renderMode?: "design" | "xray" | "structure";
+    renderMode: "design" | "xray" | "structure";
+    translate: (text: string) => string;
     onLoadAction: {} | null;
     onUnloadAction: {} | null;
     onResumeAction: {} | null;
