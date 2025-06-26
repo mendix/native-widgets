@@ -8,6 +8,5 @@ Core:
 Widget:
   - packages/**/*-native*/**/*
   - packages/**/*_native*/**/*
-  - detox/**/*
 test:
   - all: ["*.spec.*"]

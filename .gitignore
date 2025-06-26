@@ -11,8 +11,6 @@ mxproject
 coverage
 /tmp
 
-detox/apps
-detox/*.log
 **/results
 mendixProject
 **/e2e/images/diffs
