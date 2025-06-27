@@ -672,6 +672,7 @@ jobs:
           if-no-files-found: ignore
 
   android-js-tests:
+    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' }}
     needs: [mendix-version, project, android-app]
     runs-on: ubuntu-22.04
     timeout-minutes: 90
@@ -755,6 +756,7 @@ jobs:
           if-no-files-found: ignore
 
   ios-js-tests:
+    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' }}
     needs: [mendix-version, project, ios-app]
     runs-on: macos-15
     timeout-minutes: 90

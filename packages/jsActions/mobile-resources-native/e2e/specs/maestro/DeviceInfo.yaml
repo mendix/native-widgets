@@ -14,6 +14,6 @@ appId: "${APP_ID}"
 - extendedWaitUntil: 
      visible: randText  # Any random text that does not exist in the UI
      optional: true  # This should be true so that the test won't fail
-     timeout: 15000 # 15 seconds
+     timeout: 20000 # 20 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/device_info"
