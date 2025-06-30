@@ -32,7 +32,7 @@ export async function SetBadgeNumber(badgeNumber?: Big): Promise<void> {
         return Promise.reject(new Error("Input parameter 'Badge number' should be zero or greater"));
     }
 
-    return notifee.setBadgeCount(badgeNumber as any as number);
+    return notifee.setBadgeCount(Number(badgeNumber));
 
     // END USER CODE
 }
