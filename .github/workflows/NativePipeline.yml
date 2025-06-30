@@ -18,6 +18,7 @@ on:
         type: choice
         options:
           - "*-native"
+          - js-actions
           - accordion-native
           - activity-indicator-native
           - animation-native
@@ -196,14 +197,39 @@ jobs:
         run: yarn install --immutable
       - name: "Force rebuild resources"
         run: |
-          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build # Ensure all resources are rebuilt
+          # Always build JS actions if needed
+          if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
+            [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
+            [ "${{ github.event_name }}" = "schedule" ]; then
+            yarn workspace mobile-resources-native run build
+            yarn workspace nanoflow-actions-native run build
+          fi
+          # Build the rest as usual
+          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
       - name: "Run build for development"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
+        run: |
+          if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
+            [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
+            [ "${{ github.event_name }}" = "schedule" ]; then
+            yarn workspace mobile-resources-native run build
+            yarn workspace nanoflow-actions-native run build
+          fi
+          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
         env:
           NODE_OPTIONS: --max_old_space_size=6144
-      - name: "Upload resources artifact"
+      - name: "Upload JS actions resources artifact"
+        if: ${{ github.event.inputs.workspace == 'js-actions' }}
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        with:
+          name: resources
+          path: |
+            packages/jsActions/mobile-resources-native/dist/**/*
+            packages/jsActions/nanoflow-actions-native/dist/**/*
+
+      - name: "Upload widget and JS actions resources artifact"
+        if: ${{ github.event.inputs.workspace != 'js-actions' }}
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
           name: resources
@@ -238,6 +264,7 @@ jobs:
       - name: "List resources"
         run: ls -R resources
       - name: "Move widgets"
+        if: ${{ github.event.inputs.workspace != 'js-actions' }}
         shell: bash
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
@@ -436,8 +463,9 @@ jobs:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
 
-  android-tests:
+  android-widget-tests:
     needs: [scope, mendix-version, project, android-app]
+    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     strategy:
@@ -555,8 +583,9 @@ jobs:
           path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
 
-  ios-tests:
+  ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
+    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
     runs-on: macos-15
     timeout-minutes: 60
     strategy:
@@ -672,7 +701,7 @@ jobs:
           if-no-files-found: ignore
 
   android-js-tests:
-    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' }}
+    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
     needs: [mendix-version, project, android-app]
     runs-on: ubuntu-22.04
     timeout-minutes: 90
@@ -756,7 +785,7 @@ jobs:
           if-no-files-found: ignore
 
   ios-js-tests:
-    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' }}
+    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
     needs: [mendix-version, project, ios-app]
     runs-on: macos-15
     timeout-minutes: 90
@@ -783,6 +812,7 @@ jobs:
         with:
           mda-file: automation.mda
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -790,6 +820,7 @@ jobs:
           path: ios-app
       - name: Check iOS App Path
         run: ls ios-app
+
       - name: "Verify Xcode CLI Tools"
         run: |
           if ! xcode-select --print-path; then
@@ -838,7 +869,7 @@ jobs:
           path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
   compare-screenshots:
-    needs: [scope, android-tests, ios-tests, android-js-tests, ios-js-tests]
+    needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
     runs-on: ubuntu-latest
     if: always()
     env:

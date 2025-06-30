@@ -39,10 +39,13 @@ if [ "$event_name" == "pull_request" ]; then
     echo "widgets=${all_widgets}" >> $GITHUB_OUTPUT
   fi
 else
-  if [ -n "$input_workspace" ] && [ "$input_workspace" != "*-native" ]; then
+  if [ -n "$input_workspace" ] && [ "$input_workspace" != "*-native" ] && [ "$input_workspace" != "js-actions" ]; then
     selected_workspaces=$(echo "$input_workspace" | sed 's/,/ /g')
     echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
     echo "widgets=[\"$input_workspace\"]" >> $GITHUB_OUTPUT
+  elif [ "$input_workspace" == "js-actions" ]; then
+    echo "scope=--all --include 'mobile-resources-native nanoflow-actions-native'" >> $GITHUB_OUTPUT
+    echo "widgets=[\"mobile-resources-native\",\"nanoflow-actions-native\"]" >> $GITHUB_OUTPUT
   else
     echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
     echo "widgets=${all_widgets}" >> $GITHUB_OUTPUT
