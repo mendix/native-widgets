@@ -211,25 +211,11 @@ jobs:
             [ "${{ github.event_name }}" = "schedule" ]; then
             widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
             for w in $widgets; do
-              # Skip JS actions if already built above
-              if [ "$w" != "mobile-resources-native" ] && [ "$w" != "nanoflow-actions-native" ]; then
-                yarn workspace $w run build
-              fi
+              yarn workspace $w run build
             done
           fi
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
-      # - name: "Run build for development"
-      #   run: |
-      #     if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
-      #       [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
-      #       [ "${{ github.event_name }}" = "schedule" ]; then
-      #       yarn workspace mobile-resources-native run build
-      #       yarn workspace nanoflow-actions-native run build
-      #     fi
-      #     yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
-      #   env:
-      #     NODE_OPTIONS: --max_old_space_size=6144
       - name: "Upload JS actions resources artifact"
         if: ${{ github.event.inputs.workspace == 'js-actions' }}
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
@@ -238,7 +224,6 @@ jobs:
           path: |
             packages/jsActions/mobile-resources-native/dist/**/*
             packages/jsActions/nanoflow-actions-native/dist/**/*
-
       - name: "Upload widget and JS actions resources artifact"
         if: ${{ github.event.inputs.workspace != 'js-actions' }}
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4

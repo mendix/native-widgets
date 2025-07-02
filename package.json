@@ -33,7 +33,9 @@
     "patch-package": "sh ./scripts/patch/patch-package.sh",
     "build:widgets": "node ./scripts/widget/buildWidgets.js",
     "test_widgets:maestro:ios": "bash maestro/run_maestro_widget_tests.sh ios",
-    "test_widgets:maestro:android": "bash maestro/run_maestro_widget_tests.sh android"
+    "test_widgets:maestro:android": "bash maestro/run_maestro_widget_tests.sh android",
+    "test_jsactions:maestro:ios": "bash maestro/run_maestro_jsactions_tests.sh ios",
+    "test_jsactions:maestro:android": "bash maestro/run_maestro_jsactions_tests.sh android"
   },
   "workspaces": {
     "packages": [
