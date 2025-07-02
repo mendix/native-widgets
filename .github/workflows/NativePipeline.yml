@@ -84,7 +84,7 @@ jobs:
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
-          echo "Widgets are: ${{ steps.scope.outputs.widgets }}"
+          echo "Widgets or js actions are: ${{ steps.scope.outputs.widgets }}"
   mendix-version:
     runs-on: ubuntu-22.04
     outputs:
@@ -197,28 +197,39 @@ jobs:
         run: yarn install --immutable
       - name: "Force rebuild resources"
         run: |
-          # Always build JS actions if needed
+          # Build JS actions if needed
           if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
             [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
             [ "${{ github.event_name }}" = "schedule" ]; then
             yarn workspace mobile-resources-native run build
             yarn workspace nanoflow-actions-native run build
           fi
-          # Build the rest as usual
-          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
+
+          # Build widgets if needed (any specific widget, *-native, or nightly)
+          if [ "${{ github.event.inputs.workspace }}" != "js-actions" ] || \
+            [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
+            [ "${{ github.event_name }}" = "schedule" ]; then
+            widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+            for w in $widgets; do
+              # Skip JS actions if already built above
+              if [ "$w" != "mobile-resources-native" ] && [ "$w" != "nanoflow-actions-native" ]; then
+                yarn workspace $w run build
+              fi
+            done
+          fi
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
-      - name: "Run build for development"
-        run: |
-          if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
-            [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
-            [ "${{ github.event_name }}" = "schedule" ]; then
-            yarn workspace mobile-resources-native run build
-            yarn workspace nanoflow-actions-native run build
-          fi
-          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
-        env:
-          NODE_OPTIONS: --max_old_space_size=6144
+      # - name: "Run build for development"
+      #   run: |
+      #     if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
+      #       [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
+      #       [ "${{ github.event_name }}" = "schedule" ]; then
+      #       yarn workspace mobile-resources-native run build
+      #       yarn workspace nanoflow-actions-native run build
+      #     fi
+      #     yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
+      #   env:
+      #     NODE_OPTIONS: --max_old_space_size=6144
       - name: "Upload JS actions resources artifact"
         if: ${{ github.event.inputs.workspace == 'js-actions' }}
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4

@@ -32,8 +32,8 @@
     "setup-mobile": "yarn setup-android && yarn setup-ios",
     "patch-package": "sh ./scripts/patch/patch-package.sh",
     "build:widgets": "node ./scripts/widget/buildWidgets.js",
-    "test:maestro:ios": "bash maestro/run_maestro_tests.sh ios",
-    "test:maestro:android": "bash maestro/run_maestro_tests.sh android"
+    "test_widgets:maestro:ios": "bash maestro/run_maestro_widget_tests.sh ios",
+    "test_widgets:maestro:android": "bash maestro/run_maestro_widget_tests.sh android"
   },
   "workspaces": {
     "packages": [
