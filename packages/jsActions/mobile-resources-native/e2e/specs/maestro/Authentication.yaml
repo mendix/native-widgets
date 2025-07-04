@@ -3,19 +3,19 @@ appId: "${APP_ID}"
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
 - tapOn:
-    text: "C"
+    text: "J"
 - tapOn:
-    text: "Column chart"
-- assertVisible:
-    text: "Column chart"
-- assertVisible:
-    id: "container1"
+    text: "JS Actions"
+- tapOn:
+    text: "Authentication"
+- tapOn:
+    text: "Is biometric authentication supported?"
 # Because the image loading can take some time due to resources on emulator, we need to wait for the image to be visible
 - extendedWaitUntil: 
      visible: randText  # Any random text that does not exist in the UI
      optional: true  # This should be true so that the test won't fail
-     timeout: 15000 # 15 seconds
+     timeout: 5000 # 5 seconds
 - takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/column_chart"
+    path: "maestro/images/actual/${PLATFORM}/authentication"
 
 

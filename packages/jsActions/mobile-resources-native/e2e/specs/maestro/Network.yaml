@@ -1,0 +1,28 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "J"
+- tapOn:
+    text: "JS Actions"
+- tapOn:
+    text: "Network"
+- tapOn: 
+    text: "Is connected?"
+- assertVisible: 
+    text: "Yes"
+- tapOn: 
+    text: "OK"
+- tapOn: 
+    text: "Is wifi connection?"
+- assertVisible: 
+    text: "Yes"
+- tapOn: 
+    text: "OK"
+- tapOn: 
+    text: "Is cellular connection?"
+- assertVisible: 
+    text: "No"
+- tapOn: 
+    text: "OK"

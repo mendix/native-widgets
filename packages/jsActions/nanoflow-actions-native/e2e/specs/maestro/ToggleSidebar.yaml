@@ -1,0 +1,23 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "J"
+- tapOn:
+    text: "NanoflowCommons"
+- tapOn:
+    text: "Client activities"
+- tapOn:
+    text: "Toggle sidebar"
+- tapOn:
+    id: "actionButton1"
+# Because the image loading can take some time due to resources on emulator, we need to wait for the image to be complete
+- extendedWaitUntil: 
+     visible: randText  # Any random text that does not exist in the UI
+     optional: true  # This should be true so that the test won't fail
+     timeout: 5000 # 5 seconds
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/toggle_sidebar"
+
+
