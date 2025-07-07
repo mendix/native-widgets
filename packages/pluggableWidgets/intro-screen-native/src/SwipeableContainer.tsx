@@ -90,7 +90,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
 
     useEffect(() => {
         const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
-        if (width && props.activeSlide && props.activeSlide.status === ValueStatus.Available && slide !== activeIndex) {
+        if (width && props.activeSlide?.status === ValueStatus.Available && slide !== activeIndex) {
             goToSlide(slide);
         }
     }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
