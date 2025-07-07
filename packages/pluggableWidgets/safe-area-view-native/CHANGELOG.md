@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.1.0] - 2025-7-7
+
 -   We fixed the issue where the header is going outside of page in some android versions.
 
 ## [3.0.1] - 2025-3-18
