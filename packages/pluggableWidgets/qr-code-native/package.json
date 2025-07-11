@@ -27,7 +27,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "react-native-qrcode-svg": "6.0.6",
-    "react-native-svg": "15.12.0"
+    "react-native-svg": "15.11.2"
   },
   "devDependencies": {
     "@mendix/piw-utils-internal": "1.0.0",

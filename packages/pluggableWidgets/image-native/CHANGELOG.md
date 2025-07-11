@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
--   Updated react-native-svg from version 15.7.1 to 15.12.0
+-   Updated react-native-svg from version 15.7.1 to 15.11.2
 
 ### Changed
 

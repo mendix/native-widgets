@@ -9631,7 +9631,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
-    react-native-svg: "npm:15.12.0"
+    react-native-svg: "npm:15.11.2"
   languageName: unknown
   linkType: soft
 
@@ -10315,7 +10315,7 @@ __metadata:
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
     react-native-fast-image: "npm:8.3.2"
-    react-native-svg: "npm:15.12.0"
+    react-native-svg: "npm:15.11.2"
     react-native-vector-icons: "npm:10.2.0"
   languageName: unknown
   linkType: soft
@@ -15593,7 +15593,7 @@ __metadata:
     detox: "npm:^19.13.0"
     eslint: "npm:^7.32.0"
     react-native-qrcode-svg: "npm:6.0.6"
-    react-native-svg: "npm:15.12.0"
+    react-native-svg: "npm:15.11.2"
   languageName: unknown
   linkType: soft
 
@@ -16146,9 +16146,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:15.12.0":
-  version: 15.12.0
-  resolution: "react-native-svg@npm:15.12.0"
+"react-native-svg@npm:15.11.2":
+  version: 15.11.2
+  resolution: "react-native-svg@npm:15.11.2"
   dependencies:
     css-select: "npm:^5.1.0"
     css-tree: "npm:^1.1.3"
