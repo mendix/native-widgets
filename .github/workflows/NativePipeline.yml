@@ -465,6 +465,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     strategy:
+      max-parallel: 5
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
@@ -585,6 +586,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 60
     strategy:
+      max-parallel: 5
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
