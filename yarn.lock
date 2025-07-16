@@ -4013,9 +4013,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-typescript@npm:^12.1.1":
-  version: 12.1.3
-  resolution: "@rollup/plugin-typescript@npm:12.1.3"
+"@rollup/plugin-typescript@npm:12.1.4":
+  version: 12.1.4
+  resolution: "@rollup/plugin-typescript@npm:12.1.4"
   dependencies:
     "@rollup/pluginutils": "npm:^5.1.0"
     resolve: "npm:^1.22.1"
@@ -4028,7 +4028,7 @@ __metadata:
       optional: true
     tslib:
       optional: true
-  checksum: 10/6d2d717059c03f82b07faef784ccd58aa05e5be49d7c68a1a3456ddf0980aaa172ecd44edbe6d1fdef0a547836ea049795e268add5911abbaec89d871db14e4f
+  checksum: 10/c2082e225fb445ee75ca4195fa6794bbcdfe8d2a88ad105121939072c9dc049d0d429a44e32ceb96d060200d507c217209b10c4e2b76a45da11c4181a0c6cf62
   languageName: node
   linkType: hard
 
@@ -12921,7 +12921,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:^18.6.3"
     "@react-native/babel-preset": "npm:0.75.4"
     "@rollup/plugin-node-resolve": "npm:^15.3.0"
-    "@rollup/plugin-typescript": "npm:^12.1.1"
+    "@rollup/plugin-typescript": "npm:12.1.4"
     "@testing-library/jest-native": "npm:^5.4.3"
     "@testing-library/react-native": "npm:^12.9.0"
     "@types/big.js": "npm:^6.2.2"
