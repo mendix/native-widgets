@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import ReactNativeBiometrics from "react-native-biometrics";
+import TouchID from "react-native-touch-id";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -15,13 +15,10 @@ import ReactNativeBiometrics from "react-native-biometrics";
  */
 export async function IsBiometricAuthenticationSupported(): Promise<boolean> {
     // BEGIN USER CODE
-    // Documentation https://github.com/smallcase/react-native-simple-biometrics
+    // Documentation https://github.com/naoufal/react-native-touch-id
 
-    const rnBiometrics = new ReactNativeBiometrics();
-
-    return rnBiometrics
-        .isSensorAvailable()
-        .then(result => result.available)
+    return TouchID.isSupported()
+        .then(() => true)
         .catch(() => false);
 
     // END USER CODE

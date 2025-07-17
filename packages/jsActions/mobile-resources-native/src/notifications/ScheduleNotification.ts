@@ -5,15 +5,9 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Platform } from "react-native";
-import notifee, {
-    TimestampTrigger,
-    TriggerType,
-    AndroidChannel,
-    AndroidImportance,
-    Notification,
-    AlarmType
-} from "@notifee/react-native";
+import { NativeModules, Platform } from "react-native";
+import PushNotification, { PushNotificationScheduleObject } from "react-native-push-notification";
+
 // BEGIN EXTRA CODE
 // END EXTRA CODE
 
@@ -42,59 +36,68 @@ export async function ScheduleNotification(
     actionGuid?: string
 ): Promise<void> {
     // BEGIN USER CODE
-    const channelId = playSound ? "mendix-local-notifications-withsound" : "mendix-local-notifications";
-    await createNotificationChannelIfNeeded(channelId);
+    // Documentation https://github.com/zo0r/react-native-push-notification
+
+    const isIOS = Platform.OS === "ios";
+    if (NativeModules && isIOS && !NativeModules.RNCPushNotificationIOS) {
+        return Promise.reject(new Error("Notifications module is not available in your app"));
+    }
 
     if (!body) {
-        throw new Error("Input parameter 'Body' is required");
+        return Promise.reject(new Error("Input parameter 'Body' is required"));
     }
 
-    if (!date || !date.getTime()) {
-        throw new Error("Input parameter 'Date' is required and must be a valid Date object");
-    }
+    const notification = { message: body } as PushNotificationScheduleObject;
+    const notificationIdNumber = Number(notificationId);
 
-    const trigger: TimestampTrigger = {
-        type: TriggerType.TIMESTAMP,
-        timestamp: date.getTime(),
-        alarmManager: { allowWhileIdle: true, type: AlarmType.SET_EXACT_AND_ALLOW_WHILE_IDLE }
-    };
-
-    const notification: Notification = {
-        id: notificationId || undefined,
-        title: title || undefined,
-        body,
-        android: {
-            channelId
+    if (!isIOS) {
+        const channelId = "mendix-local-notifications";
+        const channelExists = await new Promise(resolve =>
+            PushNotification.channelExists(channelId, (exists: boolean) => resolve(exists))
+        );
+        if (!channelExists) {
+            const channel = await new Promise(resolve =>
+                PushNotification.createChannel(
+                    {
+                        channelId,
+                        channelName: "Local notifications"
+                    },
+                    created => resolve(created)
+                )
+            );
+            if (!channel) {
+                return Promise.reject(new Error("Could not create the local notifications channel"));
+            }
         }
-    };
-
-    if (subtitle && Platform.OS === "ios") {
-        notification.subtitle = subtitle;
+        notification.channelId = channelId;
     }
+
+    if (notificationIdNumber) {
+        notification.id = notificationIdNumber;
+    }
+
+    if (title) {
+        notification.title = title;
+    }
+
+    if (subtitle && !isIOS) {
+        notification.subText = subtitle;
+    }
+
+    notification.playSound = !!playSound;
 
     if (actionName || actionGuid) {
-        notification.data = {
-            actionName: actionName ?? "",
-            guid: actionGuid ?? ""
+        notification.userInfo = {
+            actionName,
+            guid: actionGuid
         };
     }
 
-    async function createNotificationChannelIfNeeded(channelId: string): Promise<void> {
-        if (Platform.OS === "ios") {
-            return;
-        }
-        const existingChannel = await notifee.getChannel(channelId);
-        const channel: AndroidChannel = {
-            id: channelId,
-            name: "Local Notifications",
-            importance: AndroidImportance.HIGH,
-            ...(playSound ? { sound: "default" } : {})
-        };
-        if (existingChannel === null) {
-            await notifee.createChannel(channel);
-        }
+    if (date && date.getTime()) {
+        notification.date = date;
     }
 
-    await notifee.createTriggerNotification(notification, trigger);
+    PushNotification.localNotificationSchedule(notification);
+    return Promise.resolve();
     // END USER CODE
 }

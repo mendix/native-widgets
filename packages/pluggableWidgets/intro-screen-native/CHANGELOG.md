@@ -6,21 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-### Fixes
-
--   Initial slide now correctly positioned on mount.
-
-### Changed
-
--   Updated react-native-device-info to latest version.
-
 ### Fixed
 
 -   We have fixed defaultProps deprecation warning.
 
 ## [4.0.0] - 2024-12-3
-
--   Updated react-native-device-info to latest version.
 
 ### Changed
 
