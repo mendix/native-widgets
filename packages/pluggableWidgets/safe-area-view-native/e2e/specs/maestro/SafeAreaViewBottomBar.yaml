@@ -13,3 +13,5 @@ appId: "${APP_ID}"
     \ - Safe area has an orange background color\r
 
     \ - Bottom bar starts directly below safe area"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/safe_area_view_bottom_bar"

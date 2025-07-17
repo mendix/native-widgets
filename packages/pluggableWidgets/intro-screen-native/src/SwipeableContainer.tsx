@@ -8,7 +8,9 @@ import {
     StyleSheet,
     Text,
     TouchableNativeFeedback,
+    TouchableNativeFeedbackProps,
     TouchableOpacity,
+    TouchableOpacityProps,
     View
 } from "react-native";
 import { ButtonStyle, IntroScreenStyle } from "./ui/Styles";
@@ -43,10 +45,13 @@ interface SwipeableContainerProps {
     activeSlide?: EditableValue<Big>;
 }
 
+type TouchableProps = TouchableNativeFeedbackProps | TouchableOpacityProps;
+
 declare type Option<T> = T | undefined;
 
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === "android";
-const Touchable = Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
+const Touchable: React.ComponentType<TouchableProps> =
+    Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
 
 const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: EditableValue<Big>): number => {
     if (activeSlide && activeSlide.status === ValueStatus.Available && slides && slides.length > 0) {
@@ -66,12 +71,10 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const [activeIndex, setActiveIndex] = useState(0);
     const flatList = useRef<FlatList<any>>(null);
 
-    useEffect(() => {
-        const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
-        if (width && props.activeSlide && props.activeSlide.status === ValueStatus.Available && slide !== activeIndex) {
-            goToSlide(slide);
-        }
-    }, [props.activeSlide, activeIndex, width]);
+    const rtlSafeIndex = useCallback(
+        (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
+        [props.slides.length]
+    );
 
     const goToSlide = useCallback(
         (pageNum: number) => {
@@ -82,8 +85,15 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
                 });
             }
         },
-        [width, flatList]
+        [rtlSafeIndex, width]
     );
+
+    useEffect(() => {
+        const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
+        if (width && props.activeSlide?.status === ValueStatus.Available && slide !== activeIndex) {
+            goToSlide(slide);
+        }
+    }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
 
     const onNextPress = (): void => {
         goToSlide(activeIndex + 1);
@@ -278,11 +288,6 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         );
     };
 
-    const rtlSafeIndex = useCallback(
-        (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
-        [props.slides.length]
-    );
-
     const onMomentumScrollEnd = useCallback(
         (event: NativeSyntheticEvent<any>) => {
             const offset = event.nativeEvent.contentOffset.x;
@@ -314,6 +319,8 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         <View style={styles.flexOne}>
             <FlatList
                 testID={props.testID}
+                initialScrollIndex={refreshActiveSlideAttribute(props.slides, props.activeSlide)}
+                getItemLayout={(_, i) => ({ length: width, offset: width * i, index: i })}
                 ref={flatList}
                 data={props.slides}
                 horizontal

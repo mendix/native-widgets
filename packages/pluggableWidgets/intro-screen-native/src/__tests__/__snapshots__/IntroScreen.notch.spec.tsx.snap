@@ -37,7 +37,9 @@ exports[`Intro Screen renders 1`] = `
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
+        getItemLayout={[Function]}
         horizontal={true}
+        initialScrollIndex={0}
         keyExtractor={[Function]}
         onContentSizeChange={[Function]}
         onLayout={[Function]}
@@ -64,7 +66,6 @@ exports[`Intro Screen renders 1`] = `
         <View>
           <View
             onFocusCapture={[Function]}
-            onLayout={[Function]}
             style={
               [
                 {
@@ -225,7 +226,9 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
+        getItemLayout={[Function]}
         horizontal={true}
+        initialScrollIndex={0}
         keyExtractor={[Function]}
         onContentSizeChange={[Function]}
         onLayout={[Function]}
@@ -252,7 +255,6 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
         <View>
           <View
             onFocusCapture={[Function]}
-            onLayout={[Function]}
             style={
               [
                 {
@@ -427,7 +429,9 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
+        getItemLayout={[Function]}
         horizontal={true}
+        initialScrollIndex={0}
         keyExtractor={[Function]}
         onContentSizeChange={[Function]}
         onLayout={[Function]}
@@ -454,7 +458,6 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
         <View>
           <View
             onFocusCapture={[Function]}
-            onLayout={[Function]}
             style={
               [
                 {
@@ -629,7 +632,9 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
         extraData={0}
         getItem={[Function]}
         getItemCount={[Function]}
+        getItemLayout={[Function]}
         horizontal={true}
+        initialScrollIndex={0}
         keyExtractor={[Function]}
         onContentSizeChange={[Function]}
         onLayout={[Function]}
@@ -656,7 +661,6 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
         <View>
           <View
             onFocusCapture={[Function]}
-            onLayout={[Function]}
             style={
               [
                 {

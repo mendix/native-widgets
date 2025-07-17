@@ -14,6 +14,6 @@ appId: "${APP_ID}"
 - tapOn:
     text: "OK"
     optional: true
-- takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/SafeAreaViewMaps"
+# - takeScreenshot:
+#     path: "maestro/images/actual/${PLATFORM}/SafeAreaViewMaps"
 
