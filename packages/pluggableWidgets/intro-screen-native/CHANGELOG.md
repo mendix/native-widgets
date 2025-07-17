@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   We have fixed defaultProps deprecation warning.
 
+-   Initial slide now correctly positioned on mount.
+
 ## [4.0.0] - 2024-12-3
 
 ### Changed
