@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.1] Native Mobile Resources - 2025-7-17
+
+
+## [4.0.1] IntroScreen
+### Fixed
+
+-   We have fixed defaultProps deprecation warning.
+
+-   Initial slide now correctly positioned on mount.
+
+## [3.1.0] SafeAreaView
+-   We fixed the issue where the header is going outside of page in some android versions.
+
+## [2.3.0] Signature
+-   Updated react-native-webview from version v13.12.5 to latest
+
+## [4.3.0] WebView
+-   Updated react-native-webview from version v13.12.5 to latest to support react-native 0.77
+
 ## [10.0.0] Native Mobile Resources - 2025-3-31
 -   We migrated from react-native-inappbrowser-reborn to @swan-io/react-native-browser to prevent issues for next rn upgrade.
 
