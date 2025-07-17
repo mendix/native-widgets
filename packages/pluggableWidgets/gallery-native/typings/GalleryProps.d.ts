@@ -46,7 +46,8 @@ export interface GalleryPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    renderMode?: "design" | "xray" | "structure";
+    renderMode: "design" | "xray" | "structure";
+    translate: (text: string) => string;
     datasource: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     scrollDirection: ScrollDirectionEnum;

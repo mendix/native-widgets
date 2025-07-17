@@ -38,7 +38,8 @@ export interface NotificationsPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    renderMode?: "design" | "xray" | "structure";
+    renderMode: "design" | "xray" | "structure";
+    translate: (text: string) => string;
     actions: ActionsPreviewType[];
     guid: string;
     title: string;
