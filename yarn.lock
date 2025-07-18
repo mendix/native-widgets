@@ -16988,6 +16988,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uaepass-web-view-native@workspace:packages/pluggableWidgets/uaepass-web-view-native":
+  version: 0.0.0-use.local
+  resolution: "uaepass-web-view-native@workspace:packages/pluggableWidgets/uaepass-web-view-native"
+  dependencies:
+    "@mendix/piw-native-utils-internal": "npm:*"
+    "@mendix/piw-utils-internal": "npm:*"
+    "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
+    eslint: "npm:^7.32.0"
+    react-native-webview: "npm:13.13.2"
+  languageName: unknown
+  linkType: soft
+
 "unbox-primitive@npm:^1.1.0":
   version: 1.1.0
   resolution: "unbox-primitive@npm:1.1.0"
