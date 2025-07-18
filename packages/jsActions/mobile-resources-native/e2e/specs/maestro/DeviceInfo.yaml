@@ -1,0 +1,19 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "J"
+- tapOn:
+    text: "JS Actions"
+- tapOn:
+    text: "Mobile"
+- tapOn:
+    text: "Device info"
+# Because the image loading can take some time due to resources on emulator, we need to wait for the image to be visible
+- extendedWaitUntil: 
+     visible: randText  # Any random text that does not exist in the UI
+     optional: true  # This should be true so that the test won't fail
+     timeout: 20000 # 20 seconds
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/device_info"

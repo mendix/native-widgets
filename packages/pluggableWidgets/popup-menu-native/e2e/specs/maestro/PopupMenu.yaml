@@ -16,6 +16,6 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Alert"
 - takeScreenshot:
-    path: "maestro/images/actual/${PLATFORM}/bg_image_dynamic_svg_alert"
+    path: "maestro/images/actual/${PLATFORM}/popup_menu_alert"
 
 

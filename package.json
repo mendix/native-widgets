@@ -18,7 +18,6 @@
     "lint": "yarn lint:src && yarn workspaces foreach --all --parallel run lint",
     "lint:src": "eslint --config .eslintrc.js --ext .jsx,.js,.ts,.tsx packages/*/*/src --no-error-on-unmatched-pattern",
     "lint:scripts": "eslint --fix --config .eslintrc.js --ext .jsx,.js,.ts,.tsx scripts",
-    "lint:detox": "eslint --fix --config .eslintrc.js --ext .jsx,.js,.ts,.tsx detox",
     "lint:configs": "eslint --fix --config .eslintrc.js --ext .jsx,.js,.ts,.tsx configs",
     "test": "yarn workspaces foreach --all --parallel run test",
     "test:e2e:android": "yarn workspaces foreach --all run test:e2e:android",
@@ -31,12 +30,12 @@
     "version": "ts-node --project ./scripts/tsconfig.json ./scripts/release/BumpVersion.ts",
     "validate-staged-widget-versions": "node scripts/validation/validate-versions-staged-files.js",
     "setup-mobile": "yarn setup-android && yarn setup-ios",
-    "setup-android": "node ./detox/scripts/setup-android.js",
-    "setup-ios": "node ./detox/scripts/setup-ios.js",
     "patch-package": "sh ./scripts/patch/patch-package.sh",
     "build:widgets": "node ./scripts/widget/buildWidgets.js",
-    "test:maestro:ios": "bash maestro/run_maestro_tests.sh ios",
-    "test:maestro:android": "bash maestro/run_maestro_tests.sh android"
+    "test_widgets:maestro:ios": "bash maestro/run_maestro_widget_tests.sh ios",
+    "test_widgets:maestro:android": "bash maestro/run_maestro_widget_tests.sh android",
+    "test_jsactions:maestro:ios": "bash maestro/run_maestro_jsactions_tests.sh ios",
+    "test_jsactions:maestro:android": "bash maestro/run_maestro_jsactions_tests.sh android"
   },
   "workspaces": {
     "packages": [
@@ -72,6 +71,7 @@
     "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "image-js": "^0.35.6",
+    "jest": "^29.4.1",
     "lint-staged": "^10.5.4",
     "mendix-client": "^7.15.8",
     "patch-package": "^8.0.0",
@@ -82,6 +82,7 @@
     "react-dom": "18.3.1",
     "recursive-copy": "^2.0.14",
     "rollup": "^2.79.2",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2"
   },
   "commitlint": {

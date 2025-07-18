@@ -6,13 +6,11 @@ on:
         description: "Provide the SP version to be used (e.g., 10.14.0.43709) - has to be a released version (Default: latest from Mendix versions.json)"
         required: false
         default: ""
-
       nt_branch:
-        description: "Native Template branch to use (Default: master)"
-        default: "master"
+        description: "Native Template branch/tag to use (Leave empty to auto-select based on Mendix version)"
+        default: ""
         required: false
         type: string
-
       workspace:
         description: "Select a widget to test (Default will run all)"
         required: true
@@ -20,6 +18,7 @@ on:
         type: choice
         options:
           - "*-native"
+          - js-actions
           - accordion-native
           - activity-indicator-native
           - animation-native
@@ -59,13 +58,13 @@ on:
           - video-player-native
           - web-view-native 
   
+  # Run at 0:00 UTC (2:00 AM CET time during summer, 1:00 AM during winter)
+  schedule:
+    - cron: '0 0 * * *'
   # Trigger on PR
   # pull_request:
-
-
 permissions:
   packages: write
-
 jobs:
   scope:
     runs-on: ubuntu-latest
@@ -77,56 +76,15 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 2 # Fetch the latest two commits and its parent commit
-  
       - name: "Determine scope"
         id: scope
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            if git cat-file -e ${{ github.event.before }} 2>/dev/null; then
-              changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-            else
-              echo "Previous commit not found, using HEAD~1 as fallback"
-              changed_files=$(git diff --name-only HEAD~1 ${{ github.sha }})
-            fi
-
-            selected_workspaces=""
-            for file in $changed_files; do
-              if [[ $file == packages/pluggableWidgets/* ]]; then
-                widget=$(echo $file | cut -d'/' -f3)
-                if [[ ! $selected_workspaces =~ $widget ]]; then
-                  selected_workspaces="$selected_workspaces $widget"
-                fi
-              fi
-            done
-
-            # Trim leading and trailing spaces from selected_workspaces
-            selected_workspaces=$(echo $selected_workspaces | xargs)
-
-            if [[ -n "$selected_workspaces" ]]; then
-              echo "scope=--all --include '$selected_workspaces'" >> $GITHUB_OUTPUT
-              echo "widgets=[\"$selected_workspaces\"]" >> $GITHUB_OUTPUT
-            else
-              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
-              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
-              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
-            fi
-          else
-            if [ -n "${{ github.event.inputs.workspace }}" ] && [ "${{ github.event.inputs.workspace }}" != "*-native" ]; then
-              selected_workspaces=$(echo "${{ github.event.inputs.workspace }}" | sed 's/,/ /g')
-              echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
-              echo "widgets=[\"${{ github.event.inputs.workspace }}\"]" >> $GITHUB_OUTPUT
-            else
-              widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
-              echo "scope=--all --include '*-native'" >> $GITHUB_OUTPUT
-              echo "widgets=${widgets}" >> $GITHUB_OUTPUT
-            fi
-          fi
-
+          chmod +x ./.github/scripts/determine-widget-scope.sh
+          ./.github/scripts/determine-widget-scope.sh "${{ github.event_name }}" "${{ github.event.inputs.workspace }}" "${{ github.event.before }}" "${{ github.sha }}"
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
-          echo "Widgets are: ${{ steps.scope.outputs.widgets }}"
-
+          echo "Widgets or js actions are: ${{ steps.scope.outputs.widgets }}"
   mendix-version:
     runs-on: ubuntu-22.04
     outputs:
@@ -151,9 +109,49 @@ jobs:
       - name: "Debug Mendix Version"
         run: |
           echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
-
+  determine-nt-version:
+    needs: [mendix-version]
+    runs-on: ubuntu-latest
+    outputs:
+      nt_branch: ${{ steps.set-output.outputs.nt_branch }}
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: "Check if nt_branch was specified"
+        id: check-input
+        run: |
+          if [[ -n "${{ github.event.inputs.nt_branch }}" ]]; then
+            echo "Using specified nt_branch: ${{ github.event.inputs.nt_branch }}"
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
+            echo "source=input" >> $GITHUB_OUTPUT
+          else
+            echo "No nt_branch specified, will determine from mendix_version"
+            echo "source=auto" >> $GITHUB_OUTPUT
+          fi
+      - name: "Download mendix_version.json from native-template repo"
+        if: steps.check-input.outputs.source == 'auto'
+        run: |
+          curl -s -o mendix_version.json https://raw.githubusercontent.com/mendix/native-template/master/mendix_version.json
+          cat mendix_version.json
+      - name: "Determine Native Template version based on Mendix version"
+        if: steps.check-input.outputs.source == 'auto'
+        id: determine-nt-branch
+        run: |
+          pip install requests packaging
+          python ./.github/scripts/determine-nt-version.py "${{ needs.mendix-version.outputs.mendix_version }}"
+      - name: "Set output nt_branch"
+        id: set-output
+        run: |
+          if [[ "${{ steps.check-input.outputs.source }}" == "input" ]]; then
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
+          else
+            echo "nt_branch=${{ steps.determine-nt-branch.outputs.nt_branch }}" >> $GITHUB_OUTPUT
+          fi
+      - name: "Debug final branch output"
+        run: |
+          echo "Final nt_branch value: ${{ steps.set-output.outputs.nt_branch }}"
   docker-images:
-    needs: mendix-version
+    needs: [mendix-version]
     runs-on: ubuntu-22.04
     steps:
       - name: "Login to GitHub Container Registry"
@@ -199,14 +197,35 @@ jobs:
         run: yarn install --immutable
       - name: "Force rebuild resources"
         run: |
-          yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build # Ensure all resources are rebuilt
+          # Build JS actions if needed
+          if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
+            [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
+            [ "${{ github.event_name }}" = "schedule" ]; then
+            yarn workspace mobile-resources-native run build
+            yarn workspace nanoflow-actions-native run build
+          fi
+
+          # Build widgets if needed (any specific widget, *-native, or nightly)
+          if [ "${{ github.event.inputs.workspace }}" != "js-actions" ] || \
+            [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
+            [ "${{ github.event_name }}" = "schedule" ]; then
+            widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+            for w in $widgets; do
+              yarn workspace $w run build
+            done
+          fi
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
-      - name: "Run build for development"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run build
-        env:
-          NODE_OPTIONS: --max_old_space_size=6144
-      - name: "Upload resources artifact"
+      - name: "Upload JS actions resources artifact"
+        if: ${{ github.event.inputs.workspace == 'js-actions' }}
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        with:
+          name: resources
+          path: |
+            packages/jsActions/mobile-resources-native/dist/**/*
+            packages/jsActions/nanoflow-actions-native/dist/**/*
+      - name: "Upload widget and JS actions resources artifact"
+        if: ${{ github.event.inputs.workspace != 'js-actions' }}
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
           name: resources
@@ -241,6 +260,7 @@ jobs:
       - name: "List resources"
         run: ls -R resources
       - name: "Move widgets"
+        if: ${{ github.event.inputs.workspace != 'js-actions' }}
         shell: bash
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
@@ -311,14 +331,16 @@ jobs:
           platform: ios
           mda-file: automation.mda
   android-app:
-    needs: [android-bundle]
+    needs: [android-bundle, determine-nt-version]
     runs-on: ubuntu-22.04
     steps:
+      - name: Debug branch value
+        run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
-          ref: ${{ github.event.inputs.nt_branch || 'master' }}
+          ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -377,14 +399,14 @@ jobs:
           name: android-app
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
-    needs: [ios-bundle]
+    needs: [ios-bundle, determine-nt-version]
     runs-on: macos-13
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: mendix/native-template
-          ref: ${{ github.event.inputs.nt_branch || 'master' }}
+          ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -437,10 +459,13 @@ jobs:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
 
-  android-tests:
+  android-widget-tests:
     needs: [scope, mendix-version, project, android-app]
+    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
     runs-on: ubuntu-22.04
+    timeout-minutes: 60
     strategy:
+      max-parallel: 10
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
@@ -518,7 +543,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: "Run the android tests"
+      - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.0.0
         with:
           api-level: 30
@@ -529,9 +554,9 @@ jobs:
           disable-animations: true
           script: |
             chmod +x maestro/helpers/prepare_android.sh
-            chmod +x maestro/run_maestro_tests.sh
+            chmod +x maestro/run_maestro_widget_tests.sh
             bash maestro/helpers/prepare_android.sh
-            bash maestro/run_maestro_tests.sh android "${{ matrix.widget }}"
+            bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}"
       
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
@@ -555,10 +580,13 @@ jobs:
           path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
 
-  ios-tests:
+  ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
+    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
     runs-on: macos-15
+    timeout-minutes: 60
     strategy:
+      max-parallel: 10
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
@@ -641,12 +669,12 @@ jobs:
       - name: "List Available Simulators"
         run: xcrun simctl list devices
       
-      - name: "Run Maestro Script"
+      - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
-          chmod +x maestro/run_maestro_tests.sh
+          chmod +x maestro/run_maestro_widget_tests.sh
           bash maestro/helpers/prepare_ios.sh
-          bash maestro/run_maestro_tests.sh ios "${{ matrix.widget }}"
+          bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}"
       
       - name: "Archive runtime logs"
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
@@ -670,8 +698,176 @@ jobs:
           path: packages/pluggableWidgets/**/artifacts/
           if-no-files-found: ignore
 
+  android-js-tests:
+    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
+    needs: [mendix-version, project, android-app]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+      - name: "Set up node"
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+      - name: "Install dependencies"
+        run: yarn install --immutable
+      - name: "Download project MDA file"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        with:
+          name: mda
+      - name: "Download Android app"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        with:
+          name: android-app
+          path: android-app
+      - name: "Start runtime"
+        uses: ./.github/actions/start-runtime
+        with:
+          mda-file: automation.mda
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      - name: "Install Maestro"
+        run: |
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Verify maestro
+        run: $HOME/.local/bin/maestro/bin/maestro --version
+      - name: Set up Android SDK
+        run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: "Run android tests"
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.0.0
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          profile: pixel
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          disable-animations: true
+          script: |
+            chmod +x maestro/helpers/prepare_android.sh
+            chmod +x maestro/run_maestro_jsactions_tests.sh
+            bash maestro/helpers/prepare_android.sh
+            bash maestro/run_maestro_jsactions_tests.sh android
+      
+      - name: "Archive runtime logs"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: android-runtime-logs-js-actions
+          path: log/*.log
+          if-no-files-found: ignore
+      - name: "Archive test screenshots"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: android-screenshots-js-actions
+          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
+          if-no-files-found: ignore
+      - name: "Archive artifacts"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: android-artifacts-js-actions
+          path: packages/pluggableWidgets/**/artifacts/
+          if-no-files-found: ignore
+
+  ios-js-tests:
+    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
+    needs: [mendix-version, project, ios-app]
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+      - name: "Set up node"
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+      - name: "Install dependencies"
+        run: |
+          yarn cache clean
+          yarn install --immutable
+      - name: "Download project MDA file"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        with:
+          name: mda
+      - name: "Start runtime"
+        uses: ./.github/actions/start-runtime
+        with:
+          mda-file: automation.mda
+          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+      
+      - name: "Download iOS app"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
+        with:
+          name: ios-app
+          path: ios-app
+      - name: Check iOS App Path
+        run: ls ios-app
+
+      - name: "Verify Xcode CLI Tools"
+        run: |
+          if ! xcode-select --print-path; then
+            echo "Xcode CLI tools not set. Setting them now."
+            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          else
+            echo "Xcode CLI tools are already configured."
+          fi
+      - name: "Install Maestro"
+        run: |
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: "Verify maestro"
+        run: $HOME/.local/bin/maestro/bin/maestro --version
+      - name: "List Available Simulators"
+        run: xcrun simctl list devices
+      - name: "Run iOS tests"
+        run: |
+          chmod +x maestro/helpers/prepare_ios.sh
+          chmod +x maestro/run_maestro_jsactions_tests.sh
+          bash maestro/helpers/prepare_ios.sh
+          bash maestro/run_maestro_jsactions_tests.sh ios
+      
+      - name: "Archive runtime logs"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: ios-runtime-logs-js-actions
+          path: log/*.log
+          if-no-files-found: ignore
+      - name: "Archive test screenshots"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: ios-screenshots-js-actions
+          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
+          if-no-files-found: ignore
+      - name: "Archive artifacts"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        if: always()
+        with:
+          name: ios-artifacts-js-actions
+          path: packages/pluggableWidgets/**/artifacts/
+          if-no-files-found: ignore
   compare-screenshots:
-    needs: [scope, android-tests, ios-tests]
+    needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
     runs-on: ubuntu-latest
     if: always()
     env:
@@ -689,6 +885,10 @@ jobs:
             gh run download ${{ github.run_id }} --name android-screenshots-${widget} --dir images/actual/android/ || true
             ls -l images/actual/android/
           done
+          # Download JS actions screenshots
+          echo "Downloading android-screenshots-js-actions"
+          gh run download ${{ github.run_id }} --name android-screenshots-js-actions --dir images/actual/android/ || true
+          ls -l images/actual/android/
       
       - name: "Download iOS screenshots"
         run: |
@@ -699,8 +899,11 @@ jobs:
             gh run download ${{ github.run_id }} --name ios-screenshots-${widget} --dir images/actual/ios/ || true
             ls -l images/actual/ios/
           done
+          # Download JS actions screenshots
+          echo "Downloading ios-screenshots-js-actions"
+          gh run download ${{ github.run_id }} --name ios-screenshots-js-actions --dir images/actual/ios/ || true
+          ls -l images/actual/ios/
 
-    
       - name: "Set up node"
         uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:

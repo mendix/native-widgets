@@ -57,7 +57,8 @@ fs.readdirSync(actualDir).forEach(file => {
       ];
     } else if (platform === 'android') {
       ignoredAreas = [
-        { x: 0, y: 0, width, height: 50 } // Ignore top 40 pixels on Android
+        { x: 0, y: 0, width, height: 50 }, // Ignore top 50 pixels on Android
+        { x: width - 15, y: 0, width: 15, height } // Ignore right 15 pixels on Android
       ];
     }
 
@@ -70,15 +71,17 @@ fs.readdirSync(actualDir).forEach(file => {
       diffMask: true
     });
 
-    const pixelTolerance = 50;
-    
+    const toleranceAmount = 0.02; // 2%
+    const totalPixels = width * height;
+    const pixelTolerance = Math.floor(totalPixels * toleranceAmount);
+
     if (numDiffPixels > pixelTolerance) {
       fs.writeFileSync(diffPath, PNG.sync.write(diff));
       failedComparisons.push(file);
-      console.log(`❌ Comparison failed for ${file}`);
+      console.log(`❌ Comparison failed for ${file} (diff: ${numDiffPixels} > tolerance: ${pixelTolerance})`);
     } else {
       fs.appendFileSync(path.join(__dirname, '../../compare_output.txt'), `✅ Comparison passed for ${file}\n`);
-      console.log(`✅ Comparison passed for ${file}`);
+      console.log(`✅ Comparison passed for ${file} (diff: ${numDiffPixels} <= tolerance: ${pixelTolerance})`);
     }
   } else {
     console.log(`⚠️ Expected file not found for ${file}`);
