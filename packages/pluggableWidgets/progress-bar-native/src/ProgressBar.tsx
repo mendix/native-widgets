@@ -1,7 +1,7 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { isAvailable } from "@mendix/piw-utils-internal";
-import { createElement } from "react";
-import { Text, View } from "react-native";
+import { createElement,useState } from "react";
+import { Text, View,I18nManager,ViewStyle } from "react-native";
 import { Bar } from "react-native-progress";
 
 import { ProgressBarProps } from "../typings/ProgressBarProps";
@@ -11,7 +11,7 @@ export type Props = ProgressBarProps<ProgressBarStyle>;
 
 export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Element {
     const styles = flattenStyles(defaultProgressBarStyle, props.style);
-
+    const [barWidth, setBarWidth] = useState(0);
     const validate = (): string[] => {
         const messages: string[] = [];
         const { minimumValue, maximumValue, progressValue } = props;
@@ -27,7 +27,29 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
         }
         return messages;
     };
+   // const screenWidth = Dimensions.get("window").width;
+    
 
+   const getCaptionStyle = (progress: number, barWidth: number): ViewStyle => {
+    const labelWidth = 50; // estimate or measure dynamically
+    const progressX = barWidth * progress;
+    const clampedLTR = Math.max(0, Math.min(progressX, barWidth - labelWidth));
+    const clampedRTL = Math.max(0, Math.min(barWidth - progressX, barWidth - labelWidth));
+
+    return I18nManager.isRTL
+        ? {
+              position: "absolute" as const,
+              right: clampedRTL,
+              top: -6,
+              transform: [{ translateX: 0 }]
+          }
+        : {
+              position: "absolute" as const,
+              left: clampedLTR,
+              top: -6,
+              transform: [{ translateX: 0 }]
+          };
+};
     const calculateProgress = (): number => {
         const { minimumValue, maximumValue, progressValue } = props;
 
@@ -52,21 +74,50 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
 
     const validationMessages = validate();
     const progress = calculateProgress();
-
+    const { showProgressCaption, showDefaultProgressCaption,progressCaption,useDefaulMendixColor,customColor,customUnfilledColor} = props;
     return (
-        <View style={styles.container}>
+        <View
+    style={styles.container}
+    onLayout={event => {
+        const width = event.nativeEvent.layout.width;
+        setBarWidth(width);
+    }}
+>
+    
             <Bar
                 testID={props.name}
                 height={Number(styles.bar.height)}
                 width={null}
                 progress={progress}
-                color={styles.fill.backgroundColor}
+                color={useDefaulMendixColor ? styles.fill.backgroundColor : customColor}
+                unfilledColor={useDefaulMendixColor ? "#fff" : customUnfilledColor}
                 borderWidth={styles.bar.borderWidth}
-                style={styles.bar}
+                //style={styles.bar}
             />
+            {showProgressCaption && (
+           <View style={getCaptionStyle(progress, barWidth)}>
+                <View
+        style={{
+            backgroundColor: useDefaulMendixColor ? styles.fill.backgroundColor : customColor, // blue
+            borderRadius: 5,
+            paddingHorizontal: 8,
+            paddingVertical: 2,
+            minWidth: 40,
+            alignItems: "center",
+            justifyContent: "center"
+        }}
+    >
+                <Text  style={{
+                color: "#fff", // White caption text
+                fontWeight:"bold"
+            }}>
+                    { showDefaultProgressCaption ?(progress * 100)+'%' :progressCaption?.value}
+                </Text>
+            </View>
             {validationMessages.length > 0 && (
                 <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>
             )}
+        </View> )}
         </View>
     );
 }
