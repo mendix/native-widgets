@@ -1,0 +1,31 @@
+name: 'Setup Node with Cached Dependencies'
+description: 'Set up Node.js and install dependencies with caching'
+runs:
+  using: 'composite'
+  steps:
+    - name: "Set up node"
+      uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
+      with:
+        node-version-file: .nvmrc
+        cache: yarn
+    
+    - name: "Cache yarn dependencies"
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+      with:
+        path: |
+          .yarn/cache
+          .yarn/unplugged
+          .yarn/install-state.gz
+          node_modules
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', '.yarnrc.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    
+    - name: "Install dependencies"
+      shell: bash
+      run: |
+        if [ ! -d "node_modules" ]; then
+          yarn install --immutable
+        else
+          echo "Dependencies already installed from cache"
+        fi
