@@ -465,7 +465,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     strategy:
-      max-parallel: 10
+      max-parallel: 5
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
@@ -474,13 +474,8 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: yarn install --immutable
+      - name: "Setup Node and dependencies"
+        uses: ./.github/actions/setup-node-with-cache
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -527,12 +522,7 @@ jobs:
           mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
       
       - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        uses: ./.github/actions/setup-maestro
       - name: Verify maestro
         run: $HOME/.local/bin/maestro/bin/maestro --version
       - name: Set up Android SDK
@@ -586,7 +576,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 60
     strategy:
-      max-parallel: 10
+      max-parallel: 5
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
@@ -595,15 +585,9 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: |
-          yarn cache clean
-          yarn install --immutable
+      - name: "Setup Node and dependencies"
+        uses: ./.github/actions/setup-node-with-cache
+
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -645,29 +629,13 @@ jobs:
         with:
           name: ios-app
           path: ios-app
-      - name: Check iOS App Path
-        run: ls ios-app
+      - name: "Setup Xcode CLI Tools"
+        uses: ./.github/actions/setup-xcode-cli-tools
 
-      - name: "Verify Xcode CLI Tools"
-        run: |
-          if ! xcode-select --print-path; then
-            echo "Xcode CLI tools not set. Setting them now."
-            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          else
-            echo "Xcode CLI tools are already configured."
-          fi
-      
       - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        uses: ./.github/actions/setup-maestro
       - name: "Verify maestro"
         run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: "List Available Simulators"
-        run: xcrun simctl list devices
       
       - name: "Run iOS tests"
         run: |
