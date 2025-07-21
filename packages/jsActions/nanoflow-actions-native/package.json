@@ -31,7 +31,7 @@
     "react-native-geocoder": "0.5.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^10.15.0",
+    "@mendix/pluggable-widgets-tools": "*",
     "eslint": "^7.32.0",
     "mendix": "~10.0.9976",
     "rollup": "^2.79.2"

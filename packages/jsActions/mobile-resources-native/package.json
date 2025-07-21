@@ -17,9 +17,9 @@
     "branchName": "main"
   },
   "scripts": {
-    "prestart": "rimraf ./dist/tsc",
+    "prestart": "rimraf ./dist",
     "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nativemobileresources",
-    "prebuild": "rimraf ./dist/tsc",
+    "prebuild": "rimraf ./dist",
     "build": "rollup --config ../../../configs/jsactions/rollup.config.js --configProject nativemobileresources",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "release": "yarn build",
@@ -44,7 +44,7 @@
     "url-parse": "^1.4.7"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^10.15.0",
+    "@mendix/pluggable-widgets-tools": "*",
     "@types/querystringify": "^2.0.0",
     "@types/url-parse": "^1.4.3",
     "eslint": "^7.32.0",

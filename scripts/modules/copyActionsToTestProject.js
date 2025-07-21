@@ -2,7 +2,7 @@ const fs = require("fs").promises;
 const { basename, join } = require("path");
 
 const cwd = process.cwd();
-const actionsDir = join(cwd, "dist/tsc/");
+const actionsDir = join(cwd, "dist/");
 
 const packageContent = require(join(cwd, "package.json"));
 

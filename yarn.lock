@@ -12807,7 +12807,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "mobile-resources-native@workspace:packages/jsActions/mobile-resources-native"
   dependencies:
-    "@mendix/pluggable-widgets-tools": "npm:^10.15.0"
+    "@mendix/pluggable-widgets-tools": "npm:*"
     "@notifee/react-native": "npm:9.1.8"
     "@react-native-camera-roll/camera-roll": "npm:7.4.0"
     "@react-native-firebase/messaging": "npm:17.3.0"
@@ -12879,7 +12879,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nanoflow-actions-native@workspace:packages/jsActions/nanoflow-actions-native"
   dependencies:
-    "@mendix/pluggable-widgets-tools": "npm:^10.15.0"
+    "@mendix/pluggable-widgets-tools": "npm:*"
     "@react-native-async-storage/async-storage": "npm:2.0.0"
     "@react-native-community/geolocation": "npm:3.4.0"
     eslint: "npm:^7.32.0"
