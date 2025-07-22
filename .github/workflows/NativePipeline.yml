@@ -692,11 +692,15 @@ jobs:
         with:
           name: android-app
           path: android-app
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
+      - name: "Start runtime with retry"
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
         with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            .github/scripts/setup-runtime.sh "${{ inputs.mda-file }}" "${{ inputs.mendix-version }}" "${{ steps.setup-java.outputs.path }}" "${{ github.workspace }}"
+            # Then verify
+            grep "The MxRuntime is fully started now." var/opt/m2ee/m2ee.log
       - name: "Install Maestro"
         run: |
           mkdir -p $HOME/.local/bin
