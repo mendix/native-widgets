@@ -18,9 +18,9 @@
   },
   "scripts": {
     "prestart": "rimraf ./dist",
-    "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nativemobileresources",
+    "start": "rollup --config ../../../configs/jsactions/rollup.config.mjs --watch --configProject nativemobileresources",
     "prebuild": "rimraf ./dist",
-    "build": "rollup --config ../../../configs/jsactions/rollup.config.js --configProject nativemobileresources",
+    "build": "rollup --config ../../../configs/jsactions/rollup.config.mjs --configProject nativemobileresources",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "release": "pnpm build",
     "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
@@ -48,7 +48,6 @@
     "@types/querystringify": "^2.0.0",
     "@types/url-parse": "^1.4.3",
     "mendix": "~10.0.9976",
-    "rimraf": "^4.4.1",
-    "rollup": "^2.79.2"
+    "rimraf": "^5.0.10"
   }
 }

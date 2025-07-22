@@ -17,8 +17,8 @@
     "branchName": "main"
   },
   "scripts": {
-    "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nanoflowcommons",
-    "build": "rollup --config ../../../configs/jsactions/rollup.config.js --configProject nanoflowcommons",
+    "start": "rollup --config ../../../configs/jsactions/rollup.config.mjs --watch --configProject nanoflowcommons",
+    "build": "rollup --config ../../../configs/jsactions/rollup.config.mjs --configProject nanoflowcommons",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "release": "pnpm build",
     "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
-    "mendix": "~10.0.9976",
-    "rollup": "^2.79.2"
+    "mendix": "~10.0.9976"
   }
 }

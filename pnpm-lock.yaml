@@ -33,12 +33,6 @@ importers:
       '@react-native/babel-preset':
         specifier: 0.75.4
         version: 0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.3.0
-        version: 15.3.1(rollup@3.29.5)
-      '@rollup/plugin-typescript':
-        specifier: 12.1.4
-        version: 12.1.4(rollup@3.29.5)(tslib@2.8.1)(typescript@5.8.3)
       '@testing-library/jest-native':
         specifier: ^5.4.3
         version: 5.4.3(react-native@0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3))(react-test-renderer@18.2.0(react@18.2.0))(react@18.2.0)
@@ -111,9 +105,6 @@ importers:
       pngjs:
         specifier: ^6.0.0
         version: 6.0.0
-      prettier:
-        specifier: ^2.8.8
-        version: 2.8.8
       pretty-quick:
         specifier: ^3.3.1
         version: 3.3.1(prettier@2.8.8)
@@ -123,12 +114,6 @@ importers:
       recursive-copy:
         specifier: ^2.0.14
         version: 2.0.14
-      rollup:
-        specifier: ^3.29.5
-        version: 3.29.5
-      ts-jest:
-        specifier: ^29.0.0
-        version: 29.4.0(@babel/core@7.28.0)(@jest/transform@29.7.0)(@jest/types@30.0.1)(babel-jest@29.7.0(@babel/core@7.28.0))(jest-util@30.0.2)(jest@29.7.0(@types/node@20.19.9)(ts-node@10.9.2(@types/node@20.19.9)(typescript@5.8.3)))(typescript@5.8.3)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.19.9)(typescript@5.8.3)
@@ -197,11 +182,8 @@ importers:
         specifier: 10.15.46408
         version: 10.15.46408(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3)
       rimraf:
-        specifier: ^4.4.1
-        version: 4.4.1
-      rollup:
-        specifier: ^2.79.2
-        version: 2.79.2
+        specifier: ^5.0.10
+        version: 5.0.10
 
   packages/jsActions/nanoflow-actions-native:
     dependencies:
@@ -227,9 +209,6 @@ importers:
       mendix:
         specifier: 10.15.46408
         version: 10.15.46408(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3)
-      rollup:
-        specifier: ^2.79.2
-        version: 2.79.2
 
   packages/modules/atlas-content-native:
     devDependencies:
@@ -4361,10 +4340,6 @@ packages:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Glob versions prior to v9 are no longer supported
 
-  glob@9.3.5:
-    resolution: {integrity: sha512-e1LleDykUz2Iu+MTYdkSsuWX8lvAjAcs0Xef0lNIu0S2wOAzuTxCJtcd9S3cijlwYF18EsU3rzb8jPVobxDh9Q==}
-    engines: {node: '>=16 || 14 >=14.17'}
-
   global-dirs@0.1.1:
     resolution: {integrity: sha512-NknMLn7F2J7aflwFOlGdNIuCDpN3VGoSoB+aap3KABFWbHVn1TCgFC+np23J8W2BiZbjfEw3BFBycSMv1AFblg==}
     engines: {node: '>=4'}
@@ -5552,10 +5527,6 @@ packages:
     resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
     engines: {node: '>=10'}
 
-  minimatch@8.0.4:
-    resolution: {integrity: sha512-W0Wvr9HyFXZRGIDgCicunpQ299OKXs9RgZfaukz4qAW/pJhcpUfupc9c+OObPOFueNy8VSrZgEmDtk6Kh4WzDA==}
-    engines: {node: '>=16 || 14 >=14.17'}
-
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -5566,10 +5537,6 @@ packages:
 
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
-
-  minipass@4.2.8:
-    resolution: {integrity: sha512-fNzuVyifolSLFL4NzpF+wEF4qrgqaaKX0haXPQEdQ7NKAN+WecoKMHV09YcuL/DHxrUsYQOK3MiuDf7Ip2OXfQ==}
-    engines: {node: '>=8'}
 
   minipass@7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
@@ -6838,11 +6805,6 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
-  rimraf@4.4.1:
-    resolution: {integrity: sha512-Gk8NlF062+T9CqNGn6h4tls3k6T1+/nXdOcSZVikNVtlRdYpA7wRJJMoXmuvOnLW844rPjdQ7JgXCYM6PPC/og==}
-    engines: {node: '>=14'}
-    hasBin: true
-
   rimraf@5.0.10:
     resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
     hasBin: true
@@ -6889,11 +6851,6 @@ packages:
 
   rollup-pluginutils@2.8.2:
     resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
-
-  rollup@2.79.2:
-    resolution: {integrity: sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
 
   rollup@3.29.5:
     resolution: {integrity: sha512-GVsDdsbJzzy4S/v3dqWPJ7EfvZJfCHiDqe80IyrF59LYuP+e6U1LJoUqeuqRbwAWoMNoXivMNeNAOf5E22VA1w==}
@@ -12446,13 +12403,6 @@ snapshots:
       once: 1.4.0
       path-is-absolute: 1.0.1
 
-  glob@9.3.5:
-    dependencies:
-      fs.realpath: 1.0.0
-      minimatch: 8.0.4
-      minipass: 4.2.8
-      path-scurry: 1.11.1
-
   global-dirs@0.1.1:
     dependencies:
       ini: 1.3.8
@@ -14045,10 +13995,6 @@ snapshots:
     dependencies:
       brace-expansion: 2.0.2
 
-  minimatch@8.0.4:
-    dependencies:
-      brace-expansion: 2.0.2
-
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.2
@@ -14060,8 +14006,6 @@ snapshots:
       kind-of: 6.0.3
 
   minimist@1.2.8: {}
-
-  minipass@4.2.8: {}
 
   minipass@7.1.2: {}
 
@@ -15412,10 +15356,6 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
-  rimraf@4.4.1:
-    dependencies:
-      glob: 9.3.5
-
   rimraf@5.0.10:
     dependencies:
       glob: 10.4.5
@@ -15494,10 +15434,6 @@ snapshots:
   rollup-pluginutils@2.8.2:
     dependencies:
       estree-walker: 0.6.1
-
-  rollup@2.79.2:
-    optionalDependencies:
-      fsevents: 2.3.3
 
   rollup@3.29.5:
     optionalDependencies:
