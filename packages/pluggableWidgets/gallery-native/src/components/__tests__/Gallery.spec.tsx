@@ -116,7 +116,7 @@ describe("Gallery", () => {
             const gallery = render(<Gallery {...defaultProps} itemRenderer={itemWrapperFunction({ onClick })} />);
             const galleryFirstItem = gallery.getByTestId("gallery-test-list-item-22");
             fireEvent.press(galleryFirstItem);
-            expect(onClick).toBeCalledTimes(1);
+            expect(onClick).toHaveBeenCalledTimes(1);
         });
 
         it("triggers pull down action", async () => {
@@ -131,21 +131,21 @@ describe("Gallery", () => {
             await act(async () => {
                 refreshControl.props.onRefresh();
             });
-            expect(pullDown).toBeCalledTimes(1);
+            expect(pullDown).toHaveBeenCalledTimes(1);
         });
 
         it("triggers load more items events on end reached", () => {
             const gallery = render(<Gallery {...defaultProps} />);
             const galleryList = gallery.getByTestId("gallery-test-list");
             fireEvent(galleryList, "onEndReached");
-            expect(defaultProps.loadMoreItems).toBeCalledTimes(1);
+            expect(defaultProps.loadMoreItems).toHaveBeenCalledTimes(1);
         });
 
         it("it shouldn't triggers the load more items event when item list empty", () => {
             const gallery = render(<Gallery {...defaultProps} items={[]} hasMoreItems={false} />);
             const galleryList = gallery.getByTestId("gallery-test-list");
             fireEvent(galleryList, "onEndReached");
-            expect(defaultProps.loadMoreItems).not.toBeCalled();
+            expect(defaultProps.loadMoreItems).not.toHaveBeenCalled();
         });
 
         describe("with pagination button", () => {
@@ -153,7 +153,7 @@ describe("Gallery", () => {
                 const gallery = render(<Gallery {...defaultProps} pagination="buttons" />);
                 const loadMoreItemsButton = gallery.getByTestId("gallery-test-pagination-button");
                 fireEvent.press(loadMoreItemsButton);
-                expect(defaultProps.loadMoreItems).toBeCalledTimes(1);
+                expect(defaultProps.loadMoreItems).toHaveBeenCalledTimes(1);
             });
         });
     });

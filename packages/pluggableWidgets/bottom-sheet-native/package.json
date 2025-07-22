@@ -16,7 +16,7 @@
     "release": "pluggable-widgets-tools release:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "test": "pluggable-widgets-tools test:unit:native",
-    "version": "yarn release"
+    "version": "pnpm release"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "5.1.1",
@@ -28,9 +28,8 @@
     "react-native-reanimated": "3.16.1"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "~10.0.1",
+    "@mendix/pluggable-widgets-tools": "*",
     "@types/react-native-actionsheet": "^2.4.1",
-    "@types/react-native-modal": "^4.1.1",
-    "eslint": "^7.32.0"
+    "@types/react-native-modal": "^4.1.1"
   }
 }

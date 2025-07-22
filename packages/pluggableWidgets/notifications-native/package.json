@@ -15,7 +15,7 @@
     "format": "pluggable-widgets-tools format",
     "release": "pluggable-widgets-tools release:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "version": "yarn release"
+    "version": "pnpm release"
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
@@ -24,7 +24,6 @@
     "@react-native-firebase/messaging": "17.3.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "~10.0.1",
-    "eslint": "^7.32.0"
+    "@mendix/pluggable-widgets-tools": "*"
   }
 }

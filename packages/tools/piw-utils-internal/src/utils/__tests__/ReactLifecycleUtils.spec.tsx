@@ -13,7 +13,7 @@ describe("ReactLifecycleUtils", () => {
         it("schedule update (rerender) when predicate returns true", async () => {
             const cb = jest.fn();
 
-            expect(cb).toBeCalledTimes(0);
+            expect(cb).toHaveBeenCalledTimes(0);
             render(<TestComponent onRender={cb} predicate={() => true} />);
             await waitFor(() => expect(cb).toHaveBeenCalledTimes(2));
         });
@@ -21,7 +21,7 @@ describe("ReactLifecycleUtils", () => {
         it("do nothing when predicate returns false", async () => {
             const cb = jest.fn();
 
-            expect(cb).toBeCalledTimes(0);
+            expect(cb).toHaveBeenCalledTimes(0);
             render(<TestComponent onRender={cb} predicate={() => false} />);
             await waitFor(() => expect(cb).toHaveBeenCalledTimes(1));
             // Checking second time to avoid scheduler order issues
@@ -31,7 +31,7 @@ describe("ReactLifecycleUtils", () => {
         it("schedule update only once", async () => {
             const cb = jest.fn();
 
-            expect(cb).toBeCalledTimes(0);
+            expect(cb).toHaveBeenCalledTimes(0);
             const { rerender } = render(<TestComponent onRender={cb} predicate={() => true} />);
             await waitFor(() => expect(cb).toHaveBeenCalledTimes(2));
             rerender(<TestComponent onRender={cb} predicate={() => true} />);
@@ -48,7 +48,7 @@ describe("ReactLifecycleUtils", () => {
                 .mockImplementationOnce(() => false)
                 .mockImplementationOnce(() => true);
 
-            expect(cb).toBeCalledTimes(0);
+            expect(cb).toHaveBeenCalledTimes(0);
             const { rerender } = render(<TestComponent onRender={cb} predicate={predicate} />);
             await waitFor(() => expect(cb).toHaveBeenCalledTimes(1));
             rerender(<TestComponent onRender={cb} predicate={predicate} />);

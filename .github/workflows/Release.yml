@@ -44,10 +44,23 @@ jobs:
         uses: actions/setup-node@d86ebcd40b3cb50b156bfa44dd277faf38282d12 # v4
         with:
           node-version-file: ".nvmrc"
-          cache: "yarn"
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+      - name: "Get pnpm store directory"
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: "Setup cache"
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - name: "Installing dependencies"
-        run: yarn install
+        run: pnpm install
       - name: "Running release for production"
-        run: yarn workspaces foreach ${{ steps.variablesLinux.outputs.arg }} ${{ steps.variablesWindows.outputs.arg }} --parallel run release
+        run: pnpm -r run release --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo './packages/**[HEAD~1]'; else echo './packages/**'; fi)
         env:
           NODE_OPTIONS: --max_old_space_size=8192

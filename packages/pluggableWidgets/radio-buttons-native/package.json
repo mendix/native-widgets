@@ -14,7 +14,7 @@
     "build": "pluggable-widgets-tools build:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "lint:fix": "pluggable-widgets-tools lint:fix",
-    "prerelease": "yarn lint",
+    "prerelease": "pnpm lint",
     "release": "pluggable-widgets-tools release:native",
     "test": "pluggable-widgets-tools test:unit:native"
   },
@@ -23,7 +23,6 @@
     "@mendix/piw-utils-internal": "*"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "~10.0.1",
-    "eslint": "^7.32.0"
+    "@mendix/pluggable-widgets-tools": "*"
   }
 }

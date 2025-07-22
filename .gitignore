@@ -20,11 +20,9 @@ mendixProject
 **/tests/testProject
 **/pluggableWidgets/**/artifacts
 
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.pnpm-debug.log*
+.pnpm-store
+.pnpmfile.cjs
+.pnpmfile.js
 
 .java-version

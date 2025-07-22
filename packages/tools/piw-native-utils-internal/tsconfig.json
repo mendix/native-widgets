@@ -1,6 +1,5 @@
 {
     "extends": "@mendix/pluggable-widgets-tools/configs/tsconfig.base",
-    "baseUrl": "./",
     "include": ["./src"],
     "compilerOptions": {
         "target": "es2017",

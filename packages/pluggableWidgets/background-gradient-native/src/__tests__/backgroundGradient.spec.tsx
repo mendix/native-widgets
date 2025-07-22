@@ -43,7 +43,7 @@ describe("Background gradient", () => {
             ...defaultProps,
             colorList: []
         };
-        expect(() => render(<BackgroundGradient {...defaultProps} />)).toThrowError();
+        expect(() => render(<BackgroundGradient {...defaultProps} />)).toThrow();
     });
     it("should trow error when opacity is not a number", () => {
         defaultProps = {
@@ -52,7 +52,7 @@ describe("Background gradient", () => {
             // @ts-ignore
             style: [{ container: {}, opacity: "test" }]
         };
-        expect(() => render(<BackgroundGradient {...defaultProps} />)).toThrowError();
+        expect(() => render(<BackgroundGradient {...defaultProps} />)).toThrow();
     });
     it("should trow error when angle is not a number", () => {
         defaultProps = {
@@ -61,7 +61,7 @@ describe("Background gradient", () => {
             // @ts-ignore
             style: [{ container: {}, angle: "test" }]
         };
-        expect(() => render(<BackgroundGradient {...defaultProps} />)).toThrowError();
+        expect(() => render(<BackgroundGradient {...defaultProps} />)).toThrow();
     });
     it("is should console warn when opacity is not between 0 and 100", () => {
         defaultProps = {
@@ -109,6 +109,6 @@ describe("Background gradient", () => {
         const component = render(<BackgroundGradient {...defaultProps} onClick={action} />);
         const pressable = component.getByTestId("test");
         fireEvent.press(pressable);
-        expect(actionExecution).toBeCalled();
+        expect(actionExecution).toHaveBeenCalled();
     });
 });

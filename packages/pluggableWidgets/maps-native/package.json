@@ -14,8 +14,8 @@
     "build": "pluggable-widgets-tools build:native",
     "format": "pluggable-widgets-tools format",
     "release": "pluggable-widgets-tools release:native",
-    "lint": "..\"/../../node_modules/.bin/eslint\" --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "version": "yarn release",
+    "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
+    "version": "pnpm release",
     "test": "pluggable-widgets-tools test:unit:native"
   },
   "dependencies": {
@@ -26,7 +26,6 @@
     "react-native-maps": "1.14.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "~10.0.1",
-    "eslint": "^7.32.0"
+    "@mendix/pluggable-widgets-tools": "*"
   }
 }

@@ -36,20 +36,25 @@ jobs:
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version-file: ".nvmrc"
-          cache: "yarn"
-      - name: "Get yarn cache directory path"
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_ENV' || '$GITHUB_ENV' }}
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+      - name: "Get pnpm store directory"
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       - name: "Defining cache"
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
         env:
           cache-name: cache-node-modules
         with:
-          path: ${{ env.dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - name: "Installing dependencies"
-        run: yarn install
+        run: pnpm install
       - name: "Linting code"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run lint
+        run: pnpm -r run lint --filter=${{ steps.variables.outputs.arg }}
       - name: "Running unit tests"
-        run: yarn workspaces foreach ${{ steps.variables.outputs.arg }} --parallel run test
+        run: pnpm -r run test --filter=${{ steps.variables.outputs.arg }}
