@@ -35,14 +35,6 @@ jobs:
       - name: "Fetching main to compare"
         if: github.event_name == 'pull_request' && steps.files.outputs.global_files == ''
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
-      - name: "Defining environment variables"
-        if: startsWith(matrix.os, 'ubuntu')
-        id: variablesLinux
-        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo '--all'; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
-      - name: "Defining environment variables"
-        if: startsWith(matrix.os, 'windows')
-        id: variablesWindows
-        run: echo "arg=$(If ('${{ steps.files.outputs.global_files }}' -eq '' -AND '${{ github.event_name == 'pull_request' }}' -eq 'true'){ echo '--since' } Else { echo '--all' })" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining node version"
         uses: actions/setup-node@d86ebcd40b3cb50b156bfa44dd277faf38282d12 # v4
         with:
@@ -64,6 +56,6 @@ jobs:
       - name: "Installing dependencies"
         run: pnpm install
       - name: "Running build for development"
-        run: pnpm -r run build --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo './packages/**[HEAD~1]'; else echo './packages/**'; fi)
+        run: pnpm -r --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi) run build
         env:
           NODE_OPTIONS: --max_old_space_size=8192

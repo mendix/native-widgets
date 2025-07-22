@@ -31,7 +31,7 @@ jobs:
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - name: "Defining environment variables"
         id: variables
-        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '--since'; else echo '--all'; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
+        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining node version"
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
@@ -55,6 +55,6 @@ jobs:
       - name: "Installing dependencies"
         run: pnpm install
       - name: "Linting code"
-        run: pnpm -r run lint --filter=${{ steps.variables.outputs.arg }}
+        run: pnpm -r --filter=${{ steps.variables.outputs.arg }} run lint
       - name: "Running unit tests"
-        run: pnpm -r run test --filter=${{ steps.variables.outputs.arg }}
+        run: pnpm -r --filter=${{ steps.variables.outputs.arg }} run test

@@ -61,6 +61,6 @@ jobs:
       - name: "Installing dependencies"
         run: pnpm install
       - name: "Running release for production"
-        run: pnpm -r run release --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo './packages/**[HEAD~1]'; else echo './packages/**'; fi)
+        run: pnpm -r --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi) run release
         env:
           NODE_OPTIONS: --max_old_space_size=8192

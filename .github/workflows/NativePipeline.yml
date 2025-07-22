@@ -216,7 +216,7 @@ jobs:
             done
           fi
       - name: "Unit test"
-        run: pnpm exec --filter="${{ needs.scope.outputs.scope }}" --recursive run test
+        run: pnpm -r --filter="${{ needs.scope.outputs.scope }}" run test
       - name: "Upload JS actions resources artifact"
         if: ${{ github.event.inputs.workspace == 'js-actions' }}
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
