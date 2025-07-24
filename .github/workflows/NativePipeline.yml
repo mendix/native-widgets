@@ -481,8 +481,6 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Setup Node and dependencies"
-        uses: ./.github/actions/setup-node-with-cache
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -521,29 +519,11 @@ jobs:
         with:
           name: android-app
           path: android-app
-      - name: "Setup Python"
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - name: "Setup needed tools"
+        id: setup-needed-tools  
+        uses: ./.github/actions/setup-tools
         with:
-          python-version: '3.x'
-          cache: 'pip'
-      - name: "Install Python dependencies"
-        run: pip install PyYAML httplib2
-      - name: "Cache Mendix runtime"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: tmp/runtime.tar.gz
-          key: mendix-runtime-${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Cache m2ee-tools"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: tmp/m2ee
-          key: m2ee-tools-v1
-      - name: "Setup Java 21"
-        id: setup-java
-        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 #v4
-        with:
-          distribution: "temurin"
-          java-version: "21"
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
 
       - name: "Start runtime with retry"
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
@@ -552,15 +532,7 @@ jobs:
           max_attempts: 3
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-java.outputs.path }}" "${{ github.workspace }}"
-      
-      - name: "Install Maestro"
-        uses: ./.github/actions/setup-maestro
-      - name: Verify maestro
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: Set up Android SDK
-        run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
-      
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -618,15 +590,11 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Setup Node and dependencies"
-        uses: ./.github/actions/setup-node-with-cache
-
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
 
-      
       # USED ONLY FOR TESTING PURPOSE - TO SKIP APP BUILD PART AND DOWNLOAD APP FROM SPECIFIC RUN
       # - name: "Install GitHub CLI"
       #   run: |
@@ -651,36 +619,16 @@ jobs:
       #     curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o ios-app.zip "$artifacts_url"
       #     unzip ios-app.zip -d ios-app
 
-      - name: "Setup Python"
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - name: "Download iOS app"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
-          python-version: '3.x'
-          cache: 'pip'
-      - name: "Install Python dependencies"
-        run: pip install PyYAML httplib2
-
-      - name: "Cache Mendix runtime"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
+          name: ios-app
+          path: ios-app
+      - name: "Setup needed tools"
+        id: setup-needed-tools
+        uses: ./.github/actions/setup-tools
         with:
-          path: tmp/runtime.tar.gz
-          key: mendix-runtime-${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Cache m2ee-tools"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: tmp/m2ee
-          key: m2ee-tools-v1
-      - name: "Cache pip"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-pyaml-httplib2
-      - name: "Setup Java 21"
-        id: setup-java
-        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 #v4
-        with:
-          distribution: "temurin"
-          java-version: "21"
-
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Start runtime with retry"
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
@@ -688,20 +636,10 @@ jobs:
           max_attempts: 3
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-java.outputs.path }}" "${{ github.workspace }}"
-      
-      - name: "Download iOS app"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: ios-app
-          path: ios-app
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+  
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
-      - name: "Install Maestro"
-        uses: ./.github/actions/setup-maestro
-      - name: "Verify maestro"
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
@@ -741,8 +679,6 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Setup Node and dependencies"
-        uses: ./.github/actions/setup-node-with-cache
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -752,33 +688,11 @@ jobs:
         with:
           name: android-app
           path: android-app
-      - name: "Setup Python and dependencies"
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3 python3-pip
-          pip3 install PyYAML httplib2
-
-      - name: "Cache Mendix runtime"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
+      - name: "Setup needed tools"
+        id: setup-needed-tools
+        uses: ./.github/actions/setup-tools
         with:
-          path: tmp/runtime.tar.gz
-          key: mendix-runtime-${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Cache m2ee-tools"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: tmp/m2ee
-          key: m2ee-tools-v1
-      - name: "Cache pip"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-pyaml-httplib2
-      - name: "Setup Java 21"
-        id: setup-java
-        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 #v4
-        with:
-          distribution: "temurin"
-          java-version: "21"
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Start runtime with retry"
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
@@ -786,12 +700,7 @@ jobs:
           max_attempts: 3
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-java.outputs.path }}" "${{ github.workspace }}"
-      
-      - name: "Install Maestro"
-        uses: ./.github/actions/setup-maestro
-      - name: Verify maestro
-        run: $HOME/.local/bin/maestro/bin/maestro --version
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -844,41 +753,20 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Setup Node and dependencies"
-        uses: ./.github/actions/setup-node-with-cache
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      - name: "Setup Python"
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - name: "Download iOS app"
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
-          python-version: '3.x'
-          cache: 'pip'
-      - name: "Install Python dependencies"
-        run: pip install PyYAML httplib2
-      - name: "Cache Mendix runtime"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
+          name: ios-app
+          path: ios-app
+      - name: "Setup needed tools"
+        id: setup-needed-tools
+        uses: ./.github/actions/setup-tools
         with:
-          path: tmp/runtime.tar.gz
-          key: mendix-runtime-${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Cache m2ee-tools"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: tmp/m2ee
-          key: m2ee-tools-v1
-      - name: "Cache pip"
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-pyaml-httplib2
-      - name: "Setup Java 21"
-        id: setup-java
-        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 #v4
-        with:
-          distribution: "temurin"
-          java-version: "21"
-
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Start runtime with retry"
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
@@ -886,22 +774,10 @@ jobs:
           max_attempts: 3
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-java.outputs.path }}" "${{ github.workspace }}"
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
       
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
-      - name: "Install Maestro"
-        uses: ./.github/actions/setup-maestro
-      - name: Verify maestro
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      
-      - name: "Download iOS app"
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
-        with:
-          name: ios-app
-          path: ios-app
-      - name: Check iOS App Path
-        run: ls ios-app
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
@@ -968,15 +844,9 @@ jobs:
           gh run download ${{ github.run_id }} --name ios-screenshots-js-actions --dir images/actual/ios/ || true
           ls -l images/actual/ios/
 
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
+      - name: "Setup Node and dependencies"
+        uses: ./.github/actions/setup-node-with-cache
     
-      - name: "Install dependencies"
-        run: yarn install
-  
       - name: "Compare Android screenshots"
         continue-on-error: true 
         run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js android

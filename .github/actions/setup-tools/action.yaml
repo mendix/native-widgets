@@ -1,0 +1,47 @@
+name: "Setup Tools"
+description: "Common setup for widget and js test jobs"
+inputs:
+  mendix_version:
+    description: "Mendix version"
+    required: true
+outputs:
+  java-path:
+    description: "Path to the installed Java"
+    value: ${{ steps.setup-java.outputs.path }}
+runs:
+  using: "composite"
+  steps:
+    - name: "Setup Python and dependencies"
+      uses: ./.github/actions/setup-python
+    - name: "Cache pip"
+      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-pyaml-httplib2
+
+    - name: "Setup Node and dependencies"
+      uses: ./.github/actions/setup-node-with-cache
+      
+    - name: "Setup Java 21"
+      id: setup-java
+      uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 #v4
+      with:
+        distribution: "temurin"
+        java-version: "21"
+
+    - name: "Cache Mendix runtime"
+      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
+      with:
+        path: tmp/runtime.tar.gz
+        key: mendix-runtime-${{ inputs.mendix_version }}
+
+    - name: "Cache m2ee-tools"
+      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 #v4
+      with:
+        path: tmp/m2ee
+        key: m2ee-tools-v1
+
+    - name: "Install Maestro"
+      uses: ./.github/actions/setup-maestro
+
+
