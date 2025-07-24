@@ -1,5 +1,5 @@
-diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.mjs b/node_modules/@mendix/pluggable-widgets-toolsconfigs/rollup-plugin-collect-dependencies.mjs
-index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..44ab7f4aa30abc0ba52672ea3e717f4401d00ed5 100644
+diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.mjs b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.mjs
+index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..a3f0e368d76d294a5f7cd85886fe5ce0e72b9619 100644
 --- a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.mjs
 +++ b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.mjs
 @@ -2,9 +2,8 @@
@@ -7,13 +7,13 @@ index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..44ab7f4aa30abc0ba52672ea3e717f44
  import fg from "fast-glob";
  import fsExtra from "fs-extra";
 -import { existsSync, readFileSync, writeFileSync } from "fs";
-+import { existsSync, readFileSync, writeFileSync, cpSync } from "fs";
++import { existsSync, readFileSync, writeFileSync, cpSync, lstatSync, realpathSync } from "fs";
  import { dirname, join, parse } from "path";
 -import copy from "recursive-copy";
  import { promisify } from "util";
  import resolve from "resolve";
  import _ from "lodash";
-@@ -171,15 +174,34 @@ async function copyJsModule(moduleSourcePath, to) {
+@@ -171,15 +170,41 @@ async function copyJsModule(moduleSourcePath, to) {
      if (existsSync(to)) {
          return;
      }
@@ -28,10 +28,17 @@ index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..44ab7f4aa30abc0ba52672ea3e717f44
 -    });
 +    
 +    try {
-+        cpSync(moduleSourcePath, to, {
++        // Check if the source is a symlink and resolve it to the actual path
++        let actualSourcePath = moduleSourcePath;
++        if (lstatSync(moduleSourcePath).isSymbolicLink()) {
++            actualSourcePath = realpathSync(moduleSourcePath);
++        }
++        
++        cpSync(actualSourcePath, to, {
 +            recursive: true,
++            dereference: true, // Follow symlinks and copy the actual files
 +            filter: (src, dest) => {
-+                const relativePath = src.replace(moduleSourcePath, '').replace(/^[\\/]/, '');
++                const relativePath = src.replace(actualSourcePath, '').replace(/^[\\/]/, '');
 +                
 +                // Skip certain directories
 +                if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
