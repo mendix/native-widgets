@@ -195,7 +195,7 @@ jobs:
       - name: "Setup pnpm"
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
       - name: "Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: "Force rebuild resources"
         run: |
           # Build JS actions if needed
