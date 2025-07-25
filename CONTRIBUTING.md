@@ -16,9 +16,9 @@ $ cd native-widgets
 2. Install and link dependencies
 
 ```sh
-$ yarn
+$ pnpm install
 ```
 
-1. Go make it!
+3. Go make it!
 
-Open the folder of the package you want to change and use `yarn build` to bundle it, or `npm start` for watch mode.
+Open the folder of the package you want to change and use `pnpm build` to bundle it, or `npm start` for watch mode.

@@ -12,18 +12,18 @@ preCommit().catch(error => {
 });
 
 async function preCommit() {
-    const [{ stdout: lernaPackages }, { stdout: stagedFiles }] = await Promise.all([
-        execAsync("yarn workspaces list --json"),
+    const [{ stdout: pnpmPackages }, { stdout: stagedFiles }] = await Promise.all([
+        execAsync("pnpm -r list --json"),
         execAsync("git diff --staged --name-only")
     ]);
-    const packages = JSON.parse(`[${lernaPackages.replace(/\}\n/g, "},").slice(0, -1)}]`);
+    const packages = JSON.parse(pnpmPackages);
     const staged = stagedFiles.trim().split("\n");
     const changedWidgetPackages = packages
-        .filter(({ location }) => location.match(/(pluggable|custom)Widgets/))
-        .filter(({ location }) =>
+        .filter(({ path }) => path.match(/(pluggable|custom)Widgets/))
+        .filter(({ path }) =>
             staged.some(
                 changedFilePath =>
-                    dirname(join(process.cwd(), changedFilePath)).includes(location) &&
+                    dirname(join(process.cwd(), changedFilePath)).includes(path) &&
                     changedFilePath
                         .split("/")
                         .pop()
@@ -38,12 +38,12 @@ async function preCommit() {
             validationPromises.push(
                 new Promise(async (resolve, reject) => {
                     const packageXmlAsJson = await parseStringPromise(
-                        (await readFile(join(changedWidgetPackage.location, "src", "package.xml"))).toString(),
+                        (await readFile(join(changedWidgetPackage.path, "src", "package.xml"))).toString(),
                         { ignoreAttrs: false }
                     );
                     const packageXmlVersion = packageXmlAsJson.package.clientModule[0].$.version;
                     const packageJson = JSON.parse(
-                        (await readFile(join(changedWidgetPackage.location, "package.json"))).toString()
+                        (await readFile(join(changedWidgetPackage.path, "package.json"))).toString()
                     );
                     const packageJsonVersion = packageJson.version;
                     const filesMissingVersion = [];

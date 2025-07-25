@@ -205,17 +205,18 @@ jobs:
         uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:
           node-version-file: .nvmrc
-          cache: yarn
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
       - name: "Install dependencies"
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
       - name: "Force rebuild resources"
         run: |
           # Build JS actions if needed
           if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
             [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
             [ "${{ github.event_name }}" = "schedule" ]; then
-            yarn workspace mobile-resources-native run build
-            yarn workspace nanoflow-actions-native run build
+            pnpm --filter=mobile-resources-native run build
+            pnpm --filter=nanoflow-actions-native run build
           fi
 
           # Build widgets if needed (any specific widget, *-native, or nightly)
@@ -224,11 +225,11 @@ jobs:
             [ "${{ github.event_name }}" = "schedule" ]; then
             widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
             for w in $widgets; do
-              yarn workspace $w run build
+              pnpm --filter=$w run build
             done
           fi
       - name: "Unit test"
-        run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
+        run: pnpm -r --filter="${{ needs.scope.outputs.scope }}" run test
       - name: "Upload JS actions resources artifact"
         if: ${{ github.event.inputs.workspace == 'js-actions' }}
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4

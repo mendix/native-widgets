@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 import fg from "fast-glob";
-import { readJson, writeJson } from "fs-extra";
+import fsExtra from "fs-extra";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join, parse } from "path";
 import copy from "recursive-copy";
@@ -12,6 +12,8 @@ import moment from "moment";
 import mkdirp from "mkdirp";
 
 const LICENSE_GLOB = "{licen[cs]e,LICEN[CS]E}?(.*)";
+
+const __DIRNAME = new URL("./", import.meta.url).pathname;
 
 const dependencies = [];
 export function collectDependencies({
@@ -116,7 +118,7 @@ async function resolvePackage(target, sourceDir, optional = false) {
         if (
             e.message.includes("Cannot find module") &&
             !/\.((j|t)sx?)|json|(pn|jpe?|sv)g|(tif|gi)f$/g.test(targetPackage) &&
-            !/configs\/jsActions/i.test(__dirname) && // Ignore errors about missing package.json in 'jsActions/**/src/*' folders
+            !/configs\/jsActions/i.test(__DIRNAME) && // Ignore errors about missing package.json in 'jsActions/**/src/*' folders
             !optional // Certain (peer)dependencies can be optional, ignore throwing an error if an optional (peer)dependency is considered missing.
         ) {
             throw e;
@@ -139,7 +141,7 @@ async function getTransitiveDependencies(packagePath, isExternal) {
         }
         result.add(nextPath);
 
-        const packageJson = await readJson(join(nextPath, "package.json"));
+        const packageJson = await fsExtra.readJson(join(nextPath, "package.json"));
         const dependencies = Object.keys(packageJson.dependencies || {}).concat(
             Object.keys(packageJson.peerDependencies || {})
         );
@@ -192,10 +194,10 @@ async function writeNativeDependenciesJson(nativeDependencies, outputDir, widget
     }
     const dependencies = {};
     for (const dependency of nativeDependencies) {
-        const dependencyJson = await readJson(join(dependency, "package.json"));
+        const dependencyJson = await fsExtra.readJson(join(dependency, "package.json"));
         dependencies[dependencyJson.name] = dependencyJson.version;
     }
-    await writeJson(join(outputDir, `${widgetName}.json`), { nativeDependencies: dependencies }, { spaces: 2 });
+    await fsExtra.writeJson(join(outputDir, `${widgetName}.json`), { nativeDependencies: dependencies }, { spaces: 2 });
 }
 
 async function asyncWhere(array, filter) {

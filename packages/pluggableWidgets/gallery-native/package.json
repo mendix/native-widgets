@@ -18,7 +18,7 @@
     "build": "pluggable-widgets-tools build:native",
     "release": "pluggable-widgets-tools release:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "version": "yarn release",
+    "version": "pnpm release",
     "test": "pluggable-widgets-tools test:unit:native"
   },
   "dependencies": {
@@ -26,7 +26,6 @@
     "react-native-device-info": "14.0.4"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "~10.0.1",
-    "eslint": "^7.32.0"
+    "@mendix/pluggable-widgets-tools": "*"
   }
 }

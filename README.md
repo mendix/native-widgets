@@ -10,9 +10,7 @@ widgets on Native Mobile Resources module.
 
 ## How to start?
 
--   Install yarn via `npm i -g yarn` or using your favorite package manager like `homebrew`
--   Execute `yarn set version berry` to define the latest version of yarn
--   Add workspaces plugin running `yarn plugin import workspace-tools`
+-   Install pnpm via `npm i -g pnpm` or using your favorite package manager like `homebrew`
 
 ## Included nanoflow actions
 
@@ -60,22 +58,22 @@ In order to use our mono repo, please make sure you are using the LTS version of
 
 As we are using [`node-gyp`](https://github.com/nodejs/node-gyp) in our dependencies, please make sure to [install the required dependencies](https://github.com/nodejs/node-gyp#installation) for this library according to your OS.
 
-Execute `yarn` on the root folder of this repo.
+Execute `pnpm install` on the root folder of this repo.
 
 ## Manually releasing Native Mobile Resources (NMR)
 
 Note: for an automated approach (preferred), see `scripts/release/README.md`.
 Note: this applies to NMR for latest Studio Pro (currently 9.X)
 
--   With correct node version (see `.nvmrc`) in repo root, run `yarn reinstall`.
+-   With correct node version (see `.nvmrc`) in repo root, run `pnpm reinstall`.
 -   Ensure your current git branch includes all changes intended to be released.
     -   Including updates to widgets' changelogs and semver version in `package.json` and `package.xml`.
--   Build all widgets in release mode; in root of repo run `yarn release:native`.
+-   Build all widgets in release mode; in root of repo run `pnpm release`.
 -   Copy each widgets' `.mpk` to the NMR project's `/widgets` directory, overriding any existing `.mpk`s.
 -   (conditional) If the widget is new, it needs to be listed on the NMR project page `NativeModileResources._WidgetExport`.
     -   Configure the widget with basic minimum requirements (e.g. datasource), enough to avoid any project errors.
 -   Ensure monorepo's `mobile-resources-native` package has correct changelog and `package.json` version.
--   cd to `packages/jsActions/mobile-resources-native` and run `yarn release`.
+-   cd to `packages/jsActions/mobile-resources-native` and run `pnpm release`.
 -   Delete contents of NMR project's `javascriptsource/nativemobileresources/actions`.
 -   Copy-and-paste files and folders inside monorepo `packages/jsActions/mobile-resources-native/dist/` to NMR project's `javascriptsource/nativemobileresources/actions/`.
 -   Update the version in NMR project's `themesource/nativemobileresources/.version`.
