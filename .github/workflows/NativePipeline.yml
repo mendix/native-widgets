@@ -482,7 +482,7 @@ jobs:
       - name: "Setup pnpm"
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
       - name: "Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -604,7 +604,7 @@ jobs:
       - name: "Setup pnpm"
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
       - name: "Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -716,7 +716,7 @@ jobs:
       - name: "Setup pnpm"
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
       - name: "Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -801,7 +801,7 @@ jobs:
       - name: "Setup pnpm"
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
       - name: "Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -913,7 +913,7 @@ jobs:
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
     
       - name: "Install dependencies"
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
   
       - name: "Compare Android screenshots"
         continue-on-error: true 
