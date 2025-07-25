@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn format && yarn validate-staged-widget-versions
+pnpm format && pnpm validate-staged-widget-versions

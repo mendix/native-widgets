@@ -336,7 +336,9 @@ export async function TakePicture(
             case "others":
                 showAlert(
                     "Something went wrong.",
-                    `${errorMessage}.` ?? "Something went wrong while trying to access your Camera or photo library."
+                    errorMessage
+                        ? `${errorMessage}.`
+                        : "Something went wrong while trying to access your Camera or photo library."
                 );
                 break;
             default:

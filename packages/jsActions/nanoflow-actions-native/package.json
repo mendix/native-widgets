@@ -17,10 +17,10 @@
     "branchName": "main"
   },
   "scripts": {
-    "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nanoflowcommons",
-    "build": "rollup --config ../../../configs/jsactions/rollup.config.js --configProject nanoflowcommons",
+    "start": "rollup --config ../../../configs/jsactions/rollup.config.mjs --watch --configProject nanoflowcommons",
+    "build": "rollup --config ../../../configs/jsactions/rollup.config.mjs --configProject nanoflowcommons",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "release": "yarn build",
+    "release": "pnpm build",
     "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
   },
   "dependencies": {
@@ -31,9 +31,7 @@
     "react-native-geocoder": "0.5.0"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "^10.0.1",
-    "eslint": "^7.32.0",
-    "mendix": "~10.0.9976",
-    "rollup": "^2.79.2"
+    "@mendix/pluggable-widgets-tools": "*",
+    "mendix": "~10.0.9976"
   }
 }

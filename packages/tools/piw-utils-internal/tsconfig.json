@@ -1,6 +1,5 @@
 {
     "extends": "@mendix/pluggable-widgets-tools/configs/tsconfig.base",
-    "baseUrl": "./",
     "include": ["./src"],
     "compilerOptions": {
         "types": ["mendix-client", "big.js", "react-native", "jest", "node"],

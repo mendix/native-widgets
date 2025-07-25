@@ -6,7 +6,18 @@
 import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue } from "mendix";
 
-export type DefaultFilterEnum = "contains" | "startsWith" | "endsWith" | "greater" | "greaterEqual" | "equal" | "notEqual" | "smaller" | "smallerEqual" | "empty" | "notEmpty";
+export type DefaultFilterEnum =
+    | "contains"
+    | "startsWith"
+    | "endsWith"
+    | "greater"
+    | "greaterEqual"
+    | "equal"
+    | "notEqual"
+    | "smaller"
+    | "smallerEqual"
+    | "empty"
+    | "notEmpty";
 
 export interface GalleryTextFilterProps<Style> {
     name: string;
@@ -28,7 +39,8 @@ export interface GalleryTextFilterPreviewProps {
     style: string;
     styleObject?: CSSProperties;
     readOnly: boolean;
-    renderMode?: "design" | "xray" | "structure";
+    renderMode: "design" | "xray" | "structure";
+    translate: (text: string) => string;
     defaultValue: string;
     defaultFilter: DefaultFilterEnum;
     placeholder: string;

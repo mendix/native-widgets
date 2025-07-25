@@ -33,7 +33,7 @@ describe("Filter component", () => {
         const component = render(<FilterComponent {...defaultProps} updateFilters={updateFiltersHandler} />);
 
         // Initial call with default filter
-        expect(updateFiltersHandler).toBeCalledTimes(1);
+        expect(updateFiltersHandler).toHaveBeenCalledTimes(1);
 
         const input = component.getByTestId(`${defaultProps.name}-text-input`);
         fireEvent.changeText(input, "test");
@@ -42,12 +42,12 @@ describe("Filter component", () => {
         fireEvent.changeText(input, "test3");
         act(() => jest.advanceTimersByTime(500));
 
-        expect(updateFiltersHandler).toBeCalledTimes(2);
+        expect(updateFiltersHandler).toHaveBeenCalledTimes(2);
 
         fireEvent.changeText(input, "test");
         act(() => jest.advanceTimersByTime(500));
 
-        expect(updateFiltersHandler).toBeCalledTimes(3);
+        expect(updateFiltersHandler).toHaveBeenCalledTimes(3);
     });
 
     it("clear input value when press the clear text button", () => {

@@ -3,7 +3,7 @@
 import { existsSync } from "fs";
 import { join } from "path";
 import fg from "fast-glob";
-import { cp } from "shelljs";
+import shelljs from "shelljs";
 
 const LICENSE_GLOB = "{licen[cs]e,LICEN[CS]E}?(.*)";
 
@@ -11,7 +11,7 @@ export async function copyLicenseFile(sourcePath, outDir) {
     const absolutePath = join(sourcePath, LICENSE_GLOB);
     const licenseFile = (await fg([absolutePath], { cwd: sourcePath, caseSensitiveMatch: false }))[0];
     if (existsSync(licenseFile)) {
-        cp(licenseFile, outDir);
+        shelljs.cp(licenseFile, outDir);
     }
 }
 
