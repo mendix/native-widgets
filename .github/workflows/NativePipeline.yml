@@ -514,7 +514,7 @@ jobs:
       - name: "Start runtime with retry"
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
-          timeout_minutes: 10
+          timeout_minutes: 20
           max_attempts: 3
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
@@ -539,27 +539,11 @@ jobs:
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}"
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: android-runtime-logs-${{ matrix.widget }}
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-screenshots-${{ matrix.widget }}
-          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-artifacts-${{ matrix.widget }}
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: android
+          test-type: ${{ matrix.widget }}
 
   ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
@@ -617,27 +601,11 @@ jobs:
           bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}"
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: ios-runtime-logs-${{ matrix.widget }}
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-screenshots-${{ matrix.widget }}
-          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-artifacts-${{ matrix.widget }}
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: ios
+          test-type: ${{ matrix.widget }}
 
   android-js-tests:
     if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
@@ -679,7 +647,7 @@ jobs:
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.0.0
         with:
-          api-level: 30
+          api-level: 35
           target: google_apis
           arch: x86_64
           profile: pixel
@@ -691,27 +659,11 @@ jobs:
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_jsactions_tests.sh android
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: android-runtime-logs-js-actions
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-screenshots-js-actions
-          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-artifacts-js-actions
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: android
+          test-type: js-actions
 
   ios-js-tests:
     if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
@@ -755,27 +707,11 @@ jobs:
           bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_jsactions_tests.sh ios
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: ios-runtime-logs-js-actions
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-screenshots-js-actions
-          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-artifacts-js-actions
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: ios
+          test-type: js-actions
   compare-screenshots:
     needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
     runs-on: ubuntu-latest
