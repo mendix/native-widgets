@@ -1,0 +1,40 @@
+name: Archive Test Results
+description: Archive runtime logs, screenshots, and artifacts from test runs
+inputs:
+  platform:
+    description: Platform (android or ios)
+    required: true
+  test-type:
+    description: Test type (widget name or js-actions)
+    required: true
+  workspace-path:
+    description: Workspace path for artifacts
+    required: false
+    default: ${{ github.workspace }}
+
+runs:
+  using: composite
+  steps:
+    - name: Archive runtime logs
+      uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+      if: always()
+      with:
+        name: ${{ inputs.platform }}-runtime-logs-${{ inputs.test-type }}
+        path: log/*.log
+        if-no-files-found: ignore
+    
+    - name: Archive test screenshots
+      uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+      if: always()
+      with:
+        name: ${{ inputs.platform }}-screenshots-${{ inputs.test-type }}
+        path: ${{ inputs.workspace-path }}/maestro/images/actual/${{ inputs.platform }}/**/*.png
+        if-no-files-found: ignore
+    
+    - name: Archive artifacts
+      uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+      if: always()
+      with:
+        name: ${{ inputs.platform }}-artifacts-${{ inputs.test-type }}
+        path: packages/pluggableWidgets/**/artifacts/
+        if-no-files-found: ignore
