@@ -1,7 +1,7 @@
-name: 'Setup Maestro'
-description: 'Install and cache Maestro'
+name: "Setup Maestro"
+description: "Install and cache Maestro"
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: "Cache Maestro"
       uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
