@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-- We fixed the issue where the header is going outside of page in some android versions.
+-   We fixed the issue where navigation buttons were being overlapped due to improper safe area handling.
+
+## [3.1.0] - 2025-4-25
+
+-   We fixed the issue where the header is going outside of page in some android versions.
 
 ### Changed
 
