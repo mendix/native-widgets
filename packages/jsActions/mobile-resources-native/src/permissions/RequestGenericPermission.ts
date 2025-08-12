@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Alert, Platform, NativeModules } from "react-native";
+import { Alert, Platform, NativeModules, Linking } from "react-native";
 import {
     check,
     request,
@@ -15,6 +15,7 @@ import {
     PERMISSIONS as RNPermissions
 } from "react-native-permissions";
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
+import DeviceInfo from "react-native-device-info";
 
 // BEGIN EXTRA CODE
 
@@ -30,10 +31,30 @@ function handleBlockedPermission(permission: string): void {
     const permissionName = permission.replace(/_IOS|_ANDROID/, "");
 
     if (permissionName === "SCHEDULE_EXACT_ALARM") {
-        const RNExactAlarmPermission = require("react-native-schedule-exact-alarm-permission");
-
         Alert.alert("", "Please allow setting alarms and reminders", [
-            { text: "Go to alarm settings", onPress: () => RNExactAlarmPermission.getPermission(), isPreferred: true },
+            {
+                text: "Go to alarm settings",
+                onPress: async () => {
+                    if (Platform.OS === "android") {
+                        try {
+                            // Method 1: Direct exact alarm settings
+                            await Linking.sendIntent("android.settings.REQUEST_SCHEDULE_EXACT_ALARM");
+                        } catch (error) {
+                            try {
+                                // Method 2: App-specific settings with package name
+                                const packageName = await DeviceInfo.getBundleId();
+                                await Linking.sendIntent("android.settings.REQUEST_SCHEDULE_EXACT_ALARM", [
+                                    { key: "package", value: packageName }
+                                ]);
+                            } catch (fallbackError) {
+                                // Method 3: Fallback to general app settings
+                                openSettings();
+                            }
+                        }
+                    }
+                },
+                isPreferred: true
+            },
             { text: "Cancel", style: "cancel" }
         ]);
     } else {
