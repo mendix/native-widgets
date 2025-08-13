@@ -5,17 +5,17 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Alert, Platform, NativeModules, Linking } from "react-native";
+import { Alert, Platform, NativeModules } from "react-native";
 import {
     check,
     request,
     RESULTS,
     openSettings,
     Permission,
-    PERMISSIONS as RNPermissions
+    PERMISSIONS as RNPermissions,
+    canScheduleExactAlarms
 } from "react-native-permissions";
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
-import DeviceInfo from "react-native-device-info";
 
 // BEGIN EXTRA CODE
 
@@ -36,21 +36,14 @@ function handleBlockedPermission(permission: string): void {
                 text: "Go to alarm settings",
                 onPress: async () => {
                     if (Platform.OS === "android") {
-                        try {
-                            // Method 1: Direct exact alarm settings
-                            await Linking.sendIntent("android.settings.REQUEST_SCHEDULE_EXACT_ALARM");
-                        } catch (error) {
-                            try {
-                                // Method 2: App-specific settings with package name
-                                const packageName = await DeviceInfo.getBundleId();
-                                await Linking.sendIntent("android.settings.REQUEST_SCHEDULE_EXACT_ALARM", [
-                                    { key: "package", value: packageName }
-                                ]);
-                            } catch (fallbackError) {
-                                // Method 3: Fallback to general app settings
-                                openSettings();
-                            }
+                        // Check if permission is already granted
+                        const canSchedule = await canScheduleExactAlarms();
+                        if (!canSchedule) {
+                            // Open exact alarm settings - same as RNExactAlarmPermission.getPermission()
+                            await openSettings("alarms");
                         }
+                    } else {
+                        openSettings();
                     }
                 },
                 isPreferred: true

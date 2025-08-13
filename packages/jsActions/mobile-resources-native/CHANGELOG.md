@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   We updated react-native-permissions to latest version.
+
+-   We removed react-native-schedule-exact-alarm-permission since it's no longer required.
+
 ## [10.0.0] Native Mobile Resources - 2025-3-31
+
 -   We migrated from react-native-inappbrowser-reborn to @swan-io/react-native-browser to prevent issues for next rn upgrade.
 
 -   We migrated from @react-native-community/cameraroll to @react-native-camera-roll/camera-roll to prevent issues for next rn upgrade.
@@ -14,29 +19,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We also updated several dependencies such as react-native-blob-util, react-native-image-picker to their latest version.
 
 ## [5.0.0] AppEvents
+
 ### Changed
 
 -   Updated @react-native-community/netinfo from version v5.9.7 to v11.4.1.
 
 ## [5.0.0] BottomSheet
+
 ### Changed
 
 -   Rewrote all bottomsheet widgets (customModalSheet, ExpandingDrawer, and NativeBottomSheet) using @gorhom/bottom-sheet.
 
 ## [3.4.0] Feedback
+
 ### Changed
 
 -   Updated react-native-view-shot from version v3.1.2 to v4.0.3.
 
 ## [3.3.0] ListViewSwipe
--  Updated react-native-gesture-handler from version v2.16.2 to 2.24.0
+
+-   Updated react-native-gesture-handler from version v2.16.2 to 2.24.0
 
 ## [2.2.0] Signature
+
 ### Changed
 
 -   Updated react-native-webview from version v9.0.0 to v10.15.0.
 
 ## [4.2.0] WebView
+
 ### Changed
 
 -   Updated react-native-webview from version v11.26.1 to v13.13.2
