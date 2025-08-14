@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
--   We updated react-native-permissions to latest version.
+-   We updated react-native-permissions to 5.4.2.
 
 -   We removed react-native-schedule-exact-alarm-permission since it's no longer required.
 
