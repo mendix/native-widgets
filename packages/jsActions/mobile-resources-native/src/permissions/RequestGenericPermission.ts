@@ -31,31 +31,26 @@ function handleBlockedPermission(permission: string): void {
     const permissionName = permission.replace(/_IOS|_ANDROID/, "");
 
     if (permissionName === "SCHEDULE_EXACT_ALARM") {
-        Alert.alert("", "Please allow setting alarms and reminders", [
+        return Alert.alert("", "Please allow setting alarms and reminders", [
             {
                 text: "Go to alarm settings",
                 onPress: async () => {
-                    if (Platform.OS === "android") {
+                    const canSchedule = await canScheduleExactAlarms();
+                    if (!canSchedule) {
                         // Check if permission is already granted
-                        const canSchedule = await canScheduleExactAlarms();
-                        if (!canSchedule) {
-                            // Open exact alarm settings - same as RNExactAlarmPermission.getPermission()
-                            await openSettings("alarms");
-                        }
-                    } else {
-                        openSettings();
+                        return openSettings("alarms");
                     }
+                    return openSettings();
                 },
                 isPreferred: true
             },
             { text: "Cancel", style: "cancel" }
         ]);
-    } else {
-        Alert.alert("", `Please allow ${permissionName} access`, [
-            { text: "Go to settings", onPress: () => openSettings(), isPreferred: true },
-            { text: "Cancel", style: "cancel" }
-        ]);
     }
+    return Alert.alert("", `Please allow ${permissionName} access`, [
+        { text: "Go to settings", onPress: () => openSettings(), isPreferred: true },
+        { text: "Cancel", style: "cancel" }
+    ]);
 }
 
 function mapPermissionName(permissionName: string): Permission | "android.permission.SCHEDULE_EXACT_ALARM" | undefined {
