@@ -1,8 +1,8 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
-import { Component, createElement } from "react";
+import { createElement, ReactElement, useMemo } from "react";
 import { View } from "react-native";
-import { RNCamera } from "react-native-camera";
+import { Camera, useCodeScanner, Code, useCameraDevice } from "react-native-vision-camera";
 import BarcodeMask from "react-native-barcode-mask";
 
 import { BarcodeScannerProps } from "../typings/BarcodeScannerProps";
@@ -11,55 +11,48 @@ import { executeAction } from "@mendix/piw-utils-internal";
 
 export type Props = BarcodeScannerProps<BarcodeScannerStyle>;
 
-export class BarcodeScanner extends Component<Props> {
-    private readonly styles = flattenStyles(defaultBarcodeScannerStyle, this.props.style);
-    private readonly onBarCodeReadHandler = throttle(this.onBarCodeRead.bind(this), 2000);
+export function BarcodeScanner(props: Props): ReactElement {
+    const device = useCameraDevice("back");
 
-    render(): JSX.Element {
-        return (
-            <View style={this.styles.container}>
-                <RNCamera
-                    testID={this.props.name}
+    const styles = useMemo(() => flattenStyles(defaultBarcodeScannerStyle, props.style), [props.style]);
+
+    const codeScanner = useCodeScanner({
+        codeTypes: ["ean-13", "qr", "aztec", "codabar", "code-128", "data-matrix"],
+        onCodeScanned: (codes: Code[]) => {
+            if (props.barcode.status !== ValueStatus.Available || codes.length === 0 || !codes[0].value) {
+                return;
+            }
+            const { value } = codes[0];
+
+            if (value !== props.barcode.value) {
+                props.barcode.setValue(value);
+            }
+            executeAction(props.onDetect);
+        }
+    });
+
+    return (
+        <View style={styles.container}>
+            {device && (
+                <Camera
+                    testID={props.name}
                     style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-                    captureAudio={false}
-                    onBarCodeRead={this.onBarCodeReadHandler}
+                    audio={false}
+                    isActive={true}
+                    device={device}
+                    codeScanner={codeScanner}
                 >
-                    {this.props.showMask && (
+                    {props.showMask && (
                         <BarcodeMask
-                            edgeColor={this.styles.mask.color}
-                            width={this.styles.mask.width}
-                            height={this.styles.mask.height}
-                            backgroundColor={this.styles.mask.backgroundColor}
-                            showAnimatedLine={this.props.showAnimatedLine}
+                            edgeColor={styles.mask.color}
+                            width={styles.mask.width}
+                            height={styles.mask.height}
+                            backgroundColor={styles.mask.backgroundColor}
+                            showAnimatedLine={props.showAnimatedLine}
                         />
                     )}
-                </RNCamera>
-            </View>
-        );
-    }
-
-    private onBarCodeRead(event: { data: string }): void {
-        if (this.props.barcode.status !== ValueStatus.Available || !event.data) {
-            return;
-        }
-
-        if (event.data !== this.props.barcode.value) {
-            this.props.barcode.setValue(event.data);
-        }
-
-        executeAction(this.props.onDetect);
-    }
-}
-
-export function throttle<F extends (...params: any[]) => void>(fn: F, threshold: number): F {
-    let wait = false;
-    return function invokeFn(this: any, ...args: any[]) {
-        if (!wait) {
-            fn(...args);
-            wait = true;
-            setTimeout(() => {
-                wait = false;
-            }, threshold);
-        }
-    } as F;
+                </Camera>
+            )}
+        </View>
+    );
 }
