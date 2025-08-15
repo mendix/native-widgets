@@ -38,7 +38,7 @@ export function BarcodeScanner(props: Props): ReactElement {
                     testID={props.name}
                     style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
                     audio={false}
-                    isActive={true}
+                    isActive
                     device={device}
                     codeScanner={codeScanner}
                 >
