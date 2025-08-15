@@ -23,7 +23,7 @@
     "@mendix/piw-utils-internal": "*",
     "deprecated-react-native-prop-types": "^4.0.0",
     "react-native-barcode-mask": "^1.2.4",
-    "react-native-camera": "3.40.0"
+    "react-native-vision-camera": "4.7.1"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"
