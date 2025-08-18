@@ -1,0 +1,22 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "J"
+- tapOn:
+    text: "NanoflowCommons"
+- tapOn:
+    text: "Client activities"
+- tapOn:
+    text: "Confirmation"
+- tapOn:
+    id: "container1"
+- inputText: "11"
+- tapOn: "Show confirmation "
+- assertVisible: "Yolo"
+- assertVisible: "11"
+- tapOn: "OK"
+- assertVisible: "Confirmed!"
+
+

@@ -1,0 +1,16 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- tapOn:
+    text: "J"
+- tapOn:
+    text: "JS Actions"
+- tapOn:
+    text: "Clipboard"
+- tapOn: 
+    text: "Set clipboard content to 'Hi there'"
+- tapOn: 
+    text: "Get clipboard content"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/clipboard"

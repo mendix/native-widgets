@@ -4082,16 +4082,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-video@npm:^5.0.4":
-  version: 5.0.20
-  resolution: "@types/react-native-video@npm:5.0.20"
-  dependencies:
-    "@types/react": "npm:*"
-    react-native: "npm:*"
-  checksum: 10/4923c81c2896359d223f2f75a808670aa75ec1534c5cd4320fa809653a0963384d4d8063d1a00bdd619aef411644c12d35e25065cb2d6f2b4c7fc8bfee25aa3b
-  languageName: node
-  linkType: hard
-
 "@types/react-native@npm:0.73.0":
   version: 0.73.0
   resolution: "@types/react-native@npm:0.73.0"
@@ -14488,13 +14478,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-video@npm:6.4.5":
-  version: 6.4.5
-  resolution: "react-native-video@npm:6.4.5"
+"react-native-video@npm:6.10.0":
+  version: 6.10.0
+  resolution: "react-native-video@npm:6.10.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/dfaf802c5dbde81d022528e325babd443bd0d08e77eef3cc959c7c2a9087632dd4b7b35efa2ba92dab202f2f3aeb52aa97334d2499b532d13cfd78d6599a787e
+  checksum: 10/adec35c675a509b363e3c8ba8bc52a3a169e51de36b630bde0218b6b18713f05486154075562b06a35db8411f4fd3cb0f84f4cf0299194bd855126be71617eb2
   languageName: node
   linkType: hard
 
@@ -17695,12 +17685,11 @@ __metadata:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:1.0.0"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
-    "@types/react-native-video": "npm:^5.0.4"
     deprecated-react-native-prop-types: "npm:^4.0.0"
     eslint: "npm:^7.32.0"
     react-native-system-navigation-bar: "npm:2.6.3"
     react-native-vector-icons: "npm:10.2.0"
-    react-native-video: "npm:6.4.5"
+    react-native-video: "npm:6.10.0"
   languageName: unknown
   linkType: soft
 
