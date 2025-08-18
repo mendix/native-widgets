@@ -1,0 +1,14 @@
+name: "Setup Xcode CLI Tools"
+description: "Ensure Xcode CLI tools are configured"
+runs:
+  using: "composite"
+  steps:
+    - name: "Verify and set Xcode CLI tools"
+      shell: bash
+      run: |
+        if ! xcode-select --print-path; then
+          echo "Xcode CLI tools not set. Setting them now."
+          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+        else
+          echo "Xcode CLI tools are already configured."
+        fi

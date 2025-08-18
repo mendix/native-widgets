@@ -1,0 +1,46 @@
+name: "Download Artifact from Specific Run"
+description: "Download an artifact from a specific workflow run using GitHub CLI"
+inputs:
+  artifact_name:
+    description: "Name of the artifact to download"
+    required: true
+  run_id:
+    description: "Workflow run ID"
+    required: true
+  output_dir:
+    description: "Directory to extract the artifact"
+    required: true
+  platform:
+    description: "Platform (android or ios)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: "Install GitHub CLI"
+      shell: bash
+      run: |
+        if ! command -v gh &> /dev/null; then
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo apt update
+            sudo apt install -y gh
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install gh
+          fi
+        fi
+    - name: "Authenticate GitHub CLI"
+      shell: bash
+      run: |
+        unset GITHUB_TOKEN
+        echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+    - name: "Fetch artifact URL"
+      id: fetch-artifacts
+      shell: bash
+      run: |
+        url=$(gh api "repos/${{ github.repository }}/actions/runs/${{ inputs.run_id }}/artifacts" --jq '.artifacts[] | select(.name == "${{ inputs.artifact_name }}") | .archive_download_url')
+        echo "artifacts_url=$url" >> $GITHUB_ENV
+    - name: "Download and extract artifact"
+      if: env.artifacts_url != ''
+      shell: bash
+      run: |
+        curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o ${{ inputs.platform }}-app.zip "$artifacts_url"
+        unzip ${{ inputs.platform }}-app.zip -d ${{ inputs.output_dir }}
