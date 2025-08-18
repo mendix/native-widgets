@@ -2,9 +2,9 @@ name: Run unit tests
 
 on:
   push:
-    branches: [main]
+    branches: [mx-version/10]
   pull_request:
-    branches: [main]
+    branches: [mx-version/10]
 
 jobs:
   test:
@@ -17,7 +17,7 @@ jobs:
         uses: softprops/diffset@d5947696689a571f7a984a52505e2649eead5c22 # v1
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         with:
-          base: main
+          base: mx-version/10
           global_files: |
             !{packages/**/*,configs/e2e/*.json,scripts/**/*,data/**/*}
         env:
