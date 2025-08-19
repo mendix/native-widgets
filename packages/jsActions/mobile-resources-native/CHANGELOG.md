@@ -4,7 +4,7 @@ All notable changes to this widget will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
--   We migrated from react-native-sound to react-native-track-player for the PlaySound action to provide better audio playback capabilities and improved reliability. **Breaking Change**: Apps using this version will need a native template that includes react-native-track-player native dependencies.
+-   We migrated from react-native-sound to react-native-track-player.
 
 ## [Unreleased]
 
