@@ -2,12 +2,10 @@ import { actionValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
 import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
 
-import { BarcodeScanner, Props, throttle } from "../BarcodeScanner";
+import { BarcodeScanner, Props } from "../BarcodeScanner";
 import { RNCamera } from "./__mocks__/RNCamera";
 
-jest.mock("react-native-camera", () => jest.requireActual("./__mocks__/RNCamera"));
-
-jest.useFakeTimers();
+jest.mock("react-native-vision-camera", () => jest.requireActual("./__mocks__/RNCamera"));
 
 describe("BarcodeScanner", () => {
     let defaultProps: Props;
@@ -70,26 +68,6 @@ describe("BarcodeScanner", () => {
 
         expect(defaultProps.barcode.setValue).toHaveBeenCalledWith("value2");
         expect(onDetectAction.execute).toHaveBeenCalledTimes(3);
-    });
-
-    describe("throttling", () => {
-        const func: (...args: any) => void = jest.fn();
-        const args = ["argument", { prop: "arguments" }];
-
-        it("should execute function in correct time intervals", () => {
-            const throttleFunc = throttle(func, 100);
-
-            throttleFunc(...args);
-            expect(func).toHaveBeenCalledTimes(1);
-            jest.advanceTimersByTime(100);
-            throttleFunc(...args);
-            jest.advanceTimersByTime(99);
-            throttleFunc(...args);
-            throttleFunc(...args);
-            expect(func).toHaveBeenCalledTimes(2);
-            jest.advanceTimersByTime(100);
-            expect(func).toHaveBeenCalledTimes(2);
-        });
     });
 });
 
