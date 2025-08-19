@@ -1,8 +1,8 @@
 import { Component, createElement } from "react";
 import { View, ViewProps } from "react-native";
-import { RNCameraProps } from "react-native-camera";
+import { CameraProps } from "react-native-vision-camera";
 
-export class RNCamera extends Component<RNCameraProps & ViewProps> {
+export class RNCamera extends Component<CameraProps & ViewProps> {
     static constants = {
         Aspect: {},
         BarCodeType: {},
