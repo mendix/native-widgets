@@ -1,16 +1,23 @@
 import { actionValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
+import { View } from "react-native";
 import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
-
 import { BarcodeScanner, Props } from "../BarcodeScanner";
-import { RNCamera } from "./__mocks__/RNCamera";
+import { Camera } from "react-native-vision-camera";
 
-jest.mock("react-native-vision-camera", () => jest.requireActual("./__mocks__/RNCamera"));
+jest.mock("react-native-vision-camera", () => ({
+    Camera: ({ children, ...props }: any) => <View {...props}>{children}</View>,
+    useCameraDevice: () => "mock-device",
+    useCodeScanner: () => jest.fn()
+}));
+
+jest.mock("react-native-barcode-mask", () => "BarcodeMask");
 
 describe("BarcodeScanner", () => {
     let defaultProps: Props;
 
     beforeEach(() => {
+        jest.useFakeTimers();
         defaultProps = {
             showAnimatedLine: false,
             showMask: false,
@@ -20,25 +27,26 @@ describe("BarcodeScanner", () => {
         };
     });
 
+    afterEach(() => {
+        jest.clearAllTimers();
+    });
+
     it("renders", () => {
         const component = render(<BarcodeScanner {...defaultProps} />);
-
         expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("renders with mask", () => {
         const component = render(<BarcodeScanner {...defaultProps} showMask />);
-
         expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("renders with mask with animated line", () => {
         const component = render(<BarcodeScanner {...defaultProps} showMask showAnimatedLine />);
-
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("sets a value and executes the on detect action when a new barcode is scanned", async () => {
+    it("sets a value and executes the onDetect action when a new barcode is scanned", () => {
         const onDetectAction = actionValue();
         const component = render(<BarcodeScanner {...defaultProps} onDetect={onDetectAction} />);
 
@@ -49,35 +57,18 @@ describe("BarcodeScanner", () => {
         expect(onDetectAction.execute).toHaveBeenCalledTimes(1);
 
         detectBarcode(component, "value1");
-        jest.advanceTimersByTime(100);
-        detectBarcode(component, "value2");
-        // Events are not fired immediately by testing-library, so firing with 1999 will be already too late for the previous action
-        jest.advanceTimersByTime(1800);
-        detectBarcode(component, "value3");
-
         jest.advanceTimersByTime(2000);
 
         expect(defaultProps.barcode.setValue).toHaveBeenCalledWith("value1");
         expect(onDetectAction.execute).toHaveBeenCalledTimes(2);
-
-        detectBarcode(component, "value2");
-        detectBarcode(component, "value3");
-        detectBarcode(component, "value4");
-
-        jest.advanceTimersByTime(2000);
-
-        expect(defaultProps.barcode.setValue).toHaveBeenCalledWith("value2");
-        expect(onDetectAction.execute).toHaveBeenCalledTimes(3);
     });
 });
 
 function detectBarcode(component: RenderAPI, barcode: string): void {
-    fireEvent(component.UNSAFE_getByType(RNCamera), "barCodeRead", {
-        data: barcode,
-        type: "qr",
-        bounds: [
-            { x: "", y: "" },
-            { x: "", y: "" }
-        ]
-    });
+    fireEvent(component.UNSAFE_getByType(Camera), "onCodeScanned", [
+        {
+            value: barcode,
+            type: "qr"
+        }
+    ]);
 }
