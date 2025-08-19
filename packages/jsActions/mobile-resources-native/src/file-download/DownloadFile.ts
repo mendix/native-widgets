@@ -7,7 +7,7 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Platform } from "react-native";
 import RNBlobUtil from "react-native-blob-util";
-import FileViewer from "react-native-file-viewer";
+import { open } from "react-native-file-viewer-turbo";
 import mimeTypes from "mime";
 
 // BEGIN EXTRA CODE
@@ -91,7 +91,7 @@ export async function DownloadFile(file: mendix.lib.MxObject, openWithOS: boolea
         }
     }
     if (openWithOS) {
-        await FileViewer.open(accessiblePath, {
+        await open(accessiblePath, {
             showOpenWithDialog: true,
             showAppsSuggestions: true
         });

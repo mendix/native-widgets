@@ -147,9 +147,9 @@ importers:
       react-native-device-info:
         specifier: 14.0.4
         version: 14.0.4(react-native@0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3))
-      react-native-file-viewer:
-        specifier: 2.1.5
-        version: 2.1.5(react-native@0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3))
+      react-native-file-viewer-turbo:
+        specifier: 0.6.0
+        version: 0.6.0(react-native@0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3))(react@18.2.0)
       react-native-image-picker:
         specifier: 7.2.3
         version: 7.2.3(react-native@0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3))(react@18.2.0)
@@ -6441,9 +6441,10 @@ packages:
       react: 18.2.0
       react-native: 0.75.4
 
-  react-native-file-viewer@2.1.5:
-    resolution: {integrity: sha512-MGC6sx9jsqHdefhVQ6o0akdsPGpkXgiIbpygb2Sg4g4bh7v6K1cardLV1NwGB9A6u1yICOSDT/MOC//9Ez6EUg==}
+  react-native-file-viewer-turbo@0.6.0:
+    resolution: {integrity: sha512-to+Ly3GfDTXpvPVYtGK6RuzljrqI/5ZSGDTgaKwAsXg5jdU4tHwZIWCAMZFMQpvVLBRRU0dFxmQsB6BbbqlEHg==}
     peerDependencies:
+      react: 18.2.0
       react-native: 0.75.4
 
   react-native-geocoder@0.5.0:
@@ -14935,8 +14936,9 @@ snapshots:
       react: 18.2.0
       react-native: 0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3)
 
-  react-native-file-viewer@2.1.5(react-native@0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3)):
+  react-native-file-viewer-turbo@0.6.0(react-native@0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3))(react@18.2.0):
     dependencies:
+      react: 18.2.0
       react-native: 0.75.4(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@types/react@18.3.23)(encoding@0.1.13)(react@18.2.0)(typescript@5.8.3)
 
   react-native-geocoder@0.5.0: {}
