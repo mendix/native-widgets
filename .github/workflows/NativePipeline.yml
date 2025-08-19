@@ -70,7 +70,7 @@ on:
   schedule:
     - cron: '0 0 * * *'
   # Trigger on PR
-  # pull_request:
+  pull_request:
 
 # Use default name in case no input
 run-name: ${{ github.event.inputs.run_name || 'Run Native Pipeline' }}
