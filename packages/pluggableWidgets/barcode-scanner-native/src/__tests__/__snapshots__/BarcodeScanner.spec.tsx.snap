@@ -11,6 +11,10 @@ exports[`BarcodeScanner renders 1`] = `
   }
 >
   <View
+    audio={false}
+    codeScanner={[MockFunction]}
+    device="mock-device"
+    isActive={true}
     style={
       {
         "alignItems": "center",
@@ -18,6 +22,7 @@ exports[`BarcodeScanner renders 1`] = `
         "justifyContent": "center",
       }
     }
+    testID="barcode-scanner-test"
   />
 </View>
 `;
@@ -33,6 +38,10 @@ exports[`BarcodeScanner renders with mask 1`] = `
   }
 >
   <View
+    audio={false}
+    codeScanner={[MockFunction]}
+    device="mock-device"
+    isActive={true}
     style={
       {
         "alignItems": "center",
@@ -40,7 +49,14 @@ exports[`BarcodeScanner renders with mask 1`] = `
         "justifyContent": "center",
       }
     }
-  />
+    testID="barcode-scanner-test"
+  >
+    <BarcodeMask
+      backgroundColor="rgba(0, 0, 0, 0.6)"
+      edgeColor="#62B1F6"
+      showAnimatedLine={false}
+    />
+  </View>
 </View>
 `;
 
@@ -55,6 +71,10 @@ exports[`BarcodeScanner renders with mask with animated line 1`] = `
   }
 >
   <View
+    audio={false}
+    codeScanner={[MockFunction]}
+    device="mock-device"
+    isActive={true}
     style={
       {
         "alignItems": "center",
@@ -62,6 +82,13 @@ exports[`BarcodeScanner renders with mask with animated line 1`] = `
         "justifyContent": "center",
       }
     }
-  />
+    testID="barcode-scanner-test"
+  >
+    <BarcodeMask
+      backgroundColor="rgba(0, 0, 0, 0.6)"
+      edgeColor="#62B1F6"
+      showAnimatedLine={true}
+    />
+  </View>
 </View>
 `;

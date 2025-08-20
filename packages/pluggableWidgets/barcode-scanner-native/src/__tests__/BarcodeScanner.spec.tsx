@@ -1,3 +1,4 @@
+// __tests__/BarcodeScanner.spec.tsx
 import { actionValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
 import { View } from "react-native";
