@@ -5,7 +5,7 @@ import { createElement } from "react";
 import { View } from "react-native";
 import { BarcodeScanner, Props } from "../BarcodeScanner";
 
-let mockOnCodeScanned: ((codes: { value: string }[]) => void) | undefined;
+let mockOnCodeScanned: ((codes: Array<{ value: string }>) => void) | undefined;
 
 jest.mock("react-native-vision-camera", () => ({
     Camera: ({ children, ...props }: any) => <View {...props}>{children}</View>,
