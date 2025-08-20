@@ -19,7 +19,7 @@ import TrackPlayer, { State, Event } from "react-native-track-player";
  */
 export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://react-native-track-player.js.org/
+    // Documentation https://rntp.dev
 
     if (!audioFile) {
         return Promise.reject(new Error("Input parameter 'Audio file' is required"));
@@ -43,7 +43,6 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
             });
         }
 
-        // Reset the queue and add the new track
         await TrackPlayer.reset();
         await TrackPlayer.add({
             id: guid,
@@ -52,10 +51,8 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
             artist: "Mendix App"
         });
 
-        // Play the audio
         await TrackPlayer.play();
 
-        // Wait for playback to complete
         return new Promise<void>((resolve, reject) => {
             const subscription = TrackPlayer.addEventListener(Event.PlaybackState, event => {
                 if (event.state === State.Stopped || event.state === State.Ended) {
@@ -63,7 +60,7 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
                     resolve();
                 } else if (event.state === State.Error) {
                     subscription.remove();
-                    reject(new Error("Playback failed due to an audio encoding error"));
+                    reject(new Error(event.error.message || "Playback error"));
                 }
             });
         });
