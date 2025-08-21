@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { actionValue, EditableValueBuilder, dynamicValue } from "@mendix/piw-utils-internal";
 import { render, fireEvent, screen } from "@testing-library/react-native";
 import { createElement } from "react";
