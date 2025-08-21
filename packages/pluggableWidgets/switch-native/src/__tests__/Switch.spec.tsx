@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { actionValue, EditableValueBuilder, dynamicValue } from "@mendix/piw-utils-internal";
-import { render, fireEvent } from "@testing-library/react-native";
+import { render, fireEvent, act } from "@testing-library/react-native";
 import { createElement } from "react";
 import { Switch, Props } from "../Switch";
 import { defaultSwitchStyle } from "../ui/Styles";
@@ -134,7 +134,9 @@ describe("Switch", () => {
             expect(booleanAttribute.value).toBe(false);
             expect(onChange.execute).not.toHaveBeenCalled();
 
-            fireEvent(getByTestId("Switch1"), "valueChange", true);
+            act(() => {
+                fireEvent(getByTestId("Switch1"), "valueChange", true);
+            });
 
             expect(booleanAttribute.value).toBe(true);
             expect(onChange.execute).toHaveBeenCalled();
@@ -152,7 +154,9 @@ describe("Switch", () => {
             expect(booleanAttribute.value).toBe(false);
             expect(onChange.execute).not.toHaveBeenCalled();
 
-            fireEvent(getByTestId("Switch1"), "valueChange", true);
+            act(() => {
+                fireEvent(getByTestId("Switch1"), "valueChange", true);
+            });
 
             expect(booleanAttribute.value).toBe(false);
             expect(onChange.execute).not.toHaveBeenCalled();
