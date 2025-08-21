@@ -119,14 +119,16 @@ export async function RequestLocationPermission(): Promise<boolean> {
                       )
             );
         } else if (geolocationModule) {
-            geolocationModule.requestAuthorization(
-                () => {
-                    return Promise.resolve(true);
-                },
-                (err: GeolocationError) => {
-                    return Promise.reject(err);
-                }
-            );
+            return new Promise(resolve => {
+                geolocationModule.requestAuthorization(
+                    () => {
+                        resolve(true);
+                    },
+                    () => {
+                        resolve(false);
+                    }
+                );
+            });
         }
 
         return false;
