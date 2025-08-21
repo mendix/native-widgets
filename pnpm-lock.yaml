@@ -129,6 +129,9 @@ importers:
       '@react-native-firebase/messaging':
         specifier: 17.3.0
         version: 17.3.0(@react-native-firebase/app@17.3.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))
+      '@sbaiahmed1/react-native-biometrics':
+        specifier: 0.4.0
+        version: 0.4.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       '@swan-io/react-native-browser':
         specifier: 0.4.1
         version: 0.4.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
@@ -138,9 +141,6 @@ importers:
       mime:
         specifier: 3.0.0
         version: 3.0.0
-      react-native-biometrics:
-        specifier: 3.0.1
-        version: 3.0.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))
       react-native-blob-util:
         specifier: 0.21.2
         version: 0.21.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
@@ -2400,6 +2400,12 @@ packages:
     peerDependenciesMeta:
       rollup:
         optional: true
+
+  '@sbaiahmed1/react-native-biometrics@0.4.0':
+    resolution: {integrity: sha512-9sZEGupVK73Eb5mSC66LY28NE719JQuxSMbzZUdXvyvQBZPE2p/sDlGQG0nacvVs1Ev1RTlb/TT7TQeppm7Rig==}
+    peerDependencies:
+      react: 18.2.0
+      react-native: 0.77.3
 
   '@shopify/flash-list@1.7.3':
     resolution: {integrity: sha512-RLhNptm02aqpqZvjj9pJPcU+EVYxOAJhPRCmDOaUbUP86+636w+plsbjpBPSYGvPZhPj56RtZ9FBlvolPeEmYA==}
@@ -6408,11 +6414,6 @@ packages:
   react-native-barcode-mask@1.2.4:
     resolution: {integrity: sha512-Jh3mEs/xUBs/z9mKkj2mM07MMQ2SdtW9mU4FOo5DQyA2kDte6lW87vIYFkWw1nxpzc7sy28ahMsgId8LTtKZsg==}
 
-  react-native-biometrics@3.0.1:
-    resolution: {integrity: sha512-Ru80gXRa9KG04sl5AB9HyjLjVbduhqZVjA+AiOSGqr+fNqCDmCu9y5WEksnjbnniNLmq1yGcw+qcLXmR1ddLDQ==}
-    peerDependencies:
-      react-native: 0.77.3
-
   react-native-blob-util@0.21.2:
     resolution: {integrity: sha512-4DsF+zzBEJmLww12PsUjwqjSaUrz7gdL5MeduSRn9fv5M8GLRIk5WHcgc7n+fzorGhbbL9QtB/QLTL6dMKjYUw==}
     peerDependencies:
@@ -10036,6 +10037,11 @@ snapshots:
       picomatch: 4.0.3
     optionalDependencies:
       rollup: 3.29.5
+
+  '@sbaiahmed1/react-native-biometrics@0.4.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      react: 18.2.0
+      react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
 
   '@shopify/flash-list@1.7.3(@babel/runtime@7.27.6)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -14932,10 +14938,6 @@ snapshots:
   react-native-barcode-mask@1.2.4:
     dependencies:
       prop-types: 15.8.1
-
-  react-native-biometrics@3.0.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)):
-    dependencies:
-      react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
 
   react-native-blob-util@0.21.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
     dependencies:
