@@ -13,39 +13,88 @@ const config = {
 };
 
 main().catch(e => {
-    console.error(e);
+    console.error(`[MARKETPLACE RELEASE ERROR] Marketplace release process failed`);
+    console.error(`[MARKETPLACE RELEASE ERROR] TAG: ${process.env.TAG}`);
+    console.error(`[MARKETPLACE RELEASE ERROR] Error: ${e.message}`);
+    console.error(`[MARKETPLACE RELEASE ERROR] Stack trace: ${e.stack}`);
     process.exit(1);
 });
 
 async function main() {
-    const pkgPath = join(process.cwd(), "package.json");
-    const {
-        name,
-        widgetName,
-        version,
-        marketplace: { minimumMXVersion, marketplaceId }
-    } = require(pkgPath);
+    console.log(`[MARKETPLACE] Starting marketplace release process`);
+    console.log(`[MARKETPLACE] TAG: ${process.env.TAG}`);
 
-    console.log(`Starting release process for tag ${process.env.TAG}`);
+    try {
+        const pkgPath = join(process.cwd(), "package.json");
+        const {
+            name,
+            widgetName,
+            version,
+            marketplace: { minimumMXVersion, marketplaceId }
+        } = require(pkgPath);
 
-    const pkgName = name ?? widgetName;
-    if (!pkgName || !version || !minimumMXVersion || !marketplaceId || !version.includes(".")) {
-        throw new Error(`${pkgPath} does not define expected keys.`);
+        console.log(`[MARKETPLACE] Package path: ${pkgPath}`);
+        console.log(`[MARKETPLACE] Processing release for tag: ${process.env.TAG}`);
+
+        const pkgName = name ?? widgetName;
+
+        console.log(`[MARKETPLACE] Package name: ${pkgName}`);
+        console.log(`[MARKETPLACE] Widget name: ${widgetName}`);
+        console.log(`[MARKETPLACE] Version: ${version}`);
+        console.log(`[MARKETPLACE] Minimum MX Version: ${minimumMXVersion}`);
+        console.log(`[MARKETPLACE] Marketplace ID: ${marketplaceId}`);
+
+        if (!pkgName || !version || !minimumMXVersion || !marketplaceId || !version.includes(".")) {
+            const errorMessage = `${pkgPath} does not define expected keys.`;
+            console.error(`[MARKETPLACE ERROR] ${errorMessage}`);
+            console.error(`[MARKETPLACE ERROR] Package name: ${pkgName}`);
+            console.error(`[MARKETPLACE ERROR] Version: ${version}`);
+            console.error(`[MARKETPLACE ERROR] Minimum MX Version: ${minimumMXVersion}`);
+            console.error(`[MARKETPLACE ERROR] Marketplace ID: ${marketplaceId}`);
+            throw new Error(errorMessage);
+        }
+
+        if (version.split(".").length !== 3) {
+            const errorMessage = `${pkgPath} version is not defined correctly.`;
+            console.error(`[MARKETPLACE ERROR] ${errorMessage}`);
+            console.error(`[MARKETPLACE ERROR] Version provided: ${version}`);
+            console.error(`[MARKETPLACE ERROR] Expected format: x.y.z`);
+            throw new Error(errorMessage);
+        }
+
+        await uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMXVersion);
+        console.log(`[MARKETPLACE] Successfully completed marketplace release for ${pkgName} v${version}`);
+    } catch (error) {
+        console.error(`[MARKETPLACE ERROR] Failed to complete marketplace release`);
+        console.error(`[MARKETPLACE ERROR] TAG: ${process.env.TAG}`);
+        console.error(`[MARKETPLACE ERROR] Error: ${error.message}`);
+        console.error(`[MARKETPLACE ERROR] Stack trace: ${error.stack}`);
+        throw error;
     }
-
-    if (version.split(".").length !== 3) {
-        throw new Error(`${pkgPath} version is not defined correctly.`);
-    }
-
-    await uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMXVersion);
 }
 
 async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMXVersion) {
+    console.log(`[APPSTORE UPLOAD] Starting upload to App Store`);
+    console.log(`[APPSTORE UPLOAD] Package name: ${pkgName}`);
+    console.log(`[APPSTORE UPLOAD] Marketplace ID: ${marketplaceId}`);
+    console.log(`[APPSTORE UPLOAD] Version: ${version}`);
+    console.log(`[APPSTORE UPLOAD] Minimum MX Version: ${minimumMXVersion}`);
+
     try {
         const postResponse = await createDraft(marketplaceId, version, minimumMXVersion);
+        console.log(`[APPSTORE UPLOAD] Successfully created draft with UUID: ${postResponse.UUID}`);
+
         await publishDraft(postResponse.UUID);
-        console.log(`Successfully uploaded ${pkgName} to the Mendix Marketplace.`);
+        console.log(`[APPSTORE UPLOAD] Successfully published draft`);
+        console.log(`[APPSTORE UPLOAD] Successfully uploaded ${pkgName} to the Mendix Marketplace.`);
     } catch (error) {
+        console.error(`[APPSTORE UPLOAD ERROR] Failed uploading to app store`);
+        console.error(`[APPSTORE UPLOAD ERROR] Package name: ${pkgName}`);
+        console.error(`[APPSTORE UPLOAD ERROR] Marketplace ID: ${marketplaceId}`);
+        console.error(`[APPSTORE UPLOAD ERROR] Version: ${version}`);
+        console.error(`[APPSTORE UPLOAD ERROR] Minimum MX Version: ${minimumMXVersion}`);
+        console.error(`[APPSTORE UPLOAD ERROR] Error: ${error.message}`);
+        console.error(`[APPSTORE UPLOAD ERROR] Stack trace: ${error.stack}`);
         error.message = `Failed uploading ${pkgName} to appstore with error: ${error.message}`;
         throw error;
     }
