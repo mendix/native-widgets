@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { actionValue, EditableValueBuilder, dynamicValue } from "@mendix/piw-utils-internal";
-import { render, fireEvent, act } from "@testing-library/react-native";
+import { render, fireEvent, screen } from "@testing-library/react-native";
 import { createElement } from "react";
 import { Switch, Props } from "../Switch";
 import { defaultSwitchStyle } from "../ui/Styles";
@@ -35,8 +35,8 @@ describe("Switch", () => {
             booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).build()
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
-        const switchElement = getByTestId("Switch1");
+        render(<Switch {...props} />);
+        const switchElement = screen.getByTestId("Switch1");
         expect(switchElement.props.enabled).toBe(true);
     });
 
@@ -45,8 +45,8 @@ describe("Switch", () => {
             booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).isReadOnly().build()
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
-        const switchElement = getByTestId("Switch1");
+        render(<Switch {...props} />);
+        const switchElement = screen.getByTestId("Switch1");
         expect(switchElement.props.enabled).toBe(false);
     });
 
@@ -55,8 +55,8 @@ describe("Switch", () => {
             showLabel: true
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
-        expect(getByTestId(`${name}$label`)).toBeTruthy();
+        render(<Switch {...props} />);
+        expect(screen.getByTestId(`${name}$label`)).toBeTruthy();
     });
 
     it("with showLabel true renders label horizontally", () => {
@@ -64,8 +64,8 @@ describe("Switch", () => {
             showLabel: true
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
-        const wrapper = getByTestId(`${name}$wrapper`);
+        render(<Switch {...props} />);
+        const wrapper = screen.getByTestId(`${name}$wrapper`);
         expect(wrapper.props.style).toEqual(expect.arrayContaining([{ flexDirection: "row", alignItems: "center" }]));
     });
 
@@ -75,8 +75,8 @@ describe("Switch", () => {
             labelOrientation: "vertical"
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
-        const wrapper = getByTestId(`${name}$wrapper`);
+        render(<Switch {...props} />);
+        const wrapper = screen.getByTestId(`${name}$wrapper`);
         expect(wrapper.props.style).toEqual(
             expect.not.arrayContaining([{ flexDirection: "row", alignItems: "center" }])
         );
@@ -87,18 +87,18 @@ describe("Switch", () => {
             booleanAttribute: new EditableValueBuilder<boolean>().withValidation("error").withValue(false).build()
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
+        render(<Switch {...props} />);
         expect(props.booleanAttribute.validation).toEqual("error");
-        expect(getByTestId(`${name}$alert`)).toBeTruthy();
-        expect(getByTestId(`${name}$alert`).props.children).toEqual("error");
+        expect(screen.getByTestId(`${name}$alert`)).toBeTruthy();
+        expect(screen.getByTestId(`${name}$alert`).props.children).toEqual("error");
     });
 
     it("with android device renders property", () => {
         Platform.OS = "android";
         const props = createProps();
 
-        const { getByTestId } = render(<Switch {...props} />);
-        expect(getByTestId("Switch1").props.ios_backgroundColor).toBeUndefined();
+        render(<Switch {...props} />);
+        expect(screen.getByTestId("Switch1").props.ios_backgroundColor).toBeUndefined();
     });
 
     it("renders correct thumbColor when value is true", () => {
@@ -107,8 +107,8 @@ describe("Switch", () => {
             style: [{ ...defaultSwitchStyle, input: { thumbColorOn: "red" } }]
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
-        expect(getByTestId("Switch1").props.thumbTintColor).toEqual("red");
+        render(<Switch {...props} />);
+        expect(screen.getByTestId("Switch1").props.thumbTintColor).toEqual("red");
     });
 
     it("renders correct thumbColor when value is false", () => {
@@ -117,8 +117,8 @@ describe("Switch", () => {
             style: [{ ...defaultSwitchStyle, input: { thumbColorOff: "blue" } }]
         });
 
-        const { getByTestId } = render(<Switch {...props} />);
-        expect(getByTestId("Switch1").props.thumbTintColor).toEqual("blue");
+        render(<Switch {...props} />);
+        expect(screen.getByTestId("Switch1").props.thumbTintColor).toEqual("blue");
     });
 
     describe("interactions", () => {
@@ -129,14 +129,12 @@ describe("Switch", () => {
                 booleanAttribute,
                 onChange
             });
-            const { getByTestId } = render(<Switch {...props} />);
+            render(<Switch {...props} />);
 
             expect(booleanAttribute.value).toBe(false);
             expect(onChange.execute).not.toHaveBeenCalled();
 
-            act(() => {
-                fireEvent(getByTestId("Switch1"), "valueChange", true);
-            });
+            fireEvent(screen.getByTestId("Switch1"), "valueChange", true);
 
             expect(booleanAttribute.value).toBe(true);
             expect(onChange.execute).toHaveBeenCalled();
@@ -149,14 +147,12 @@ describe("Switch", () => {
                 booleanAttribute,
                 onChange
             });
-            const { getByTestId } = render(<Switch {...props} />);
+            render(<Switch {...props} />);
 
             expect(booleanAttribute.value).toBe(false);
             expect(onChange.execute).not.toHaveBeenCalled();
 
-            act(() => {
-                fireEvent(getByTestId("Switch1"), "valueChange", true);
-            });
+            fireEvent(screen.getByTestId("Switch1"), "valueChange", true);
 
             expect(booleanAttribute.value).toBe(false);
             expect(onChange.execute).not.toHaveBeenCalled();
