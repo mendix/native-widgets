@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Updated react-native from version 0.75.4 to 0.77.3.
 -   We migrated from react-native-file-viewer to react-native-file-viewer-turbo for new architecture compatibility
 -   File viewer now uses modal to display content
 
