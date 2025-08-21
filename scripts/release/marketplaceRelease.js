@@ -101,30 +101,83 @@ async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMX
 }
 
 async function getGithubAssetUrl() {
-    console.log("Retrieving informations from Github Tag");
-    const request = await fetch("GET", "https://api.github.com/repos/mendix/native-widgets/releases?per_page=10");
-    const data = (await request) ?? [];
-    const releaseId = data.find(info => info.tag_name === process.env.TAG)?.id;
-    if (!releaseId) {
-        throw new Error(`Could not find release with tag ${process.env.TAG} on GitHub`);
+    console.log(`[GITHUB ASSET] Retrieving information from GitHub Tag: ${process.env.TAG}`);
+
+    try {
+        const request = await fetch("GET", "https://api.github.com/repos/mendix/native-widgets/releases?per_page=20");
+        const data = (await request) ?? [];
+
+        console.log(`[GITHUB ASSET] Found ${data.length} releases on GitHub`);
+        console.log(`[GITHUB ASSET] Looking for release with tag: ${process.env.TAG}`);
+
+        // Log available releases for debugging
+        const availableTags = data.map(release => release.tag_name);
+        console.log(
+            `[GITHUB ASSET] Available release tags: ${availableTags.slice(0, 10).join(", ")}${
+                availableTags.length > 10 ? "..." : ""
+            }`
+        );
+
+        const releaseId = data.find(info => info.tag_name === process.env.TAG)?.id;
+        if (!releaseId) {
+            console.error(`[GITHUB ASSET ERROR] Could not find release with tag ${process.env.TAG} on GitHub`);
+            console.error(`[GITHUB ASSET ERROR] Available tags: ${availableTags.join(", ")}`);
+            console.error(`[GITHUB ASSET ERROR] This usually means the GitHub release creation step failed earlier`);
+            console.error(`[GITHUB ASSET ERROR] Check the native module creation logs for the GitHub release step`);
+            console.error(`[GITHUB ASSET ERROR] `);
+            console.error(`[GITHUB ASSET ERROR] To resolve this issue:`);
+            console.error(`[GITHUB ASSET ERROR] 1. Check if the native module creation process completed successfully`);
+            console.error(`[GITHUB ASSET ERROR] 2. Look for GitHub release creation errors in the logs`);
+            console.error(`[GITHUB ASSET ERROR] 3. If needed, manually create the GitHub release with the MPK asset`);
+            console.error(`[GITHUB ASSET ERROR] 4. Or re-run the native module creation process`);
+            console.error(`[GITHUB ASSET ERROR] `);
+            throw new Error(`Could not find release with tag ${process.env.TAG} on GitHub`);
+        }
+
+        console.log(`[GITHUB ASSET] Found release with ID: ${releaseId}`);
+
+        const assetsRequest = await fetch(
+            "GET",
+            `https://api.github.com/repos/mendix/native-widgets/releases/${releaseId}/assets`
+        );
+        const assetsData = (await assetsRequest) ?? [];
+
+        console.log(`[GITHUB ASSET] Found ${assetsData.length} assets in release`);
+
+        const downloadUrl = assetsData.find(asset => asset.name.endsWith(".mpk"))?.browser_download_url;
+        if (!downloadUrl) {
+            console.error(
+                `[GITHUB ASSET ERROR] Could not retrieve MPK URL from GitHub release with tag ${process.env.TAG}`
+            );
+            console.error(`[GITHUB ASSET ERROR] Available assets: ${assetsData.map(a => a.name).join(", ")}`);
+            console.error(`[GITHUB ASSET ERROR] Looking for assets ending with .mpk`);
+            throw new Error(`Could not retrieve MPK url from GitHub release with tag ${process.env.TAG}`);
+        }
+
+        console.log(`[GITHUB ASSET] Successfully found MPK download URL: ${downloadUrl}`);
+        return downloadUrl;
+    } catch (error) {
+        console.error(`[GITHUB ASSET ERROR] Failed to retrieve GitHub asset URL`);
+        console.error(`[GITHUB ASSET ERROR] Tag: ${process.env.TAG}`);
+        console.error(`[GITHUB ASSET ERROR] Error: ${error.message}`);
+        console.error(`[GITHUB ASSET ERROR] Stack trace: ${error.stack}`);
+        throw error;
     }
-    const assetsRequest = await fetch(
-        "GET",
-        `https://api.github.com/repos/mendix/native-widgets/releases/${releaseId}/assets`
-    );
-    const assetsData = (await assetsRequest) ?? [];
-    const downloadUrl = assetsData.find(asset => asset.name.endsWith(".mpk"))?.browser_download_url;
-    if (!downloadUrl) {
-        throw new Error(`Could not retrieve MPK url from GitHub release with tag ${process.env.TAG}`);
-    }
-    return downloadUrl;
 }
 
 async function createDraft(marketplaceId, version, minimumMXVersion) {
-    console.log(`Creating draft in the Mendix Marketplace...`);
-    console.log(`ID: ${marketplaceId} - Version: ${version} - MXVersion: ${minimumMXVersion}`);
+    console.log(`[MARKETPLACE DRAFT] Creating draft in the Mendix Marketplace`);
+    console.log(`[MARKETPLACE DRAFT] ID: ${marketplaceId} - Version: ${version} - MXVersion: ${minimumMXVersion}`);
+    console.log(`[MARKETPLACE DRAFT] TAG: ${process.env.TAG}`);
+
     const [major, minor, patch] = version.split(".");
+    console.log(`[MARKETPLACE DRAFT] Version parts - Major: ${major}, Minor: ${minor}, Patch: ${patch}`);
+    console.log(`[MARKETPLACE DRAFT] Studio Pro Version: ${minimumMXVersion.split(".").slice(0, 3).join(".")}`);
+
     try {
+        console.log(`[MARKETPLACE DRAFT] Getting GitHub asset URL for release`);
+        const artifactURL = await getGithubAssetUrl();
+
         const body = {
             VersionMajor: major ?? 1,
             VersionMinor: minor ?? 0,
@@ -133,22 +186,42 @@ async function createDraft(marketplaceId, version, minimumMXVersion) {
             IsSourceGitHub: true,
             GithubRepo: {
                 UseReadmeForDoc: false,
-                ArtifactURL: await getGithubAssetUrl()
+                ArtifactURL: artifactURL
             }
         };
 
-        return fetchContributor("POST", `packages/${marketplaceId}/versions`, JSON.stringify(body));
+        console.log(`[MARKETPLACE DRAFT] Request body prepared, sending to marketplace API`);
+        console.log(`[MARKETPLACE DRAFT] Artifact URL: ${artifactURL}`);
+
+        const result = await fetchContributor("POST", `packages/${marketplaceId}/versions`, JSON.stringify(body));
+        console.log(`[MARKETPLACE DRAFT] Successfully created draft in marketplace`);
+        return result;
     } catch (error) {
+        console.error(`[MARKETPLACE DRAFT ERROR] Failed creating draft in the appstore`);
+        console.error(`[MARKETPLACE DRAFT ERROR] Marketplace ID: ${marketplaceId}`);
+        console.error(`[MARKETPLACE DRAFT ERROR] Version: ${version}`);
+        console.error(`[MARKETPLACE DRAFT ERROR] MX Version: ${minimumMXVersion}`);
+        console.error(`[MARKETPLACE DRAFT ERROR] TAG: ${process.env.TAG}`);
+        console.error(`[MARKETPLACE DRAFT ERROR] Error: ${error.message}`);
+        console.error(`[MARKETPLACE DRAFT ERROR] Stack trace: ${error.stack}`);
         error.message = `Failed creating draft in the appstore with error: ${error.message}`;
         throw error;
     }
 }
 
 function publishDraft(UUID) {
-    console.log(`Publishing draft in the Mendix Marketplace...`);
+    console.log(`[MARKETPLACE PUBLISH] Publishing draft in the Mendix Marketplace`);
+    console.log(`[MARKETPLACE PUBLISH] Draft UUID: ${UUID}`);
+
     try {
-        return fetchContributor("PATCH", `package-versions/${UUID}`, JSON.stringify({ Status: "Publish" }));
+        const result = fetchContributor("PATCH", `package-versions/${UUID}`, JSON.stringify({ Status: "Publish" }));
+        console.log(`[MARKETPLACE PUBLISH] Successfully initiated publish for draft: ${UUID}`);
+        return result;
     } catch (error) {
+        console.error(`[MARKETPLACE PUBLISH ERROR] Failed publishing draft in the appstore`);
+        console.error(`[MARKETPLACE PUBLISH ERROR] Draft UUID: ${UUID}`);
+        console.error(`[MARKETPLACE PUBLISH ERROR] Error: ${error.message}`);
+        console.error(`[MARKETPLACE PUBLISH ERROR] Stack trace: ${error.stack}`);
         error.message = `Failed publishing draft in the appstore with error: ${error.message}`;
         throw error;
     }

@@ -15,19 +15,26 @@ async function setLocalGitCredentials(workingDirectory) {
 }
 
 function execShellCommand(cmd, workingDirectory = process.cwd()) {
-    console.log(`[EXEC] Running command: ${cmd} in directory: ${workingDirectory}`);
+    console.log(`[EXEC] Running command: ${cmd}`);
+    console.log(`[EXEC] Working directory: ${workingDirectory}`);
+
     return new Promise((resolve, reject) => {
         exec(cmd, { cwd: workingDirectory }, (error, stdout, stderr) => {
             if (error) {
                 console.error(`[EXEC ERROR] Command failed: ${cmd}`);
                 console.error(`[EXEC ERROR] Working directory: ${workingDirectory}`);
+                console.error(`[EXEC ERROR] Exit code: ${error.code}`);
                 console.error(`[EXEC ERROR] Stderr: ${stderr}`);
                 console.error(`[EXEC ERROR] Stdout: ${stdout}`);
-                console.error(`[EXEC ERROR] Error: ${error.message}`);
+                console.error(`[EXEC ERROR] Error message: ${error.message}`);
                 reject(error);
             }
             if (stderr) {
-                console.warn(`[EXEC WARN] Stderr: ${stderr}`);
+                console.warn(`[EXEC WARN] Stderr output: ${stderr}`);
+            }
+            console.log(`[EXEC SUCCESS] Command completed successfully: ${cmd}`);
+            if (stdout.trim()) {
+                console.log(`[EXEC SUCCESS] Output: ${stdout.trim()}`);
             }
             console.log(`[EXEC SUCCESS] Command completed: ${cmd}`);
             resolve(stdout);
@@ -332,6 +339,7 @@ async function createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput) {
     console.log(`[GITHUB RELEASE] MX Version: ${moduleInfo.minimumMXVersion}`);
     console.log(`[GITHUB RELEASE] Tag: ${process.env.TAG}`);
     console.log(`[GITHUB RELEASE] MPK Output: ${mpkOutput}`);
+    console.log(`[GITHUB RELEASE] Changelog length: ${moduleChangelogs?.length || 0} characters`);
 
     try {
         await createGithubReleaseFrom({
@@ -358,10 +366,46 @@ async function createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput) {
 }
 
 async function createGithubReleaseFrom({ title, body = "", tag, mpkOutput, isDraft = false }) {
+    console.log(`[GITHUB RELEASE FROM] Starting GitHub release creation`);
+    console.log(`[GITHUB RELEASE FROM] Title: ${title}`);
+    console.log(`[GITHUB RELEASE FROM] Tag: ${tag}`);
+    console.log(`[GITHUB RELEASE FROM] MPK Output: ${mpkOutput}`);
+    console.log(`[GITHUB RELEASE FROM] Draft: ${isDraft}`);
+    console.log(`[GITHUB RELEASE FROM] Body length: ${body?.length || 0} characters`);
+
+    // Validate inputs
+    if (!title || !tag || !mpkOutput) {
+        const missingParams = [];
+        if (!title) {
+            missingParams.push("title");
+        }
+        if (!tag) {
+            missingParams.push("tag");
+        }
+        if (!mpkOutput) {
+            missingParams.push("mpkOutput");
+        }
+
+        console.error(`[GITHUB RELEASE FROM ERROR] Missing required parameters: ${missingParams.join(", ")}`);
+        throw new Error(`Missing required parameters for GitHub release: ${missingParams.join(", ")}`);
+    }
+
+    // Check if MPK file exists
+    try {
+        await access(mpkOutput);
+        console.log(`[GITHUB RELEASE FROM] MPK file exists: ${mpkOutput}`);
+    } catch (error) {
+        console.error(`[GITHUB RELEASE FROM ERROR] MPK file not found: ${mpkOutput}`);
+        throw new Error(`MPK file not found: ${mpkOutput}`);
+    }
+
+    // Sanitize body to avoid command injection and quote issues
+    const sanitizedBody = body.replaceAll("'", "`").replaceAll('"', "`").replace(/\n/g, "\\n");
+
     const command = [
         `gh release create`,
         `--title '${title}'`,
-        `--notes '${body.replaceAll("'", "`")}'`,
+        `--notes '${sanitizedBody}'`,
         isDraft ? "--draft" : "",
         `'${tag}'`,
         `'${mpkOutput}'`
@@ -369,7 +413,49 @@ async function createGithubReleaseFrom({ title, body = "", tag, mpkOutput, isDra
         .filter(str => str !== "")
         .join(" ");
 
-    await execShellCommand(command);
+    console.log(`[GITHUB RELEASE FROM] Executing command: ${command}`);
+
+    try {
+        const result = await execShellCommand(command);
+        console.log(`[GITHUB RELEASE FROM] Command output: ${result.trim()}`);
+        console.log(`[GITHUB RELEASE FROM] Successfully created GitHub release with tag: ${tag}`);
+
+        // Verify the release was created by checking if the tag exists
+        try {
+            const verifyCommand = `gh release view '${tag}'`;
+            console.log(`[GITHUB RELEASE FROM] Verifying release creation: ${verifyCommand}`);
+            await execShellCommand(verifyCommand);
+            console.log(`[GITHUB RELEASE FROM] Release verification successful`);
+        } catch (verifyError) {
+            console.warn(`[GITHUB RELEASE FROM WARN] Could not verify release creation: ${verifyError.message}`);
+        }
+
+        return result;
+    } catch (error) {
+        console.error(`[GITHUB RELEASE FROM ERROR] Failed to create GitHub release`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Title: ${title}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Tag: ${tag}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] MPK Output: ${mpkOutput}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Draft: ${isDraft}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Command: ${command}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Error: ${error.message}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Stack trace: ${error.stack}`);
+
+        // Check if it's an authentication issue
+        if (error.message.includes("authentication") || error.message.includes("token")) {
+            console.error(`[GITHUB RELEASE FROM ERROR] This appears to be an authentication issue`);
+            console.error(`[GITHUB RELEASE FROM ERROR] Please check your GH_TOKEN environment variable`);
+            console.error(`[GITHUB RELEASE FROM ERROR] Or run: gh auth login`);
+        }
+
+        // Check if it's a duplicate release issue
+        if (error.message.includes("already exists") || error.message.includes("tag name")) {
+            console.error(`[GITHUB RELEASE FROM ERROR] Release with tag '${tag}' might already exist`);
+            console.error(`[GITHUB RELEASE FROM ERROR] Check existing releases with: gh release list`);
+        }
+
+        throw error;
+    }
 }
 
 function zip(src, fileName) {
