@@ -1,5 +1,5 @@
 import { Maps, Props } from "../Maps";
-import { render } from "@testing-library/react-native";
+import { render, act } from "@testing-library/react-native";
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 import { createElement } from "react";
@@ -83,8 +83,10 @@ describe("<Maps />", () => {
 
         const component = render(<Maps {...defaultProps} />);
 
-        // Give the component time to complete async operations
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Wait for async operations to complete within <Maps />
+        await act(async () => {
+            await new Promise(resolve => setTimeout(resolve, 0));
+        });
 
         expect(component.toJSON()).toMatchSnapshot();
     });
