@@ -65,6 +65,7 @@ export async function DownloadFile(file: mendix.lib.MxObject, openWithOS: boolea
         return Promise.reject(new Error("Input parameter 'file' is required"));
     }
 
+    console.log("DownloadFile action called with file:", file);
     const dirs = RNBlobUtil.fs.dirs;
     const fileName = file.get("Name") as string;
     const sanitizedFileName = sanitizeFileName(fileName);
