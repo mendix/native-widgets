@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 -   We migrated from react-native-sound to react-native-track-player.
+-   Updated react-native from version 0.75.4 to 0.77.3.
 
 ## [10.0.0] Native Mobile Resources - 2025-3-31
 

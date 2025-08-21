@@ -30,7 +30,6 @@ exports[`ProgressCircle renders 1`] = `
             "backgroundColor": "transparent",
             "borderWidth": 0,
           },
-          {},
           {
             "flex": 0,
             "height": 100,
