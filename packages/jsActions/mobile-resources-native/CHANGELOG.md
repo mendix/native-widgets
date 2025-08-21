@@ -6,7 +6,47 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.0.3] Native Mobile Resources - 2025-8-21
+
 -   Updated react-native from version 0.75.4 to 0.77.3.
+
+## [2.2.0] BackgroundGradient
+
+-   Updated react-native-linear-gradient to latest version.
+
+## [5.0.1] BottomSheet
+
+-   Updated react-native-device-info to latest version.
+
+## [4.2.0] IntroScreen
+
+### Fixes
+
+-   Initial slide now correctly positioned on mount.
+
+### Changed
+
+-   Updated react-native-device-info to latest version.
+
+### Fixed
+
+-   We have fixed defaultProps deprecation warning.
+
+## [5.0.0] Notifications
+
+-   The widget has been migrated to notifee.
+
+## [3.1.1] SafeAreaView
+
+-   We fixed the issue where navigation buttons were being overlapped due to improper safe area handling.
+
+## [2.3.0] Signature
+
+-   Updated react-native-webview from version v13.12.5 to latest
+
+## [4.3.0] WebView
+
+-   Updated react-native-webview from version v13.12.5 to latest to support react-native 0.77
 
 ## [10.0.0] Native Mobile Resources - 2025-3-31
 
