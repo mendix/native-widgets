@@ -65,10 +65,7 @@ on:
           - toggle-buttons-native
           - video-player-native
           - web-view-native 
-
-  # Run at 4:00 UTC (6:00 AM CET time during summer, 5:00 AM during winter)
-  schedule:
-    - cron: '0 4 * * *'
+          
   # Trigger on PR
   pull_request:
 
