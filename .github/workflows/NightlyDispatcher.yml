@@ -1,0 +1,47 @@
+name: Nightly Dispatcher
+
+on:
+  schedule:
+    # Run main branch at midnight (0:00 UTC)
+    - cron: '0 0 * * *'
+    # Run version/mx/10 branch at 4:00 AM UTC
+    - cron: '0 4 * * *'
+
+jobs:
+  dispatch-main:
+    if: github.event.schedule == '0 0 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Trigger Native Pipeline on main"
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'NativePipeline.yml',
+              ref: 'main',
+              inputs: {
+                run_name: 'Nightly Main Branch Pipeline',
+                workspace: '*-native'
+              }
+            });
+
+  dispatch-version-mx-10:
+    if: github.event.schedule == '0 4 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Trigger Native Pipeline on version/mx/10"
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'NativePipeline.yml',
+              ref: 'version/mx/10',
+              inputs: {
+                run_name: 'Nightly version/mx/10 Branch Pipeline',
+                workspace: '*-native'
+              }
+            });
