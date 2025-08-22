@@ -2,6 +2,10 @@ name: Run Native Pipeline
 on:
   workflow_dispatch:
     inputs:
+      run_name:
+        description: "Provide a name for the run"
+        required: false
+        default: ""
       mendix_version:
         description: "Provide the SP version to be used (e.g., 10.14.0.43709) - has to be a released version (Default: latest from Mendix versions.json)"
         required: false
@@ -11,6 +15,10 @@ on:
         default: ""
         required: false
         type: string
+      LOCAL_TEST_ARTIFACT_RUN_ID:
+        description: "Workflow run ID for local artifact download (leave empty for normal CI)"
+        required: false
+        default: ""
       workspace:
         description: "Select a widget to test (Default will run all)"
         required: true
@@ -57,12 +65,17 @@ on:
           - toggle-buttons-native
           - video-player-native
           - web-view-native 
-  
-  # Run at 0:00 UTC (2:00 AM CET time during summer, 1:00 AM during winter)
+
+  # Run at 4:00 UTC (6:00 AM CET time during summer, 5:00 AM during winter)
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 4 * * *'
   # Trigger on PR
-  # pull_request:
+  pull_request:
+
+# Use default name in case no input
+run-name: ${{ github.event.inputs.run_name || 'Run Native Pipeline' }}
+env:
+  LOCAL_TEST_ARTIFACT_RUN_ID: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID || '' }}
 permissions:
   packages: write
 jobs:
@@ -247,11 +260,13 @@ jobs:
           apt update && apt upgrade -y
           apt install curl -y
       - name: "Download test project"
-        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/mx-version/10.zip
       - name: "Extract test project"
         uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
         with:
           args: unzip -qq project.zip -d .
+      - name: "Rename extracted directory" # Doing this since mxbuild fails with - path too long
+        run: mv Native-Mobile-Resources-mx-version-10 Native-Mobile-Resources-mx10
       - name: "Download resources artifact"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -265,26 +280,26 @@ jobs:
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
+              newPath=Native-Mobile-Resources-mx10/widgets/$(basename $oldPath)
               mv -f $oldPath $newPath
             done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+            mx update-widgets --loose-version-check Native-Mobile-Resources-mx10/NativeComponentsTestProject.mpr
           fi
       - name: "Move mobile-resources"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
+            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-mx10/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
+            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-mx10/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Force rebuild test project"
         run: |
-          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-mx10/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
@@ -465,7 +480,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     strategy:
-      max-parallel: 10
+      max-parallel: 5
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
@@ -474,70 +489,38 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: yarn install --immutable
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      
-      # USED ONLY FOR TESTING PURPOSE - TO SKIP APP BUILD PART AND DOWNLOAD FROM SPECIFIC RUN
-      # - name: "Install GitHub CLI"
-      #   run: |
-      #     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-      #     sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-      #     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-      #     sudo apt update
-      #     sudo apt install gh
-      # - name: "Authenticate GitHub CLI"
-      #   run: |
-      #     unset GITHUB_TOKEN
-      #     echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-      # - name: "Fetch artifacts from run 676"
-      #   id: fetch-artifacts
-      #   run: |
-      #     artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "android-app") | .archive_download_url')
-      #     echo "Artifacts URL: $artifacts_url"
-      #     echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
-      # - name: "Download Android app"
-      #   if: env.artifacts_url != ''
-      #   run: |
-      #     if [ -z "$artifacts_url" ]; then
-      #       echo "No artifacts URL found."
-      #       exit 1
-      #     fi
-      #     curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o android-app.zip "$artifacts_url"
-      #     unzip android-app.zip -d android-app
-      
+      # Used only for local testing, will be empty on GitHub
+      - name: "Download Android app from specific run"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
+        uses: ./.github/actions/use-arficats-from-specific-run
+        with:
+          artifact_name: android-app
+          run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
+          output_dir: android-app
+          platform: android
       - name: "Download Android app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: android-app
           path: android-app
-      
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
+      - name: "Setup needed tools"
+        id: setup-needed-tools  
+        uses: ./.github/actions/setup-tools
         with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      
-      - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - name: Verify maestro
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: Set up Android SDK
-        run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
-      
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
+
+      - name: "Start runtime with retry"
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
+        with:
+          timeout_minutes: 20
+          max_attempts: 3
+          command: |
+            chmod +x .github/scripts/start-runtime-with-verification.sh
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -546,7 +529,7 @@ jobs:
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.0.0
         with:
-          api-level: 30
+          api-level: 35
           target: google_apis
           arch: x86_64
           profile: pixel
@@ -558,27 +541,11 @@ jobs:
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}"
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: android-runtime-logs-${{ matrix.widget }}
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-screenshots-${{ matrix.widget }}
-          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-artifacts-${{ matrix.widget }}
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: android
+          test-type: ${{ matrix.widget }}
 
   ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
@@ -586,7 +553,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 60
     strategy:
-      max-parallel: 10
+      max-parallel: 5
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
@@ -595,80 +562,40 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: |
-          yarn cache clean
-          yarn install --immutable
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-
-      
-      # USED ONLY FOR TESTING PURPOSE - TO SKIP APP BUILD PART AND DOWNLOAD APP FROM SPECIFIC RUN
-      # - name: "Install GitHub CLI"
-      #   run: |
-      #     brew install gh
-      # - name: "Authenticate GitHub CLI"
-      #   run: |
-      #     unset GITHUB_TOKEN
-      #     echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-      # - name: "Fetch artifacts from run 676"
-      #   id: fetch-artifacts
-      #   run: |
-      #     artifacts_url=$(gh api "repos/${{ github.repository }}/actions/runs/13453887084/artifacts" --jq '.artifacts[] | select(.name == "ios-app") | .archive_download_url')
-      #     echo "Artifacts URL: $artifacts_url"
-      #     echo "artifacts_url=$artifacts_url" >> $GITHUB_ENV
-      # - name: "Download iOS app"
-      #   if: env.artifacts_url != ''
-      #   run: |
-      #     if [ -z "$artifacts_url" ]; then
-      #       echo "No artifacts URL found."
-      #       exit 1
-      #     fi
-      #     curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o ios-app.zip "$artifacts_url"
-      #     unzip ios-app.zip -d ios-app
-
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
+      # Used only for local testing, will be empty on GitHub
+      - name: "Download iOS app from specific run"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
+        uses: ./.github/actions/use-arficats-from-specific-run
         with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      
+          artifact_name: ios-app
+          run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
+          output_dir: ios-app
+          platform: ios
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ios-app
           path: ios-app
-      - name: Check iOS App Path
-        run: ls ios-app
-
-      - name: "Verify Xcode CLI Tools"
-        run: |
-          if ! xcode-select --print-path; then
-            echo "Xcode CLI tools not set. Setting them now."
-            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          else
-            echo "Xcode CLI tools are already configured."
-          fi
-      
-      - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - name: "Verify maestro"
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: "List Available Simulators"
-        run: xcrun simctl list devices
-      
+      - name: "Setup needed tools"
+        id: setup-needed-tools
+        uses: ./.github/actions/setup-tools
+        with:
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
+      - name: "Start runtime with retry"
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            chmod +x .github/scripts/start-runtime-with-verification.sh
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+  
+      - name: "Setup Xcode CLI Tools"
+        uses: ./.github/actions/setup-xcode-cli-tools
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
@@ -676,27 +603,11 @@ jobs:
           bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}"
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: ios-runtime-logs-${{ matrix.widget }}
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-screenshots-${{ matrix.widget }}
-          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-artifacts-${{ matrix.widget }}
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: ios
+          test-type: ${{ matrix.widget }}
 
   android-js-tests:
     if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
@@ -708,13 +619,6 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: yarn install --immutable
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -724,22 +628,19 @@ jobs:
         with:
           name: android-app
           path: android-app
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
+      - name: "Setup needed tools"
+        id: setup-needed-tools
+        uses: ./.github/actions/setup-tools
         with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - name: Verify maestro
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: Set up Android SDK
-        run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
+      - name: "Start runtime with retry"
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            chmod +x .github/scripts/start-runtime-with-verification.sh
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -748,7 +649,7 @@ jobs:
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # v2.0.0
         with:
-          api-level: 30
+          api-level: 35
           target: google_apis
           arch: x86_64
           profile: pixel
@@ -760,27 +661,11 @@ jobs:
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_jsactions_tests.sh android
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: android-runtime-logs-js-actions
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-screenshots-js-actions
-          path: ${{ github.workspace }}/maestro/images/actual/android/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: android-artifacts-js-actions
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: android
+          test-type: js-actions
 
   ios-js-tests:
     if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
@@ -792,52 +677,31 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
-      - name: "Install dependencies"
-        run: |
-          yarn cache clean
-          yarn install --immutable
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      - name: "Start runtime"
-        uses: ./.github/actions/start-runtime
-        with:
-          mda-file: automation.mda
-          mendix-version: ${{ needs.mendix-version.outputs.mendix_version }}
-      
       - name: "Download iOS app"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ios-app
           path: ios-app
-      - name: Check iOS App Path
-        run: ls ios-app
-
-      - name: "Verify Xcode CLI Tools"
-        run: |
-          if ! xcode-select --print-path; then
-            echo "Xcode CLI tools not set. Setting them now."
-            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          else
-            echo "Xcode CLI tools are already configured."
-          fi
-      - name: "Install Maestro"
-        run: |
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - name: "Verify maestro"
-        run: $HOME/.local/bin/maestro/bin/maestro --version
-      - name: "List Available Simulators"
-        run: xcrun simctl list devices
+      - name: "Setup needed tools"
+        id: setup-needed-tools
+        uses: ./.github/actions/setup-tools
+        with:
+          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
+      - name: "Start runtime with retry"
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            chmod +x .github/scripts/start-runtime-with-verification.sh
+            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+      
+      - name: "Setup Xcode CLI Tools"
+        uses: ./.github/actions/setup-xcode-cli-tools
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
@@ -845,27 +709,11 @@ jobs:
           bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_jsactions_tests.sh ios
       
-      - name: "Archive runtime logs"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
+      - name: Archive test results
+        uses: ./.github/actions/archive-test-results
         with:
-          name: ios-runtime-logs-js-actions
-          path: log/*.log
-          if-no-files-found: ignore
-      - name: "Archive test screenshots"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-screenshots-js-actions
-          path: ${{ github.workspace }}/maestro/images/actual/ios/**/*.png
-          if-no-files-found: ignore
-      - name: "Archive artifacts"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
-        if: always()
-        with:
-          name: ios-artifacts-js-actions
-          path: packages/pluggableWidgets/**/artifacts/
-          if-no-files-found: ignore
+          platform: ios
+          test-type: js-actions
   compare-screenshots:
     needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
     runs-on: ubuntu-latest
@@ -904,15 +752,9 @@ jobs:
           gh run download ${{ github.run_id }} --name ios-screenshots-js-actions --dir images/actual/ios/ || true
           ls -l images/actual/ios/
 
-      - name: "Set up node"
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
-        with:
-          node-version-file: .nvmrc
-          cache: yarn
+      - name: "Setup Node and dependencies"
+        uses: ./.github/actions/setup-node-with-cache
     
-      - name: "Install dependencies"
-        run: yarn install
-  
       - name: "Compare Android screenshots"
         continue-on-error: true 
         run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js android

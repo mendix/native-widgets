@@ -1,0 +1,21 @@
+name: "Setup Maestro"
+description: "Install and cache Maestro"
+runs:
+  using: "composite"
+  steps:
+    - name: "Cache Maestro"
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+      with:
+        path: $HOME/.local/bin/maestro
+        key: maestro-${{ runner.os }}-v1
+    
+    - name: "Install Maestro"
+      shell: bash
+      run: |
+        if [ ! -f "$HOME/.local/bin/maestro/bin/maestro" ]; then
+          mkdir -p $HOME/.local/bin
+          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
+          unzip maestro.zip -d $HOME/.local/bin
+          chmod +x $HOME/.local/bin/maestro/bin/maestro
+        fi
+        echo "$HOME/.local/bin" >> $GITHUB_PATH

@@ -2,7 +2,7 @@ name: Publishing docker images for mxbuild
 
 on:
   push:
-    branches: [main]
+    branches: [mx-version/10]
     paths:
       - "configs/e2e/mendix-versions.json"
 
