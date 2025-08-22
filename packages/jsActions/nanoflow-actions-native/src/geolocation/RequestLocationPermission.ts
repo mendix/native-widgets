@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import Geolocation, { GeolocationError } from "@react-native-community/geolocation";
+import Geolocation from "@react-native-community/geolocation";
 
 import type { GeolocationServiceStatic, AuthorizationResult } from "../../typings/Geolocation";
 
@@ -119,14 +119,16 @@ export async function RequestLocationPermission(): Promise<boolean> {
                       )
             );
         } else if (geolocationModule) {
-            geolocationModule.requestAuthorization(
-                () => {
-                    return Promise.resolve(true);
-                },
-                (err: GeolocationError) => {
-                    return Promise.reject(err);
-                }
-            );
+            return new Promise(resolve => {
+                geolocationModule.requestAuthorization(
+                    () => {
+                        resolve(true);
+                    },
+                    () => {
+                        resolve(false);
+                    }
+                );
+            });
         }
 
         return false;
