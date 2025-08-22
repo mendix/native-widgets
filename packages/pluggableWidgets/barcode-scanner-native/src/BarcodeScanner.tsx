@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
-import { createElement, ReactElement, useMemo } from "react";
+import { createElement, ReactElement, useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { Camera, useCodeScanner, Code, useCameraDevice } from "react-native-vision-camera";
 import BarcodeMask from "react-native-barcode-mask";
@@ -16,21 +16,36 @@ export function BarcodeScanner(props: Props): ReactElement {
 
     const styles = useMemo(() => flattenStyles(defaultBarcodeScannerStyle, props.style), [props.style]);
 
-    const onCodeScanned = (codes: Code[]) => {
-        if (props.barcode.status !== ValueStatus.Available || codes.length === 0 || !codes[0].value) {
-            return;
-        }
-        const { value } = codes[0];
+    // Ref to track last scan time
+    const lastScanRef = useRef(0);
 
-        if (value !== props.barcode.value) {
-            props.barcode.setValue(value);
-        }
-        executeAction(props.onDetect);
-    };
+    const onCodeScanned = useCallback(
+        (codes: Code[]) => {
+            const now = Date.now();
+
+            // throttle: only allow once every 2000ms
+            if (now - lastScanRef.current < 2000) {
+                return;
+            }
+            lastScanRef.current = now;
+
+            if (props.barcode.status !== ValueStatus.Available || codes.length === 0 || !codes[0].value) {
+                return;
+            }
+
+            const { value } = codes[0];
+            if (value !== props.barcode.value) {
+                props.barcode.setValue(value);
+            }
+
+            executeAction(props.onDetect);
+        },
+        [props.barcode, props.onDetect]
+    );
 
     const codeScanner = useCodeScanner({
         codeTypes: ["ean-13", "qr", "aztec", "codabar", "code-128", "data-matrix"],
-        onCodeScanned: throttle(onCodeScanned, 2000)
+        onCodeScanned
     });
 
     return (
@@ -57,17 +72,4 @@ export function BarcodeScanner(props: Props): ReactElement {
             )}
         </View>
     );
-}
-
-export function throttle<F extends (...params: any[]) => void>(fn: F, threshold: number): F {
-    let wait = false;
-    return function invokeFn(this: any, ...args: any[]) {
-        if (!wait) {
-            fn(...args);
-            wait = true;
-            setTimeout(() => {
-                wait = false;
-            }, threshold);
-        }
-    } as F;
 }
