@@ -15,16 +15,28 @@ async function setLocalGitCredentials(workingDirectory) {
 }
 
 function execShellCommand(cmd, workingDirectory = process.cwd()) {
+    console.log(`[EXEC] Running command: ${cmd}`);
+    console.log(`[EXEC] Working directory: ${workingDirectory}`);
+
     return new Promise((resolve, reject) => {
         exec(cmd, { cwd: workingDirectory }, (error, stdout, stderr) => {
             if (error) {
-                console.warn(stderr);
-                console.warn(stdout);
+                console.error(`[EXEC ERROR] Command failed: ${cmd}`);
+                console.error(`[EXEC ERROR] Working directory: ${workingDirectory}`);
+                console.error(`[EXEC ERROR] Exit code: ${error.code}`);
+                console.error(`[EXEC ERROR] Stderr: ${stderr}`);
+                console.error(`[EXEC ERROR] Stdout: ${stdout}`);
+                console.error(`[EXEC ERROR] Error message: ${error.message}`);
                 reject(error);
             }
             if (stderr) {
-                console.warn(stderr);
+                console.warn(`[EXEC WARN] Stderr output: ${stderr}`);
             }
+            console.log(`[EXEC SUCCESS] Command completed successfully: ${cmd}`);
+            if (stdout.trim()) {
+                console.log(`[EXEC SUCCESS] Output: ${stdout.trim()}`);
+            }
+            console.log(`[EXEC SUCCESS] Command completed: ${cmd}`);
             resolve(stdout);
         });
     });
@@ -50,7 +62,7 @@ async function getPackageInfo(path) {
     try {
         await access(pkgPath);
         const { name, widgetName, moduleName, version, marketplace, testProject, repository } = require(pkgPath);
-        return {
+        const packageInfo = {
             nameWithDash: name,
             nameWithSpace: moduleName ?? widgetName,
             version,
@@ -60,8 +72,20 @@ async function getPackageInfo(path) {
             testProjectBranchName: testProject?.branchName,
             changelogPath: `${path}/CHANGELOG.md`
         };
+
+        console.log(`[PACKAGE INFO] Loading package info from: ${pkgPath}`);
+        console.log(`[PACKAGE INFO] Name: ${packageInfo.nameWithSpace} (${packageInfo.nameWithDash})`);
+        console.log(`[PACKAGE INFO] Version: ${packageInfo.version}`);
+        console.log(`[PACKAGE INFO] Minimum MX Version: ${packageInfo.minimumMXVersion}`);
+        console.log(`[PACKAGE INFO] Repository URL: ${packageInfo.url}`);
+        console.log(`[PACKAGE INFO] Test Project URL: ${packageInfo.testProjectUrl}`);
+        console.log(`[PACKAGE INFO] Test Project Branch: ${packageInfo.testProjectBranchName}`);
+
+        return packageInfo;
     } catch (error) {
-        console.error(`ERROR: Path does not exist: ${pkgPath}`);
+        console.error(`[PACKAGE INFO ERROR] Path does not exist: ${pkgPath}`);
+        console.error(`[PACKAGE INFO ERROR] Error details: ${error.message}`);
+        console.error(`[PACKAGE INFO ERROR] Stack trace: ${error.stack}`);
         return null;
     }
 }
@@ -91,18 +115,40 @@ async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, exc
 
 async function bumpVersionInPackageJson(moduleFolder, moduleInfo) {
     const moduleVersionNew = process.env.TAG?.split("-v")?.[1];
+
+    console.log(`[VERSION BUMP] Processing version bump for: ${moduleInfo.nameWithSpace}`);
+    console.log(`[VERSION BUMP] Current version: ${moduleInfo.version}`);
+    console.log(`[VERSION BUMP] Target version: ${moduleVersionNew}`);
+    console.log(`[VERSION BUMP] Module folder: ${moduleFolder}`);
+    console.log(`[VERSION BUMP] TAG environment variable: ${process.env.TAG}`);
+
     if (moduleInfo.version === moduleVersionNew) {
-        throw new Error(
-            `It looks like version ${moduleInfo.version} of "${moduleInfo.nameWithSpace}" has been released already. Did you manually bump the version without releasing? Then you should revert the bump before retrying.`
-        );
+        const errorMessage = `It looks like version ${moduleInfo.version} of "${moduleInfo.nameWithSpace}" has been released already. Did you manually bump the version without releasing? Then you should revert the bump before retrying.`;
+        console.error(`[VERSION BUMP ERROR] ${errorMessage}`);
+        throw new Error(errorMessage);
     } else {
         console.log(
-            `Bumping "${moduleInfo.nameWithSpace}" version from ${moduleInfo.version} to ${moduleVersionNew}..`
+            `[VERSION BUMP] Bumping "${moduleInfo.nameWithSpace}" version from ${moduleInfo.version} to ${moduleVersionNew}..`
         );
-        const pkgPath = join(moduleFolder, "package.json");
-        const pkg = require(pkgPath);
-        moduleInfo.version = pkg.version = moduleVersionNew;
-        await writeFile(pkgPath, JSON.stringify(pkg, null, 2));
+
+        try {
+            const pkgPath = join(moduleFolder, "package.json");
+            const pkg = require(pkgPath);
+            moduleInfo.version = pkg.version = moduleVersionNew;
+            await writeFile(pkgPath, JSON.stringify(pkg, null, 2));
+
+            console.log(`[VERSION BUMP] Successfully updated package.json at: ${pkgPath}`);
+            console.log(`[VERSION BUMP] New version set: ${moduleVersionNew}`);
+        } catch (error) {
+            console.error(`[VERSION BUMP ERROR] Failed to update package.json`);
+            console.error(`[VERSION BUMP ERROR] Module: ${moduleInfo.nameWithSpace}`);
+            console.error(`[VERSION BUMP ERROR] Folder: ${moduleFolder}`);
+            console.error(`[VERSION BUMP ERROR] Current version: ${moduleInfo.version}`);
+            console.error(`[VERSION BUMP ERROR] Target version: ${moduleVersionNew}`);
+            console.error(`[VERSION BUMP ERROR] Error: ${error.message}`);
+            console.error(`[VERSION BUMP ERROR] Stack trace: ${error.stack}`);
+            throw error;
+        }
     }
     return moduleInfo;
 }
@@ -151,13 +197,50 @@ async function getUnreleasedChangelogs({ version, changelogPath }) {
 // Update changelogs and create PR in widget-resources
 async function commitAndCreatePullRequest(moduleInfo) {
     const changelogBranchName = `${moduleInfo.nameWithDash}-release-${moduleInfo.version}`;
-    await execShellCommand(
-        `git checkout -b ${changelogBranchName} && git add . && git commit -m "chore(${moduleInfo.nameWithDash}): update changelogs" && git push --set-upstream origin ${changelogBranchName}`
-    );
-    await execShellCommand(
-        `gh pr create --title "${moduleInfo.nameWithSpace}: Updating changelogs" --body "This is an automated PR." --base main --head ${changelogBranchName}`
-    );
-    console.log("Created PR for changelog updates.");
+
+    console.log(`[BRANCH] Creating branch: ${changelogBranchName}`);
+    console.log(`[BRANCH] Module: ${moduleInfo.nameWithSpace}`);
+    console.log(`[BRANCH] Version: ${moduleInfo.version}`);
+
+    try {
+        // Check if branch already exists locally or remotely and delete it
+        const branchExists = await execShellCommand(`git branch --list ${changelogBranchName}`)
+            .then(output => output.trim().length > 0)
+            .catch(() => false);
+
+        const remoteBranchExists = await execShellCommand(`git ls-remote --heads origin ${changelogBranchName}`)
+            .then(output => output.trim().length > 0)
+            .catch(() => false);
+
+        if (branchExists) {
+            console.log(`[BRANCH] Local branch ${changelogBranchName} exists, deleting it`);
+            await execShellCommand(`git branch -D ${changelogBranchName}`);
+        }
+
+        if (remoteBranchExists) {
+            console.log(`[BRANCH] Remote branch ${changelogBranchName} exists, deleting it`);
+            await execShellCommand(`git push origin --delete ${changelogBranchName}`);
+        }
+
+        // Create new branch and push
+        await execShellCommand(
+            `git checkout -b ${changelogBranchName} && git add . && git commit -m "chore(${moduleInfo.nameWithDash}): update changelogs" && git push --set-upstream origin ${changelogBranchName}`
+        );
+
+        await execShellCommand(
+            `gh pr create --title "${moduleInfo.nameWithSpace}: Updating changelogs" --body "This is an automated PR." --base main --head ${changelogBranchName}`
+        );
+
+        console.log(`[BRANCH] Created PR for changelog updates on branch: ${changelogBranchName}`);
+    } catch (error) {
+        console.error(`[BRANCH ERROR] Failed to create branch and PR`);
+        console.error(`[BRANCH ERROR] Branch name: ${changelogBranchName}`);
+        console.error(`[BRANCH ERROR] Module: ${moduleInfo.nameWithSpace}`);
+        console.error(`[BRANCH ERROR] Version: ${moduleInfo.version}`);
+        console.error(`[BRANCH ERROR] Error: ${error.message}`);
+        console.error(`[BRANCH ERROR] Stack trace: ${error.stack}`);
+        throw error;
+    }
 }
 
 async function updateWidgetChangelogs(widgetsFolders) {
@@ -217,31 +300,112 @@ async function cloneRepo(githubUrl, localFolder) {
 }
 
 async function createMPK(tmpFolder, moduleInfo, excludeFilesRegExp) {
-    console.log("Creating module MPK..");
-    await createModuleMpkInDocker(
-        tmpFolder,
-        moduleInfo.moduleNameInModeler,
-        moduleInfo.minimumMXVersion,
-        excludeFilesRegExp
-    );
-    return (await getFiles(tmpFolder, [`.mpk`]))[0];
+    console.log(`[MPK CREATION] Starting MPK creation process`);
+    console.log(`[MPK CREATION] Module: ${moduleInfo.nameWithSpace} (${moduleInfo.moduleNameInModeler})`);
+    console.log(`[MPK CREATION] Version: ${moduleInfo.version}`);
+    console.log(`[MPK CREATION] Minimum MX Version: ${moduleInfo.minimumMXVersion}`);
+    console.log(`[MPK CREATION] Temporary folder: ${tmpFolder}`);
+    console.log(`[MPK CREATION] Exclude files regex: ${excludeFilesRegExp}`);
+
+    try {
+        await createModuleMpkInDocker(
+            tmpFolder,
+            moduleInfo.moduleNameInModeler,
+            moduleInfo.minimumMXVersion,
+            excludeFilesRegExp
+        );
+
+        const mpkFiles = await getFiles(tmpFolder, [`.mpk`]);
+        const mpkOutput = mpkFiles[0];
+
+        console.log(`[MPK CREATION] Successfully created MPK: ${mpkOutput}`);
+        return mpkOutput;
+    } catch (error) {
+        console.error(`[MPK CREATION ERROR] Failed to create MPK`);
+        console.error(`[MPK CREATION ERROR] Module: ${moduleInfo.nameWithSpace} (${moduleInfo.moduleNameInModeler})`);
+        console.error(`[MPK CREATION ERROR] Version: ${moduleInfo.version}`);
+        console.error(`[MPK CREATION ERROR] MX Version: ${moduleInfo.minimumMXVersion}`);
+        console.error(`[MPK CREATION ERROR] Temporary folder: ${tmpFolder}`);
+        console.error(`[MPK CREATION ERROR] Exclude regex: ${excludeFilesRegExp}`);
+        console.error(`[MPK CREATION ERROR] Error: ${error.message}`);
+        console.error(`[MPK CREATION ERROR] Stack trace: ${error.stack}`);
+        throw error;
+    }
 }
 
 async function createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput) {
-    console.log(`Creating Github release for module ${moduleInfo.nameWithSpace}`);
-    await createGithubReleaseFrom({
-        title: `${moduleInfo.nameWithSpace} ${moduleInfo.version} - Mendix ${moduleInfo.minimumMXVersion}`,
-        body: moduleChangelogs,
-        tag: process.env.TAG,
-        mpkOutput
-    });
+    console.log(`[GITHUB RELEASE] Creating GitHub release for module: ${moduleInfo.nameWithSpace}`);
+    console.log(`[GITHUB RELEASE] Version: ${moduleInfo.version}`);
+    console.log(`[GITHUB RELEASE] MX Version: ${moduleInfo.minimumMXVersion}`);
+    console.log(`[GITHUB RELEASE] Tag: ${process.env.TAG}`);
+    console.log(`[GITHUB RELEASE] MPK Output: ${mpkOutput}`);
+    console.log(`[GITHUB RELEASE] Changelog length: ${moduleChangelogs?.length || 0} characters`);
+
+    try {
+        await createGithubReleaseFrom({
+            title: `${moduleInfo.nameWithSpace} ${moduleInfo.version} - Mendix ${moduleInfo.minimumMXVersion}`,
+            body: moduleChangelogs,
+            tag: process.env.TAG,
+            mpkOutput
+        });
+
+        console.log(
+            `[GITHUB RELEASE] Successfully created GitHub release for: ${moduleInfo.nameWithSpace} ${moduleInfo.version}`
+        );
+    } catch (error) {
+        console.error(`[GITHUB RELEASE ERROR] Failed to create GitHub release`);
+        console.error(`[GITHUB RELEASE ERROR] Module: ${moduleInfo.nameWithSpace}`);
+        console.error(`[GITHUB RELEASE ERROR] Version: ${moduleInfo.version}`);
+        console.error(`[GITHUB RELEASE ERROR] MX Version: ${moduleInfo.minimumMXVersion}`);
+        console.error(`[GITHUB RELEASE ERROR] Tag: ${process.env.TAG}`);
+        console.error(`[GITHUB RELEASE ERROR] MPK Output: ${mpkOutput}`);
+        console.error(`[GITHUB RELEASE ERROR] Error: ${error.message}`);
+        console.error(`[GITHUB RELEASE ERROR] Stack trace: ${error.stack}`);
+        throw error;
+    }
 }
 
 async function createGithubReleaseFrom({ title, body = "", tag, mpkOutput, isDraft = false }) {
+    console.log(`[GITHUB RELEASE FROM] Starting GitHub release creation`);
+    console.log(`[GITHUB RELEASE FROM] Title: ${title}`);
+    console.log(`[GITHUB RELEASE FROM] Tag: ${tag}`);
+    console.log(`[GITHUB RELEASE FROM] MPK Output: ${mpkOutput}`);
+    console.log(`[GITHUB RELEASE FROM] Draft: ${isDraft}`);
+    console.log(`[GITHUB RELEASE FROM] Body length: ${body?.length || 0} characters`);
+
+    // Validate inputs
+    if (!title || !tag || !mpkOutput) {
+        const missingParams = [];
+        if (!title) {
+            missingParams.push("title");
+        }
+        if (!tag) {
+            missingParams.push("tag");
+        }
+        if (!mpkOutput) {
+            missingParams.push("mpkOutput");
+        }
+
+        console.error(`[GITHUB RELEASE FROM ERROR] Missing required parameters: ${missingParams.join(", ")}`);
+        throw new Error(`Missing required parameters for GitHub release: ${missingParams.join(", ")}`);
+    }
+
+    // Check if MPK file exists
+    try {
+        await access(mpkOutput);
+        console.log(`[GITHUB RELEASE FROM] MPK file exists: ${mpkOutput}`);
+    } catch (error) {
+        console.error(`[GITHUB RELEASE FROM ERROR] MPK file not found: ${mpkOutput}`);
+        throw new Error(`MPK file not found: ${mpkOutput}`);
+    }
+
+    // Sanitize body to avoid command injection and quote issues
+    const sanitizedBody = body.replaceAll("'", "`").replaceAll('"', "`").replace(/\n/g, "\\n");
+
     const command = [
         `gh release create`,
         `--title '${title}'`,
-        `--notes '${body.replaceAll("'", "`")}'`,
+        `--notes '${sanitizedBody}'`,
         isDraft ? "--draft" : "",
         `'${tag}'`,
         `'${mpkOutput}'`
@@ -249,7 +413,49 @@ async function createGithubReleaseFrom({ title, body = "", tag, mpkOutput, isDra
         .filter(str => str !== "")
         .join(" ");
 
-    await execShellCommand(command);
+    console.log(`[GITHUB RELEASE FROM] Executing command: ${command}`);
+
+    try {
+        const result = await execShellCommand(command);
+        console.log(`[GITHUB RELEASE FROM] Command output: ${result.trim()}`);
+        console.log(`[GITHUB RELEASE FROM] Successfully created GitHub release with tag: ${tag}`);
+
+        // Verify the release was created by checking if the tag exists
+        try {
+            const verifyCommand = `gh release view '${tag}'`;
+            console.log(`[GITHUB RELEASE FROM] Verifying release creation: ${verifyCommand}`);
+            await execShellCommand(verifyCommand);
+            console.log(`[GITHUB RELEASE FROM] Release verification successful`);
+        } catch (verifyError) {
+            console.warn(`[GITHUB RELEASE FROM WARN] Could not verify release creation: ${verifyError.message}`);
+        }
+
+        return result;
+    } catch (error) {
+        console.error(`[GITHUB RELEASE FROM ERROR] Failed to create GitHub release`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Title: ${title}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Tag: ${tag}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] MPK Output: ${mpkOutput}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Draft: ${isDraft}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Command: ${command}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Error: ${error.message}`);
+        console.error(`[GITHUB RELEASE FROM ERROR] Stack trace: ${error.stack}`);
+
+        // Check if it's an authentication issue
+        if (error.message.includes("authentication") || error.message.includes("token")) {
+            console.error(`[GITHUB RELEASE FROM ERROR] This appears to be an authentication issue`);
+            console.error(`[GITHUB RELEASE FROM ERROR] Please check your GH_TOKEN environment variable`);
+            console.error(`[GITHUB RELEASE FROM ERROR] Or run: gh auth login`);
+        }
+
+        // Check if it's a duplicate release issue
+        if (error.message.includes("already exists") || error.message.includes("tag name")) {
+            console.error(`[GITHUB RELEASE FROM ERROR] Release with tag '${tag}' might already exist`);
+            console.error(`[GITHUB RELEASE FROM ERROR] Check existing releases with: gh release list`);
+        }
+
+        throw error;
+    }
 }
 
 function zip(src, fileName) {
@@ -282,7 +488,9 @@ async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders) {
             // explicitly set the dest mode, in certain scenarios the file is read only
             // https://chmodcommand.com/chmod-644/
             await chmod(dest, 0o644);
-        } catch (_) {}
+        } catch (chmodError) {
+            console.warn(`[EXPORT MODULE] Could not change file permissions for ${dest}: ${chmodError.message}`);
+        }
         await copyFile(src, dest);
     }
     // Add entries to the package.xml

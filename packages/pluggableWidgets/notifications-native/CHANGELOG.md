@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.0.0] - 2025-8-21
+
 -   The widget has been migrated to notifee.
 
 ## [4.1.0] - 2024-12-3

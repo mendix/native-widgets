@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-8-21
+
 -   Updated react-native-linear-gradient to latest version.
 
 ## [2.1.0] - 2024-12-3
