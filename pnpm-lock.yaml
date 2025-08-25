@@ -20,6 +20,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      url-parse:
+        specifier: 1.5.10
+        version: 1.5.10
     devDependencies:
       '@actions/core':
         specifier: ^1.6.0
@@ -2448,6 +2452,7 @@ packages:
     deprecated: |-
       DEPRECATED: This package is no longer maintained.
       Please use the built-in Jest matchers available in @testing-library/react-native v12.4+.
+
       See migration guide: https://callstack.github.io/react-native-testing-library/docs/migration/jest-matchers
     peerDependencies:
       react: 18.2.0
@@ -4391,6 +4396,7 @@ packages:
 
   has-own@1.0.1:
     resolution: {integrity: sha512-RDKhzgQTQfMaLvIFhjahU+2gGnRBK6dYOd5Gd9BzkmnBneOCRYjRC003RIMrdAbH52+l+CnMS4bBCXGer8tEhg==}
+    deprecated: This project is not maintained. Use Object.hasOwn() instead.
 
   has-property-descriptors@1.0.2:
     resolution: {integrity: sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg==}
@@ -5434,6 +5440,7 @@ packages:
 
   metro-react-native-babel-preset@0.74.1:
     resolution: {integrity: sha512-DjsG9nqm5C7cjB2SlgbcNJOn9y5MBUd3bRlCfnoj8CxAeGTGkS+yXd183lHR3C1bhmQNjuUE0abzzpE1CFh6JQ==}
+    deprecated: Use @react-native/babel-preset instead
     peerDependencies:
       '@babel/core': '*'
 
@@ -6583,6 +6590,7 @@ packages:
 
   react-native-vector-icons@10.2.0:
     resolution: {integrity: sha512-n5HGcxUuVaTf9QJPs/W22xQpC2Z9u0nb0KgLPnVltP8vdUvOp6+R26gF55kilP/fV4eL4vsAHUqUjewppJMBOQ==}
+    deprecated: react-native-vector-icons package has moved to a new model of per-icon-family packages. See the https://github.com/oblador/react-native-vector-icons/blob/master/MIGRATION.md on how to migrate
     hasBin: true
 
   react-native-video@6.10.0:

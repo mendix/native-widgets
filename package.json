@@ -96,5 +96,8 @@
       "typescript": "~5.8.0"
     }
   },
-  "packageManager": "pnpm@10.13.1"
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "url-parse": "1.5.10"
+  }
 }
