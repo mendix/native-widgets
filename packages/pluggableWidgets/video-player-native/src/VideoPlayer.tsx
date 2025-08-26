@@ -86,13 +86,9 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
         setFullScreen(isFullScreen);
         const { NavigationBar } = NativeModules;
         if (NavigationBar) {
-            const SystemNavigationBar = (await import("react-native-system-navigation-bar")).default;
-
             if (isFullScreen) {
-                SystemNavigationBar.navigationHide();
                 StatusBar.setHidden(true);
             } else {
-                SystemNavigationBar.navigationShow();
                 StatusBar.setHidden(false);
                 const isDark = Appearance.getColorScheme() === "dark";
                 StatusBar.setBarStyle(isDark ? "light-content" : "dark-content");
