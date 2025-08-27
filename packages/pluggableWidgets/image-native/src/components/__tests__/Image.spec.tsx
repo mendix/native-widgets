@@ -10,6 +10,10 @@ import { parse, SvgAst } from "react-native-svg";
 import svgXml from "./svgXml";
 import { GlyphIcon } from "../fonts/font";
 
+function flushMicrotasksQueue(): Promise<unknown> {
+    return act(() => new Promise(resolve => setTimeout(resolve, 0)));
+}
+
 jest.mock("react-native-svg/lib/commonjs/xml", () => {
     const original = jest.requireActual("react-native-svg/lib/commonjs/xml");
     return {
@@ -71,7 +75,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -81,7 +85,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -91,7 +95,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -101,7 +105,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
@@ -112,7 +116,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -126,7 +130,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -140,7 +144,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -154,7 +158,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -170,7 +174,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -180,7 +184,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -190,7 +194,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -200,7 +204,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
@@ -211,7 +215,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -225,7 +229,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -239,7 +243,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -253,7 +257,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -272,7 +276,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -282,7 +286,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -292,7 +296,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -302,7 +306,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
@@ -313,7 +317,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$Image`));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -327,7 +331,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -341,7 +345,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -355,7 +359,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -371,7 +375,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -382,7 +386,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -393,7 +397,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -404,7 +408,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -418,7 +422,7 @@ describe("Widget", () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -434,7 +438,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -448,7 +452,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -462,7 +466,7 @@ describe("Widget", () => {
             );
             const image = render(ImageComponent);
 
-            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+            await flushMicrotasksQueue();
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -479,7 +483,7 @@ describe("Widget", () => {
             it("renders the structure with an icon and default color", async () => {
                 const image = render(<Image {...imageProps} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 expect(image.toJSON()).toMatchSnapshot();
             });
@@ -488,7 +492,7 @@ describe("Widget", () => {
                 const color = "red";
                 const image = render(<Image {...imageProps} style={[{ image: { color } }]} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 expect(image.getByTestId(`${imageProps.name}$Icon`).findByType(GlyphIcon).props.color).toEqual(color);
             });
@@ -497,7 +501,7 @@ describe("Widget", () => {
                 const size = 12;
                 const image = render(<Image {...imageProps} style={[{ image: { size } }]} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 expect(image.getByTestId(`${imageProps.name}$Icon`).findByType(GlyphIcon).props.size).toEqual(size);
             });
@@ -506,7 +510,7 @@ describe("Widget", () => {
                 const iconSize = 18;
                 const image = render(<Image {...imageProps} iconSize={iconSize} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 expect(image.getByTestId(`${imageProps.name}$Icon`).findByType(GlyphIcon).props.size).toEqual(iconSize);
             });
@@ -514,7 +518,7 @@ describe("Widget", () => {
             it("triggers the onclick action", async () => {
                 const image = render(<Image {...imageProps} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
                 expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -533,7 +537,7 @@ describe("Widget", () => {
             it("renders the structure", async () => {
                 const image = render(<Image {...imageProps} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 expect(image.toJSON()).toMatchSnapshot();
@@ -565,7 +569,7 @@ describe("Widget", () => {
                 ] as Style[];
                 const image = render(<Image {...imageProps} style={style} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 expect(image.toJSON()).toMatchSnapshot();
@@ -574,7 +578,7 @@ describe("Widget", () => {
             it("renders the structure inside a modal", async () => {
                 const image = render(<Image {...imageProps} onClickType={"enlarge"} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
@@ -585,7 +589,7 @@ describe("Widget", () => {
             it("triggers the onclick action", async () => {
                 const image = render(<Image {...imageProps} />);
 
-                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+                await flushMicrotasksQueue();
 
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
