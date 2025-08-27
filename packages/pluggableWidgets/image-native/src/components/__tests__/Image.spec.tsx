@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import { Text } from "react-native";
-import { fireEvent, render, waitFor } from "@testing-library/react-native";
+import { fireEvent, render, act } from "@testing-library/react-native";
 import { NativeIcon, NativeImage } from "mendix";
 import { Style } from "@mendix/piw-native-utils-internal";
 import { Image } from "../../Image";
@@ -69,7 +69,9 @@ describe("Widget", () => {
     describe("Static Image", () => {
         it("renders the structure", async () => {
             const ImageComponent = <Image {...imageProps} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -77,7 +79,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom height", async () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -85,7 +89,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom width", async () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -93,7 +99,9 @@ describe("Widget", () => {
 
         it("renders the structure inside a modal", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
@@ -102,7 +110,9 @@ describe("Widget", () => {
 
         it("triggers the onclick action", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -114,7 +124,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -126,7 +138,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -138,7 +152,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -152,7 +168,9 @@ describe("Widget", () => {
 
         it("renders the structure", async () => {
             const ImageComponent = <Image {...imageProps} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -160,7 +178,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom height", async () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -168,7 +188,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom width", async () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -176,7 +198,9 @@ describe("Widget", () => {
 
         it("renders the structure inside a modal", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
@@ -185,7 +209,9 @@ describe("Widget", () => {
 
         it("triggers the onclick action", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -197,7 +223,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -209,7 +237,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -221,7 +251,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -238,7 +270,9 @@ describe("Widget", () => {
 
         it("renders the structure", async () => {
             const ImageComponent = <Image {...imageProps} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -246,7 +280,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom height", async () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -254,7 +290,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom width", async () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -262,7 +300,9 @@ describe("Widget", () => {
 
         it("renders the structure inside a modal", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
             fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
@@ -271,7 +311,9 @@ describe("Widget", () => {
 
         it("triggers the onclick action", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent.press(image.getByTestId(`${imageProps.name}$Image`));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -283,7 +325,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -295,7 +339,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -307,7 +353,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -321,7 +369,9 @@ describe("Widget", () => {
 
         it("renders the structure", async () => {
             const ImageComponent = <Image {...imageProps} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -330,7 +380,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom height", async () => {
             const ImageComponent = <Image {...imageProps} heightUnit={"points"} customHeight={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -339,7 +391,9 @@ describe("Widget", () => {
 
         it("renders the structure with custom width", async () => {
             const ImageComponent = <Image {...imageProps} widthUnit={"points"} customWidth={100} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -348,7 +402,9 @@ describe("Widget", () => {
 
         it("renders the structure inside a modal", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"enlarge"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -360,7 +416,9 @@ describe("Widget", () => {
 
         it("triggers the onclick action", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
             fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
@@ -374,7 +432,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -386,7 +446,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -398,7 +460,9 @@ describe("Widget", () => {
                     <Text>Background Image</Text>
                 </Image>
             );
-            const image = await waitFor(() => render(ImageComponent));
+            const image = render(ImageComponent);
+
+            await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
             fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
             expect(image.toJSON()).toMatchSnapshot();
@@ -413,33 +477,44 @@ describe("Widget", () => {
             });
 
             it("renders the structure with an icon and default color", async () => {
-                const image = await waitFor(() => render(<Image {...imageProps} />));
+                const image = render(<Image {...imageProps} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+
                 expect(image.toJSON()).toMatchSnapshot();
             });
 
             it("uses color if set", async () => {
                 const color = "red";
-                const image = await waitFor(() => render(<Image {...imageProps} style={[{ image: { color } }]} />));
+                const image = render(<Image {...imageProps} style={[{ image: { color } }]} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
                 expect(image.getByTestId(`${imageProps.name}$Icon`).findByType(GlyphIcon).props.color).toEqual(color);
             });
 
             it("prefers size from styles", async () => {
                 const size = 12;
-                const image = await waitFor(() => render(<Image {...imageProps} style={[{ image: { size } }]} />));
+                const image = render(<Image {...imageProps} style={[{ image: { size } }]} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
                 expect(image.getByTestId(`${imageProps.name}$Icon`).findByType(GlyphIcon).props.size).toEqual(size);
             });
 
             it("prefers size from iconSize prop", async () => {
                 const iconSize = 18;
-                const image = await waitFor(() => render(<Image {...imageProps} iconSize={iconSize} />));
+                const image = render(<Image {...imageProps} iconSize={iconSize} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
                 expect(image.getByTestId(`${imageProps.name}$Icon`).findByType(GlyphIcon).props.size).toEqual(iconSize);
             });
 
             it("triggers the onclick action", async () => {
-                const image = await waitFor(() => render(<Image {...imageProps} />));
+                const image = render(<Image {...imageProps} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
                 fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
                 expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
@@ -456,7 +531,10 @@ describe("Widget", () => {
             });
 
             it("renders the structure", async () => {
-                const image = await waitFor(() => render(<Image {...imageProps} />));
+                const image = render(<Image {...imageProps} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 expect(image.toJSON()).toMatchSnapshot();
             });
@@ -485,13 +563,18 @@ describe("Widget", () => {
                         }
                     }
                 ] as Style[];
-                const image = await waitFor(() => render(<Image {...imageProps} style={style} />));
+                const image = render(<Image {...imageProps} style={style} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
+
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 expect(image.toJSON()).toMatchSnapshot();
             });
 
             it("renders the structure inside a modal", async () => {
-                const image = await waitFor(() => render(<Image {...imageProps} onClickType={"enlarge"} />));
+                const image = render(<Image {...imageProps} onClickType={"enlarge"} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
@@ -500,7 +583,9 @@ describe("Widget", () => {
             });
 
             it("triggers the onclick action", async () => {
-                const image = await waitFor(() => render(<Image {...imageProps} />));
+                const image = render(<Image {...imageProps} />);
+
+                await act(() => new Promise(resolve => setTimeout(resolve, 0)));
 
                 fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
                 fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
