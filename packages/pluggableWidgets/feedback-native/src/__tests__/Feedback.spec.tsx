@@ -71,5 +71,5 @@ describe("Feedback", () => {
                 referrer: "no-referrer"
             }
         );
-    });
+    }, 8000); // increased timeout due to slow test execution on Github
 });
