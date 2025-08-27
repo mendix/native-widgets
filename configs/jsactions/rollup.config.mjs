@@ -93,17 +93,6 @@ export default async args => {
                                       }
                                   );
 
-                                  // We dynamically import react-native-schedule-exact-alarm-permission as it works only on Android
-                                  // so we need to copy it here as collectDependencies won't detect it.
-                                  await copyJsModule(
-                                      // require returns a path to commonjs index.js file
-                                      join(
-                                          dirname(require.resolve("react-native-schedule-exact-alarm-permission")),
-                                          "../",
-                                          "../"
-                                      ),
-                                      join(outDir, "node_modules", "react-native-schedule-exact-alarm-permission")
-                                  );
                               } else if (args.configProject === "nanoflowcommons") {
                                   // `invariant` is being used silently by @react-native-community/geolocation; it is not listed as a dependency nor peerDependency.
                                   // https://github.dev/react-native-geolocation/react-native-geolocation/blob/1786929f2be581da91082ff857c2393da5e597b3/js/implementation.native.js#L13
