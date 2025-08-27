@@ -1,5 +1,5 @@
 import { FeedbackStyle } from "../ui/styles";
-import { fireEvent, render, waitFor, cleanup } from "@testing-library/react-native";
+import { render, cleanup, userEvent } from "@testing-library/react-native";
 import { createElement } from "react";
 import { FeedbackProps } from "../../typings/FeedbackProps";
 import { Feedback } from "../Feedback";
@@ -52,12 +52,15 @@ describe("Feedback", () => {
 
     it("should call the api when sending", async () => {
         const feedbackMsg = "unittest";
+        const user = userEvent.setup();
         const component = render(<Feedback {...defaultProps} />);
-        fireEvent.press(component.getByTestId("feedback-test$button"));
-        await waitFor(() => {
-            fireEvent.changeText(component.getByTestId("feedback-test$input"), feedbackMsg);
-        });
-        fireEvent.press(component.getByTestId("feedback-test$send"));
+
+        await user.press(component.getByTestId("feedback-test$button"));
+
+        await user.type(component.getByTestId("feedback-test$input"), feedbackMsg);
+
+        await user.press(component.getByTestId("feedback-test$send"));
+
         expect(fetch).toHaveBeenCalledWith(
             "https://feedback-api.mendix.com/rest/v3/feedbackapi/projects/sprintr-app-id/issues",
             {
