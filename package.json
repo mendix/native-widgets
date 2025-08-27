@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "npx husky install && pnpm -r run prepare",
-    "postinstall": "patch-package && pnpm -r run postinstall",
+    "postinstall": "pnpm -r run postinstall",
     "reinstall": "pnpm store prune && git clean -dfx && find . -type dir -name node_modules | xargs rm -rf && pnpm install && pnpm run postinstall",
     "prettier": "prettier --config \"./prettier.config.js\" --write \"**/*.{js,jsx,ts,tsx,scss,html,xml,yml,yaml}\"",
     "format": "pretty-quick --staged --config \"./prettier.config.js\" --pattern \"**/{src,script,typings,test,**}/**/*.{js,jsx,ts,tsx,scss,html,xml,md,json}\"",
@@ -29,7 +29,6 @@
     "version": "ts-node --project ./scripts/tsconfig.json ./scripts/release/BumpVersion.ts",
     "validate-staged-widget-versions": "node scripts/validation/validate-versions-staged-files.js",
     "setup-mobile": "pnpm setup-android && pnpm setup-ios",
-    "patch-package": "sh ./scripts/patch/patch-package.sh",
     "build:widgets": "node ./scripts/widget/buildWidgets.js",
     "test_widgets:maestro:ios": "bash maestro/run_maestro_widget_tests.sh ios",
     "test_widgets:maestro:android": "bash maestro/run_maestro_widget_tests.sh android",
@@ -65,7 +64,6 @@
     "image-js": "^0.35.6",
     "lint-staged": "^10.5.4",
     "mendix-client": "^7.15.8",
-    "patch-package": "^8.0.0",
     "pixelmatch": "^5.3.0",
     "pngjs": "^6.0.0",
     "pretty-quick": "^3.3.1",
@@ -94,6 +92,15 @@
       "@types/react-native": "0.73.0",
       "cheerio": "1.0.0-rc.12",
       "typescript": "~5.8.0"
+    },
+    "patchedDependencies": {
+      "@mendix/pluggable-widgets-tools@10.21.1": "patches/@mendix+pluggable-widgets-tools+10.21.1.patch",
+      "@ptomasroos/react-native-multi-slider@1.0.0": "patches/@ptomasroos+react-native-multi-slider+1.0.0.patch",
+      "react-native-action-button@2.8.5": "patches/react-native-action-button+2.8.5.patch",
+      "react-native-camera@3.40.0": "patches/react-native-camera+3.40.0.patch",
+      "react-native-gesture-handler@2.24.0": "patches/react-native-gesture-handler+2.24.0.patch",
+      "react-native-slider@0.11.0": "patches/react-native-slider+0.11.0.patch",
+      "react-native-snap-carousel@3.9.1": "patches/react-native-snap-carousel+3.9.1.patch"
     }
   },
   "packageManager": "pnpm@10.13.1"

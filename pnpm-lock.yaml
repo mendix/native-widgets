@@ -17,6 +17,29 @@ overrides:
   cheerio: 1.0.0-rc.12
   typescript: ~5.8.0
 
+patchedDependencies:
+  '@mendix/pluggable-widgets-tools@10.21.1':
+    hash: 1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c
+    path: patches/@mendix+pluggable-widgets-tools+10.21.1.patch
+  '@ptomasroos/react-native-multi-slider@1.0.0':
+    hash: b5e11465e4305f5284e90a78fc4575401f791921f34dbbafb9831f19ecae94da
+    path: patches/@ptomasroos+react-native-multi-slider+1.0.0.patch
+  react-native-action-button@2.8.5:
+    hash: 593bb64b27425a7f3805ad9567928d1369fd4cf939ab5d3eb43411a759565c48
+    path: patches/react-native-action-button+2.8.5.patch
+  react-native-camera@3.40.0:
+    hash: a1c648b476aee6b170796fa8d0614d3ebb16035bee5d516649c513c1fd584f59
+    path: patches/react-native-camera+3.40.0.patch
+  react-native-gesture-handler@2.24.0:
+    hash: 10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573
+    path: patches/react-native-gesture-handler+2.24.0.patch
+  react-native-slider@0.11.0:
+    hash: 899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6
+    path: patches/react-native-slider+0.11.0.patch
+  react-native-snap-carousel@3.9.1:
+    hash: 3a4c1b0f17629becc5d99ef1958df5a2f55c46e45f45670862aaeda12ab2f4e1
+    path: patches/react-native-snap-carousel+3.9.1.patch
+
 importers:
 
   .:
@@ -96,9 +119,6 @@ importers:
       mendix-client:
         specifier: ^7.15.8
         version: 7.15.8
-      patch-package:
-        specifier: ^8.0.0
-        version: 8.0.0
       pixelmatch:
         specifier: ^5.3.0
         version: 5.3.0
@@ -168,7 +188,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/querystringify':
         specifier: ^2.0.0
         version: 2.0.2
@@ -202,7 +222,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       mendix:
         specifier: 10.15.46408
         version: 10.15.46408(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(react@18.2.0)
@@ -211,7 +231,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       concurrently:
         specifier: ^6.0.0
         version: 6.5.1
@@ -233,7 +253,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/activity-indicator-native:
     dependencies:
@@ -246,7 +266,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/animation-native:
     dependencies:
@@ -262,7 +282,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/app-events-native:
     dependencies:
@@ -278,7 +298,7 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/background-gradient-native:
     dependencies:
@@ -291,7 +311,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/background-image-native:
     dependencies:
@@ -304,7 +324,7 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/badge-native:
     dependencies:
@@ -317,7 +337,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/bar-chart-native:
     dependencies:
@@ -330,7 +350,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/barcode-scanner-native:
     dependencies:
@@ -348,17 +368,17 @@ importers:
         version: 1.2.4
       react-native-camera:
         specifier: 3.40.0
-        version: 3.40.0
+        version: 3.40.0(patch_hash=a1c648b476aee6b170796fa8d0614d3ebb16035bee5d516649c513c1fd584f59)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/bottom-sheet-native:
     dependencies:
       '@gorhom/bottom-sheet':
         specifier: 5.1.1
-        version: 5.1.1(@types/react-native@0.73.0(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(@types/react@18.3.23)(react-native-gesture-handler@2.24.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native-reanimated@3.16.1(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        version: 5.1.1(@types/react-native@0.73.0(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(@types/react@18.3.23)(react-native-gesture-handler@2.24.0(patch_hash=10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native-reanimated@3.16.1(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
@@ -373,14 +393,14 @@ importers:
         version: 14.0.4(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))
       react-native-gesture-handler:
         specifier: 2.24.0
-        version: 2.24.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        version: 2.24.0(patch_hash=10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       react-native-reanimated:
         specifier: 3.16.1
         version: 3.16.1(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/react-native-actionsheet':
         specifier: ^2.4.1
         version: 2.4.7
@@ -401,11 +421,11 @@ importers:
         version: 4.2.3
       react-native-snap-carousel:
         specifier: ^3.9.1
-        version: 3.9.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        version: 3.9.1(patch_hash=3a4c1b0f17629becc5d99ef1958df5a2f55c46e45f45670862aaeda12ab2f4e1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/react-native-snap-carousel':
         specifier: ^3.7.4
         version: 3.8.11(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(react@18.2.0)
@@ -426,14 +446,14 @@ importers:
         version: 0.0.10(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       react-native-slider:
         specifier: ^0.11.0
-        version: 0.11.0
+        version: 0.11.0(patch_hash=899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6)
       tinycolor2:
         specifier: ^1.4.1
         version: 1.6.0
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/tinycolor2':
         specifier: ^1.4.1
         version: 1.4.6
@@ -449,7 +469,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/feedback-native:
     dependencies:
@@ -471,7 +491,7 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/querystringify':
         specifier: ^2.0.0
         version: 2.0.2
@@ -492,11 +512,11 @@ importers:
         version: 4.2.3
       react-native-action-button:
         specifier: ^2.8.5
-        version: 2.8.5(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))
+        version: 2.8.5(patch_hash=593bb64b27425a7f3805ad9567928d1369fd4cf939ab5d3eb43411a759565c48)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/gallery-native:
     dependencies:
@@ -509,7 +529,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/gallery-text-filter-native:
     dependencies:
@@ -525,7 +545,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/image-native:
     dependencies:
@@ -547,7 +567,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/intro-screen-native:
     dependencies:
@@ -566,7 +586,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/line-chart-native:
     dependencies:
@@ -579,7 +599,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/listview-swipe-native:
     dependencies:
@@ -591,11 +611,11 @@ importers:
         version: link:../../tools/piw-utils-internal
       react-native-gesture-handler:
         specifier: 2.24.0
-        version: 2.24.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        version: 2.24.0(patch_hash=10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/maps-native:
     dependencies:
@@ -617,7 +637,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/notifications-native:
     dependencies:
@@ -636,7 +656,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/pie-doughnut-chart-native:
     dependencies:
@@ -649,7 +669,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/popup-menu-native:
     dependencies:
@@ -665,7 +685,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/react-native-material-menu':
         specifier: ^1.0.6
         version: 1.0.10(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(react@18.2.0)
@@ -684,7 +704,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/progress-circle-native:
     dependencies:
@@ -700,7 +720,7 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/qr-code-native:
     dependencies:
@@ -719,7 +739,7 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/radio-buttons-native:
     dependencies:
@@ -732,7 +752,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/range-slider-native:
     dependencies:
@@ -744,14 +764,14 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@ptomasroos/react-native-multi-slider':
         specifier: ^1.0.0
-        version: 1.0.0(prop-types@15.8.1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        version: 1.0.0(patch_hash=b5e11465e4305f5284e90a78fc4575401f791921f34dbbafb9831f19ecae94da)(prop-types@15.8.1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       prop-types:
         specifier: ^15.7.2
         version: 15.8.1
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/ptomasroos__react-native-multi-slider':
         specifier: ^0.0.1
         version: 0.0.1(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(react@18.2.0)
@@ -773,7 +793,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/react-native-star-rating':
         specifier: ^1.1.6
         version: 1.1.6(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(react@18.2.0)
@@ -789,7 +809,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/safe-area-view-native:
     dependencies:
@@ -808,7 +828,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/signature-native:
     dependencies:
@@ -827,7 +847,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/slider-native:
     dependencies:
@@ -839,14 +859,14 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@ptomasroos/react-native-multi-slider':
         specifier: ^1.0.0
-        version: 1.0.0(prop-types@15.8.1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        version: 1.0.0(patch_hash=b5e11465e4305f5284e90a78fc4575401f791921f34dbbafb9831f19ecae94da)(prop-types@15.8.1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       prop-types:
         specifier: ^15.7.2
         version: 15.8.1
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/ptomasroos__react-native-multi-slider':
         specifier: ^0.0.1
         version: 0.0.1(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(react@18.2.0)
@@ -862,7 +882,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/toggle-buttons-native:
     dependencies:
@@ -881,7 +901,7 @@ importers:
         version: 7.27.1(@babel/core@7.28.0)
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/pluggableWidgets/video-player-native:
     dependencies:
@@ -906,7 +926,7 @@ importers:
         version: link:../../tools/piw-utils-internal
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       '@types/react-native-video':
         specifier: ^5.0.4
         version: 5.0.20(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(react@18.2.0)
@@ -925,13 +945,13 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
 
   packages/tools/piw-native-utils-internal:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       rimraf:
         specifier: ^5.0.10
         version: 5.0.10
@@ -940,7 +960,7 @@ importers:
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
-        version: 10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
+        version: 10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)
       rimraf:
         specifier: ^5.0.10
         version: 5.0.10
@@ -2804,9 +2824,6 @@ packages:
     resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
     engines: {node: '>=10.0.0'}
 
-  '@yarnpkg/lockfile@1.1.0':
-    resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
-
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
     hasBin: true
@@ -4197,9 +4214,6 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
-  find-yarn-workspace-root@2.0.0:
-    resolution: {integrity: sha512-1IMnbjt4KzsQfnhnzNd8wUEgXZ44IzZaZmnLYx7D5FZlaHt2gW20Cri8Q+E/t5tIj4+epTBub+2Zxu/vNILzqQ==}
-
   flat-cache@3.2.0:
     resolution: {integrity: sha512-CYcENa+FtcUKLmhhqyctpclsq7QF38pKjZHsGNiSQF5r4FtoKDWabFDl3hzaEQMvT1LHEysw5twgLvpYYb4vbw==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -5119,10 +5133,6 @@ packages:
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
 
-  json-stable-stringify@1.3.0:
-    resolution: {integrity: sha512-qtYiSSFlwot9XHtF9bD9c7rwKjr+RecWT//ZnPvSmEjpV5mmPOCN4j8UjY5hbjNkOwZ/jQv3J6R1/pL7RwgMsg==}
-    engines: {node: '>= 0.4'}
-
   json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
 
@@ -5140,9 +5150,6 @@ packages:
 
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
-
-  jsonify@0.0.1:
-    resolution: {integrity: sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==}
 
   jsonparse@1.3.1:
     resolution: {integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==}
@@ -5166,9 +5173,6 @@ packages:
   kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
-
-  klaw-sync@6.0.0:
-    resolution: {integrity: sha512-nIeuVSzdCCs6TDPTqI8w1Yre34sSq7AkZ4B3sfOBbI2CgVSB4Du4aLQijFU2+lhAFCwt9+42Hel6lQNIv6AntQ==}
 
   kleur@3.0.3:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
@@ -5839,10 +5843,6 @@ packages:
     resolution: {integrity: sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==}
     engines: {node: '>=10'}
 
-  os-tmpdir@1.0.2:
-    resolution: {integrity: sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==}
-    engines: {node: '>=0.10.0'}
-
   own-keys@1.0.1:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
     engines: {node: '>= 0.4'}
@@ -5918,11 +5918,6 @@ packages:
   parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
-
-  patch-package@8.0.0:
-    resolution: {integrity: sha512-da8BVIhzjtgScwDJ2TtKsfT5JFWz1hYoBl9rUQ1f38MC2HwnEIkK8VN3dKMKcP7P7bvvgzNDbfNHtx3MsQb5vA==}
-    engines: {node: '>=14', npm: '>5'}
-    hasBin: true
 
   path-exists@3.0.0:
     resolution: {integrity: sha512-bpC7GYwiDYQ4wYLe+FA8lhRjhQCMcQGuSgGGqDkg/QerRWw9CmGRT0iSOVRSZJ29NMLZgIzqaljJ63oaL4NIJQ==}
@@ -7030,10 +7025,6 @@ packages:
     resolution: {integrity: sha512-3TYDR7xWt4dIqV2JauJr+EJeW356RXijHeUlO+8djJ+uBXPn8/2dpzBc8yQhh583sVvc9CvFAeQVgijsH+PNNg==}
     engines: {node: '>=0.10.0'}
 
-  slash@2.0.0:
-    resolution: {integrity: sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==}
-    engines: {node: '>=6'}
-
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -7310,10 +7301,6 @@ packages:
 
   tinycolor2@1.6.0:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
-
-  tmp@0.0.33:
-    resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
-    engines: {node: '>=0.6.0'}
 
   tmp@0.2.5:
     resolution: {integrity: sha512-voyz6MApa1rQGUxT3E+BK7/ROe8itEx7vD8/HEvt4xwXucvQ5G5oeEiHkmHZJuBO21RpOf+YYm9MOivj709jow==}
@@ -9103,13 +9090,13 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@gorhom/bottom-sheet@5.1.1(@types/react-native@0.73.0(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(@types/react@18.3.23)(react-native-gesture-handler@2.24.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native-reanimated@3.16.1(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
+  '@gorhom/bottom-sheet@5.1.1(@types/react-native@0.73.0(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(@types/react@18.3.23)(react-native-gesture-handler@2.24.0(patch_hash=10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native-reanimated@3.16.1(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@gorhom/portal': 1.0.14(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       invariant: 2.2.4
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
-      react-native-gesture-handler: 2.24.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+      react-native-gesture-handler: 2.24.0(patch_hash=10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       react-native-reanimated: 3.16.1(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
     optionalDependencies:
       '@types/react': 18.3.23
@@ -9396,7 +9383,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
 
-  '@mendix/pluggable-widgets-tools@10.21.1(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)':
+  '@mendix/pluggable-widgets-tools@10.21.1(patch_hash=1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c)(@jest/transform@29.7.0)(@jest/types@30.0.1)(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/babel__core@7.20.5)(@types/node@20.19.9)(encoding@0.1.13)(jest-util@30.0.2)(picomatch@4.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.8.1)':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/plugin-transform-class-properties': 7.27.1(@babel/core@7.28.0)
@@ -9588,7 +9575,7 @@ snapshots:
       '@xml-tools/parser': 1.0.11
       prettier: 2.8.8
 
-  '@ptomasroos/react-native-multi-slider@1.0.0(prop-types@15.8.1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
+  '@ptomasroos/react-native-multi-slider@1.0.0(patch_hash=b5e11465e4305f5284e90a78fc4575401f791921f34dbbafb9831f19ecae94da)(prop-types@15.8.1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
     dependencies:
       prop-types: 15.8.1
       react: 18.2.0
@@ -10569,8 +10556,6 @@ snapshots:
   '@xmldom/xmldom@0.7.13': {}
 
   '@xmldom/xmldom@0.8.10': {}
-
-  '@yarnpkg/lockfile@1.1.0': {}
 
   JSONStream@1.3.5:
     dependencies:
@@ -12251,10 +12236,6 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
-  find-yarn-workspace-root@2.0.0:
-    dependencies:
-      micromatch: 4.0.8
-
   flat-cache@3.2.0:
     dependencies:
       flatted: 3.3.3
@@ -13453,14 +13434,6 @@ snapshots:
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
-  json-stable-stringify@1.3.0:
-    dependencies:
-      call-bind: 1.0.8
-      call-bound: 1.0.4
-      isarray: 2.0.5
-      jsonify: 0.0.1
-      object-keys: 1.1.1
-
   json-stringify-safe@5.0.1: {}
 
   json5@1.0.2:
@@ -13480,8 +13453,6 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  jsonify@0.0.1: {}
-
   jsonparse@1.3.1: {}
 
   jsx-ast-utils@3.3.5:
@@ -13500,10 +13471,6 @@ snapshots:
   kind-of@5.1.0: {}
 
   kind-of@6.0.3: {}
-
-  klaw-sync@6.0.0:
-    dependencies:
-      graceful-fs: 4.2.11
 
   kleur@3.0.3: {}
 
@@ -14367,8 +14334,6 @@ snapshots:
       wcwidth: 1.0.1
     optional: true
 
-  os-tmpdir@1.0.2: {}
-
   own-keys@1.0.1:
     dependencies:
       get-intrinsic: 1.3.0
@@ -14444,24 +14409,6 @@ snapshots:
       entities: 6.0.1
 
   parseurl@1.3.3: {}
-
-  patch-package@8.0.0:
-    dependencies:
-      '@yarnpkg/lockfile': 1.1.0
-      chalk: 4.1.2
-      ci-info: 3.9.0
-      cross-spawn: 7.0.6
-      find-yarn-workspace-root: 2.0.0
-      fs-extra: 9.1.0
-      json-stable-stringify: 1.3.0
-      klaw-sync: 6.0.0
-      minimist: 1.2.8
-      open: 7.4.2
-      rimraf: 2.7.1
-      semver: 7.7.2
-      slash: 2.0.0
-      tmp: 0.0.33
-      yaml: 2.8.0
 
   path-exists@3.0.0: {}
 
@@ -14915,7 +14862,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-native-action-button@2.8.5(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)):
+  react-native-action-button@2.8.5(patch_hash=593bb64b27425a7f3805ad9567928d1369fd4cf939ab5d3eb43411a759565c48)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)):
     dependencies:
       prop-types: 15.8.1
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
@@ -14939,7 +14886,7 @@ snapshots:
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
 
-  react-native-camera@3.40.0:
+  react-native-camera@3.40.0(patch_hash=a1c648b476aee6b170796fa8d0614d3ebb16035bee5d516649c513c1fd584f59):
     dependencies:
       prop-types: 15.8.1
 
@@ -14948,7 +14895,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
-      react-native-slider: 0.11.0
+      react-native-slider: 0.11.0(patch_hash=899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6)
       tinycolor2: 1.6.0
 
   react-native-device-info@14.0.4(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)):
@@ -14971,7 +14918,7 @@ snapshots:
 
   react-native-geocoder@0.5.0: {}
 
-  react-native-gesture-handler@2.24.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
+  react-native-gesture-handler@2.24.0(patch_hash=10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
     dependencies:
       '@egjs/hammerjs': 2.0.17
       hoist-non-react-statics: 3.3.2
@@ -15073,11 +15020,11 @@ snapshots:
     dependencies:
       react-native-webview: 13.13.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
 
-  react-native-slider@0.11.0:
+  react-native-slider@0.11.0(patch_hash=899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6):
     dependencies:
       prop-types: 15.8.1
 
-  react-native-snap-carousel@3.9.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
+  react-native-snap-carousel@3.9.1(patch_hash=3a4c1b0f17629becc5d99ef1958df5a2f55c46e45f45670862aaeda12ab2f4e1)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
     dependencies:
       prop-types: 15.8.1
       react: 18.2.0
@@ -15677,8 +15624,6 @@ snapshots:
 
   slash@1.0.0: {}
 
-  slash@2.0.0: {}
-
   slash@3.0.0: {}
 
   slice-ansi@2.1.0:
@@ -15986,10 +15931,6 @@ snapshots:
   tiny-invariant@1.3.3: {}
 
   tinycolor2@1.6.0: {}
-
-  tmp@0.0.33:
-    dependencies:
-      os-tmpdir: 1.0.2
 
   tmp@0.2.5: {}
 
@@ -16663,7 +16604,8 @@ snapshots:
 
   yaml@1.10.2: {}
 
-  yaml@2.8.0: {}
+  yaml@2.8.0:
+    optional: true
 
   yargs-parser@18.1.3:
     dependencies:
