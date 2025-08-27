@@ -5,6 +5,8 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
+import "mx-global";
+import { Big } from "big.js";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -12,14 +14,25 @@
 /**
  * @returns {Promise.<boolean>}
  */
-export async function IsConnectedToServer(): Promise<boolean> {
-    // BEGIN USER CODE
+export async function IsConnectedToServer() {
+	// BEGIN USER CODE
     try {
-        const response = await fetch(mx.remoteUrl);
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const body = JSON.stringify({ "action": "info" });
+
+        const requestOptions = {
+            method: 'POST',
+            headers,
+            body,
+        };
+
+        // mx.remoteUrl always has / at the end, therefore we don't add it.
+        const response = await fetch(`${mx.remoteUrl}xas/`, requestOptions);
         return response.ok;
-    } catch (err) {
-        console.error(err);
+    }
+    catch (err) {
         return false;
     }
-    // END USER CODE
+	// END USER CODE
 }
