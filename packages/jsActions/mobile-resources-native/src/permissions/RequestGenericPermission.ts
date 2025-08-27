@@ -12,7 +12,8 @@ import {
     RESULTS,
     openSettings,
     Permission,
-    PERMISSIONS as RNPermissions
+    PERMISSIONS as RNPermissions,
+    canScheduleExactAlarms
 } from "react-native-permissions";
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
 
@@ -30,18 +31,26 @@ function handleBlockedPermission(permission: string): void {
     const permissionName = permission.replace(/_IOS|_ANDROID/, "");
 
     if (permissionName === "SCHEDULE_EXACT_ALARM") {
-        const RNExactAlarmPermission = require("react-native-schedule-exact-alarm-permission");
-
-        Alert.alert("", "Please allow setting alarms and reminders", [
-            { text: "Go to alarm settings", onPress: () => RNExactAlarmPermission.getPermission(), isPreferred: true },
-            { text: "Cancel", style: "cancel" }
-        ]);
-    } else {
-        Alert.alert("", `Please allow ${permissionName} access`, [
-            { text: "Go to settings", onPress: () => openSettings(), isPreferred: true },
+        return Alert.alert("", "Please allow setting alarms and reminders", [
+            {
+                text: "Go to alarm settings",
+                onPress: async () => {
+                    const canSchedule = await canScheduleExactAlarms();
+                    if (!canSchedule) {
+                        // Check if permission is already granted
+                        return openSettings("alarms");
+                    }
+                    return openSettings();
+                },
+                isPreferred: true
+            },
             { text: "Cancel", style: "cancel" }
         ]);
     }
+    return Alert.alert("", `Please allow ${permissionName} access`, [
+        { text: "Go to settings", onPress: () => openSettings(), isPreferred: true },
+        { text: "Cancel", style: "cancel" }
+    ]);
 }
 
 function mapPermissionName(permissionName: string): Permission | "android.permission.SCHEDULE_EXACT_ALARM" | undefined {
