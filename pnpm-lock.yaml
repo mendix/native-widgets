@@ -888,12 +888,6 @@ importers:
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
-      deprecated-react-native-prop-types:
-        specifier: ^4.0.0
-        version: 4.2.3
-      react-native-system-navigation-bar:
-        specifier: 2.6.3
-        version: 2.6.3(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       react-native-vector-icons:
         specifier: 10.2.0
         version: 10.2.0
@@ -6572,12 +6566,6 @@ packages:
 
   react-native-svg@15.7.1:
     resolution: {integrity: sha512-Xc11L4t6/DtmUwrQqHR7S45Qy3cIWpcfGlmEatVeZ9c1N8eAK79heJmGRgCOVrXESrrLEHfP/AYGf0BGyrvV6A==}
-    peerDependencies:
-      react: 18.2.0
-      react-native: 0.77.3
-
-  react-native-system-navigation-bar@2.6.3:
-    resolution: {integrity: sha512-QzKVdIkDfwziJQA5PEHPJhT2/WCioWaNaXOg0HpzLAX5XlSdirnfz3riWJB9Zrj/RdWIt+qZGihkw5zTdYA3uA==}
     peerDependencies:
       react: 18.2.0
       react-native: 0.77.3
@@ -15093,11 +15081,6 @@ snapshots:
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
       warn-once: 0.1.1
-
-  react-native-system-navigation-bar@2.6.3(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
-    dependencies:
-      react: 18.2.0
-      react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
 
   react-native-vector-icons@10.2.0:
     dependencies:
