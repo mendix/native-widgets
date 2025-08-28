@@ -18,6 +18,9 @@ overrides:
   typescript: ~5.8.0
 
 patchedDependencies:
+  '@d11/react-native-fast-image@8.11.1':
+    hash: 456ad6ac6ad71b29e02e6eb600a60a763bfc49387fcc9c9ece15db16518b95ce
+    path: patches/@d11__react-native-fast-image@8.11.1.patch
   '@mendix/pluggable-widgets-tools@10.21.1':
     hash: 1e48df1c64ba081cf8f9067dd961b190124953e01649c78345c134bb31fe247c
     path: patches/@mendix+pluggable-widgets-tools+10.21.1.patch
@@ -548,7 +551,7 @@ importers:
     dependencies:
       '@d11/react-native-fast-image':
         specifier: 8.11.1
-        version: 8.11.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        version: 8.11.1(patch_hash=456ad6ac6ad71b29e02e6eb600a60a763bfc49387fcc9c9ece15db16518b95ce)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
@@ -9013,7 +9016,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@d11/react-native-fast-image@8.11.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
+  '@d11/react-native-fast-image@8.11.1(patch_hash=456ad6ac6ad71b29e02e6eb600a60a763bfc49387fcc9c9ece15db16518b95ce)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
     dependencies:
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
