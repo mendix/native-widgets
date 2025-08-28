@@ -63,10 +63,11 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
         supportedOrientations: ["portrait", "landscape"]
     };
 
-    UNSAFE_componentDidMount() {
+    componentDidMount() {
         Dimensions.addEventListener("change", this.updateDeviceHeight);
     }
-    UNSAFE_componentDidUpdate(_: Readonly<FeedbackProps<FeedbackStyle>>, prevState: Readonly<State>) {
+
+    componentDidUpdate(_: Readonly<FeedbackProps<FeedbackStyle>>, prevState: Readonly<State>) {
         if (
             ["todo", "inprogress"].includes(prevState.status) &&
             this.state.status === "closingDialog" &&
