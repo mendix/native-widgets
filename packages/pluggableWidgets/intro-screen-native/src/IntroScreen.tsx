@@ -24,33 +24,33 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
         } else {
             setVisible(true);
         }
-    }, []);
+    }, [props.identifier]);
+
+    const hideModal = useCallback((): void => {
+        if (props.identifier) {
+            AsyncStorage.setItem(props.identifier, "gone").then(() => setVisible(false));
+        } else {
+            setVisible(false);
+        }
+    }, [props.identifier]);
 
     const onDone = useCallback(() => {
         hideModal();
         executeAction(props.onDone);
-    }, [props.onDone]);
+    }, [hideModal, props.onDone]);
 
     const onSlideChange = useCallback(() => executeAction(props.onSlideChange), [props.onSlideChange]);
 
     const onSkip = useCallback(() => {
         hideModal();
         executeAction(props.onSkip);
-    }, [props.onSkip]);
+    }, [hideModal, props.onSkip]);
 
     const checkLabel = (label?: DynamicValue<string>): string | undefined => {
         if (label && label.value && label.status === ValueStatus.Available) {
             return label.value;
         }
         return undefined;
-    };
-
-    const hideModal = (): void => {
-        if (props.identifier) {
-            AsyncStorage.setItem(props.identifier, "gone").then(() => setVisible(false));
-        } else {
-            setVisible(false);
-        }
     };
 
     const showSkipPrevious = props.buttonPattern === "all";

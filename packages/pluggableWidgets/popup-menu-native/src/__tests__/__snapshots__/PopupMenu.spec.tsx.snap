@@ -110,9 +110,12 @@ exports[`Popup menu renders 1`] = `
         <View
           collapsable={false}
           style={
-            {
-              "overflow": "hidden",
-            }
+            [
+              {
+                "overflow": "hidden",
+              },
+              false,
+            ]
           }
         >
           <View
@@ -313,9 +316,12 @@ exports[`Popup menu renders custom items 1`] = `
         <View
           collapsable={false}
           style={
-            {
-              "overflow": "hidden",
-            }
+            [
+              {
+                "overflow": "hidden",
+              },
+              false,
+            ]
           }
         >
           <View

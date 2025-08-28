@@ -18,7 +18,7 @@ The script supports two parameters:
 To execute the script, use the following command in the main `package.json` file:
 
 ```bash
-yarn build:widgets
+pnpm build:widgets
 ```
 
 This command runs the script without parameters, deleting `dist` folders, building widgets, and copying the resulting `.mpk` files to the `dist` directory at the project's root.
@@ -26,7 +26,7 @@ This command runs the script without parameters, deleting `dist` folders, buildi
 **Note:** Before running the script, ensure you have installed the required packages by running:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 This command installs the necessary dependencies for the project.

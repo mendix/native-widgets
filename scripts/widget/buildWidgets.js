@@ -4,7 +4,7 @@ const path = require("path");
 const readline = require("readline");
 
 const deleteDist = process.argv.includes("--delete-dist");
-const skipYarnBuild = process.argv.includes("--skip-build");
+const skipPnpmBuild = process.argv.includes("--skip-build");
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -67,16 +67,16 @@ const deleteDistFolders = () => {
     });
 };
 
-const runYarnBuild = () => {
+const runPnpmBuild = () => {
     return new Promise((resolve, reject) => {
-        if (skipYarnBuild) {
-            log.warning("Skipping 'yarn build'...");
+        if (skipPnpmBuild) {
+            log.warning("Skipping 'pnpm build'...");
             resolve();
             return;
         }
-        log.info("Running 'yarn build'...");
+        log.info("Running 'pnpm build'...");
 
-        const buildProcess = spawn("yarn", ["build"], { stdio: "pipe", shell: true });
+        const buildProcess = spawn("pnpm", ["build"], { stdio: "pipe", shell: true });
 
         buildProcess.stdout.on("data", data => {
             process.stdout.write(`\r${colors.yellow}Building widgets... ${data.toString().trim()}${colors.reset}`);
@@ -88,11 +88,11 @@ const runYarnBuild = () => {
 
         buildProcess.on("close", code => {
             if (code !== 0) {
-                log.error(`'yarn build' failed with code ${code}`);
+                log.error(`'pnpm build' failed with code ${code}`);
                 resolve();
                 return;
             }
-            log.success("\n'yarn build' completed.");
+            log.success("\n'pnpm build' completed.");
             resolve();
         });
     });
@@ -167,9 +167,9 @@ const main = async () => {
     try {
         await deleteDistFolders();
 
-        if (deleteDist && skipYarnBuild) {
+        if (deleteDist && skipPnpmBuild) {
             const answer = await askQuestion(
-                "Warning: You have deleted 'dist' folders and skipped 'yarn build'. This may result in no '.mpk' files to copy. Do you want to continue? (yes/no) "
+                "Warning: You have deleted 'dist' folders and skipped 'pnpm build'. This may result in no '.mpk' files to copy. Do you want to continue? (yes/no) "
             );
             if (answer.toLowerCase() !== "yes") {
                 console.log("Operation cancelled.");
@@ -177,8 +177,8 @@ const main = async () => {
             }
         }
 
-        if (!skipYarnBuild) {
-            await runYarnBuild();
+        if (!skipPnpmBuild) {
+            await runPnpmBuild();
         }
 
         await copyMPKFiles();

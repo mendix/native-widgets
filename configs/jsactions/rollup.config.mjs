@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
-import { red, yellow } from "colors";
+import colors from "colors";
 import fg from "fast-glob";
 import { mkdirSync } from "fs";
+import { createRequire } from "module";
 import { basename, dirname, join, posix, relative, sep } from "path";
 import copy from "recursive-copy";
 import clear from "rollup-plugin-clear";
@@ -10,13 +11,14 @@ import command from "rollup-plugin-command";
 import { promisify } from "util";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import { collectDependencies, copyJsModule } from "./rollup-plugin-collect-dependencies";
-import { licenseCustomTemplate, copyLicenseFile } from "./rollup-helper";
-import { bigJsImportReplacer } from "./rollup-plugin-bigjs-import-replacer";
+import { collectDependencies, copyJsModule } from "./rollup-plugin-collect-dependencies.mjs";
+import { licenseCustomTemplate, copyLicenseFile } from "./rollup-helper.mjs";
+import { bigJsImportReplacer } from "./rollup-plugin-bigjs-import-replacer.mjs";
 
 const cwd = process.cwd();
 
 export default async args => {
+    const require = createRequire(import.meta.url);
     const jsActionTargetFolder = `javascriptsource/${args.configProject ?? "nativemobileresources"}/actions`;
     const result = [];
     const posixPath = join(cwd, "src", "**/*.ts").split(sep).join(posix.sep); // Always use forward slashes
@@ -91,17 +93,6 @@ export default async args => {
                                       }
                                   );
 
-                                  // We dynamically import react-native-schedule-exact-alarm-permission as it works only on Android
-                                  // so we need to copy it here as collectDependencies won't detect it.
-                                  await copyJsModule(
-                                      // require returns a path to commonjs index.js file
-                                      join(
-                                          dirname(require.resolve("react-native-schedule-exact-alarm-permission")),
-                                          "../",
-                                          "../"
-                                      ),
-                                      join(outDir, "node_modules", "react-native-schedule-exact-alarm-permission")
-                                  );
                               } else if (args.configProject === "nanoflowcommons") {
                                   // `invariant` is being used silently by @react-native-community/geolocation; it is not listed as a dependency nor peerDependency.
                                   // https://github.dev/react-native-geolocation/react-native-geolocation/blob/1786929f2be581da91082ff857c2393da5e597b3/js/implementation.native.js#L13
@@ -140,12 +131,12 @@ export default async args => {
         // Many rollup warnings are indication of some critical issue, so we should treat them as errors,
         // except a short white-list which we know is safe _and_ not easily fixable.
         if (["CIRCULAR_DEPENDENCY", "THIS_IS_UNDEFINED", "UNUSED_EXTERNAL_IMPORT"].includes(warning.code)) {
-            console.warn(yellow(description));
+            console.warn(colors.yellow(description));
         } else if (args.watch) {
             // Do not break watch mode because of an error. Also don't use console.error, since it is overwritten by rollup
-            console.warn(red(description));
+            console.warn(colors.red(description));
         } else {
-            console.error(red(description));
+            console.error(colors.red(description));
             process.exit(1);
         }
     }

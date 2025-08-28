@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [4.1.0] - 2025-7-7
 
+-   Initial slide now correctly positioned on mount.
+
 -   Updated react-native-device-info to latest version.
 
 ### Fixed

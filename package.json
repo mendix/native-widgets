@@ -8,28 +8,27 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "prepare": "npx husky install && yarn workspaces foreach --all run prepare",
-    "postinstall": "patch-package --use-yarn && yarn workspaces foreach --all run postinstall",
-    "reinstall": "yarn cache clean && git clean -dfx && find . -type dir -name node_modules | xargs rm -rf && yarn && yarn run postinstall",
+    "prepare": "npx husky install && pnpm -r run prepare",
+    "postinstall": "patch-package && pnpm -r run postinstall",
+    "reinstall": "pnpm store prune && git clean -dfx && find . -type dir -name node_modules | xargs rm -rf && pnpm install && pnpm run postinstall",
     "prettier": "prettier --config \"./prettier.config.js\" --write \"**/*.{js,jsx,ts,tsx,scss,html,xml,yml,yaml}\"",
     "format": "pretty-quick --staged --config \"./prettier.config.js\" --pattern \"**/{src,script,typings,test,**}/**/*.{js,jsx,ts,tsx,scss,html,xml,md,json}\"",
     "clean-all-screenshots-mac": "find . -name 'screenshot-baseline' -type d -prune -exec rm -rf '{}' +",
-    "information:githubrelease": "yarn workspaces foreach --all run information:githubrelease",
-    "lint": "yarn lint:src && yarn workspaces foreach --all --parallel run lint",
+    "lint": "pnpm lint:src && pnpm -r run lint",
     "lint:src": "eslint --config .eslintrc.js --ext .jsx,.js,.ts,.tsx packages/*/*/src --no-error-on-unmatched-pattern",
     "lint:scripts": "eslint --fix --config .eslintrc.js --ext .jsx,.js,.ts,.tsx scripts",
     "lint:configs": "eslint --fix --config .eslintrc.js --ext .jsx,.js,.ts,.tsx configs",
-    "test": "yarn workspaces foreach --all --parallel run test",
-    "test:e2e:android": "yarn workspaces foreach --all run test:e2e:android",
-    "test:e2e:ios": "yarn workspaces foreach --all run test:e2e:ios",
-    "build": "yarn workspaces foreach --all --parallel run build",
-    "release": "yarn workspaces foreach --all --parallel run release",
-    "release:marketplace": "yarn workspaces foreach --all run release:marketplace",
+    "test": "pnpm -r run test",
+    "test:e2e:android": "pnpm -r run test:e2e:android",
+    "test:e2e:ios": "pnpm -r run test:e2e:ios",
+    "build": "pnpm -r run build",
+    "release": "pnpm -r run release",
+    "release:marketplace": "pnpm -r run release:marketplace",
     "release-github:widget": "node ./scripts/release/createWidgetRelease.js",
     "create-modules": "node ./scripts/release/createNativeModules.js",
     "version": "ts-node --project ./scripts/tsconfig.json ./scripts/release/BumpVersion.ts",
     "validate-staged-widget-versions": "node scripts/validation/validate-versions-staged-files.js",
-    "setup-mobile": "yarn setup-android && yarn setup-ios",
+    "setup-mobile": "pnpm setup-android && pnpm setup-ios",
     "patch-package": "sh ./scripts/patch/patch-package.sh",
     "build:widgets": "node ./scripts/widget/buildWidgets.js",
     "test_widgets:maestro:ios": "bash maestro/run_maestro_widget_tests.sh ios",
@@ -37,21 +36,16 @@
     "test_jsactions:maestro:ios": "bash maestro/run_maestro_jsactions_tests.sh ios",
     "test_jsactions:maestro:android": "bash maestro/run_maestro_jsactions_tests.sh android"
   },
-  "workspaces": {
-    "packages": [
-      "packages/**/*"
-    ]
-  },
+  "workspaces": [
+    "packages/**/*"
+  ],
   "devDependencies": {
     "@actions/core": "^1.6.0",
     "@commitlint/cli": "^18.6.1",
     "@commitlint/config-conventional": "^18.6.3",
-    "@react-native/babel-preset": "0.75.4",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-typescript": "^8.5.0",
+    "@react-native/babel-preset": "0.77.3",
     "@testing-library/jest-native": "^5.4.3",
-    "@testing-library/react": "^16.0.1",
-    "@testing-library/react-native": "^11.5.4",
+    "@testing-library/react-native": "^12.9.0",
     "@types/big.js": "^6.2.2",
     "@types/concurrently": "^6.3.0",
     "@types/enzyme": "^3.10.18",
@@ -66,8 +60,6 @@
     "@types/xml2js": "^0.4.14",
     "cross-env": "^7.0.3",
     "deepmerge": "^4.3.1",
-    "eslint": "^7.32.0",
-    "eslint-plugin-prettier": "4.2.1",
     "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "image-js": "^0.35.6",
@@ -76,11 +68,9 @@
     "patch-package": "^8.0.0",
     "pixelmatch": "^5.3.0",
     "pngjs": "^6.0.0",
-    "prettier": "^2.8.8",
     "pretty-quick": "^3.3.1",
     "react-dom": "18.3.1",
     "recursive-copy": "^2.0.14",
-    "rollup": "^2.79.2",
     "ts-node": "^10.9.2"
   },
   "commitlint": {
@@ -91,16 +81,20 @@
   "engines": {
     "node": ">=20"
   },
-  "resolutions": {
-    "@mendix/pluggable-widgets-tools": "10.15.0",
-    "mendix": "10.15.46408",
-    "@types/react": "^18",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-native": "0.75.4",
-    "@prettier/plugin-xml": "2.2.0",
-    "@types/react-native": "0.73.0",
-    "cheerio": "1.0.0-rc.12"
+  "pnpm": {
+    "overrides": {
+      "@mendix/pluggable-widgets-tools": "10.21.1",
+      "@rollup/plugin-typescript": "12.1.4",
+      "mendix": "10.15.46408",
+      "@types/react": "^18",
+      "react": "18.2.0",
+      "react-dom": "18.2.0",
+      "react-native": "0.77.3",
+      "@prettier/plugin-xml": "2.2.0",
+      "@types/react-native": "0.73.0",
+      "cheerio": "1.0.0-rc.12",
+      "typescript": "~5.8.0"
+    }
   },
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "pnpm@10.13.1"
 }

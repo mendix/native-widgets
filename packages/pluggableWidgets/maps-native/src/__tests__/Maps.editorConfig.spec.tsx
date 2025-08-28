@@ -19,7 +19,9 @@ describe("Zoom level check", () => {
             mapType: "standard",
             provider: "default",
             interactive: true,
-            showsUserLocation: true
+            showsUserLocation: true,
+            renderMode: "design",
+            translate: (text: string) => text
         };
     });
 

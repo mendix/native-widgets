@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 import fg from "fast-glob";
-import { readJson, writeJson } from "fs-extra";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import fsExtra from "fs-extra";
+import { existsSync, readFileSync, writeFileSync, cpSync, lstatSync, realpathSync } from "fs";
 import { dirname, join, parse } from "path";
-import copy from "recursive-copy";
 import { promisify } from "util";
 import resolve from "resolve";
 import _ from "lodash";
@@ -12,6 +11,8 @@ import moment from "moment";
 import mkdirp from "mkdirp";
 
 const LICENSE_GLOB = "{licen[cs]e,LICEN[CS]E}?(.*)";
+
+const __DIRNAME = new URL("./", import.meta.url).pathname;
 
 const dependencies = [];
 export function collectDependencies({
@@ -116,7 +117,7 @@ async function resolvePackage(target, sourceDir, optional = false) {
         if (
             e.message.includes("Cannot find module") &&
             !/\.((j|t)sx?)|json|(pn|jpe?|sv)g|(tif|gi)f$/g.test(targetPackage) &&
-            !/configs\/jsActions/i.test(__dirname) && // Ignore errors about missing package.json in 'jsActions/**/src/*' folders
+            !/configs\/jsActions/i.test(__DIRNAME) && // Ignore errors about missing package.json in 'jsActions/**/src/*' folders
             !optional // Certain (peer)dependencies can be optional, ignore throwing an error if an optional (peer)dependency is considered missing.
         ) {
             throw e;
@@ -139,7 +140,7 @@ async function getTransitiveDependencies(packagePath, isExternal) {
         }
         result.add(nextPath);
 
-        const packageJson = await readJson(join(nextPath, "package.json"));
+        const packageJson = await fsExtra.readJson(join(nextPath, "package.json"));
         const dependencies = Object.keys(packageJson.dependencies || {}).concat(
             Object.keys(packageJson.peerDependencies || {})
         );
@@ -170,15 +171,36 @@ export async function copyJsModule(moduleSourcePath, to) {
     if (existsSync(to)) {
         return;
     }
-    return promisify(copy)(moduleSourcePath, to, {
-        filter: [
-            "**/*.*",
-            LICENSE_GLOB,
-            "!**/{android,ios,windows,mac,jest,github,gradle,__*__,docs,jest,example*}/**/*",
-            "!**/*.{config,setup}.*",
-            "!**/*.{podspec,flow}"
-        ],
-        overwrite: true
+
+    // Check if the source is a symlink and resolve it to the actual path
+    let actualSourcePath = moduleSourcePath;
+    if (lstatSync(moduleSourcePath).isSymbolicLink()) {
+        actualSourcePath = realpathSync(moduleSourcePath);
+    }
+
+    cpSync(actualSourcePath, to, {
+        recursive: true,
+        dereference: true, // Follow symlinks and copy the actual files
+        filter: (src, dest) => {
+            const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
+
+            // Skip certain directories
+            if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
+                return false;
+            }
+
+            // Skip certain file types
+            if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
+                return false;
+            }
+
+            // Include LICENSE files
+            if (relativePath.match(/license/i)) {
+                return true;
+            }
+
+            return true;
+        }
     });
 }
 
@@ -192,10 +214,10 @@ async function writeNativeDependenciesJson(nativeDependencies, outputDir, widget
     }
     const dependencies = {};
     for (const dependency of nativeDependencies) {
-        const dependencyJson = await readJson(join(dependency, "package.json"));
+        const dependencyJson = await fsExtra.readJson(join(dependency, "package.json"));
         dependencies[dependencyJson.name] = dependencyJson.version;
     }
-    await writeJson(join(outputDir, `${widgetName}.json`), { nativeDependencies: dependencies }, { spaces: 2 });
+    await fsExtra.writeJson(join(outputDir, `${widgetName}.json`), { nativeDependencies: dependencies }, { spaces: 2 });
 }
 
 async function asyncWhere(array, filter) {
