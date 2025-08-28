@@ -99,8 +99,7 @@
       "react-native-camera@3.40.0": "patches/react-native-camera+3.40.0.patch",
       "react-native-gesture-handler@2.24.0": "patches/react-native-gesture-handler+2.24.0.patch",
       "react-native-slider@0.11.0": "patches/react-native-slider+0.11.0.patch",
-      "react-native-snap-carousel@3.9.1": "patches/react-native-snap-carousel+3.9.1.patch",
-      "@d11/react-native-fast-image@8.11.1": "patches/@d11__react-native-fast-image@8.11.1.patch"
+      "react-native-snap-carousel@3.9.1": "patches/react-native-snap-carousel+3.9.1.patch"
     }
   },
   "packageManager": "pnpm@10.13.1"
