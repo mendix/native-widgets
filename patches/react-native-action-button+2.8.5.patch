@@ -1,7 +1,7 @@
-diff --git a/node_modules/react-native-action-button/ActionButton.js b/node_modules/react-native-action-button/ActionButton.js
+diff --git a/ActionButton.js b/ActionButton.js
 index b8306c2efb2460d4aa110e83d2e5410588f280de..890003d30fa5400f4778f5bb2dffa10e70fbe3ee 100644
---- a/node_modules/react-native-action-button/ActionButton.js
-+++ b/node_modules/react-native-action-button/ActionButton.js
+--- a/ActionButton.js
++++ b/ActionButton.js
 @@ -16,6 +16,7 @@ import {
    touchableBackground,
    DEFAULT_ACTIVE_OPACITY

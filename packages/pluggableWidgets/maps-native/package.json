@@ -21,7 +21,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.1",
     "react-native-geocoder": "0.5.0",
     "react-native-maps": "1.14.0"
   },

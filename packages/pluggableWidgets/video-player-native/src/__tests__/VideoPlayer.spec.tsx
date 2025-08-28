@@ -10,10 +10,6 @@ import { VideoStyle } from "../ui/Styles";
 
 jest.useFakeTimers();
 jest.mock("react-native-video", () => "Video");
-jest.mock("react-native-system-navigation-bar", () => ({
-    navigationHide: jest.fn(),
-    navigationShow: jest.fn()
-}));
 
 describe("VideoPlayer", () => {
     let defaultProps: VideoPlayerProps<VideoStyle>;
