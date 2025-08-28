@@ -11,12 +11,15 @@ jobs:
   dispatch-main:
     if: github.event.schedule == '0 0 * * *'
     runs-on: ubuntu-latest
+    outputs:
+      run-id: ${{ steps.trigger.outputs.run-id }}
     steps:
       - name: "Trigger Native Pipeline on main"
+        id: trigger
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
         with:
           script: |
-            await github.rest.actions.createWorkflowDispatch({
+            const response = await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'NativePipeline.yml',
@@ -26,16 +29,33 @@ jobs:
                 workspace: '*-native'
               }
             });
+            
+            // Wait a moment then get the latest run
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'NativePipeline.yml',
+              branch: 'main',
+              per_page: 1
+            });
+            
+            const runId = runs.data.workflow_runs[0]?.id;
+            core.setOutput('run-id', runId);
+            return runId;
 
   dispatch-version-mx-10:
     if: github.event.schedule == '0 4 * * *'
     runs-on: ubuntu-latest
+    outputs:
+      run-id: ${{ steps.trigger.outputs.run-id }}
     steps:
       - name: "Trigger Native Pipeline on version/mx/10"
+        id: trigger
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
         with:
           script: |
-            await github.rest.actions.createWorkflowDispatch({
+            const response = await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'NativePipeline.yml',
@@ -45,3 +65,93 @@ jobs:
                 workspace: '*-native'
               }
             });
+            
+            // Wait a moment then get the latest run
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'NativePipeline.yml',
+              branch: 'version/mx/10',
+              per_page: 1
+            });
+            
+            const runId = runs.data.workflow_runs[0]?.id;
+            core.setOutput('run-id', runId);
+            return runId;
+
+  auto-retry-main:
+    needs: dispatch-main
+    if: always() && needs.dispatch-main.result == 'success' && github.event.schedule == '0 0 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Monitor and retry failed jobs"
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
+        with:
+          script: |
+            const runId = '${{ needs.dispatch-main.outputs.run-id }}';
+            
+            if (!runId || runId === 'null') {
+              core.setFailed('No run ID available from dispatch job');
+              return;
+            }
+            
+            // Poll for completion
+            let run;
+            do {
+              await new Promise(resolve => setTimeout(resolve, 60000)); // Wait 1 minute
+              run = await github.rest.actions.getWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId
+              });
+              console.log(`Run status: ${run.data.status}, conclusion: ${run.data.conclusion}`);
+            } while (run.data.status === 'in_progress' || run.data.status === 'queued');
+            
+            // If there are failures, rerun failed jobs
+            if (run.data.conclusion === 'failure') {
+              console.log('Pipeline failed, triggering rerun of failed jobs...');
+              await github.rest.actions.reRunWorkflowFailedJobs({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId
+              });
+            }
+
+  auto-retry-version-mx-10:
+    needs: dispatch-version-mx-10
+    if: always() && needs.dispatch-version-mx-10.result == 'success' && github.event.schedule == '0 4 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Monitor and retry failed jobs"
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
+        with:
+          script: |
+            const runId = '${{ needs.dispatch-version-mx-10.outputs.run-id }}';
+            
+            if (!runId || runId === 'null') {
+              core.setFailed('No run ID available from dispatch job');
+              return;
+            }
+            
+            // Poll for completion
+            let run;
+            do {
+              await new Promise(resolve => setTimeout(resolve, 60000)); // Wait 1 minute
+              run = await github.rest.actions.getWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId
+              });
+              console.log(`Run status: ${run.data.status}, conclusion: ${run.data.conclusion}`);
+            } while (run.data.status === 'in_progress' || run.data.status === 'queued');
+            
+            // If there are failures, rerun failed jobs
+            if (run.data.conclusion === 'failure') {
+              console.log('Pipeline failed, triggering rerun of failed jobs...');
+              await github.rest.actions.reRunWorkflowFailedJobs({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId
+              });
+            }
