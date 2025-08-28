@@ -529,15 +529,15 @@ importers:
 
   packages/pluggableWidgets/image-native:
     dependencies:
+      '@d11/react-native-fast-image':
+        specifier: 8.11.1
+        version: 8.11.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      react-native-fast-image:
-        specifier: 8.3.2
-        version: 8.3.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
       react-native-svg:
         specifier: 15.7.1
         version: 15.7.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
@@ -1792,6 +1792,12 @@ packages:
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
+
+  '@d11/react-native-fast-image@8.11.1':
+    resolution: {integrity: sha512-KG5Oxs1TWbwMf0ibZwE4EKMSSC0vpBQG6yPAB3WwcYtSzlY4JICjjpXPP+oixwQ/hO/sm6EGBNkVHOlfg4aJ+g==}
+    peerDependencies:
+      react: 18.2.0
+      react-native: 0.77.3
 
   '@egjs/hammerjs@2.0.17':
     resolution: {integrity: sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==}
@@ -6435,12 +6441,6 @@ packages:
     peerDependencies:
       react-native: 0.77.3
 
-  react-native-fast-image@8.3.2:
-    resolution: {integrity: sha512-AJ0b4BEswRwa0bh4SibYUtXszEiaO88Lf4CZ1ib+t5ZfkAgsMk9Liv3L0LYnDblMJmSeGTr1+2ViIM8F2vamjg==}
-    peerDependencies:
-      react: 18.2.0
-      react-native: 0.77.3
-
   react-native-file-viewer-turbo@0.6.0:
     resolution: {integrity: sha512-to+Ly3GfDTXpvPVYtGK6RuzljrqI/5ZSGDTgaKwAsXg5jdU4tHwZIWCAMZFMQpvVLBRRU0dFxmQsB6BbbqlEHg==}
     peerDependencies:
@@ -9038,6 +9038,11 @@ snapshots:
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+
+  '@d11/react-native-fast-image@8.11.1(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      react: 18.2.0
+      react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
 
   '@egjs/hammerjs@2.0.17':
     dependencies:
@@ -14955,11 +14960,6 @@ snapshots:
 
   react-native-dialog@9.2.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)):
     dependencies:
-      react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
-
-  react-native-fast-image@8.3.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
-    dependencies:
-      react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
 
   react-native-file-viewer-turbo@0.6.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
