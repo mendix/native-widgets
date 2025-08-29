@@ -1,0 +1,138 @@
+diff --git a/bin/mx-scripts.js b/bin/mx-scripts.js
+index 673e0b2ebc148755e575cc77c3fc493ba7b5cfde..055f87d9644b2e3d2e3bd74bf416a593234447b3 100755
+--- a/bin/mx-scripts.js
++++ b/bin/mx-scripts.js
+@@ -107,7 +107,7 @@ function getRealCommand(cmd, toolsRoot) {
+ }
+ 
+ function findNodeModulesBin() {
+-    let parentDir = join(__dirname, "..");
++    let parentDir = join(__dirname, "../..");
+     const bins = [];
+     while (parse(parentDir).root !== parentDir) {
+         const candidate = join(parentDir, "node_modules/.bin");
+diff --git a/configs/rollup-plugin-collect-dependencies.mjs b/configs/rollup-plugin-collect-dependencies.mjs
+index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..a3f0e368d76d294a5f7cd85886fe5ce0e72b9619 100644
+--- a/configs/rollup-plugin-collect-dependencies.mjs
++++ b/configs/rollup-plugin-collect-dependencies.mjs
+@@ -2,9 +2,8 @@
+ 
+ import fg from "fast-glob";
+ import fsExtra from "fs-extra";
+-import { existsSync, readFileSync, writeFileSync } from "fs";
++import { existsSync, readFileSync, writeFileSync, cpSync, lstatSync, realpathSync } from "fs";
+ import { dirname, join, parse } from "path";
+-import copy from "recursive-copy";
+ import { promisify } from "util";
+ import resolve from "resolve";
+ import _ from "lodash";
+@@ -171,15 +170,41 @@ async function copyJsModule(moduleSourcePath, to) {
+     if (existsSync(to)) {
+         return;
+     }
+-    return promisify(copy)(moduleSourcePath, to, {
+-        filter: [
+-            "**/*.*",
+-            LICENSE_GLOB,
+-            "!**/{android,ios,windows,mac,jest,github,gradle,__*__,docs,jest,example*}/**/*",
+-            "!**/*.{config,setup}.*",
+-            "!**/*.{podspec,flow}"
+-        ]
+-    });
++    
++    try {
++        // Check if the source is a symlink and resolve it to the actual path
++        let actualSourcePath = moduleSourcePath;
++        if (lstatSync(moduleSourcePath).isSymbolicLink()) {
++            actualSourcePath = realpathSync(moduleSourcePath);
++        }
++        
++        cpSync(actualSourcePath, to, {
++            recursive: true,
++            dereference: true, // Follow symlinks and copy the actual files
++            filter: (src, dest) => {
++                const relativePath = src.replace(actualSourcePath, '').replace(/^[\\/]/, '');
++                
++                // Skip certain directories
++                if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
++                    return false;
++                }
++                
++                // Skip certain file types
++                if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
++                    return false;
++                }
++                
++                // Include LICENSE files
++                if (relativePath.match(/license/i)) {
++                    return true;
++                }
++                
++                return true;
++            }
++        });
++    } catch (error) {
++        throw error;
++    }
+ }
+ 
+ function getModuleName(modulePath) {
+diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
+index 72e3c51473b7566ca9d8b224b35334099ce615db..7e0949aa5d50d288d848117a804fd691422aefde 100644
+--- a/test-config/jest.native.config.js
++++ b/test-config/jest.native.config.js
+@@ -3,7 +3,7 @@ const { join } = require("path");
+ const projectDir = process.cwd();
+ 
+ module.exports = {
+-    preset: hasDependency("@testing-library/react-native") ? "@testing-library/react-native" : "react-native",
++    preset: "react-native",
+     testRunner: "jest-jasmine2",
+     clearMocks: true,
+     haste: {
+@@ -14,9 +14,7 @@ module.exports = {
+     setupFilesAfterEnv: [
+         join(__dirname, "test-index-native.js"),
+         ...(hasDependency("react-native-gesture-handler") ? ["react-native-gesture-handler/jestSetup.js"] : []),
+-        ...(hasDependency("@testing-library/jest-native") ? ["@testing-library/jest-native/extend-expect"] : [])
+     ],
+-    snapshotSerializers: ["enzyme-to-json/serializer"],
+     testMatch: ["<rootDir>/**/*.spec.{js,jsx,ts,tsx}"],
+     transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-)/)"],
+     transform: {
+@@ -35,7 +33,6 @@ module.exports = {
+         "react-hot-loader/root": join(__dirname, "__mocks__/hot")
+     },
+     moduleDirectories: ["node_modules", join(projectDir, "node_modules")],
+-    collectCoverage: !process.env.CI,
+     coverageDirectory: join(projectDir, "dist/coverage"),
+     testEnvironment: "jsdom"
+ };
+diff --git a/test-config/test-index-native.js b/test-config/test-index-native.js
+index 8c4d3dd8475ec4ecceb3f36d74edbe9b7313599e..eec5172291384fc5606736b59c4aa7d4f75f9d34 100644
+--- a/test-config/test-index-native.js
++++ b/test-config/test-index-native.js
+@@ -1,6 +1,4 @@
+ const { TextEncoder, TextDecoder } = require("util");
+-const { configure: configureEnzyme } = require("enzyme");
+-const Adapter = require("@cfaester/enzyme-adapter-react-18").default;
+ const enableHooks = require("jest-react-hooks-shallow").default;
+ 
+ Object.defineProperties(global, {
+@@ -12,7 +10,6 @@ Object.defineProperties(global, {
+     }
+ });
+ 
+-configureEnzyme({ adapter: new Adapter() });
+ enableHooks(jest);
+ global.setImmediate = global.setTimeout;
+ 
+diff --git a/test-config/transform-native.js b/test-config/transform-native.js
+index eed8109dada3788bb1195573b9713eb1f00dd8f9..4b422fac0e21d2b1f44a763d0b21b0280bf1cacb 100644
+--- a/test-config/transform-native.js
++++ b/test-config/transform-native.js
+@@ -1,3 +1,3 @@
+ module.exports = require("babel-jest").createTransformer({
+-    presets: ["module:metro-react-native-babel-preset"]
++    presets: ["module:@react-native/babel-preset"]
+ });
