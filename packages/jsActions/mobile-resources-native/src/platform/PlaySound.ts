@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import Sound from "react-native-sound";
+import TrackPlayer, { State, Event } from "react-native-track-player";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -19,7 +19,7 @@ import Sound from "react-native-sound";
  */
 export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://github.com/zmxv/react-native-sound
+    // Documentation https://rntp.dev
 
     if (!audioFile) {
         return Promise.reject(new Error("Input parameter 'Audio file' is required"));
@@ -34,19 +34,39 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
     const changedDate = audioFile.get("changedDate") as number;
     const url = mx.data.getDocumentUrl(guid, changedDate);
 
-    const audio = new Sound(url, undefined, error => {
-        if (error) {
-            return Promise.reject(new Error(error));
+    try {
+        // Initialize the player if it hasn't been set up yet
+        const state = await TrackPlayer.getPlaybackState();
+        if (state.state === State.None) {
+            await TrackPlayer.setupPlayer({
+                maxCacheSize: 1024
+            });
         }
 
-        audio.play(success => {
-            audio.release();
-            if (success) {
-                return Promise.resolve();
-            }
-            return Promise.reject(new Error("Playback failed due to an audio encoding error"));
+        await TrackPlayer.reset();
+        await TrackPlayer.add({
+            id: guid,
+            url,
+            title: `Audio ${guid}`,
+            artist: "Mendix App"
         });
-    });
+
+        await TrackPlayer.play();
+
+        return new Promise<void>((resolve, reject) => {
+            const subscription = TrackPlayer.addEventListener(Event.PlaybackState, event => {
+                if (event.state === State.Stopped || event.state === State.Ended) {
+                    subscription.remove();
+                    resolve();
+                } else if (event.state === State.Error) {
+                    subscription.remove();
+                    reject(new Error(event.error.message || "Playback error"));
+                }
+            });
+        });
+    } catch (error) {
+        return Promise.reject(new Error(`Failed to play audio: ${error}`));
+    }
 
     // END USER CODE
 }
