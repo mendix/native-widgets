@@ -2,14 +2,14 @@ name: Nightly Dispatcher
 
 on:
   schedule:
-    # Run main branch at midnight (0:00 UTC)
-    - cron: '0 0 * * *'
+    # Run main branch at 10:00 PM (22:00 UTC)
+    - cron: '0 22 * * *'
     # Run version/mx/10 branch at 4:00 AM UTC
     - cron: '0 4 * * *'
 
 jobs:
   dispatch-main:
-    if: github.event.schedule == '0 0 * * *'
+    if: github.event.schedule == '0 22 * * *'
     runs-on: ubuntu-latest
     outputs:
       run-id: ${{ steps.trigger.outputs.run-id }}
@@ -82,7 +82,7 @@ jobs:
 
   auto-retry-main:
     needs: dispatch-main
-    if: always() && needs.dispatch-main.result == 'success' && github.event.schedule == '0 0 * * *'
+    if: always() && needs.dispatch-main.result == 'success' && github.event.schedule == '0 22 * * *'
     runs-on: ubuntu-latest
     steps:
       - name: "Monitor and retry failed jobs"
