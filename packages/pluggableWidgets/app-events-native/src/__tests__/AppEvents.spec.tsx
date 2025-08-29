@@ -1,8 +1,7 @@
 import { actionValue } from "@mendix/piw-utils-internal";
 import { createElement } from "react";
 import { AppStateStatus } from "react-native";
-
-import { mount } from "enzyme";
+import { render } from "@testing-library/react-native";
 
 import { AppEvents, Props } from "../AppEvents";
 
@@ -54,14 +53,14 @@ describe("AppEvents", () => {
     });
 
     it("does not render anything", () => {
-        const wrapper = mount(<AppEvents {...defaultProps} />);
-        expect(wrapper).toMatchObject({});
+        const { toJSON } = render(<AppEvents {...defaultProps} />);
+        expect(toJSON()).toBeNull();
     });
 
     describe("with on load action", () => {
         it("executes the on load action", () => {
             const onLoadAction = actionValue();
-            mount(<AppEvents {...defaultProps} onLoadAction={onLoadAction} />);
+            render(<AppEvents {...defaultProps} onLoadAction={onLoadAction} />);
             expect(onLoadAction.execute).toHaveBeenCalledTimes(1);
         });
     });
@@ -69,16 +68,16 @@ describe("AppEvents", () => {
     describe("with on resume action", () => {
         it("registers and unregisters an event listener", () => {
             const onResumeAction = actionValue();
-            const wrapper = mount(<AppEvents {...defaultProps} onResumeAction={onResumeAction} />);
+            const { unmount } = render(<AppEvents {...defaultProps} onResumeAction={onResumeAction} />);
 
             expect(appStateChangeHandler).toBeDefined();
-            wrapper.unmount();
+            unmount();
             expect(appStateChangeHandler).toBeUndefined();
         });
 
         it("executes the on resume action", () => {
             const onResumeAction = actionValue();
-            mount(<AppEvents {...defaultProps} onResumeAction={onResumeAction} />);
+            render(<AppEvents {...defaultProps} onResumeAction={onResumeAction} />);
 
             appStateChangeHandler!("background");
             appStateChangeHandler!("active");
@@ -87,7 +86,7 @@ describe("AppEvents", () => {
 
         it("does not execute the on resume action when the app state hasn't changed", () => {
             const onResumeAction = actionValue();
-            mount(<AppEvents {...defaultProps} onResumeAction={onResumeAction} />);
+            render(<AppEvents {...defaultProps} onResumeAction={onResumeAction} />);
 
             appStateChangeHandler!("active");
             appStateChangeHandler!("active");
@@ -98,7 +97,7 @@ describe("AppEvents", () => {
             const dateNowSpy = jest.spyOn(Date, "now").mockReturnValue(0);
 
             const onResumeAction = actionValue();
-            mount(<AppEvents {...defaultProps} onResumeAction={onResumeAction} onResumeTimeout={5} />);
+            render(<AppEvents {...defaultProps} onResumeAction={onResumeAction} onResumeTimeout={5} />);
 
             dateNowSpy.mockReturnValue(4000);
             appStateChangeHandler!("background");
@@ -117,17 +116,17 @@ describe("AppEvents", () => {
     describe("with on online action", () => {
         it("registers and unregisters an event listener", async () => {
             const onOnlineAction = actionValue();
-            const wrapper = mount(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} />);
+            const { unmount } = render(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} />);
             await flushMicrotasksQueue();
 
             expect(connectionChangeHandler).toBeDefined();
-            wrapper.unmount();
+            unmount();
             expect(connectionChangeHandler).toBeUndefined();
         });
 
         it("executes the on online action", async () => {
             const onOnlineAction = actionValue();
-            mount(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} />);
+            render(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} />);
             await flushMicrotasksQueue();
 
             connectionChangeHandler!({ isConnected: false });
@@ -139,7 +138,7 @@ describe("AppEvents", () => {
             const dateNowSpy = jest.spyOn(Date, "now").mockReturnValue(0);
 
             const onOnlineAction = actionValue();
-            mount(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} onOnlineTimeout={5} />);
+            render(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} onOnlineTimeout={5} />);
             await flushMicrotasksQueue();
 
             dateNowSpy.mockReturnValue(4000);
@@ -157,7 +156,7 @@ describe("AppEvents", () => {
 
         it("does not execute the on online action if the connection state didn't change", async () => {
             const onOnlineAction = actionValue();
-            mount(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} />);
+            render(<AppEvents {...defaultProps} onOnlineAction={onOnlineAction} />);
             await flushMicrotasksQueue();
 
             connectionChangeHandler!({ isConnected: true });
@@ -178,7 +177,7 @@ describe("AppEvents", () => {
 
         it("executes the on timeout action once after the timeout has passed", () => {
             const onTimeoutAction = actionValue();
-            mount(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} />);
+            render(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} />);
 
             expect(onTimeoutAction.execute).toHaveBeenCalledTimes(0);
             jest.advanceTimersByTime(30000);
@@ -189,16 +188,16 @@ describe("AppEvents", () => {
 
         it("does not execute the on timeout action after the component has been unmounted", () => {
             const onTimeoutAction = actionValue();
-            const wrapper = mount(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} />);
+            const { unmount } = render(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} />);
             jest.advanceTimersByTime(15000);
-            wrapper.unmount();
+            unmount();
             jest.advanceTimersByTime(15000);
             expect(onTimeoutAction.execute).toHaveBeenCalledTimes(0);
         });
 
         it("executes the interval on timeout action after every interval", () => {
             const onTimeoutAction = actionValue();
-            mount(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} timerType={"interval"} />);
+            render(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} timerType={"interval"} />);
 
             expect(onTimeoutAction.execute).toHaveBeenCalledTimes(0);
             jest.advanceTimersByTime(30000);
@@ -209,20 +208,20 @@ describe("AppEvents", () => {
 
         it("does not execute the interval on timeout action after the component has been unmounted", () => {
             const onTimeoutAction = actionValue();
-            const wrapper = mount(
+            const { unmount } = render(
                 <AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} timerType={"interval"} />
             );
 
             jest.advanceTimersByTime(30000);
             expect(onTimeoutAction.execute).toHaveBeenCalledTimes(1);
-            wrapper.unmount();
+            unmount();
             jest.advanceTimersByTime(30000);
             expect(onTimeoutAction.execute).toHaveBeenCalledTimes(1);
         });
 
         it("does not execute the interval on timeout action when it is already executing", () => {
             const onTimeoutAction = actionValue(true, true);
-            mount(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} timerType={"interval"} />);
+            render(<AppEvents {...defaultProps} onTimeoutAction={onTimeoutAction} timerType={"interval"} />);
 
             jest.advanceTimersByTime(30000);
             expect(onTimeoutAction.execute).not.toHaveBeenCalled();

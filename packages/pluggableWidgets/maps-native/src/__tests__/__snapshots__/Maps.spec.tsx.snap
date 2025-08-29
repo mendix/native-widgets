@@ -1,105 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
-<Maps
-  defaultZoomLevel="city"
-  dynamicMarkers={[]}
-  fitToMarkers={true}
-  interactive={true}
-  mapType="standard"
-  markers={
-    [
-      {
-        "iconColor": "red",
-        "iconSize": 1,
-        "latitude": {
-          "status": "available",
-          "value": "35.6895",
-        },
-        "locationType": "latlng",
-        "longitude": {
-          "status": "available",
-          "value": "139.6917",
-        },
-      },
-      {
-        "iconColor": "red",
-        "iconSize": 1,
-        "latitude": {
-          "status": "available",
-          "value": "52.3702",
-        },
-        "locationType": "latlng",
-        "longitude": {
-          "status": "available",
-          "value": "4.8952",
-        },
-      },
-    ]
+exports[`<Maps /> renders 1`] = `
+<View
+  style={
+    {
+      "minHeight": 50,
+    }
   }
-  maxZoomLevel="streets"
-  minZoomLevel="city"
-  name="maps-test"
-  provider="default"
-  showsUserLocation={false}
-  style={[]}
+  testID="maps-test"
 >
+  <View
+    cacheEnabled={false}
+    liteMode={false}
+    mapPadding={
+      {
+        "bottom": 48,
+        "left": 48,
+        "right": 48,
+        "top": 48,
+      }
+    }
+    mapType="standard"
+    maxZoomLevel={15}
+    minZoomLevel={3}
+    onMapReady={[Function]}
+    onRegionChangeComplete={[Function]}
+    pitchEnabled={false}
+    rotateEnabled={true}
+    scrollEnabled={true}
+    showsMyLocationButton={false}
+    showsPointsOfInterest={false}
+    showsTraffic={false}
+    showsUserLocation={false}
+    style={
+      {
+        "alignSelf": "stretch",
+        "flex": 1,
+      }
+    }
+    zoomEnabled={true}
+  >
+    <View
+      coordinate={
+        {
+          "latitude": 35.6895,
+          "longitude": 139.6917,
+        }
+      }
+      onPress={[Function]}
+      opacity={1}
+      pinColor="red"
+    >
+      <View
+        tooltip={true}
+      />
+    </View>
+    <View
+      coordinate={
+        {
+          "latitude": 52.3702,
+          "longitude": 4.8952,
+        }
+      }
+      onPress={[Function]}
+      opacity={1}
+      pinColor="red"
+    >
+      <View
+        tooltip={true}
+      />
+    </View>
+  </View>
   <View
     style={
       {
-        "minHeight": 50,
+        "alignItems": "center",
+        "backgroundColor": "#fafafa",
+        "bottom": 0,
+        "justifyContent": "center",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "zIndex": 99,
       }
     }
-    testID="maps-test"
   >
-    <View
-      style={
-        {
-          "minHeight": 50,
-        }
-      }
-      testID="maps-test"
-    >
-      <View
-        style={
-          {
-            "alignItems": "center",
-            "backgroundColor": "#fafafa",
-            "bottom": 0,
-            "justifyContent": "center",
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 99,
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "#fafafa",
-              "bottom": 0,
-              "justifyContent": "center",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-              "zIndex": 99,
-            }
-          }
-        >
-          <ActivityIndicator
-            size="large"
-          >
-            <ActivityIndicator
-              size="large"
-            />
-          </ActivityIndicator>
-        </View>
-      </View>
-    </View>
+    <ActivityIndicator
+      size="large"
+    />
   </View>
-</Maps>
+</View>
 `;

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We have removed react-native-system-navigation-bar and deprecated-react-native-prop-types dependencies. Navigation bar visibility is now handled by the react-native-video package.
+
 ## [6.2.0] - 2025-08-18
 
 ### Changed

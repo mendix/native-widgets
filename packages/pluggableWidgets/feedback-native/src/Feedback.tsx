@@ -66,6 +66,7 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
     componentDidMount() {
         Dimensions.addEventListener("change", this.updateDeviceHeight);
     }
+
     componentDidUpdate(_: Readonly<FeedbackProps<FeedbackStyle>>, prevState: Readonly<State>) {
         if (
             ["todo", "inprogress"].includes(prevState.status) &&
