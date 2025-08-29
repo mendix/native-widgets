@@ -1,14 +1,49 @@
-/**
- * @jest-environment jsdom
- */
 import { Maps, Props } from "../Maps";
-import { mount } from "enzyme";
+import { render, act } from "@testing-library/react-native";
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 import { createElement } from "react";
-import { waitFor } from "@testing-library/react-native";
 
-describe("", () => {
+// Mock react-native-maps
+// Without this, the Maps component renders only an empty AIRMap component without markers
+jest.mock("react-native-maps", () => {
+    const React = require("react");
+    const { View } = require("react-native");
+
+    const MapView = React.forwardRef((props: any, ref: any) => {
+        // Simulate onMapReady being called after component mounts
+        React.useEffect(() => {
+            if (props.onMapReady) {
+                setTimeout(() => props.onMapReady(), 0);
+            }
+        }, [props.onMapReady]);
+
+        // Add ref methods that the Maps component expects
+        React.useImperativeHandle(ref, () => ({
+            fitToCoordinates: jest.fn(),
+            animateCamera: jest.fn(),
+            setCamera: jest.fn(),
+            getCamera: jest.fn(() =>
+                Promise.resolve({
+                    center: { latitude: 0, longitude: 0 },
+                    zoom: 10,
+                    altitude: 1000
+                })
+            )
+        }));
+
+        return <View {...props} />;
+    });
+
+    return {
+        __esModule: true,
+        default: MapView,
+        Marker: (props: any) => <View {...props} />,
+        Callout: (props: any) => <View {...props} />
+    };
+});
+
+describe("<Maps />", () => {
     let defaultProps: Props;
 
     beforeEach(() => {
@@ -46,11 +81,13 @@ describe("", () => {
             }
         ];
 
-        const wrapper = mount(<Maps {...defaultProps} />);
+        const component = render(<Maps {...defaultProps} />);
 
-        await waitFor(() => {
-            wrapper.update();
-            expect(wrapper).toMatchSnapshot();
+        // Wait for async operations to complete within <Maps />
+        await act(async () => {
+            await new Promise(resolve => setTimeout(resolve, 0));
         });
+
+        expect(component.toJSON()).toMatchSnapshot();
     });
 });
