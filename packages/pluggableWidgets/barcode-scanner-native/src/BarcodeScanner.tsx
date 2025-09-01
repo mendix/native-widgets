@@ -16,18 +16,15 @@ export function BarcodeScanner(props: Props): ReactElement {
 
     const styles = useMemo(() => flattenStyles(defaultBarcodeScannerStyle, props.style), [props.style]);
 
-    // Ref to track last scan time
-    const lastScanRef = useRef(0);
+    // Ref to track the lock state
+    const isLockedRef = useRef(false);
 
     const onCodeScanned = useCallback(
         (codes: Code[]) => {
-            const now = Date.now();
-
-            // throttle: only allow once every 2000ms
-            if (now - lastScanRef.current < 2000) {
+            // Block if still in cooldown
+            if (isLockedRef.current) {
                 return;
             }
-            lastScanRef.current = now;
 
             if (props.barcode.status !== ValueStatus.Available || codes.length === 0 || !codes[0].value) {
                 return;
@@ -39,6 +36,12 @@ export function BarcodeScanner(props: Props): ReactElement {
             }
 
             executeAction(props.onDetect);
+
+            // Lock further scans for 2 seconds
+            isLockedRef.current = true;
+            setTimeout(() => {
+                isLockedRef.current = false;
+            }, 2000);
         },
         [props.barcode, props.onDetect]
     );
