@@ -16,7 +16,7 @@ on:
         required: false
         type: string
       LOCAL_TEST_ARTIFACT_RUN_ID:
-        description: "Workflow run ID for local artifact download (leave empty for normal CI)"
+        description: "Workflow run ID for local artifact download (leave empty for normal CI). Use the full run ID from the URL, not the run number displayed in UI."
         required: false
         default: ""
       workspace:
@@ -305,6 +305,8 @@ jobs:
   android-bundle:
     needs: [project, mendix-version]
     runs-on: ubuntu-22.04
+    # Skip this job if we're using artifacts from a specific run
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
       image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
@@ -325,6 +327,8 @@ jobs:
   ios-bundle:
     needs: [project, mendix-version]
     runs-on: ubuntu-22.04
+    # Skip this job if we're using artifacts from a specific run
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
       image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
@@ -345,6 +349,8 @@ jobs:
   android-app:
     needs: [android-bundle, determine-nt-version]
     runs-on: ubuntu-22.04
+    # Skip this job if we're using artifacts from a specific run, but allow it to run if android-bundle was skipped
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.android-bundle.result == 'success') }}
     steps:
       - name: Debug branch value
         run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
@@ -413,6 +419,8 @@ jobs:
   ios-app:
     needs: [ios-bundle, determine-nt-version]
     runs-on: macos-13
+    # Skip this job if we're using artifacts from a specific run, but allow it to run if ios-bundle was skipped
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.ios-bundle.result == 'success') }}
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -473,7 +481,8 @@ jobs:
 
   android-widget-tests:
     needs: [scope, mendix-version, project, android-app]
-    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
+    # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
+    if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     strategy:
@@ -499,7 +508,9 @@ jobs:
           run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
           output_dir: android-app
           platform: android
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download Android app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: android-app
@@ -546,7 +557,8 @@ jobs:
 
   ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
-    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
+    # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
+    if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
     timeout-minutes: 60
     strategy:
@@ -595,7 +607,9 @@ jobs:
           run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
           output_dir: ios-app
           platform: ios
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download iOS app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ios-app
@@ -630,8 +644,9 @@ jobs:
           test-type: ${{ matrix.widget }}
 
   android-js-tests:
-    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
     needs: [mendix-version, project, android-app]
+    # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
+    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions') && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-22.04
     timeout-minutes: 90
     steps:
@@ -643,7 +658,18 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      # Used only for local testing, will be empty on GitHub
+      - name: "Download Android app from specific run"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
+        uses: ./.github/actions/use-arficats-from-specific-run
+        with:
+          artifact_name: android-app
+          run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
+          output_dir: android-app
+          platform: android
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download Android app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: android-app
@@ -688,8 +714,9 @@ jobs:
           test-type: js-actions
 
   ios-js-tests:
-    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
     needs: [mendix-version, project, ios-app]
+    # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
+    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions') && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
     timeout-minutes: 90
     steps:
@@ -716,7 +743,18 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      # Used only for local testing, will be empty on GitHub
+      - name: "Download iOS app from specific run"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
+        uses: ./.github/actions/use-arficats-from-specific-run
+        with:
+          artifact_name: ios-app
+          run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
+          output_dir: ios-app
+          platform: ios
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download iOS app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ios-app
