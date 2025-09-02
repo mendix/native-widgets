@@ -357,7 +357,7 @@ jobs:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          repository: mendix/native-template
+          repository: mendix/native-template:wq
           ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
       - name: "Check out code"
@@ -569,24 +569,31 @@ jobs:
     steps:
       - name: "Force cleanup workspace"
         run: |
-          # Kill any Git processes
-          sudo pkill -f git || true
-          sudo pkill -f xcodebuild || true
+          # Kill all Git and Xcode processes aggressively
+          sudo pkill -9 -f git || true
+          sudo pkill -9 -f xcodebuild || true
+          sudo pkill -9 -f node || true
           
-          # Only clean the repository contents, not the workspace structure
-          if [ -d "/Users/runner/work/native-widgets/native-widgets" ]; then
-            cd /Users/runner/work/native-widgets/native-widgets
-            # Remove git locks specifically
-            find . -name "*.lock" -type f -delete 2>/dev/null || true
-            # Remove .git directory for fresh clone
-            rm -rf .git 2>/dev/null || true
-            # Remove repository contents but keep the directory structure
-            rm -rf * 2>/dev/null || true
-            rm -rf .[!.]* 2>/dev/null || true
+          # Wait for processes to be killed
+          sleep 5
+          
+          # Clean the workspace contents while preserving directory structure
+          cd /Users/runner/work/native-widgets
+          if [ -d "native-widgets" ]; then
+            cd native-widgets
+            
+            # Force remove all git state and locks with extreme prejudice
+            sudo rm -rf .git || true
+            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
+            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
+            
+            # Remove all other contents
+            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
           fi
           
-          # Wait a moment for processes to terminate
-          sleep 2
+          # Final wait and process cleanup
+          sudo pkill -9 -f git || true
+          sleep 3
         continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -722,17 +729,30 @@ jobs:
     steps:
       - name: "Clean up any Git locks"
         run: |
-          # Kill any hanging git processes
-          sudo pkill -f git || true
+          # Kill all git and related processes aggressively
+          sudo pkill -9 -f git || true
+          sudo pkill -9 -f node || true
           
-          # Remove any existing Git lock files
-          find . -name "*.lock" -type f -delete 2>/dev/null || true
+          # Wait for processes to be killed
+          sleep 5
           
-          # Remove .git directory entirely for fresh start
-          rm -rf .git || true
+          # Clean the workspace contents while preserving directory structure
+          cd /Users/runner/work/native-widgets
+          if [ -d "native-widgets" ]; then
+            cd native-widgets
+            
+            # Force remove git state and locks
+            sudo rm -rf .git || true
+            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
+            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
+            
+            # Remove all other contents
+            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
+          fi
           
-          # Add a small random delay to stagger operations
-          sleep $((RANDOM % 10))
+          # Final cleanup
+          sudo pkill -9 -f git || true
+          sleep $((RANDOM % 5 + 3))
         continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
