@@ -561,9 +561,17 @@ jobs:
           sudo pkill -f git || true
           sudo pkill -f xcodebuild || true
           
-          # Clean workspace completely
-          cd /Users/runner/work/native-widgets/ || true
-          rm -rf * .* 2>/dev/null || true
+          # Only clean the repository contents, not the workspace structure
+          if [ -d "/Users/runner/work/native-widgets/native-widgets" ]; then
+            cd /Users/runner/work/native-widgets/native-widgets
+            # Remove git locks specifically
+            find . -name "*.lock" -type f -delete 2>/dev/null || true
+            # Remove .git directory for fresh clone
+            rm -rf .git 2>/dev/null || true
+            # Remove repository contents but keep the directory structure
+            rm -rf * 2>/dev/null || true
+            rm -rf .[!.]* 2>/dev/null || true
+          fi
           
           # Wait a moment for processes to terminate
           sleep 2
@@ -573,6 +581,7 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
+          ref: ${{ github.sha }}
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
