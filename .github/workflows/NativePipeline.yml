@@ -555,10 +555,24 @@ jobs:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
     steps:
+      - name: "Force cleanup workspace"
+        run: |
+          # Kill any Git processes
+          sudo pkill -f git || true
+          sudo pkill -f xcodebuild || true
+          
+          # Clean workspace completely
+          cd /Users/runner/work/native-widgets/ || true
+          rm -rf * .* 2>/dev/null || true
+          
+          # Wait a moment for processes to terminate
+          sleep 2
+        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
+          clean: true
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -670,10 +684,25 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 90
     steps:
+      - name: "Clean up any Git locks"
+        run: |
+          # Kill any hanging git processes
+          sudo pkill -f git || true
+          
+          # Remove any existing Git lock files
+          find . -name "*.lock" -type f -delete 2>/dev/null || true
+          
+          # Remove .git directory entirely for fresh start
+          rm -rf .git || true
+          
+          # Add a small random delay to stagger operations
+          sleep $((RANDOM % 10))
+        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
+          clean: true
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
