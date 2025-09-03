@@ -499,7 +499,7 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      # Used only for local testing, will be empty on GitHub
+      # Used only when specific run id is provided when triggering the jbo
       - name: "Download Android app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
         uses: ./.github/actions/use-arficats-from-specific-run
