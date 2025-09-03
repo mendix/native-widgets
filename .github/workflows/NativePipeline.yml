@@ -652,9 +652,9 @@ jobs:
           test-type: ${{ matrix.widget }}
 
   android-js-tests:
-    needs: [mendix-version, project, android-app]
+    needs: [scope, mendix-version, project, android-app]
     # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
-    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions') && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
+    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
@@ -722,9 +722,9 @@ jobs:
           test-type: js-actions
 
   ios-js-tests:
-    needs: [mendix-version, project, ios-app]
+    needs: [scope, mendix-version, project, ios-app]
     # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
-    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions') && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
+    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
     timeout-minutes: 90
     steps:
