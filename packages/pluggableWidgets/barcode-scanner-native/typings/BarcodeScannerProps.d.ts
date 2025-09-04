@@ -6,12 +6,15 @@
 import { CSSProperties } from "react";
 import { ActionValue, EditableValue } from "mendix";
 
+export type CameraTypeEnum = "front" | "back";
+
 export interface BarcodeScannerProps<Style> {
     name: string;
     style: Style[];
     barcode: EditableValue<string>;
     showMask: boolean;
     showAnimatedLine: boolean;
+    cameraType: CameraTypeEnum;
     onDetect?: ActionValue;
 }
 
@@ -29,5 +32,6 @@ export interface BarcodeScannerPreviewProps {
     barcode: string;
     showMask: boolean;
     showAnimatedLine: boolean;
+    cameraType: CameraTypeEnum;
     onDetect: {} | null;
 }
