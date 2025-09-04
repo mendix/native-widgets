@@ -35,6 +35,67 @@ jest.mock("react-native/Libraries/Image/Image", () => {
     };
 });
 
+jest.mock("@d11/react-native-fast-image", () => {
+    const { Image } = jest.requireActual("react-native");
+
+    const FastImage = (props: any): JSX.Element => {
+        // Map FastImage props to React Native Image props
+        const {
+            source,
+            resizeMode,
+            onFastImageLoadStart,
+            onFastImageProgress,
+            onFastImageLoad,
+            onFastImageError,
+            onFastImageLoadEnd,
+            ...otherProps
+        } = props;
+
+        return (
+            <Image
+                {...otherProps}
+                source={source}
+                resizeMode={resizeMode}
+                onLoadStart={onFastImageLoadStart}
+                onProgress={onFastImageProgress}
+                onLoad={onFastImageLoad}
+                onError={onFastImageError}
+                onLoadEnd={onFastImageLoadEnd}
+            />
+        );
+    };
+
+    // Add static properties that FastImage has
+    FastImage.resizeMode = {
+        contain: "contain",
+        cover: "cover",
+        stretch: "stretch",
+        center: "center"
+    };
+
+    FastImage.priority = {
+        low: "low",
+        normal: "normal",
+        high: "high"
+    };
+
+    FastImage.cacheControl = {
+        immutable: "immutable",
+        web: "web",
+        cacheOnly: "cacheOnly"
+    };
+
+    FastImage.preload = jest.fn();
+    FastImage.clearMemoryCache = jest.fn(() => Promise.resolve());
+    FastImage.clearDiskCache = jest.fn(() => Promise.resolve());
+
+    return {
+        __esModule: true,
+        default: FastImage,
+        Source: {} // Type export, empty object for tests
+    };
+});
+
 const onLayoutEventData = {
     nativeEvent: {
         layout: {
