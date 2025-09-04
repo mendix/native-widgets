@@ -16,7 +16,7 @@ on:
         required: false
         type: string
       LOCAL_TEST_ARTIFACT_RUN_ID:
-        description: "Workflow run ID for local artifact download (leave empty for normal CI)"
+        description: "Workflow run ID for local artifact download (leave empty for normal CI). Use the full run ID from the URL, not the run number displayed in UI."
         required: false
         default: ""
       workspace:
@@ -65,7 +65,7 @@ on:
           - toggle-buttons-native
           - video-player-native
           - web-view-native 
-
+          
   # Trigger on PR
   pull_request:
 
@@ -96,7 +96,7 @@ jobs:
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
           echo "Widgets or js actions are: ${{ steps.scope.outputs.widgets }}"
   mendix-version:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
     steps:
@@ -162,7 +162,7 @@ jobs:
           echo "Final nt_branch value: ${{ steps.set-output.outputs.nt_branch }}"
   docker-images:
     needs: [mendix-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: "Login to GitHub Container Registry"
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
@@ -303,7 +303,9 @@ jobs:
           path: automation.mda
   android-bundle:
     needs: [project, mendix-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    # Skip this job if we're using artifacts from a specific run
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
       image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
@@ -323,7 +325,9 @@ jobs:
           mda-file: automation.mda
   ios-bundle:
     needs: [project, mendix-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    # Skip this job if we're using artifacts from a specific run
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
       image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
@@ -343,7 +347,9 @@ jobs:
           mda-file: automation.mda
   android-app:
     needs: [android-bundle, determine-nt-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    # Skip this job if we're using artifacts from a specific run, but allow it to run if android-bundle was skipped
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.android-bundle.result == 'success') }}
     steps:
       - name: Debug branch value
         run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
@@ -411,7 +417,9 @@ jobs:
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
     needs: [ios-bundle, determine-nt-version]
-    runs-on: macos-13
+    runs-on: macos-15
+    # Skip this job if we're using artifacts from a specific run, but allow it to run if ios-bundle was skipped
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.ios-bundle.result == 'success') }}
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -472,8 +480,9 @@ jobs:
 
   android-widget-tests:
     needs: [scope, mendix-version, project, android-app]
-    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
-    runs-on: ubuntu-22.04
+    # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
+    if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     strategy:
       max-parallel: 5
@@ -489,7 +498,7 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
-      # Used only for local testing, will be empty on GitHub
+      # Used only when specific run id is provided when triggering the jbo
       - name: "Download Android app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
         uses: ./.github/actions/use-arficats-from-specific-run
@@ -498,7 +507,9 @@ jobs:
           run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
           output_dir: android-app
           platform: android
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download Android app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: android-app
@@ -545,7 +556,8 @@ jobs:
 
   ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
-    if: ${{ github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule' }}
+    # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
+    if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
     timeout-minutes: 60
     strategy:
@@ -554,10 +566,41 @@ jobs:
         widget: ${{ fromJson(needs.scope.outputs.widgets) }}
       fail-fast: false
     steps:
+      - name: "Force cleanup workspace"
+        run: |
+          # Kill all Git and Xcode processes aggressively
+          sudo pkill -9 -f git || true
+          sudo pkill -9 -f xcodebuild || true
+          sudo pkill -9 -f node || true
+          
+          # Wait for processes to be killed
+          sleep 5
+          
+          # Clean the workspace contents while preserving directory structure
+          cd /Users/runner/work/native-widgets
+          if [ -d "native-widgets" ]; then
+            cd native-widgets
+            
+            # Force remove all git state and locks with extreme prejudice
+            sudo rm -rf .git || true
+            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
+            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
+            
+            # Remove all other contents
+            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
+          fi
+          
+          # Final wait and process cleanup
+          sudo pkill -9 -f git || true
+          sleep 3
+        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          fetch-tags: false
+          clean: true
+          ref: ${{ github.sha }}
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -571,7 +614,9 @@ jobs:
           run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
           output_dir: ios-app
           platform: ios
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download iOS app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ios-app
@@ -606,9 +651,10 @@ jobs:
           test-type: ${{ matrix.widget }}
 
   android-js-tests:
-    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
-    needs: [mendix-version, project, android-app]
-    runs-on: ubuntu-22.04
+    needs: [scope, mendix-version, project, android-app]
+    # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
+    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
       - name: "Check out code"
@@ -619,7 +665,18 @@ jobs:
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      # Used only for local testing, will be empty on GitHub
+      - name: "Download Android app from specific run"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
+        uses: ./.github/actions/use-arficats-from-specific-run
+        with:
+          artifact_name: android-app
+          run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
+          output_dir: android-app
+          platform: android
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download Android app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: android-app
@@ -664,20 +721,61 @@ jobs:
           test-type: js-actions
 
   ios-js-tests:
-    if: ${{ github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions'}}
-    needs: [mendix-version, project, ios-app]
+    needs: [scope, mendix-version, project, ios-app]
+    # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
+    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
     timeout-minutes: 90
     steps:
+      - name: "Clean up any Git locks"
+        run: |
+          # Kill all git and related processes aggressively
+          sudo pkill -9 -f git || true
+          sudo pkill -9 -f node || true
+          
+          # Wait for processes to be killed
+          sleep 5
+          
+          # Clean the workspace contents while preserving directory structure
+          cd /Users/runner/work/native-widgets
+          if [ -d "native-widgets" ]; then
+            cd native-widgets
+            
+            # Force remove git state and locks
+            sudo rm -rf .git || true
+            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
+            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
+            
+            # Remove all other contents
+            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
+          fi
+          
+          # Final cleanup
+          sudo pkill -9 -f git || true
+          sleep $((RANDOM % 5 + 3))
+        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          fetch-tags: false
+          clean: true
       - name: "Download project MDA file"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: mda
+      # Used only for local testing, will be empty on GitHub
+      - name: "Download iOS app from specific run"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
+        uses: ./.github/actions/use-arficats-from-specific-run
+        with:
+          artifact_name: ios-app
+          run_id: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID }}
+          output_dir: ios-app
+          platform: ios
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Download iOS app"
+        if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ios-app
