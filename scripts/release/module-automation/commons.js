@@ -68,24 +68,117 @@ async function getPackageInfo(path) {
 
 // Create reusable mxbuild image
 async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, excludeFilesRegExp) {
-    const existingImages = (await execShellCommand(`docker image ls -q mxbuild:${mendixVersion}`)).toString().trim();
-    if (!existingImages) {
-        console.log(`Creating new mxbuild docker image...`);
-        await execShellCommand(
-            `docker build -f ${join(process.cwd(), "scripts/automation/mxbuild.Dockerfile")} ` +
-                `--build-arg MENDIX_VERSION=${mendixVersion} ` +
-                `-t mxbuild:${mendixVersion} ${process.cwd()}`
-        );
+    console.log("[MODULE_MPK] Starting createModuleMpkInDocker:");
+    console.log("[MODULE_MPK] sourceDir:", sourceDir);
+    console.log("[MODULE_MPK] moduleName:", moduleName);
+    console.log("[MODULE_MPK] mendixVersion:", mendixVersion);
+    console.log("[MODULE_MPK] excludeFilesRegExp:", excludeFilesRegExp);
+
+    try {
+        // Check if docker is running
+        await execShellCommand(`docker info`);
+        console.log("[MODULE_MPK] Docker service is running");
+    } catch (error) {
+        console.error("[MODULE_MPK] ERROR: Docker service is not running or accessible");
+        throw new Error("Docker service is not running or accessible. Please ensure Docker is running.");
     }
 
-    // Build testProject via mxbuild
-    const projectFile = basename((await getFiles(sourceDir, [`.mpr`]))[0]);
-    await execShellCommand(
-        `docker run -t -v ${sourceDir}:/source ` +
-            `--rm mxbuild:${mendixVersion} bash -c "mx update-widgets --loose-version-check /source/${projectFile} && dotnet /tmp/mxbuild/modeler/mx.dll create-module-package ${
+    try {
+        // Check if the sourceDir exists and has the correct permissions
+        const sourceDirFiles = await getFiles(sourceDir);
+        console.log(`[MODULE_MPK] sourceDir files count: ${sourceDirFiles.length}`);
+        console.log(`[MODULE_MPK] sourceDir accessible: true`);
+    } catch (error) {
+        console.error(`[MODULE_MPK] ERROR: sourceDir not accessible: ${error.message}`);
+        throw new Error(`Source directory ${sourceDir} is not accessible: ${error.message}`);
+    }
+
+    try {
+        const existingImages = (await execShellCommand(`docker image ls -q mxbuild:${mendixVersion}`))
+            .toString()
+            .trim();
+        console.log(`[MODULE_MPK] Existing docker image check: ${existingImages ? "Found" : "Not found"}`);
+
+        if (!existingImages) {
+            console.log(`[MODULE_MPK] Creating new mxbuild docker image...`);
+            const dockerfilePath = join(process.cwd(), "scripts/automation/mxbuild.Dockerfile");
+            console.log(`[MODULE_MPK] Dockerfile path: ${dockerfilePath}`);
+
+            await execShellCommand(
+                `docker build -f ${dockerfilePath} ` +
+                    `--build-arg MENDIX_VERSION=${mendixVersion} ` +
+                    `-t mxbuild:${mendixVersion} ${process.cwd()}`
+            );
+            console.log(`[MODULE_MPK] Docker image created successfully`);
+        }
+
+        // Get .mpr files in the sourceDir
+        const mprFiles = await getFiles(sourceDir, [`.mpr`]);
+        console.log(`[MODULE_MPK] Found .mpr files:`, mprFiles);
+
+        if (!mprFiles || mprFiles.length === 0) {
+            throw new Error(`No .mpr file found in ${sourceDir}`);
+        }
+
+        // Build testProject via mxbuild
+        const projectFile = basename(mprFiles[0]);
+        console.log(`[MODULE_MPK] Using project file: ${projectFile}`);
+
+        // Split the commands to better identify where things are failing
+        try {
+            // First check container environment and permissions
+            console.log(`[MODULE_MPK] Checking container environment...`);
+            await execShellCommand(
+                `docker run --rm -v ${sourceDir}:/source mxbuild:${mendixVersion} bash -c "ls -la /source && echo 'Source files visible' && whoami && echo 'Container user confirmed'"`
+            );
+
+            // Run the update-widgets command separately
+            console.log(`[MODULE_MPK] Running update-widgets command...`);
+            await execShellCommand(
+                `docker run --rm -v ${sourceDir}:/source mxbuild:${mendixVersion} bash -c "dotnet /tmp/mxbuild/modeler/mx.dll update-widgets --loose-version-check /source/${projectFile}"`
+            );
+            console.log(`[MODULE_MPK] update-widgets completed successfully`);
+
+            // Then run the create-module-package command
+            console.log(`[MODULE_MPK] Running create-module-package command...`);
+            const createModuleCmd = `docker run --rm -v ${sourceDir}:/source mxbuild:${mendixVersion} bash -c "dotnet /tmp/mxbuild/modeler/mx.dll create-module-package ${
                 excludeFilesRegExp ? `--exclude-files='${excludeFilesRegExp}'` : ""
-            } /source/${projectFile} ${moduleName}"`
-    );
+            } /source/${projectFile} ${moduleName}"`;
+
+            await execShellCommand(createModuleCmd);
+            console.log(`[MODULE_MPK] Module ${moduleName} created successfully.`);
+        } catch (error) {
+            console.error(`[MODULE_MPK] ERROR in docker run command: ${error.message}`);
+            console.error(`[MODULE_MPK] Docker run exit code: ${error.code}`);
+            console.error(`[MODULE_MPK] Command: ${error.cmd}`);
+
+            // Try getting logs from the container if it failed
+            try {
+                console.log(`[MODULE_MPK] Trying to get more details about the container environment...`);
+                await execShellCommand(
+                    `docker run --rm mxbuild:${mendixVersion} bash -c "echo 'Environment:' && env | grep -i mendix || echo 'No Mendix env vars' && echo 'MxBuild files:' && ls -la /tmp/mxbuild/modeler/ && echo 'Checking mx script:' && cat /usr/local/bin/mx || echo 'mx script not found'"`
+                );
+            } catch (logError) {
+                console.error(`[MODULE_MPK] Failed to get container details: ${logError.message}`);
+            }
+
+            // Try inspecting the MPR file if possible
+            try {
+                console.log(`[MODULE_MPK] Checking project file contents...`);
+                await execShellCommand(
+                    `docker run --rm -v ${sourceDir}:/source mxbuild:${mendixVersion} bash -c "ls -la /source && echo 'Project file size:' && ls -la /source/${projectFile} || echo 'Project file not found'"`
+                );
+            } catch (projError) {
+                console.error(`[MODULE_MPK] Failed to inspect project file: ${projError.message}`);
+            }
+
+            throw new Error(`Failed to create module package: ${error.message}`);
+        }
+    } catch (error) {
+        console.error(`[MODULE_MPK] ERROR: ${error.message}`);
+        throw error;
+    }
+
     console.log(`Module ${moduleName} created successfully.`);
 }
 
