@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.1.0] - 2025-9-8
+
 ### Fixed
 
 -   We have fixed defaultProps deprecation warning.
