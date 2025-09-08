@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.3.0] - 2025-9-8
+
 -   Updated react-native-webview from version v13.12.5 to latest to support react-native 0.77
 
 ## [4.2.0] - 2025-3-31
