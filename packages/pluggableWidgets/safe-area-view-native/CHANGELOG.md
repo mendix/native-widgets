@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.1.1] - 2025-9-9
+
 -   We fixed the issue where navigation buttons were being overlapped due to improper safe area handling.
 
 ## [3.1.0] - 2025-4-25
