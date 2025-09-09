@@ -264,7 +264,7 @@ async function updateNativeComponentsTestProject(moduleInfo, tmpFolder, nativeWi
 
     console.log("Updating NativeComponentsTestProject...");
     console.log("[TEST_PROJECT_UPDATE] [GIT] Cloning test project repository");
-    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder);
+    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder, moduleInfo.testProjectBranchName);
     console.log("[TEST_PROJECT_UPDATE] [GIT] Test project cloned to:", tmpFolder);
 
     console.log("Deleting existing JS Actions from test project...");
@@ -385,7 +385,7 @@ async function updateNativeComponentsTestProjectWithAtlas(moduleInfo, tmpFolder)
 
     console.log("Updating NativeComponentsTestProject..");
     console.log("[ATLAS_TEST_PROJECT_UPDATE] [GIT] Cloning test project repository");
-    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder);
+    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder, moduleInfo.testProjectBranchName);
     console.log("[ATLAS_TEST_PROJECT_UPDATE] [GIT] Test project cloned to:", tmpFolder);
 
     console.log("Copying Native styling files..");
