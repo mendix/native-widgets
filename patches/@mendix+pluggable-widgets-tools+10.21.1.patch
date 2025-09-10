@@ -77,6 +77,19 @@ index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..a3f0e368d76d294a5f7cd85886fe5ce0
  }
  
  function getModuleName(modulePath) {
+diff --git a/configs/rollup.config.native.mjs b/configs/rollup.config.native.mjs
+index 682cf9fc4259a1f431e7cc3b17a319fdb072929e..5be03c770f8247637223f78738c3cdecae4d3d92 100644
+--- a/configs/rollup.config.native.mjs
++++ b/configs/rollup.config.native.mjs
+@@ -62,7 +62,7 @@ const nativeExternal = [
+     /^react($|\/)/,
+     /^react-native-gesture-handler($|\/)/,
+     /^react-native-reanimated($|\/)/,
+-    /^react-native-fast-image($|\/)/,
++    /^@d11\/react-native-fast-image($|\/)/,
+     /^react-native-svg($|\/)/,
+     /^react-native-vector-icons($|\/)/,
+     /^@?react-navigation($|\/)/,
 diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
 index 72e3c51473b7566ca9d8b224b35334099ce615db..7e0949aa5d50d288d848117a804fd691422aefde 100644
 --- a/test-config/jest.native.config.js
