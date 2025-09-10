@@ -1,5 +1,9 @@
 name: Nightly Dispatcher
 
+permissions:
+  actions: write
+  contents: read
+
 on:
   schedule:
     # Run main branch at 10:00 PM (22:00 UTC)
@@ -8,161 +12,130 @@ on:
     - cron: '0 4 * * *'
 
 jobs:
-  dispatch-main:
-    if: github.event.schedule == '0 22 * * *'
+  # This job determines which branch to target based on the schedule
+  determine-target:
     runs-on: ubuntu-latest
     outputs:
-      run-id: ${{ steps.trigger.outputs.run-id }}
+      target-branch: ${{ steps.set-branch.outputs.branch }}
+      run-name: ${{ steps.set-branch.outputs.run-name }}
     steps:
-      - name: "Trigger Native Pipeline on main"
+      - id: set-branch
+        run: |
+          if [[ "${{ github.event.schedule }}" == "0 22 * * *" ]]; then
+            echo "branch=main" >> $GITHUB_OUTPUT
+            echo "run-name=Nightly Main Branch Pipeline" >> $GITHUB_OUTPUT
+          else
+            echo "branch=version/mx/10" >> $GITHUB_OUTPUT
+            echo "run-name=Nightly version/mx/10 Branch Pipeline" >> $GITHUB_OUTPUT
+          fi
+
+  # This single job handles dispatching to the correct branch
+  dispatch-pipeline:
+    needs: determine-target
+    runs-on: ubuntu-latest
+    outputs:
+      run-id: ${{ steps.trigger.outputs.run_id }}
+      target-branch: ${{ needs.determine-target.outputs.target-branch }}
+    steps:
+      - name: "Trigger Native Pipeline on ${{ needs.determine-target.outputs.target-branch }}"
         id: trigger
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
         with:
           script: |
+            const targetBranch = '${{ needs.determine-target.outputs.target-branch }}';
+            const runName = '${{ needs.determine-target.outputs.run-name }}';
+            
+            console.log(`Triggering workflow on branch: ${targetBranch}`);
+            
             const response = await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'NativePipeline.yml',
-              ref: 'main',
+              ref: targetBranch,
               inputs: {
-                run_name: 'Nightly Main Branch Pipeline',
+                run_name: runName,
                 workspace: '*-native'
               }
             });
             
-            // Wait longer and find the correct run
-            let runId = null;
-            let attempts = 0;
-            const maxAttempts = 12; // 2 minutes total
-            
-            while (!runId && attempts < maxAttempts) {
-              await new Promise(resolve => setTimeout(resolve, 10000)); // Wait 10 seconds
-              attempts++;
-              
-              const runs = await github.rest.actions.listWorkflowRuns({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'NativePipeline.yml',
-                branch: 'main',
-                per_page: 5
-              });
-              
-              // Find run created in the last 5 minutes
-              const fiveMinutesAgo = new Date();
-              fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
-              
-              const recentRun = runs.data.workflow_runs.find(run => {
-                const runDate = new Date(run.created_at);
-                return runDate > fiveMinutesAgo && run.event === 'workflow_dispatch';
-              });
-              
-              if (recentRun) {
-                runId = recentRun.id;
-                console.log(`Found triggered run ID: ${runId}`);
-                break;
-              }
-            }
-            
-            if (!runId) {
-              core.setFailed('Could not find the triggered workflow run');
-              return;
-            }
-            
-            core.setOutput('run-id', runId);
-            return runId;
-
-  dispatch-version-mx-10:
-    if: github.event.schedule == '0 4 * * *'
-    runs-on: ubuntu-latest
-    outputs:
-      run-id: ${{ steps.trigger.outputs.run-id }}
-    steps:
-      - name: "Trigger Native Pipeline on version/mx/10"
-        id: trigger
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
-        with:
-          script: |
-            const response = await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'NativePipeline.yml',
-              ref: 'version/mx/10',
-              inputs: {
-                run_name: 'Nightly version/mx/10 Branch Pipeline',
-                workspace: '*-native'
-              }
-            });
+            console.log('Workflow dispatch triggered successfully');
             
             // Wait longer and find the correct run
             let runId = null;
             let attempts = 0;
-            const maxAttempts = 12; // 2 minutes total
+            const maxAttempts = 18; // 3 minutes
             
             while (!runId && attempts < maxAttempts) {
               await new Promise(resolve => setTimeout(resolve, 10000)); // Wait 10 seconds
               attempts++;
+              console.log(`Attempt ${attempts}/${maxAttempts} to find triggered run...`);
               
-              const runs = await github.rest.actions.listWorkflowRuns({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'NativePipeline.yml',
-                branch: 'version/mx/10',
-                per_page: 5
-              });
-              
-              // Find run created in the last 5 minutes
-              const fiveMinutesAgo = new Date();
-              fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
-              
-              const recentRun = runs.data.workflow_runs.find(run => {
-                const runDate = new Date(run.created_at);
-                return runDate > fiveMinutesAgo && run.event === 'workflow_dispatch';
-              });
-              
-              if (recentRun) {
-                runId = recentRun.id;
-                console.log(`Found triggered run ID: ${runId}`);
-                break;
+              try {
+                const runs = await github.rest.actions.listWorkflowRuns({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: 'NativePipeline.yml',
+                  branch: targetBranch,
+                  per_page: 10
+                });
+                
+                // Find run created in the last 10 minutes
+                const tenMinutesAgo = new Date();
+                tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 10);
+                
+                const recentRun = runs.data.workflow_runs.find(run => {
+                  const runDate = new Date(run.created_at);
+                  return runDate > tenMinutesAgo && run.event === 'workflow_dispatch';
+                });
+                
+                if (recentRun) {
+                  runId = recentRun.id;
+                  console.log(`Found triggered run ID: ${runId}`);
+                  break;
+                }
+              } catch (error) {
+                console.log(`Error finding run: ${error.message}`);
               }
             }
             
             if (!runId) {
-              core.setFailed('Could not find the triggered workflow run');
+              console.log('Could not find the triggered workflow run - will continue without monitoring');
+              core.setOutput('dispatch_success', 'false');
+              core.setOutput('run_id', '');
               return;
             }
             
-            core.setOutput('run-id', runId);
+            core.setOutput('dispatch_success', 'true');
+            core.setOutput('run_id', runId);
             return runId;
 
-  auto-retry-main:
-    needs: dispatch-main
-    if: always() && needs.dispatch-main.result == 'success' && github.event.schedule == '0 22 * * *'
+  auto-retry:
+    needs: [dispatch-pipeline, determine-target]
+    if: always() && needs.dispatch-pipeline.outputs.run-id != ''
     runs-on: ubuntu-latest
-    env:
-      RETRY_COUNT: 0  # Track retry attempts
     steps:
       - name: "Monitor and retry failed jobs"
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
         with:
           script: |
-            const runId = '${{ needs.dispatch-main.outputs.run-id }}';
-            const MAX_RETRIES = 1; // Only retry once
+            const runId = '${{ needs.dispatch-pipeline.outputs.run-id }}';
+            const targetBranch = '${{ needs.dispatch-pipeline.outputs.target-branch }}';
             
-            if (!runId || runId === 'null') {
-              core.setFailed('No run ID available from dispatch job');
+            if (!runId || runId === 'null' || runId === '') {
+              console.log('No run ID available from dispatch job - skipping monitoring');
               return;
             }
             
-            console.log(`Monitoring run ID: ${runId}`);
+            console.log(`Starting monitoring for run ID: ${runId} on branch ${targetBranch}`);
             
             // Poll for completion with timeout
             let run;
             let pollAttempts = 0;
-            const maxPollAttempts = 120; // 2 hours max
+            const maxPollAttempts = 240; // 4 hours max
             
             do {
               if (pollAttempts >= maxPollAttempts) {
-                console.log('Monitoring timeout reached (2 hours). Stopping.');
+                console.log('Monitoring timeout reached (4 hours). Stopping.');
                 return;
               }
               
@@ -175,98 +148,33 @@ jobs:
                   repo: context.repo.repo,
                   run_id: runId
                 });
-                console.log(`Poll #${pollAttempts}: Run status: ${run.data.status}, conclusion: ${run.data.conclusion || 'N/A'}`);
+                console.log(`Poll #${pollAttempts}: Run status: ${run.data.status}, conclusion: ${run.data.conclusion || 'N/A'}, attempt: ${run.data.run_attempt}`);
               } catch (error) {
                 console.log(`Error getting run status: ${error.message}`);
                 continue;
               }
             } while (run.data.status === 'in_progress' || run.data.status === 'queued');
             
-            // Check if we should retry (only once)
+            // Check if we should retry
             if (run.data.conclusion === 'failure') {
-              console.log('Pipeline failed. Checking retry count...');
+              console.log(`Pipeline failed on attempt ${run.data.run_attempt}. Checking if retry needed...`);
               
-              // Use GitHub's run attempt number to track retries
-              if (run.data.run_attempt <= MAX_RETRIES) {
-                console.log(`Triggering retry (attempt ${run.data.run_attempt}/${MAX_RETRIES})...`);
-                await github.rest.actions.reRunWorkflowFailedJobs({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  run_id: runId
-                });
-                console.log('Retry triggered for failed jobs only.');
+              // Only retry if this is the first attempt
+              if (run.data.run_attempt === 1) {
+                console.log(`Triggering retry for failed jobs on branch ${targetBranch}...`);
+                try {
+                  await github.rest.actions.reRunWorkflowFailedJobs({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    run_id: runId
+                  });
+                  console.log('Retry triggered successfully for failed jobs only.');
+                } catch (error) {
+                  console.error(`Failed to trigger retry: ${error.message}`);
+                  console.log('Detailed error:', JSON.stringify(error, null, 2));
+                }
               } else {
-                console.log(`Maximum retries (${MAX_RETRIES}) reached. Not retrying again.`);
-              }
-            } else if (run.data.conclusion === 'success') {
-              console.log('Pipeline completed successfully!');
-            } else {
-              console.log(`Pipeline completed with conclusion: ${run.data.conclusion}`);
-            }
-
-  auto-retry-version-mx-10:
-    needs: dispatch-version-mx-10
-    if: always() && needs.dispatch-version-mx-10.result == 'success' && github.event.schedule == '0 4 * * *'
-    runs-on: ubuntu-latest
-    env:
-      RETRY_COUNT: 0  # Track retry attempts
-    steps:
-      - name: "Monitor and retry failed jobs"
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7
-        with:
-          script: |
-            const runId = '${{ needs.dispatch-version-mx-10.outputs.run-id }}';
-            const MAX_RETRIES = 1; // Only retry once
-            
-            if (!runId || runId === 'null') {
-              core.setFailed('No run ID available from dispatch job');
-              return;
-            }
-            
-            console.log(`Monitoring run ID: ${runId}`);
-            
-            // Poll for completion with timeout
-            let run;
-            let pollAttempts = 0;
-            const maxPollAttempts = 120; // 2 hours max
-            
-            do {
-              if (pollAttempts >= maxPollAttempts) {
-                console.log('Monitoring timeout reached (2 hours). Stopping.');
-                return;
-              }
-              
-              await new Promise(resolve => setTimeout(resolve, 60000)); // Wait 1 minute
-              pollAttempts++;
-              
-              try {
-                run = await github.rest.actions.getWorkflowRun({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  run_id: runId
-                });
-                console.log(`Poll #${pollAttempts}: Run status: ${run.data.status}, conclusion: ${run.data.conclusion || 'N/A'}`);
-              } catch (error) {
-                console.log(`Error getting run status: ${error.message}`);
-                continue;
-              }
-            } while (run.data.status === 'in_progress' || run.data.status === 'queued');
-            
-            // Check if we should retry (only once)
-            if (run.data.conclusion === 'failure') {
-              console.log('Pipeline failed. Checking retry count...');
-              
-              // Use GitHub's run attempt number to track retries
-              if (run.data.run_attempt <= MAX_RETRIES) {
-                console.log(`Triggering retry (attempt ${run.data.run_attempt}/${MAX_RETRIES})...`);
-                await github.rest.actions.reRunWorkflowFailedJobs({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  run_id: runId
-                });
-                console.log('Retry triggered for failed jobs only.');
-              } else {
-                console.log(`Maximum retries (${MAX_RETRIES}) reached. Not retrying again.`);
+                console.log('This was already a retry attempt. Not retrying again.');
               }
             } else if (run.data.conclusion === 'success') {
               console.log('Pipeline completed successfully!');
