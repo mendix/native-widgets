@@ -800,7 +800,6 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
@@ -877,7 +876,6 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="contain"
         source={
           {
@@ -958,7 +956,6 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="contain"
         source={
           {
@@ -1039,7 +1036,6 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="cover"
         source={
           {
@@ -1139,7 +1135,6 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="contain"
         source={
           {
@@ -1283,7 +1278,6 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
           }
         >
           <FastImageView
-            defaultSource={null}
             resizeMode="contain"
             source={
               {
@@ -1378,7 +1372,6 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
@@ -1470,7 +1463,6 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
@@ -1633,7 +1625,6 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
@@ -1726,7 +1717,6 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="contain"
         source={
           {
@@ -1870,7 +1860,6 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
           }
         >
           <FastImageView
-            defaultSource={null}
             resizeMode="contain"
             source={
               {
@@ -1966,7 +1955,6 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
@@ -3029,7 +3017,6 @@ exports[`Widget Static Image renders the structure 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
@@ -3106,7 +3093,6 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="contain"
         source={
           {
@@ -3187,7 +3173,6 @@ exports[`Widget Static Image renders the structure as a background image with 50
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="contain"
         source={
           {
@@ -3268,7 +3253,6 @@ exports[`Widget Static Image renders the structure as a background image with a 
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="cover"
         source={
           {
@@ -3368,7 +3352,6 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
       }
     >
       <FastImageView
-        defaultSource={null}
         resizeMode="contain"
         source={
           {
@@ -3512,7 +3495,6 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
           }
         >
           <FastImageView
-            defaultSource={null}
             resizeMode="contain"
             source={
               {
@@ -3607,7 +3589,6 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
@@ -3699,7 +3680,6 @@ exports[`Widget Static Image renders the structure with custom width 1`] = `
     }
   >
     <FastImageView
-      defaultSource={null}
       resizeMode="contain"
       source={
         {
