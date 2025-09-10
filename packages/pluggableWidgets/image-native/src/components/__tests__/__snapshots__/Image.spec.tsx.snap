@@ -774,42 +774,9 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -831,8 +798,27 @@ exports[`Widget Dynamic Image renders the structure 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
 
@@ -864,42 +850,9 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
       }
     }
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="contain"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -921,8 +874,27 @@ exports[`Widget Dynamic Image renders the structure as a background image 1`] = 
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="contain"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>
   <Text>
     Background Image
@@ -958,42 +930,9 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
       }
     }
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="contain"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -1015,8 +954,27 @@ exports[`Widget Dynamic Image renders the structure as a background image with 5
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="contain"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>
   <Text>
     Background Image
@@ -1052,42 +1010,9 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
       }
     }
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="cover"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -1109,8 +1034,27 @@ exports[`Widget Dynamic Image renders the structure as a background image with a
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="cover"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>
   <Text>
     Background Image
@@ -1168,42 +1112,9 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
     }
     testID="Image1$ImageSmallPressable"
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="contain"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "name": "image.png",
-            "uri": "file:///[object Object]",
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -1222,8 +1133,27 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="contain"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>,
   <Modal
     accessibilityRole="image"
@@ -1322,42 +1252,9 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
           }
         }
       >
-        <RCTImageView
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          defaultSource={null}
-          loadingIndicatorSrc={null}
-          resizeMode="contain"
-          shouldNotifyLoadEvents={false}
-          source={
-            [
-              {
-                "name": "image.png",
-                "uri": "file:///[object Object]",
-              },
-            ]
-          }
-          src={
-            [
-              {
-                "name": "image.png",
-                "uri": "file:///[object Object]",
-              },
-            ]
-          }
+        <View
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               {
                 "overflow": "hidden",
               },
@@ -1379,8 +1276,27 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
               ],
             ]
           }
-          testID="Image1$Image"
-        />
+        >
+          <FastImageView
+            resizeMode="contain"
+            source={
+              {
+                "height": 1111,
+                "width": 2222,
+              }
+            }
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            testID="Image1$Image"
+          />
+        </View>
       </View>
     </View>
   </Modal>,
@@ -1430,42 +1346,9 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -1487,8 +1370,27 @@ exports[`Widget Dynamic Image renders the structure with custom height 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
 
@@ -1535,42 +1437,9 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "name": "image.png",
-          "uri": "file:///[object Object]",
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -1592,8 +1461,27 @@ exports[`Widget Dynamic Image renders the structure with custom width 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
 
@@ -1711,44 +1599,9 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -1770,8 +1623,27 @@ exports[`Widget Icon type: image/staticImage renders the structure 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
 
@@ -1819,44 +1691,9 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
     }
     testID="Image1$ImageSmallPressable"
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="contain"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -1878,8 +1715,27 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="contain"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>,
   <Modal
     accessibilityRole="image"
@@ -1978,44 +1834,9 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
           }
         }
       >
-        <RCTImageView
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          defaultSource={null}
-          loadingIndicatorSrc={null}
-          resizeMode="contain"
-          shouldNotifyLoadEvents={false}
-          source={
-            [
-              {
-                "height": undefined,
-                "uri": undefined,
-                "width": undefined,
-              },
-            ]
-          }
-          src={
-            [
-              {
-                "height": undefined,
-                "uri": undefined,
-                "width": undefined,
-              },
-            ]
-          }
+        <View
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               {
                 "overflow": "hidden",
               },
@@ -2037,8 +1858,27 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
               ],
             ]
           }
-          testID="Image1$Image"
-        />
+        >
+          <FastImageView
+            resizeMode="contain"
+            source={
+              {
+                "height": 1111,
+                "width": 2222,
+              }
+            }
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            testID="Image1$Image"
+          />
+        </View>
       </View>
     </View>
   </Modal>,
@@ -2088,44 +1928,9 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -2148,8 +1953,27 @@ exports[`Widget Icon type: image/staticImage sets the correct styles 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
 
@@ -3167,44 +2991,9 @@ exports[`Widget Static Image renders the structure 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -3226,8 +3015,27 @@ exports[`Widget Static Image renders the structure 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
 
@@ -3259,44 +3067,9 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
       }
     }
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="contain"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -3318,8 +3091,27 @@ exports[`Widget Static Image renders the structure as a background image 1`] = `
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="contain"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>
   <Text>
     Background Image
@@ -3355,44 +3147,9 @@ exports[`Widget Static Image renders the structure as a background image with 50
       }
     }
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="contain"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -3414,8 +3171,27 @@ exports[`Widget Static Image renders the structure as a background image with 50
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="contain"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>
   <Text>
     Background Image
@@ -3451,44 +3227,9 @@ exports[`Widget Static Image renders the structure as a background image with a 
       }
     }
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="cover"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -3510,8 +3251,27 @@ exports[`Widget Static Image renders the structure as a background image with a 
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="cover"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>
   <Text>
     Background Image
@@ -3569,44 +3329,9 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
     }
     testID="Image1$ImageSmallPressable"
   >
-    <RCTImageView
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      defaultSource={null}
-      loadingIndicatorSrc={null}
-      resizeMode="contain"
-      shouldNotifyLoadEvents={false}
-      source={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
-      src={
-        [
-          {
-            "height": undefined,
-            "uri": undefined,
-            "width": undefined,
-          },
-        ]
-      }
+    <View
       style={
         [
-          {
-            "height": undefined,
-            "width": undefined,
-          },
           {
             "overflow": "hidden",
           },
@@ -3625,8 +3350,27 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
           ],
         ]
       }
-      testID="Image1$Image"
-    />
+    >
+      <FastImageView
+        resizeMode="contain"
+        source={
+          {
+            "height": 1111,
+            "width": 2222,
+          }
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$Image"
+      />
+    </View>
   </View>,
   <Modal
     accessibilityRole="image"
@@ -3725,44 +3469,9 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
           }
         }
       >
-        <RCTImageView
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          defaultSource={null}
-          loadingIndicatorSrc={null}
-          resizeMode="contain"
-          shouldNotifyLoadEvents={false}
-          source={
-            [
-              {
-                "height": undefined,
-                "uri": undefined,
-                "width": undefined,
-              },
-            ]
-          }
-          src={
-            [
-              {
-                "height": undefined,
-                "uri": undefined,
-                "width": undefined,
-              },
-            ]
-          }
+        <View
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               {
                 "overflow": "hidden",
               },
@@ -3784,8 +3493,27 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
               ],
             ]
           }
-          testID="Image1$Image"
-        />
+        >
+          <FastImageView
+            resizeMode="contain"
+            source={
+              {
+                "height": 1111,
+                "width": 2222,
+              }
+            }
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            testID="Image1$Image"
+          />
+        </View>
       </View>
     </View>
   </Modal>,
@@ -3835,44 +3563,9 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -3894,8 +3587,27 @@ exports[`Widget Static Image renders the structure with custom height 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
 
@@ -3942,44 +3654,9 @@ exports[`Widget Static Image renders the structure with custom width 1`] = `
   }
   testID="Image1$ImageSmallPressable"
 >
-  <RCTImageView
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    defaultSource={null}
-    loadingIndicatorSrc={null}
-    resizeMode="contain"
-    shouldNotifyLoadEvents={false}
-    source={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
-    src={
-      [
-        {
-          "height": undefined,
-          "uri": undefined,
-          "width": undefined,
-        },
-      ]
-    }
+  <View
     style={
       [
-        {
-          "height": undefined,
-          "width": undefined,
-        },
         {
           "overflow": "hidden",
         },
@@ -4001,7 +3678,26 @@ exports[`Widget Static Image renders the structure with custom width 1`] = `
         ],
       ]
     }
-    testID="Image1$Image"
-  />
+  >
+    <FastImageView
+      resizeMode="contain"
+      source={
+        {
+          "height": 1111,
+          "width": 2222,
+        }
+      }
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="Image1$Image"
+    />
+  </View>
 </View>
 `;
