@@ -35,6 +35,47 @@ jest.mock("react-native/Libraries/Image/Image", () => {
     };
 });
 
+jest.mock("@d11/react-native-fast-image", () => {
+    const React = jest.requireActual("react") as typeof import("react");
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { resolveAssetSource } = require("react-native/Libraries/Image/Image");
+    const FastImage = ({
+        testID,
+        style,
+        source: originalSource,
+        resizeMode
+    }: {
+        testID: string;
+        style: any;
+        source: any;
+        resizeMode: string;
+    }): any => {
+        let source = originalSource;
+        try {
+            if (typeof originalSource === "number") {
+                const asset = resolveAssetSource(originalSource);
+                source = asset ? { height: asset.height, width: asset.width } : { height: 0, width: 0 };
+            } else if (originalSource?.uri) {
+                // Dynamic image: use fixed dimensions to match stored snapshots
+                source = { height: 1111, width: 2222 };
+            }
+        } catch (_) {
+            source = { height: 0, width: 0 };
+        }
+        return React.createElement(
+            "View",
+            { style: [{ overflow: "hidden" }, Array.isArray(style) ? style : [style]] },
+            React.createElement("FastImageView", {
+                testID,
+                style: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 },
+                source,
+                resizeMode
+            })
+        );
+    };
+    return { __esModule: true, default: FastImage };
+});
+
 const onLayoutEventData = {
     nativeEvent: {
         layout: {

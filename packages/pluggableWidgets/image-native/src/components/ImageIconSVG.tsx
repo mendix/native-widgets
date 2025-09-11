@@ -1,7 +1,7 @@
 import { createElement, FunctionComponent, Fragment, useCallback } from "react";
 import { View } from "react-native";
 import { SvgUri, SvgXml } from "react-native-svg";
-import FastImageComponent, { Source } from "react-native-fast-image";
+import FastImageComponent, { Source } from "@d11/react-native-fast-image";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { CustomImageProps, GlyphIcon } from "../utils/imageUtils";
 import { GlyphIcon as GlyphIconComponent } from "./fonts/font";
