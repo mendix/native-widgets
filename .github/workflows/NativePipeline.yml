@@ -170,15 +170,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Check if docker image already exists"
-        run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
-          echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        if: ${{ env.IMAGE_MISSING != 0 }}
       - name: "Build mxbuild image"
-        if: ${{ env.IMAGE_MISSING != 0 }}
         uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
         with:
           file: ./.github/scripts/mxbuild.Dockerfile
@@ -187,6 +181,19 @@ jobs:
             MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
           push: true
           tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+          cache-from: type=registry,ref=ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+          cache-to: type=inline
+      - name: "Build mxruntime service image"
+        uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
+        with:
+          file: ./.github/scripts/mxruntime-service.Dockerfile
+          context: ./.github/scripts
+          build-args: |
+            MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
+          push: true
+          tags: ghcr.io/mendix/native-widgets/mxruntime:${{ needs.mendix-version.outputs.mendix_version }}
+          cache-from: type=registry,ref=ghcr.io/mendix/native-widgets/mxruntime:${{ needs.mendix-version.outputs.mendix_version }}
+          cache-to: type=inline
   resources:
     needs: [scope, mendix-version]
     runs-on: ubuntu-22.04
@@ -479,11 +486,26 @@ jobs:
           path: native-template/ios/build/Build/Products/**/*.app
 
   android-widget-tests:
-    needs: [scope, mendix-version, project, android-app]
+    needs: [scope, mendix-version, project, android-app, docker-images]
     # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
     if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    services:
+      mendix-runtime:
+        image: ghcr.io/mendix/native-widgets/mxruntime:${{ needs.mendix-version.outputs.mendix_version }}
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        ports:
+          - 8080:8080
+          - 8090:8090
+        options: >-
+          --health-cmd="/app/health-check.sh"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-start-period=60s
+          --health-retries=10
     strategy:
       max-parallel: 5
       matrix:
@@ -514,20 +536,22 @@ jobs:
         with:
           name: android-app
           path: android-app
-      - name: "Setup needed tools"
-        id: setup-needed-tools  
-        uses: ./.github/actions/setup-tools
-        with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
-        with:
-          timeout_minutes: 20
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+      - name: "Setup runtime in service container"
+        run: |
+          # Wait for service container to be healthy first
+          timeout 120 bash -c 'until docker ps --filter "label=com.github.actions.job.service=mendix-runtime" --filter "health=healthy" | grep mendix-runtime; do sleep 2; done'
+          
+          # Copy MDA to the service container (the startup script will detect and use it)
+          CONTAINER_ID=$(docker ps -q --filter "label=com.github.actions.job.service=mendix-runtime")
+          docker cp automation.mda $CONTAINER_ID:/app/automation.mda
+          echo "MDA file copied to container, waiting for runtime to start..."
+          
+          # Wait for runtime to detect MDA and start successfully
+          timeout 180 bash -c 'until docker logs $CONTAINER_ID 2>&1 | grep -q "Runtime started successfully"; do echo "Waiting for runtime startup..."; sleep 10; done'
+          
+          # Wait for runtime HTTP endpoint to be ready
+          timeout 60 bash -c 'until curl -f http://localhost:8080/health || curl -f http://localhost:8080; do echo "Waiting for HTTP endpoint..."; sleep 5; done'
+          echo "Runtime is ready at http://localhost:8080"
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -555,7 +579,7 @@ jobs:
           test-type: ${{ matrix.widget }}
 
   ios-widget-tests:
-    needs: [scope, mendix-version, project, ios-app]
+    needs: [scope, mendix-version, project, ios-app, docker-images]
     # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
     if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
@@ -626,7 +650,7 @@ jobs:
         uses: ./.github/actions/setup-tools
         with:
           mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
+      - name: "Start runtime with retry (iOS fallback)"
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
           timeout_minutes: 10
@@ -634,10 +658,11 @@ jobs:
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
             .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
-  
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
       - name: "Run iOS tests"
+        env:
+          RUNTIME_URL: http://localhost:8080
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_widget_tests.sh
@@ -651,11 +676,26 @@ jobs:
           test-type: ${{ matrix.widget }}
 
   android-js-tests:
-    needs: [scope, mendix-version, project, android-app]
+    needs: [scope, mendix-version, project, android-app, docker-images]
     # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
     if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 90
+    services:
+      mendix-runtime:
+        image: ghcr.io/mendix/native-widgets/mxruntime:${{ needs.mendix-version.outputs.mendix_version }}
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        ports:
+          - 8080:8080
+          - 8090:8090
+        options: >-
+          --health-cmd="/app/health-check.sh"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-start-period=60s
+          --health-retries=10
     steps:
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -681,19 +721,22 @@ jobs:
         with:
           name: android-app
           path: android-app
-      - name: "Setup needed tools"
-        id: setup-needed-tools
-        uses: ./.github/actions/setup-tools
-        with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+      - name: "Setup runtime in service container"
+        run: |
+          # Wait for service container to be healthy first
+          timeout 120 bash -c 'until docker ps --filter "label=com.github.actions.job.service=mendix-runtime" --filter "health=healthy" | grep mendix-runtime; do sleep 2; done'
+          
+          # Copy MDA to the service container (the startup script will detect and use it)
+          CONTAINER_ID=$(docker ps -q --filter "label=com.github.actions.job.service=mendix-runtime")
+          docker cp automation.mda $CONTAINER_ID:/app/automation.mda
+          echo "MDA file copied to container, waiting for runtime to start..."
+          
+          # Wait for runtime to detect MDA and start successfully
+          timeout 180 bash -c 'until docker logs $CONTAINER_ID 2>&1 | grep -q "Runtime started successfully"; do echo "Waiting for runtime startup..."; sleep 10; done'
+          
+          # Wait for runtime HTTP endpoint to be ready
+          timeout 60 bash -c 'until curl -f http://localhost:8080/health || curl -f http://localhost:8080; do echo "Waiting for HTTP endpoint..."; sleep 5; done'
+          echo "Runtime is ready at http://localhost:8080"
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -721,7 +764,7 @@ jobs:
           test-type: js-actions
 
   ios-js-tests:
-    needs: [scope, mendix-version, project, ios-app]
+    needs: [scope, mendix-version, project, ios-app, docker-images]
     # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
     if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
@@ -785,7 +828,7 @@ jobs:
         uses: ./.github/actions/setup-tools
         with:
           mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
+      - name: "Start runtime with retry (iOS JS fallback)"
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
           timeout_minutes: 10
@@ -797,6 +840,8 @@ jobs:
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
       - name: "Run iOS tests"
+        env:
+          RUNTIME_URL: http://localhost:8080
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_jsactions_tests.sh
