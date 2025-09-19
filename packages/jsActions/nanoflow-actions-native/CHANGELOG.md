@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 -   We've fixed location permission issue on iOS.
+-   We've fixed isConnectedToServer succeeding without internet on offline apps when service worker is enabled.
 
 ### Changed
 
