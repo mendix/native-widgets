@@ -127,6 +127,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 keyExtractor={item => item.id}
                 ListEmptyComponent={renderEmptyPlaceholder}
                 onEndReached={onEndReached}
+                onEndReachedThreshold={0.5}
                 scrollEventThrottle={50}
                 renderItem={renderItem}
                 style={props.style.list}
