@@ -14,6 +14,7 @@ export interface GalleryStyle {
     emptyPlaceholder?: ViewStyle;
     firstItem?: ViewStyle;
     lastItem?: ViewStyle;
+    listContainer?: ViewStyle;
     list?: ViewStyle;
     listItem?: ViewStyle;
     loadMoreButtonContainer?: ViewStyle;
@@ -46,5 +47,8 @@ export const defaultGalleryStyle: GalleryStyle = {
         fontSize: 12,
         fontWeight: "bold",
         lineHeight: 14
+    },
+    listContainer: {
+        paddingBottom: 250
     }
 };

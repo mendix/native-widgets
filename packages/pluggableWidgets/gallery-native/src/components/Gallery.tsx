@@ -121,13 +121,14 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                     ...props.style.loadMoreButtonContainer,
                     ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
                 }}
+                contentContainerStyle={props.style.listContainer}
                 refreshing={props.pullDownIsExecuting}
                 data={props.items}
                 horizontal={!isScrollDirectionVertical}
                 keyExtractor={item => item.id}
                 ListEmptyComponent={renderEmptyPlaceholder}
                 onEndReached={onEndReached}
-                onEndReachedThreshold={0.5}
+                onEndReachedThreshold={0.6}
                 scrollEventThrottle={50}
                 renderItem={renderItem}
                 style={props.style.list}
