@@ -13,6 +13,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
         "marginTop": 8,
       }
     }
+    contentContainerStyle={false}
     data={
       [
         {
@@ -341,6 +342,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         "marginTop": 8,
       }
     }
+    contentContainerStyle={false}
     data={
       [
         {
@@ -715,6 +717,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         "marginTop": 8,
       }
     }
+    contentContainerStyle={false}
     data={
       [
         {

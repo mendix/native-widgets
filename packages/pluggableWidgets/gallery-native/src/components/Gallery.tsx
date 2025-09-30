@@ -121,7 +121,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                     ...props.style.loadMoreButtonContainer,
                     ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
                 }}
-                contentContainerStyle={props.style.listContainer}
+                contentContainerStyle={props.pagination === "virtualScrolling" && props.style.listContainer}
                 refreshing={props.pullDownIsExecuting}
                 data={props.items}
                 horizontal={!isScrollDirectionVertical}
