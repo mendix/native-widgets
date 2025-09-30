@@ -106,6 +106,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
         muted: props.muted,
         repeat: props.loop,
         controls: props.showControls,
+        ignoreSilentSwitch: "ignore",
         onLoadStart: () => setStatus(StatusEnum.LOADING),
         onError: () => setStatus(StatusEnum.ERROR),
         useTextureView: false,
