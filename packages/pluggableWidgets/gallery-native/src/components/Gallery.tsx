@@ -1,4 +1,4 @@
-import { createElement, ReactElement, ReactNode } from "react";
+import { createElement, ReactElement, ReactNode, useCallback } from "react";
 import { Text, FlatList, Pressable, View, ViewProps, Platform, TouchableOpacity } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
@@ -32,6 +32,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const numColumns = DeviceInfo.isTablet() ? props.tabletColumns : props.phoneColumns;
     const firstItemId = props.items?.[0]?.id;
     const lastItemId = props.items?.[props.items.length - 1]?.id;
+    const { name, style, itemRenderer } = props;
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -39,31 +40,44 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         }
     };
 
-    const renderItem = (item: { item: T }): ReactElement =>
-        props.itemRenderer((children, onPress) => {
-            const listItemWrapperProps: ViewProps = {
-                style: isScrollDirectionVertical && { width: `${100 / numColumns}%` },
-                testID: `${props.name}-list-item-${item.item.id}`
-            };
-            const renderListItemContent = (
-                <View
-                    style={[
-                        props.style.listItem,
-                        firstItemId === item.item.id && props.style.firstItem,
-                        lastItemId === item.item.id && props.style.lastItem
-                    ]}
-                >
-                    {children}
-                </View>
-            );
-            return onPress ? (
-                <Pressable {...listItemWrapperProps} onPress={onPress}>
-                    {renderListItemContent}
-                </Pressable>
-            ) : (
-                <View {...listItemWrapperProps}>{renderListItemContent}</View>
-            );
-        }, item.item);
+    const renderItem = useCallback(
+        (item: { item: T }): ReactElement =>
+            itemRenderer((children, onPress) => {
+                const listItemWrapperProps: ViewProps = {
+                    style: isScrollDirectionVertical && { width: `${100 / numColumns}%` },
+                    testID: `${name}-list-item-${item.item.id}`
+                };
+                const renderListItemContent = (
+                    <View
+                        style={[
+                            style.listItem,
+                            firstItemId === item.item.id && style.firstItem,
+                            lastItemId === item.item.id && style.lastItem
+                        ]}
+                    >
+                        {children}
+                    </View>
+                );
+                return onPress ? (
+                    <Pressable {...listItemWrapperProps} onPress={onPress}>
+                        {renderListItemContent}
+                    </Pressable>
+                ) : (
+                    <View {...listItemWrapperProps}>{renderListItemContent}</View>
+                );
+            }, item.item),
+        [
+            isScrollDirectionVertical,
+            numColumns,
+            itemRenderer,
+            name,
+            style.listItem,
+            style.firstItem,
+            style.lastItem,
+            firstItemId,
+            lastItemId
+        ]
+    );
 
     const loadMoreButton = (): ReactElement | null => {
         const renderButton = (
@@ -80,7 +94,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         );
 
         const buttonProps = {
-            testID: `${props.name}-pagination-button`,
+            testID: `${name}-pagination-button`,
             onPress: () => props.hasMoreItems && props.loadMoreItems && props.loadMoreItems(),
             style: loadMoreButtonContainerStyle
         };
@@ -111,7 +125,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     );
 
     return (
-        <View testID={`${props.name}`} style={props.style.container}>
+        <View testID={`${name}`} style={props.style.container}>
             {props.filters ? <View>{props.filters}</View> : null}
             <FlatList
                 {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
@@ -127,10 +141,11 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 keyExtractor={item => item.id}
                 ListEmptyComponent={renderEmptyPlaceholder}
                 onEndReached={onEndReached}
+                onEndReachedThreshold={0.6}
                 scrollEventThrottle={50}
                 renderItem={renderItem}
                 style={props.style.list}
-                testID={`${props.name}-list`}
+                testID={`${name}-list`}
             />
         </View>
     );
