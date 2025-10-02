@@ -154,6 +154,5 @@ const nativeExternal = [
     /^react-native-svg(\/|$)/,
     /^react-native-vector-icons(\/|$)/,
     /^@?react-navigation($|\/)/,
-    /^react-native-device-info(\/|$)/,
-    /^react-native-vision-camera(\/|$)/
+    /^react-native-device-info(\/|$)/
 ];
