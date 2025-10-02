@@ -21,6 +21,7 @@ export class BarcodeScanner extends Component<Props> {
                 <RNCamera
                     testID={this.props.name}
                     style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+                    type={this.props.cameraType  === 'front' ? RNCamera.Constants.Type.front : RNCamera.Constants.Type.back}
                     captureAudio={false}
                     onBarCodeRead={this.onBarCodeReadHandler}
                 >
