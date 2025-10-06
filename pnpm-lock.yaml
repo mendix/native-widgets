@@ -27,9 +27,6 @@ patchedDependencies:
   react-native-action-button@2.8.5:
     hash: 593bb64b27425a7f3805ad9567928d1369fd4cf939ab5d3eb43411a759565c48
     path: patches/react-native-action-button+2.8.5.patch
-  react-native-camera@3.40.0:
-    hash: a1c648b476aee6b170796fa8d0614d3ebb16035bee5d516649c513c1fd584f59
-    path: patches/react-native-camera+3.40.0.patch
   react-native-gesture-handler@2.24.0:
     hash: 10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573
     path: patches/react-native-gesture-handler+2.24.0.patch
@@ -357,15 +354,12 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      deprecated-react-native-prop-types:
-        specifier: ^4.0.0
-        version: 4.2.3
       react-native-barcode-mask:
         specifier: ^1.2.4
         version: 1.2.4
-      react-native-camera:
-        specifier: 3.40.0
-        version: 3.40.0(patch_hash=a1c648b476aee6b170796fa8d0614d3ebb16035bee5d516649c513c1fd584f59)
+      react-native-vision-camera:
+        specifier: 4.7.1
+        version: 4.7.1(react-native-reanimated@3.16.7(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
@@ -6410,9 +6404,6 @@ packages:
       react: 18.2.0
       react-native: 0.77.3
 
-  react-native-camera@3.40.0:
-    resolution: {integrity: sha512-Ur0hZqZcl3SntTVMB9GxuiLYpQxqwgzhQVb+7EGae4WjfDzQEwlGF0bJ7UpZyeUTb1oZmsiSib58xUckn11XMw==}
-
   react-native-color@0.0.10:
     resolution: {integrity: sha512-MrYIaWH/fiRXBhfJBVG7vtNF5cQQKg1rK16pU8xtlKne2Ipu+Inki1Gb/oFvaOu+zNXb5/6tss467k8zYIvMwA==}
     peerDependencies:
@@ -6587,6 +6578,22 @@ packages:
     peerDependencies:
       react: 18.2.0
       react-native: 0.77.3
+
+  react-native-vision-camera@4.7.1:
+    resolution: {integrity: sha512-N6qqjhUSC9XRUQzqx+647+sPsrf9FcEYGjRhif1WNy2z8AwPMOSLINIcmMM6C4drxH2CdiaULGAWHpx/cnsBpw==}
+    peerDependencies:
+      '@shopify/react-native-skia': '*'
+      react: 18.2.0
+      react-native: 0.77.3
+      react-native-reanimated: '*'
+      react-native-worklets-core: '*'
+    peerDependenciesMeta:
+      '@shopify/react-native-skia':
+        optional: true
+      react-native-reanimated:
+        optional: true
+      react-native-worklets-core:
+        optional: true
 
   react-native-webview@13.13.2:
     resolution: {integrity: sha512-zACPDTF0WnaEnKZ9mA/r/UpcOpV2gQM06AAIrOOexnO8UJvXL8Pjso0b/wTqKFxUZZnmjKuwd8gHVUosVOdVrw==}
@@ -14890,10 +14897,6 @@ snapshots:
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
 
-  react-native-camera@3.40.0(patch_hash=a1c648b476aee6b170796fa8d0614d3ebb16035bee5d516649c513c1fd584f59):
-    dependencies:
-      prop-types: 15.8.1
-
   react-native-color@0.0.10(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
     dependencies:
       prop-types: 15.8.1
@@ -15058,6 +15061,13 @@ snapshots:
       html2canvas: 1.4.1
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
+
+  react-native-vision-camera@4.7.1(react-native-reanimated@3.16.7(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0))(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
+    optionalDependencies:
+      react-native-reanimated: 3.16.7(@babel/core@7.28.0)(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
 
   react-native-webview@13.13.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
     dependencies:
