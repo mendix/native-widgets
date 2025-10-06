@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.5] Native Mobile Resources - 2025-10-6
+
+
+## [5.0.1] BottomSheet
+### Fixed
+
+-   Fixed React Native Reanimated worklet function errors by properly memoizing snap points.
+
 ## [10.1.3] Native Mobile Resources - 2025-9-9
 
 
