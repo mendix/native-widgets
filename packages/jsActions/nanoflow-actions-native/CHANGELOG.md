@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [6.1.1] Nanoflow Commons - 2025-10-7
+
 ### Fixed
 
 -   We've fixed location permission issue on iOS.
