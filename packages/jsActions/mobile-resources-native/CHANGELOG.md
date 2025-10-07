@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.1.1] Native Mobile Resources - 2025-10-7
+
+## [4.2.0] BarcodeScanner
+
+-   We migrated to react-native-vision-camera from react-native-camera.
+
 ## [11.1.0] Native Mobile Resources - 2025-10-2
 
 -   We migrated from react-native-sound to react-native-track-player.
