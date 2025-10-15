@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
--   We have updated `react-native-video` version to 6.10.2 to fix the silent mode's no audio issue on iOS.
+-   We have updated `react-native-video` version to 6.10.2.
+-   We have fixed the issue where there was no audio in silent mode on iOS.
 
 ### Changed
 
