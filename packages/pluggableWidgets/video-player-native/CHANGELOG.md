@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Set `ignoreSilentSwitch` to `ignore` to allow audio playback even when device is in silent mode on iOS
+
 ## [6.1.1] - 2025-9-9
 
 ### Changed
