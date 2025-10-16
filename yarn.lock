@@ -14478,13 +14478,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-video@npm:6.10.0":
-  version: 6.10.0
-  resolution: "react-native-video@npm:6.10.0"
+"react-native-video@npm:6.10.2":
+  version: 6.10.2
+  resolution: "react-native-video@npm:6.10.2"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/adec35c675a509b363e3c8ba8bc52a3a169e51de36b630bde0218b6b18713f05486154075562b06a35db8411f4fd3cb0f84f4cf0299194bd855126be71617eb2
+  checksum: 10/6846b6a019741663ebae0b7514e169aed61278b756d18cacc51d60e208dd098019db923be6c80a077975a57d219d79eeeef064b7f99aa54283a5aa9a1a2af4ba
   languageName: node
   linkType: hard
 
@@ -17689,7 +17689,7 @@ __metadata:
     eslint: "npm:^7.32.0"
     react-native-system-navigation-bar: "npm:2.6.3"
     react-native-vector-icons: "npm:10.2.0"
-    react-native-video: "npm:6.10.0"
+    react-native-video: "npm:6.10.2"
   languageName: unknown
   linkType: soft
 

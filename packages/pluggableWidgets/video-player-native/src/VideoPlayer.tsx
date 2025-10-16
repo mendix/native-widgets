@@ -168,6 +168,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                         <Video
                             {...videoProps}
                             paused={!props.autoStart && !currentPlayTime}
+                            ignoreSilentSwitch="ignore"
                             onLoad={data => {
                                 setStatus(StatusEnum.READY);
                                 setVideoAspectRatio(data.naturalSize.width / data.naturalSize.height);
