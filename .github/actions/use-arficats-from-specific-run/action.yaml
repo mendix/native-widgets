@@ -1,0 +1,76 @@
+name: "Download Artifact from Specific Run"
+description: "Download an artifact from a specific workflow run using GitHub CLI"
+inputs:
+  artifact_name:
+    description: "Name of the artifact to download"
+    required: true
+  run_id:
+    description: "Workflow run ID"
+    required: true
+  output_dir:
+    description: "Directory to extract the artifact"
+    required: true
+  platform:
+    description: "Platform (android or ios)"
+    required: true
+  github_token:
+    description: "GitHub token for authentication"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: "Install GitHub CLI"
+      shell: bash
+      run: |
+        if ! command -v gh &> /dev/null; then
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo apt update
+            sudo apt install -y gh
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install gh
+          fi
+        fi
+    - name: "Authenticate GitHub CLI"
+      shell: bash
+      run: |
+        unset GITHUB_TOKEN
+        echo "${{ inputs.github_token }}" | gh auth login --with-token
+    - name: "Fetch artifact URL"
+      id: fetch-artifacts
+      shell: bash
+      run: |
+        echo "Fetching artifacts for run ID: ${{ inputs.run_id }}"
+        echo "Looking for artifact: ${{ inputs.artifact_name }}"
+        echo "Note: Use the full run ID from the URL (e.g., 17402124525), not the run number from the UI (e.g., #1269)"
+        
+        # Check if the run exists
+        if ! gh api "repos/${{ github.repository }}/actions/runs/${{ inputs.run_id }}" > /dev/null 2>&1; then
+          echo "Error: Run ID ${{ inputs.run_id }} not found or not accessible"
+          echo "Make sure you're using the full run ID from the URL, not the run number displayed in the UI"
+          exit 1
+        fi
+        
+        # Get the artifact URL
+        url=$(gh api "repos/${{ github.repository }}/actions/runs/${{ inputs.run_id }}/artifacts" --jq '.artifacts[] | select(.name == "${{ inputs.artifact_name }}") | .archive_download_url' 2>/dev/null || echo "")
+        
+        if [ -z "$url" ]; then
+          echo "Error: Artifact '${{ inputs.artifact_name }}' not found in run ${{ inputs.run_id }}"
+          echo "Available artifacts in this run:"
+          gh api "repos/${{ github.repository }}/actions/runs/${{ inputs.run_id }}/artifacts" --jq '.artifacts[].name' 2>/dev/null || echo "No artifacts found or run not accessible"
+          exit 1
+        fi
+        
+        echo "Found artifact URL: $url"
+        echo "artifacts_url=$url" >> $GITHUB_ENV
+    - name: "Download and extract artifact"
+      if: env.artifacts_url != ''
+      shell: bash
+      run: |
+        echo "Downloading artifact from: $artifacts_url"
+        curl -L -H "Authorization: token ${{ inputs.github_token }}" -o ${{ inputs.platform }}-app.zip "$artifacts_url"
+        
+        echo "Extracting artifact to: ${{ inputs.output_dir }}"
+        unzip ${{ inputs.platform }}-app.zip -d ${{ inputs.output_dir }}
+        
+        echo "Contents of ${{ inputs.output_dir }}:"
+        ls -la ${{ inputs.output_dir }}/

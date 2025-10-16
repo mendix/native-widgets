@@ -1,7 +1,7 @@
 {
   "name": "mobile-resources-native",
   "moduleName": "Native Mobile Resources",
-  "version": "10.0.0",
+  "version": "10.1.5",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -14,7 +14,7 @@
   },
   "testProject": {
     "githubUrl": "https://github.com/mendix/native-mobile-resources",
-    "branchName": "main"
+    "branchName": "mx/10.24.x"
   },
   "scripts": {
     "prestart": "rimraf ./dist/tsc",

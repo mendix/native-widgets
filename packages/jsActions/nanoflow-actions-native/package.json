@@ -1,7 +1,7 @@
 {
   "name": "nanoflow-actions-native",
   "moduleName": "Nanoflow Commons",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -14,7 +14,7 @@
   },
   "testProject": {
     "githubUrl": "https://github.com/mendix/native-mobile-resources",
-    "branchName": "main"
+    "branchName": "mx/10.24.x"
   },
   "scripts": {
     "start": "rollup --config ../../../configs/jsactions/rollup.config.js --watch --configProject nanoflowcommons",

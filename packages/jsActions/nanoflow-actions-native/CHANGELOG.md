@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.1.3] Nanoflow Commons - 2025-9-24
+### Fixed
+
+-   We've fixed location permission issue on iOS.
+
 ### Changed
 
 -   We've updated the minimum Mendix version to 10.21.
