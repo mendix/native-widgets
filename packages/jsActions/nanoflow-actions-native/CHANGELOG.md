@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   We've migrated from using @react-native-community/geolocation to react-native-permissions for handling location permissions.
+
 ## [5.1.3] Nanoflow Commons - 2025-9-24
+
 ### Fixed
 
 -   We've fixed location permission issue on iOS.
