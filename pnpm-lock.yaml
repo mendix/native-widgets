@@ -903,8 +903,8 @@ importers:
         specifier: 10.2.0
         version: 10.2.0
       react-native-video:
-        specifier: 6.10.0
-        version: 6.10.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
+        specifier: 6.10.2
+        version: 6.10.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@mendix/piw-utils-internal':
         specifier: 1.0.0
@@ -6567,8 +6567,8 @@ packages:
     resolution: {integrity: sha512-n5HGcxUuVaTf9QJPs/W22xQpC2Z9u0nb0KgLPnVltP8vdUvOp6+R26gF55kilP/fV4eL4vsAHUqUjewppJMBOQ==}
     hasBin: true
 
-  react-native-video@6.10.0:
-    resolution: {integrity: sha512-NyDnpSBRJkj7TxMku2dEys54qKynW/l9kSPCVvayyqXWrc24cxHhLvAaxORdJDb6tS4FhUbR8tFIoOY65/XKZg==}
+  react-native-video@6.10.2:
+    resolution: {integrity: sha512-ua/7mGZVJYe0pUh5tWccG4h+Jj3IGemGSwsc6E7HFV+nfvUfULtWuCth4dYDU1HPeuVW+aDlD660AnKD+mdS1w==}
     peerDependencies:
       react: 18.2.0
       react-native: 0.77.3
@@ -15051,7 +15051,7 @@ snapshots:
       prop-types: 15.8.1
       yargs: 16.2.0
 
-  react-native-video@6.10.0(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
+  react-native-video@6.10.2(react-native@0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0))(react@18.2.0):
     dependencies:
       react: 18.2.0
       react-native: 0.77.3(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@18.2.0)
