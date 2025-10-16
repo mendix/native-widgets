@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 -   We have updated `react-native-video` version to 6.10.2.
--   We have fixed the issue where there was no audio in silent mode on iOS.
+-   We have fixed an issue where videos were muted in iOS silent mode. The video player now plays sound even when the device is set to silent.
 
 ## [6.3.0] - 2025-10-2
 
