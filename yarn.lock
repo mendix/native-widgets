@@ -2930,9 +2930,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-firebase/app@npm:19.3.0":
-  version: 19.3.0
-  resolution: "@react-native-firebase/app@npm:19.3.0"
+"@react-native-firebase/app@npm:20.1.0":
+  version: 20.1.0
+  resolution: "@react-native-firebase/app@npm:20.1.0"
   dependencies:
     opencollective-postinstall: "npm:^2.0.3"
     superstruct: "npm:^0.6.2"
@@ -2943,20 +2943,20 @@ __metadata:
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: 10/fc1c8044d201474649ae8cba1ce1efb8077c0ea0f56d3d8fc9a024a9ea27dac9cfa8eef6399335cf21789165689be36ff51f528e56b5f6b482f7330736e2f822
+  checksum: 10/5a06d1f60fb813f1e114066a03c57e46efd58f753fc7d00cadcd47399a8b9f88f221e2ccb31b5d095b00b06d4921fa3b5be720b67450d69315ea730f7499716e
   languageName: node
   linkType: hard
 
-"@react-native-firebase/messaging@npm:19.3.0":
-  version: 19.3.0
-  resolution: "@react-native-firebase/messaging@npm:19.3.0"
+"@react-native-firebase/messaging@npm:20.1.0":
+  version: 20.1.0
+  resolution: "@react-native-firebase/messaging@npm:20.1.0"
   peerDependencies:
-    "@react-native-firebase/app": 19.3.0
+    "@react-native-firebase/app": 20.1.0
     expo: ">=47.0.0"
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: 10/045d7f4d1fe4182dec57db01bbab13281cbb63fd22b534208cfcec32983f5c21e855e50cb91f37fb06da25ff555b605c66ded7c643a69ef67737a1b4dc035648
+  checksum: 10/8948f45373b58f128c5460fc5786b413b29d07158081f9c381c94fc29e208b1f5f77381eb1c621e161a1ce82a3130287d56db260c7bed3f06e3b07446eb054ec
   languageName: node
   linkType: hard
 
@@ -12037,7 +12037,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:^10.0.1"
     "@react-native-camera-roll/camera-roll": "npm:7.4.0"
     "@react-native-community/push-notification-ios": "npm:1.10.1"
-    "@react-native-firebase/messaging": "npm:19.3.0"
+    "@react-native-firebase/messaging": "npm:20.1.0"
     "@swan-io/react-native-browser": "npm:^0.4.1"
     "@types/querystringify": "npm:^2.0.0"
     "@types/react-native-push-notification": "npm:8.1.1"
@@ -12409,8 +12409,8 @@ __metadata:
   dependencies:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
-    "@react-native-firebase/app": "npm:19.3.0"
-    "@react-native-firebase/messaging": "npm:19.3.0"
+    "@react-native-firebase/app": "npm:20.1.0"
+    "@react-native-firebase/messaging": "npm:20.1.0"
     eslint: "npm:^7.32.0"
     react-native-push-notification: "npm:8.1.1"
   languageName: unknown
