@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.0.2] - 2025-10-17
+
 ### Fixed
 
--  We've fixed an issue where the Gallery widget would not properly load more items when scrolling down quickly.
+-   We've fixed an issue where the Gallery widget would not properly load more items when scrolling down quickly.
 
 ## [2.0.1] - 2025-8-5
 
