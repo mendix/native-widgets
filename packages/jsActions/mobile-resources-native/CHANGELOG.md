@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.6] Native Mobile Resources - 2025-10-17
+
+
+## [2.0.1] Gallery
+### Fixed
+
+-  We've fixed an issue where the Gallery widget would not properly load more items when scrolling down quickly.
+
+## [6.1.2] VideoPlayer
+-   We have updated `react-native-video` version to 6.10.2.
+-   We have fixed an issue where videos were muted in iOS silent mode. The video player now plays sound even when the device is set to silent.
+
 ## [10.1.5] Native Mobile Resources - 2025-10-6
 
 
