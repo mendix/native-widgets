@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import SignatureScreen from "react-native-signature-canvas";
 import { fireEvent, render } from "@testing-library/react-native";
 

@@ -1,6 +1,6 @@
 import { available, flattenStyles, toNumber, unavailable } from "@mendix/piw-native-utils-internal";
 import MultiSlider, { MarkerProps } from "@ptomasroos/react-native-multi-slider";
-import { createElement, ReactElement, useCallback, useRef, useState } from "react";
+import { ReactElement, useCallback, useRef, useState, JSX } from "react";
 import { LayoutChangeEvent, Text, View } from "react-native";
 import { Big } from "big.js";
 

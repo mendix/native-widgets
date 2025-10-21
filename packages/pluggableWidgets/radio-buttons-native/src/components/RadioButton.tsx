@@ -1,4 +1,4 @@
-import { createElement, ReactElement } from "react";
+import { ReactElement } from "react";
 import { Pressable, Text, View } from "react-native";
 import { RadioButtonsStyle } from "../ui/Styles";
 import { OrientationEnum } from "../../typings/RadioButtonsProps";

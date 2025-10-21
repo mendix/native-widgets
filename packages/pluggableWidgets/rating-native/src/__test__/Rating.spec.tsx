@@ -6,7 +6,6 @@ import { dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Rating, Props } from "../Rating";
 import { render, fireEvent } from "@testing-library/react-native";
 import { defaultRatingStyle } from "../ui/Styles";
-import { createElement } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { ActionValue, EditableValue } from "mendix";
 import StarButton from "../lib/StarButton";

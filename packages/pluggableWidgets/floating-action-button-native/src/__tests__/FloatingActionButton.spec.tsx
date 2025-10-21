@@ -1,7 +1,6 @@
 import { FloatingActionButtonProps } from "../../typings/FloatingActionButtonProps";
 import { FloatingActionButtonStyle } from "../ui/styles";
 import { fireEvent, render, waitForElementToBeRemoved } from "@testing-library/react-native";
-import { createElement } from "react";
 import { FloatingActionButton } from "../FloatingActionButton";
 import { actionValue, dynamicValue } from "@mendix/piw-utils-internal";
 import { NativeIcon } from "mendix";

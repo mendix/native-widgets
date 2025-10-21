@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
-import { createElement, ReactElement, useCallback, useMemo, useRef } from "react";
+import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { Camera, useCodeScanner, Code, useCameraDevice } from "react-native-vision-camera";
 import BarcodeMask from "react-native-barcode-mask";

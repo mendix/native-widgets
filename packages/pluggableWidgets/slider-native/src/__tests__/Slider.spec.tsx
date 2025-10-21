@@ -1,6 +1,5 @@
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { createElement } from "react";
 import { View } from "react-native";
 import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";

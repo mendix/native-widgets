@@ -1,7 +1,5 @@
-import { createElement } from "react";
 import { Text } from "react-native";
 import { render } from "@testing-library/react-native";
-
 import { Animation, Props } from "../Animation";
 
 jest.mock("react-native/Libraries/Utilities/Platform", () => ({

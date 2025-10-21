@@ -1,4 +1,4 @@
-import { createElement, FunctionComponent, useState, useEffect, useCallback } from "react";
+import { FunctionComponent, useState, useEffect, useCallback } from "react";
 import { flattenStyles, Style } from "@mendix/piw-native-utils-internal";
 import { DefaultImageStyle, defaultImageStyle } from "./ui/Styles";
 import { ImageProps } from "../typings/ImageProps";

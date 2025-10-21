@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { render } from "@testing-library/react-native";
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";

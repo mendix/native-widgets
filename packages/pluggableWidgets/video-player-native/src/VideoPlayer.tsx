@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { createElement, ReactElement, useEffect, useRef, useState, Fragment, useCallback } from "react";
+import { ReactElement, useEffect, useRef, useState, Fragment, useCallback } from "react";
 import {
     ActivityIndicator,
     Platform,

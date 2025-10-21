@@ -2,7 +2,6 @@ import { Maps, Props } from "../Maps";
 import { render, act } from "@testing-library/react-native";
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { createElement } from "react";
 
 // Mock react-native-maps
 // Without this, the Maps component renders only an empty AIRMap component without markers

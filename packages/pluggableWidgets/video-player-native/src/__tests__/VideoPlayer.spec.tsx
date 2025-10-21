@@ -1,5 +1,4 @@
 import { dynamicValue } from "@mendix/piw-utils-internal";
-import { createElement } from "react";
 import { Modal, View } from "react-native";
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { ReactVideoProps } from "react-native-video";

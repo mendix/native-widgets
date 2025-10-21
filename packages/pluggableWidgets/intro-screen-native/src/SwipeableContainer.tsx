@@ -1,4 +1,4 @@
-import { createElement, Fragment, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
     FlatList,
     I18nManager,

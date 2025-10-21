@@ -1,4 +1,4 @@
-import { createElement, createContext } from "react";
+import { createContext } from "react";
 import { render, fireEvent, act } from "@testing-library/react-native";
 import {
     FilterContextValue,

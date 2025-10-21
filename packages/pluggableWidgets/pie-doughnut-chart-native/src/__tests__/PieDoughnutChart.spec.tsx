@@ -3,7 +3,6 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { ObjectItem } from "mendix";
 import { View } from "react-native";
-import { createElement } from "react";
 import { Big } from "big.js";
 
 import { PieDoughnutChartProps, SeriesType } from "../../typings/PieDoughnutChartProps";

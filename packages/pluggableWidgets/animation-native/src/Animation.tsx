@@ -1,4 +1,4 @@
-import { Component, ReactNode, createElement } from "react";
+import { Component, ReactNode } from "react";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { Animation as AnimationType, View, Easing } from "react-native-animatable";
 

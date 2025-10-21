@@ -1,6 +1,6 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
 // has an outdated dependency (RN-vector-icons) that we now managed here in this widget.
-import { Component, createElement } from "react";
+import { Component } from "react";
 import {
     GestureResponderEvent,
     Image,
