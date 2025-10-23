@@ -1,5 +1,5 @@
 diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
-index bb8cc3a..277e39f 100644
+index bb8cc3a..34e0877 100644
 --- a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
 +++ b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup.config.native.js
 @@ -169,6 +169,17 @@ export default async args => {
@@ -20,7 +20,7 @@ index bb8cc3a..277e39f 100644
          return [
              nodeResolve({ preferBuiltins: false, mainFields: ["module", "browser", "main"] }),
              isTypescript
-@@ -223,7 +234,16 @@ export default async args => {
+@@ -223,7 +234,21 @@ export default async args => {
                    })
                  : null,
              image(),
@@ -28,7 +28,12 @@ index bb8cc3a..277e39f 100644
 +            production ? terser(hasReanimated
 +                ? {
 +                    mangle: false,
-+                    compress: false,
++                    compress: {
++                        defaults: false,
++                        inline: false,
++                        reduce_funcs: false,
++                        side_effects: false,
++                    },
 +                    keep_fnames: true,
 +                    keep_classnames: true,
 +                    module: false,
