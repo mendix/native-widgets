@@ -777,7 +777,7 @@ importers:
         specifier: '*'
         version: link:../../tools/piw-utils-internal
       react-native-animatable:
-        specifier: ^1.3.2
+        specifier: 1.4.0
         version: 1.4.0
       react-native-vector-icons:
         specifier: 10.2.0

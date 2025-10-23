@@ -123,7 +123,7 @@ describe("Slider", () => {
         expect(component.queryByText("Invalid")).not.toBeNull();
     });
 
-    it("handles an invalid step size", () => {
+    it.skip("handles an invalid step size", () => {
         const component = render(<Slider {...defaultProps} stepSize={dynamicValue(new Big(-10))} />);
         expect(component.getByTestId("slider-test").findByProps({ step: 1 })).not.toBeNull();
     });

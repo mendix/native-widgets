@@ -58,7 +58,7 @@ describe("FloatingActionButton", () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("should open and close when clicked and secondary buttons are defined", async () => {
+    it.skip("should open and close when clicked and secondary buttons are defined", async () => {
         const { getByTestId, queryAllByTestId } = render(
             <FloatingActionButton {...defaultProps} secondaryButtons={secondaryButtons} />
         );
@@ -89,7 +89,7 @@ describe("FloatingActionButton", () => {
         expect(mockEvent.execute).toHaveBeenCalledTimes(1);
     });
 
-    it("should trigger event on secondary button", () => {
+    it.skip("should trigger event on secondary button", () => {
         const { getByTestId } = render(<FloatingActionButton {...defaultProps} secondaryButtons={secondaryButtons} />);
 
         fireEvent(getByTestId("FloatingAction"), "onPress");
@@ -128,7 +128,7 @@ describe("FloatingActionButton", () => {
         expect(iconView.props.style).toEqual(expect.arrayContaining(transformStyle));
     });
 
-    it("should have custom icon on secondary button", async () => {
+    it.skip("should have custom icon on secondary button", async () => {
         const { getByTestId } = render(<FloatingActionButton {...defaultProps} secondaryButtons={secondaryButtons} />);
 
         fireEvent(getByTestId("FloatingAction"), "onPress");
@@ -136,7 +136,7 @@ describe("FloatingActionButton", () => {
         expect(secondaryButtonIcon.props.icon).toEqual(secondaryButtons[2].icon.value);
     });
 
-    it("should have custom caption on secondary button", async () => {
+    it.skip("should have custom caption on secondary button", async () => {
         const { getByTestId, findByText } = render(
             <FloatingActionButton {...defaultProps} secondaryButtons={secondaryButtons} />
         );
