@@ -6,38 +6,49 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [] Notifications
+
+### BREAKING
+
+-   Updated the react-native-firebase to v20.1.0. Ensure that the Native Template and Native Builder are updated accordingly.
+
 ## [10.1.5] Native Mobile Resources - 2025-10-6
 
-
 ## [5.0.1] BottomSheet
+
 ### Fixed
 
 -   Fixed React Native Reanimated worklet function errors by properly memoizing snap points.
 
 ## [10.1.3] Native Mobile Resources - 2025-9-9
 
-
 ## [4.1.0] IntroScreen
+
 ### Fixed
 
 -   We have fixed defaultProps deprecation warning.
 -   Initial slide now correctly positioned on mount.
 
 ## [3.1.1] SafeAreaView
+
 -   We fixed the issue where navigation buttons were being overlapped due to improper safe area handling.
 
 ## [2.3.0] Signature
+
 -   Updated react-native-webview from version v13.12.5 to latest
 
 ## [6.1.1] VideoPlayer
+
 ### Changed
 
 -   We have updated `react-native-video` version to 6.10.0
 
 ## [4.3.0] WebView
+
 -   Updated react-native-webview from version v13.12.5 to latest to support react-native 0.77
 
 ## [10.0.0] Native Mobile Resources - 2025-3-31
+
 -   We migrated from react-native-inappbrowser-reborn to @swan-io/react-native-browser to prevent issues for next rn upgrade.
 
 -   We migrated from @react-native-community/cameraroll to @react-native-camera-roll/camera-roll to prevent issues for next rn upgrade.
@@ -45,29 +56,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We also updated several dependencies such as react-native-blob-util, react-native-image-picker to their latest version.
 
 ## [5.0.0] AppEvents
+
 ### Changed
 
 -   Updated @react-native-community/netinfo from version v5.9.7 to v11.4.1.
 
 ## [5.0.0] BottomSheet
+
 ### Changed
 
 -   Rewrote all bottomsheet widgets (customModalSheet, ExpandingDrawer, and NativeBottomSheet) using @gorhom/bottom-sheet.
 
 ## [3.4.0] Feedback
+
 ### Changed
 
 -   Updated react-native-view-shot from version v3.1.2 to v4.0.3.
 
 ## [3.3.0] ListViewSwipe
--  Updated react-native-gesture-handler from version v2.16.2 to 2.24.0
+
+-   Updated react-native-gesture-handler from version v2.16.2 to 2.24.0
 
 ## [2.2.0] Signature
+
 ### Changed
 
 -   Updated react-native-webview from version v9.0.0 to v10.15.0.
 
 ## [4.2.0] WebView
+
 ### Changed
 
 -   Updated react-native-webview from version v11.26.1 to v13.13.2
