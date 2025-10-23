@@ -28,7 +28,7 @@ const enum StatusEnum {
 
 export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     const [styles, setStyles] = useState(flattenStyles(defaultVideoStyle, props.style));
-    const timeoutRef = useRef<NodeJS.Timeout>();
+    const timeoutRef = useRef<NodeJS.Timeout>(null);
     const playerRef = useRef<VideoRef>(null);
     const fullScreenPlayerRef = useRef<VideoRef>(null);
     const [status, setStatus] = useState(StatusEnum.NOT_READY);
