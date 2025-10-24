@@ -60,6 +60,11 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
       onLoadStart={[Function]}
       onProgress={[Function]}
       paused={true}
+      ref={
+        {
+          "current": null,
+        }
+      }
       repeat={false}
       resizeMode="stretch"
       source={
@@ -204,6 +209,11 @@ exports[`VideoPlayer VideoPlayerAndroid render video without controls if showCon
       onLoadStart={[Function]}
       onProgress={[Function]}
       paused={true}
+      ref={
+        {
+          "current": null,
+        }
+      }
       repeat={false}
       resizeMode="stretch"
       source={
@@ -283,6 +293,11 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
       onLoadStart={[Function]}
       onProgress={[Function]}
       paused={true}
+      ref={
+        {
+          "current": null,
+        }
+      }
       repeat={false}
       resizeMode="stretch"
       source={
@@ -426,6 +441,11 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
       onLoadStart={[Function]}
       onProgress={[Function]}
       paused={true}
+      ref={
+        {
+          "current": null,
+        }
+      }
       repeat={false}
       resizeMode="contain"
       source={
@@ -572,6 +592,11 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
       onLoadStart={[Function]}
       onProgress={[Function]}
       paused={true}
+      ref={
+        {
+          "current": null,
+        }
+      }
       repeat={false}
       resizeMode="stretch"
       source={
@@ -720,6 +745,11 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
       onLoadStart={[Function]}
       onProgress={[Function]}
       paused={true}
+      ref={
+        {
+          "current": null,
+        }
+      }
       repeat={false}
       resizeMode="stretch"
       source={
