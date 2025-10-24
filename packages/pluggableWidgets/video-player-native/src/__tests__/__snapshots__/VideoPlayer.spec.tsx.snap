@@ -54,6 +54,7 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
   >
     <Video
       controls={true}
+      ignoreSilentSwitch="ignore"
       muted={false}
       onError={[Function]}
       onLoad={[Function]}
@@ -203,6 +204,7 @@ exports[`VideoPlayer VideoPlayerAndroid render video without controls if showCon
   >
     <Video
       controls={false}
+      ignoreSilentSwitch="ignore"
       muted={false}
       onError={[Function]}
       onLoad={[Function]}
@@ -287,6 +289,7 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
   >
     <Video
       controls={true}
+      ignoreSilentSwitch="ignore"
       muted={false}
       onError={[Function]}
       onLoad={[Function]}
@@ -435,6 +438,7 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
   >
     <Video
       controls={true}
+      ignoreSilentSwitch="ignore"
       muted={false}
       onError={[Function]}
       onLoad={[Function]}
@@ -586,6 +590,7 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
   >
     <Video
       controls={true}
+      ignoreSilentSwitch="ignore"
       muted={false}
       onError={[Function]}
       onLoad={[Function]}
@@ -739,6 +744,7 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
   >
     <Video
       controls={true}
+      ignoreSilentSwitch="ignore"
       muted={false}
       onError={[Function]}
       onLoad={[Function]}
