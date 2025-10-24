@@ -286,13 +286,15 @@ jobs:
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/dist/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/dist/* Native-Mobile-Resources-mx10/javascriptsource/nativemobileresources/actions/
+            mv -f resources/jsActions/mobile-resources-native/dist/node_modules Native-Mobile-Resources-mx10/javascriptsource/nativemobileresources/actions/
+            find resources/jsActions/mobile-resources-native/dist -type f -exec mv -f {} Native-Mobile-Resources-mx10/javascriptsource/nativemobileresources/actions/ \;
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/nanoflow-actions-native/dist/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/dist/* Native-Mobile-Resources-mx10/javascriptsource/nanoflowcommons/actions/
+            mv -f resources/jsActions/nanoflow-actions-native/dist/node_modules Native-Mobile-Resources-mx10/javascriptsource/nanoflowcommons/actions/
+            find resources/jsActions/nanoflow-actions-native/dist -type f -exec mv -f {} Native-Mobile-Resources-mx10/javascriptsource/nanoflowcommons/actions/ \;
           fi
       - name: "Force rebuild test project"
         run: |
