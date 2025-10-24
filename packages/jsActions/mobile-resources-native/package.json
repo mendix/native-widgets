@@ -28,7 +28,7 @@
   "dependencies": {
     "@notifee/react-native": "9.1.8",
     "@react-native-camera-roll/camera-roll": "7.4.0",
-    "@react-native-firebase/messaging": "17.3.0",
+    "@react-native-firebase/messaging": "20.1.0",
     "@sbaiahmed1/react-native-biometrics": "0.4.0",
     "@swan-io/react-native-browser": "0.4.1",
     "fbjs": "3.0.4",
