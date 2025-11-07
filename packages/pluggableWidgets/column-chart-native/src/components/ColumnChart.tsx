@@ -1,4 +1,4 @@
-import { createElement, ReactElement, useCallback, useMemo, useState } from "react";
+import { ReactElement, useCallback, useMemo, useState } from "react";
 import { LayoutChangeEvent, Text, TextStyle, View } from "react-native";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "victory-native";
 import { BarProps } from "victory-bar";

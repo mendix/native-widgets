@@ -1,7 +1,7 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { ValueStatus } from "mendix";
-import { Component, createElement } from "react";
+import { Component, JSX } from "react";
 import StarRating from "./lib/StarRating";
 import { Big } from "big.js";
 

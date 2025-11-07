@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { render, fireEvent, act } from "@testing-library/react-native";
 import FilterComponent, { FilterComponentProps } from "../FilterComponent";
 import { defaultGalleryTextFilterStyle } from "../../ui/Styles";

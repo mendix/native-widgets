@@ -1,4 +1,4 @@
-import { createElement, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, JSX } from "react";
 import { defaultWelcomeScreenStyle, IntroScreenStyle } from "./ui/Styles";
 import { IntroScreenProps } from "../typings/IntroScreenProps";
 import { Modal, View } from "react-native";

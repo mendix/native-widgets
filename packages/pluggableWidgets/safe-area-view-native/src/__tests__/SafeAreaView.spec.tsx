@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { render } from "@testing-library/react-native";
 import { SafeAreaView } from "../SafeAreaView";
 import { SafeAreaViewProps } from "../../typings/SafeAreaViewProps";

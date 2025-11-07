@@ -1,4 +1,4 @@
-import { createElement, useCallback, ReactElement } from "react";
+import { useCallback, ReactElement } from "react";
 import { Text, View } from "react-native";
 
 import { mergeNativeStyles } from "@mendix/pluggable-widgets-tools";

@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { Component, createElement } from "react";
+import { Component, JSX } from "react";
 import { View } from "react-native";
 import RNQRCode from "react-native-qrcode-svg";
 

@@ -1,4 +1,4 @@
-import { createElement, ReactNode, FunctionComponent, useState, useCallback } from "react";
+import { ReactNode, FunctionComponent, useState, useCallback } from "react";
 import { ImageStyle, LayoutChangeEvent, View } from "react-native";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { ResizeModeEnum } from "../../typings/ImageProps";

@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { createElement, ReactElement, useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { BadgeProps } from "../typings/BadgeProps";

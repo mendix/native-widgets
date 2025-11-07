@@ -1,5 +1,4 @@
 import { actionValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
-import { createElement } from "react";
 import { Text } from "react-native";
 import { fireEvent, render } from "@testing-library/react-native";
 

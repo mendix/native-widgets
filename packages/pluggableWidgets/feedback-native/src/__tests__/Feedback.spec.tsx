@@ -1,6 +1,5 @@
 import { FeedbackStyle } from "../ui/styles";
 import { render, cleanup, userEvent } from "@testing-library/react-native";
-import { createElement } from "react";
 import { FeedbackProps } from "../../typings/FeedbackProps";
 import { Feedback } from "../Feedback";
 import { dynamicValue } from "@mendix/piw-utils-internal";

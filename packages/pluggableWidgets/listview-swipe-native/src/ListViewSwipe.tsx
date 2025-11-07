@@ -1,4 +1,4 @@
-import { createElement, ReactElement, ReactNode, useCallback, useRef, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useRef, useState } from "react";
 import { ListViewSwipeProps } from "../typings/ListViewSwipeProps";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { Animated, View } from "react-native";

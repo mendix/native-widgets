@@ -29,7 +29,14 @@ exports[`Intro Screen renders 1`] = `
         data={
           [
             {
-              "content": <View />,
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
               "name": "Page 1",
             },
           ]
@@ -218,7 +225,14 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
         data={
           [
             {
-              "content": <View />,
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
               "name": "Page 1",
             },
           ]
@@ -421,7 +435,14 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
         data={
           [
             {
-              "content": <View />,
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
               "name": "Page 1",
             },
           ]
@@ -624,7 +645,14 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
         data={
           [
             {
-              "content": <View />,
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
               "name": "Page 1",
             },
           ]

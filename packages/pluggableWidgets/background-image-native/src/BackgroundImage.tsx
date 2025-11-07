@@ -1,4 +1,4 @@
-import { createElement } from "react";
+import { JSX } from "react";
 import { View, StyleSheet, StyleProp } from "react-native";
 import { ValueStatus } from "mendix";
 import { Image, SvgImageStyle } from "mendix/components/native/Image";

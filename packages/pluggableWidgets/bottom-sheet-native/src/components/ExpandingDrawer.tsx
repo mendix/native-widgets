@@ -1,4 +1,4 @@
-import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
+import { ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
 import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";

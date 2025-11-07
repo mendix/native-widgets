@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
-import { Component, createElement, ReactElement, ReactNode } from "react";
+import { Component, ReactElement, ReactNode } from "react";
 import { View, ViewStyle } from "react-native";
 
 import { HueGradient, LightnessGradient, SaturationGradient } from "react-native-color";

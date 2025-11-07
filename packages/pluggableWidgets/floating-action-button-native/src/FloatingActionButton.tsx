@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { Icon } from "mendix/components/native/Icon";
-import { Component, createElement } from "react";
+import { Component, JSX } from "react";
 import { View } from "react-native";
 import ActionButton from "react-native-action-button";
 
