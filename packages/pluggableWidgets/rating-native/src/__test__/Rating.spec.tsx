@@ -6,12 +6,43 @@ import { dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Rating, Props } from "../Rating";
 import { render, fireEvent } from "@testing-library/react-native";
 import { defaultRatingStyle } from "../ui/Styles";
-import { createElement } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { ActionValue, EditableValue } from "mendix";
 import StarButton from "../lib/StarButton";
 
-jest.mock("react-native-animatable", () => ({ View: (props: any) => <View {...props} bounce={jest.fn()} /> }));
+jest.mock("react-native-animatable", () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const React = require("react");
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { View } = require("react-native");
+
+    return {
+        View: React.forwardRef((props: any, ref: any) => {
+            // Expose animation methods on the ref
+            if (ref) {
+                const animationMethods = {
+                    bounce: jest.fn(() => Promise.resolve({ finished: true })),
+                    flash: jest.fn(() => Promise.resolve({ finished: true })),
+                    jello: jest.fn(() => Promise.resolve({ finished: true })),
+                    pulse: jest.fn(() => Promise.resolve({ finished: true })),
+                    rotate: jest.fn(() => Promise.resolve({ finished: true })),
+                    rubberBand: jest.fn(() => Promise.resolve({ finished: true })),
+                    shake: jest.fn(() => Promise.resolve({ finished: true })),
+                    swing: jest.fn(() => Promise.resolve({ finished: true })),
+                    tada: jest.fn(() => Promise.resolve({ finished: true })),
+                    wobble: jest.fn(() => Promise.resolve({ finished: true }))
+                };
+
+                if (typeof ref === "function") {
+                    ref(animationMethods);
+                } else if (ref && typeof ref === "object") {
+                    Object.assign(ref, animationMethods);
+                }
+            }
+            return <View {...props} />;
+        })
+    };
+});
 
 const ratingProps: Props = {
     animation: "bounce",

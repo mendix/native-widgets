@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { createElement, ReactElement, useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import { View, Text, Switch as SwitchComponent, Platform } from "react-native";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";

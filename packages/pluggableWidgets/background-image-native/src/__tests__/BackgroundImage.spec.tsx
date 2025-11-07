@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { Text } from "react-native";
 import { render } from "@testing-library/react-native";
 import { dynamicValue } from "@mendix/piw-utils-internal";

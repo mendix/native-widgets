@@ -1,4 +1,4 @@
-import { createElement, ReactElement, useRef, useState, useEffect, useCallback } from "react";
+import { ReactElement, useRef, useState, useEffect, useCallback } from "react";
 import { View, TextInput, TouchableOpacity, ViewStyle } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { debounce } from "@mendix/piw-utils-internal";

@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { Text } from "react-native";
 import { render, fireEvent } from "@testing-library/react-native";
 import Big from "big.js";

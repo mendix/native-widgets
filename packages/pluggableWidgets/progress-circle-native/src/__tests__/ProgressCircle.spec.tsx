@@ -1,6 +1,5 @@
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { createElement } from "react";
 import { Text, PixelRatio } from "react-native";
 import { Circle } from "react-native-progress";
 import { render } from "@testing-library/react-native";

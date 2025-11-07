@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { Component, createElement } from "react";
+import { Component, JSX } from "react";
 import { Text, View, Linking } from "react-native";
 import { WebView as RNWebView } from "react-native-webview";
 

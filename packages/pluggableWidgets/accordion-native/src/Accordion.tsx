@@ -1,4 +1,4 @@
-import { createElement, ReactElement, useState, useCallback, useEffect } from "react";
+import { ReactElement, useState, useCallback, useEffect } from "react";
 import { View, LayoutAnimation, Platform, UIManager } from "react-native";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";

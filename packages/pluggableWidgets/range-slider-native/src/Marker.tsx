@@ -1,5 +1,5 @@
 import { MarkerProps } from "@ptomasroos/react-native-multi-slider";
-import { createElement, ReactElement } from "react";
+import { ReactElement } from "react";
 import { Platform, StyleSheet, TouchableHighlight, View } from "react-native";
 
 export function Marker(props: MarkerProps & { testID: string }): ReactElement {

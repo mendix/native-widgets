@@ -1,4 +1,4 @@
-import { createElement, ReactElement, ReactNode, useCallback } from "react";
+import { ReactElement, ReactNode, useCallback } from "react";
 import { Text, FlatList, Pressable, View, ViewProps, Platform, TouchableOpacity } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
