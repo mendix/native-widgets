@@ -6,9 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.8] Native Mobile Resources - 2025-11-7
 ## [] Notifications
 
 ### BREAKING
+
+-   Updated the react-native-firebase to v20.1.0. Ensure that the Native Template and Native Builder are updated accordingly.
+
+## [4.2.0] Notifications
+## BREAKING
 
 -   Updated the react-native-firebase to v20.1.0. Ensure that the Native Template and Native Builder are updated accordingly.
 
