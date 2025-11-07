@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { createElement, ReactElement } from "react";
+import { ReactElement } from "react";
 import { Text } from "react-native";
 import { all } from "deepmerge";
 import { GalleryTextFilterProps, DefaultFilterEnum } from "../typings/GalleryTextFilterProps";

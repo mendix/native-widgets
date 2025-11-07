@@ -1,4 +1,4 @@
-import { createElement, Fragment } from "react";
+import { Fragment } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { render } from "@testing-library/react-native";
 import { ListViewSwipe } from "../ListViewSwipe";

@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { waitFor, render } from "@testing-library/react-native";
 import { useScheduleUpdateOnce } from "../ReactLifecycleUtils";
 

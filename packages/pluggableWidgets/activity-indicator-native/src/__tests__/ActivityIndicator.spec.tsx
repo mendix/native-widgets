@@ -1,6 +1,4 @@
-import { createElement } from "react";
 import { render } from "@testing-library/react-native";
-
 import { ActivityIndicator, Props } from "../ActivityIndicator";
 
 const defaultProps: Props = {

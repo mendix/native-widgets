@@ -1,8 +1,8 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { isAvailable } from "@mendix/piw-utils-internal";
-import { createElement } from "react";
 import { Text, View } from "react-native";
 import { Bar } from "react-native-progress";
+import { JSX } from "react";
 
 import { ProgressBarProps } from "../typings/ProgressBarProps";
 import { defaultProgressBarStyle, ProgressBarStyle } from "./ui/Styles";

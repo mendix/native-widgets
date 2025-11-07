@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { RadioButtons, props } from "../RadioButtons";
 import { fireEvent, render } from "@testing-library/react-native";

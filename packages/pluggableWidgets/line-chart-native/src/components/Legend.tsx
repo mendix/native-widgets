@@ -1,4 +1,4 @@
-import { createElement, ReactElement, useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import { Text, View } from "react-native";
 
 import { LineChartLegendStyle } from "../ui/Styles";

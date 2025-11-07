@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { Text } from "react-native";
 import { fireEvent, render, act } from "@testing-library/react-native";
 import { NativeIcon, NativeImage } from "mendix";

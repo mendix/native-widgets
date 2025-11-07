@@ -128,11 +128,6 @@ exports[`Popup menu renders 1`] = `
             testID="popup-menu_menu"
           >
             <View
-              accessibilityState={
-                {
-                  "disabled": false,
-                }
-              }
               accessibilityValue={
                 {
                   "max": undefined,
@@ -166,7 +161,6 @@ exports[`Popup menu renders 1`] = `
                 }
               >
                 <Text
-                  ellipsizeMode="tail"
                   numberOfLines={1}
                   style={
                     [
@@ -176,7 +170,7 @@ exports[`Popup menu renders 1`] = `
                         "paddingHorizontal": 16,
                         "textAlign": "left",
                       },
-                      false,
+                      undefined,
                       undefined,
                     ]
                   }
@@ -193,7 +187,7 @@ exports[`Popup menu renders 1`] = `
                     "flex": 1,
                   },
                   {
-                    "borderBottomColor": "rgba(0,0,0,0.12)",
+                    "borderBottomColor": undefined,
                   },
                 ]
               }

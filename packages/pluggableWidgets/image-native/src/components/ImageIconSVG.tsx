@@ -1,4 +1,4 @@
-import { createElement, FunctionComponent, Fragment, useCallback } from "react";
+import { FunctionComponent, Fragment, useCallback } from "react";
 import { View } from "react-native";
 import { SvgUri, SvgXml } from "react-native-svg";
 import FastImageComponent, { Source } from "@d11/react-native-fast-image";

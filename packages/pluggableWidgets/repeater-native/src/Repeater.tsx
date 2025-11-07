@@ -1,6 +1,6 @@
 import { RepeaterProps } from "../typings/RepeaterProps";
 import { defaultRepeaterStyle, RepeaterStyle } from "./ui/Styles";
-import { createElement, ReactElement, Fragment } from "react";
+import { ReactElement, Fragment } from "react";
 import { View } from "react-native";
 import { ValueStatus } from "mendix";
 import { mergeNativeStyles } from "@mendix/pluggable-widgets-tools";

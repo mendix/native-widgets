@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { Component, createElement } from "react";
+import { Component, JSX } from "react";
 import { ActivityIndicator as RNActivityIndicator, View } from "react-native";
 
 import { ActivityIndicatorProps } from "../typings/ActivityIndicatorProps";
