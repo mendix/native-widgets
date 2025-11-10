@@ -260,7 +260,7 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
                 style={styles.backdrop}
             >
                 <Pressable
-                    onPress={null}
+                    onPress={() => setEnlarged(false)}
                     style={{
                         // The child (FastImage) needs "flexGrow: 1" so images on Android are not blurry.
                         // Therefore we explicitly have to set width / height here to prevent the image from taking up the whole screen, which in turn prevents the user from closing the modal (bc parent Pressable will not be clickable).
