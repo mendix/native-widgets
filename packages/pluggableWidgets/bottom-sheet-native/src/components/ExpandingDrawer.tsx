@@ -1,4 +1,4 @@
-import { ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
+import { createElement, ReactNode, ReactElement, useCallback, useState, useRef, Children, useMemo } from "react";
 import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
@@ -26,23 +26,29 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     const isSmallContentValid = Children.count(props.smallContent) > 0;
     const isLargeContentValid = Children.count(props.largeContent) > 0;
 
-    const onLayoutHandlerHeader = (event: LayoutChangeEvent): void => {
-        const height = event.nativeEvent.layout.height;
-        if (height > 0 && height <= maxHeight) {
-            setHeightHeader(height);
-        }
-    };
-
-    const onLayoutHandlerContent = (event: LayoutChangeEvent): void => {
-        const height = event.nativeEvent.layout.height;
-        if (height > 0) {
-            if (height <= maxHeight) {
-                setHeightContent(height);
-            } else if (!props.fullscreenContent) {
-                setHeightContent(maxHeight);
+    const onLayoutHandlerHeader = useCallback(
+        (event: LayoutChangeEvent): void => {
+            const height = event.nativeEvent.layout.height;
+            if (height > 0 && height <= maxHeight) {
+                setHeightHeader(height);
             }
-        }
-    };
+        },
+        [maxHeight]
+    );
+
+    const onLayoutHandlerContent = useCallback(
+        (event: LayoutChangeEvent): void => {
+            const height = event.nativeEvent.layout.height;
+            if (height > 0) {
+                if (height <= maxHeight) {
+                    setHeightContent(height);
+                } else if (!props.fullscreenContent) {
+                    setHeightContent(maxHeight);
+                }
+            }
+        },
+        [maxHeight, props.fullscreenContent]
+    );
 
     const onLayoutFullscreenHandler = (event: LayoutChangeEvent): void => {
         const height = event.nativeEvent.layout.height;
@@ -53,6 +59,19 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
 
     const containerStyle =
         props.fullscreenContent && isOpen ? props.styles.containerWhenExpandedFullscreen : props.styles.container;
+
+    const snapPoints = useMemo(() => {
+        if (props.fullscreenContent && heightContent) {
+            return [fullscreenHeight, heightContent, heightHeader];
+        }
+        if (props.fullscreenContent) {
+            return [fullscreenHeight, heightHeader];
+        }
+        if (isLargeContentValid) {
+            return [heightContent, heightHeader];
+        }
+        return [heightHeader];
+    }, [props.fullscreenContent, heightContent, fullscreenHeight, heightHeader, isLargeContentValid]);
 
     const renderContent = useCallback((): ReactNode => {
         const content = (
@@ -77,7 +96,15 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
             );
         }
         return content;
-    }, [props.smallContent, props.largeContent, props.fullscreenContent, isOpen, fullscreenHeight]);
+    }, [
+        props.smallContent,
+        props.largeContent,
+        props.fullscreenContent,
+        fullscreenHeight,
+        isSmallContentValid,
+        onLayoutHandlerContent,
+        onLayoutHandlerHeader
+    ]);
 
     if (props.fullscreenContent && fullscreenHeight === 0) {
         return (
@@ -91,18 +118,9 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         return <View style={{ position: "absolute", bottom: -maxHeight }}>{renderContent()}</View>;
     }
 
-    const snapPoints =
-        props.fullscreenContent && heightContent
-            ? [fullscreenHeight, heightContent, heightHeader]
-            : props.fullscreenContent
-            ? [fullscreenHeight, heightHeader]
-            : isLargeContentValid
-            ? [heightContent, heightHeader]
-            : [heightHeader];
-
     const collapsedIndex = 0;
 
-    const onChange = (index: number) => {
+    const onChange = (index: number): void => {
         const hasOpened = lastIndexRef === -1 && index === 0;
         const hasClosed = index === -1;
 
