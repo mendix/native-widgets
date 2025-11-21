@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We have migrated from `react-native-push-notification` to `@notifee/react-native` for better new architecture compatibility and enhanced push notification features.
+
 ## [10.1.8] Native Mobile Resources - 2025-11-7
+
 ## [] Notifications
 
 ### BREAKING
@@ -14,19 +19,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated the react-native-firebase to v20.1.0. Ensure that the Native Template and Native Builder are updated accordingly.
 
 ## [4.2.0] Notifications
+
 ## BREAKING
 
 -   Updated the react-native-firebase to v20.1.0. Ensure that the Native Template and Native Builder are updated accordingly.
 
 ## [10.1.6] Native Mobile Resources - 2025-10-17
 
-
 ## [2.0.1] Gallery
+
 ### Fixed
 
--  We've fixed an issue where the Gallery widget would not properly load more items when scrolling down quickly.
+-   We've fixed an issue where the Gallery widget would not properly load more items when scrolling down quickly.
 
 ## [6.1.2] VideoPlayer
+
 -   We have updated `react-native-video` version to 6.10.2.
 -   We have fixed an issue where videos were muted in iOS silent mode. The video player now plays sound even when the device is set to silent.
 
