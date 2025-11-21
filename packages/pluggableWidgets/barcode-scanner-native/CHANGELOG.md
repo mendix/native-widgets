@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.2.0] - 2025-11-21
+
 -   We migrated to react-native-vision-camera from react-native-camera.
 
 ## [4.1.0] - 2024-12-3
