@@ -10,7 +10,7 @@
     "react-native-system-navigation-bar": "2.6.3",
     "react-native-video": "6.10.0",
     "@react-native-async-storage/async-storage": "2.0.0",
-    "react-native-camera": "3.40.0",
+    "react-native-vision-camera": "4.7.1",
     "react-native-view-shot": "4.0.3",
     "react-native-blob-util": "0.21.2",
     "react-native-file-viewer": "2.1.5",

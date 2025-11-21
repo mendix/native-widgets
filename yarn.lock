@@ -5135,10 +5135,9 @@ __metadata:
     "@mendix/piw-native-utils-internal": "npm:*"
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
-    deprecated-react-native-prop-types: "npm:^4.0.0"
     eslint: "npm:^7.32.0"
     react-native-barcode-mask: "npm:^1.2.4"
-    react-native-camera: "npm:3.40.0"
+    react-native-vision-camera: "npm:4.7.1"
   languageName: unknown
   linkType: soft
 
@@ -13990,15 +13989,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-camera@npm:3.40.0":
-  version: 3.40.0
-  resolution: "react-native-camera@npm:3.40.0"
-  dependencies:
-    prop-types: "npm:^15.6.2"
-  checksum: 10/e274121cb70f7df20a0cbd25018fe80b57509a97fc6cf1ec5ebd560f9da0df073d668e8b59c368f1c7ab11f57710a6d1c670b7456c30243c909eaa7f917383c5
-  languageName: node
-  linkType: hard
-
 "react-native-color@npm:^0.0.10":
   version: 0.0.10
   resolution: "react-native-color@npm:0.0.10"
@@ -14347,6 +14337,26 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10/5e4f133a69754cd5fd29bf762bfa5bf399f4c0b192972808cf4194e4775ac5d4415e01079e52be7d31bc5b25fe7efbd5e95f4a33967bab0f36725d4cc8903345
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:4.7.1":
+  version: 4.7.1
+  resolution: "react-native-vision-camera@npm:4.7.1"
+  peerDependencies:
+    "@shopify/react-native-skia": "*"
+    react: "*"
+    react-native: "*"
+    react-native-reanimated: "*"
+    react-native-worklets-core: "*"
+  peerDependenciesMeta:
+    "@shopify/react-native-skia":
+      optional: true
+    react-native-reanimated:
+      optional: true
+    react-native-worklets-core:
+      optional: true
+  checksum: 10/706db577a13748b029179d31bde00e67744e2d7c93d65448922b92b105df5d126aa5c4a969bd1780890eb153fe92ae5703f400b1e08d6d3b8c8d185bb3391dfe
   languageName: node
   linkType: hard
 
