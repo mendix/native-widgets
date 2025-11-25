@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+- We've fixed isConnectedToServer succeeding without internet on offline apps when service worker is enabled.
+
 ## [5.1.3] Nanoflow Commons - 2025-9-24
 ### Fixed
 
