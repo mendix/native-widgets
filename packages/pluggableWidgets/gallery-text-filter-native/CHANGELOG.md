@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Updated react-native-svg to v15.12.1. This addresses compatibility issues with React Native 0.78 and later versions.
+
 ## [2.0.0] - 2024-12-3
 
 ### Changed
