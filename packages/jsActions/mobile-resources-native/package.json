@@ -17,9 +17,9 @@
     "branchName": "main"
   },
   "scripts": {
-    "prestart": "rimraf ./dist",
+    "prestart": "rimraf ./dist/**",
     "start": "rollup --config ../../../configs/jsactions/rollup.config.mjs --watch --configProject nativemobileresources",
-    "prebuild": "rimraf ./dist",
+    "prebuild": "rimraf ./dist/**",
     "build": "rollup --config ../../../configs/jsactions/rollup.config.mjs --configProject nativemobileresources",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "release": "pnpm build",
