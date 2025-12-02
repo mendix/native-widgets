@@ -5137,7 +5137,7 @@ __metadata:
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     eslint: "npm:^7.32.0"
     react-native-barcode-mask: "npm:^1.2.4"
-    react-native-vision-camera: "npm:4.7.1"
+    react-native-vision-camera: "npm:4.7.3"
   languageName: unknown
   linkType: soft
 
@@ -14340,9 +14340,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-vision-camera@npm:4.7.1":
-  version: 4.7.1
-  resolution: "react-native-vision-camera@npm:4.7.1"
+"react-native-vision-camera@npm:4.7.3":
+  version: 4.7.3
+  resolution: "react-native-vision-camera@npm:4.7.3"
   peerDependencies:
     "@shopify/react-native-skia": "*"
     react: "*"
@@ -14356,7 +14356,7 @@ __metadata:
       optional: true
     react-native-worklets-core:
       optional: true
-  checksum: 10/706db577a13748b029179d31bde00e67744e2d7c93d65448922b92b105df5d126aa5c4a969bd1780890eb153fe92ae5703f400b1e08d6d3b8c8d185bb3391dfe
+  checksum: 10/2487d3651cb07918820e1f255480e28fec77f936450570b531b429a1861fad573f6bfd4cdb15a78ea7adb471ee45d08e0006cdac81db4fe35949291f3e12d680
   languageName: node
   linkType: hard
 
