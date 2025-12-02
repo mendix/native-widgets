@@ -47,6 +47,6 @@
     "@types/querystringify": "^2.0.0",
     "@types/url-parse": "^1.4.3",
     "mendix": "~10.0.9976",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.1.2"
   }
 }
