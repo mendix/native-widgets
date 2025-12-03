@@ -24,6 +24,10 @@ on:
         required: true
         default: "*-native"
         type: choice
+        # NOTE: This list must be kept in sync with packages/pluggableWidgets/*-native folders
+        # The determine-widget-scope.sh script automatically discovers widgets, but GitHub Actions
+        # doesn't support dynamic dropdown options, so this list must be updated manually when
+        # adding or removing widgets.
         options:
           - "*-native"
           - js-actions
@@ -49,6 +53,7 @@ on:
           - line-chart-native
           - listview-swipe-native
           - maps-native
+          - notifications-native
           - pie-doughnut-chart-native
           - popup-menu-native
           - progress-bar-native
