@@ -73,6 +73,8 @@ on:
           
   # Trigger on PR
   pull_request:
+    branches:
+      - version/mx/10
 
 # Use default name in case no input
 run-name: ${{ github.event.inputs.run_name || 'Run Native Pipeline' }}
