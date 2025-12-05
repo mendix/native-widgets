@@ -8,10 +8,15 @@ before_commit="$3"
 current_commit="$4"
 
 # List of all native widgets
-all_widgets='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native"]'
+# Dynamically discover all native widgets from the packages/pluggableWidgets directory
+# This ensures we don't miss any widgets when new ones are added
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="$(cd "$script_dir/../.." && pwd)"
+widget_dirs=$(find "$repo_root/packages/pluggableWidgets" -maxdepth 1 -type d -name "*-native" -exec basename {} \; | sort)
+all_widgets=$(echo "$widget_dirs" | jq -R -s -c 'split("\n") | map(select(length > 0))')
 
 # Combined widgets and JS actions for default cases
-all_widgets_and_js='["accordion-native","activity-indicator-native","animation-native","app-events-native","background-gradient-native","background-image-native","badge-native","bar-chart-native","barcode-scanner-native","bottom-sheet-native","carousel-native","color-picker-native","column-chart-native","feedback-native","floating-action-button-native","gallery-native","gallery-text-filter-native","image-native","intro-screen-native","line-chart-native","listview-swipe-native","maps-native","pie-doughnut-chart-native","popup-menu-native","progress-bar-native","progress-circle-native","qr-code-native","radio-buttons-native","range-slider-native","rating-native","repeater-native","safe-area-view-native","signature-native","slider-native","switch-native","toggle-buttons-native","video-player-native","web-view-native","mobile-resources-native","nanoflow-actions-native"]'
+all_widgets_and_js=$(echo "$widget_dirs" | jq -R -s -c 'split("\n") | map(select(length > 0)) + ["mobile-resources-native", "nanoflow-actions-native"]')
 
 if [ "$event_name" == "pull_request" ]; then
   if git cat-file -e "$before_commit" 2>/dev/null; then
