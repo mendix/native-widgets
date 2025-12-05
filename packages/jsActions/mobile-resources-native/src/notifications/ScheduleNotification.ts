@@ -6,7 +6,13 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { NativeModules, Platform } from "react-native";
-import PushNotification, { PushNotificationScheduleObject } from "react-native-push-notification";
+import notifee, {
+    AndroidChannel,
+    AndroidImportance,
+    Notification,
+    TimestampTrigger,
+    TriggerType
+} from "@notifee/react-native";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -36,68 +42,64 @@ export async function ScheduleNotification(
     actionGuid?: string
 ): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://github.com/zo0r/react-native-push-notification
-
-    const isIOS = Platform.OS === "ios";
-    if (NativeModules && isIOS && !NativeModules.RNCPushNotificationIOS) {
-        return Promise.reject(new Error("Notifications module is not available in your app"));
-    }
-
     if (!body) {
-        return Promise.reject(new Error("Input parameter 'Body' is required"));
+        throw new Error("Input parameter 'Body' is required");
     }
 
-    const notification = { message: body } as PushNotificationScheduleObject;
-    const notificationIdNumber = Number(notificationId);
-
-    if (!isIOS) {
-        const channelId = "mendix-local-notifications";
-        const channelExists = await new Promise(resolve =>
-            PushNotification.channelExists(channelId, (exists: boolean) => resolve(exists))
-        );
-        if (!channelExists) {
-            const channel = await new Promise(resolve =>
-                PushNotification.createChannel(
-                    {
-                        channelId,
-                        channelName: "Local notifications"
-                    },
-                    created => resolve(created)
-                )
-            );
-            if (!channel) {
-                return Promise.reject(new Error("Could not create the local notifications channel"));
-            }
-        }
-        notification.channelId = channelId;
+    if (!date) {
+        throw new Error("Input parameter 'Date' is required");
     }
 
-    if (notificationIdNumber) {
-        notification.id = notificationIdNumber;
+    // Documentation Documentation https://github.com/invertase/notifee
+    if (NativeModules && !NativeModules.NotifeeApiModule) {
+        return Promise.reject(new Error("Notifee native module is not available in your app"));
     }
 
-    if (title) {
-        notification.title = title;
-    }
+    const channelId = playSound ? "mendix-local-notifications-withsound" : "mendix-local-notifications";
+    await createNotificationChannelIfNeeded(channelId);
 
-    if (subtitle && !isIOS) {
-        notification.subText = subtitle;
-    }
+    const notification: Notification = {
+        id: notificationId,
+        title: title || undefined,
+        body,
+        android: { channelId, sound: "default" },
+        ios: playSound ? { sound: "default" } : {}
+    };
 
-    notification.playSound = !!playSound;
+    if (subtitle && Platform.OS === "ios") {
+        notification.subtitle = subtitle;
+    }
 
     if (actionName || actionGuid) {
-        notification.userInfo = {
-            actionName,
-            guid: actionGuid
+        notification.data = {
+            actionName: actionName ?? "",
+            guid: actionGuid ?? ""
         };
     }
 
-    if (date && date.getTime()) {
-        notification.date = date;
+    const trigger: TimestampTrigger = {
+        type: TriggerType.TIMESTAMP,
+        timestamp: date.getTime()
+    };
+
+    await notifee.createTriggerNotification(notification, trigger);
+
+    async function createNotificationChannelIfNeeded(channelId: string): Promise<void> {
+        if (Platform.OS === "ios") {
+            return;
+        }
+        const existingChannel = await notifee.getChannel(channelId);
+        const channel: AndroidChannel = {
+            id: channelId,
+            name: "Local Notifications",
+            importance: AndroidImportance.HIGH,
+            ...(playSound ? { sound: "default" } : {})
+        };
+        if (existingChannel === null) {
+            await notifee.createChannel(channel);
+        }
     }
 
-    PushNotification.localNotificationSchedule(notification);
     return Promise.resolve();
     // END USER CODE
 }
