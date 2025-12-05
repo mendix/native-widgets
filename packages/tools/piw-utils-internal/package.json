@@ -14,7 +14,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "tsc --watch",
-    "prebuild": "rimraf ./dist",
+    "prebuild": "rimraf ./dist/**",
     "build": "tsc",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "prepare": "pnpm build",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
-    "rimraf": "^5.0.10"
+    "rimraf": "^6.1.2"
   },
   "files": [
     "components",
