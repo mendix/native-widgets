@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.10] Native Mobile Resources - 2025-12-11
+
+
+## [4.2.1] BarcodeScanner
+### Fixed
+
+-   Updated react-native-vision-camera from version v4.7.1 to v4.7.3.
+
 ## [10.1.9] Native Mobile Resources - 2025-11-21
 
 ## [4.2.0] BarcodeScanner
