@@ -6,33 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Updated react-native-vision-camera from version v4.7.1 to v4.7.3.
+
 ## [10.1.9] Native Mobile Resources - 2025-11-21
 
-
 ## [4.2.0] BarcodeScanner
+
+### Fixed
+
 -   We migrated to react-native-vision-camera from react-native-camera.
 
 ## [10.1.8] Native Mobile Resources - 2025-11-7
-## [] Notifications
-
-### BREAKING
-
--   Updated the react-native-firebase to v20.1.0. Ensure that the Native Template and Native Builder are updated accordingly.
 
 ## [4.2.0] Notifications
+
 ## BREAKING
 
 -   Updated the react-native-firebase to v20.1.0. Ensure that the Native Template and Native Builder are updated accordingly.
 
 ## [10.1.6] Native Mobile Resources - 2025-10-17
 
-
 ## [2.0.1] Gallery
+
 ### Fixed
 
--  We've fixed an issue where the Gallery widget would not properly load more items when scrolling down quickly.
+-   We've fixed an issue where the Gallery widget would not properly load more items when scrolling down quickly.
 
 ## [6.1.2] VideoPlayer
+
 -   We have updated `react-native-video` version to 6.10.2.
 -   We have fixed an issue where videos were muted in iOS silent mode. The video player now plays sound even when the device is set to silent.
 
@@ -59,9 +62,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [3.1.1] SafeAreaView
 
+### Fixed
+
 -   We fixed the issue where navigation buttons were being overlapped due to improper safe area handling.
 
 ## [2.3.0] Signature
+
+### Fixed
 
 -   Updated react-native-webview from version v13.12.5 to latest
 
@@ -78,9 +85,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [10.0.0] Native Mobile Resources - 2025-3-31
 
 -   We migrated from react-native-inappbrowser-reborn to @swan-io/react-native-browser to prevent issues for next rn upgrade.
-
 -   We migrated from @react-native-community/cameraroll to @react-native-camera-roll/camera-roll to prevent issues for next rn upgrade.
-
 -   We also updated several dependencies such as react-native-blob-util, react-native-image-picker to their latest version.
 
 ## [5.0.0] AppEvents
@@ -171,9 +176,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [4.3.1] ProgressBar
 
+### Fixed
+
 -   Bumped the version of the react-native-progress to fix black background issues.
 
 ## [3.2.1] ProgressCircle
+
+### Fixed
 
 -   Bumped the version of the react-native-progress to fix black background issues.
 
@@ -496,7 +505,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 -   Fixed a bug where the accordion state was not updating correctly when the "Collapsed" attribute was selected.
-
 -   Resolved an issue where the accordion's dynamic content was not updating its height after the initial render.
 
 ## [3.3.0] BottomSheet
