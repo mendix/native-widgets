@@ -24,6 +24,10 @@ on:
         required: true
         default: "*-native"
         type: choice
+        # NOTE: This list must be kept in sync with packages/pluggableWidgets/*-native folders
+        # The determine-widget-scope.sh script automatically discovers widgets, but GitHub Actions
+        # doesn't support dynamic dropdown options, so this list must be updated manually when
+        # adding or removing widgets.
         options:
           - "*-native"
           - js-actions
@@ -49,6 +53,7 @@ on:
           - line-chart-native
           - listview-swipe-native
           - maps-native
+          - notifications-native
           - pie-doughnut-chart-native
           - popup-menu-native
           - progress-bar-native
@@ -68,6 +73,8 @@ on:
           
   # Trigger on PR
   pull_request:
+    branches:
+      - version/mx/10
 
 # Use default name in case no input
 run-name: ${{ github.event.inputs.run_name || 'Run Native Pipeline' }}
@@ -285,14 +292,16 @@ jobs:
       - name: "Move mobile-resources"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-mx10/javascriptsource/nativemobileresources/actions/
+          if compgen -G 'resources/jsActions/mobile-resources-native/dist/*' > /dev/null; then
+            rm -rf Native-Mobile-Resources-mx10/javascriptsource/nativemobileresources/actions/node_modules
+            mv -f resources/jsActions/mobile-resources-native/dist/* Native-Mobile-Resources-mx10/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-mx10/javascriptsource/nanoflowcommons/actions/
+          if compgen -G 'resources/jsActions/nanoflow-actions-native/dist/*' > /dev/null; then
+            rm -rf Native-Mobile-Resources-mx10/javascriptsource/nanoflowcommons/actions/node_modules
+            mv -f resources/jsActions/nanoflow-actions-native/dist/* Native-Mobile-Resources-mx10/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Force rebuild test project"
         run: |
