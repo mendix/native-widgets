@@ -6,10 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Updated react-native-vision-camera from version v4.7.1 to v4.7.3.
+
 ## [4.2.0] - 2025-11-21
 
 -   We migrated to react-native-vision-camera from react-native-camera.
--   Updated react-native-vision-camera from version v4.7.1 to v4.7.3.
 
 ## [4.1.0] - 2024-12-3
 
