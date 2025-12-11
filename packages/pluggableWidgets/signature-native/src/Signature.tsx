@@ -1,6 +1,6 @@
 import { mergeNativeStyles, extractStyles } from "@mendix/pluggable-widgets-tools";
 import { executeAction } from "@mendix/piw-utils-internal";
-import { createElement, ReactElement, useCallback, useRef } from "react";
+import { ReactElement, useCallback, useRef } from "react";
 import { View, Text } from "react-native";
 import SignatureScreen, { SignatureViewRef } from "react-native-signature-canvas";
 import { Touchable } from "./components/Touchable";

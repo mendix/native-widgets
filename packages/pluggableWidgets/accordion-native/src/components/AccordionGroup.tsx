@@ -1,4 +1,4 @@
-import { createElement, ReactElement } from "react";
+import { ReactElement } from "react";
 import { View, Pressable, Text } from "react-native";
 import { DynamicValue, NativeIcon } from "mendix";
 

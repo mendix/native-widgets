@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { Component, createElement } from "react";
+import { Component, JSX } from "react";
 import { Text, View } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 

@@ -1,4 +1,4 @@
-import { ReactElement, createElement } from "react";
+import { ReactElement } from "react";
 import { Pressable, NativeModules, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { all } from "deepmerge";

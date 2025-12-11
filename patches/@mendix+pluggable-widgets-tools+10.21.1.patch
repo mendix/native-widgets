@@ -11,6 +11,20 @@ index 673e0b2ebc148755e575cc77c3fc493ba7b5cfde..055f87d9644b2e3d2e3bd74bf416a593
      const bins = [];
      while (parse(parentDir).root !== parentDir) {
          const candidate = join(parentDir, "node_modules/.bin");
+diff --git a/configs/eslint.ts.base.json b/configs/eslint.ts.base.json
+index 297192c29c1dfcfcd05b3d396ce4d04249c0045d..cf48693c4690859b6b897e5fb8cd3882f61bacec 100644
+--- a/configs/eslint.ts.base.json
++++ b/configs/eslint.ts.base.json
+@@ -18,7 +18,8 @@
+         "plugin:@typescript-eslint/recommended",
+         "prettier",
+         "plugin:prettier/recommended",
+-        "plugin:react-hooks/recommended"
++        "plugin:react-hooks/recommended",
++        "plugin:react/jsx-runtime"
+     ],
+     "parser": "@typescript-eslint/parser",
+     "parserOptions": {
 diff --git a/configs/rollup-plugin-collect-dependencies.mjs b/configs/rollup-plugin-collect-dependencies.mjs
 index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..a3f0e368d76d294a5f7cd85886fe5ce0e72b9619 100644
 --- a/configs/rollup-plugin-collect-dependencies.mjs
@@ -90,6 +104,20 @@ index 682cf9fc4259a1f431e7cc3b17a319fdb072929e..5be03c770f8247637223f78738c3cdec
      /^react-native-svg($|\/)/,
      /^react-native-vector-icons($|\/)/,
      /^@?react-navigation($|\/)/,
+diff --git a/configs/tsconfig.base.json b/configs/tsconfig.base.json
+index 5cee5d4d880e152576fc7cad69dd8c22dfbedee8..62627fd52bf0d5847d9ebec37fadac3142ed71a7 100644
+--- a/configs/tsconfig.base.json
++++ b/configs/tsconfig.base.json
+@@ -16,8 +16,7 @@
+         "skipLibCheck": true,
+         "noUnusedLocals": true,
+         "noUnusedParameters": true,
+-        "jsx": "react",
+-        "jsxFactory": "createElement",
++        "jsx": "react-jsx",
+         "allowSyntheticDefaultImports": true,
+         "esModuleInterop": true,
+         "useUnknownInCatchVariables": false,
 diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
 index 72e3c51473b7566ca9d8b224b35334099ce615db..7e0949aa5d50d288d848117a804fd691422aefde 100644
 --- a/test-config/jest.native.config.js

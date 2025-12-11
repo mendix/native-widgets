@@ -1,5 +1,4 @@
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
-import { createElement } from "react";
 import { Pressable, Text } from "react-native";
 import { fireEvent, render } from "@testing-library/react-native";
 import { Accordion, Props } from "../Accordion";

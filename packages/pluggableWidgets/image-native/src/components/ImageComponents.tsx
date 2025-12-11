@@ -1,4 +1,4 @@
-import { createElement, Dispatch, SetStateAction, FunctionComponent, useState, Fragment, useCallback } from "react";
+import { Dispatch, SetStateAction, FunctionComponent, useState, Fragment, useCallback } from "react";
 import { Modal, Pressable, LayoutChangeEvent, View, ImageStyle } from "react-native";
 import { SvgUri } from "react-native-svg";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";

@@ -1,4 +1,4 @@
-import { createElement, ReactElement, ReactNode, useEffect, useRef, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import { InteractionManager, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";

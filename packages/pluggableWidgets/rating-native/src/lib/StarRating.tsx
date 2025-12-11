@@ -1,6 +1,6 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
 // has an outdated dependency (react-native-vector-icons) that we now managed here in this widget.
-import { ClassicComponentClass, Component, createElement } from "react";
+import { ClassicComponentClass, Component } from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
 import { AnimatableProps, View as AnimatableView } from "react-native-animatable";
 import type { StarRatingProps } from "react-native-star-rating";

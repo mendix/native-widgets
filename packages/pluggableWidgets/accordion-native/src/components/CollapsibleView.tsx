@@ -1,4 +1,4 @@
-import { createElement, ReactElement, ReactNode } from "react";
+import { ReactNode, ReactElement } from "react";
 import { View, ViewStyle } from "react-native";
 
 interface CollapsibleViewProps {

@@ -1,4 +1,4 @@
-import { createElement, Fragment, ReactElement, useCallback, useEffect, useState } from "react";
+import { Fragment, ReactElement, useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, LayoutChangeEvent, Platform, Text, View } from "react-native";
 import { CarouselProps } from "../typings/CarouselProps";
 import { CarouselStyle, defaultCarouselStyle, LayoutStyle } from "./ui/styles";

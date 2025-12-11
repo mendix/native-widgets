@@ -1,5 +1,4 @@
 import { dynamicValue } from "@mendix/piw-utils-internal";
-import { createElement } from "react";
 import { render } from "@testing-library/react-native";
 
 import { Props, QRCode } from "../QRCode";

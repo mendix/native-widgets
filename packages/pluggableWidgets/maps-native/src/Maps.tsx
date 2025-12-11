@@ -1,7 +1,7 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ActionValue, ValueStatus, Option } from "mendix";
 import { Icon } from "mendix/components/native/Icon";
-import { Component, createElement, createRef } from "react";
+import { Component, createRef, JSX } from "react";
 import { ActivityIndicator, Platform, View } from "react-native";
 import MapView, { Callout, LatLng, Marker as MarkerView } from "react-native-maps";
 import { Big } from "big.js";

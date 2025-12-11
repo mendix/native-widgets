@@ -1,4 +1,4 @@
-import { createElement, ReactElement } from "react";
+import { ReactElement } from "react";
 import { all } from "deepmerge";
 
 import { ColumnChartProps } from "../typings/ColumnChartProps";

@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { Image, SvgImageStyle } from "mendix/components/native/Image";
-import { Component, createElement, Fragment } from "react";
+import { Component, Fragment, JSX } from "react";
 import {
     ActivityIndicator,
     Dimensions,

@@ -1,4 +1,4 @@
-import { createElement, ReactElement, useMemo, useCallback, useState } from "react";
+import { ReactElement, useMemo, useCallback, useState } from "react";
 import { View, LayoutChangeEvent, Text } from "react-native";
 import { InterpolationPropType } from "victory-core";
 import { VictoryChart, VictoryLine, VictoryGroup, VictoryScatter, VictoryAxis } from "victory-native";

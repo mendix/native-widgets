@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { createElement, ReactElement, useEffect, useRef, useState, Fragment, useCallback } from "react";
+import { ReactElement, useEffect, useRef, useState, Fragment, useCallback } from "react";
 import {
     ActivityIndicator,
     Platform,
@@ -28,7 +28,7 @@ const enum StatusEnum {
 
 export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     const [styles, setStyles] = useState(flattenStyles(defaultVideoStyle, props.style));
-    const timeoutRef = useRef<NodeJS.Timeout>();
+    const timeoutRef = useRef<NodeJS.Timeout>(null);
     const playerRef = useRef<VideoRef>(null);
     const fullScreenPlayerRef = useRef<VideoRef>(null);
     const [status, setStatus] = useState(StatusEnum.NOT_READY);
@@ -164,6 +164,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                         <Video
                             {...videoProps}
                             paused={!props.autoStart && !currentPlayTime}
+                            ignoreSilentSwitch="ignore"
                             onLoad={data => {
                                 setStatus(StatusEnum.READY);
                                 setVideoAspectRatio(data.naturalSize.width / data.naturalSize.height);

@@ -1,7 +1,6 @@
 import { PopupMenuProps } from "../../typings/PopupMenuProps";
 import { PopupMenuStyle } from "../ui/Styles";
 import { Text, View } from "react-native";
-import { createElement } from "react";
 import { actionValue } from "@mendix/piw-utils-internal";
 import { fireEvent, render, within } from "@testing-library/react-native";
 import { PopupMenu } from "../PopupMenu";
