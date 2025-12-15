@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.1] Native Mobile Resources - 2025-12-15
+
+## [5.0.3] BottomSheet
+
+-   Updated react-native-reanimated to v3.17.5. This addresses compatibility issues with React Native 0.78 and later versions.
+
+## [2.0.1] GalleryTextFilter
+
+-   Updated react-native-svg to v15.12.1. This addresses compatibility issues with React Native 0.78 and later versions.
+
+## [3.0.2] Image
+
+-   Updated react-native-svg to v15.12.1. This addresses compatibility issues with React Native 0.78 and later versions.
+
+## [4.0.1] QRCode
+
+-   Updated react-native-svg to v15.12.1. This addresses compatibility issues with React Native 0.78 and later versions.
+
 ## [11.3.0] Native Mobile Resources - 2025-12-15
 
 ## [5.1.0] Notifications
