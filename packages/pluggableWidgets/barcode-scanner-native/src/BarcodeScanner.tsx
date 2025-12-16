@@ -47,7 +47,25 @@ export function BarcodeScanner(props: Props): ReactElement {
     );
 
     const codeScanner = useCodeScanner({
-        codeTypes: ["ean-13", "qr", "aztec", "codabar", "code-128", "data-matrix"],
+        codeTypes: [
+            "qr",
+            "aztec",
+            "codabar",
+            "code-39",
+            "code-93",
+            "code-128",
+            "data-matrix",
+            "ean-13",
+            "ean-8",
+            "upc-a",
+            "upc-e",
+            "gs1-data-bar",
+            "gs1-data-bar-expanded",
+            "gs1-data-bar-limited",
+            "itf",
+            "pdf-417",
+            "itf-14"
+        ],
         onCodeScanned
     });
 
