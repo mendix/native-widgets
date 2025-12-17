@@ -5,7 +5,6 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Base64 } from "js-base64";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -16,7 +15,7 @@ import { Base64 } from "js-base64";
  * @param {MxObject} image
  * @returns {Promise.<boolean>}
  */
-export function Base64DecodeToImage(base64: string, image: mendix.lib.MxObject): Promise<boolean> {
+export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxObject): Promise<boolean> {
     // BEGIN USER CODE
 
     if (!base64) {
@@ -26,7 +25,10 @@ export function Base64DecodeToImage(base64: string, image: mendix.lib.MxObject):
         throw new Error("image should not be null");
     }
 
-    const blob = new Blob([Base64.toUint8Array(base64)], { type: "image/png" });
+    const dataUri = base64.startsWith("data:") ? base64 : `data:image/png;base64,${base64}`;
+
+    const res = await fetch(dataUri);
+    const blob = await res.blob();
 
     return new Promise((resolve, reject) => {
         mx.data.saveDocument(image.getGuid(), "camera image", {}, blob, () => resolve(true), reject);
