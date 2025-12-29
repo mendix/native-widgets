@@ -73,6 +73,8 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         return [heightHeader];
     }, [props.fullscreenContent, heightContent, fullscreenHeight, heightHeader, isLargeContentValid]);
 
+    const offsetSnapPoints = useMemo(() => snapPoints.map(p => p + OFFSET_BOTTOM_SHEET), [snapPoints]);
+
     const renderContent = useCallback((): ReactNode => {
         const content = (
             <View onLayout={onLayoutHandlerContent} pointerEvents="box-none">
@@ -141,7 +143,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 <BottomSheet
                     ref={bottomSheetRef}
                     index={collapsedIndex}
-                    snapPoints={snapPoints.map(p => p + OFFSET_BOTTOM_SHEET)}
+                    snapPoints={offsetSnapPoints}
                     onClose={() => setIsOpen(false)}
                     enablePanDownToClose={false}
                     onChange={onChange}
