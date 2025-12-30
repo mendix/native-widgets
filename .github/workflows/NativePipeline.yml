@@ -92,7 +92,7 @@ jobs:
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          fetch-depth: 2 # Fetch the latest two commits and its parent commit
+          fetch-depth: 0 # Required to diff PR base/head SHAs reliably
       - name: "Determine scope"
         id: scope
         run: |
