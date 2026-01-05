@@ -359,8 +359,8 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4
       react-native-vision-camera:
-        specifier: 4.7.1
-        version: 4.7.1(react-native-reanimated@3.17.5(@babel/core@7.28.0)(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+        specifier: 4.7.3
+        version: 4.7.3(react-native-reanimated@3.17.5(@babel/core@7.28.0)(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
@@ -6547,8 +6547,8 @@ packages:
       react: 19.0.0
       react-native: 0.78.2
 
-  react-native-vision-camera@4.7.1:
-    resolution: {integrity: sha512-N6qqjhUSC9XRUQzqx+647+sPsrf9FcEYGjRhif1WNy2z8AwPMOSLINIcmMM6C4drxH2CdiaULGAWHpx/cnsBpw==}
+  react-native-vision-camera@4.7.3:
+    resolution: {integrity: sha512-g1/neOyjSqn1kaAa2FxI/qp5KzNvPcF0bnQw6NntfbxH6tm0+8WFZszlgb5OV+iYlB6lFUztCbDtyz5IpL47OA==}
     peerDependencies:
       '@shopify/react-native-skia': '*'
       react: 19.0.0
@@ -14927,7 +14927,7 @@ snapshots:
       react: 19.0.0
       react-native: 0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0)
 
-  react-native-vision-camera@4.7.1(react-native-reanimated@3.17.5(@babel/core@7.28.0)(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0):
+  react-native-vision-camera@4.7.3(react-native-reanimated@3.17.5(@babel/core@7.28.0)(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
       react-native: 0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0)

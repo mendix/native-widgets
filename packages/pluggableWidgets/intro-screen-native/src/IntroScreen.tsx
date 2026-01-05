@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, JSX } from "react";
 import { defaultWelcomeScreenStyle, IntroScreenStyle } from "./ui/Styles";
 import { IntroScreenProps } from "../typings/IntroScreenProps";
-import { Modal, View } from "react-native";
+import { InteractionManager, Modal, View } from "react-native";
 import { DynamicValue, ValueStatus } from "mendix";
 import { SwipeableContainer } from "./SwipeableContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -22,7 +22,7 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
                 setVisible(value === "" || value === null);
             });
         } else {
-            setVisible(true);
+            InteractionManager.runAfterInteractions(() => setVisible(true));
         }
     }, [props.identifier]);
 
@@ -30,7 +30,7 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
         if (props.identifier) {
             AsyncStorage.setItem(props.identifier, "gone").then(() => setVisible(false));
         } else {
-            setVisible(false);
+            InteractionManager.runAfterInteractions(() => setVisible(false));
         }
     }, [props.identifier]);
 
