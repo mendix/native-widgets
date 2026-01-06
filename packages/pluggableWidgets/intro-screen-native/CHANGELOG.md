@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
+
 ## [4.1.0] - 2025-7-7
 
 -   Initial slide now correctly positioned on mount.
