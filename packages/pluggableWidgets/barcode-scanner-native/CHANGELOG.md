@@ -6,8 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
--   We migrated to react-native-vision-camera from react-native-camera.
+## [4.2.2] - 2025-12-19
+
+-   We expanded the barcode-scanner configuration in Vision Camera to support all available `CodeType` formats, including QR, Aztec, Data Matrix, PDF-417, EAN, UPC, GS1 DataBar, ITF, and Code barcodes.
+
+## [4.2.1] - 2025-12-11
+
+### Fixed
+
 -   Updated react-native-vision-camera from version v4.7.1 to v4.7.3.
+
+## [4.2.0] - 2025-11-21
+
+-   We migrated to react-native-vision-camera from react-native-camera.
 
 ## [4.1.0] - 2024-12-3
 
