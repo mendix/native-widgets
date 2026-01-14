@@ -84,8 +84,8 @@ export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
             style={styles?.container as any}
             button={
                 <TouchableButton onPress={showMenu} testID={`${props.name}_trigger`}>
-                    <View pointerEvents="box-only" style={styles.buttonContainer}>
-                        {props.menuTriggerer}
+                    <View style={styles.buttonContainer} pointerEvents="box-only">
+                        <View pointerEvents="none">{props.menuTriggerer}</View>
                     </View>
                 </TouchableButton>
             }
