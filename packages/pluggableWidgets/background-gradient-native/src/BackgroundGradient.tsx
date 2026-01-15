@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Pressable, Alert } from "react-native";
+import { Pressable } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { all } from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
@@ -36,18 +36,6 @@ const angleValidation = (angle: number | undefined): number => {
 };
 
 export function BackgroundGradient({ name, colorList, content, onClick, style }: props): ReactElement {
-    if (!LinearGradient) {
-        Alert.alert(
-            "Background Gradient Not Available",
-            "This device does not support the background gradient feature.\n\n" +
-                "Possible reasons:\n" +
-                "• The app binary does not include native gradient support (older app version).\n" +
-                "• The native library wasn’t linked or rebuilt before installation.\n" +
-                "• The current OS/platform does not support this feature.\n\n" +
-                "Please update the app to the latest version or check that the required native modules are built into this release."
-        );
-    }
-
     const styles = all<CustomStyle>([defaultStyle, ...style]);
     const angle = angleValidation(styles.angle);
     const opacity = opacityValidation(styles.opacity);
