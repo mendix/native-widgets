@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-1-19
+
 -   We fixed an issue where the `background-gradient-native` widget would not render correctly with the new RN architecture upgrade.
 
 ## [2.2.0] - 2025-7-7
