@@ -214,6 +214,9 @@ importers:
       react-native-geocoder:
         specifier: 0.5.0
         version: 0.5.0
+      react-native-permissions:
+        specifier: 5.4.2
+        version: 5.4.2(react-native@0.78.2(@babel/core@7.28.0)(@babel/preset-env@7.28.0(@babel/core@7.28.0))(@react-native-community/cli@14.1.0(typescript@5.8.3))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 10.21.1
