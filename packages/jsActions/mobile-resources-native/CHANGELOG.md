@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.13] Native Mobile Resources - 2026-1-19
+
+
+## [4.1.1] IntroScreen
+### Fixed
+- We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
+
 ## [10.1.11] Native Mobile Resources - 2025-12-19
 
 
