@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.1] - 2026-1-19
+
 -   We fixed an iOS issue where native Popup Menu icons were not tappable and failed to open the menu.
 
 ## [4.0.0] - 2024-12-3
