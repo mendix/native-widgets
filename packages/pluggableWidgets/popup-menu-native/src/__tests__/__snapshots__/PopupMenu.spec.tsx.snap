@@ -42,9 +42,13 @@ exports[`Popup menu renders 1`] = `
       pointerEvents="box-only"
       testID="popup-menu_trigger"
     >
-      <Text>
-        Menu Triggerer
-      </Text>
+      <View
+        pointerEvents="none"
+      >
+        <Text>
+          Menu Triggerer
+        </Text>
+      </View>
     </View>
   </View>
   <View
@@ -242,9 +246,13 @@ exports[`Popup menu renders custom items 1`] = `
       pointerEvents="box-only"
       testID="popup-menu_trigger"
     >
-      <Text>
-        Menu Triggerer
-      </Text>
+      <View
+        pointerEvents="none"
+      >
+        <Text>
+          Menu Triggerer
+        </Text>
+      </View>
     </View>
   </View>
   <View

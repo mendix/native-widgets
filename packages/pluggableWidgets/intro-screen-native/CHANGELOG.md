@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-1-19
+
 ### Fixed
 
 -   We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
