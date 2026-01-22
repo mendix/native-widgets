@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.4] Native Mobile Resources - 2026-1-22
+
+## [3.0.3] Image
+
+### Changed
+
+-   We fixed image enlargement issue on Android.
+
+## [11.3.3] Native Mobile Resources - 2026-1-19
+
+## [2.2.1] BackgroundGradient
+
+-   We fixed an issue where the `background-gradient-native` widget would not render correctly with the new RN architecture upgrade.
+
+## [4.2.1] IntroScreen
+
+### Fixed
+
+-   We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
+
+## [4.0.1] PopupMenu
+
+-   We fixed an iOS issue where native Popup Menu icons were not tappable and failed to open the menu.
+
 ## [11.3.2] Native Mobile Resources - 2025-12-23
 
 ## [4.2.2] BarcodeScanner

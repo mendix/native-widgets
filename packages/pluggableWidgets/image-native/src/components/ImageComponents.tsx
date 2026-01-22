@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction, FunctionComponent, useState, Fragment, useCallback } from "react";
-import { Modal, Pressable, LayoutChangeEvent, View, ImageStyle } from "react-native";
+import { Dispatch, SetStateAction, FunctionComponent, useState, Fragment, useCallback, useMemo } from "react";
+import { Modal, Pressable, LayoutChangeEvent, View, ImageStyle, useWindowDimensions } from "react-native";
 import { SvgUri } from "react-native-svg";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { OnClickTypeEnum } from "../../typings/ImageProps";
-import { CustomImageObjectProps, onLayoutSetDimensions } from "../utils/imageUtils";
+import { CustomImageObjectProps, onLayoutSetDimensions, getScaledDimensions } from "../utils/imageUtils";
 import { DimensionsType, ImageIconSVG } from "./ImageIconSVG";
 import { DefaultImageStyle } from "../ui/Styles.js";
 import { DynamicValue } from "mendix";
@@ -209,7 +209,6 @@ export const ImageSmall: FunctionComponent<ImageSmallProps> = props => {
 };
 
 export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
-    const [dimensions, setDimensions] = useState<DimensionsType>();
     const {
         visible,
         setEnlarged,
@@ -222,12 +221,11 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
         screenReaderHint
     } = props;
     const [svgProps] = extractStyles(styles.image as ImageStyle, ["width", "height"]);
-    const onLayoutSetDimensionsCallback = useCallback(
-        ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-            onLayoutSetDimensions(layout.width, layout.height, setDimensions, initialDimensions);
-        },
-        [initialDimensions]
-    );
+
+    const { width, height } = useWindowDimensions();
+    const dimensions = useMemo(() => {
+        return getScaledDimensions(width, height, initialDimensions);
+    }, [width, height, initialDimensions]);
 
     return visible && initialDimensions?.width && initialDimensions?.height ? (
         <Modal
@@ -251,19 +249,11 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
             <Pressable
                 testID={`${name}$ImageEnlargedPressable`}
                 onPress={() => setEnlarged(false)}
-                onLayout={
-                    source.type !== "icon" &&
-                    ((!dimensions?.width && !svgProps?.width) || (!dimensions?.height && !svgProps?.height))
-                        ? onLayoutSetDimensionsCallback
-                        : undefined
-                }
                 style={styles.backdrop}
             >
-                <Pressable
-                    onPress={null}
+                <View
+                    pointerEvents="none"
                     style={{
-                        // The child (FastImage) needs "flexGrow: 1" so images on Android are not blurry.
-                        // Therefore we explicitly have to set width / height here to prevent the image from taking up the whole screen, which in turn prevents the user from closing the modal (bc parent Pressable will not be clickable).
                         width: (svgProps?.width ?? dimensions?.width) as number,
                         height: (svgProps?.height ?? dimensions?.height) as number
                     }}
@@ -276,7 +266,7 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
                         initialDimensions={initialDimensions}
                         styles={styles.image}
                     />
-                </Pressable>
+                </View>
             </Pressable>
         </Modal>
     ) : null;
