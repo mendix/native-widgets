@@ -204,7 +204,10 @@ async function githubAuthentication(moduleInfo) {
             ""
         )}`
     );
-    await execShellCommand(`echo "${process.env.GH_PAT}" | gh auth login --with-token`);
+    // gh CLI will use GH_TOKEN environment variable if set, otherwise authenticate via stdin
+    if (!process.env.GH_TOKEN) {
+        await execShellCommand(`echo "${process.env.GH_PAT}" | gh auth login --with-token`);
+    }
 }
 
 async function cloneRepo(githubUrl, localFolder, branchName = "main") {
