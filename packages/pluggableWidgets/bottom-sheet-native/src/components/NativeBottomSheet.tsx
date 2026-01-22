@@ -1,7 +1,8 @@
-import { ReactElement, useCallback, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useRef } from "react";
 import {
     ActionSheetIOS,
     Appearance,
+    Dimensions,
     Modal,
     Platform,
     Pressable,
@@ -28,6 +29,18 @@ let lastIndexRef = -1;
 
 export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
+
+    const snapPoints = useMemo(() => {
+        // @gorhom/bottom-sheet relies on Reanimated worklets; passing a stable snapPoints array
+        // avoids UI-thread "non-worklet function" crashes caused by unstable/undefined inputs.
+        const itemCount = props.itemsBasic.length;
+        const itemHeight = 44;
+        const verticalPadding = 24;
+        const maxHeight = Dimensions.get("window").height * 0.9;
+        const estimatedHeight = itemCount * itemHeight + verticalPadding;
+
+        return [Math.min(maxHeight, estimatedHeight)];
+    }, [props.itemsBasic.length]);
 
     const isAvailable = props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available;
     const isOpen =
@@ -139,12 +152,12 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         );
     };
 
-    const getContainerStyle = () => {
+    const containerStyle = useMemo(() => {
         if (props.useNative) {
             return [nativeAndroidStyles.sheetContainer];
         }
         return [styles.sheetContainer, props.styles.container];
-    };
+    }, [props.useNative, props.styles.container]);
 
     const handleSheetChanges = (index: number) => {
         if (!isAvailable) {
@@ -175,11 +188,12 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
             <BottomSheet
                 ref={bottomSheetRef}
                 index={isOpen ? 0 : -1} // Start closed.
+                snapPoints={snapPoints}
                 enablePanDownToClose
                 animateOnMount
                 onClose={() => handleSheetChanges(-1)}
                 onChange={handleSheetChanges}
-                style={getContainerStyle()}
+                style={containerStyle}
                 backdropComponent={renderBackdrop}
                 backgroundStyle={props.styles.container}
                 handleComponent={null}

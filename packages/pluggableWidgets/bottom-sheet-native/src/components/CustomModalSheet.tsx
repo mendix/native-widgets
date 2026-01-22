@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useRef, useState, useMemo } from "react";
 import { InteractionManager, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
@@ -17,6 +17,13 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
     const [currentStatus, setCurrentStatus] = useState(false);
     const isAvailable = props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available;
 
+    const snapPoints = useMemo(() => {
+        if (height === 0) {
+            return ["90%"];
+        }
+        return [height - Number(defaultPaddings.paddingBottom)];
+    }, [height]);
+
     const onLayoutFullscreenHandler = (event: LayoutChangeEvent): void => {
         const layoutHeight = event.nativeEvent.layout.height;
         if (layoutHeight > 0 && layoutHeight !== height) {
@@ -34,7 +41,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
             bottomSheetRef.current?.close();
             setCurrentStatus(false);
         }
-    }, [props.triggerAttribute, currentStatus]);
+    }, [props.triggerAttribute, currentStatus, isAvailable]);
 
     if (height === 0) {
         return (
@@ -44,14 +51,12 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         );
     }
 
-    const snapPoints = [height - Number(defaultPaddings.paddingBottom)];
-
     const isOpen =
         props.triggerAttribute &&
         props.triggerAttribute.status === ValueStatus.Available &&
         props.triggerAttribute.value;
 
-    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
+    const renderBackdrop = (backdropProps: BottomSheetBackdropProps): ReactElement => (
         <Pressable style={{ flex: 1 }} onPress={close}>
             <BottomSheetBackdrop
                 {...backdropProps}
@@ -63,7 +68,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         </Pressable>
     );
 
-    const handleSheetChanges = (index: number) => {
+    const handleSheetChanges = (index: number): void => {
         if (!isAvailable) {
             return;
         }
@@ -79,7 +84,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         }
     };
 
-    const close = () => {
+    const close = (): void => {
         bottomSheetRef.current?.close();
     };
 
