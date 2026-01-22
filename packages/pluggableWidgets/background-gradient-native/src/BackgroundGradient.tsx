@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Pressable, NativeModules, Alert } from "react-native";
+import { Pressable } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { all } from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
@@ -36,10 +36,6 @@ const angleValidation = (angle: number | undefined): number => {
 };
 
 export function BackgroundGradient({ name, colorList, content, onClick, style }: props): ReactElement {
-    if (!("BVLinearGradient" in NativeModules.UIManager)) {
-        Alert.alert("", "The widget 'Background gradient' requires an updated 'Make It Native 9' application");
-    }
-
     const styles = all<CustomStyle>([defaultStyle, ...style]);
     const angle = angleValidation(styles.angle);
     const opacity = opacityValidation(styles.opacity);
