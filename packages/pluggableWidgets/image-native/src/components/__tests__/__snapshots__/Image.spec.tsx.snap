@@ -391,49 +391,21 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
       testID="Image1$ImageEnlargedPressable"
     >
       <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        pointerEvents="none"
         style={
           {
-            "height": 9999,
-            "width": 9999,
+            "height": 750,
+            "width": 750,
           }
         }
       >
         <RNSVGSvgViewAndroid
           align="xMidYMid"
-          bbHeight={9999}
-          bbWidth={9999}
+          bbHeight={750}
+          bbWidth={750}
           color="#000"
           focusable={false}
-          height={9999}
+          height={750}
           id="Layer_1"
           meetOrSlice={0}
           minX={0}
@@ -458,8 +430,8 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
               ],
               {
                 "flex": 0,
-                "height": 9999,
-                "width": 9999,
+                "height": 750,
+                "width": 750,
               },
             ]
           }
@@ -468,7 +440,7 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
           vbHeight={9999}
           vbWidth={9999}
           version={1.1}
-          width={9999}
+          width={750}
           x="0px"
           xmlSpace="preserve"
           xmlns="http://www.w3.org/2000/svg"
@@ -1211,39 +1183,11 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
       testID="Image1$ImageEnlargedPressable"
     >
       <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        pointerEvents="none"
         style={
           {
-            "height": 1111,
-            "width": 2222,
+            "height": 375,
+            "width": 750,
           }
         }
       >
@@ -1258,8 +1202,8 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
                   "aspectRatio": 2,
                 },
                 {
-                  "height": 1111,
-                  "width": 2222,
+                  "height": 375,
+                  "width": 750,
                 },
                 {
                   "flexGrow": 1,
@@ -1793,39 +1737,11 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
       testID="Image1$ImageEnlargedPressable"
     >
       <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        pointerEvents="none"
         style={
           {
-            "height": 1111,
-            "width": 2222,
+            "height": 375,
+            "width": 750,
           }
         }
       >
@@ -1840,8 +1756,8 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
                   "aspectRatio": 2,
                 },
                 {
-                  "height": 1111,
-                  "width": 2222,
+                  "height": 375,
+                  "width": 750,
                 },
                 {
                   "flexGrow": 1,
@@ -2588,35 +2504,7 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
       testID="Image1$ImageEnlargedPressable"
     >
       <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        pointerEvents="none"
         style={
           {
             "height": 15,
@@ -3420,39 +3308,11 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
       testID="Image1$ImageEnlargedPressable"
     >
       <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        pointerEvents="none"
         style={
           {
-            "height": 1111,
-            "width": 2222,
+            "height": 375,
+            "width": 750,
           }
         }
       >
@@ -3467,8 +3327,8 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
                   "aspectRatio": 2,
                 },
                 {
-                  "height": 1111,
-                  "width": 2222,
+                  "height": 375,
+                  "width": 750,
                 },
                 {
                   "flexGrow": 1,
