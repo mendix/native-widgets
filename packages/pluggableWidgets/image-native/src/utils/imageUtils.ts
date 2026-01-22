@@ -149,6 +149,17 @@ export function onLayoutSetDimensions(
     setDimensions: Dispatch<SetStateAction<DimensionsType | undefined>>,
     initialDimensions?: DimensionsType
 ): void {
+    const dimensions = getScaledDimensions(width, height, initialDimensions);
+    if (dimensions) {
+        setDimensions(dimensions);
+    }
+}
+
+export function getScaledDimensions(
+    width: number,
+    height: number,
+    initialDimensions?: DimensionsType
+): DimensionsType | undefined {
     if (initialDimensions?.width && initialDimensions?.height) {
         let newWidth;
         let newHeight;
@@ -167,9 +178,9 @@ export function onLayoutSetDimensions(
             newHeight = heightScale < 1 ? initialDimensions.height * heightScale : initialDimensions.height;
         }
 
-        setDimensions({
+        return {
             width: newWidth,
             height: newHeight
-        });
+        };
     }
 }
