@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.4] Native Mobile Resources - 2026-1-22
+
+## [3.0.3] Image
+
+### Changed
+
+-   We fixed image enlargement issue on Android.
+
 ## [11.3.3] Native Mobile Resources - 2026-1-19
 
 ## [2.2.1] BackgroundGradient
