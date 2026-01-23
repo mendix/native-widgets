@@ -15,7 +15,7 @@
  * Set to False if the file only needs to be downloaded to the device storage.
  * @returns {Promise.<void>}
  */
-export async function DownloadWebFile(file?: mendix.lib.MxObject, showFileInBrowser?: boolean) {
+export async function DownloadWebFile(file?: mendix.lib.MxObject, showFileInBrowser?: boolean): Promise<void> {
     // BEGIN USER CODE
     if (!file) {
         return Promise.reject(new Error("Input parameter 'file' is required"));
