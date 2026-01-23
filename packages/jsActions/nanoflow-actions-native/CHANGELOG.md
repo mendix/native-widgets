@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [5.1.7] Nanoflow Commons - 2026-1-22
+## [5.2.0] Nanoflow Commons - 2026-1-23
+
 -   We've migrated from using @react-native-community/geolocation to react-native-permissions for handling location permissions.
--   
+-
+
 ## [5.1.6] Nanoflow Commons - 2025-12-05
 
 ### Fixed
