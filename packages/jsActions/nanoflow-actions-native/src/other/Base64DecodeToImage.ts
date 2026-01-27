@@ -5,6 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
+import RNBlobUtil from "react-native-blob-util";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -25,14 +26,44 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
         throw new Error("image should not be null");
     }
 
-    const dataUri = base64.startsWith("data:") ? base64 : `data:image/png;base64,${base64}`;
-
-    const res = await fetch(dataUri);
-    const blob = await res.blob();
-
-    return new Promise((resolve, reject) => {
-        mx.data.saveDocument(image.getGuid(), "camera image", {}, blob, () => resolve(true), reject);
-    });
+    try {
+        // Remove data URI prefix if present (e.g., "data:image/png;base64,")
+        let cleanBase64 = base64;
+        if (base64.includes(",")) {
+            cleanBase64 = base64.split(",")[1];
+        }
+        
+        // Remove any whitespace/newlines
+        cleanBase64 = cleanBase64.replace(/\s/g, "");
+        
+        // Validate base64 format
+        if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleanBase64)) {
+            throw new Error("Invalid base64 format");
+        }
+        
+        // Create a temporary file path
+        const tempPath = `${RNBlobUtil.fs.dirs.CacheDir}/temp_image_${Date.now()}.png`;
+        
+        // Write Base64 data to a temporary file
+        await RNBlobUtil.fs.writeFile(tempPath, cleanBase64, "base64");
+        
+        // Fetch the file as a blob
+        const res = await fetch(`file://${tempPath}`);
+        const blob = await res.blob();
+        
+        return new Promise((resolve, reject) => {
+            mx.data.saveDocument(image.getGuid(), "camera image", {}, blob, () => {        
+                RNBlobUtil.fs.unlink(tempPath).catch(() => {});
+                resolve(true);
+            }, (error) => {
+                RNBlobUtil.fs.unlink(tempPath).catch(() => {});
+                reject(error);
+            });
+        });
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        throw new Error(`Failed to decode base64 to image: ${errorMessage}`);
+    }
 
     // END USER CODE
 }
