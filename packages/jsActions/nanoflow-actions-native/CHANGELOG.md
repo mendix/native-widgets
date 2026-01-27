@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Added a "Download web file" nanoflow action that triggers file download for web applications.
 -   Changed a caption for the existing "Download file" action to "Download native file".
+
+## [6.2.1] Nanoflow Commons - 2026-1-22
+
 -   We've migrated from using @react-native-community/geolocation to react-native-permissions for handling location permissions.
 
 ## [6.1.1] Nanoflow Commons - 2025-10-7
