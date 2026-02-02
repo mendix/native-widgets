@@ -12114,6 +12114,7 @@ __metadata:
     invariant: "npm:^2.2.4"
     js-base64: "npm:~3.7.2"
     mendix: "npm:~10.0.9976"
+    react-native-blob-util: "npm:0.21.2"
     react-native-geocoder: "npm:0.5.0"
     react-native-permissions: "npm:4.1.5"
     rollup: "npm:^2.79.2"
