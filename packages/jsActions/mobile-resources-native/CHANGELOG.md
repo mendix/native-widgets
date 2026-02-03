@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.5] Native Mobile Resources - 2026-2-4
+
+-   Changed a caption for the existing "Download file" action to "Download native file".
+
 ## [11.3.4] Native Mobile Resources - 2026-1-22
 
 ## [3.0.3] Image
