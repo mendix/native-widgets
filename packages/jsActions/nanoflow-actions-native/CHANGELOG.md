@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [6.3.0] Nanoflow Commons - 2026-2-3
+
 -   Added a "Download web file" nanoflow action that triggers file download for web applications.
--   Changed a caption for the existing "Download file" action to "Download native file".
 
 ## [6.2.1] Nanoflow Commons - 2026-1-22
 
