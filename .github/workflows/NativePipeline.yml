@@ -88,6 +88,8 @@ jobs:
     outputs:
       scope: ${{ steps.scope.outputs.scope }}
       widgets: ${{ steps.scope.outputs.widgets }}
+      widgets_to_test: ${{ steps.scope.outputs.widgets_to_test }}
+      js_actions_changed: ${{ steps.scope.outputs.js_actions_changed }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -101,7 +103,9 @@ jobs:
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
-          echo "Widgets or js actions are: ${{ steps.scope.outputs.widgets }}"
+          echo "Widgets to build: ${{ steps.scope.outputs.widgets }}"
+          echo "Widgets to test: ${{ steps.scope.outputs.widgets_to_test }}"
+          echo "JS actions changed: ${{ steps.scope.outputs.js_actions_changed }}"
   mendix-version:
     runs-on: ubuntu-24.04
     outputs:
@@ -215,23 +219,20 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: "Force rebuild resources"
         run: |
-          # Build JS actions if needed
-          if [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
+          # Build JS actions if needed (when js_actions_changed is true OR when workspace explicitly includes them)
+          if [ "${{ needs.scope.outputs.js_actions_changed }}" = "true" ] || \
+            [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
             [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
             [ "${{ github.event_name }}" = "schedule" ]; then
             pnpm --filter=mobile-resources-native run build
             pnpm --filter=nanoflow-actions-native run build
           fi
 
-          # Build widgets if needed (any specific widget, *-native, or nightly)
-          if [ "${{ github.event.inputs.workspace }}" != "js-actions" ] || \
-            [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
-            [ "${{ github.event_name }}" = "schedule" ]; then
-            widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
-            for w in $widgets; do
-              pnpm --filter=$w run build
-            done
-          fi
+          # Build widgets from scope
+          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          for w in $widgets; do
+            pnpm --filter=$w run build
+          done
       - name: "Unit test"
         run: pnpm -r --filter="${{ needs.scope.outputs.scope }}" run test
       - name: "Upload JS actions resources artifact"
@@ -487,14 +488,14 @@ jobs:
 
   android-widget-tests:
     needs: [scope, mendix-version, project, android-app]
-    # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
-    if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
+    # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
+    if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     strategy:
       max-parallel: 5
       matrix:
-        widget: ${{ fromJson(needs.scope.outputs.widgets) }}
+        widget: ${{ fromJson(needs.scope.outputs.widgets_to_test) }}
       fail-fast: false
     steps:
       - name: "Check out code"
@@ -563,14 +564,14 @@ jobs:
 
   ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
-    # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
-    if: ${{ (github.event.inputs.workspace != 'js-actions' || github.event_name == 'schedule') && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
+    # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
+    if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
     timeout-minutes: 60
     strategy:
       max-parallel: 5
       matrix:
-        widget: ${{ fromJson(needs.scope.outputs.widgets) }}
+        widget: ${{ fromJson(needs.scope.outputs.widgets_to_test) }}
       fail-fast: false
     steps:
       - name: "Force cleanup workspace"
@@ -659,8 +660,8 @@ jobs:
 
   android-js-tests:
     needs: [scope, mendix-version, project, android-app]
-    # Run if project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
-    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
+    # Run if JS actions changed and project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
+    if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
@@ -729,8 +730,8 @@ jobs:
 
   ios-js-tests:
     needs: [scope, mendix-version, project, ios-app]
-    # Run if project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
-    if: ${{ (github.event.inputs.workspace == '*-native' || github.event_name == 'schedule' || github.event.inputs.workspace == 'js-actions' || contains(needs.scope.outputs.widgets, 'mobile-resources-native') || contains(needs.scope.outputs.widgets, 'nanoflow-actions-native')) && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
+    # Run if JS actions changed and project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
+    if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-15
     timeout-minutes: 90
     steps:
@@ -827,7 +828,7 @@ jobs:
   
       - name: "Download Android screenshots"
         run: |
-          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
           mkdir -p images/actual/android/
           for widget in $widgets; do
             echo "Downloading android-screenshots-${widget}"
@@ -841,7 +842,7 @@ jobs:
       
       - name: "Download iOS screenshots"
         run: |
-          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
+          widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
           mkdir -p images/actual/ios/
           for widget in $widgets; do
             echo "Downloading ios-screenshots-${widget}"
