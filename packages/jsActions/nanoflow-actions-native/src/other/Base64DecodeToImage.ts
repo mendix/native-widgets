@@ -61,11 +61,15 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
                     {},
                     blob,
                     () => {
-                        RNBlobUtil.fs.unlink(tempPath).catch(() => {});
+                        RNBlobUtil.fs.unlink(tempPath).catch(() => {
+                            // ignore errors during cleanup
+                        });
                         resolve(true);
                     },
                     error => {
-                        RNBlobUtil.fs.unlink(tempPath).catch(() => {});
+                        RNBlobUtil.fs.unlink(tempPath).catch(() => {
+                            // ignore errors during cleanup
+                        });
                         reject(error);
                     }
                 );
