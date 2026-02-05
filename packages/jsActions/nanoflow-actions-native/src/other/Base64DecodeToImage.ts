@@ -55,17 +55,24 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
             const blob = await res.blob();
 
             return new Promise((resolve, reject) => {
-                mx.data.saveDocument(image.getGuid(), "camera image", {}, blob, () => {
-                    RNBlobUtil.fs.unlink(tempPath).catch(() => { });
-                    resolve(true);
-                }, (error) => {
-                    RNBlobUtil.fs.unlink(tempPath).catch(() => { });
-                    reject(error);
-                });
+                mx.data.saveDocument(
+                    image.getGuid(),
+                    "camera image",
+                    {},
+                    blob,
+                    () => {
+                        RNBlobUtil.fs.unlink(tempPath).catch(() => {});
+                        resolve(true);
+                    },
+                    error => {
+                        RNBlobUtil.fs.unlink(tempPath).catch(() => {});
+                        reject(error);
+                    }
+                );
             });
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            throw new Error(`Failed to decode base64 to image: ${errorMessage}`);
+            console.error("Failed to decode base64 to image:", error);
+            return false;
         }
     }
 
@@ -74,6 +81,6 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
     return new Promise((resolve, reject) => {
         mx.data.saveDocument(image.getGuid(), "camera image", {}, blob, () => resolve(true), reject);
     });
-    
+
     // END USER CODE
 }
