@@ -5,7 +5,7 @@ import { AppState, AppStateStatus, NativeEventSubscription } from "react-native"
 import { AppEventsProps } from "../typings/AppEventsProps";
 import { executeAction } from "@mendix/piw-utils-internal";
 
-export type Props = AppEventsProps<undefined>;
+export type Props = AppEventsProps<undefined>; // NOOP COMMENT TO TRIGGER CI CHANGE DETECTION
 
 export class AppEvents extends Component<Props> {
     private readonly onAppStateChangeHandler = this.onAppStateChange.bind(this);
