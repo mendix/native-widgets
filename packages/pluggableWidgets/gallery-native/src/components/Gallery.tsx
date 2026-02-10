@@ -1,5 +1,6 @@
-import { createElement, ReactElement, ReactNode, useCallback } from "react";
-import { Text, FlatList, Pressable, View, ViewProps, Platform, TouchableOpacity } from "react-native";
+import { createElement, ReactElement, ReactNode, useCallback, useMemo } from "react";
+import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
 import { GalleryStyle } from "../ui/Styles";
@@ -79,7 +80,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         ]
     );
 
-    const loadMoreButton = (): ReactElement | null => {
+    const loadMoreButton = useMemo((): ReactElement | null => {
         const renderButton = (
             <Text style={props.style.loadMoreButtonCaption}>
                 {props.loadMoreButtonCaption && isAvailable(props.loadMoreButtonCaption)
@@ -118,7 +119,16 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 <TouchableOpacity {...buttonProps}>{renderButton}</TouchableOpacity>
             )
         ) : null;
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        props.pagination,
+        props.hasMoreItems,
+        props.loadMoreButtonCaption,
+        props.style.loadMoreButtonPressableContainer,
+        props.style.loadMoreButtonContainer,
+        name,
+        props.loadMoreItems
+    ]);
 
     const renderEmptyPlaceholder = (): ReactElement => (
         <View style={props.style.emptyPlaceholder}>{props.emptyPlaceholder}</View>
@@ -127,7 +137,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     return (
         <View testID={`${name}`} style={props.style.container}>
             {props.filters ? <View>{props.filters}</View> : null}
-            <FlatList
+            <FlashList
                 {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
                 {...(isScrollDirectionVertical ? { numColumns } : {})}
                 ListFooterComponent={loadMoreButton}
@@ -146,6 +156,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 renderItem={renderItem}
                 style={props.style.list}
                 testID={`${name}-list`}
+                estimatedItemSize={100}
             />
         </View>
     );
