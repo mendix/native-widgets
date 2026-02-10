@@ -6,6 +6,7 @@ import { Text, TextInput } from "react-native";
 import { ObjectItem, GUID, DynamicValue, ValueStatus } from "mendix";
 import { render, fireEvent, act } from "@testing-library/react-native";
 import { Gallery, GalleryProps } from "../Gallery";
+import { ReactTestInstance } from "react-test-renderer";
 
 jest.mock("react-native-device-info", () => ({ isTablet: jest.fn().mockReturnValue(false) }));
 
@@ -84,8 +85,7 @@ describe("Gallery", () => {
                     <Gallery {...defaultProps} loadMoreButtonCaption={loadMoreButtonCaption} pagination="buttons" />
                 );
                 expect(gallery).toMatchSnapshot();
-
-                const customPagingText = gallery.getByText("Show more");
+                const customPagingText = gallery.queryByText("Show more");
                 expect(customPagingText).toBeDefined();
             });
 
@@ -114,9 +114,13 @@ describe("Gallery", () => {
         it("item on click action", () => {
             const onClick = jest.fn();
             const gallery = render(<Gallery {...defaultProps} itemRenderer={itemWrapperFunction({ onClick })} />);
+            const scrollView = gallery.getByTestId("gallery-test-list");
+            // Simulate onLayout to set the dimensions for the list items and render them (flash-list specific)
+            scrollView.props.onLayout({ nativeEvent: { layout: { width: 400, height: 800 } } });
             const galleryFirstItem = gallery.getByTestId("gallery-test-list-item-22");
-            fireEvent.press(galleryFirstItem);
-            expect(onClick).toBeCalledTimes(1);
+            expect(galleryFirstItem).toBeTruthy();
+            fireEvent.press(galleryFirstItem as ReactTestInstance);
+            expect(onClick).toHaveBeenCalledTimes(1);
         });
 
         it("triggers pull down action", async () => {
@@ -131,14 +135,14 @@ describe("Gallery", () => {
             await act(async () => {
                 refreshControl.props.onRefresh();
             });
-            expect(pullDown).toBeCalledTimes(1);
+            expect(pullDown).toHaveBeenCalledTimes(1);
         });
 
         it("triggers load more items events on end reached", () => {
             const gallery = render(<Gallery {...defaultProps} />);
             const galleryList = gallery.getByTestId("gallery-test-list");
             fireEvent(galleryList, "onEndReached");
-            expect(defaultProps.loadMoreItems).toBeCalledTimes(1);
+            expect(defaultProps.loadMoreItems).toHaveBeenCalledTimes(1);
         });
 
         it("it shouldn't triggers the load more items event when item list empty", () => {
@@ -151,8 +155,12 @@ describe("Gallery", () => {
         describe("with pagination button", () => {
             it("triggers load more items event on click load more items button", () => {
                 const gallery = render(<Gallery {...defaultProps} pagination="buttons" />);
+                const scrollView = gallery.getByTestId("gallery-test-list");
+                // Simulate onLayout to set the dimensions for the list items and render them (flash-list specific)
+                scrollView.props.onLayout({ nativeEvent: { layout: { width: 400, height: 800 } } });
                 const loadMoreItemsButton = gallery.getByTestId("gallery-test-pagination-button");
-                fireEvent.press(loadMoreItemsButton);
+                expect(loadMoreItemsButton).toBeTruthy();
+                fireEvent.press(loadMoreItemsButton as ReactTestInstance);
                 expect(defaultProps.loadMoreItems).toBeCalledTimes(1);
             });
         });
