@@ -1,6 +1,5 @@
 import { createElement, Fragment, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
-    FlatList,
     I18nManager,
     LayoutChangeEvent,
     NativeSyntheticEvent,
@@ -13,6 +12,7 @@ import {
     TouchableOpacityProps,
     View
 } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import { ButtonStyle, IntroScreenStyle } from "./ui/Styles";
 import { Icon } from "mendix/components/native/Icon";
 import { SlidesType } from "../typings/IntroScreenProps";
@@ -69,7 +69,7 @@ const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: Editabl
 export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement => {
     const [width, setWidth] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
-    const flatList = useRef<FlatList<any>>(null);
+    const flashList = useRef<FlashList<any>>(null);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -79,8 +79,8 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const goToSlide = useCallback(
         (pageNum: number) => {
             setActiveIndex(pageNum);
-            if (flatList && flatList.current) {
-                flatList.current.scrollToOffset({
+            if (flashList && flashList.current) {
+                flashList.current.scrollToOffset({
                     offset: rtlSafeIndex(pageNum) * width
                 });
             }
@@ -111,9 +111,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         onSlideChange(index, activeIndexBeforeChange);
     };
 
-    const renderItem = ({ item }: any): ReactElement => {
-        return <View style={[{ width, flex: 1 }]}>{item.content}</View>;
-    };
+    const renderItem = useCallback(
+        ({ item }: any): ReactElement => {
+            return <View style={[{ width, flex: 1 }]}>{item.content}</View>;
+        },
+        [width]
+    );
 
     const renderButton = (
         caption: Option<string>,
@@ -317,11 +320,10 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
 
     return (
         <View style={styles.flexOne}>
-            <FlatList
+            <FlashList
                 testID={props.testID}
                 initialScrollIndex={refreshActiveSlideAttribute(props.slides, props.activeSlide)}
-                getItemLayout={(_, i) => ({ length: width, offset: width * i, index: i })}
-                ref={flatList}
+                ref={flashList}
                 data={props.slides}
                 horizontal
                 pagingEnabled
@@ -334,6 +336,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
                 extraData={width}
                 onLayout={onLayout}
                 keyExtractor={(_: any, index: number) => "screen_key_" + index}
+                estimatedItemSize={width || 100}
             />
             {renderPagination()}
         </View>
@@ -342,7 +345,8 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
 
 const styles = StyleSheet.create({
     flexOne: {
-        flex: 1
+        flex: 1,
+        flexDirection: isAndroidRTL ? "row-reverse" : "row"
     },
     flatList: {
         flex: 1,
