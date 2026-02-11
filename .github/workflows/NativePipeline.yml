@@ -282,6 +282,7 @@ jobs:
         shell: bash
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
+            mkdir -p Native-Mobile-Resources-mx10/widgets
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
               newPath=Native-Mobile-Resources-mx10/widgets/$(basename $oldPath)
               mv -f $oldPath $newPath
