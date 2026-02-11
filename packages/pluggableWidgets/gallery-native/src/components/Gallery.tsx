@@ -1,4 +1,4 @@
-import { createElement, ReactElement, ReactNode, useCallback, useMemo } from "react";
+import { createElement, ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
 import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { ObjectItem, DynamicValue } from "mendix";
@@ -9,6 +9,7 @@ import { isAvailable } from "@mendix/piw-utils-internal";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 
 const DEFAULT_RIPPLE_COLOR = "rgba(0, 0, 0, 0.2)";
+const DEFAULT_ITEM_SIZE = 150;
 
 export interface GalleryProps<T extends ObjectItem> {
     emptyPlaceholder?: ReactNode;
@@ -34,6 +35,18 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const firstItemId = props.items?.[0]?.id;
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
+    const [measuredItemSize, setMeasuredItemSize] = useState<number>(DEFAULT_ITEM_SIZE);
+
+    const onItemLayout = useCallback(
+        (event: any) => {
+            const { height, width } = event.nativeEvent.layout;
+            const itemSize = isScrollDirectionVertical ? height : width;
+            if (itemSize > 0 && measuredItemSize === DEFAULT_ITEM_SIZE) {
+                setMeasuredItemSize(itemSize);
+            }
+        },
+        [isScrollDirectionVertical, measuredItemSize]
+    );
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -48,8 +61,10 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                     style: isScrollDirectionVertical && { width: `${100 / numColumns}%` },
                     testID: `${name}-list-item-${item.item.id}`
                 };
+                const isFirstItem = firstItemId === item.item.id;
                 const renderListItemContent = (
                     <View
+                        onLayout={isFirstItem ? onItemLayout : undefined}
                         style={[
                             style.listItem,
                             firstItemId === item.item.id && style.firstItem,
@@ -76,7 +91,8 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
             style.firstItem,
             style.lastItem,
             firstItemId,
-            lastItemId
+            lastItemId,
+            onItemLayout
         ]
     );
 
@@ -135,7 +151,10 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     );
 
     return (
-        <View testID={`${name}`} style={props.style.container}>
+        <View
+            testID={`${name}`}
+            style={[props.style.container, !isScrollDirectionVertical && { flexDirection: "row" }]}
+        >
             {props.filters ? <View>{props.filters}</View> : null}
             <FlashList
                 {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
@@ -156,7 +175,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 renderItem={renderItem}
                 style={props.style.list}
                 testID={`${name}-list`}
-                estimatedItemSize={100}
+                estimatedItemSize={measuredItemSize}
             />
         </View>
     );
