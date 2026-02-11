@@ -270,6 +270,8 @@ jobs:
         uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
         with:
           args: unzip -qq project.zip -d .
+      - name: "Rename test project directory"
+        run: mv Native-Mobile-Resources-mx-version-10 test-project
       - name: "Download resources artifact"
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
@@ -283,28 +285,28 @@ jobs:
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-mx-version-10/widgets/$(basename $oldPath)
+              newPath=test-project/widgets/$(basename $oldPath)
               mv -f $oldPath $newPath
             done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-mx-version-10/NativeComponentsTestProject.mpr
+            mx update-widgets --loose-version-check test-project/NativeComponentsTestProject.mpr
           fi
       - name: "Move mobile-resources"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/mobile-resources-native/dist/*' > /dev/null; then
-            rm -rf Native-Mobile-Resources-mx-version-10/javascriptsource/nativemobileresources/actions/node_modules
-            mv -f resources/jsActions/mobile-resources-native/dist/* Native-Mobile-Resources-mx-version-10/javascriptsource/nativemobileresources/actions/
+            rm -rf test-project/javascriptsource/nativemobileresources/actions/node_modules
+            mv -f resources/jsActions/mobile-resources-native/dist/* test-project/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
           if compgen -G 'resources/jsActions/nanoflow-actions-native/dist/*' > /dev/null; then
-            rm -rf Native-Mobile-Resources-mx-version-10/javascriptsource/nanoflowcommons/actions/node_modules
-            mv -f resources/jsActions/nanoflow-actions-native/dist/* Native-Mobile-Resources-mx-version-10/javascriptsource/nanoflowcommons/actions/
+            rm -rf test-project/javascriptsource/nanoflowcommons/actions/node_modules
+            mv -f resources/jsActions/nanoflow-actions-native/dist/* test-project/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Force rebuild test project"
         run: |
-          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-mx-version-10/NativeComponentsTestProject.mpr
+          mxbuild -o automation.mda --loose-version-check test-project/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
