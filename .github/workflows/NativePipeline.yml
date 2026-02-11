@@ -232,7 +232,6 @@ jobs:
             for w in $widgets; do
               yarn workspace $w run build
             done
-          fi
       - name: "Unit test"
         run: yarn workspaces foreach ${{ needs.scope.outputs.scope }} run test
       - name: "Upload JS actions resources artifact"
