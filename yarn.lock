@@ -9035,6 +9035,7 @@ __metadata:
     "@mendix/piw-utils-internal": "npm:*"
     "@mendix/pluggable-widgets-tools": "npm:~10.0.1"
     "@react-native-async-storage/async-storage": "npm:2.0.0"
+    "@shopify/flash-list": "npm:1.8.3"
     eslint: "npm:^7.32.0"
     react-native-device-info: "npm:13.0.0"
   languageName: unknown
