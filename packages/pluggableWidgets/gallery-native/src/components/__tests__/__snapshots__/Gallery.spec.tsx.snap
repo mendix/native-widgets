@@ -2,7 +2,12 @@
 
 exports[`Gallery rendering rendering with load more button it shouldn't render the paging button if hasn't more item 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {},
+      false,
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -105,7 +110,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
         }
       }
       disableRecycling={false}
-      estimatedItemSize={100}
+      estimatedItemSize={150}
       extendedState={{}}
       externalScrollView={[Function]}
       finalRenderAheadOffset={250}
@@ -129,10 +134,10 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
             "width": 0,
           },
           "averageWindow": AverageWindow {
-            "currentAverage": 100,
+            "currentAverage": 150,
             "currentCount": 1,
             "inputValues": [
-              100,
+              150,
             ],
             "nextIndex": 1,
           },
@@ -176,7 +181,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
                 "id": "99",
               },
             ],
-            "estimatedItemSize": 100,
+            "estimatedItemSize": 150,
             "horizontal": false,
             "keyExtractor": [Function],
             "numColumns": 2,
@@ -285,7 +290,12 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
 
 exports[`Gallery rendering rendering with load more button renders correctly 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {},
+      false,
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -403,7 +413,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         }
       }
       disableRecycling={false}
-      estimatedItemSize={100}
+      estimatedItemSize={150}
       extendedState={{}}
       externalScrollView={[Function]}
       finalRenderAheadOffset={250}
@@ -427,10 +437,10 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
             "width": 0,
           },
           "averageWindow": AverageWindow {
-            "currentAverage": 100,
+            "currentAverage": 150,
             "currentCount": 1,
             "inputValues": [
-              100,
+              150,
             ],
             "nextIndex": 1,
           },
@@ -487,7 +497,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
                 "id": "99",
               },
             ],
-            "estimatedItemSize": 100,
+            "estimatedItemSize": 150,
             "horizontal": false,
             "keyExtractor": [Function],
             "numColumns": 2,
@@ -596,7 +606,12 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
 
 exports[`Gallery rendering rendering with load more button renders correctly with custom paging button title 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {},
+      false,
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -714,7 +729,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         }
       }
       disableRecycling={false}
-      estimatedItemSize={100}
+      estimatedItemSize={150}
       extendedState={{}}
       externalScrollView={[Function]}
       finalRenderAheadOffset={250}
@@ -738,10 +753,10 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
             "width": 0,
           },
           "averageWindow": AverageWindow {
-            "currentAverage": 100,
+            "currentAverage": 150,
             "currentCount": 1,
             "inputValues": [
-              100,
+              150,
             ],
             "nextIndex": 1,
           },
@@ -798,7 +813,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
                 "id": "99",
               },
             ],
-            "estimatedItemSize": 100,
+            "estimatedItemSize": 150,
             "horizontal": false,
             "keyExtractor": [Function],
             "numColumns": 2,
@@ -907,7 +922,12 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
 
 exports[`Gallery rendering renders correctly 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {},
+      false,
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -1010,7 +1030,7 @@ exports[`Gallery rendering renders correctly 1`] = `
         }
       }
       disableRecycling={false}
-      estimatedItemSize={100}
+      estimatedItemSize={150}
       extendedState={{}}
       externalScrollView={[Function]}
       finalRenderAheadOffset={250}
@@ -1034,10 +1054,10 @@ exports[`Gallery rendering renders correctly 1`] = `
             "width": 0,
           },
           "averageWindow": AverageWindow {
-            "currentAverage": 100,
+            "currentAverage": 150,
             "currentCount": 1,
             "inputValues": [
-              100,
+              150,
             ],
             "nextIndex": 1,
           },
@@ -1081,7 +1101,7 @@ exports[`Gallery rendering renders correctly 1`] = `
                 "id": "99",
               },
             ],
-            "estimatedItemSize": 100,
+            "estimatedItemSize": 150,
             "horizontal": false,
             "keyExtractor": [Function],
             "numColumns": 2,
@@ -1190,7 +1210,14 @@ exports[`Gallery rendering renders correctly 1`] = `
 
 exports[`Gallery rendering renders correctly horizontal 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {},
+      {
+        "flexDirection": "row",
+      },
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -1288,7 +1315,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
         }
       }
       disableRecycling={false}
-      estimatedItemSize={100}
+      estimatedItemSize={150}
       extendedState={{}}
       externalScrollView={[Function]}
       finalRenderAheadOffset={250}
@@ -1312,10 +1339,10 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
             "width": 0,
           },
           "averageWindow": AverageWindow {
-            "currentAverage": 100,
+            "currentAverage": 150,
             "currentCount": 1,
             "inputValues": [
-              100,
+              150,
             ],
             "nextIndex": 1,
           },
@@ -1359,7 +1386,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
                 "id": "99",
               },
             ],
-            "estimatedItemSize": 100,
+            "estimatedItemSize": 150,
             "horizontal": true,
             "keyExtractor": [Function],
             "numColumns": 1,
@@ -1493,7 +1520,12 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
 
 exports[`Gallery rendering renders correctly with empty list and custom placeholder 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {},
+      false,
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -1538,7 +1570,7 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
         }
       }
       disableRecycling={false}
-      estimatedItemSize={100}
+      estimatedItemSize={150}
       extendedState={{}}
       externalScrollView={[Function]}
       finalRenderAheadOffset={250}
@@ -1562,10 +1594,10 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
             "width": 0,
           },
           "averageWindow": AverageWindow {
-            "currentAverage": 100,
+            "currentAverage": 150,
             "currentCount": 1,
             "inputValues": [
-              100,
+              150,
             ],
             "nextIndex": 1,
           },
@@ -1581,7 +1613,7 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
               "marginTop": 8,
             },
             "data": [],
-            "estimatedItemSize": 100,
+            "estimatedItemSize": 150,
             "horizontal": false,
             "keyExtractor": [Function],
             "numColumns": 2,
@@ -1731,7 +1763,12 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
 
 exports[`Gallery rendering renders correctly with filter 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {},
+      false,
+    ]
+  }
   testID="gallery-test"
 >
   <View>
@@ -1837,7 +1874,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
         }
       }
       disableRecycling={false}
-      estimatedItemSize={100}
+      estimatedItemSize={150}
       extendedState={{}}
       externalScrollView={[Function]}
       finalRenderAheadOffset={250}
@@ -1861,10 +1898,10 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
             "width": 0,
           },
           "averageWindow": AverageWindow {
-            "currentAverage": 100,
+            "currentAverage": 150,
             "currentCount": 1,
             "inputValues": [
-              100,
+              150,
             ],
             "nextIndex": 1,
           },
@@ -1908,7 +1945,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
                 "id": "99",
               },
             ],
-            "estimatedItemSize": 100,
+            "estimatedItemSize": 150,
             "horizontal": false,
             "keyExtractor": [Function],
             "numColumns": 2,
