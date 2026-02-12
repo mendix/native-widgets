@@ -14,7 +14,9 @@ appId: "${APP_ID}"
     id: "container1"
 - inputText: "11"
 - tapOn: "Show confirmation "
-- assertVisible: "Yolo"
+- extendedWaitUntil:
+    visible: "Yolo"
+    timeout: 10000
 - assertVisible: "11"
 - tapOn: "OK"
 - assertVisible: "Confirmed!"
