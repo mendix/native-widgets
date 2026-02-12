@@ -40,9 +40,9 @@ jobs:
         run: pnpm install
       - name: "Bumping version"
         id: bump_version
-        run:
-          NEW_VER=$(npm --prefix ./packages/jsActions/${{ inputs.module }} version ${{ inputs.version }} --no-git-tag-version)
-          echo "VERSION=$NEW_VER" >> $GITHUB_OUTPUT
+        run: |
+          NEW_VER=$(npm --prefix "./packages/jsActions/${{ inputs.module }}" version "${{ inputs.version }}" --no-git-tag-version)
+          echo "VERSION=${NEW_VER}" >> "$GITHUB_OUTPUT"
       - name: "Building native widgets and js actions"
         run: pnpm -r run release
       - name: "Updating Native Mobile Resources project"
