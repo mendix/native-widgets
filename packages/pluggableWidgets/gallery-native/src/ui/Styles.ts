@@ -23,8 +23,7 @@ export interface GalleryStyle {
 
 export const defaultGalleryStyle: GalleryStyle = {
     container: {
-        flex: 1,
-        padding: 0.1 // Safe padding to allow flash-list to render without specifying fixed dimensions
+        flex: 1
     },
     listItem: { flexGrow: 1 },
     loadMoreButtonContainer: {
