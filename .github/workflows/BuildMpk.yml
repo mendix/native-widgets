@@ -50,3 +50,14 @@ jobs:
         env:
           MODULE: ${{ inputs.module }}
           VERSION: ${{ steps.bump_version.outputs.VERSION }}
+
+      - name: "Upload MPK artifact"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        with:
+          name: ${{ inputs.module }}-${{ steps.bump_version.outputs.VERSION }}.mpk
+          path: tmp/${{ inputs.module }}/**/*.mpk
+          if-no-files-found: error
+
+      - name: "Cleanup tmp folder"
+        if: ${{ always() }}
+        run: rm -rf tmp
