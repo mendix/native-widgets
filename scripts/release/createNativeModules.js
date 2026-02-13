@@ -15,7 +15,7 @@ const {
     exportModuleWithWidgets,
     regex
 } = require("./module-automation/commons");
-
+const { getOssFiles, copyFilesToMpk } = require("./module-automation/utils");
 const repoRootPath = join(__dirname, "../../");
 const [moduleFolderNameInRepo, version] = process.env.TAG.split("-v");
 
@@ -46,6 +46,7 @@ async function main() {
 async function createNativeMobileResourcesModule() {
     console.log("Creating the Native Mobile Resource module.");
     const moduleFolder = join(repoRootPath, "packages/jsActions", moduleFolderNameInRepo);
+    const ossFiles = await getOssFiles(moduleFolder, true);
     const tmpFolder = join(repoRootPath, "tmp", moduleFolderNameInRepo);
     const widgetFolders = await readdir(join(repoRootPath, "packages/pluggableWidgets"));
     const nativeWidgetFolders = widgetFolders
@@ -63,7 +64,7 @@ async function createNativeMobileResourcesModule() {
     await commitAndCreatePullRequest(moduleInfo);
     await updateNativeComponentsTestProject(moduleInfo, tmpFolder, nativeWidgetFolders);
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
-    await exportModuleWithWidgets(moduleInfo.moduleNameInModeler, mpkOutput, nativeWidgetFolders);
+    await exportModuleWithWidgets(moduleInfo.moduleNameInModeler, mpkOutput, nativeWidgetFolders, ossFiles);
     await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
     if (process.env.CI !== "true") {
         try {
@@ -78,6 +79,7 @@ async function createNativeMobileResourcesModule() {
 async function createNanoflowCommonsModule() {
     console.log("Creating the Nanoflow Commons module.");
     const moduleFolder = join(repoRootPath, "packages/jsActions", moduleFolderNameInRepo);
+    const ossFiles = await getOssFiles(moduleFolder, true);
     const tmpFolder = join(repoRootPath, "tmp", moduleFolderNameInRepo);
     let moduleInfo = {
         ...(await getPackageInfo(moduleFolder)),
@@ -91,6 +93,7 @@ async function createNanoflowCommonsModule() {
     await commitAndCreatePullRequest(moduleInfo);
     await updateNativeComponentsTestProject(moduleInfo, tmpFolder);
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
+    await copyFilesToMpk(ossFiles, mpkOutput, moduleInfo.moduleNameInModeler);
     await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
     if (process.env.CI !== "true") {
         try {

@@ -25,7 +25,7 @@
     "release": "pnpm -r run release",
     "release:marketplace": "pnpm -r run release:marketplace",
     "release-github:widget": "node ./scripts/release/createWidgetRelease.js",
-    "create-modules": "node ./scripts/release/createNativeModules.js",
+    "create-modules": "ts-node --project ./scripts/tsconfig.json ./scripts/release/createNativeModules.js",
     "build-mpk": "ts-node --project ./scripts/tsconfig.json ./scripts/release/build-mpk.ts",
     "version": "ts-node --project ./scripts/tsconfig.json ./scripts/release/BumpVersion.ts",
     "validate-staged-widget-versions": "node scripts/validation/validate-versions-staged-files.js",
