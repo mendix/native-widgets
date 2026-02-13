@@ -1,7 +1,6 @@
 const { basename, extname, join, resolve } = require("path");
 const { access, readdir, copyFile, readFile, writeFile, rename, rm, mkdir, chmod } = require("fs/promises");
 const { exec } = require("child_process");
-const { globSync } = require("glob");
 
 const regex = {
     changelogs: /(?<=## \[unreleased\]\n)((?!## \[\d+\.\d+\.\d+\])\W|\w)*/i,
@@ -261,51 +260,6 @@ function unzip(src, dest) {
     return execShellCommand(`unzip "${src}" -d "${dest}"`);
 }
 
-async function getOssFiles(folderPath, isOssReadmeRequired) {
-    if (!folderPath || typeof folderPath !== "string") {
-        throw new TypeError(`Invalid folderPath: ${folderPath}`);
-    }
-
-    const licenseFile = join(folderPath, `License.txt`);
-    try {
-        await access(licenseFile);
-    } catch {
-        throw new Error(`License file not found at expected location: ${licenseFile}`);
-    }
-
-    const readmeossPattern = "*__*__READMEOSS_*.html";
-    const readmeossFiles = globSync(readmeossPattern, { cwd: folderPath, absolute: true, ignore: "**/.*/**" });
-
-    if (isOssReadmeRequired && readmeossFiles.length === 0) {
-        throw new Error(`No OSS README file found in ${folderPath} matching ${readmeossPattern}`);
-    }
-
-    if (readmeossFiles.length === 0) {
-        return [{ src: licenseFile, dest: basename(licenseFile) }];
-    }
-
-    const ossReadmeFile = readmeossFiles[0];
-
-    return [
-        { src: licenseFile, dest: basename(licenseFile) },
-        { src: ossReadmeFile, dest: basename(ossReadmeFile) }
-    ];
-}
-
-async function copyFilesToMpk(files, mpkOutput, moduleName) {
-    const projectPath = mpkOutput.replace(".mpk", "");
-    // Unzip the mpk
-    await unzip(mpkOutput, projectPath);
-    await rm(mpkOutput, { recursive: true, force: true });
-    // Add additional files to the MPK
-    for await (const file of files) {
-        await copyFile(file.src, join(projectPath, file.dest));
-    }
-    // Re-zip and rename
-    await zip(projectPath, moduleName);
-    await rename(`${projectPath}.zip`, mpkOutput);
-}
-
 // Unzip the module, copy the widget and update package.xml
 async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, additionalFiles) {
     console.log(`Adding ${widgetsFolders.length} widgets to module ${moduleName}`);
@@ -374,7 +328,5 @@ module.exports = {
     zip,
     unzip,
     exportModuleWithWidgets,
-    copyFilesToMpk,
-    getOssFiles,
     regex
 };

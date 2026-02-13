@@ -8,10 +8,9 @@ import {
     cloneRepo,
     createMPK,
     exportModuleWithWidgets,
-    regex,
-    copyFilesToMpk,
-    getOssFiles
+    regex
 } from "./module-automation/commons";
+import { copyFilesToMpk, getOssFiles } from "./module-automation/utils";
 
 const repoRootPath = join(__dirname, "../../");
 
