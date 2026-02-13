@@ -1,5 +1,6 @@
 import { basename, join, dirname } from "path";
 import { readdir, copyFile, rm, mkdir } from "fs/promises";
+import { appendFileSync } from "fs";
 import {
     execShellCommand,
     getFiles,
@@ -23,6 +24,22 @@ type ArtifactResult = {
     artifactPath: string;
     artifactName: string;
 };
+
+function setGithubActionsVars(artifact: ArtifactResult): void {
+    const githubEnvPath = process.env.GITHUB_ENV;
+    if (githubEnvPath) {
+        appendFileSync(githubEnvPath, `ARTIFACT_PATH=${artifact.artifactPath}\n`);
+        appendFileSync(githubEnvPath, `ARTIFACT_NAME=${artifact.artifactName}\n`);
+        log(`Exported ARTIFACT_PATH and ARTIFACT_NAME to GITHUB_ENV`);
+    }
+
+    const githubOutputPath = process.env.GITHUB_OUTPUT;
+    if (githubOutputPath) {
+        appendFileSync(githubOutputPath, `artifact_path=${artifact.artifactPath}\n`);
+        appendFileSync(githubOutputPath, `artifact_name=${artifact.artifactName}\n`);
+        log(`Exported artifact_path and artifact_name to GITHUB_OUTPUT`);
+    }
+}
 
 type InputVariables = {
     module: string;
@@ -51,6 +68,8 @@ function writeArtifactEnvVariable(artifact: ArtifactResult): void {
     log(`Setting environment variable ARTIFACT_NAME=${artifact.artifactName}`);
     process.env.ARTIFACT_NAME = artifact.artifactName;
     log("Artifact environment variables set successfully.");
+
+    setGithubActionsVars(artifact);
 }
 
 function validateInput(): void {
