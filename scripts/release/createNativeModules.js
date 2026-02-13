@@ -46,7 +46,6 @@ async function main() {
 async function createNativeMobileResourcesModule() {
     console.log("Creating the Native Mobile Resource module.");
     const moduleFolder = join(repoRootPath, "packages/jsActions", moduleFolderNameInRepo);
-    const ossFiles = await getOssFiles(moduleFolder, true);
     const tmpFolder = join(repoRootPath, "tmp", moduleFolderNameInRepo);
     const widgetFolders = await readdir(join(repoRootPath, "packages/pluggableWidgets"));
     const nativeWidgetFolders = widgetFolders
@@ -59,6 +58,10 @@ async function createNativeMobileResourcesModule() {
     };
     moduleInfo = await bumpVersionInPackageJson(moduleFolder, moduleInfo);
 
+    const ossFiles = await getOssFiles(moduleFolder, {
+        package: moduleInfo.moduleNameInModeler,
+        version: moduleInfo.version
+    });
     await githubAuthentication(moduleInfo);
     const moduleChangelogs = await updateChangelogs(nativeWidgetFolders, moduleInfo);
     await commitAndCreatePullRequest(moduleInfo);
@@ -79,7 +82,6 @@ async function createNativeMobileResourcesModule() {
 async function createNanoflowCommonsModule() {
     console.log("Creating the Nanoflow Commons module.");
     const moduleFolder = join(repoRootPath, "packages/jsActions", moduleFolderNameInRepo);
-    const ossFiles = await getOssFiles(moduleFolder, true);
     const tmpFolder = join(repoRootPath, "tmp", moduleFolderNameInRepo);
     let moduleInfo = {
         ...(await getPackageInfo(moduleFolder)),
@@ -87,6 +89,10 @@ async function createNanoflowCommonsModule() {
         moduleFolderNameInModeler: "nanoflowcommons"
     };
     moduleInfo = await bumpVersionInPackageJson(moduleFolder, moduleInfo);
+    const ossFiles = await getOssFiles(moduleFolder, {
+        package: moduleInfo.moduleNameInModeler,
+        version: moduleInfo.version
+    });
 
     await githubAuthentication(moduleInfo);
     const moduleChangelogs = await updateModuleChangelogs(moduleInfo);

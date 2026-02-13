@@ -3,38 +3,32 @@ import { basename, join } from "path";
 import { globSync } from "glob";
 import { exec } from "child_process";
 
+type OssReadMeValidationCriteria = {
+    package: string;
+    version: string;
+};
+
 export async function getOssFiles(
     folderPath: string,
-    isOssReadmeRequired: boolean
+    validationCriteria?: OssReadMeValidationCriteria
 ): Promise<Array<{ src: string; dest: string }>> {
     if (!folderPath || typeof folderPath !== "string") {
         throw new TypeError(`Invalid folderPath: ${folderPath}`);
     }
 
-    const licenseFile = join(folderPath, `License.txt`);
+    const license = join(folderPath, `License.txt`);
     try {
-        await access(licenseFile);
+        await access(license);
     } catch {
-        throw new Error(`License file not found at expected location: ${licenseFile}`);
+        throw new Error(`License file not found at expected location: ${license}`);
     }
 
-    const readmeossPattern = "*__*__READMEOSS_*.html";
-    const readmeossFiles = globSync(readmeossPattern, { cwd: folderPath, absolute: true, ignore: "**/.*/**" });
-
-    if (isOssReadmeRequired && readmeossFiles.length === 0) {
-        throw new Error(`No OSS README file found in ${folderPath} matching ${readmeossPattern}`);
+    const readmePattern = "*__*__READMEOSS_*.html";
+    const readme = globSync(readmePattern, { cwd: folderPath, absolute: true, ignore: "**/.*/**" })[0];
+    if (validationCriteria) {
+        validateOssReadme(readme, validationCriteria);
     }
-
-    if (readmeossFiles.length === 0) {
-        return [{ src: licenseFile, dest: basename(licenseFile) }];
-    }
-
-    const ossReadmeFile = readmeossFiles[0];
-
-    return [
-        { src: licenseFile, dest: basename(licenseFile) },
-        { src: ossReadmeFile, dest: basename(ossReadmeFile) }
-    ];
+    return [{ src: license, dest: basename(license) }, ...(readme ? [{ src: readme, dest: basename(readme) }] : [])];
 }
 
 type FilePathPair = { src: string; dest: string };
@@ -61,7 +55,7 @@ export function unzip(src: string, dest: string): Promise<string> {
     return execShellCommand(`unzip "${src}" -d "${dest}"`);
 }
 
-function execShellCommand(cmd: string, workingDirectory = process.cwd()): Promise<string> {
+export function execShellCommand(cmd: string, workingDirectory = process.cwd()): Promise<string> {
     return new Promise((resolve, reject) => {
         exec(cmd, { cwd: workingDirectory }, (error, stdout, stderr) => {
             if (error) {
@@ -75,4 +69,46 @@ function execShellCommand(cmd: string, workingDirectory = process.cwd()): Promis
             resolve(stdout);
         });
     });
+}
+
+export function validateOssReadme(ossReadme: string, validationCriteria: OssReadMeValidationCriteria): void {
+    if (!ossReadme || typeof ossReadme !== "string") {
+        throw new TypeError(`Invalid OSS README path/name: ${ossReadme}`);
+    }
+    if (!validationCriteria.version || typeof validationCriteria.version !== "string") {
+        throw new TypeError(`Invalid version: ${validationCriteria.version}`);
+    }
+    if (!validationCriteria.package || typeof validationCriteria.package !== "string") {
+        throw new TypeError(`Invalid package name: ${validationCriteria.package}`);
+    }
+
+    const fileName = basename(ossReadme);
+    const expectedPackage = validationCriteria.package.trim();
+    const expectedVersion = validationCriteria.version.trim();
+
+    // File name pattern: SiemensMendix<PACKAGE>__<VERSION>__READMEOSS_*.html
+    // Example: SiemensMendixNanoflowCommons__6.3.1__READMEOSS_2026-02-10__04-28-37.html
+    const parsed = fileName.match(/^SiemensMendix(.+?)__(.+?)__READMEOSS_(.+)\.html$/);
+
+    if (!parsed) {
+        throw new Error(
+            `OSS README validation failed: '${fileName}' does not match expected pattern ` +
+                `'SiemensMendix<PACKAGE>__<VERSION>__READMEOSS_*.html'.`
+        );
+    }
+
+    const foundPackage = parsed[1];
+    const foundVersion = parsed[2];
+
+    if (foundPackage !== expectedPackage) {
+        throw new Error(
+            `OSS README validation failed: expected package '${expectedPackage}' but found '${foundPackage}' in '${fileName}'.`
+        );
+    }
+
+    if (foundVersion !== expectedVersion) {
+        throw new Error(
+            `OSS README validation failed: expected version '${expectedVersion}' but found '${foundVersion}' in '${fileName}'.`
+        );
+    }
 }
