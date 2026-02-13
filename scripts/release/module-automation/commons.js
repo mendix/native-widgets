@@ -299,8 +299,10 @@ async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, ad
         throw new Error(`Including widgets in module failed. package.xml of widget/module ${moduleName} not found`);
     }
     // Add additional files to the MPK
-    for await (const file of additionalFiles) {
-        await copyFile(file.src, join(projectPath, file.dest));
+    if (Array.isArray(additionalFiles)) {
+        for await (const file of additionalFiles) {
+            await copyFile(file.src, join(projectPath, file.dest));
+        }
     }
     // Re-zip and rename
     await zip(projectPath, moduleName);

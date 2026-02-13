@@ -18,14 +18,3 @@ export function exportModuleWithWidgets(
     nativeWidgetFolders: string[],
     ossFiles?: Array<{ src: string; dest: string }>
 ): Promise<void>;
-
-export function copyFilesToMpk(
-    files: Array<{ src: string; dest: string }>,
-    mpkOutput: string,
-    moduleNameInModeler: string
-): Promise<void>;
-
-export function getOssFiles(
-    folderPath: string,
-    isOssReadmeRequired: boolean
-): Promise<Array<{ src: string; dest: string }>>;
