@@ -1,0 +1,7 @@
+{
+    "extends": "@mendix/pluggable-widgets-tools/configs/tsconfig.base",
+    "compilerOptions": {
+        "module": "commonjs"
+    },
+    "include": ["./**/*.ts"]
+}

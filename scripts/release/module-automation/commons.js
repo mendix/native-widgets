@@ -261,7 +261,7 @@ function unzip(src, dest) {
 }
 
 // Unzip the module, copy the widget and update package.xml
-async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders) {
+async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, additionalFiles) {
     console.log(`Adding ${widgetsFolders.length} widgets to module ${moduleName}`);
     const projectPath = mpkOutput.replace(".mpk", "");
     const packageXmlFile = join(projectPath, "package.xml");
@@ -297,6 +297,12 @@ async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders) {
         }
     } catch (e) {
         throw new Error(`Including widgets in module failed. package.xml of widget/module ${moduleName} not found`);
+    }
+    // Add additional files to the MPK
+    if (Array.isArray(additionalFiles)) {
+        for await (const file of additionalFiles) {
+            await copyFile(file.src, join(projectPath, file.dest));
+        }
     }
     // Re-zip and rename
     await zip(projectPath, moduleName);
