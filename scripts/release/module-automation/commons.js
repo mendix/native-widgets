@@ -261,7 +261,7 @@ function unzip(src, dest) {
     return execShellCommand(`unzip "${src}" -d "${dest}"`);
 }
 
-async function getOssFiles(folderPath, skipOssReadme) {
+async function getOssFiles(folderPath, isOssReadmeRequired) {
     if (!folderPath || typeof folderPath !== "string") {
         throw new TypeError(`Invalid folderPath: ${folderPath}`);
     }
@@ -273,15 +273,15 @@ async function getOssFiles(folderPath, skipOssReadme) {
         throw new Error(`License file not found at expected location: ${licenseFile}`);
     }
 
-    if (skipOssReadme) {
-        return [{ src: licenseFile, dest: basename(licenseFile) }];
-    }
-
     const readmeossPattern = "*__*__READMEOSS_*.html";
     const readmeossFiles = globSync(readmeossPattern, { cwd: folderPath, absolute: true, ignore: "**/.*/**" });
 
-    if (readmeossFiles.length === 0) {
+    if (isOssReadmeRequired && readmeossFiles.length === 0) {
         throw new Error(`No OSS README file found in ${folderPath} matching ${readmeossPattern}`);
+    }
+
+    if (readmeossFiles.length === 0) {
+        return [{ src: licenseFile, dest: basename(licenseFile) }];
     }
 
     const ossReadmeFile = readmeossFiles[0];
@@ -292,13 +292,13 @@ async function getOssFiles(folderPath, skipOssReadme) {
     ];
 }
 
-async function copyFilesToMpk(filesToAdd, mpkOutput, moduleName) {
+async function copyFilesToMpk(files, mpkOutput, moduleName) {
     const projectPath = mpkOutput.replace(".mpk", "");
     // Unzip the mpk
     await unzip(mpkOutput, projectPath);
     await rm(mpkOutput, { recursive: true, force: true });
     // Add additional files to the MPK
-    for await (const file of filesToAdd) {
+    for await (const file of files) {
         await copyFile(file.src, join(projectPath, file.dest));
     }
     // Re-zip and rename
@@ -307,7 +307,7 @@ async function copyFilesToMpk(filesToAdd, mpkOutput, moduleName) {
 }
 
 // Unzip the module, copy the widget and update package.xml
-async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, filesToAdd) {
+async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, additionalFiles) {
     console.log(`Adding ${widgetsFolders.length} widgets to module ${moduleName}`);
     const projectPath = mpkOutput.replace(".mpk", "");
     const packageXmlFile = join(projectPath, "package.xml");
@@ -345,7 +345,7 @@ async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, fi
         throw new Error(`Including widgets in module failed. package.xml of widget/module ${moduleName} not found`);
     }
     // Add additional files to the MPK
-    for await (const file of filesToAdd) {
+    for await (const file of additionalFiles) {
         await copyFile(file.src, join(projectPath, file.dest));
     }
     // Re-zip and rename

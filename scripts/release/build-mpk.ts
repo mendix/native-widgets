@@ -106,7 +106,7 @@ async function createNativeMobileResourcesModule(): Promise<ArtifactResult> {
     log("Creating the Native Mobile Resource module...");
     const moduleFolder = join(repoRootPath, "packages/jsActions", inputs.module);
     log(`Module folder: ${moduleFolder}`);
-    const ossFiles = await getOssFiles(moduleFolder, true);
+    const ossFiles = await getOssFiles(moduleFolder, false);
     log(`OSS files to include: ${ossFiles.length}`);
     const tmpFolder = join(repoRootPath, "tmp", inputs.module);
     log(`Temp folder: ${tmpFolder}`);
@@ -141,7 +141,7 @@ async function createNanoflowCommonsModule(): Promise<ArtifactResult> {
     log("Creating the Nanoflow Commons module...");
     const moduleFolder = join(repoRootPath, "packages/jsActions", inputs.module);
     log(`Module folder: ${moduleFolder}`);
-    const ossFiles = await getOssFiles(moduleFolder, true);
+    const ossFiles = await getOssFiles(moduleFolder, false);
     log(`OSS files to include: ${ossFiles.length}`);
     const tmpFolder = join(repoRootPath, "tmp", inputs.module);
     log(`Temp folder: ${tmpFolder}`);

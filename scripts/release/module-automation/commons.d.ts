@@ -25,4 +25,7 @@ export function copyFilesToMpk(
     moduleNameInModeler: string
 ): Promise<void>;
 
-export function getOssFiles(folderPath: string, skipOssReadme: boolean): Promise<Array<{ src: string; dest: string }>>;
+export function getOssFiles(
+    folderPath: string,
+    isOssReadmeRequired: boolean
+): Promise<Array<{ src: string; dest: string }>>;
