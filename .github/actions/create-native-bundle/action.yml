@@ -23,16 +23,16 @@ runs:
       with:
         args: unzip -qq project.zip
     - name: "Rename extracted directory"
-      run: mv Native-Mobile-Resources-mx-version-10 Native-Mobile-Resources-mx10
+      run: mv Native-Mobile-Resources-mx-version-10 NMR-mx10
       shell: bash
     - name: "Extract deployment package"
       uses: montudor/action-zip@v1.0.0
       with:
-        args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-mx10/deployment
+        args: unzip -qq ${{ inputs.mda-file }} -d NMR-mx10/deployment
     - name: "Create bundle for ${{ inputs.platform }}"
       run: |
         mkdir -p ${{ inputs.platform }}/assets
-        cd Native-Mobile-Resources-mx10/deployment/native && \
+        cd NMR-mx10/deployment/native && \
         /tmp/mxbuild/modeler/tools/node/linux-x64/node \
         /tmp/mxbuild/modeler/tools/node/node_modules/react-native/cli.js \
         bundle --verbose --platform ${{ inputs.platform }} --dev false \
