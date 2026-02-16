@@ -104,6 +104,48 @@ index 682cf9fc4259a1f431e7cc3b17a319fdb072929e..5be03c770f8247637223f78738c3cdec
      /^react-native-svg($|\/)/,
      /^react-native-vector-icons($|\/)/,
      /^@?react-navigation($|\/)/,
+@@ -179,6 +179,18 @@ export default async args => {
+     return result;
+ 
+     function getCommonPlugins(config) {
++        const hasReanimated = (() => {
++            try {
++                const packageJson = require(join(sourcePath, "package.json"));
++                return !!(
++                    (packageJson.dependencies && packageJson.dependencies["react-native-reanimated"]) ||
++                    (packageJson.peerDependencies && packageJson.peerDependencies["react-native-reanimated"])
++                );
++            } catch {
++                return false;
++            }
++        })();
++
+         return [
+             nodeResolve({ preferBuiltins: false, mainFields: ["module", "browser", "main"] }),
+             isTypescript
+@@ -232,7 +244,21 @@ export default async args => {
+                 })
+                 : null,
+             image(),
+-            production ? terser({ mangle: false }) : null,
++            production ? terser(hasReanimated
++                ? {
++                    mangle: false,
++                    compress: {
++                        defaults: false,
++                        inline: false,
++                        reduce_funcs: false,
++                        side_effects: false,
++                    },
++                    keep_fnames: true,
++                    keep_classnames: true,
++                    module: false,
++                    format: { comments: false }
++                  }
++                : { mangle: false }) : null,
+             // We need to create .mpk and copy results to test project after bundling is finished.
+             // In case of a regular build is it is on `writeBundle` of the last config we define
+             // (since rollup processes configs sequentially). But in watch mode rollup re-bundles only
 diff --git a/configs/tsconfig.base.json b/configs/tsconfig.base.json
 index 5cee5d4d880e152576fc7cad69dd8c22dfbedee8..62627fd52bf0d5847d9ebec37fadac3142ed71a7 100644
 --- a/configs/tsconfig.base.json
