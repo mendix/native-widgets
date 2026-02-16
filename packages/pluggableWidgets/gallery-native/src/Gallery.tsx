@@ -49,6 +49,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
                 }),
                 {}
             ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [props.filterList, viewStateFilters.current]
     );
 
