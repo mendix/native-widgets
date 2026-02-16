@@ -1,6 +1,5 @@
 import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
-    FlatList,
     I18nManager,
     LayoutChangeEvent,
     NativeSyntheticEvent,
@@ -18,6 +17,7 @@ import { Icon } from "mendix/components/native/Icon";
 import { SlidesType } from "../typings/IntroScreenProps";
 import { EditableValue, ValueStatus, DynamicValue, NativeIcon } from "mendix";
 import { Big } from "big.js";
+import { FlashList, FlashListRef } from "@shopify/flash-list";
 
 interface SwipeableContainerProps {
     testID?: string;
@@ -69,7 +69,7 @@ const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: Editabl
 export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement => {
     const [width, setWidth] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
-    const flatList = useRef<FlatList<any>>(null);
+    const flashList = useRef<FlashListRef<any>>(null);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -79,8 +79,8 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const goToSlide = useCallback(
         (pageNum: number) => {
             setActiveIndex(pageNum);
-            if (flatList && flatList.current) {
-                flatList.current.scrollToOffset({
+            if (flashList && flashList.current) {
+                flashList.current.scrollToOffset({
                     offset: rtlSafeIndex(pageNum) * width
                 });
             }
@@ -317,11 +317,10 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
 
     return (
         <View style={styles.flexOne}>
-            <FlatList
+            <FlashList
                 testID={props.testID}
                 initialScrollIndex={refreshActiveSlideAttribute(props.slides, props.activeSlide)}
-                getItemLayout={(_, i) => ({ length: width, offset: width * i, index: i })}
-                ref={flatList}
+                ref={flashList}
                 data={props.slides}
                 horizontal
                 pagingEnabled
