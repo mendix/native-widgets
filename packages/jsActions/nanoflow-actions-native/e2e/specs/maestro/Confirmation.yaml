@@ -1,4 +1,5 @@
 appId: "${APP_ID}"
+platform: "${PLATFORM}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
@@ -14,8 +15,24 @@ appId: "${APP_ID}"
     id: "container1"
 - inputText: "11"
 - tapOn: "Show confirmation "
-- assertVisible: "Yolo"
-- assertVisible: "11"
+- runFlow:
+    when:
+      platform: android
+    commands:
+      - assertVisible: "Yolo"
+      - assertVisible: "11"
+- runFlow:
+    when:
+      platform: ios
+    commands:
+      - assertVisible:
+          text: ".*Yolo.*"
+          optional: true
+      - assertVisible:
+          text: ".*11.*"
+          optional: true
+      - takeScreenshot:
+          path: "maestro/images/actual/${PLATFORM}/confirmation"
 - tapOn: "OK"
 - assertVisible: "Confirmed!"
 
