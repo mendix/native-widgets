@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   We fixed an issue with @react-native-community/geolocation where Android devices had difficulty obtaining precise location data.
+
 ## [5.2.0] Nanoflow Commons - 2026-1-23
 
 -   We've migrated from using @react-native-community/geolocation to react-native-permissions for handling location permissions.
