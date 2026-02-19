@@ -34,19 +34,17 @@ jobs:
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version-file: ".nvmrc"
-      - name: "Setup pnpm"
-        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
       - name: "Installing dependencies"
-        run: pnpm install
+        run: yarn install
       - name: "Bumping version"
         id: bump_version
         run: |
           NEW_VER=$(npm --prefix "./packages/jsActions/${{ inputs.module }}" version "${{ inputs.version }}" --no-git-tag-version)
           echo "VERSION=${NEW_VER}" >> "$GITHUB_OUTPUT"
       - name: "Building native widgets and js actions"
-        run: pnpm -r run release
+        run: yarn workspaces foreach --all run release
       - name: "Updating Native Mobile Resources project"
-        run: pnpm run build-mpk
+        run: yarn run build-mpk
         env:
           MODULE: ${{ inputs.module }}
           VERSION: ${{ steps.bump_version.outputs.VERSION }}
