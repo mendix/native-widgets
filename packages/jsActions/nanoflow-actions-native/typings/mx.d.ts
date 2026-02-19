@@ -2,11 +2,6 @@
 declare namespace mx {
     interface ui {
         toggleSidebar: () => void;
-        downloadFile: (args: {
-            mxobject: mendix.lib.MxObject;
-            target: "window" | "internal";
-            error?: (err: Error) => void;
-        }) => Promise<void>;
     }
     interface data {
         update: (param: { guid?: string | undefined; entity?: string | undefined; callback?: () => void }) => void;
