@@ -1,0 +1,64 @@
+name: Build MPK
+
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: "Select the module to create MPK for"
+        required: true
+        type: choice
+        options:
+          - mobile-resources-native
+          - nanoflow-actions-native
+      version:
+        description: "Version to increase"
+        required: true
+        type: choice
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  publish_release:
+    name: "Build MPK"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checking-out code"
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        with:
+          submodules: false
+      - name: "Defining node version"
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+      - name: "Installing dependencies"
+        run: pnpm install
+      - name: "Bumping version"
+        id: bump_version
+        run: |
+          NEW_VER=$(npm --prefix "./packages/jsActions/${{ inputs.module }}" version "${{ inputs.version }}" --no-git-tag-version)
+          echo "VERSION=${NEW_VER}" >> "$GITHUB_OUTPUT"
+      - name: "Building native widgets and js actions"
+        run: pnpm -r run release
+      - name: "Updating Native Mobile Resources project"
+        run: pnpm run build-mpk
+        env:
+          MODULE: ${{ inputs.module }}
+          VERSION: ${{ steps.bump_version.outputs.VERSION }}
+
+      - name: "Upload MPK artifact"
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_PATH }}
+          if-no-files-found: error
+
+      - name: "Cleanup tmp folder"
+        if: ${{ always() }}
+        run: |
+          sudo rm -rf tmp || true
