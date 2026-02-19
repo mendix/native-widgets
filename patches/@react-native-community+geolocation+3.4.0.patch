@@ -1,5 +1,5 @@
 diff --git a/node_modules/@react-native-community/geolocation/android/src/main/java/com/reactnativecommunity/geolocation/AndroidLocationManager.java b/node_modules/@react-native-community/geolocation/android/src/main/java/com/reactnativecommunity/geolocation/AndroidLocationManager.java
-index 55d2619..bbe20ae 100644
+index 55d2619..eb57964 100644
 --- a/node_modules/@react-native-community/geolocation/android/src/main/java/com/reactnativecommunity/geolocation/AndroidLocationManager.java
 +++ b/node_modules/@react-native-community/geolocation/android/src/main/java/com/reactnativecommunity/geolocation/AndroidLocationManager.java
 @@ -10,6 +10,7 @@ import android.location.LocationManager;
@@ -9,15 +9,6 @@ index 55d2619..bbe20ae 100644
 +import android.os.Looper;
  
  import androidx.core.content.ContextCompat;
- 
-@@ -209,7 +210,7 @@ public class AndroidLocationManager extends BaseLocationManager {
- 
-         public void invoke(Location location) {
-             mOldLocation = location;
--            mLocationManager.requestLocationUpdates(mProvider, 100, 1, mLocationListener);
-+            mLocationManager.requestLocationUpdates(mProvider, 0, 0, mLocationListener, Looper.getMainLooper());
-             mHandler.postDelayed(mTimeoutRunnable, mTimeout);
-         }
  
 diff --git a/node_modules/@react-native-community/geolocation/android/src/main/java/com/reactnativecommunity/geolocation/GeolocationModule.java b/node_modules/@react-native-community/geolocation/android/src/main/java/com/reactnativecommunity/geolocation/GeolocationModule.java
 index 5b42ba4..4972f38 100644
