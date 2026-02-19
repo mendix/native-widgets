@@ -1,5 +1,5 @@
 import { all } from "deepmerge";
-import { createElement, ReactElement, useCallback, useEffect, useMemo, useState, useRef } from "react";
+import { createElement, ReactElement, useCallback, useEffect, useMemo, useState, useRef, Fragment } from "react";
 import {
     executeAction,
     FilterType,
@@ -13,7 +13,7 @@ import { extractFilters } from "./utils/filters";
 import { FilterCondition } from "mendix/filters";
 import { Gallery as GalleryComponent, GalleryProps as GalleryComponentProps } from "./components/Gallery";
 import { GalleryProps } from "../typings/GalleryProps";
-import { ObjectItem } from "mendix";
+import { ObjectItem, ValueStatus } from "mendix";
 
 export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
     const viewStateFilters = useRef<FilterCondition | undefined>(undefined);
@@ -49,6 +49,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
                 }),
                 {}
             ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [props.filterList, viewStateFilters.current]
     );
 
@@ -102,6 +103,10 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
             ) : null,
         [FilterContext, customFiltersState, filterList, initialFilters, isFilterable, props.filtersPlaceholder]
     );
+
+    if (props.datasource.status === ValueStatus.Loading && props.datasource.items === undefined) {
+        return <Fragment />;
+    }
 
     return (
         <GalleryComponent
