@@ -1,6 +1,6 @@
 const { basename, extname, join, resolve } = require("path");
 const { access, readdir, copyFile, readFile, writeFile, rename, rm, mkdir, chmod } = require("fs/promises");
-const { exec } = require("child_process");
+const { exec, execFile } = require("child_process");
 
 const regex = {
     changelogs: /(?<=## \[unreleased\]\n)((?!## \[\d+\.\d+\.\d+\])\W|\w)*/i,
@@ -17,6 +17,22 @@ async function setLocalGitCredentials(workingDirectory) {
 function execShellCommand(cmd, workingDirectory = process.cwd()) {
     return new Promise((resolve, reject) => {
         exec(cmd, { cwd: workingDirectory }, (error, stdout, stderr) => {
+            if (error) {
+                console.warn(stderr);
+                console.warn(stdout);
+                reject(error);
+            }
+            if (stderr) {
+                console.warn(stderr);
+            }
+            resolve(stdout);
+        });
+    });
+}
+
+function execFileCommand(command, args = [], workingDirectory = process.cwd()) {
+    return new Promise((resolve, reject) => {
+        execFile(command, args, { cwd: workingDirectory }, (error, stdout, stderr) => {
             if (error) {
                 console.warn(stderr);
                 console.warn(stdout);
@@ -212,7 +228,7 @@ async function cloneRepo(githubUrl, localFolder, branchName = "main") {
     const githubUrlAuthenticated = `https://${process.env.GH_USERNAME}:${process.env.GH_PAT}@${githubUrlDomain}`;
     await rm(localFolder, { recursive: true, force: true });
     await mkdir(localFolder, { recursive: true });
-    await execShellCommand(`git clone -b ${branchName} ${githubUrlAuthenticated} ${localFolder}`);
+    await execFileCommand("git", ["clone", "-b", branchName, githubUrlAuthenticated, localFolder]);
     await setLocalGitCredentials(localFolder);
 }
 
