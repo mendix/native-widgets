@@ -1,6 +1,6 @@
 import { access, copyFile, rename, rm } from "fs/promises";
 import { basename, join } from "path";
-import { globSync } from "glob";
+import { sync } from "glob";
 import { exec } from "child_process";
 
 type OssReadMeValidationCriteria = {
@@ -24,7 +24,7 @@ export async function getOssFiles(
     }
 
     const readmePattern = "*__*__READMEOSS_*.html";
-    const readme = globSync(readmePattern, { cwd: folderPath, absolute: true, ignore: "**/.*/**" })[0];
+    const readme = sync(readmePattern, { cwd: folderPath, absolute: true, ignore: "**/.*/**" })[0];
     if (validationCriteria) {
         validateOssReadme(readme, validationCriteria);
     }
