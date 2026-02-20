@@ -22,7 +22,6 @@ export interface GalleryStyle {
 }
 
 export const defaultGalleryStyle: GalleryStyle = {
-    listItem: { flexGrow: 1 },
     loadMoreButtonContainer: {
         alignSelf: "stretch"
     },
