@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, useCallback, useMemo } from "react";
-import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity, Dimensions } from "react-native";
+import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity, useWindowDimensions } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
 import { GalleryStyle } from "../ui/Styles";
@@ -34,13 +34,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const firstItemId = props.items?.[0]?.id;
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
-
-    const itemWidth = useMemo(() => {
-        if (isScrollDirectionVertical) {
-            return undefined;
-        }
-        return Dimensions.get("window").width;
-    }, [isScrollDirectionVertical]);
+    const { width } = useWindowDimensions();
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -51,8 +45,9 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const renderItem = useCallback(
         (item: { item: T }): ReactElement =>
             itemRenderer((children, onPress) => {
+                const itemStyle = isScrollDirectionVertical ? undefined : { width };
                 const listItemWrapperProps: ViewProps = {
-                    style: itemWidth ? { width: itemWidth } : undefined,
+                    style: itemStyle,
                     testID: `${name}-list-item-${item.item.id}`
                 };
                 const renderListItemContent = (
@@ -74,7 +69,17 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                     <View {...listItemWrapperProps}>{renderListItemContent}</View>
                 );
             }, item.item),
-        [itemRenderer, name, style.listItem, style.firstItem, style.lastItem, firstItemId, lastItemId, itemWidth]
+        [
+            itemRenderer,
+            isScrollDirectionVertical,
+            width,
+            name,
+            style.listItem,
+            style.firstItem,
+            style.lastItem,
+            firstItemId,
+            lastItemId
+        ]
     );
 
     const loadMoreButton = useMemo((): ReactElement | null => {
