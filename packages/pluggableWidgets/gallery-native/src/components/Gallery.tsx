@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, useCallback, useMemo } from "react";
-import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity } from "react-native";
+import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity, Dimensions } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
 import { GalleryStyle } from "../ui/Styles";
@@ -35,6 +35,13 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
 
+    const itemWidth = useMemo(() => {
+        if (isScrollDirectionVertical) {
+            return undefined;
+        }
+        return Dimensions.get("window").width;
+    }, [isScrollDirectionVertical]);
+
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
             props.loadMoreItems();
@@ -45,7 +52,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         (item: { item: T }): ReactElement =>
             itemRenderer((children, onPress) => {
                 const listItemWrapperProps: ViewProps = {
-                    style: isScrollDirectionVertical && { width: `${100 / numColumns}%` },
+                    style: itemWidth ? { width: itemWidth } : undefined,
                     testID: `${name}-list-item-${item.item.id}`
                 };
                 const renderListItemContent = (
@@ -67,17 +74,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                     <View {...listItemWrapperProps}>{renderListItemContent}</View>
                 );
             }, item.item),
-        [
-            isScrollDirectionVertical,
-            numColumns,
-            itemRenderer,
-            name,
-            style.listItem,
-            style.firstItem,
-            style.lastItem,
-            firstItemId,
-            lastItemId
-        ]
+        [itemRenderer, name, style.listItem, style.firstItem, style.lastItem, firstItemId, lastItemId, itemWidth]
     );
 
     const loadMoreButton = useMemo((): ReactElement | null => {
@@ -136,10 +133,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     );
 
     return (
-        <View
-            testID={`${name}`}
-            style={[props.style.container, !isScrollDirectionVertical && { flexDirection: "row" }]}
-        >
+        <View testID={`${name}`} style={props.style.container}>
             {props.filters ? <View>{props.filters}</View> : null}
             <FlashList
                 {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
