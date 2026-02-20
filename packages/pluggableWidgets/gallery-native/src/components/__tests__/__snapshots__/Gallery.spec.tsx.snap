@@ -2,12 +2,7 @@
 
 exports[`Gallery rendering rendering with load more button it shouldn't render the paging button if hasn't more item 1`] = `
 <View
-  style={
-    [
-      {},
-      false,
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
   <View
@@ -26,11 +21,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
   >
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-11"
       >
         <View
@@ -48,11 +38,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-22"
       >
         <View
@@ -70,11 +55,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-33"
       >
         <View
@@ -92,11 +72,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-44"
       >
         <View
@@ -114,11 +89,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-55"
       >
         <View
@@ -136,11 +106,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-66"
       >
         <View
@@ -158,11 +123,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-77"
       >
         <View
@@ -180,11 +140,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-88"
       >
         <View
@@ -202,11 +157,6 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-99"
       >
         <View
@@ -228,12 +178,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
 
 exports[`Gallery rendering rendering with load more button renders correctly 1`] = `
 <View
-  style={
-    [
-      {},
-      false,
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
   <View
@@ -252,11 +197,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
   >
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-11"
       >
         <View
@@ -274,11 +214,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-22"
       >
         <View
@@ -296,11 +231,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-33"
       >
         <View
@@ -318,11 +248,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-44"
       >
         <View
@@ -340,11 +265,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-55"
       >
         <View
@@ -362,11 +282,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-66"
       >
         <View
@@ -384,11 +299,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-77"
       >
         <View
@@ -406,11 +316,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-88"
       >
         <View
@@ -428,11 +333,6 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-99"
       >
         <View
@@ -499,12 +399,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
 
 exports[`Gallery rendering rendering with load more button renders correctly with custom paging button title 1`] = `
 <View
-  style={
-    [
-      {},
-      false,
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
   <View
@@ -523,11 +418,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
   >
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-11"
       >
         <View
@@ -545,11 +435,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-22"
       >
         <View
@@ -567,11 +452,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-33"
       >
         <View
@@ -589,11 +469,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-44"
       >
         <View
@@ -611,11 +486,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-55"
       >
         <View
@@ -633,11 +503,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-66"
       >
         <View
@@ -655,11 +520,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-77"
       >
         <View
@@ -677,11 +537,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-88"
       >
         <View
@@ -699,11 +554,6 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-99"
       >
         <View
@@ -770,12 +620,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
 
 exports[`Gallery rendering renders correctly 1`] = `
 <View
-  style={
-    [
-      {},
-      false,
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
   <View
@@ -794,11 +639,6 @@ exports[`Gallery rendering renders correctly 1`] = `
   >
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-11"
       >
         <View
@@ -816,11 +656,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-22"
       >
         <View
@@ -838,11 +673,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-33"
       >
         <View
@@ -860,11 +690,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-44"
       >
         <View
@@ -882,11 +707,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-55"
       >
         <View
@@ -904,11 +724,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-66"
       >
         <View
@@ -926,11 +741,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-77"
       >
         <View
@@ -948,11 +758,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-88"
       >
         <View
@@ -970,11 +775,6 @@ exports[`Gallery rendering renders correctly 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-99"
       >
         <View
@@ -996,14 +796,7 @@ exports[`Gallery rendering renders correctly 1`] = `
 
 exports[`Gallery rendering renders correctly horizontal 1`] = `
 <View
-  style={
-    [
-      {},
-      {
-        "flexDirection": "row",
-      },
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
   <View
@@ -1021,7 +814,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
   >
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-11"
       >
         <View
@@ -1039,7 +836,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-22"
       >
         <View
@@ -1057,7 +858,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-33"
       >
         <View
@@ -1075,7 +880,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-44"
       >
         <View
@@ -1093,7 +902,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-55"
       >
         <View
@@ -1111,7 +924,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-66"
       >
         <View
@@ -1129,7 +946,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-77"
       >
         <View
@@ -1147,7 +968,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-88"
       >
         <View
@@ -1165,7 +990,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     </View>
     <View>
       <View
-        style={false}
+        style={
+          {
+            "width": 750,
+          }
+        }
         testID="gallery-test-list-item-99"
       >
         <View
@@ -1187,12 +1016,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
 
 exports[`Gallery rendering renders correctly with empty list and custom placeholder 1`] = `
 <View
-  style={
-    [
-      {},
-      false,
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
   <View
@@ -1221,12 +1045,7 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
 
 exports[`Gallery rendering renders correctly with filter 1`] = `
 <View
-  style={
-    [
-      {},
-      false,
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
   <View>
@@ -1248,11 +1067,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
   >
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-11"
       >
         <View
@@ -1270,11 +1084,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-22"
       >
         <View
@@ -1292,11 +1101,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-33"
       >
         <View
@@ -1314,11 +1118,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-44"
       >
         <View
@@ -1336,11 +1135,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-55"
       >
         <View
@@ -1358,11 +1152,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-66"
       >
         <View
@@ -1380,11 +1169,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-77"
       >
         <View
@@ -1402,11 +1186,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-88"
       >
         <View
@@ -1424,11 +1203,6 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     </View>
     <View>
       <View
-        style={
-          {
-            "width": "50%",
-          }
-        }
         testID="gallery-test-list-item-99"
       >
         <View
