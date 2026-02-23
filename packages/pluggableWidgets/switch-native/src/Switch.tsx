@@ -76,6 +76,7 @@ export function Switch(props: Props): ReactElement {
                 // Horizontal layout: label and switch in a row, validation message below
                 <>
                     <View
+                        testID={`${name}$horizontalContainer`}
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
