@@ -71,18 +71,23 @@ describe("Switch", () => {
         expect(switchWrapper.exists({ testID: `${name}$label` })).toEqual(true);
     });
 
-    it("with showLabel true renders label horizontally", () => {
+    it("with showLabel true and horizontal orientation, renders label and switch in a row", () => {
         const props = createProps({
-            showLabel: true
+            showLabel: true,
+            labelOrientation: "horizontal",
+            label: dynamicValue<string>("Test Label", false)
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(
-            switchWrapper
-                .find({ testID: `${name}$wrapper` })
-                .at(1)
-                .prop("style")
-        ).toEqual(expect.arrayContaining([{ flexDirection: "row", alignItems: "center" }]));
+        render(<Switch {...props} />);
+
+        const horizontalContainer = screen.getByTestId(`${name}$horizontalContainer`);
+
+        expect(horizontalContainer.props.style).toEqual(
+            expect.objectContaining({ flexDirection: "row", alignItems: "center" })
+        );
+
+        expect(horizontalContainer).toContainElement(screen.getByTestId(`${name}$label`));
+        expect(horizontalContainer).toContainElement(screen.getByTestId(name));
     });
 
     it("with showLabel true and labelOrientation vertical, renders vertical", () => {
@@ -91,14 +96,12 @@ describe("Switch", () => {
             labelOrientation: "vertical"
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-
-        expect(
-            switchWrapper
-                .find({ testID: `${name}$wrapper` })
-                .at(1)
-                .prop("style")
-        ).toEqual(expect.not.arrayContaining([{ flexDirection: "row", alignItems: "center" }]));
+        render(<Switch {...props} />);
+        const wrapper = screen.getByTestId(`${name}$wrapper`);
+        expect(wrapper.props.style).toEqual(
+            expect.arrayContaining([{ flexDirection: "column", alignItems: "flex-start" }])
+        );
+        expect(screen.queryByTestId(`${name}$horizontalContainer`)).toBeNull();
     });
 
     it("with error renders validation message", () => {
