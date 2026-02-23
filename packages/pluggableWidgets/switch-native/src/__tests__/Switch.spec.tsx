@@ -20,7 +20,8 @@ const createProps = (props?: Partial<Props>): Props => {
         showLabel: false,
         booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).build(),
         onChange: undefined,
-        style: [{ ...defaultSwitchStyle, ...style }]
+        style: [{ ...defaultSwitchStyle, ...style }],
+        labelPosition: "left"
     };
 
     return { ...defaultProps, ...props };
