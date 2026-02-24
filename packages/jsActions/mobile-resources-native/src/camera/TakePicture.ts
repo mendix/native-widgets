@@ -131,7 +131,7 @@ export async function TakePicture(
                         {},
                         blob,
                         async () => {
-                            await NativeModules.NativeFsModule.remove(filePathWithoutFileScheme);
+                            await NativeModules.MendixNative.fsRemove(filePathWithoutFileScheme);
 
                             imageObject.set("Name", filename);
 
@@ -142,7 +142,7 @@ export async function TakePicture(
                             });
                         },
                         async (error: Error) => {
-                            await NativeModules.NativeFsModule.remove(filePathWithoutFileScheme);
+                            await NativeModules.MendixNative.fsRemove(filePathWithoutFileScheme);
 
                             reject(error);
                         }
