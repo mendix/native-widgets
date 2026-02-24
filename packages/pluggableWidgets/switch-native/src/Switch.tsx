@@ -87,16 +87,31 @@ export function Switch(props: Props): ReactElement {
                         {labelPosition === "right" ? (
                             <>
                                 {React.cloneElement(switchElement, { key: "switch" })}
-                                {labelElement && React.cloneElement(labelElement, { key: "label" })}
+                                <View
+                                    style={{
+                                        flexDirection: "column",
+                                        alignItems: "flex-end"
+                                    }}
+                                >
+                                    {labelElement && React.cloneElement(labelElement, { key: "label" })}
+                                    {validationMessage}
+                                </View>
                             </>
                         ) : (
                             <>
-                                {labelElement && React.cloneElement(labelElement, { key: "label" })}
+                                <View
+                                    style={{
+                                        flexDirection: "column",
+                                        alignItems: "flex-start"
+                                    }}
+                                >
+                                    {labelElement && React.cloneElement(labelElement, { key: "label" })}
+                                    {validationMessage}
+                                </View>
                                 {React.cloneElement(switchElement, { key: "switch" })}
                             </>
                         )}
                     </View>
-                    {validationMessage}
                 </>
             ) : (
                 // Vertical layout: label, switch, and validation message all in a column
