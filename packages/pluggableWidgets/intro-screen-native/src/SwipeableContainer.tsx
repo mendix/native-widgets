@@ -111,9 +111,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         onSlideChange(index, activeIndexBeforeChange);
     };
 
-    const renderItem = ({ item }: any): ReactElement => {
-        return <View style={[{ width, flex: 1 }]}>{item.content}</View>;
-    };
+    const renderItem = useCallback(
+        ({ item }: any): ReactElement => {
+            return <View style={[{ width }]}>{item.content}</View>;
+        },
+        [width]
+    );
 
     const renderButton = (
         caption: Option<string>,
