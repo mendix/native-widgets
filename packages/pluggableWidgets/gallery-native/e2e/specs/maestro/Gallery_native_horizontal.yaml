@@ -11,7 +11,7 @@ appId: "${APP_ID}"
 - assertVisible:
     text: ".*Title 0.*"
 - repeat:
-    times: 20
+    times: 25
     commands:
       - swipe:
           start: 90%, 10%
