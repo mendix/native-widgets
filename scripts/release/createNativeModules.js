@@ -138,7 +138,7 @@ async function updateNativeComponentsTestProject(moduleInfo, tmpFolder, nativeWi
     const tmpFolderActions = join(tmpFolder, `javascriptsource/${moduleInfo.moduleFolderNameInModeler}/actions`);
 
     console.log("Updating NativeComponentsTestProject...");
-    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder);
+    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder, moduleInfo.testProjectBranchName);
 
     console.log("Deleting existing JS Actions from test project...");
     await rm(tmpFolderActions, { force: true, recursive: true }); // this is useful to avoid retaining stale dependencies in the test project.
@@ -208,7 +208,7 @@ async function updateNativeComponentsTestProjectWithAtlas(moduleInfo, tmpFolder)
     const tmpFolderNativeStyles = join(tmpFolder, `themesource/${moduleInfo.moduleFolderNameInModeler}`);
 
     console.log("Updating NativeComponentsTestProject..");
-    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder);
+    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder, moduleInfo.testProjectBranchName);
 
     console.log("Copying Native styling files..");
     await Promise.all([

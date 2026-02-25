@@ -8,7 +8,7 @@ export function getFiles(folder: string, extensions?: string[]): Promise<string[
 
 export function getPackageInfo(folder: string): Promise<any>;
 
-export function cloneRepo(githubUrl: string, localFolder: string, branchName?: string): Promise<void>;
+export function cloneRepo(githubUrl: string, localFolder: string, branchName: string): Promise<void>;
 
 export function createMPK(tmpFolder: string, moduleInfo: any, excludeFilesRegExp: RegExp): Promise<string>;
 
