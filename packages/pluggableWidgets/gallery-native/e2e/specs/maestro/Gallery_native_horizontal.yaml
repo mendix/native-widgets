@@ -11,11 +11,10 @@ appId: "${APP_ID}"
 - assertVisible:
     text: ".*Title 0.*"
 - repeat:
-    times: 6
+    times: 20
     commands:
       - swipe:
           start: 90%, 10%
           end: 15%, 10%
-          duration: 700
 - assertVisible:
-    text: ".*Title 5.*"
+    text: ".*Title 20.*"
