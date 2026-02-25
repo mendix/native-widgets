@@ -181,7 +181,7 @@ async function updateNativeComponentsTestProject(
     log(`Updating NativeComponentsTestProject (repo=${moduleInfo.testProjectUrl ?? "<unknown>"})...`);
     log(`JS actions dist path: ${jsActionsPath}`);
     log(`JS actions files found: ${jsActions.length}`);
-    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder);
+    await cloneRepo(moduleInfo.testProjectUrl, tmpFolder, moduleInfo.testProjectBranchName);
 
     log(`Deleting existing JS Actions from test project: ${tmpFolderActions}`);
     await rm(tmpFolderActions, { force: true, recursive: true }); // this is useful to avoid retaining stale dependencies in the test project.
