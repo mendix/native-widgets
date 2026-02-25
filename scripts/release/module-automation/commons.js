@@ -207,12 +207,13 @@ async function githubAuthentication(moduleInfo) {
     await execShellCommand(`echo "${process.env.GH_PAT}" | gh auth login --with-token`);
 }
 
-async function cloneRepo(githubUrl, localFolder) {
+async function cloneRepo(githubUrl, localFolder, branchName) {
     const githubUrlDomain = githubUrl.replace("https://", "");
     const githubUrlAuthenticated = `https://${process.env.GH_USERNAME}:${process.env.GH_PAT}@${githubUrlDomain}`;
     await rm(localFolder, { recursive: true, force: true });
     await mkdir(localFolder, { recursive: true });
-    await execShellCommand(`git clone ${githubUrlAuthenticated} ${localFolder}`);
+    const branchOption = branchName ? `-b ${branchName}` : "";
+    await execShellCommand(`git clone ${branchOption} ${githubUrlAuthenticated} ${localFolder}`);
     await setLocalGitCredentials(localFolder);
 }
 
