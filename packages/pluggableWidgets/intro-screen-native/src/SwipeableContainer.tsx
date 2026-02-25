@@ -70,6 +70,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const [width, setWidth] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
     const flashList = useRef<FlashListRef<any>>(null);
+    const isInitializing = useRef(true);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -92,6 +93,16 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
         if (width && props.activeSlide?.status === ValueStatus.Available && slide !== activeIndex) {
             goToSlide(slide);
+            if (isInitializing.current) {
+                if (isInitializing.current) {
+                    // Use requestAnimationFrame twice to wait for the next frame after scroll.
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            isInitializing.current = false;
+                        });
+                    });
+                }
+            }
         }
     }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
 
@@ -298,6 +309,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             if (newIndex === activeIndex) {
                 return;
             }
+
+            if (isInitializing.current) {
+                setActiveIndex(newIndex);
+                return;
+            }
+
             const lastIndex = activeIndex;
             setActiveIndex(newIndex);
             onSlideChange(newIndex, lastIndex);
