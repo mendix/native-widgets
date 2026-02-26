@@ -68,6 +68,7 @@ const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: Editabl
 
 export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement => {
     const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
     const flashList = useRef<FlashListRef<any>>(null);
     const isInitializing = useRef(true);
@@ -124,9 +125,9 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
 
     const renderItem = useCallback(
         ({ item }: any): ReactElement => {
-            return <View style={[{ width }]}>{item.content}</View>;
+            return <View style={[{ width }, { height }]}>{item.content}</View>;
         },
-        [width]
+        [width, height]
     );
 
     const renderButton = (
@@ -327,12 +328,17 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
      */
     const onLayout = useCallback(
         (event: LayoutChangeEvent) => {
-            const newWidth = event.nativeEvent.layout.width;
+            const layout = event.nativeEvent.layout;
+            const newWidth = layout.width;
             if (newWidth !== width) {
                 setWidth(newWidth);
             }
+            const newHeight = layout.height;
+            if (newHeight !== height) {
+                setHeight(newHeight);
+            }
         },
-        [width]
+        [width, height]
     );
 
     return (
