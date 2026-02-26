@@ -7,6 +7,7 @@ import { render, fireEvent, act } from "@testing-library/react-native";
 import { Gallery, GalleryProps } from "../Gallery";
 
 jest.mock("react-native-device-info", () => ({ isTablet: jest.fn().mockReturnValue(false) }));
+jest.mock("@shopify/flash-list"); // Mocking FlashList API because it causes issues with the test renderer
 
 const itemWrapperFunction =
     ({ onClick }: { onClick?: () => void }): GalleryProps<ObjectItem>["itemRenderer"] =>

@@ -1,7 +1,7 @@
 {
   "name": "intro-screen-native",
   "widgetName": "IntroScreen",
-  "version": "4.2.1",
+  "version": "4.3.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
     "@react-native-async-storage/async-storage": "2.0.0",
+    "@shopify/flash-list": "2.2.2",
     "react-native-device-info": "14.0.4"
   },
   "devDependencies": {

@@ -1,6 +1,5 @@
 import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
-    FlatList,
     I18nManager,
     LayoutChangeEvent,
     NativeSyntheticEvent,
@@ -18,6 +17,7 @@ import { Icon } from "mendix/components/native/Icon";
 import { SlidesType } from "../typings/IntroScreenProps";
 import { EditableValue, ValueStatus, DynamicValue, NativeIcon } from "mendix";
 import { Big } from "big.js";
+import { FlashList, FlashListRef } from "@shopify/flash-list";
 
 interface SwipeableContainerProps {
     testID?: string;
@@ -68,8 +68,10 @@ const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: Editabl
 
 export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement => {
     const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
-    const flatList = useRef<FlatList<any>>(null);
+    const flashList = useRef<FlashListRef<any>>(null);
+    const isInitializing = useRef(true);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -79,8 +81,8 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const goToSlide = useCallback(
         (pageNum: number) => {
             setActiveIndex(pageNum);
-            if (flatList && flatList.current) {
-                flatList.current.scrollToOffset({
+            if (flashList && flashList.current) {
+                flashList.current.scrollToOffset({
                     offset: rtlSafeIndex(pageNum) * width
                 });
             }
@@ -92,6 +94,16 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
         if (width && props.activeSlide?.status === ValueStatus.Available && slide !== activeIndex) {
             goToSlide(slide);
+            if (isInitializing.current) {
+                if (isInitializing.current) {
+                    // Use requestAnimationFrame twice to wait for the next frame after scroll.
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            isInitializing.current = false;
+                        });
+                    });
+                }
+            }
         }
     }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
 
@@ -111,9 +123,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         onSlideChange(index, activeIndexBeforeChange);
     };
 
-    const renderItem = ({ item }: any): ReactElement => {
-        return <View style={[{ width, flex: 1 }]}>{item.content}</View>;
-    };
+    const renderItem = useCallback(
+        ({ item }: any): ReactElement => {
+            return <View style={[{ width }, { height }]}>{item.content}</View>;
+        },
+        [width, height]
+    );
 
     const renderButton = (
         caption: Option<string>,
@@ -295,6 +310,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             if (newIndex === activeIndex) {
                 return;
             }
+
+            if (isInitializing.current) {
+                setActiveIndex(newIndex);
+                return;
+            }
+
             const lastIndex = activeIndex;
             setActiveIndex(newIndex);
             onSlideChange(newIndex, lastIndex);
@@ -307,21 +328,25 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
      */
     const onLayout = useCallback(
         (event: LayoutChangeEvent) => {
-            const newWidth = event.nativeEvent.layout.width;
+            const layout = event.nativeEvent.layout;
+            const newWidth = layout.width;
             if (newWidth !== width) {
                 setWidth(newWidth);
             }
+            const newHeight = layout.height;
+            if (newHeight !== height) {
+                setHeight(newHeight);
+            }
         },
-        [width]
+        [width, height]
     );
 
     return (
         <View style={styles.flexOne}>
-            <FlatList
+            <FlashList
                 testID={props.testID}
                 initialScrollIndex={refreshActiveSlideAttribute(props.slides, props.activeSlide)}
-                getItemLayout={(_, i) => ({ length: width, offset: width * i, index: i })}
-                ref={flatList}
+                ref={flashList}
                 data={props.slides}
                 horizontal
                 pagingEnabled
