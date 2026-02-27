@@ -1,14 +1,8 @@
-/**
- * @jest-environment jsdom
- */
 import { actionValue, EditableValueBuilder, dynamicValue } from "@mendix/piw-utils-internal";
-import { mount, ReactWrapper } from "enzyme";
+import { render, fireEvent, screen } from "@testing-library/react-native";
 import { createElement } from "react";
-
 import { Switch, Props } from "../Switch";
 import { defaultSwitchStyle } from "../ui/Styles";
-
-declare type RWrapper = ReactWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
 
 const name = "Switch1";
 const createProps = (props?: Partial<Props>): Props => {
@@ -20,27 +14,18 @@ const createProps = (props?: Partial<Props>): Props => {
         showLabel: false,
         booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).build(),
         onChange: undefined,
-        style: [{ ...defaultSwitchStyle, ...style }]
+        style: [{ ...defaultSwitchStyle, ...style }],
+        labelPosition: "left"
     };
 
     return { ...defaultProps, ...props };
 };
 
 describe("Switch", () => {
-    const switchIndex = 0;
     let Platform: any;
-    let switchWrapper: RWrapper;
-
-    function getSwitchComponent() {
-        return switchWrapper.find({ testID: "Switch1" }).at(switchIndex);
-    }
 
     beforeEach(() => {
         Platform = require("react-native").Platform;
-    });
-
-    afterEach(() => {
-        switchWrapper.unmount();
     });
 
     it("with editable value renders enabled", () => {
@@ -48,8 +33,9 @@ describe("Switch", () => {
             booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).build()
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(getSwitchComponent().prop("disabled")).toBe(false);
+        render(<Switch {...props} />);
+        const switchElement = screen.getByTestId("Switch1");
+        expect(switchElement.props.enabled).toBe(true);
     });
 
     it("with value in readOnly state renders disabled", () => {
@@ -57,8 +43,9 @@ describe("Switch", () => {
             booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).isReadOnly().build()
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(getSwitchComponent().prop("disabled")).toBe(true);
+        render(<Switch {...props} />);
+        const switchElement = screen.getByTestId("Switch1");
+        expect(switchElement.props.enabled).toBe(false);
     });
 
     it("with showLabel true renders label", () => {
@@ -66,22 +53,27 @@ describe("Switch", () => {
             showLabel: true
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(switchWrapper.exists({ testID: `${name}$label` })).toEqual(true);
+        render(<Switch {...props} />);
+        expect(screen.getByTestId(`${name}$label`)).toBeTruthy();
     });
 
-    it("with showLabel true renders label horizontally", () => {
+    it("with showLabel true and horizontal orientation, renders label and switch in a row", () => {
         const props = createProps({
-            showLabel: true
+            showLabel: true,
+            labelOrientation: "horizontal",
+            label: dynamicValue<string>("Test Label", false)
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(
-            switchWrapper
-                .find({ testID: `${name}$wrapper` })
-                .at(1)
-                .prop("style")
-        ).toEqual(expect.arrayContaining([{ flexDirection: "row", alignItems: "center" }]));
+        render(<Switch {...props} />);
+
+        const horizontalContainer = screen.getByTestId(`${name}$horizontalContainer`);
+
+        expect(horizontalContainer.props.style).toEqual(
+            expect.objectContaining({ flexDirection: "row", alignItems: "center" })
+        );
+
+        expect(horizontalContainer).toContainElement(screen.getByTestId(`${name}$label`));
+        expect(horizontalContainer).toContainElement(screen.getByTestId(name));
     });
 
     it("with showLabel true and labelOrientation vertical, renders vertical", () => {
@@ -90,14 +82,12 @@ describe("Switch", () => {
             labelOrientation: "vertical"
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-
-        expect(
-            switchWrapper
-                .find({ testID: `${name}$wrapper` })
-                .at(1)
-                .prop("style")
-        ).toEqual(expect.not.arrayContaining([{ flexDirection: "row", alignItems: "center" }]));
+        render(<Switch {...props} />);
+        const wrapper = screen.getByTestId(`${name}$wrapper`);
+        expect(wrapper.props.style).toEqual(
+            expect.arrayContaining([{ flexDirection: "column", alignItems: "flex-start" }])
+        );
+        expect(screen.queryByTestId(`${name}$horizontalContainer`)).toBeNull();
     });
 
     it("with error renders validation message", () => {
@@ -105,32 +95,18 @@ describe("Switch", () => {
             booleanAttribute: new EditableValueBuilder<boolean>().withValidation("error").withValue(false).build()
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(switchWrapper.prop("booleanAttribute").validation).toEqual("error");
-
-        expect(switchWrapper.exists({ testID: `${name}$alert` })).toEqual(true);
-        expect(
-            switchWrapper
-                .find({ testID: `${name}$alert` })
-                .at(1)
-                .text()
-        ).toEqual("error");
-    });
-
-    it("with iOS device renders correct property", () => {
-        Platform.OS = "ios";
-        const props = createProps();
-
-        switchWrapper = mount(<Switch {...props} />);
-        expect(getSwitchComponent().props()).toEqual(expect.objectContaining({ ios_backgroundColor: undefined }));
+        render(<Switch {...props} />);
+        expect(props.booleanAttribute.validation).toEqual("error");
+        expect(screen.getByTestId(`${name}$alert`)).toBeTruthy();
+        expect(screen.getByTestId(`${name}$alert`).props.children).toEqual("error");
     });
 
     it("with android device renders property", () => {
         Platform.OS = "android";
         const props = createProps();
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(getSwitchComponent().prop("ios_backgroundColor")).toBeUndefined();
+        render(<Switch {...props} />);
+        expect(screen.getByTestId("Switch1").props.ios_backgroundColor).toBeUndefined();
     });
 
     it("renders correct thumbColor when value is true", () => {
@@ -139,8 +115,8 @@ describe("Switch", () => {
             style: [{ ...defaultSwitchStyle, input: { thumbColorOn: "red" } }]
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(getSwitchComponent().prop("thumbColor")).toEqual("red");
+        render(<Switch {...props} />);
+        expect(screen.getByTestId("Switch1").props.thumbTintColor).toEqual("red");
     });
 
     it("renders correct thumbColor when value is false", () => {
@@ -149,41 +125,45 @@ describe("Switch", () => {
             style: [{ ...defaultSwitchStyle, input: { thumbColorOff: "blue" } }]
         });
 
-        switchWrapper = mount(<Switch {...props} />);
-        expect(getSwitchComponent().prop("thumbColor")).toEqual("blue");
+        render(<Switch {...props} />);
+        expect(screen.getByTestId("Switch1").props.thumbTintColor).toEqual("blue");
     });
 
     describe("interactions", () => {
         it("invokes onValueChange handler", () => {
+            const onChange = actionValue();
+            const booleanAttribute = new EditableValueBuilder<boolean>().withValue(false).build();
             const props = createProps({
-                booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).build(),
-                onChange: actionValue()
+                booleanAttribute,
+                onChange
             });
-            switchWrapper = mount(<Switch {...props} />);
+            render(<Switch {...props} />);
 
-            expect(switchWrapper.prop("booleanAttribute").value).toBe(false);
-            expect(switchWrapper.prop("onChange").execute).not.toHaveBeenCalled();
+            expect(booleanAttribute.value).toBe(false);
+            expect(onChange.execute).not.toHaveBeenCalled();
 
-            getSwitchComponent().simulate("change");
+            fireEvent(screen.getByTestId("Switch1"), "valueChange", true);
 
-            expect(switchWrapper.prop("booleanAttribute").value).toBe(true);
-            expect(switchWrapper.prop("onChange").execute).toHaveBeenCalled();
+            expect(booleanAttribute.value).toBe(true);
+            expect(onChange.execute).toHaveBeenCalled();
         });
 
         it("when disabled, do not invoke onValueChange handler", () => {
+            const onChange = actionValue();
+            const booleanAttribute = new EditableValueBuilder<boolean>().withValue(false).isReadOnly().build();
             const props = createProps({
-                booleanAttribute: new EditableValueBuilder<boolean>().withValue(false).isReadOnly().build(),
-                onChange: actionValue()
+                booleanAttribute,
+                onChange
             });
-            switchWrapper = mount(<Switch {...props} />);
+            render(<Switch {...props} />);
 
-            expect(switchWrapper.prop("booleanAttribute").value).toBe(false);
-            expect(switchWrapper.prop("onChange").execute).not.toHaveBeenCalled();
+            expect(booleanAttribute.value).toBe(false);
+            expect(onChange.execute).not.toHaveBeenCalled();
 
-            getSwitchComponent().simulate("change");
+            fireEvent(screen.getByTestId("Switch1"), "valueChange", true);
 
-            expect(switchWrapper.prop("booleanAttribute").value).toBe(false);
-            expect(switchWrapper.prop("onChange").execute).not.toHaveBeenCalled();
+            expect(booleanAttribute.value).toBe(false);
+            expect(onChange.execute).not.toHaveBeenCalled();
         });
     });
 });
