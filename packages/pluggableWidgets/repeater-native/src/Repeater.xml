@@ -14,6 +14,10 @@
                 <property key="content" type="widgets" dataSource="datasource">
                     <caption>Content</caption>
                     <description/>
+                </property>                
+                <property key="emptyPlaceholder" type="widgets" required="false">
+                    <caption>Empty placeholder</caption>
+                    <description/>
                 </property>
             </propertyGroup>
             <propertyGroup caption="Common">
