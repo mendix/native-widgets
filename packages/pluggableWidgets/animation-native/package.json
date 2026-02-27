@@ -30,6 +30,6 @@
     "react-native-animatable": "^1.3.2"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "*"
+    "@mendix/pluggable-widgets-tools": "file:../../../mendix-pluggable-widgets-tools-11.6.0.tgz"
   }
 }
