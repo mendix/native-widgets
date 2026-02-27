@@ -95,7 +95,6 @@
       "react-test-renderer": "19.0.0"
     },
     "patchedDependencies": {
-      "@mendix/pluggable-widgets-tools@11.6.0": "patches/@mendix+pluggable-widgets-tools+10.21.1.patch",
       "@ptomasroos/react-native-multi-slider@1.0.0": "patches/@ptomasroos+react-native-multi-slider+1.0.0.patch",
       "react-native-action-button@2.8.5": "patches/react-native-action-button+2.8.5.patch",
       "react-native-gesture-handler@2.24.0": "patches/react-native-gesture-handler+2.24.0.patch",
