@@ -23,17 +23,71 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
 
     const [activeSlide, setActiveSlide] = useState(0);
 
+    const [firstItem, setFirstItem] = useState(0);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (props.contentSource?.status === ValueStatus.Available) {
+        if (props.contentSource?.status === ValueStatus.Available && loading) {
+            // Set initial index of the first item to show the associated active selection.
+            const index =
+                (props.activeSelection?.value
+                    ? props.contentSource?.items?.findIndex(i => i.id === props.activeSelection?.value?.id)
+                    : 0) ?? 0;
+            setFirstItem(index);
+            setActiveSlide(index);
             setLoading(false);
         }
-    }, [props.contentSource]);
+    }, [loading, props.activeSelection, props.contentSource]);
 
-    const onSnap = useCallback((index: number) => {
-        setActiveSlide(index);
-    }, []);
+    useEffect(() => {
+        if (
+            carouselRef &&
+            props.contentSource.status === "available" &&
+            props.activeSelection?.status === "available"
+        ) {
+            let index = props.contentSource.items?.findIndex(i => i.id === props.activeSelection?.value?.id) ?? 0;
+            // Removed item that is active selection can not be found
+            index = index >= 0 ? index : 0;
+            // Should check carouselRef.currentIndex though this is not fast enough for update.
+            if (index !== activeSlide) {
+                // Update carousel when associated item is changed
+                setActiveSlide(index);
+                const animate = props.animateExpression?.value ?? true;
+                // Async snap to index, use case add item is added before current selected
+                setTimeout(() => {
+                    (carouselRef as NativeCarousel<ObjectItem>).snapToItem(index, animate);
+                }, 1);
+            }
+        }
+    }, [activeSlide, carouselRef, props.activeSelection, props.animateExpression, props.contentSource]);
+
+    useEffect(() => {
+        if (props.contentSource.status === "available" && props.activeSelection?.status === "available") {
+            // Check if selected item is still available, reset to index 0 or null
+            let item = props.contentSource.items?.find(i => i.id === props.activeSelection?.value?.id);
+            if (item == null) {
+                item = props.contentSource.items?.[0];
+            }
+            if (props.activeSelection.value?.id !== item?.id) {
+                // Set association when empty to first slide
+                props.activeSelection.setValue(item);
+            }
+        }
+    }, [props.activeSelection, props.contentSource]);
+
+    const onSnap = useCallback(
+        (index: number) => {
+            setActiveSlide(index);
+            if (props.activeSelection) {
+                const item = props.contentSource?.items?.[index];
+                if (item?.id !== props.activeSelection.value?.id) {
+                    props.activeSelection.setValue(item);
+                }
+            }
+        },
+        [props.activeSelection, props.contentSource]
+    );
 
     const renderItem = useCallback(({ item, index }: { item: ObjectItem; index: number }) => {
         const viewStyle = layoutSpecificStyle.slideItem;
@@ -97,7 +151,7 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
         );
     }, [activeSlide, carouselRef, props.contentSource, props.showPagination]);
 
-    const onLayout = (event: LayoutChangeEvent) => {
+    const onLayout = (event: LayoutChangeEvent): void => {
         let viewHeight = event.nativeEvent.layout.height;
         const viewWidth = event.nativeEvent.layout.width;
 
@@ -149,7 +203,7 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
                             testID={`${props.name}$carousel`}
                             activeSlideAlignment={props.activeSlideAlignment}
                             layout="default"
-                            firstItem={0}
+                            firstItem={firstItem}
                             useScrollView
                             enableSnap
                             data={props.contentSource.items}
