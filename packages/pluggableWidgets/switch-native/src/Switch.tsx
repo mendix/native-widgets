@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import React, { createElement, ReactElement, useCallback, Fragment } from "react";
-import { View, Text, Switch as SwitchComponent, Platform } from "react-native";
+import { View, Text, Switch as SwitchComponent } from "react-native";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 
@@ -51,7 +51,6 @@ export function Switch(props: Props): ReactElement {
                 false: inputProps.trackColorOff
             }}
             thumbColor={booleanAttribute.value ? inputProps.thumbColorOn : inputProps.thumbColorOff}
-            {...(Platform.OS === "ios" ? { ios_backgroundColor: inputProps.trackColorOff } : {})}
         />
     );
 
