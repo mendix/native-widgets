@@ -19,10 +19,22 @@ all_widgets=$(echo "$widget_dirs" | jq -R -s -c 'split("\n") | map(select(length
 all_widgets_and_js=$(echo "$widget_dirs" | jq -R -s -c 'split("\n") | map(select(length > 0)) + ["mobile-resources-native", "nanoflow-actions-native"]')
 
 if [ "$event_name" == "pull_request" ]; then
-  if git cat-file -e "$before_commit" 2>/dev/null; then
+  base_sha=""
+  head_sha=""
+
+  # For pull_request events, github.event.before is usually empty.
+  # Prefer reading the base/head SHAs from the GitHub event payload.
+  if [ -n "${GITHUB_EVENT_PATH:-}" ] && [ -f "${GITHUB_EVENT_PATH:-}" ]; then
+    base_sha=$(jq -r '.pull_request.base.sha // empty' "$GITHUB_EVENT_PATH" 2>/dev/null || true)
+    head_sha=$(jq -r '.pull_request.head.sha // empty' "$GITHUB_EVENT_PATH" 2>/dev/null || true)
+  fi
+
+  if [ -n "$base_sha" ] && [ -n "$head_sha" ] && git cat-file -e "$base_sha" 2>/dev/null && git cat-file -e "$head_sha" 2>/dev/null; then
+    changed_files=$(git diff --name-only "$base_sha" "$head_sha")
+  elif [ -n "$before_commit" ] && git cat-file -e "$before_commit" 2>/dev/null; then
     changed_files=$(git diff --name-only "$before_commit" "$current_commit")
   else
-    echo "Previous commit not found, using HEAD~1 as fallback"
+    echo "Base/head SHAs not available locally; falling back to HEAD~1 diff"
     changed_files=$(git diff --name-only HEAD~1 "$current_commit")
   fi
 
