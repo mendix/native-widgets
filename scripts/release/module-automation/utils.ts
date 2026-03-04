@@ -24,7 +24,7 @@ export async function getOssFiles(
     }
 
     const readmePattern = "*__*__READMEOSS_*.html";
-    const readme = globSync(readmePattern, { cwd: folderPath, absolute: true, ignore: "**/.*/**" })[0];
+    const readme = globSync(readmePattern, { cwd: folderPath, absolute: true })[0];
     if (validationCriteria) {
         validateOssReadme(readme, validationCriteria);
     }
