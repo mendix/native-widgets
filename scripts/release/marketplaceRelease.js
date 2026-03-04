@@ -53,22 +53,40 @@ async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMX
 
 async function getGithubAssetUrl() {
     console.log("Retrieving informations from Github Tag");
-    const request = await fetch("GET", "https://api.github.com/repos/mendix/native-widgets/releases?per_page=10");
-    const data = (await request) ?? [];
-    const releaseId = data.find(info => info.tag_name === process.env.TAG)?.id;
-    if (!releaseId) {
-        throw new Error(`Could not find release with tag ${process.env.TAG} on GitHub`);
+    const tag = process.env.TAG;
+    const githubHeaders = process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {};
+
+    // Use direct tag lookup endpoint instead of listing releases
+    // This avoids pagination issues and is more reliable
+    const maxRetries = 5;
+    const retryDelayMs = 5000;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        console.log(`Attempt ${attempt}/${maxRetries}: Fetching release for tag ${tag}`);
+
+        const releaseData = await fetch(
+            "GET",
+            `https://api.github.com/repos/mendix/native-widgets/releases/tags/${tag}`,
+            undefined,
+            githubHeaders
+        );
+
+        if (releaseData && releaseData.id) {
+            console.log(`Found release: ${releaseData.name} (id: ${releaseData.id})`);
+            const downloadUrl = releaseData.assets?.find(asset => asset.name.endsWith(".mpk"))?.browser_download_url;
+            if (!downloadUrl) {
+                throw new Error(`Could not retrieve MPK url from GitHub release with tag ${tag}`);
+            }
+            return downloadUrl;
+        }
+
+        if (attempt < maxRetries) {
+            console.log(`Release not found yet, waiting ${retryDelayMs / 1000}s before retry...`);
+            await new Promise(resolve => setTimeout(resolve, retryDelayMs));
+        }
     }
-    const assetsRequest = await fetch(
-        "GET",
-        `https://api.github.com/repos/mendix/native-widgets/releases/${releaseId}/assets`
-    );
-    const assetsData = (await assetsRequest) ?? [];
-    const downloadUrl = assetsData.find(asset => asset.name.endsWith(".mpk"))?.browser_download_url;
-    if (!downloadUrl) {
-        throw new Error(`Could not retrieve MPK url from GitHub release with tag ${process.env.TAG}`);
-    }
-    return downloadUrl;
+
+    throw new Error(`Could not find release with tag ${tag} on GitHub after ${maxRetries} attempts`);
 }
 
 async function createDraft(marketplaceId, version, minimumMXVersion) {

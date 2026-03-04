@@ -49,6 +49,7 @@ jobs:
           CPAPI_USERNAME: ${{ secrets.CPAPI_USERNAME }}
           CPAPI_PASS_PROD: ${{ secrets.CPAPI_PASS_PROD }}
           TAG: ${{ steps.variables.outputs.tag }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: "Send slack msg on failure"
         if: ${{ failure() }}
         uses: ./.github/actions/slack-notification
