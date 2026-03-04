@@ -1,5 +1,5 @@
 import { basename, join, dirname } from "path";
-import { readdir, copyFile, rm, mkdir } from "fs/promises";
+import { readdir, copyFile, rm, mkdir, rename } from "fs/promises";
 import { appendFileSync } from "fs";
 import {
     execShellCommand,
@@ -101,6 +101,16 @@ async function main(): Promise<ArtifactResult> {
     throw new Error(`${LOG_PREFIX} No implementation for MODULE="${inputs.module}"`);
 }
 
+async function appendVersionToMpkFilename(mpkPath: string): Promise<string> {
+    const versionedMpkPath = mpkPath.replace(/\.mpk$/, `-v${inputs.version}.mpk`);
+    if (versionedMpkPath === mpkPath) {
+        throw new Error(`${LOG_PREFIX} Expected an .mpk file path, got: ${mpkPath}`);
+    }
+    await rename(mpkPath, versionedMpkPath);
+    log(`Renamed MPK to include version: ${versionedMpkPath}`);
+    return versionedMpkPath;
+}
+
 async function createNativeMobileResourcesModule(): Promise<ArtifactResult> {
     log("Creating the Native Mobile Resource module...");
     const moduleFolder = join(repoRootPath, "packages/jsActions", inputs.module);
@@ -130,8 +140,9 @@ async function createNativeMobileResourcesModule(): Promise<ArtifactResult> {
     log(`MPK created at: ${mpkOutput}`);
     log("Exporting module with widgets into MPK...");
     await exportModuleWithWidgets(moduleInfo.moduleNameInModeler, mpkOutput, nativeWidgetFolders, ossFiles);
+    const versionedMpkOutput = await appendVersionToMpkFilename(mpkOutput);
     return {
-        artifactPath: mpkOutput,
+        artifactPath: versionedMpkOutput,
         artifactName: moduleInfo.moduleNameInModeler
     };
 }
@@ -162,8 +173,9 @@ async function createNanoflowCommonsModule(): Promise<ArtifactResult> {
     log(`MPK created at: ${mpkOutput}`);
     log("Copying OSS files into MPK...");
     await copyFilesToMpk(ossFiles, mpkOutput, moduleInfo.moduleNameInModeler);
+    const versionedMpkOutput = await appendVersionToMpkFilename(mpkOutput);
     return {
-        artifactPath: mpkOutput,
+        artifactPath: versionedMpkOutput,
         artifactName: moduleInfo.moduleNameInModeler
     };
 }
