@@ -25,7 +25,6 @@ export interface SwitchStyle extends Style {
 export const defaultSwitchStyle: SwitchStyle = {
     container: {
         // All ViewStyle properties are allowed
-        paddingVertical: 4,
         justifyContent: "center"
     },
     containerDisabled: {
@@ -50,6 +49,5 @@ export const defaultSwitchStyle: SwitchStyle = {
     },
     validationMessage: {
         // All TextStyle properties are allowed
-        alignSelf: "stretch"
     }
 };
