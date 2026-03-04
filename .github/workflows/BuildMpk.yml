@@ -52,7 +52,7 @@ jobs:
       - name: "Upload MPK artifact"
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
         with:
-          name: ${{ env.ARTIFACT_NAME }}
+          name: ${{ env.ARTIFACT_NAME }}-${{ steps.bump_version.outputs.VERSION }}
           path: ${{ env.ARTIFACT_PATH }}
           if-no-files-found: error
 
