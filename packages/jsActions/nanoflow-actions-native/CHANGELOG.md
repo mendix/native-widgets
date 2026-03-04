@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.2.1] Nanoflow Commons - 2026-3-4
 -   We fixed an issue with @react-native-community/geolocation where Android devices had difficulty obtaining precise location data.
 
 ### Fixed
