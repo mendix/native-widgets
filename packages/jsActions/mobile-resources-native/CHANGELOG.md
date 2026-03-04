@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.15] Native Mobile Resources - 2026-3-4
+
+
+## [2.0.2] Gallery
+### Fixed
+
+-   We've fixed an issue with a race condition where the Gallery widget would not consistently render items when using virtual scrolling in arbitrary scenarios.
+
 ## [10.1.14] Native Mobile Resources - 2026-1-22
 
 
