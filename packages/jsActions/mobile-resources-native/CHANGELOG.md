@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.6] Native Mobile Resources - 2026-3-5
+
 -   We fixed native file system module reference.
 
 ## [11.3.5] Native Mobile Resources - 2026-2-4
