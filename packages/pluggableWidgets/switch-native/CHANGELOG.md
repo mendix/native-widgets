@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-03-05
+
 ### Added
 
 -   Added the ability to change the position of the label in horizontal view from the left side of the switch to the right side.
@@ -14,7 +16,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   We fixed an issue where the validation message was rendered inside the view container of the switch, which caused incorrect styling of the switch.
 -   Fixed an issue where two overlapping tracks were seen in IOS, giving a inconsistent look to switch.
-
 
 ## [1.1.0] - 2024-12-3
 
