@@ -81,9 +81,9 @@
   },
   "pnpm": {
     "overrides": {
-      "@mendix/pluggable-widgets-tools": "10.21.1",
+      "@mendix/pluggable-widgets-tools": "11.6.0",
       "@rollup/plugin-typescript": "12.1.4",
-      "mendix": "10.24.81004",
+      "mendix": "11.8.0",
       "react": "19.0.0",
       "react-dom": "19.0.0",
       "react-native": "0.78.2",
@@ -95,7 +95,7 @@
       "react-test-renderer": "19.0.0"
     },
     "patchedDependencies": {
-      "@mendix/pluggable-widgets-tools@10.21.1": "patches/@mendix+pluggable-widgets-tools+10.21.1.patch",
+      "@mendix/pluggable-widgets-tools@11.6.0": "patches/@mendix+pluggable-widgets-tools+11.6.0.patch",
       "@ptomasroos/react-native-multi-slider@1.0.0": "patches/@ptomasroos+react-native-multi-slider+1.0.0.patch",
       "react-native-action-button@2.8.5": "patches/react-native-action-button+2.8.5.patch",
       "react-native-gesture-handler@2.24.0": "patches/react-native-gesture-handler+2.24.0.patch",
@@ -103,5 +103,5 @@
       "react-native-snap-carousel@3.9.1": "patches/react-native-snap-carousel+3.9.1.patch"
     }
   },
-  "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264"
+  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017"
 }
