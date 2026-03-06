@@ -24,12 +24,11 @@ export function getPreview(values: SwitchPreviewProps, isDarkMode: boolean): Str
         document: decodeURIComponent(
             (isDarkMode ? StructurePreviewSwitchDarkSVG : StructurePreviewSwitchSVG).replace("data:image/svg+xml,", "")
         ),
-        width: 80,
+        width: 51,
         height: 30,
         grow: 8
     };
-    const children = values.showLabel ? [label, image] : [image];
-
+    const children = values.showLabel ? (values.labelPosition === "right" ? [image, label] : [label, image]) : [image];
     return values.labelOrientation === "horizontal"
         ? {
               type: "RowLayout",
@@ -48,7 +47,11 @@ export function getPreview(values: SwitchPreviewProps, isDarkMode: boolean): Str
 
 export function getProperties(values: SwitchPreviewProps, defaultProperties: Properties): Properties {
     if (!values.showLabel) {
-        hidePropertiesIn(defaultProperties, values, ["label", "labelOrientation"]);
+        hidePropertiesIn(defaultProperties, values, ["label", "labelOrientation", "labelPosition"]);
+    }
+
+    if (values.showLabel && values.labelOrientation !== "horizontal") {
+        hidePropertiesIn(defaultProperties, values, ["labelPosition"]);
     }
 
     return defaultProperties;
