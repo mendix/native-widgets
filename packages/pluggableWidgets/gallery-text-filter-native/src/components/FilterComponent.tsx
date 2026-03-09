@@ -95,6 +95,8 @@ export default function FilterComponent(props: FilterComponentProps): ReactEleme
             />
             {value !== "" ? (
                 <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel="Clear text"
                     testID={`${props.name}-clear-text-button`}
                     onPress={onPressClearTextIcon}
                     style={props.styles?.textInputClearIcon}
