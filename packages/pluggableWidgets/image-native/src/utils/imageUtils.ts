@@ -19,6 +19,18 @@ export declare interface CustomImageObjectProps {
     image: CustomImageProps;
 }
 
+function getBundledAssetSource(value: NativeImage | Readonly<ImageURISource | string> | undefined): number | undefined {
+    if (typeof value === "number") {
+        return value;
+    }
+
+    if (typeof value === "object" && value && "uri" in value && typeof value.uri === "number") {
+        return value.uri;
+    }
+
+    return undefined;
+}
+
 export async function convertImageProps(
     datasource: DatasourceEnum,
     imageIcon: DynamicValue<NativeIcon> | undefined,
@@ -44,27 +56,32 @@ export async function convertImageProps(
                 return fallback;
             }
 
-            if (typeof imageSource.value === "number") {
+            const imageValue = imageSource.value;
+            const bundledAssetSource = getBundledAssetSource(imageValue);
+
+            if (bundledAssetSource) {
                 return {
-                    type: "staticImage", // Static image
-                    image: imageSource.value
+                    type: "staticImage",
+                    image: bundledAssetSource
                 };
-            } else if (typeof imageSource.value === "string") {
+            }
+
+            if (typeof imageValue === "string") {
                 return {
                     type: "staticSVG", // Static image SVG
-                    image: imageSource.value
+                    image: imageValue
                 };
-            } else if (imageSource.value?.uri && imageSource.value?.name?.endsWith(".svg")) {
+            } else if (typeof imageValue === "object" && imageValue?.uri && imageValue?.name?.endsWith(".svg")) {
                 return {
                     type: "dynamicSVG", // Dynamic image SVG
-                    image: (Platform.OS === "android" ? "file:///" : "") + imageSource.value.uri
+                    image: (Platform.OS === "android" ? "file:///" : "") + imageValue.uri
                 };
-            } else if (imageSource.value?.uri) {
+            } else if (typeof imageValue === "object" && imageValue?.uri) {
                 return {
                     type: "dynamicImage", // Dynamic image
                     image: {
-                        ...imageSource.value,
-                        uri: (Platform.OS === "android" ? "file:///" : "") + imageSource.value.uri
+                        ...imageValue,
+                        uri: (Platform.OS === "android" ? "file:///" : "") + imageValue.uri
                     }
                 };
             }
@@ -93,9 +110,11 @@ export async function convertImageProps(
                     };
                 }
                 if (imageIcon.value?.type === "image") {
+                    const bundledAssetSource = getBundledAssetSource(imageIcon.value.iconUrl);
+
                     return {
                         type: "staticImage",
-                        image: imageIcon.value.iconUrl
+                        image: bundledAssetSource ?? imageIcon.value.iconUrl
                     };
                 }
             }
@@ -109,13 +128,17 @@ export async function convertImageProps(
 export function getImageDimensions(source: CustomImageObjectProps): Promise<{ width: number; height: number }> {
     return new Promise((resolve, reject) => {
         switch (source?.type) {
-            case "staticImage":
-                const { width, height } = RNImage.resolveAssetSource(source?.image as ImageURISource);
+            case "staticImage": {
+                const resolvedAssetSource = RNImage.resolveAssetSource(source?.image as ImageURISource | number);
+                const width = resolvedAssetSource?.width ?? 0;
+                const height = resolvedAssetSource?.height ?? 0;
+
                 resolve({
                     width,
                     height
                 });
                 break;
+            }
             case "dynamicImage":
                 const uri = (source?.image as ImageURISource)?.uri as string;
                 if (uri) {
