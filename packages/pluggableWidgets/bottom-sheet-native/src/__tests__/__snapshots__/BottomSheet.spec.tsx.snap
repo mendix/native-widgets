@@ -15,7 +15,7 @@ exports[`Bottom sheet renders a custom modal 1`] = `
     }
   }
 >
-  <RCTSafeAreaView
+  <View
     onLayout={[Function]}
     style={
       {
@@ -68,7 +68,7 @@ exports[`Bottom sheet renders a expanding fullscreen 1`] = `
     }
   }
 >
-  <RCTSafeAreaView
+  <View
     onLayout={[Function]}
     style={
       {
@@ -92,7 +92,7 @@ exports[`Bottom sheet renders a expanding fullscreen with custom styles 1`] = `
     }
   }
 >
-  <RCTSafeAreaView
+  <View
     onLayout={[Function]}
     style={
       {

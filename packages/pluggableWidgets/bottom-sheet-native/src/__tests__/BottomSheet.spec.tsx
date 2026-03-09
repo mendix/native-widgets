@@ -3,16 +3,30 @@ import { render } from "@testing-library/react-native";
 import { BottomSheet } from "../BottomSheet";
 import { BottomSheetProps } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle } from "../ui/Styles";
-import { Text } from "react-native";
+import { ActionSheetIOS, Text } from "react-native";
+
+jest.mock("react-native-worklets", () => jest.requireActual("react-native-worklets/lib/module/mock"));
+
+jest.mock("react-native-reanimated", () => {
+    const Reanimated = jest.requireActual("react-native-reanimated/lib/module/mock");
+
+    if (Reanimated?.default && typeof Reanimated.default === "object") {
+        Reanimated.default.call = () => undefined;
+    }
+
+    return Reanimated;
+});
 
 jest.mock("react-native-device-info", () => ({
     getDeviceId: () => "iPhone10,6"
 }));
 
-jest.mock("react-native/Libraries/Utilities/Platform", () => ({
-    OS: "ios",
-    select: jest.fn(dict => dict.ios)
-}));
+jest.mock("react-native/Libraries/Utilities/Platform", () => {
+    const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
+    Platform.OS = "ios";
+    Platform.default = { ...Platform.default, OS: "ios" };
+    return Platform;
+});
 
 const defaultProps: BottomSheetProps<BottomSheetStyle> = {
     name: "bottom-sheet-test",
@@ -35,6 +49,31 @@ const defaultProps: BottomSheetProps<BottomSheetStyle> = {
 };
 
 describe("Bottom sheet", () => {
+    // RN 0.83 test renderer may serialize iOS SafeAreaView as a plain View,
+    // so snapshots in this suite no longer prove iOS-specific rendering by host tag.
+    // This test explicitly verifies our Platform.OS override by asserting the iOS native path.
+    it("uses iOS native action sheet when native implementation is enabled", () => {
+        const actionSheetSpy = jest
+            .spyOn(ActionSheetIOS, "showActionSheetWithOptions")
+            .mockImplementation(() => undefined);
+        const props = {
+            ...defaultProps,
+            triggerAttribute: new EditableValueBuilder<boolean>().withValue(true).build()
+        };
+
+        render(<BottomSheet {...props} />);
+
+        expect(actionSheetSpy).toHaveBeenCalled();
+        expect(actionSheetSpy).toHaveBeenCalledWith(
+            expect.objectContaining({
+                options: ["Item 1", "Item 2", "Cancel"],
+                cancelButtonIndex: 2
+            }),
+            expect.any(Function)
+        );
+        actionSheetSpy.mockRestore();
+    });
+
     it("renders a native bottom action sheet for ios (Basic modal)", () => {
         const component = render(<BottomSheet {...defaultProps} />);
 
