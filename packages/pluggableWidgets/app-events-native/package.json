@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
-    "@react-native-community/netinfo": "11.4.1"
+    "@react-native-community/netinfo": "11.5.2"
   },
   "devDependencies": {
     "@mendix/piw-utils-internal": "*",
