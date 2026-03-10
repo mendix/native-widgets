@@ -2,7 +2,7 @@ import { PopupMenuProps } from "../../typings/PopupMenuProps";
 import { PopupMenuStyle } from "../ui/Styles";
 import { Text, View } from "react-native";
 import { actionValue } from "@mendix/piw-utils-internal";
-import { fireEvent, render, within } from "@testing-library/react-native";
+import { act, fireEvent, render, within } from "@testing-library/react-native";
 import { PopupMenu } from "../PopupMenu";
 import { MenuDivider, MenuItem } from "react-native-material-menu";
 import { ReactTestInstance } from "react-test-renderer";
@@ -14,9 +14,13 @@ jest.useFakeTimers();
 let basicItemTestId: string;
 let customItemTestId: string;
 
-jest.mock("react-native/Libraries/Modal/Modal", () => (props: any) => {
+jest.mock("react-native/Libraries/Modal/Modal", () => {
     const MockedModal = jest.requireActual("react-native").View;
-    return <MockedModal {...props} testID="modal" />;
+
+    return {
+        __esModule: true,
+        default: (props: any) => <MockedModal {...props} testID="modal" />
+    };
 });
 
 describe("Popup menu", () => {
@@ -71,7 +75,9 @@ describe("Popup menu", () => {
 
             fireEvent.press(basicItem);
 
-            jest.advanceTimersByTime(501);
+            act(() => {
+                jest.advanceTimersByTime(501);
+            });
 
             expect(dummyActionValue.execute).toHaveBeenCalled();
         });
@@ -116,7 +122,9 @@ describe("Popup menu", () => {
             const component = render(<PopupMenu {...defaultProps} />);
             fireEvent.press(component.getByTestId(customItemTestId));
 
-            jest.advanceTimersByTime(501);
+            act(() => {
+                jest.advanceTimersByTime(501);
+            });
 
             expect(dummyActionValue.execute).toHaveBeenCalled();
         });
