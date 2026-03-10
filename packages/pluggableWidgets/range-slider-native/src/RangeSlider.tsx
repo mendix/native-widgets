@@ -26,7 +26,7 @@ export function RangeSlider(props: Props): ReactElement {
     const enabledOne = editable && lowerValue !== undefined && !props.lowerValueAttribute.readOnly;
     const enabledTwo = editable && upperValue !== undefined && !props.upperValueAttribute.readOnly;
 
-    const customMarker: Function =
+    const customMarker =
         (markerEnabled: boolean, testID: string) =>
         (markerProps: MarkerProps): JSX.Element =>
             (
@@ -69,13 +69,7 @@ export function RangeSlider(props: Props): ReactElement {
 
             executeAction(props.onChange);
         },
-        [
-            lastLowerValue.current,
-            lastUpperValue.current,
-            props.lowerValueAttribute,
-            props.upperValueAttribute,
-            props.onChange
-        ]
+        [props.lowerValueAttribute, props.upperValueAttribute, props.onChange]
     );
 
     return (
