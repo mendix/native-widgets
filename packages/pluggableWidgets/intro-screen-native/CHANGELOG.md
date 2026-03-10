@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   We migrated from using the native FlatList to @shopify/flash-list.
+-   Updated @react-native-async-storage/async-storage from version v2.0.0 to v2.2.0.
+-   Updated react-native-device-info from version v14.0.4 to v15.0.2.
 
 ## [4.2.1] - 2026-1-19
 

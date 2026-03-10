@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @d11/react-native-fast-image from version v8.11.1 to v8.13.0.
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
 ## [3.0.3] - 2026-1-22
 
 ### Changed

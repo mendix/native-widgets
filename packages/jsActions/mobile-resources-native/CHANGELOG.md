@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @react-native-camera-roll/camera-roll from version v7.4.0 to v7.10.2.
+-   Updated @sbaiahmed1/react-native-biometrics from version v0.4.0 to v0.10.0.
+-   Updated @swan-io/react-native-browser from version v0.4.1 to v1.0.1.
+-   Updated react-native-blob-util from version v0.21.2 to v0.24.7.
+-   Updated react-native-device-info from version v14.0.4 to v15.0.2.
+-   Updated react-native-file-viewer-turbo from version v0.6.0 to v0.7.4.
+-   Updated react-native-localize from version v3.2.1 to v3.7.0.
+-   Updated react-native-permissions from version v5.4.2 to v5.5.1.
+
 ## [11.4.1] Native Mobile Resources - 2026-3-14
 
 ## [2.0.2] GalleryTextFilter

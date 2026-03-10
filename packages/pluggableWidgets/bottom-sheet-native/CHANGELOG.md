@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @gorhom/bottom-sheet from version v5.1.1 to v5.2.8.
+-   Updated @shopify/flash-list from version v1.7.3 to v2.2.2.
+-   Updated react-native-device-info from version v14.0.4 to v15.0.2.
+-   Updated react-native-gesture-handler from version v2.24.0 to v2.30.0.
+-   Updated react-native-reanimated from version v3.17.5 to v4.2.2.
+-   Added react-native-worklets v0.7.4.
+
 ## [5.0.3] - 2025-12-15
 
 -   Updated react-native-reanimated to v3.17.5. This addresses compatibility issues with React Native 0.78 and later versions.
