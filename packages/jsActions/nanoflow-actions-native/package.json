@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
-    "mendix": "~10.0.9976"
+    "mendix": "11.8.0"
   }
 }
