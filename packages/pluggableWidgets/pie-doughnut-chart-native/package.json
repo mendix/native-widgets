@@ -24,6 +24,6 @@
     "victory-native": "^36.6.8"
   },
   "devDependencies": {
-    "@mendix/pluggable-widgets-tools": "*"
+    "@mendix/pluggable-widgets-tools": "file:../../../mendix-pluggable-widgets-tools-11.6.0.tgz"
   }
 }
