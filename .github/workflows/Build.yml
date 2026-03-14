@@ -56,6 +56,6 @@ jobs:
       - name: "Installing dependencies"
         run: pnpm install
       - name: "Running build for development"
-        run: pnpm -r --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi) run build
+        run: pnpm -r --filter='!native-widgets' --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi) run build
         env:
           NODE_OPTIONS: --max_old_space_size=8192
