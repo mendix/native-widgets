@@ -88,7 +88,9 @@ async function createDraft(marketplaceId, version, minimumMXVersion) {
             }
         };
 
-        return fetchContributor("POST", `packages/${marketplaceId}/versions`, JSON.stringify(body));
+        const bodyString = JSON.stringify(body);
+        console.log(`Request body: ${bodyString}`);
+        return fetchContributor("POST", `packages/${marketplaceId}/versions`, bodyString);
     } catch (error) {
         error.message = `Failed creating draft in the appstore with error: ${error.message}`;
         throw error;
@@ -147,6 +149,12 @@ async function fetch(method, url, body, additionalHeaders) {
     } else if (response.ok) {
         return response.json();
     } else {
+        try {
+            const responseBody = await response.text();
+            console.error(`Failed API response content: ${responseBody}`);
+        } catch (error) {
+            console.error(`Failed to parse error response body. Technical error: ${error.message}`);
+        }
         throw new Error(`Fetching Failed (Code ${response.status}). ${response.statusText}`);
     }
 }
