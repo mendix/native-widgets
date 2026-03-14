@@ -18,13 +18,12 @@ main().catch(e => {
 });
 
 async function main() {
-    const pkgPath = join(process.cwd(), "package.json");
     const {
         name,
         widgetName,
         version,
         marketplace: { minimumMXVersion, marketplaceId }
-    } = require(pkgPath);
+    } = packageMetadata();
 
     console.log(`Starting release process for tag ${process.env.TAG}`);
 
@@ -89,8 +88,11 @@ async function createDraft(marketplaceId, version, minimumMXVersion) {
     console.log(`Creating draft in the Mendix Marketplace...`);
     console.log(`ID: ${marketplaceId} - Version: ${version} - MXVersion: ${minimumMXVersion}`);
     const [major, minor, patch] = version.split(".");
+    const { marketplace } = packageMetadata();
     try {
         const body = {
+            Name: marketplace.name,
+            Description: marketplace.description,
             VersionMajor: major ?? 1,
             VersionMinor: minor ?? 0,
             VersionPatch: patch ?? 0,
@@ -169,4 +171,10 @@ async function fetch(method, url, body, additionalHeaders) {
     } else {
         throw new Error(`Fetching Failed (Code ${response.status}). ${response.statusText}`);
     }
+}
+
+function packageMetadata() {
+    const pkgPath = join(process.cwd(), "package.json");
+    const { name, widgetName, version, marketplace } = require(pkgPath);
+    return { name, widgetName, version, marketplace };
 }
