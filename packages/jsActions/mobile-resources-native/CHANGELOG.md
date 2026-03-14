@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.7] Native Mobile Resources - 2026-3-14
+
+## [1.1.1] Switch
+
+### Added
+
+-   Added the ability to change the position of the label in horizontal view from the left side of the switch to the right side.
+
+### Fixed
+
+-   We fixed an issue where the validation message was rendered inside the view container of the switch, which caused incorrect styling of the switch.
+-   Fixed an issue where
+
 ## [11.3.6] Native Mobile Resources - 2026-3-5
 
 -   We fixed native file system module reference.

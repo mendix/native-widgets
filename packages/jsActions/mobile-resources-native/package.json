@@ -1,7 +1,7 @@
 {
   "name": "mobile-resources-native",
   "moduleName": "Native Mobile Resources",
-  "version": "11.3.6",
+  "version": "11.3.7",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -9,6 +9,8 @@
     "url": "https://github.com/mendix/native-widgets.git"
   },
   "marketplace": {
+    "name": "Native Mobile Resources",
+    "description": "Download this module to access a rich set of widgets and nanoflow actions created for native mobile, including authentication, network, platform, and more. A must-have for native mobile development!",
     "minimumMXVersion": "11.6.0",
     "marketplaceId": 109513
   },

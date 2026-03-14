@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-3-14
+
 ### Added
 
 -   Added the ability to change the position of the label in horizontal view from the left side of the switch to the right side.
