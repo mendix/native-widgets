@@ -51,6 +51,7 @@ describe("Feedback", () => {
     });
 
     it("should call the api when sending", async () => {
+        jest.useFakeTimers();
         const feedbackMsg = "unittest";
         const user = userEvent.setup();
         const component = render(<Feedback {...defaultProps} />);
@@ -71,5 +72,7 @@ describe("Feedback", () => {
                 referrer: "no-referrer"
             }
         );
-    }, 8000); // increased timeout due to slow test execution on Github
+
+        jest.useRealTimers();
+    });
 });
