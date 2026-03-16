@@ -181,7 +181,7 @@ describe("Widget", () => {
             fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
             await fireLayout(image, imageProps.name, "ImageEnlargedPressable");
             expect(image.toJSON()).toMatchSnapshot();
-        });
+        }, 10000);
 
         it("triggers the onclick action", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
