@@ -18,13 +18,12 @@ main().catch(e => {
 });
 
 async function main() {
-    const pkgPath = join(process.cwd(), "package.json");
     const {
         name,
         widgetName,
         version,
         marketplace: { minimumMXVersion, marketplaceId }
-    } = require(pkgPath);
+    } = packageMetadata();
 
     console.log(`Starting release process for tag ${process.env.TAG}`);
 
@@ -53,30 +52,47 @@ async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMX
 
 async function getGithubAssetUrl() {
     console.log("Retrieving informations from Github Tag");
-    const request = await fetch("GET", "https://api.github.com/repos/mendix/native-widgets/releases?per_page=10");
-    const data = (await request) ?? [];
-    const releaseId = data.find(info => info.tag_name === process.env.TAG)?.id;
-    if (!releaseId) {
-        throw new Error(`Could not find release with tag ${process.env.TAG} on GitHub`);
+    const tag = process.env.TAG;
+    // Use direct tag lookup endpoint instead of listing releases
+    // This avoids pagination issues and is more reliable
+    const maxRetries = 5;
+    const retryDelayMs = 5000;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        console.log(`Attempt ${attempt}/${maxRetries}: Fetching release for tag ${tag}`);
+
+        const releaseData = await fetch(
+            "GET",
+            `https://api.github.com/repos/mendix/native-widgets/releases/tags/${tag}`
+        );
+
+        if (releaseData && releaseData.id) {
+            console.log(`Found release: ${releaseData.name} (id: ${releaseData.id})`);
+            const downloadUrl = releaseData.assets?.find(asset => asset.name.endsWith(".mpk"))?.browser_download_url;
+            if (!downloadUrl) {
+                throw new Error(`Could not retrieve MPK url from GitHub release with tag ${tag}`);
+            }
+            return downloadUrl;
+        }
+
+        if (attempt < maxRetries) {
+            console.log(`Release not found yet, waiting ${retryDelayMs / 1000}s before retry...`);
+            await new Promise(resolve => setTimeout(resolve, retryDelayMs));
+        }
     }
-    const assetsRequest = await fetch(
-        "GET",
-        `https://api.github.com/repos/mendix/native-widgets/releases/${releaseId}/assets`
-    );
-    const assetsData = (await assetsRequest) ?? [];
-    const downloadUrl = assetsData.find(asset => asset.name.endsWith(".mpk"))?.browser_download_url;
-    if (!downloadUrl) {
-        throw new Error(`Could not retrieve MPK url from GitHub release with tag ${process.env.TAG}`);
-    }
-    return downloadUrl;
+
+    throw new Error(`Could not find release with tag ${tag} on GitHub after ${maxRetries} attempts`);
 }
 
 async function createDraft(marketplaceId, version, minimumMXVersion) {
     console.log(`Creating draft in the Mendix Marketplace...`);
     console.log(`ID: ${marketplaceId} - Version: ${version} - MXVersion: ${minimumMXVersion}`);
     const [major, minor, patch] = version.split(".");
+    const { marketplace } = packageMetadata();
     try {
         const body = {
+            Name: marketplace.name,
+            Description: marketplace.description,
             VersionMajor: major ?? 1,
             VersionMinor: minor ?? 0,
             VersionPatch: patch ?? 0,
@@ -143,10 +159,22 @@ async function fetch(method, url, body, additionalHeaders) {
     } else if (response.status === 503) {
         throw new Error(`Fetching Failed. "${url}" is unreachable (Code ${response.status}).`);
     } else if (response.status !== 200 && response.status !== 201) {
+        try {
+            const responseBody = await response.text();
+            console.error(`Failed API response code: ${response.status} content: ${responseBody}`);
+        } catch {
+            console.error(`Failed to parse error response body.`);
+        }
         throw new Error(`Fetching Failed (Code ${response.status}). ${response.statusText}`);
     } else if (response.ok) {
         return response.json();
     } else {
         throw new Error(`Fetching Failed (Code ${response.status}). ${response.statusText}`);
     }
+}
+
+function packageMetadata() {
+    const pkgPath = join(process.cwd(), "package.json");
+    const { name, widgetName, version, marketplace } = require(pkgPath);
+    return { name, widgetName, version, marketplace };
 }

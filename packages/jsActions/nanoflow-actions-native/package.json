@@ -9,6 +9,8 @@
     "url": "https://github.com/mendix/native-widgets.git"
   },
   "marketplace": {
+    "name": "Nanoflow Commons",
+    "description": "The Nanoflow Commons module contains commonly used nanoflow actions that are usable across web, hybrid mobile, and native mobile apps, such as: client activities, geo location, local storage, & more.",
     "minimumMXVersion": "11.7.0",
     "marketplaceId": 109515
   },
