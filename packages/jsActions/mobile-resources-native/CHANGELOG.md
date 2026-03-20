@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue where the TakePicture and TakePictureAdvanced actions could fail to upload images by not passing the native file payload metadata required by the upload flow.
+
 ## [11.4.1] Native Mobile Resources - 2026-3-14
 
 ## [2.0.2] GalleryTextFilter
