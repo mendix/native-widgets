@@ -2,11 +2,11 @@ name: Ensure SHA pinned actions
 
 on:
   push:
-    branches: [main]
+    branches: [main, mx/11.6.x]
     paths:
       - ".github/workflows/*.yml"
   pull_request:
-    branches: [main]
+    branches: [main, mx/11.6.x]
     paths:
       - ".github/workflows/*.yml"
 

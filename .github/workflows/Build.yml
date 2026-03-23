@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - 'mx/release/**'
+      - 'mx/11.6.x'
   pull_request:
     branches:
       - main
       - 'mx/release/**'
+      - 'mx/11.6.x'
 jobs:
   test:
     name: "Build (${{ matrix.os }})"
