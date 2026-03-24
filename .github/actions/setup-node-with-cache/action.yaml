@@ -4,19 +4,20 @@ runs:
   using: 'composite'
   steps:
     - name: "Set up node"
-      uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
+      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version-file: .nvmrc
+        package-manager-cache: false
         
     - name: "Setup pnpm"
-      uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+      uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
     - name: "Get pnpm store directory"
       id: pnpm-cache
       shell: bash
       run: |
         echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
     - name: "Setup cache"
-      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
       with:
         path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}

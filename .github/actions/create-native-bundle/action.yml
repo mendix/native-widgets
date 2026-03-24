@@ -19,11 +19,11 @@ runs:
       run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
       shell: bash
     - name: "Extract test project"
-      uses: montudor/action-zip@v1.0.0
+      uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
       with:
         args: unzip -qq project.zip
     - name: "Extract deployment package"
-      uses: montudor/action-zip@v1.0.0
+      uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
       with:
         args: unzip -qq ${{ inputs.mda-file }} -d Native-Mobile-Resources-main/deployment
     - name: "Create bundle for ${{ inputs.platform }}"
@@ -41,7 +41,7 @@ runs:
       env:
         NODE_OPTIONS: --max_old_space_size=6144
     - name: "Upload bundle for ${{ inputs.platform }}"
-      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
       with:
         name: ${{ inputs.platform }}-bundle
         path: ${{ inputs.platform }}

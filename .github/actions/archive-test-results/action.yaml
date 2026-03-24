@@ -16,7 +16,7 @@ runs:
   using: composite
   steps:
     - name: Archive runtime logs
-      uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
       if: always()
       with:
         name: ${{ inputs.platform }}-runtime-logs-${{ inputs.test-type }}
@@ -24,7 +24,7 @@ runs:
         if-no-files-found: ignore
     
     - name: Archive test screenshots
-      uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
       if: always()
       with:
         name: ${{ inputs.platform }}-screenshots-${{ inputs.test-type }}
@@ -32,7 +32,7 @@ runs:
         if-no-files-found: ignore
     
     - name: Archive artifacts
-      uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 #v4
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
       if: always()
       with:
         name: ${{ inputs.platform }}-artifacts-${{ inputs.test-type }}
