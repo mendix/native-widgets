@@ -1,12 +1,18 @@
 documentation:
-  - all: ["*.md"]
+  - changed-files:
+      - any-glob-to-any-file: "*.md"
 Core:
-  - .github/**/*
-  - .husky/**/*
-  - data/**/*
-  - scripts/**/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**/*
+          - .husky/**/*
+          - data/**/*
+          - scripts/**/*
 Widget:
-  - packages/**/*-native*/**/*
-  - packages/**/*_native*/**/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/**/*-native*/**/*
+          - packages/**/*_native*/**/*
 test:
-  - all: ["*.spec.*"]
+  - changed-files:
+      - any-glob-to-any-file: "*.spec.*"
