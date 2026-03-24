@@ -2,6 +2,101 @@
 
 MAX_RETRIES=3
 RETRY_DELAY=10
+SESSION_REUSE_DIR=""
+
+resolve_maestro_bin() {
+  if [ -n "${MAESTRO_BIN:-}" ]; then
+    echo "$MAESTRO_BIN"
+  elif [ -x "$HOME/.local/bin/maestro/bin/maestro" ]; then
+    echo "$HOME/.local/bin/maestro/bin/maestro"
+  elif command -v maestro >/dev/null 2>&1; then
+    command -v maestro
+  else
+    echo "maestro"
+  fi
+}
+
+maestro_precondition_path() {
+  echo "$SCRIPT_DIR/Precondition.yaml"
+}
+
+prepare_suite_session_reuse() {
+  local precondition_src precondition_dst
+  precondition_src=$(maestro_precondition_path)
+  [ -f "$precondition_src" ] || { echo "Missing Maestro precondition: $precondition_src"; return 1; }
+
+  if [ -z "$SESSION_REUSE_DIR" ]; then
+    SESSION_REUSE_DIR=$(mktemp -d "${TMPDIR:-/tmp}/native-widgets-maestro-session-reuse.XXXXXX")
+  fi
+  precondition_dst="$SESSION_REUSE_DIR/Precondition.yaml"
+
+  python3 - "$precondition_src" "$precondition_dst" <<'PY'
+import pathlib
+import sys
+
+source_path = pathlib.Path(sys.argv[1])
+dest_path = pathlib.Path(sys.argv[2])
+content = source_path.read_text(encoding="utf-8")
+updated = content.replace("clearState: true", "clearState: false", 1)
+if updated == content:
+  raise SystemExit("Precondition.yaml does not contain 'clearState: true'")
+dest_path.write_text(updated, encoding="utf-8")
+PY
+}
+
+rewrite_test_for_session_reuse() {
+  local source_file="$1"
+  local file_hash output_file
+  file_hash=$(python3 - "$source_file" <<'PY'
+import hashlib
+import sys
+
+print(hashlib.sha256(sys.argv[1].encode("utf-8")).hexdigest())
+PY
+)
+  output_file="$SESSION_REUSE_DIR/${file_hash}.yaml"
+
+  python3 - "$source_file" "$output_file" <<'PY'
+import pathlib
+import re
+import sys
+
+source_path = pathlib.Path(sys.argv[1])
+dest_path = pathlib.Path(sys.argv[2])
+content = source_path.read_text(encoding="utf-8")
+updated, replacements = re.subn(
+  r'(^\s*file:\s*["\']).*Precondition\.yaml(["\']\s*$)',
+  r'\1Precondition.yaml\2',
+  content,
+  count=1,
+  flags=re.MULTILINE,
+)
+if replacements == 0:
+  raise SystemExit(f"No Precondition.yaml reference found in {source_path}")
+dest_path.write_text(updated, encoding="utf-8")
+PY
+
+  echo "$output_file"
+}
+
+stop_test_session() {
+  if [ "$PLATFORM" == "ios" ]; then
+    xcrun simctl terminate "${DEVICE_ID:-booted}" "$APP_ID" >/dev/null 2>&1 || true
+  else
+    if [ -n "${DEVICE_ID:-}" ]; then
+      adb -s "$DEVICE_ID" shell am force-stop "$APP_ID" >/dev/null 2>&1 || true
+    else
+      adb shell am force-stop "$APP_ID" >/dev/null 2>&1 || true
+    fi
+  fi
+}
+
+run_maestro_test() {
+  local yaml_test_file="$1"
+  local maestro_bin
+  maestro_bin=$(resolve_maestro_bin)
+  "$maestro_bin" test --env APP_ID="$APP_ID" --env PLATFORM="$PLATFORM" --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"
+}
 
 # Function to restart the iOS simulator
 restart_simulator() {
@@ -61,19 +156,31 @@ ensure_emulator_ready() {
 # Function to run tests
 run_tests() {
   local test_files=("$@")
+  local test_index=0
+
+  prepare_suite_session_reuse || return 1
+
   for yaml_test_file in "${test_files[@]}"; do
-    echo "🧪 Testing: $yaml_test_file"
+    test_index=$((test_index + 1))
+    local effective_test_file="$yaml_test_file"
+    if [ "$test_index" -eq 1 ]; then
+      echo "🧪 Testing: $yaml_test_file (clean app state)"
+    else
+      effective_test_file=$(rewrite_test_for_session_reuse "$yaml_test_file") || return 1
+      echo "🧪 Testing: $yaml_test_file (reused session)"
+    fi
     if [ "$PLATFORM" == "android" ]; then
       ensure_emulator_ready
       set_status_bar
     fi
-    if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
+    if run_maestro_test "$effective_test_file"; then
       echo "✅ Test passed: $yaml_test_file"
       passed_tests+=("$yaml_test_file")
     else
       echo "❌ Test failed: $yaml_test_file"
       failed_tests+=("$yaml_test_file")
     fi
+    stop_test_session
     completed_tests=$((completed_tests + 1))
     remaining_tests=$((total_tests - completed_tests))
     echo "📊 Progress: $completed_tests/$total_tests tests completed, $remaining_tests tests remaining. ✅ ${#passed_tests[@]} passed, ❌ ${#failed_tests[@]} failed."
@@ -95,7 +202,7 @@ rerun_failed_tests() {
     fi
     local attempt=0
     while [ $attempt -lt $MAX_RETRIES ]; do
-      if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
+      if run_maestro_test "$yaml_test_file"; then
         echo "✅ Test passed: $yaml_test_file"
         passed_tests+=("$yaml_test_file")
         break
@@ -110,6 +217,7 @@ rerun_failed_tests() {
         fi
       fi
     done
+    stop_test_session
     echo "📊 Retry Progress: $retry_count/$total_retries tests completed, ${#passed_tests[@]} passed, ${#final_failed_tests[@]} failed."
   done
 }

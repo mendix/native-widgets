@@ -43,6 +43,9 @@ run_jsactions_tests() {
     return 0
   fi
 
+  total_tests=${#all_yaml_files[@]}
+  completed_tests=0
+
   passed_tests=()
   failed_tests=()
   final_failed_tests=()

@@ -1,7 +1,13 @@
 #!/bin/bash
 
-# Update DEVICE_ID and path to the yaml file according to needs
-# Use command like: ./run_maestro_tests_local.sh android/ios proggress-circle-native
+# Update DEVICE_ID according to needs
+# Use command like: ./run_maestro_jsactions_tests_local.sh android/ios mobile-resources-native
+
+SCRIPT_DIR=$(dirname "$0")
+
+source "$SCRIPT_DIR/helpers/helpers.sh" || { echo "Failed to source helpers.sh"; exit 1; }
+
+command -v run_tests >/dev/null 2>&1 || { echo "run_tests function not found"; exit 1; }
 
 if [ "$1" == "android" ]; then
   APP_ID="com.mendix.nativetemplate"
@@ -17,6 +23,10 @@ else
 fi
 
 ACTION=${2:-*-native}
+passed_tests=()
+failed_tests=()
+final_failed_tests=()
+completed_tests=0
 
 # Determine the search path based on the widget selection
 if [ "$ACTION" == "*-native" ]; then
@@ -25,8 +35,14 @@ else
   search_path="../packages/jsActions/$ACTION"
 fi
 
-# Find all .yaml files under the determined search path, excluding platform-specific files
-for yaml_test_file in $(find $search_path -type f -path "*/maestro/*.yaml" ! -name "*_ios.yaml" ! -name "*_android.yaml"); do
-  echo "Running test: $yaml_test_file"
-  maestro --device $DEVICE_ID test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM "$yaml_test_file"
-done
+yaml_test_files=()
+while IFS= read -r yaml_test_file; do
+  yaml_test_files+=("$yaml_test_file")
+done < <(find "$search_path" -type f -path "*/maestro/*.yaml" ! -name "*_ios.yaml" ! -name "*_android.yaml" | sort)
+total_tests=${#yaml_test_files[@]}
+
+[ "$total_tests" -gt 0 ] || { echo "No Maestro YAML tests found in $search_path"; exit 0; }
+
+run_tests "${yaml_test_files[@]}"
+
+[ ${#failed_tests[@]} -eq 0 ] || exit 1
