@@ -13,7 +13,7 @@ jest.mock("react-native-maps", () => {
         // Simulate onMapReady being called after component mounts
         React.useEffect(() => {
             if (props.onMapReady) {
-                setTimeout(() => props.onMapReady(), 0);
+                Promise.resolve().then(() => props.onMapReady());
             }
         }, [props.onMapReady]);
 

@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - 'mx/release/**'
+      - 'mx/11.6.x'
   pull_request:
     branches:
       - main
       - 'mx/release/**'
+      - 'mx/11.6.x'
 jobs:
   test:
     name: "Build (${{ matrix.os }})"
@@ -20,7 +22,7 @@ jobs:
     steps:
       - name: "Checking changed files"
         id: files
-        uses: softprops/diffset@db8c4e13f5cc3f8ab666ba2cb6998b688058a41c # v1
+        uses: softprops/diffset@d60d53313c1b61c12ccb0fc76cbde5a14ae5d330 # v3
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         with:
           base: main
@@ -29,25 +31,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: "Checking-out code"
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
       - name: "Fetching main to compare"
         if: github.event_name == 'pull_request' && steps.files.outputs.global_files == ''
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - name: "Defining node version"
-        uses: actions/setup-node@d86ebcd40b3cb50b156bfa44dd277faf38282d12 # v4
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: ".nvmrc"
+          package-manager-cache: false
       - name: "Setup pnpm"
-        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
       - name: "Get pnpm store directory"
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       - name: "Setup cache"
-        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}

@@ -12,24 +12,25 @@ jobs:
 
     steps:
       - name: "Checking-out code"
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           submodules: false
       - name: "Defining Environment Variables"
         id: variables
         run: echo "tag=$(git tag --points-at HEAD)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining scope"
-        uses: jungwinter/split@c185fe95439c136a8788b7f700bd5275920d7109 # v1
+        uses: jungwinter/split@7f51d99e7cc1f147f6f99be75acf5e641930af88 # v2.1.0
         id: scope
         with:
           msg: "${{ steps.variables.outputs.tag }}"
           seperator: "-v"
       - name: "Defining node version"
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: ".nvmrc"
+          package-manager-cache: false
       - name: "Setup pnpm"
-        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
       - name: "Installing dependencies"
         run: pnpm install
       - name: "Building native widgets and js actions"
