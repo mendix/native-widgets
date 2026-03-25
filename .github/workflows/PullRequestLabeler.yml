@@ -1,6 +1,6 @@
 name: "Pull Request Labeler"
 on:
-  - pull_request_target #always checks the configuration from the target branch, for source branch change this to pull_request
+  - pull_request
 
 jobs:
   triage:
