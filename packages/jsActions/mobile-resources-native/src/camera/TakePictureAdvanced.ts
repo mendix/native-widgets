@@ -19,6 +19,15 @@ import { getLocales } from "react-native-localize";
 import { ImagePickerV2Options, ImagePickerV2Response, PictureQuality, PictureSource } from "../../typings/Camera";
 
 // BEGIN EXTRA CODE
+type NativePayload = {
+    uri: string;
+    name: string;
+    type: string;
+};
+
+type BlobWithNativePayload = Blob & {
+    nativePayload?: NativePayload;
+};
 // END EXTRA CODE
 
 /**
@@ -177,12 +186,19 @@ export async function TakePictureAdvanced(
                     // eslint-disable-next-line no-useless-escape
                     const filename = /[^\/]*$/.exec(uri)![0];
                     const filePathWithoutFileScheme = uri.replace("file://", "");
+                    const blobWithNativePayload = blob as BlobWithNativePayload;
+
+                    blobWithNativePayload.nativePayload = {
+                        uri,
+                        name: filename,
+                        type: blob.type
+                    };
 
                     mx.data.saveDocument(
                         imageObject.getGuid(),
                         filename,
                         {},
-                        blob,
+                        blobWithNativePayload,
                         async () => {
                             await NativeModules.MendixNative.fsRemove(filePathWithoutFileScheme);
 
@@ -385,7 +401,7 @@ export async function TakePictureAdvanced(
         });
     }
 
-    function handleImagePickerV4Error(errorCode: ErrorCode, errorMessage?: string) {
+    function handleImagePickerV4Error(errorCode: ErrorCode, errorMessage?: string): void {
         switch (errorCode) {
             case "camera_unavailable":
                 showAlert("The camera is unavailable.", "");
