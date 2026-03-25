@@ -2,9 +2,9 @@ name: Run release
 
 on:
   push:
-    branches: [main, mx/11.6.x]
+    branches: [main]
   pull_request:
-    branches: [main, mx/11.6.x]
+    branches: [main]
 
 jobs:
   test:

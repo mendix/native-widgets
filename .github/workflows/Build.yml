@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - 'mx/release/**'
-      - 'mx/11.6.x'
+      # - 'mx/11.6.x'
   pull_request:
     branches:
       - main
