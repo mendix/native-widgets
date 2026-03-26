@@ -22,7 +22,7 @@ exports[`<Maps /> renders 1`] = `
     }
     mapType="standard"
     maxZoomLevel={15}
-    minZoomLevel={10}
+    minZoomLevel={3}
     onMapReady={[Function]}
     onRegionChangeComplete={[Function]}
     pitchEnabled={false}
@@ -70,6 +70,25 @@ exports[`<Maps /> renders 1`] = `
         tooltip={true}
       />
     </View>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#fafafa",
+        "bottom": 0,
+        "justifyContent": "center",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "zIndex": 99,
+      }
+    }
+  >
+    <ActivityIndicator
+      size="large"
+    />
   </View>
 </View>
 `;

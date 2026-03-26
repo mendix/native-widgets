@@ -1,0 +1,105 @@
+diff --git a/bin/mx-scripts.js b/bin/mx-scripts.js
+index 386ff15fee9c5bc49bffa9428e97d5587ac345fe..f6f8c0fae834f68bec1304c381b642e4ab691566 100755
+--- a/bin/mx-scripts.js
++++ b/bin/mx-scripts.js
+@@ -112,7 +112,7 @@ function getRealCommand(cmd, toolsRoot) {
+ }
+ 
+ function findNodeModulesBin() {
+-    let parentDir = join(__dirname, "..");
++    let parentDir = join(__dirname, "../..");
+     const bins = [];
+     while (parse(parentDir).root !== parentDir) {
+         const candidate = join(parentDir, "node_modules/.bin");
+diff --git a/configs/eslint.ts.base.json b/configs/eslint.ts.base.json
+index 660df6ff7b4080f0f3c18fb5bfc659149b868539..20ae95bd78fba25f0912b9aa067fb8a875e0855c 100644
+--- a/configs/eslint.ts.base.json
++++ b/configs/eslint.ts.base.json
+@@ -18,7 +18,8 @@
+         "plugin:@typescript-eslint/recommended",
+         "prettier",
+         "plugin:prettier/recommended",
+-        "plugin:react-hooks/recommended"
++        "plugin:react-hooks/recommended",
++        "plugin:react/jsx-runtime"
+     ],
+     "parser": "@typescript-eslint/parser",
+     "parserOptions": {
+diff --git a/configs/rollup-plugin-collect-dependencies.mjs b/configs/rollup-plugin-collect-dependencies.mjs
+index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..92291d4f7cb3cf9e8eaba895aa3ad26415afb036 100644
+--- a/configs/rollup-plugin-collect-dependencies.mjs
++++ b/configs/rollup-plugin-collect-dependencies.mjs
+@@ -2,9 +2,8 @@
+ 
+ import fg from "fast-glob";
+ import fsExtra from "fs-extra";
+-import { existsSync, readFileSync, writeFileSync } from "fs";
++import { cpSync, existsSync, lstatSync, readFileSync, realpathSync, writeFileSync } from "fs";
+ import { dirname, join, parse } from "path";
+-import copy from "recursive-copy";
+ import { promisify } from "util";
+ import resolve from "resolve";
+ import _ from "lodash";
+@@ -171,14 +170,28 @@ async function copyJsModule(moduleSourcePath, to) {
+     if (existsSync(to)) {
+         return;
+     }
+-    return promisify(copy)(moduleSourcePath, to, {
+-        filter: [
+-            "**/*.*",
+-            LICENSE_GLOB,
+-            "!**/{android,ios,windows,mac,jest,github,gradle,__*__,docs,jest,example*}/**/*",
+-            "!**/*.{config,setup}.*",
+-            "!**/*.{podspec,flow}"
+-        ]
++
++    let actualSourcePath = moduleSourcePath;
++    if (lstatSync(moduleSourcePath).isSymbolicLink()) {
++        actualSourcePath = realpathSync(moduleSourcePath);
++    }
++
++    cpSync(actualSourcePath, to, {
++        recursive: true,
++        dereference: true,
++        filter: src => {
++            const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
++
++            if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
++                return false;
++            }
++
++            if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
++                return false;
++            }
++
++            return true;
++        }
+     });
+ }
+ 
+diff --git a/configs/rollup.config.native.mjs b/configs/rollup.config.native.mjs
+index 51c3265d054fdbcb491768d0600beb151f7ac37d..352ef3bf2539e33ee836762f962fe9f54acbf8ef 100644
+--- a/configs/rollup.config.native.mjs
++++ b/configs/rollup.config.native.mjs
+@@ -62,7 +62,7 @@ const nativeExternal = [
+     /^react($|\/)/,
+     /^react-native-gesture-handler($|\/)/,
+     /^react-native-reanimated($|\/)/,
+-    /^react-native-fast-image($|\/)/,
++    /^react-native-worklets($|\/)/,
+     /^react-native-svg($|\/)/,
+     /^react-native-vector-icons($|\/)/,
+     /^@?react-navigation($|\/)/,
+diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
+index 8346a68bb08ee24c3249691a2895ab8ba1fc7164..d1c0aa0b05fddfc7e636196065dc84250b9c9bc4 100644
+--- a/test-config/jest.native.config.js
++++ b/test-config/jest.native.config.js
+@@ -16,7 +16,7 @@ module.exports = {
+         ...(hasDependency("react-native-gesture-handler") ? ["react-native-gesture-handler/jestSetup.js"] : []),
+     ],
+     testMatch: ["<rootDir>/**/*.spec.{js,jsx,ts,tsx}"],
+-    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-)/)"],
++    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-|@shopify/flash-list)/)"],
+     transform: {
+         "^.+\\.tsx?$": [
+             "ts-jest",

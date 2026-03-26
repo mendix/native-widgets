@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated react-native-maps from version v1.14.0 to v1.20.1.
+
 ## [5.1.1] - 2025-3-24
 
 ### Fixed
