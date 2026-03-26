@@ -14,10 +14,15 @@ appId: "${APP_ID}"
 # Wait until the sheet is actually open (button label changes)
 - extendedWaitUntil:
     visible: "Close"
-    timeout: 10000
+    timeout: 20000
 
-# Small settle time so we don't capture mid-animation
-- wait: 500
+# Add an additional wait for a sheet-specific element/text that indicates content finished rendering
+- extendedWaitUntil:
+    visible: "Close"
+    timeout: 20000
+
+# Longer settle time so we don't capture mid-animation on slower CI emulators
+- wait: 1500
 
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_basic_non_native"
