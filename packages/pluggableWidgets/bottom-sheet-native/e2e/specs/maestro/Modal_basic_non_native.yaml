@@ -22,7 +22,10 @@ appId: "${APP_ID}"
     timeout: 20000
 
 # Longer settle time so we don't capture mid-animation on slower CI emulators
-- wait: 1500
+- extendedWaitUntil: 
+     visible: randText
+     optional: true
+     timeout: 1500
 
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_basic_non_native"
