@@ -1,4 +1,4 @@
-import { ReactNode, ReactElement, useCallback, useState, useRef, Children } from "react";
+import { ReactNode, ReactElement, useCallback, useMemo, useState, useRef, Children } from "react";
 import { Dimensions, LayoutChangeEvent, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
@@ -79,26 +79,22 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         return content;
     }, [props.smallContent, props.largeContent, props.fullscreenContent, isOpen, fullscreenHeight]);
 
-    if (props.fullscreenContent && fullscreenHeight === 0) {
-        return (
-            <View style={{ ...StyleSheet.absoluteFillObject, opacity: 0 }}>
-                <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutFullscreenHandler} />
-            </View>
-        );
-    }
+    const snapPoints = useMemo(() => {
+        if (props.fullscreenContent && heightContent) {
+            return [fullscreenHeight, heightContent, heightHeader];
+        }
+        if (props.fullscreenContent) {
+            return [fullscreenHeight, heightHeader];
+        }
+        if (isLargeContentValid) {
+            return [heightContent, heightHeader];
+        }
+        return [heightHeader];
+    }, [props.fullscreenContent, fullscreenHeight, heightContent, heightHeader, isLargeContentValid]);
 
-    if (heightHeader === 0 || (isLargeContentValid && heightContent === 0)) {
-        return <View style={{ position: "absolute", bottom: -maxHeight }}>{renderContent()}</View>;
-    }
-
-    const snapPoints =
-        props.fullscreenContent && heightContent
-            ? [fullscreenHeight, heightContent, heightHeader]
-            : props.fullscreenContent
-            ? [fullscreenHeight, heightHeader]
-            : isLargeContentValid
-            ? [heightContent, heightHeader]
-            : [heightHeader];
+    const snapPointsWithOffset = useMemo(() => {
+        return snapPoints.map(p => p + OFFSET_BOTTOM_SHEET);
+    }, [snapPoints]);
 
     const collapsedIndex = 0;
 
@@ -117,13 +113,25 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
         lastIndexRef = index;
     };
 
+    if (props.fullscreenContent && fullscreenHeight === 0) {
+        return (
+            <View style={{ ...StyleSheet.absoluteFillObject, opacity: 0 }}>
+                <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutFullscreenHandler} />
+            </View>
+        );
+    }
+
+    if (heightHeader === 0 || (isLargeContentValid && heightContent === 0)) {
+        return <View style={{ position: "absolute", bottom: -maxHeight }}>{renderContent()}</View>;
+    }
+
     return (
         <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
             {snapPoints.length > 1 && (
                 <BottomSheet
                     ref={bottomSheetRef}
                     index={collapsedIndex}
-                    snapPoints={snapPoints.map(p => p + OFFSET_BOTTOM_SHEET)}
+                    snapPoints={snapPointsWithOffset}
                     onClose={() => setIsOpen(false)}
                     enablePanDownToClose={false}
                     onChange={onChange}

@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { InteractionManager, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
@@ -9,13 +9,20 @@ interface CustomModalSheetProps {
     content?: ReactNode;
     styles: BottomSheetStyle;
 }
+
 let lastIndexRef = -1;
 
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const [height, setHeight] = useState(0);
     const [currentStatus, setCurrentStatus] = useState(false);
+
     const isAvailable = props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available;
+
+    const isOpen =
+        props.triggerAttribute &&
+        props.triggerAttribute.status === ValueStatus.Available &&
+        props.triggerAttribute.value;
 
     const onLayoutFullscreenHandler = (event: LayoutChangeEvent): void => {
         const layoutHeight = event.nativeEvent.layout.height;
@@ -23,6 +30,52 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
             setHeight(layoutHeight);
         }
     };
+
+    const close = useCallback(() => {
+        bottomSheetRef.current?.close();
+    }, []);
+
+    const renderBackdrop = useCallback(
+        (backdropProps: BottomSheetBackdropProps) => (
+            <Pressable style={{ flex: 1 }} onPress={close}>
+                <BottomSheetBackdrop
+                    {...backdropProps}
+                    pressBehavior={"close"}
+                    opacity={0.3}
+                    appearsOnIndex={0}
+                    disappearsOnIndex={-1}
+                />
+            </Pressable>
+        ),
+        [close]
+    );
+
+    const snapPoints = useMemo(() => {
+        if (height === 0) {
+            return [0];
+        }
+        return [height - Number(defaultPaddings.paddingBottom)];
+    }, [height]);
+
+    const handleSheetChanges = useCallback(
+        (index: number) => {
+            if (!isAvailable) {
+                return;
+            }
+
+            const hasOpened = lastIndexRef === -1 && index === 0;
+            const hasClosed = index === -1;
+            lastIndexRef = index;
+
+            if (hasOpened) {
+                props.triggerAttribute?.setValue(true);
+            }
+            if (hasClosed) {
+                props.triggerAttribute?.setValue(false);
+            }
+        },
+        [isAvailable, props.triggerAttribute]
+    );
 
     useEffect(() => {
         if (!isAvailable) {
@@ -34,7 +87,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
             bottomSheetRef.current?.close();
             setCurrentStatus(false);
         }
-    }, [props.triggerAttribute, currentStatus]);
+    }, [props.triggerAttribute, currentStatus, isAvailable]);
 
     if (height === 0) {
         return (
@@ -44,47 +97,8 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         );
     }
 
-    const snapPoints = [height - Number(defaultPaddings.paddingBottom)];
-
-    const isOpen =
-        props.triggerAttribute &&
-        props.triggerAttribute.status === ValueStatus.Available &&
-        props.triggerAttribute.value;
-
-    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <Pressable style={{ flex: 1 }} onPress={close}>
-            <BottomSheetBackdrop
-                {...backdropProps}
-                pressBehavior={"close"}
-                opacity={0.3}
-                appearsOnIndex={0}
-                disappearsOnIndex={-1}
-            />
-        </Pressable>
-    );
-
-    const handleSheetChanges = (index: number) => {
-        if (!isAvailable) {
-            return;
-        }
-        const hasOpened = lastIndexRef === -1 && index === 0;
-        const hasClosed = index === -1;
-        lastIndexRef = index;
-
-        if (hasOpened) {
-            props.triggerAttribute?.setValue(true);
-        }
-        if (hasClosed) {
-            props.triggerAttribute?.setValue(false);
-        }
-    };
-
-    const close = () => {
-        bottomSheetRef.current?.close();
-    };
-
     return (
-        <Modal onRequestClose={close} transparent visible={isOpen}>
+        <Modal onRequestClose={close} transparent visible={!!isOpen}>
             <BottomSheet
                 ref={bottomSheetRef}
                 index={isOpen ? 0 : -1}

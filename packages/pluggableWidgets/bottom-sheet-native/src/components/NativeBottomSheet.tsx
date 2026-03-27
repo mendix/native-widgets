@@ -10,7 +10,11 @@ import {
     TouchableHighlight,
     View
 } from "react-native";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+    BottomSheetBackdrop,
+    BottomSheetBackdropProps,
+    BottomSheetScrollView
+} from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { ItemsBasicType } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle, ModalItemContainerStyle } from "../ui/Styles";
@@ -78,16 +82,23 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         }
     }, [isOpen]);
 
-    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <Pressable style={{ flex: 1 }} onPress={close}>
-            <BottomSheetBackdrop
-                {...backdropProps}
-                pressBehavior={"close"}
-                opacity={0.3}
-                appearsOnIndex={0}
-                disappearsOnIndex={-1}
-            />
-        </Pressable>
+    const close = useCallback(() => {
+        bottomSheetRef.current?.close();
+    }, []);
+
+    const renderBackdrop = useCallback(
+        (backdropProps: BottomSheetBackdropProps) => (
+            <Pressable style={{ flex: 1 }} onPress={close}>
+                <BottomSheetBackdrop
+                    {...backdropProps}
+                    pressBehavior="close"
+                    opacity={0.3}
+                    appearsOnIndex={0}
+                    disappearsOnIndex={-1}
+                />
+            </Pressable>
+        ),
+        [close]
     );
 
     const actionHandler = useCallback(
@@ -166,10 +177,6 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         return <View></View>;
     }
 
-    const close = () => {
-        bottomSheetRef.current?.close();
-    };
-
     return (
         <Modal onRequestClose={close} transparent visible={isOpen}>
             <BottomSheet
@@ -185,9 +192,9 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                 handleComponent={null}
                 handleStyle={{ display: "none" }}
             >
-                <BottomSheetView style={[{ flex: 1, paddingBottom: 16 }]}>
+                <BottomSheetScrollView style={[{ flex: 1, paddingBottom: 16 }]}>
                     {props.itemsBasic.map((item, index) => renderItem(item, index))}
-                </BottomSheetView>
+                </BottomSheetScrollView>
             </BottomSheet>
         </Modal>
     );

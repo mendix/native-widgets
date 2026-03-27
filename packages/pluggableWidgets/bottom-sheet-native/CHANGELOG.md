@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Fixed the "non‑worklet function called on the UI thread” error in bottom sheet coming from @gorhom/bottom-sheet usage.
+
 ## [5.0.3] - 2025-12-15
 
 -   Updated react-native-reanimated to v3.17.5. This addresses compatibility issues with React Native 0.78 and later versions.
