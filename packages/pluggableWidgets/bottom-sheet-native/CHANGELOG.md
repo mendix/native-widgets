@@ -8,7 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
--   Fixed the "non‑worklet function called on the UI thread” error in bottom sheet coming from @gorhom/bottom-sheet usage.
+-   Fixed the “non‑worklet function called on the UI thread” error in bottom sheet coming from @gorhom/bottom-sheet usage.
+-   Fixed ExpandingDrawer to open correctly and show all elements.
+
+### Changed
+
+-   Improved performance by memoizing all callbacks with useCallback and useMemo across all components.
+-   BottomSheet now uses BottomSheetScrollView instead of BottomSheetView, enabling proper scrolling in expanded states.
+-   NativeBottomSheet now explicitly calculates snapPoints with 90% screen height cap for predictable sizing.
+-   CustomModalSheet now measures content height dynamically with 90% screen height cap, removing offscreen SafeAreaView measurement.
 
 ## [5.0.3] - 2025-12-15
 

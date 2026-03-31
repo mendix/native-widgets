@@ -1,8 +1,12 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { InteractionManager, LayoutChangeEvent, Modal, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
+import { Dimensions, InteractionManager, LayoutChangeEvent, Modal, Pressable } from "react-native";
+import BottomSheet, {
+    BottomSheetBackdrop,
+    BottomSheetBackdropProps,
+    BottomSheetScrollView
+} from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
-import { BottomSheetStyle, defaultPaddings } from "../ui/Styles";
+import { BottomSheetStyle } from "../ui/Styles";
 
 interface CustomModalSheetProps {
     triggerAttribute?: EditableValue<boolean>;
@@ -14,7 +18,7 @@ let lastIndexRef = -1;
 
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
-    const [height, setHeight] = useState(0);
+    const [contentHeight, setContentHeight] = useState(0);
     const [currentStatus, setCurrentStatus] = useState(false);
 
     const isAvailable = props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available;
@@ -24,12 +28,15 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         props.triggerAttribute.status === ValueStatus.Available &&
         props.triggerAttribute.value;
 
-    const onLayoutFullscreenHandler = (event: LayoutChangeEvent): void => {
-        const layoutHeight = event.nativeEvent.layout.height;
-        if (layoutHeight > 0 && layoutHeight !== height) {
-            setHeight(layoutHeight);
-        }
-    };
+    const onContentLayoutHandler = useCallback(
+        (event: LayoutChangeEvent): void => {
+            const layoutHeight = event.nativeEvent.layout.height;
+            if (layoutHeight > 0 && layoutHeight !== contentHeight) {
+                setContentHeight(layoutHeight);
+            }
+        },
+        [contentHeight]
+    );
 
     const close = useCallback(() => {
         bottomSheetRef.current?.close();
@@ -51,11 +58,15 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
     );
 
     const snapPoints = useMemo(() => {
-        if (height === 0) {
-            return [0];
+        if (contentHeight === 0) {
+            return [1]; // During measurement
         }
-        return [height - Number(defaultPaddings.paddingBottom)];
-    }, [height]);
+
+        // Use actual measured content height, cap at 90% screen
+        const maxHeight = Dimensions.get("screen").height * 0.9;
+        const snapHeight = Math.min(contentHeight, maxHeight);
+        return [snapHeight];
+    }, [contentHeight]);
 
     const handleSheetChanges = useCallback(
         (index: number) => {
@@ -89,14 +100,6 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         }
     }, [props.triggerAttribute, currentStatus, isAvailable]);
 
-    if (height === 0) {
-        return (
-            <View style={{ ...StyleSheet.absoluteFillObject, opacity: 0 }}>
-                <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutFullscreenHandler} />
-            </View>
-        );
-    }
-
     return (
         <Modal onRequestClose={close} transparent visible={!!isOpen}>
             <BottomSheet
@@ -112,7 +115,13 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                 handleComponent={null}
                 handleStyle={{ display: "none" }}
             >
-                <BottomSheetView style={[props.styles.container, defaultPaddings]}>{props.content}</BottomSheetView>
+                <BottomSheetScrollView
+                    style={[{ flex: 1 }]}
+                    contentContainerStyle={{ paddingBottom: 16 }}
+                    onLayout={onContentLayoutHandler}
+                >
+                    {props.content}
+                </BottomSheetScrollView>
             </BottomSheet>
         </Modal>
     );
