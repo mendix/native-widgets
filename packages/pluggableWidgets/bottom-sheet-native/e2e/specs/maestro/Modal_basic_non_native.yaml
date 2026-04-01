@@ -15,7 +15,7 @@ appId: "${APP_ID}"
 - extendedWaitUntil:
     visible: randText
     optional: true
-    timeout: 50000
+    timeout: 25000
 
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_basic_non_native"
