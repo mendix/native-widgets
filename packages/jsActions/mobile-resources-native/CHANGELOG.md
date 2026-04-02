@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We replaced the depricated CameraRoll.saveToCameraRoll with CameraRoll.saveAsset in SaveToPictureLibrary activity.
+-   Add await to API calls updated to async in recent update
+
 ## [11.4.1] Native Mobile Resources - 2026-3-14
 
 ## [2.0.2] GalleryTextFilter
