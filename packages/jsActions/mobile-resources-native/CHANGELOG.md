@@ -6,15 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We replaced the depricated CameraRoll.saveToCameraRoll with CameraRoll.saveAsset in SaveToPictureLibrary activity.
+
 ## [10.1.16] Native Mobile Resources - 2026-3-14
 
-
 ## [2.0.1] GalleryTextFilter
+
 ### Fixed
 
 -   Fixed VoiceOver/TalkBack not announcing the clear text button and text input value.
 
 ## [1.1.1] Switch
+
 ### Added
 
 -   Added the ability to change the position of the label in horizontal view from the left side of the switch to the right side.
@@ -26,37 +31,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [10.1.15] Native Mobile Resources - 2026-3-4
 
-
 ## [2.0.2] Gallery
+
 ### Fixed
 
 -   We've fixed an issue with a race condition where the Gallery widget would not consistently render items when using virtual scrolling in arbitrary scenarios.
 
 ## [10.1.14] Native Mobile Resources - 2026-1-22
 
-
 ## [3.0.1] Image
+
 ### Changed
 
 -   We fixed image enlargement issue on Android.
 
 ## [10.1.13] Native Mobile Resources - 2026-1-19
 
-
 ## [4.1.1] IntroScreen
+
 ### Fixed
-- We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
+
+-   We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
 
 ## [10.1.11] Native Mobile Resources - 2025-12-19
 
-
 ## [4.2.2] BarcodeScanner
+
 -   We expanded the barcode-scanner configuration in Vision Camera to support all available `CodeType` formats, including QR, Aztec, Data Matrix, PDF-417, EAN, UPC, GS1 DataBar, ITF, and Code barcodes.
 
 ## [10.1.10] Native Mobile Resources - 2025-12-11
 
-
 ## [4.2.1] BarcodeScanner
+
 ### Fixed
 
 -   Updated react-native-vision-camera from version v4.7.1 to v4.7.3.
