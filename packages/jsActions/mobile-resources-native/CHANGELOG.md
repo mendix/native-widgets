@@ -10,13 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   We replaced the depricated CameraRoll.saveToCameraRoll with CameraRoll.saveAsset in SaveToPictureLibrary activity.
 
-## [10.1.16] Native Mobile Resources - 2026-3-14
-
-## [2.0.1] GalleryTextFilter
-
-### Fixed
-
--   Fixed VoiceOver/TalkBack not announcing the clear text button and text input value.
+## [11.3.7] Native Mobile Resources - 2026-3-14
 
 ## [1.1.1] Switch
 
@@ -29,42 +23,50 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We fixed an issue where the validation message was rendered inside the view container of the switch, which caused incorrect styling of the switch.
 -   Fixed an issue where
 
-## [10.1.15] Native Mobile Resources - 2026-3-4
+## [11.3.6] Native Mobile Resources - 2026-3-5
 
-## [2.0.2] Gallery
+-   We fixed native file system module reference.
 
-### Fixed
+## [11.3.5] Native Mobile Resources - 2026-2-4
 
 -   Changed a caption for the existing "Download file" action to "Download native file".
 
-## [10.1.14] Native Mobile Resources - 2026-1-22
+## [11.3.4] Native Mobile Resources - 2026-1-22
 
-## [3.0.1] Image
+## [3.0.3] Image
 
 ### Changed
 
 -   We fixed image enlargement issue on Android.
 
-## [10.1.13] Native Mobile Resources - 2026-1-19
+## [11.3.3] Native Mobile Resources - 2026-1-19
 
-## [4.1.1] IntroScreen
+## [2.2.1] BackgroundGradient
+
+-   We fixed an issue where the `background-gradient-native` widget would not render correctly with the new RN architecture upgrade.
+
+## [4.2.1] IntroScreen
 
 ### Fixed
 
 -   We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
 
-## [10.1.11] Native Mobile Resources - 2025-12-19
+## [4.0.1] PopupMenu
+
+-   We fixed an iOS issue where native Popup Menu icons were not tappable and failed to open the menu.
+
+## [11.3.2] Native Mobile Resources - 2025-12-23
 
 ## [4.2.2] BarcodeScanner
 
 -   We expanded the barcode-scanner configuration in Vision Camera to support all available `CodeType` formats, including QR, Aztec, Data Matrix, PDF-417, EAN, UPC, GS1 DataBar, ITF, and Code barcodes.
 -   We updated react-native-vision-camera from version v4.7.1 to v4.7.3.
 
-## [10.1.10] Native Mobile Resources - 2025-12-11
+## [11.3.1] Native Mobile Resources - 2025-12-15
 
-## [4.2.1] BarcodeScanner
+## [5.0.3] BottomSheet
 
-### Fixed
+-   Updated react-native-reanimated to v3.17.5. This addresses compatibility issues with React Native 0.78 and later versions.
 
 ## [2.0.1] GalleryTextFilter
 
