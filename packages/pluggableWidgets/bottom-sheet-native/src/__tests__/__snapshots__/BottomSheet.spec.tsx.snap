@@ -18,7 +18,6 @@ exports[`Bottom sheet renders a expanding 1`] = `
   }
 >
   <View
-    onLayout={[Function]}
     style={
       {
         "bottom": 0,
@@ -65,7 +64,6 @@ exports[`Bottom sheet renders a expanding fullscreen 1`] = `
   }
 >
   <View
-    onLayout={[Function]}
     style={
       {
         "bottom": 0,
@@ -120,7 +118,6 @@ exports[`Bottom sheet renders a expanding fullscreen with custom styles 1`] = `
   }
 >
   <View
-    onLayout={[Function]}
     style={
       {
         "bottom": 0,
