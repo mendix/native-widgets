@@ -1,7 +1,8 @@
-import { createIconSet } from "react-native-vector-icons";
+import { createIconSet } from "@react-native-vector-icons/common";
 import { glyphMap } from "./Halflings";
 
 export const GlyphIcon = createIconSet(glyphMap, "GLYPHICONS Halflings", "glyphicons-halflings-regular.ttf");
+type GlyphIconName = keyof typeof glyphMap;
 
 export interface Icon {
     uri: string;
@@ -12,8 +13,23 @@ export interface ImageSourcesCache {
     [iconClassName: string]: Icon;
 }
 
-export const getIcon = async (iconName: string, size: number, color: string): Promise<Icon> =>
-    GlyphIcon.getImageSource(iconName, size, color);
+function isGlyphIconName(iconName: string): iconName is GlyphIconName {
+    return iconName in glyphMap;
+}
+
+export const getIcon = async (iconName: string, size: number, color: string): Promise<Icon> => {
+    if (!isGlyphIconName(iconName)) {
+        throw new Error(`Unknown glyphicon requested: ${iconName}`);
+    }
+
+    const source = await GlyphIcon.getImageSource(iconName, size, color);
+
+    if (!source) {
+        throw new Error(`Failed to generate image source for glyphicon: ${iconName}`);
+    }
+
+    return source;
+};
 
 export interface IconConfiguration {
     name: string;

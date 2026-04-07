@@ -5,6 +5,7 @@ import FastImageComponent, { Source } from "@d11/react-native-fast-image";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { CustomImageProps, GlyphIcon } from "../utils/imageUtils";
 import { GlyphIcon as GlyphIconComponent } from "./fonts/font";
+import type { GlyphIconName } from "./fonts/font";
 import { ResizeModeEnum } from "../../typings/ImageProps";
 import { getPositionFromSVG } from "../utils/svgUtils";
 
@@ -124,7 +125,7 @@ export const ImageIconSVG: FunctionComponent<ImageIconSVGProps> = props => {
         return (
             <View testID={`${name}$Icon`}>
                 <GlyphIconComponent
-                    name={String((image as GlyphIcon).iconClass)}
+                    name={(image as GlyphIcon).iconClass as GlyphIconName}
                     color={styles?.color ?? "black"}
                     size={styles?.size ?? iconSize}
                 />

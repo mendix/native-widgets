@@ -152,7 +152,7 @@ const nativeExternal = [
     /^react-native-reanimated(\/|$)/,
     /^react-native-worklets(\/|$)/,
     /^react-native-svg(\/|$)/,
-    /^react-native-vector-icons(\/|$)/,
+    /^@react-native-vector-icons(\/|$)/,
     /^@?react-navigation($|\/)/,
     /^react-native-device-info(\/|$)/
 ];

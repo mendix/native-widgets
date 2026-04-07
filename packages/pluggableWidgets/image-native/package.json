@@ -25,8 +25,9 @@
     "@d11/react-native-fast-image": "8.13.0",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-svg": "15.15.3",
-    "react-native-vector-icons": "10.2.0"
+    "@react-native-vector-icons/common": "12.4.0",
+    "@react-native-vector-icons/get-image": "12.3.0",
+    "react-native-svg": "15.15.3"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"

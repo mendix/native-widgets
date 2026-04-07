@@ -88,18 +88,20 @@ index 51c3265d054fdbcb491768d0600beb151f7ac37d..352ef3bf2539e33ee836762f962fe9f5
 -    /^react-native-fast-image($|\/)/,
 +    /^react-native-worklets($|\/)/,
      /^react-native-svg($|\/)/,
-     /^react-native-vector-icons($|\/)/,
+-    /^react-native-vector-icons($|\/)/,
++    /^@react-native-vector-icons($|\/)/,
      /^@?react-navigation($|\/)/,
 diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
-index 8346a68bb08ee24c3249691a2895ab8ba1fc7164..d1c0aa0b05fddfc7e636196065dc84250b9c9bc4 100644
+index 8346a68bb08ee24c3249691a2895ab8ba1fc7164..f85a77f91f1bcbfef0a6d3d2fb4b4af5f65ebf11 100644
 --- a/test-config/jest.native.config.js
 +++ b/test-config/jest.native.config.js
-@@ -16,7 +16,7 @@ module.exports = {
+@@ -16,7 +16,8 @@ module.exports = {
          ...(hasDependency("react-native-gesture-handler") ? ["react-native-gesture-handler/jestSetup.js"] : []),
      ],
      testMatch: ["<rootDir>/**/*.spec.{js,jsx,ts,tsx}"],
 -    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-)/)"],
 +    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-|@shopify/flash-list)/)"],
      transform: {
++        "^.+\\.(ttf|otf|woff2?|eot)$": require.resolve("react-native/jest/assetFileTransformer.js"),
          "^.+\\.tsx?$": [
              "ts-jest",

@@ -13,7 +13,7 @@ import {
     Pressable
 } from "react-native";
 import Video, { OnProgressData, ReactVideoProps, VideoRef } from "react-native-video";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { MaterialIcons as Icon } from "@react-native-vector-icons/material-icons";
 import { VideoPlayerProps } from "../typings/VideoPlayerProps";
 import { defaultVideoStyle, VideoStyle } from "./ui/Styles";
 import { isAvailable } from "@mendix/piw-utils-internal";

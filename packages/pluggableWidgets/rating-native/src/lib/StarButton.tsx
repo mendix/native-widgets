@@ -1,56 +1,28 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
-// has an outdated dependency (RN-vector-icons) that we now managed here in this widget.
+// handled both vector icon names and image sources. This widget only uses image sources.
 import { Component } from "react";
 import {
     GestureResponderEvent,
     Image,
+    ImageSourcePropType,
     ImageStyle,
-    ImageURISource,
     StyleSheet,
     TouchableOpacity,
     View
 } from "react-native";
 import type { StarRatingProps } from "react-native-star-rating";
 
-import EntypoIcons from "react-native-vector-icons/Entypo";
-import EvilIconsIcons from "react-native-vector-icons/EvilIcons";
-import FeatherIcons from "react-native-vector-icons/Feather";
-import FontAwesomeIcons from "react-native-vector-icons/FontAwesome";
-import FoundationIcons from "react-native-vector-icons/Foundation";
-import IoniconsIcons from "react-native-vector-icons/Ionicons";
-import MaterialIconsIcons from "react-native-vector-icons/MaterialIcons";
-import MaterialCommunityIconsIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import OcticonsIcons from "react-native-vector-icons/Octicons";
-import ZocialIcons from "react-native-vector-icons/Zocial";
-import SimpleLineIconsIcons from "react-native-vector-icons/SimpleLineIcons";
-
 declare type Option<T> = T | undefined;
-
-export const iconSets = {
-    Entypo: EntypoIcons,
-    EvilIcons: EvilIconsIcons,
-    Feather: FeatherIcons,
-    FontAwesome: FontAwesomeIcons,
-    Foundation: FoundationIcons,
-    Ionicons: IoniconsIcons,
-    MaterialIcons: MaterialIconsIcons,
-    MaterialCommunityIcons: MaterialCommunityIconsIcons,
-    Octicons: OcticonsIcons,
-    Zocial: ZocialIcons,
-    SimpleLineIcons: SimpleLineIconsIcons
-};
 
 interface Props
     extends Pick<
         StarRatingProps,
-        "activeOpacity" | "buttonStyle" | "disabled" | "halfStarEnabled" | "iconSet" | "reversed" | "starStyle"
+        "activeOpacity" | "buttonStyle" | "disabled" | "halfStarEnabled" | "reversed" | "starStyle"
     > {
     starSize: number;
     rating: number;
-    iconSet: keyof typeof iconSets;
     onStarButtonPress: (rating: number) => void;
-    starColor: Option<string>;
-    starIconName: Option<string | ImageURISource>;
+    starIconName: Option<ImageSourcePropType>;
 }
 
 const defaultProps = {
@@ -79,13 +51,8 @@ class StarButton extends Component<Props> {
         onStarButtonPress(rating + addition);
     }
 
-    iconSetFromProps() {
-        return iconSets[this.props.iconSet];
-    }
-
     renderIcon() {
-        const { reversed, starColor, starIconName, starSize, starStyle } = this.props;
-        const Icon = this.iconSetFromProps();
+        const { reversed, starIconName, starSize, starStyle } = this.props;
         const newStarStyle = {
             transform: [
                 {
@@ -95,9 +62,7 @@ class StarButton extends Component<Props> {
             ...StyleSheet.flatten(starStyle)
         } as ImageStyle;
 
-        return typeof starIconName === "string" ? (
-            <Icon name={starIconName} size={starSize} color={starColor} style={newStarStyle} />
-        ) : starIconName ? (
+        return starIconName ? (
             <Image
                 source={starIconName}
                 style={[
