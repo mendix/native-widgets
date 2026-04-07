@@ -91,7 +91,12 @@
       "@prettier/plugin-xml": "2.2.0",
       "cheerio": "1.0.0-rc.12",
       "typescript": "~5.9.3",
-      "react-test-renderer": "19.2.4"
+      "react-test-renderer": "19.2.4",
+      "minimatch@>=10.0.0 <10.2.1": ">=10.2.1",
+      "minimatch@>=5.0.0 <5.1.8": ">=5.1.8",
+      "minimatch@>=9.0.0 <9.0.7": ">=9.0.7",
+      "minimatch@>=10.0.0 <10.2.3": ">=10.2.3",
+      "minimatch@<3.1.4": ">=3.1.4"
     },
     "patchedDependencies": {
       "@mendix/pluggable-widgets-tools@11.8.0": "patches/@mendix+pluggable-widgets-tools+11.8.0.patch",
