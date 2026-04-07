@@ -4,8 +4,7 @@ import { SvgUri, SvgXml } from "react-native-svg";
 import FastImageComponent, { Source } from "@d11/react-native-fast-image";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { CustomImageProps, GlyphIcon } from "../utils/imageUtils";
-import { GlyphIcon as GlyphIconComponent } from "./fonts/font";
-import type { GlyphIconName } from "./fonts/font";
+import { GlyphIcon as GlyphIconComponent, type GlyphIconName } from "./fonts/font";
 import { ResizeModeEnum } from "../../typings/ImageProps";
 import { getPositionFromSVG } from "../utils/svgUtils";
 
