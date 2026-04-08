@@ -23,9 +23,9 @@
                         <attributeType name="String" />
                     </attributeTypes>
                 </property>
-                <property key="imageObject" type="datasource" isList="true" required="false">
+                <property key="imageObject" type="contextObject" required="false">
                     <caption>Target image</caption>
-                    <description>A data source that returns the image object to which the signature will be uploaded (e.g. a nanoflow returning the current System.Image context object).</description>
+                    <description>The context System.Image object to which the signature will be uploaded when save mode is Direct image.</description>
                 </property>
             </propertyGroup>
             <propertyGroup caption="Buttons">

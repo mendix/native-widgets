@@ -72,11 +72,11 @@ export function Signature(props: Props): ReactElement {
     const handleSignature = useCallback(
         async (base64signature: string): Promise<void> => {
             if (props.saveMode === "directImage") {
-                const targetGuid = props.imageObject?.items?.[0]?.id;
+                const targetGuid = props.imageObject?.value?.id;
 
                 if (!targetGuid) {
                     console.error(
-                        "Signature direct image mode requires a target image object from the configured data source."
+                        "Signature direct image mode requires the widget to be placed inside a System.Image data container."
                     );
                     return;
                 }
