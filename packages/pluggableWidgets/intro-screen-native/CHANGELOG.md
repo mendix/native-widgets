@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   We migrated from using the native FlatList to @shopify/flash-list.
+-   Replaced the depricated InteractionManager in IntroScreen.
 
 ## [4.2.1] - 2026-1-19
 
