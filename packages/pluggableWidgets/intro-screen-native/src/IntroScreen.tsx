@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, JSX } from "react";
 import { defaultWelcomeScreenStyle, IntroScreenStyle } from "./ui/Styles";
 import { IntroScreenProps } from "../typings/IntroScreenProps";
-import { InteractionManager, Modal, View } from "react-native";
+import { Modal, View } from "react-native";
 import { DynamicValue, ValueStatus } from "mendix";
 import { SwipeableContainer } from "./SwipeableContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,20 +17,33 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
             : defaultWelcomeScreenStyle;
 
     useEffect(() => {
+        let isMounted = true;
+
         if (props.identifier) {
             AsyncStorage.getItem(props.identifier).then(value => {
-                setVisible(value === "" || value === null);
+                if (isMounted) {
+                    setVisible(value === "" || value === null);
+                }
             });
         } else {
-            InteractionManager.runAfterInteractions(() => setVisible(true));
+            // Show modal on next frame when there's no identifier to prevent flash of content
+            queueMicrotask(() => {
+                if (isMounted) {
+                    setVisible(true);
+                }
+            });
         }
+
+        return () => {
+            isMounted = false;
+        };
     }, [props.identifier]);
 
     const hideModal = useCallback((): void => {
         if (props.identifier) {
             AsyncStorage.setItem(props.identifier, "gone").then(() => setVisible(false));
         } else {
-            InteractionManager.runAfterInteractions(() => setVisible(false));
+            setVisible(false);
         }
     }, [props.identifier]);
 
