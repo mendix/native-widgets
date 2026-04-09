@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   Replaced the depricated InteractionManager in Feedback widget.
+-   Replaced the deprecated InteractionManager in Feedback widget.
 
 ## [3.4.0] - 2025-3-31
 
