@@ -6,6 +6,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.4.2] Native Mobile Resources - 2026-4-9
+
+## [5.0.4] BottomSheet
+
+### Fixed
+
+-   Fixed the “non‑worklet function called on the UI thread” error in bottom sheet coming from @gorhom/bottom-sheet usage.
+-   Fixed ExpandingDrawer to open correctly and show all elements.
+
+### Changed
+
+-   Improved performance by memoizing all callbacks with useCallback and useMemo across all components.
+-   BottomSheet now uses BottomSheetScrollView instead of BottomSheetView, enabling proper scrolling in expanded states.
+-   NativeBottomSheet now explicitly calculates snapPoints with 90% screen height cap for predictable sizing.
+-   CustomModalSheet now measures content height dynamically with 90% screen height cap, removing offscreen SafeAreaView measurement.
+
+## [2.1.0] Gallery
+
+### Changed
+
+-   We migrated from using the native FlatList to @shopify/flash-list.
+
+## [4.3.0] IntroScreen
+
+### Changed
+
+-   We migrated from using the native FlatList to @shopify/flash-list.
+
 ## [11.4.1] Native Mobile Resources - 2026-3-14
 
 ## [2.0.2] GalleryTextFilter
