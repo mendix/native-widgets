@@ -94,11 +94,17 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
         return this.state.status === "initial" ? (
             <View style={floatingButtonContainer(this.state.deviceHeight)}>
                 <View style={this.styles.floatingButton}>
-                    <TouchableOpacity onPress={this.onFeedbackButtonPressHandler} testID={`${this.props.name}$button`}>
+                    <TouchableOpacity
+                        onPress={this.onFeedbackButtonPressHandler}
+                        testID={`${this.props.name}$button`}
+                        accessibilityRole="button"
+                        accessibilityLabel={this.props.accessibilityLabelFeedbackButton?.value ?? "Open feedback form"}
+                    >
                         {this.props.logo && this.props.logo.value ? (
                             <Image style={imageStyle as StyleProp<SvgImageStyle>} source={this.props.logo.value} />
-                        ) : null}
-                        <RNImage style={imageStyle} source={commentIcon} />
+                        ) : (
+                            <RNImage style={imageStyle} source={commentIcon} />
+                        )}
                     </TouchableOpacity>
                 </View>
             </View>
@@ -120,19 +126,27 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
                 }}
                 {...this.dialogContainerProps}
             >
-                <Dialog.Title style={this.styles.title}>Send Feedback</Dialog.Title>
+                <Dialog.Title style={this.styles.title}>
+                    {this.props.titleSendFeedback?.value ?? "Send Feedback"}
+                </Dialog.Title>
+                <Text style={{ marginTop: 12, marginBottom: 8, fontSize: 14 }}>
+                    {this.props.labelFeedbackInput?.value ?? "Type your feedback here"}
+                </Text>
                 <TextInput
                     testID={`${this.props.name}$input`}
                     multiline
                     style={this.processedStyles.textAreaInputStyles}
                     value={this.state.feedbackMessage}
                     onChangeText={this.onChangeTextHandler}
-                    placeholder="Type your feedback here"
+                    placeholder={this.props.placeholderFeedback?.value ?? "Type your feedback here"}
+                    accessibilityLabel={this.props.labelFeedbackInput?.value ?? "Type your feedback here"}
                     {...this.processedStyles.textAreaInputProps}
                 />
                 {this.props.allowScreenshot && (
                     <View style={switchContainer}>
-                        <Text style={this.styles.switchLabel}>Include Screenshot</Text>
+                        <Text style={this.styles.switchLabel}>
+                            {this.props.labelIncludeScreenshot?.value ?? "Include Screenshot"}
+                        </Text>
                         <Switch
                             testID={`${this.props.name}$switch`}
                             style={this.processedStyles.switchInputStyles}
@@ -144,13 +158,13 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
                     </View>
                 )}
                 <Dialog.Button
-                    label="Cancel"
+                    label={this.props.buttonCancel?.value ?? "Cancel"}
                     color={this.styles.button.color}
                     onPress={this.onCancelHandler}
                     testID={`${this.props.name}$cancel`}
                 />
                 <Dialog.Button
-                    label="Send"
+                    label={this.props.buttonSend?.value ?? "Send"}
                     disabled={disabled}
                     color={sendButtonColor}
                     onPress={this.onSendHandler}
@@ -163,7 +177,7 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
     private renderInProgressDialog(): JSX.Element {
         return (
             <Dialog.Container visible={this.state.status === "inprogress"} {...this.dialogContainerProps}>
-                <Dialog.Title style={this.styles.title}>Sending...</Dialog.Title>
+                <Dialog.Title style={this.styles.title}>{this.props.titleSending?.value ?? "Sending..."}</Dialog.Title>
                 <ActivityIndicator
                     color={this.styles.activityIndicator.color}
                     size="large"
@@ -176,12 +190,12 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
     private renderDoneDialog(): JSX.Element {
         return (
             <Dialog.Container visible={this.state.status === "done"} {...this.dialogContainerProps}>
-                <Dialog.Title style={this.styles.title}>Result</Dialog.Title>
+                <Dialog.Title style={this.styles.title}>{this.props.titleResult?.value ?? "Result"}</Dialog.Title>
                 <Dialog.Description style={this.processedStyles.descriptionStyle} testID={`${this.props.name}$success`}>
-                    Feedback successfully sent
+                    {this.props.messageSuccess?.value ?? "Feedback successfully sent"}
                 </Dialog.Description>
                 <Dialog.Button
-                    label="OK"
+                    label={this.props.buttonOk?.value ?? "OK"}
                     onPress={this.onCancelHandler}
                     color={this.styles.button.color}
                     testID={`${this.props.name}$success$ok`}
@@ -193,12 +207,12 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
     private renderErrorDialog(): JSX.Element {
         return (
             <Dialog.Container visible={this.state.status === "error"} {...this.dialogContainerProps}>
-                <Dialog.Title style={this.styles.title}>Result</Dialog.Title>
+                <Dialog.Title style={this.styles.title}>{this.props.titleResult?.value ?? "Result"}</Dialog.Title>
                 <Dialog.Description style={this.processedStyles.descriptionStyle} testID={`${this.props.name}$error`}>
-                    Error sending feedback
+                    {this.props.messageError?.value ?? "Error sending feedback"}
                 </Dialog.Description>
                 <Dialog.Button
-                    label="OK"
+                    label={this.props.buttonOk?.value ?? "OK"}
                     onPress={this.onCancelHandler}
                     color={this.styles.button.color}
                     testID={`${this.props.name}$error$ok`}
