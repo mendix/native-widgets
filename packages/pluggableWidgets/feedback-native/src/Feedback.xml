@@ -1,24 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <widget id="com.mendix.widget.native.feedback.Feedback" supportedPlatform="Native" needsEntityContext="true" offlineCapable="true" pluginWidget="true" xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../../../node_modules/mendix/custom_widget.xsd">
     <name>Feedback</name>
     <description>Allow users to submit feedback directly into the app project.</description>
     <studioProCategory>Add-ons</studioProCategory>
     <studioCategory>Add-ons</studioCategory>
     <properties>
-        <property key="sprintrapp" type="string">
-            <caption>App ID</caption>
-            <category>General</category>
-            <description>The App ID is a hash that uniquely identifies your app project. You can find this ID in Settings > General in the Developer Portal.</description>
-        </property>
-        <property key="allowScreenshot" type="boolean" defaultValue="true">
-            <caption>Allow screenshots</caption>
-            <category>General</category>
-            <description>If you are not allowed to send screenshots when submitting feedback for legal reasons, set this to ‘No’.</description>
-        </property>
-        <property key="logo" type="image" required="false">
-            <caption>Logo</caption>
-            <category>General</category>
-            <description>For customized branding, add a logo to the widget. The recommended size of the image is 90 by 90 pixels.</description>
-        </property>
+        <propertyGroup caption="General">
+            <property key="sprintrapp" type="string">
+                <caption>App ID</caption>
+                <description>The App ID is a hash that uniquely identifies your app project. You can find this ID in Settings > General in the Developer Portal.</description>
+            </property>
+            <property key="allowScreenshot" type="boolean" defaultValue="true">
+                <caption>Allow screenshots</caption>
+                <description>If you are not allowed to send screenshots when submitting feedback for legal reasons, set this to ‘No’.</description>
+            </property>
+            <property key="logo" type="image" required="false">
+                <caption>Logo</caption>
+                <description>For customized branding, add a logo to the widget. The recommended size of the image is 90 by 90 pixels.</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Localization">
+            <propertyGroup caption="Dialog Titles">
+                <property key="titleSendFeedback" type="textTemplate" required="false">
+                    <caption>Send feedback title</caption>
+                    <description>Title shown when composing feedback</description>
+                    <translations>
+                        <translation lang="en_US">Send Feedback</translation>
+                    </translations>
+                </property>
+                <property key="titleSending" type="textTemplate" required="false">
+                    <caption>Sending title</caption>
+                    <description>Title shown while sending feedback</description>
+                    <translations>
+                        <translation lang="en_US">Sending...</translation>
+                    </translations>
+                </property>
+                <property key="titleResult" type="textTemplate" required="false">
+                    <caption>Result title</caption>
+                    <description>Title shown in result dialogs (success/error)</description>
+                    <translations>
+                        <translation lang="en_US">Result</translation>
+                    </translations>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Input Labels">
+                <property key="labelFeedbackInput" type="textTemplate" required="false">
+                    <caption>Feedback input label</caption>
+                    <description>Visible label shown above the feedback text field</description>
+                    <translations>
+                        <translation lang="en_US">Type your feedback here</translation>
+                    </translations>
+                </property>
+                <property key="placeholderFeedback" type="textTemplate" required="false">
+                    <caption>Feedback placeholder</caption>
+                    <description>Placeholder text for feedback input field</description>
+                    <translations>
+                        <translation lang="en_US">Type your feedback here</translation>
+                    </translations>
+                </property>
+                <property key="labelIncludeScreenshot" type="textTemplate" required="false">
+                    <caption>Screenshot label</caption>
+                    <description>Label for screenshot toggle switch</description>
+                    <translations>
+                        <translation lang="en_US">Include Screenshot</translation>
+                    </translations>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Buttons">
+                <property key="buttonCancel" type="textTemplate" required="false">
+                    <caption>Cancel button</caption>
+                    <description>Label for cancel button</description>
+                    <translations>
+                        <translation lang="en_US">Cancel</translation>
+                    </translations>
+                </property>
+                <property key="buttonSend" type="textTemplate" required="false">
+                    <caption>Send button</caption>
+                    <description>Label for send button</description>
+                    <translations>
+                        <translation lang="en_US">Send</translation>
+                    </translations>
+                </property>
+                <property key="buttonOk" type="textTemplate" required="false">
+                    <caption>OK button</caption>
+                    <description>Label for OK button in result dialogs</description>
+                    <translations>
+                        <translation lang="en_US">OK</translation>
+                    </translations>
+                </property>
+                <property key="accessibilityLabelFeedbackButton" type="textTemplate" required="false">
+                    <caption>Feedback button accessibility label</caption>
+                    <description>Label announced by screen readers for the feedback button (not visible on screen)</description>
+                    <translations>
+                        <translation lang="en_US">Open feedback form</translation>
+                    </translations>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Messages">
+                <property key="messageSuccess" type="textTemplate" required="false">
+                    <caption>Success message</caption>
+                    <description>Message shown when feedback is sent successfully</description>
+                    <translations>
+                        <translation lang="en_US">Feedback successfully sent</translation>
+                    </translations>
+                </property>
+                <property key="messageError" type="textTemplate" required="false">
+                    <caption>Error message</caption>
+                    <description>Message shown when feedback fails to send</description>
+                    <translations>
+                        <translation lang="en_US">Error sending feedback</translation>
+                    </translations>
+                </property>
+            </propertyGroup>
+        </propertyGroup>
     </properties>
 </widget>
