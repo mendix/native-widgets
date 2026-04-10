@@ -10,15 +10,15 @@
             <propertyGroup caption="General">
                 <property key="saveMode" type="enumeration" defaultValue="attribute">
                     <caption>Save mode</caption>
-                    <description>Choose whether the signature is stored as a base64 string or uploaded directly to an image object.</description>
+                    <description>Choose how the signature is saved. "Store as Base64 string" saves the signature as a base64 value to a String attribute — use the Base64DecodeToImage nanoflow action to convert and commit it to an image object. "Direct image upload" skips the base64 step entirely: the signature is uploaded directly to the linked System.Image object, so you only need to commit the object in your nanoflow.</description>
                     <enumerationValues>
-                        <enumerationValue key="attribute">Base64 attribute</enumerationValue>
+                        <enumerationValue key="attribute">Store as Base64 string</enumerationValue>
                         <enumerationValue key="directImage">Direct image</enumerationValue>
                     </enumerationValues>
                 </property>
                 <property key="imageAttribute" type="attribute" required="false">
                     <caption>Attribute</caption>
-                    <description>The String attribute that receives the signature as a base64 value when save mode is Base64 attribute.</description>
+                    <description>The String attribute that receives the signature as a base64 value when save mode is Store as Base64 string.</description>
                     <attributeTypes>
                         <attributeType name="String" />
                     </attributeTypes>
@@ -46,7 +46,7 @@
             </property>
             <property key="onSave" type="action" required="false">
                 <caption>On save</caption>
-                <description>Fired when the save button is clicked. In direct image mode, this fires after the image upload succeeds.</description>
+                <description>Fired when the save button is clicked.</description>
             </property>
             <property key="onEnd" type="action" required="false">
                 <caption>On end</caption>
