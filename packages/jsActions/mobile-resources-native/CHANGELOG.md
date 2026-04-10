@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.8] Native Mobile Resources - 2026-4-10
+
+## [2.1.0] Gallery
+
+### Changed
+
+-   We migrated from using the native FlatList to @shopify/flash-list.
+
+## [4.3.0] IntroScreen
+
+### Changed
+
+-   We migrated from using the native FlatList to @shopify/flash-list.
+
 ## [11.3.7] Native Mobile Resources - 2026-3-14
 
 ## [1.1.1] Switch
