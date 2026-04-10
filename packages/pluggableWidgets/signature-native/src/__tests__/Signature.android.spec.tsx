@@ -45,7 +45,8 @@ const defaultProps: Props = {
     style: [],
     imageAttribute: new EditableValueBuilder<string>().withValue("").build(),
     buttonCaptionClear: dynamicValue<string>("Clear"),
-    buttonCaptionSave: dynamicValue<string>("Save")
+    buttonCaptionSave: dynamicValue<string>("Save"),
+    saveMode: "attribute"
 };
 
 describe("Signature Android", () => {
