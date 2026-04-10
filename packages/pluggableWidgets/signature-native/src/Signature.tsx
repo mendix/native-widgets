@@ -40,7 +40,7 @@ async function uploadSignature(signature: string, guid: string): Promise<void> {
         return await new Promise((resolve, reject) => {
             mx.data.saveDocument(
                 guid,
-                "signature.png",
+                "camera image",
                 {},
                 blob,
                 () => resolve(),
