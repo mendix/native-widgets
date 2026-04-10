@@ -10,10 +10,12 @@ appId: "${APP_ID}"
     text: "Modal basic non native"
 - tapOn:
     text: "Open"
-# Because the image loading can take some time due to resources on emulator, we need to wait for the image to be visible
-- extendedWaitUntil: 
-     visible: randText  # Any random text that does not exist in the UI
-     optional: true  # This should be true so that the test won't fail
-     timeout: 10000 # 10 seconds
+
+# Wait until the sheet is actually open (button label changes)
+- extendedWaitUntil:
+    visible: randText
+    optional: true
+    timeout: 25000
+
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_basic_non_native"
