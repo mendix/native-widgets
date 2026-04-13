@@ -20,3 +20,13 @@ appId: "${APP_ID}"
     direction: UP
 - assertVisible:
     text: ".*Title 9.*"
+- tapOn:
+    text: "Load more"
+- assertVisible:
+    text: ".*Title 10.*"
+- swipe:
+    from:
+      text: ".*Title 10.*"
+    direction: UP
+- assertVisible:
+    text: ".*Title 14.*"

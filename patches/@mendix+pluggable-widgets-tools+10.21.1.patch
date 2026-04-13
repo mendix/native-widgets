@@ -139,7 +139,8 @@ index 72e3c51473b7566ca9d8b224b35334099ce615db..7e0949aa5d50d288d848117a804fd691
      ],
 -    snapshotSerializers: ["enzyme-to-json/serializer"],
      testMatch: ["<rootDir>/**/*.spec.{js,jsx,ts,tsx}"],
-     transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-)/)"],
+-    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-)/)"],
++    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-|@shopify/flash-list)/)"],
      transform: {
 @@ -35,7 +33,6 @@ module.exports = {
          "react-hot-loader/root": join(__dirname, "__mocks__/hot")

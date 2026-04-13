@@ -6,42 +6,49 @@ appId: "${APP_ID}"
     text: "I"
 - tapOn:
     text: "Intro screen"
-- assertVisible:
-    text: "Active slide: 2"
+- extendedWaitUntil:
+    visible: "Active slide: 2"
+    timeout: 5000
 - assertVisible:
     text: "Changes: 0"
 - swipe:
     direction: LEFT
-- assertVisible:
-    text: "Active slide: 3"
+- extendedWaitUntil:
+    visible: "Active slide: 3"
+    timeout: 5000
 - assertVisible:
     text: "Changes: 1"
 - swipe:
     direction: RIGHT
-- assertVisible:
-    text: "Active slide: 2"
+- extendedWaitUntil:
+    visible: "Active slide: 2"
+    timeout: 5000
 - assertVisible:
     text: "Changes: 2"
 - tapOn:
     text: "PREVIOUS"
-- assertVisible:
-    text: "Active slide: 1"
+- extendedWaitUntil:
+    visible: "Active slide: 1"
+    timeout: 5000
 - assertVisible:
     text: "Changes: 3"
 - tapOn:
     text: "SKIP"
-- assertVisible:
-    text: "Skipped"
+- extendedWaitUntil:
+    visible: "Skipped"
+    timeout: 5000
 - tapOn:
     text: "OK"
 - tapOn: "Go back"
 - tapOn:
     text: "Intro screen"
-- assertVisible:
-    text: "Active slide: 2"
+- extendedWaitUntil:
+    visible: "Active slide: 2"
+    timeout: 5000
 - tapOn:
     text: "NEXT"
 - tapOn:
     text: "FINISH"
-- assertVisible:
-    text: "Done"
+- extendedWaitUntil:
+    visible: "Done"
+    timeout: 5000

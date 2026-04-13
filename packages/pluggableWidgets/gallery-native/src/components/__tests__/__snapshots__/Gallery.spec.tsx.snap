@@ -5,326 +5,174 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
   style={{}}
   testID="gallery-test"
 >
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
+  <View
     ListFooterComponentStyle={
       {
         "marginTop": 8,
       }
     }
-    data={
-      [
-        {
-          "id": "11",
-        },
-        {
-          "id": "22",
-        },
-        {
-          "id": "33",
-        },
-        {
-          "id": "44",
-        },
-        {
-          "id": "55",
-        },
-        {
-          "id": "66",
-        },
-        {
-          "id": "77",
-        },
-        {
-          "id": "88",
-        },
-        {
-          "id": "99",
-        },
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
     horizontal={false}
     keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
+    numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={true}
-    renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
+        testID="gallery-test-list-item-11"
       >
         <View
           style={
-            {
-              "flexDirection": "row",
-            }
+            [
+              undefined,
+              undefined,
+              false,
+            ]
           }
         >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-11"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  undefined,
-                  false,
-                ]
-              }
-            >
-              11
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-22"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              22
-            </View>
-          </View>
+          11
         </View>
       </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-33"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              33
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-44"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              44
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-55"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              55
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-66"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              66
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-77"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              77
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-88"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              88
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-99"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  undefined,
-                ]
-              }
-            >
-              99
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          {
-            "marginTop": 8,
-          }
-        }
-      />
     </View>
-  </RCTScrollView>
+    <View>
+      <View
+        testID="gallery-test-list-item-22"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          22
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-33"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          33
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-44"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          44
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-55"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          55
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-66"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          66
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-77"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          77
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-88"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          88
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-99"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              undefined,
+            ]
+          }
+        >
+          99
+        </View>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -333,372 +181,219 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
   style={{}}
   testID="gallery-test"
 >
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
+  <View
     ListFooterComponentStyle={
       {
         "marginTop": 8,
       }
     }
-    data={
-      [
-        {
-          "id": "11",
-        },
-        {
-          "id": "22",
-        },
-        {
-          "id": "33",
-        },
-        {
-          "id": "44",
-        },
-        {
-          "id": "55",
-        },
-        {
-          "id": "66",
-        },
-        {
-          "id": "77",
-        },
-        {
-          "id": "88",
-        },
-        {
-          "id": "99",
-        },
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
     horizontal={false}
     keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
+    numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={true}
-    renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
+        testID="gallery-test-list-item-11"
       >
         <View
           style={
-            {
-              "flexDirection": "row",
-            }
+            [
+              undefined,
+              undefined,
+              false,
+            ]
           }
         >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-11"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  undefined,
-                  false,
-                ]
-              }
-            >
-              11
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-22"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              22
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-33"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              33
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-44"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              44
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-55"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              55
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-66"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              66
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-77"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              77
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-88"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              88
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-99"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  undefined,
-                ]
-              }
-            >
-              99
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          {
-            "marginTop": 8,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeBackgroundAndroid={
-            {
-              "borderless": false,
-              "color": 855638016,
-              "rippleRadius": undefined,
-              "type": "RippleAndroid",
-            }
-          }
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={{}}
-          testID="gallery-test-pagination-button"
-        >
-          <Text>
-            Load more
-          </Text>
+          11
         </View>
       </View>
     </View>
-  </RCTScrollView>
+    <View>
+      <View
+        testID="gallery-test-list-item-22"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          22
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-33"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          33
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-44"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          44
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-55"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          55
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-66"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          66
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-77"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          77
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-88"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          88
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-99"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              undefined,
+            ]
+          }
+        >
+          99
+        </View>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeBackgroundAndroid={
+        {
+          "borderless": false,
+          "color": 855638016,
+          "rippleRadius": undefined,
+          "type": "RippleAndroid",
+        }
+      }
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={{}}
+      testID="gallery-test-pagination-button"
+    >
+      <Text>
+        Load more
+      </Text>
+    </View>
+  </View>
 </View>
 `;
 
@@ -707,372 +402,219 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
   style={{}}
   testID="gallery-test"
 >
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
+  <View
     ListFooterComponentStyle={
       {
         "marginTop": 8,
       }
     }
-    data={
-      [
-        {
-          "id": "11",
-        },
-        {
-          "id": "22",
-        },
-        {
-          "id": "33",
-        },
-        {
-          "id": "44",
-        },
-        {
-          "id": "55",
-        },
-        {
-          "id": "66",
-        },
-        {
-          "id": "77",
-        },
-        {
-          "id": "88",
-        },
-        {
-          "id": "99",
-        },
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
     horizontal={false}
     keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
+    numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={true}
-    renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
+        testID="gallery-test-list-item-11"
       >
         <View
           style={
-            {
-              "flexDirection": "row",
-            }
+            [
+              undefined,
+              undefined,
+              false,
+            ]
           }
         >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-11"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  undefined,
-                  false,
-                ]
-              }
-            >
-              11
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-22"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              22
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-33"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              33
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-44"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              44
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-55"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              55
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-66"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              66
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-77"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              77
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-88"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              88
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-99"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  undefined,
-                ]
-              }
-            >
-              99
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          {
-            "marginTop": 8,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeBackgroundAndroid={
-            {
-              "borderless": false,
-              "color": 855638016,
-              "rippleRadius": undefined,
-              "type": "RippleAndroid",
-            }
-          }
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={{}}
-          testID="gallery-test-pagination-button"
-        >
-          <Text>
-            Show more
-          </Text>
+          11
         </View>
       </View>
     </View>
-  </RCTScrollView>
+    <View>
+      <View
+        testID="gallery-test-list-item-22"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          22
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-33"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          33
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-44"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          44
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-55"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          55
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-66"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          66
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-77"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          77
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-88"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          88
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-99"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              undefined,
+            ]
+          }
+        >
+          99
+        </View>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      nativeBackgroundAndroid={
+        {
+          "borderless": false,
+          "color": 855638016,
+          "rippleRadius": undefined,
+          "type": "RippleAndroid",
+        }
+      }
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={{}}
+      testID="gallery-test-pagination-button"
+    >
+      <Text>
+        Show more
+      </Text>
+    </View>
+  </View>
 </View>
 `;
 
@@ -1081,326 +623,174 @@ exports[`Gallery rendering renders correctly 1`] = `
   style={{}}
   testID="gallery-test"
 >
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
+  <View
     ListFooterComponentStyle={
       {
         "marginTop": 8,
       }
     }
-    data={
-      [
-        {
-          "id": "11",
-        },
-        {
-          "id": "22",
-        },
-        {
-          "id": "33",
-        },
-        {
-          "id": "44",
-        },
-        {
-          "id": "55",
-        },
-        {
-          "id": "66",
-        },
-        {
-          "id": "77",
-        },
-        {
-          "id": "88",
-        },
-        {
-          "id": "99",
-        },
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
     horizontal={false}
     keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
+    numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={true}
-    renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
+        testID="gallery-test-list-item-11"
       >
         <View
           style={
-            {
-              "flexDirection": "row",
-            }
+            [
+              undefined,
+              undefined,
+              false,
+            ]
           }
         >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-11"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  undefined,
-                  false,
-                ]
-              }
-            >
-              11
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-22"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              22
-            </View>
-          </View>
+          11
         </View>
       </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-33"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              33
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-44"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              44
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-55"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              55
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-66"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              66
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-77"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              77
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-88"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              88
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-99"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  undefined,
-                ]
-              }
-            >
-              99
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          {
-            "marginTop": 8,
-          }
-        }
-      />
     </View>
-  </RCTScrollView>
+    <View>
+      <View
+        testID="gallery-test-list-item-22"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          22
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-33"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          33
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-44"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          44
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-55"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          55
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-66"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          66
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-77"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          77
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-88"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          88
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-99"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              undefined,
+            ]
+          }
+        >
+          99
+        </View>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -1409,337 +799,218 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
   style={{}}
   testID="gallery-test"
 >
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
+  <View
     ListFooterComponentStyle={
       {
         "marginStart": 8,
       }
     }
-    data={
-      [
-        {
-          "id": "11",
-        },
-        {
-          "id": "22",
-        },
-        {
-          "id": "33",
-        },
-        {
-          "id": "44",
-        },
-        {
-          "id": "55",
-        },
-        {
-          "id": "66",
-        },
-        {
-          "id": "77",
-        },
-        {
-          "id": "88",
-        },
-        {
-          "id": "99",
-        },
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
     horizontal={true}
     keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={true}
-    renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-11"
-        >
-          <View
-            style={
-              [
-                undefined,
-                undefined,
-                false,
-              ]
-            }
-          >
-            11
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-22"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                false,
-              ]
-            }
-          >
-            22
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-33"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                false,
-              ]
-            }
-          >
-            33
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-44"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                false,
-              ]
-            }
-          >
-            44
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-55"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                false,
-              ]
-            }
-          >
-            55
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-66"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                false,
-              ]
-            }
-          >
-            66
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-77"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                false,
-              ]
-            }
-          >
-            77
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-88"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                false,
-              ]
-            }
-          >
-            88
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
-      >
-        <View
-          style={false}
-          testID="gallery-test-list-item-99"
-        >
-          <View
-            style={
-              [
-                undefined,
-                false,
-                undefined,
-              ]
-            }
-          >
-            99
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
         style={
           {
-            "marginStart": 8,
+            "width": 750,
           }
         }
-      />
+        testID="gallery-test-list-item-11"
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              false,
+            ]
+          }
+        >
+          11
+        </View>
+      </View>
     </View>
-  </RCTScrollView>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-22"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          22
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-33"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          33
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-44"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          44
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-55"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          55
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-66"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          66
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-77"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          77
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-88"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          88
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        style={
+          {
+            "width": 750,
+          }
+        }
+        testID="gallery-test-list-item-99"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              undefined,
+            ]
+          }
+        >
+          99
+        </View>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -1748,52 +1019,27 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
   style={{}}
   testID="gallery-test"
 >
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
+  <View
     ListFooterComponentStyle={
       {
         "marginTop": 8,
       }
     }
-    data={[]}
-    getItem={[Function]}
-    getItemCount={[Function]}
     horizontal={false}
     keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
+    numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
     refreshing={false}
-    removeClippedSubviews={true}
-    renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    viewabilityConfigCallbackPairs={[]}
   >
     <View>
-      <View>
-        <Text>
-          Empty list...
-        </Text>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          {
-            "marginTop": 8,
-          }
-        }
-      />
+      <Text>
+        Empty list...
+      </Text>
     </View>
-  </RCTScrollView>
+  </View>
 </View>
 `;
 
@@ -1805,325 +1051,173 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
   <View>
     <TextInput />
   </View>
-  <RCTScrollView
-    ListEmptyComponent={[Function]}
-    ListFooterComponent={[Function]}
+  <View
     ListFooterComponentStyle={
       {
         "marginTop": 8,
       }
     }
-    data={
-      [
-        {
-          "id": "11",
-        },
-        {
-          "id": "22",
-        },
-        {
-          "id": "33",
-        },
-        {
-          "id": "44",
-        },
-        {
-          "id": "55",
-        },
-        {
-          "id": "66",
-        },
-        {
-          "id": "77",
-        },
-        {
-          "id": "88",
-        },
-        {
-          "id": "99",
-        },
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
     horizontal={false}
     keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
+    numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={true}
-    renderItem={[Function]}
     scrollEventThrottle={50}
-    stickyHeaderIndices={[]}
     testID="gallery-test-list"
-    viewabilityConfigCallbackPairs={[]}
   >
     <View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
+        testID="gallery-test-list-item-11"
       >
         <View
           style={
-            {
-              "flexDirection": "row",
-            }
+            [
+              undefined,
+              undefined,
+              false,
+            ]
           }
         >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-11"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  undefined,
-                  false,
-                ]
-              }
-            >
-              11
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-22"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              22
-            </View>
-          </View>
+          11
         </View>
       </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-33"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              33
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-44"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              44
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-55"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              55
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-66"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              66
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-77"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              77
-            </View>
-          </View>
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-88"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  false,
-                ]
-              }
-            >
-              88
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "width": "50%",
-              }
-            }
-            testID="gallery-test-list-item-99"
-          >
-            <View
-              style={
-                [
-                  undefined,
-                  false,
-                  undefined,
-                ]
-              }
-            >
-              99
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        onLayout={[Function]}
-        style={
-          {
-            "marginTop": 8,
-          }
-        }
-      />
     </View>
-  </RCTScrollView>
+    <View>
+      <View
+        testID="gallery-test-list-item-22"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          22
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-33"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          33
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-44"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          44
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-55"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          55
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-66"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          66
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-77"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          77
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-88"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              false,
+            ]
+          }
+        >
+          88
+        </View>
+      </View>
+    </View>
+    <View>
+      <View
+        testID="gallery-test-list-item-99"
+      >
+        <View
+          style={
+            [
+              undefined,
+              false,
+              undefined,
+            ]
+          }
+        >
+          99
+        </View>
+      </View>
+    </View>
+  </View>
 </View>
 `;

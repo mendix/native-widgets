@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.3.0] - 2026-4-10
+
+### Changed
+
+-   We migrated from using the native FlatList to @shopify/flash-list.
+
 ## [4.2.1] - 2026-1-19
 
 ### Fixed
