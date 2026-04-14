@@ -124,10 +124,19 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     };
 
     const renderItem = useCallback(
-        ({ item }: any): ReactElement => {
-            return <View style={[{ width }, { height }]}>{item.content}</View>;
+        ({ item, index }: any): ReactElement => {
+            const isActive = index === activeIndex;
+            return (
+                <View
+                    style={[{ width, flex: 1 }]}
+                    importantForAccessibility={isActive ? "auto" : "no-hide-descendants"}
+                    accessibilityElementsHidden={!isActive}
+                >
+                    {item.content}
+                </View>
+            );
         },
-        [width, height]
+        [width, height, activeIndex]
     );
 
     const renderButton = (
@@ -284,6 +293,9 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
                                         : props.styles.dotStyle
                                 ]}
                                 onPress={() => onPaginationPress(i)}
+                                accessibilityRole="button"
+                                accessibilityLabel={`Go to slide ${i + 1}`}
+                                accessibilityState={{ selected: rtlSafeIndex(i) === activeIndex }}
                             />
                         ))}
                     {!hidePagination && paginationOverflow && (
@@ -356,9 +368,10 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
                 renderItem={renderItem}
                 onMomentumScrollEnd={onMomentumScrollEnd}
                 scrollEventThrottle={50}
-                extraData={width}
+                extraData={[width, activeIndex]}
                 onLayout={onLayout}
                 keyExtractor={(_: any, index: number) => "screen_key_" + index}
+                importantForAccessibility="no"
             />
             {renderPagination()}
         </View>
