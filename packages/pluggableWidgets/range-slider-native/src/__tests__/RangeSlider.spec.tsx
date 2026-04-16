@@ -134,11 +134,6 @@ describe("RangeSlider", () => {
         expect(component.getAllByText("Invalid")).toHaveLength(2);
     });
 
-    it.skip("handles an invalid step size", () => {
-        const component = render(<RangeSlider {...defaultProps} stepSize={dynamicValue(new Big(-10))} />);
-        expect(component.getByTestId("range-slider-test").findByProps({ step: 1 })).not.toBeNull();
-    });
-
     it("changes the lower value when swiping", () => {
         const onChangeAction = actionValue();
         const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
