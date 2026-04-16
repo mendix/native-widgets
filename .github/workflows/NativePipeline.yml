@@ -263,13 +263,13 @@ jobs:
           apt update && apt upgrade -y
           apt install curl -y
       - name: "Download test project"
-        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/mx/11.6.x.zip
+        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/mx/11.6.1.zip
       - name: "Extract test project"
         uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
         with:
           args: unzip -qq project.zip -d .
       - name: "Rename extracted folder"
-        run: mv Native-Mobile-Resources-mx-11.6.x NMR
+        run: mv Native-Mobile-Resources-mx-11.6.1 NMR
       - name: "Download resources artifact"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:

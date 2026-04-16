@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { Component, JSX } from "react";
+import { JSX } from "react";
 import { ActivityIndicator as RNActivityIndicator, View } from "react-native";
 
 import { ActivityIndicatorProps } from "../typings/ActivityIndicatorProps";
@@ -7,18 +7,12 @@ import { ActivityIndicatorStyle, defaultActivityStyle } from "./ui/Styles";
 
 export type Props = ActivityIndicatorProps<ActivityIndicatorStyle>;
 
-export class ActivityIndicator extends Component<Props> {
-    private readonly styles = flattenStyles(defaultActivityStyle, this.props.style);
+export function ActivityIndicator(props: Props): JSX.Element {
+    const styles = flattenStyles(defaultActivityStyle, props.style);
 
-    render(): JSX.Element {
-        return (
-            <View style={this.styles.container}>
-                <RNActivityIndicator
-                    testID={this.props.name}
-                    size={this.styles.indicator.size}
-                    color={this.styles.indicator.color}
-                />
-            </View>
-        );
-    }
+    return (
+        <View style={styles.container}>
+            <RNActivityIndicator testID={props.name} size={styles.indicator.size} color={styles.indicator.color} />
+        </View>
+    );
 }
