@@ -32,9 +32,9 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
 
     const guid = audioFile.getGuid();
     const changedDate = audioFile.get("changedDate") as number;
-    const url = mx.data.getDocumentUrl(guid, changedDate);
 
     try {
+        const url = await mx.data.getDocumentUrl(guid, changedDate);
         // Initialize the player if it hasn't been set up yet
         const state = await TrackPlayer.getPlaybackState();
         if (state.state === State.None) {
