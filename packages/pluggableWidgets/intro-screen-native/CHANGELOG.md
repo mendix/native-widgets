@@ -6,10 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue with the TalkBack/VoiceOver traversal in the IntroScreen widget, where the order was not correct.
+
 ## [4.1.1] - 2026-1-19
 
 ### Fixed
-- We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
+
+-   We fixed an issue where using the conditional visibility on the IntroScreen would cause the widget not to render.
 
 ## [4.1.0] - 2025-9-9
 
