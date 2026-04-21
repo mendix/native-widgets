@@ -12,6 +12,17 @@ export interface FeedbackProps<Style> {
     sprintrapp: string;
     allowScreenshot: boolean;
     logo?: DynamicValue<NativeImage>;
+    titleSendFeedback?: DynamicValue<string>;
+    titleSending?: DynamicValue<string>;
+    titleResult?: DynamicValue<string>;
+    labelFeedbackInput?: DynamicValue<string>;
+    labelIncludeScreenshot?: DynamicValue<string>;
+    buttonCancel?: DynamicValue<string>;
+    buttonSend?: DynamicValue<string>;
+    buttonOk?: DynamicValue<string>;
+    accessibilityLabelFeedbackButton?: DynamicValue<string>;
+    messageSuccess?: DynamicValue<string>;
+    messageError?: DynamicValue<string>;
 }
 
 export interface FeedbackPreviewProps {
@@ -26,5 +37,16 @@ export interface FeedbackPreviewProps {
     renderMode?: "design" | "xray" | "structure";
     sprintrapp: string;
     allowScreenshot: boolean;
-    logo: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
+    logo: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    titleSendFeedback: string;
+    titleSending: string;
+    titleResult: string;
+    labelFeedbackInput: string;
+    labelIncludeScreenshot: string;
+    buttonCancel: string;
+    buttonSend: string;
+    buttonOk: string;
+    accessibilityLabelFeedbackButton: string;
+    messageSuccess: string;
+    messageError: string;
 }
