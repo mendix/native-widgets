@@ -5,7 +5,6 @@ import {
     ActivityIndicator,
     Dimensions,
     Image as RNImage,
-    InteractionManager,
     StyleProp,
     Switch,
     Text,
@@ -73,9 +72,12 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
             this.state.status === "closingDialog" &&
             this.state.nextStatus
         ) {
-            InteractionManager.runAfterInteractions(() =>
-                this.setState(({ nextStatus }) => ({ status: nextStatus || "initial", nextStatus: undefined }))
-            );
+            // Use requestAnimationFrame twice to wait for the dialog close animation to complete
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.setState(({ nextStatus }) => ({ status: nextStatus || "initial", nextStatus: undefined }));
+                });
+            });
         }
     }
 

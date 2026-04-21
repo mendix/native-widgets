@@ -6,11 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue with the TalkBack/VoiceOver traversal in the IntroScreen widget, where the order was not correct.
+
 ## [4.3.0] - 2026-4-9
 
 ### Changed
 
 -   We migrated from using the native FlatList to @shopify/flash-list.
+-   Replaced the deprecated InteractionManager in IntroScreen.
 
 ## [4.2.1] - 2026-1-19
 

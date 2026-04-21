@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Dimensions, InteractionManager, LayoutChangeEvent, Modal, Pressable } from "react-native";
+import { Dimensions, LayoutChangeEvent, Modal, Pressable } from "react-native";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
@@ -13,8 +13,6 @@ interface CustomModalSheetProps {
     content?: ReactNode;
     styles: BottomSheetStyle;
 }
-
-let lastIndexRef = -1;
 
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -74,15 +72,10 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                 return;
             }
 
-            const hasOpened = lastIndexRef === -1 && index === 0;
             const hasClosed = index === -1;
-            lastIndexRef = index;
-
-            if (hasOpened) {
-                props.triggerAttribute?.setValue(true);
-            }
-            if (hasClosed) {
+            if (hasClosed && props.triggerAttribute?.value) {
                 props.triggerAttribute?.setValue(false);
+                setCurrentStatus(false);
             }
         },
         [isAvailable, props.triggerAttribute]
@@ -92,13 +85,18 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         if (!isAvailable) {
             return;
         }
-        if (props.triggerAttribute?.value && !currentStatus) {
-            InteractionManager.runAfterInteractions(() => setCurrentStatus(true));
-        } else if (!props.triggerAttribute?.value && currentStatus) {
+
+        const shouldBeOpen = props.triggerAttribute?.value === true;
+
+        if (shouldBeOpen && !currentStatus) {
+            requestAnimationFrame(() => {
+                setCurrentStatus(true);
+            });
+        } else if (!shouldBeOpen && currentStatus) {
             bottomSheetRef.current?.close();
             setCurrentStatus(false);
         }
-    }, [props.triggerAttribute, currentStatus, isAvailable]);
+    }, [props.triggerAttribute?.value, currentStatus, isAvailable]);
 
     return (
         <Modal onRequestClose={close} transparent visible={!!isOpen}>

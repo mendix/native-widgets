@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   BottomSheet now uses BottomSheetScrollView instead of BottomSheetView, enabling proper scrolling in expanded states.
 -   NativeBottomSheet now explicitly calculates snapPoints with 90% screen height cap for predictable sizing.
 -   CustomModalSheet now measures content height dynamically with 90% screen height cap, removing offscreen SafeAreaView measurement.
+-   Replaced the deprecated InteractionManager in CustomModalSheet.
 
 ## [5.0.3] - 2025-12-15
 
