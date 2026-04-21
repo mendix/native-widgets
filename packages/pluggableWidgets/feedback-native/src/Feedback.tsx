@@ -138,7 +138,6 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
                     style={this.processedStyles.textAreaInputStyles}
                     value={this.state.feedbackMessage}
                     onChangeText={this.onChangeTextHandler}
-                    placeholder={this.props.placeholderFeedback?.value ?? "Type your feedback here"}
                     accessibilityLabel={this.props.labelFeedbackInput?.value ?? "Type your feedback here"}
                     {...this.processedStyles.textAreaInputProps}
                 />
@@ -148,6 +147,8 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
                             {this.props.labelIncludeScreenshot?.value ?? "Include Screenshot"}
                         </Text>
                         <Switch
+                            accessibilityLabel={this.props.labelIncludeScreenshot?.value ?? "Include Screenshot"}
+                            accessibilityRole="switch"
                             testID={`${this.props.name}$switch`}
                             style={this.processedStyles.switchInputStyles}
                             value={this.state.sendScreenshot}

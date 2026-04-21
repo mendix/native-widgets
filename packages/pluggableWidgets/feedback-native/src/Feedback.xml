@@ -51,13 +51,6 @@
                         <translation lang="en_US">Type your feedback here</translation>
                     </translations>
                 </property>
-                <property key="placeholderFeedback" type="textTemplate" required="false">
-                    <caption>Feedback placeholder</caption>
-                    <description>Placeholder text for feedback input field</description>
-                    <translations>
-                        <translation lang="en_US">Type your feedback here</translation>
-                    </translations>
-                </property>
                 <property key="labelIncludeScreenshot" type="textTemplate" required="false">
                     <caption>Screenshot label</caption>
                     <description>Label for screenshot toggle switch</description>
