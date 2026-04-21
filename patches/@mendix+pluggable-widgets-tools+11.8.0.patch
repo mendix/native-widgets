@@ -29,6 +29,15 @@ diff --git a/configs/rollup-plugin-collect-dependencies.mjs b/configs/rollup-plu
 index 2d0b5bfac7f1a1482bc1a222cba3e52b0339cc79..92291d4f7cb3cf9e8eaba895aa3ad26415afb036 100644
 --- a/configs/rollup-plugin-collect-dependencies.mjs
 +++ b/configs/rollup-plugin-collect-dependencies.mjs
+@@ -96,7 +96,7 @@ async function writeBundle() {
+                     } else if (!transitiveDependency.startsWith(dependency)) {
+                         await copyJsModule(
+                             transitiveDependency,
+-                            join(destinationPath, "node_modules", getModuleName(transitiveDependency))
++                            join(outputDir, "node_modules", getModuleName(transitiveDependency))
+                         );
+                     }
+                 }
 @@ -2,9 +2,8 @@
  
  import fg from "fast-glob";
@@ -89,7 +98,7 @@ index 51c3265d054fdbcb491768d0600beb151f7ac37d..352ef3bf2539e33ee836762f962fe9f5
 +    /^react-native-worklets($|\/)/,
      /^react-native-svg($|\/)/,
 -    /^react-native-vector-icons($|\/)/,
-+    /^@react-native-vector-icons($|\/)/,
++    /^@react-native-vector-icons\/common($|\/)/,
      /^@?react-navigation($|\/)/,
 diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
 index 8346a68bb08ee24c3249691a2895ab8ba1fc7164..f85a77f91f1bcbfef0a6d3d2fb4b4af5f65ebf11 100644
