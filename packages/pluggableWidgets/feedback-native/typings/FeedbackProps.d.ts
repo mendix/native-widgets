@@ -16,7 +16,6 @@ export interface FeedbackProps<Style> {
     titleSending?: DynamicValue<string>;
     titleResult?: DynamicValue<string>;
     labelFeedbackInput?: DynamicValue<string>;
-    placeholderFeedback?: DynamicValue<string>;
     labelIncludeScreenshot?: DynamicValue<string>;
     buttonCancel?: DynamicValue<string>;
     buttonSend?: DynamicValue<string>;
@@ -44,7 +43,6 @@ export interface FeedbackPreviewProps {
     titleSending: string;
     titleResult: string;
     labelFeedbackInput: string;
-    placeholderFeedback: string;
     labelIncludeScreenshot: string;
     buttonCancel: string;
     buttonSend: string;
