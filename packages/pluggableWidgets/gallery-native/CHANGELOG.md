@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   We migrated from using the native FlatList to @shopify/flash-list.
+-   Updated react-native-device-info from version v14.0.4 to v15.0.2.
 
 ## [2.0.2] - 2025-10-17
 

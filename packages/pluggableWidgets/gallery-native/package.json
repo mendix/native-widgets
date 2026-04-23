@@ -24,7 +24,7 @@
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
     "@shopify/flash-list": "2.2.2",
-    "react-native-device-info": "14.0.4"
+    "react-native-device-info": "15.0.2"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"

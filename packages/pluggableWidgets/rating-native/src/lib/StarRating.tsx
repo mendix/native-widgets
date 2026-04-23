@@ -1,11 +1,11 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
-// has an outdated dependency (react-native-vector-icons) that we now managed here in this widget.
-import { ClassicComponentClass, Component } from "react";
-import { View, StyleSheet, ViewStyle } from "react-native";
+// supported vector icon names as well as image sources. This widget only uses image sources.
+import { ClassicComponentClass, Component, JSX } from "react";
+import { ImageSourcePropType, View, StyleSheet, ViewStyle } from "react-native";
 import { AnimatableProps, View as AnimatableView } from "react-native-animatable";
 import type { StarRatingProps } from "react-native-star-rating";
 
-import StarButton, { iconSets } from "./StarButton";
+import StarButton from "./StarButton";
 
 const ANIMATION_TYPES = [
     "bounce",
@@ -31,14 +31,7 @@ const defaultProps = {
     buttonStyle: {},
     containerStyle: {},
     disabled: false,
-    emptyStar: "star-o",
-    emptyStarColor: "gray",
-    fullStar: "star",
-    fullStarColor: "black",
-    halfStar: "star-half-o",
-    halfStarColor: undefined,
     halfStarEnabled: false,
-    iconSet: "FontAwesome",
     maxStars: DEFAULT_MAX_RATING,
     rating: DEFAULT_RATING,
     reversed: false,
@@ -47,8 +40,10 @@ const defaultProps = {
     selectedStar: undefined
 };
 
-interface Props extends StarRatingProps {
-    iconSet: keyof typeof iconSets;
+interface Props extends Omit<StarRatingProps, "iconSet" | "emptyStar" | "fullStar" | "halfStar"> {
+    emptyStar?: ImageSourcePropType;
+    fullStar?: ImageSourcePropType;
+    halfStar?: ImageSourcePropType;
 }
 type AnimationFn = (duration: number) => Promise<{ finished: boolean }>;
 
@@ -76,11 +71,11 @@ class StarRating extends Component<Props> {
         this.onStarButtonPress = this.onStarButtonPress.bind(this);
     }
 
-    onStarButtonPress(rating: number) {
+    onStarButtonPress(rating: number): void {
         this.props.selectedStar?.(rating);
     }
 
-    render() {
+    render(): JSX.Element {
         const {
             activeOpacity,
             animation,
@@ -88,13 +83,9 @@ class StarRating extends Component<Props> {
             containerStyle,
             disabled,
             emptyStar,
-            emptyStarColor,
             fullStar,
-            fullStarColor,
             halfStar,
-            halfStarColor,
             halfStarEnabled,
-            iconSet,
             maxStars,
             rating,
             reversed,
@@ -113,14 +104,11 @@ class StarRating extends Component<Props> {
 
         for (let i = 0; i < (maxStars ?? DEFAULT_MAX_RATING); i++) {
             let starIconName = emptyStar;
-            let finalStarColor = emptyStarColor;
 
             if (starsLeft >= 1) {
                 starIconName = fullStar;
-                finalStarColor = fullStarColor;
             } else if (starsLeft === 0.5) {
                 starIconName = halfStar;
-                finalStarColor = halfStarColor || fullStarColor;
             }
 
             const starButtonElement = (
@@ -138,7 +126,6 @@ class StarRating extends Component<Props> {
                         buttonStyle={buttonStyle}
                         disabled={disabled}
                         halfStarEnabled={halfStarEnabled}
-                        iconSet={iconSet}
                         onStarButtonPress={(rating: number) => {
                             if (animation && ANIMATION_TYPES.includes(animation)) {
                                 for (let s = 0; s <= i; s++) {
@@ -153,7 +140,6 @@ class StarRating extends Component<Props> {
                         }}
                         rating={i + 1}
                         reversed={reversed}
-                        starColor={finalStarColor}
                         starIconName={starIconName}
                         starSize={starSize}
                         starStyle={starStyle}

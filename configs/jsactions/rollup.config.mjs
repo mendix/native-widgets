@@ -92,7 +92,6 @@ export default async args => {
                                           overwrite: true
                                       }
                                   );
-
                               } else if (args.configProject === "nanoflowcommons") {
                                   // `invariant` is being used silently by @react-native-community/geolocation; it is not listed as a dependency nor peerDependency.
                                   // https://github.dev/react-native-geolocation/react-native-geolocation/blob/1786929f2be581da91082ff857c2393da5e597b3/js/implementation.native.js#L13
@@ -151,8 +150,9 @@ const nativeExternal = [
     "react",
     /react-native-gesture-handler\/*/,
     /^react-native-reanimated(\/|$)/,
+    /^react-native-worklets(\/|$)/,
     /^react-native-svg(\/|$)/,
-    /^react-native-vector-icons(\/|$)/,
+    /^@react-native-vector-icons(\/|$)/,
     /^@?react-navigation($|\/)/,
     /^react-native-device-info(\/|$)/
 ];

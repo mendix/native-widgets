@@ -13,6 +13,7 @@ jest.mock("react-native", () => {
 jest.mock("react-native/Libraries/Utilities/Platform", () => {
     const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
     Platform.OS = "ios";
+    Platform.default = { ...Platform.default, OS: "ios" };
     return Platform;
 });
 

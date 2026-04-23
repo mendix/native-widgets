@@ -15,13 +15,14 @@ jest.mock("react-native", () => {
 jest.mock("react-native/Libraries/Utilities/Platform", () => {
     const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
     Platform.OS = "android";
+    Platform.default = { ...Platform.default, OS: "android" };
     return Platform;
 });
 
 jest.mock("react-native-webview", () => {
-    const { View } = require("react-native");
+    const { View } = jest.requireActual("react-native");
 
-    const WebView = (props: any) => {
+    const WebView = (props: any): ReactElement => {
         return <View {...props} testID="mockWebView" />;
     };
 
@@ -37,7 +38,11 @@ jest.mock("react-native/Libraries/Components/Touchable/TouchableNativeFeedback",
     TouchableNativeFeedback.SelectableBackgroundBorderless = jest.fn(() => "SelectableBackgroundBorderless");
     TouchableNativeFeedback.Ripple = jest.fn(() => "Ripple");
     TouchableNativeFeedback.canUseNativeForeground = jest.fn(() => true);
-    return TouchableNativeFeedback;
+
+    return {
+        __esModule: true,
+        default: TouchableNativeFeedback
+    };
 });
 
 const defaultProps: Props = {
