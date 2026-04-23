@@ -4,6 +4,18 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { Signature, Props } from "../Signature";
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 
+jest.mock("react-native-blob-util", () => ({
+    __esModule: true,
+    default: {
+        fs: {
+            dirs: { CacheDir: "/tmp" },
+            writeFile: jest.fn().mockResolvedValue(undefined),
+            unlink: jest.fn().mockResolvedValue(undefined)
+        },
+        fetch: jest.fn()
+    }
+}));
+
 jest.mock("react-native", () => {
     const RN = jest.requireActual("react-native");
     RN.NativeModules.RNCWebView = { isFileUploadSupported: jest.fn(() => true) };
@@ -21,7 +33,8 @@ const defaultProps: Props = {
     style: [],
     imageAttribute: new EditableValueBuilder<string>().withValue("").build(),
     buttonCaptionClear: dynamicValue<string>("Clear"),
-    buttonCaptionSave: dynamicValue<string>("Save")
+    buttonCaptionSave: dynamicValue<string>("Save"),
+    saveMode: "attribute"
 };
 
 jest.mock("react-native-webview", () => {

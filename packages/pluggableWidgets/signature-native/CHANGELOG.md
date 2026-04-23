@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-4-10
+
+### Added
+
+-   Added directImage save mode that uploads the signature directly to a System.Image object
+
 ## [2.3.0] - 2025-7-7
 
 -   Updated react-native-webview from version v13.12.5 to latest
