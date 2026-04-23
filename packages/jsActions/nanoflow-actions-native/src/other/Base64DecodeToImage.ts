@@ -30,28 +30,7 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
     // Native platform
     if (navigator && navigator.product === "ReactNative") {
         try {
-            // Remove data URI prefix if present (e.g., "data:image/png;base64,")
-            let cleanBase64 = base64;
-            if (base64.includes(",")) {
-                cleanBase64 = base64.split(",")[1];
-            }
-
-            // Remove any whitespace/newlines
-            cleanBase64 = cleanBase64.replace(/\s/g, "");
-
-            // Validate base64 format
-            if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleanBase64)) {
-                throw new Error("Invalid base64 format");
-            }
-
-            // Create a temporary file path
-            const tempPath = `${RNBlobUtil.fs.dirs.CacheDir}/temp_image_${Date.now()}.png`;
-
-            // Write Base64 data to a temporary file
-            await RNBlobUtil.fs.writeFile(tempPath, cleanBase64, "base64");
-
-            // Fetch the file as a blob
-            const res = await fetch(`file://${tempPath}`);
+            const res = await fetch(base64);
             const blob = await res.blob();
 
             return new Promise((resolve, reject) => {
@@ -61,11 +40,9 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
                     {},
                     blob,
                     () => {
-                        RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
                         resolve(true);
                     },
                     error => {
-                        RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
                         reject(error);
                     }
                 );
