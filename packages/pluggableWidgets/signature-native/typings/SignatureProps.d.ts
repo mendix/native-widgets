@@ -4,12 +4,16 @@
  * @author Mendix Widgets Framework Team
  */
 import { CSSProperties } from "react";
-import { ActionValue, DynamicValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue, NativeImage } from "mendix";
+
+export type SaveModeEnum = "attribute" | "directImage";
 
 export interface SignatureProps<Style> {
     name: string;
     style: Style[];
-    imageAttribute: EditableValue<string>;
+    saveMode: SaveModeEnum;
+    imageAttribute?: EditableValue<string>;
+    imageSource?: DynamicValue<NativeImage>;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
     onClear?: ActionValue;
@@ -29,7 +33,9 @@ export interface SignaturePreviewProps {
     readOnly: boolean;
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
+    saveMode: SaveModeEnum;
     imageAttribute: string;
+    imageSource: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
     buttonCaptionClear: string;
     buttonCaptionSave: string;
     onClear: {} | null;
