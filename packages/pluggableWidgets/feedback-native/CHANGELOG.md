@@ -10,6 +10,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Replaced the deprecated InteractionManager in Feedback widget.
 
+### Added
+
+-   Translation support for all widget text through configurable properties in Studio Pro.
+-   Visible label above feedback input field to ensure WCAG compliance.
+
+### Fixed
+
+-   Fixed logo overlap issue where custom logo appeared on top of default icon instead of replacing it.
+
 ## [3.4.0] - 2025-3-31
 
 ### Changed
