@@ -35,9 +35,14 @@ export function Signature(props: Props): ReactElement {
     const handleSignature = useCallback(
         async (dataUri: string): Promise<void> => {
             if (props.saveMode === "directImage") {
+                /*
+                if (props.imageSource.status !== "available" || props.imageSource.readOnly) {
+                 return;
+                } This check needs to add once the EditableImageValue<NativeImage> is released from widget tools
+                */
                 try {
                     const blob = await dataUriToBlob(dataUri);
-                    (props.imageSource as any)?.setValue(blob);
+                    (props.imageSource as any)?.setValue(blob); // as any hack needs to remove once the EditableImageValue<NativeImage> is released from widget tools
                     props.hasSignatureAttribute?.setValue(true);
                     executeAction(props.onSave);
                 } catch (error) {

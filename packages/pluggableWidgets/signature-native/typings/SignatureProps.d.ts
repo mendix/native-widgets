@@ -13,7 +13,7 @@ export interface SignatureProps<Style> {
     style: Style[];
     saveMode: SaveModeEnum;
     imageAttribute?: EditableValue<string>;
-    imageSource?: DynamicValue<NativeImage>;
+    imageSource?: DynamicValue<NativeImage>; // This should be of type EditableValue<NativeImage> once widhget tools releases the EditableImageValue<NativeImage> for images type with allowUpload true
     hasSignatureAttribute?: EditableValue<boolean>;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
