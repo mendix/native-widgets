@@ -51,9 +51,9 @@
                 <caption>On clear</caption>
                 <description>Fired when the clear button is clicked.</description>
             </property>
-            <property key="onSave" type="action" required="false">
-                <caption>On save</caption>
-                <description>Fired when the save button is clicked.</description>
+            <property key="onSignEndAction" type="action" required="false">
+                <caption>On sign end</caption>
+                <description>Fired after the signature image has been saved to the image object. Commit the object here to persist it.</description>
             </property>
             <property key="onEnd" type="action" required="false">
                 <caption>On end</caption>

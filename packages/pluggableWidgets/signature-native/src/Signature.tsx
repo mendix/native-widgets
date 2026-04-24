@@ -44,7 +44,7 @@ export function Signature(props: Props): ReactElement {
                     const blob = await dataUriToBlob(dataUri);
                     (props.imageSource as any)?.setValue(blob); // as any hack needs to remove once the EditableImageValue<NativeImage> is released from widget tools
                     props.hasSignatureAttribute?.setValue(true);
-                    executeAction(props.onSave);
+                    executeAction(props.onSignEndAction);
                 } catch (error) {
                     console.error("Failed to upload signature image:", error);
                 }
@@ -53,9 +53,9 @@ export function Signature(props: Props): ReactElement {
 
             props.imageAttribute?.setValue(dataUri);
             props.hasSignatureAttribute?.setValue(true);
-            executeAction(props.onSave);
+            executeAction(props.onSignEndAction);
         },
-        [props.imageAttribute, props.imageSource, props.hasSignatureAttribute, props.onSave, props.saveMode]
+        [props.imageAttribute, props.imageSource, props.hasSignatureAttribute, props.onSignEndAction, props.saveMode]
     );
 
     return (

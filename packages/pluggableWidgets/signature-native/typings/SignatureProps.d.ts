@@ -18,7 +18,7 @@ export interface SignatureProps<Style> {
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
     onClear?: ActionValue;
-    onSave?: ActionValue;
+    onSignEndAction?: ActionValue;
     onEnd?: ActionValue;
     onEmpty?: ActionValue;
 }
@@ -41,7 +41,7 @@ export interface SignaturePreviewProps {
     buttonCaptionClear: string;
     buttonCaptionSave: string;
     onClear: {} | null;
-    onSave: {} | null;
+    onSignEndAction: {} | null;
     onEnd: {} | null;
     onEmpty: {} | null;
 }
