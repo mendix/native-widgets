@@ -38,6 +38,7 @@ export function Signature(props: Props): ReactElement {
                 try {
                     const blob = await dataUriToBlob(dataUri);
                     (props.imageSource as any)?.setValue(blob);
+                    props.hasSignatureAttribute?.setValue(true);
                     executeAction(props.onSave);
                 } catch (error) {
                     console.error("Failed to upload signature image:", error);
@@ -46,9 +47,10 @@ export function Signature(props: Props): ReactElement {
             }
 
             props.imageAttribute?.setValue(dataUri);
+            props.hasSignatureAttribute?.setValue(true);
             executeAction(props.onSave);
         },
-        [props.imageAttribute, props.imageSource, props.onSave, props.saveMode]
+        [props.imageAttribute, props.imageSource, props.hasSignatureAttribute, props.onSave, props.saveMode]
     );
 
     return (
@@ -59,7 +61,10 @@ export function Signature(props: Props): ReactElement {
                 onEmpty={() => executeAction(props.onEmpty)}
                 onEnd={() => executeAction(props.onEnd)}
                 onOK={handleSignature}
-                onClear={() => executeAction(props.onClear)}
+                onClear={() => {
+                    props.hasSignatureAttribute?.setValue(false);
+                    executeAction(props.onClear);
+                }}
                 webStyle={webStyles}
                 {...signatureProps}
             />

@@ -25,10 +25,14 @@
                 </property>
                 <property key="imageSource" type="image" required="false" allowUpload="true">
                     <caption>Image source</caption>
-                    <description>
-                        The System.Image (or specialization) entity the signature will be saved into.
-                        Commit the object in your On sign end handler.
-                    </description>
+                    <description>The System.Image (or specialization) entity the signature will be saved into. Commit the object in your On sign end handler.</description>
+                </property>
+                <property key="hasSignatureAttribute" type="attribute" required="false">
+                    <caption>Has signature</caption>
+                    <description>Optional Boolean attribute that is set to true when a signature has been captured and false when cleared. Useful for validation and conditional visibility.</description>
+                    <attributeTypes>
+                        <attributeType name="Boolean" />
+                    </attributeTypes>
                 </property>
             </propertyGroup>
             <propertyGroup caption="Buttons">

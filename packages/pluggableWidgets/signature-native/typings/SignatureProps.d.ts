@@ -14,6 +14,7 @@ export interface SignatureProps<Style> {
     saveMode: SaveModeEnum;
     imageAttribute?: EditableValue<string>;
     imageSource?: DynamicValue<NativeImage>;
+    hasSignatureAttribute?: EditableValue<boolean>;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
     onClear?: ActionValue;
@@ -36,6 +37,7 @@ export interface SignaturePreviewProps {
     saveMode: SaveModeEnum;
     imageAttribute: string;
     imageSource: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    hasSignatureAttribute: string;
     buttonCaptionClear: string;
     buttonCaptionSave: string;
     onClear: {} | null;
