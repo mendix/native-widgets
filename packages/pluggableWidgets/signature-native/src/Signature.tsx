@@ -34,28 +34,21 @@ export function Signature(props: Props): ReactElement {
 
     const handleSignature = useCallback(
         async (dataUri: string): Promise<void> => {
-            if (props.saveMode === "directImage") {
+            try {
                 /*
                 if (props.imageSource.status !== "available" || props.imageSource.readOnly) {
                  return;
                 } This check needs to add once the EditableImageValue<NativeImage> is released from widget tools
                 */
-                try {
-                    const blob = await dataUriToBlob(dataUri);
-                    (props.imageSource as any)?.setValue(blob); // as any hack needs to remove once the EditableImageValue<NativeImage> is released from widget tools
-                    props.hasSignatureAttribute?.setValue(true);
-                    executeAction(props.onSignEndAction);
-                } catch (error) {
-                    console.error("Failed to upload signature image:", error);
-                }
-                return;
+                const blob = await dataUriToBlob(dataUri);
+                (props.imageSource as any)?.setValue(blob); // as any hack needs to remove once the EditableImageValue<NativeImage> is released from widget tools
+                props.hasSignatureAttribute?.setValue(true);
+                executeAction(props.onSignEndAction);
+            } catch (error) {
+                console.error("Signature: failed to save image", error);
             }
-
-            props.imageAttribute?.setValue(dataUri);
-            props.hasSignatureAttribute?.setValue(true);
-            executeAction(props.onSignEndAction);
         },
-        [props.imageAttribute, props.imageSource, props.hasSignatureAttribute, props.onSignEndAction, props.saveMode]
+        [props.imageSource, props.hasSignatureAttribute, props.onSignEndAction]
     );
 
     return (

@@ -6,14 +6,10 @@
 import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue, NativeImage } from "mendix";
 
-export type SaveModeEnum = "attribute" | "directImage";
-
 export interface SignatureProps<Style> {
     name: string;
     style: Style[];
-    saveMode: SaveModeEnum;
-    imageAttribute?: EditableValue<string>;
-    imageSource?: DynamicValue<NativeImage>; // This should be of type EditableValue<NativeImage> once widhget tools releases the EditableImageValue<NativeImage> for images type with allowUpload true
+    imageSource: DynamicValue<NativeImage>;
     hasSignatureAttribute?: EditableValue<boolean>;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
@@ -34,8 +30,6 @@ export interface SignaturePreviewProps {
     readOnly: boolean;
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
-    saveMode: SaveModeEnum;
-    imageAttribute: string;
     imageSource: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
     hasSignatureAttribute: string;
     buttonCaptionClear: string;

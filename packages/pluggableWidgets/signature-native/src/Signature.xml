@@ -7,25 +7,10 @@
     </icon>
     <properties>
         <propertyGroup caption="General">
-            <propertyGroup caption="General">
-                <property key="saveMode" type="enumeration" defaultValue="attribute">
-                    <caption>Save mode</caption>
-                    <description>Choose how the signature is saved. "Store as Base64 string" saves the signature as a base64 value to a String attribute — use the Base64DecodeToImage nanoflow action to convert and commit it to an image object. "Direct image upload" skips the base64 step entirely: the signature is uploaded directly to the linked System.Image object, so you only need to commit the object in your nanoflow.</description>
-                    <enumerationValues>
-                        <enumerationValue key="attribute">Store as Base64 string</enumerationValue>
-                        <enumerationValue key="directImage">Direct image</enumerationValue>
-                    </enumerationValues>
-                </property>
-                <property key="imageAttribute" type="attribute" required="false">
-                    <caption>Attribute</caption>
-                    <description>The String attribute that receives the signature as a base64 value when save mode is Store as Base64 string.</description>
-                    <attributeTypes>
-                        <attributeType name="String" />
-                    </attributeTypes>
-                </property>
-                <property key="imageSource" type="image" required="false" allowUpload="true">
-                    <caption>Image source</caption>
-                    <description>The System.Image (or specialization) entity the signature will be saved into. Commit the object in your On sign end handler.</description>
+            <propertyGroup caption="Data source">
+                <property key="imageSource" type="image" required="true" allowUpload="true">
+                    <caption>Image</caption>
+                    <description>The System.Image (or specialization) object the signature will be saved into. Commit the object in your On sign end handler to persist it.</description>
                 </property>
                 <property key="hasSignatureAttribute" type="attribute" required="false">
                     <caption>Has signature</caption>
