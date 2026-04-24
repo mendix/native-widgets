@@ -6,7 +6,6 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Base64 } from "js-base64";
-import RNBlobUtil from "react-native-blob-util";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
