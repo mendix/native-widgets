@@ -10,9 +10,10 @@ import { SignatureStyle, defaultSignatureStyle, webStyles } from "./ui/Styles";
 
 export type Props = SignatureProps<SignatureStyle>;
 
-async function dataUriToBlob(dataUri: string): Promise<Blob> {
+async function dataUriToFile(dataUri: string): Promise<File> {
     const response = await fetch(dataUri);
-    return await response.blob();
+    const blob = await response.blob();
+    return new File([blob], `signature_${Date.now()}.png`, { type: "image/png", lastModified: Date.now() });
 }
 
 export function Signature(props: Props): ReactElement {
@@ -40,7 +41,7 @@ export function Signature(props: Props): ReactElement {
                  return;
                 } This check needs to add once the EditableImageValue<NativeImage> is released from widget tools
                 */
-                const blob = await dataUriToBlob(dataUri);
+                const blob = await dataUriToFile(dataUri);
                 (props.imageSource as any)?.setValue(blob); // as any hack needs to remove once the EditableImageValue<NativeImage> is released from widget tools
                 props.hasSignatureAttribute?.setValue(true);
                 executeAction(props.onSignEndAction);
