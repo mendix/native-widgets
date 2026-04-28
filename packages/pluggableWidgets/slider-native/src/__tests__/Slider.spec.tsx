@@ -1,8 +1,6 @@
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { View } from "react-native";
-import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
-import { ReactTestInstance } from "react-test-renderer";
+import { fireEvent, render } from "@testing-library/react-native";
 import { ValueStatus, DynamicValue } from "mendix";
 
 import { Props, Slider } from "../Slider";
@@ -93,29 +91,6 @@ describe("Slider", () => {
         expect(component.queryByText("The current value can not be greater than the maximum value.")).not.toBeNull();
     });
 
-    it("renders with the width of the parent view", () => {
-        const component = render(
-            <Slider
-                {...defaultProps}
-                style={[
-                    {
-                        container: { width: 100 },
-                        highlight: {},
-                        highlightDisabled: {},
-                        marker: {},
-                        markerActive: {},
-                        markerDisabled: {},
-                        track: {},
-                        trackDisabled: {},
-                        validationMessage: {}
-                    }
-                ]}
-            />
-        );
-        fireEvent(component.getByTestId("slider-test"), "layout", { nativeEvent: { layout: { width: 100 } } });
-        expect(component.getByTestId("slider-test").findByProps({ sliderLength: 100 })).not.toBeNull();
-    });
-
     it("renders a validation message", () => {
         const value = new EditableValueBuilder<Big>().withValidation("Invalid").build();
         const component = render(<Slider {...defaultProps} valueAttribute={value} />);
@@ -123,61 +98,31 @@ describe("Slider", () => {
         expect(component.queryByText("Invalid")).not.toBeNull();
     });
 
-    it.skip("handles an invalid step size", () => {
-        const component = render(<Slider {...defaultProps} stepSize={dynamicValue(new Big(-10))} />);
-        expect(component.getByTestId("slider-test").findByProps({ step: 1 })).not.toBeNull();
-    });
-
-    it("changes the value when swiping", () => {
+    it("changes the value when sliding completes", () => {
         const onChangeAction = actionValue();
         const component = render(<Slider {...defaultProps} onChange={onChangeAction} />);
 
-        fireEvent(getHandle(component), "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(getHandle(component), "responderMove", responderMove(50));
-
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-
-        fireEvent(getHandle(component), "responderRelease", {});
+        const slider = component.getByTestId("slider-test$slider");
+        fireEvent(slider, "onSlidingComplete", 190);
 
         expect(defaultProps.valueAttribute.setValue).toHaveBeenCalledWith(new Big(190));
         expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
+    });
+
+    it("calls onValueChange while sliding", () => {
+        const component = render(<Slider {...defaultProps} />);
+
+        const slider = component.getByTestId("slider-test$slider");
+        fireEvent(slider, "onValueChange", 150);
+
+        expect(defaultProps.valueAttribute.setValue).toHaveBeenCalledWith(new Big(150));
     });
 
     it("does not change the value when non editable", () => {
         const onChangeAction = actionValue();
         const component = render(<Slider {...defaultProps} editable={"never"} onChange={onChangeAction} />);
 
-        fireEvent(getHandle(component), "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(getHandle(component), "responderMove", responderMove(50));
-        fireEvent(getHandle(component), "responderRelease", {});
-
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-        expect(defaultProps.valueAttribute.setValue).not.toHaveBeenCalled();
+        const slider = component.getByTestId("slider-test$slider");
+        expect(slider.props.disabled).toBe(true);
     });
 });
-
-function getHandle(component: RenderAPI): ReactTestInstance {
-    return component
-        .getByTestId("slider-test")
-        .findAllByType(View)
-        .filter(instance => instance.props.onMoveShouldSetResponder)[0];
-}
-
-function responderMove(dx: number): any {
-    return {
-        touchHistory: {
-            numberActiveTouches: 1,
-            indexOfSingleActiveTouch: 0,
-            touchBank: [
-                {
-                    touchActive: true,
-                    currentTimeStamp: Date.now(),
-                    currentPageX: dx,
-                    currentPageY: 0,
-                    previousPageX: 0,
-                    previousPageY: 0
-                }
-            ]
-        }
-    };
-}

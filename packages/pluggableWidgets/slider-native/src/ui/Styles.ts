@@ -1,6 +1,15 @@
 import { Style } from "@mendix/piw-native-utils-internal";
 import { Platform, TextStyle, ViewStyle } from "react-native";
 
+interface SliderColors {
+    minimumTrackTintColor?: string;
+    maximumTrackTintColor?: string;
+    thumbTintColor?: string;
+    minimumTrackTintColorDisabled?: string;
+    maximumTrackTintColorDisabled?: string;
+    thumbTintColorDisabled?: string;
+}
+
 export interface SliderStyle extends Style {
     container: ViewStyle;
     track: ViewStyle;
@@ -11,6 +20,8 @@ export interface SliderStyle extends Style {
     markerActive: ViewStyle;
     markerDisabled: ViewStyle;
     validationMessage: TextStyle;
+    /** Color configuration for the native slider component. */
+    sliderColors: SliderColors;
 }
 
 const blue = "rgb(0,122,255)";
@@ -72,5 +83,13 @@ export const defaultSliderStyle: SliderStyle = {
     },
     validationMessage: {
         color: "#ed1c24"
+    },
+    sliderColors: {
+        minimumTrackTintColor: Platform.select({ ios: blue, android: purple }),
+        maximumTrackTintColor: Platform.select({ ios: blueLighter, android: purpleLighter }),
+        thumbTintColor: Platform.select({ android: purple }),
+        minimumTrackTintColorDisabled: Platform.select({ ios: blue, android: "#AAA" }),
+        maximumTrackTintColorDisabled: Platform.select({ ios: blueLighter, android: "#EEE" }),
+        thumbTintColorDisabled: Platform.select({ android: "#AAA" })
     }
 };

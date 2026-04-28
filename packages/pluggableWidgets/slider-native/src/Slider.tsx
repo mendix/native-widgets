@@ -1,20 +1,17 @@
 import { available, flattenStyles, toNumber, unavailable } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
-import { ValueStatus, Option } from "mendix";
-import MultiSlider, { MarkerProps } from "@ptomasroos/react-native-multi-slider";
-import { ReactElement, useCallback, useRef, useState, JSX } from "react";
-import { LayoutChangeEvent, Text, View } from "react-native";
+import { ValueStatus } from "mendix";
+import RNSlider from "@react-native-community/slider";
+import { ReactElement, useCallback, useRef } from "react";
+import { Text, View } from "react-native";
 import { Big } from "big.js";
 
 import { SliderProps } from "../typings/SliderProps";
-import { Marker } from "./Marker";
 import { defaultSliderStyle, SliderStyle } from "./ui/Styles";
 
 export type Props = SliderProps<SliderStyle>;
 
 export function Slider(props: Props): ReactElement {
-    const [width, setWidth] = useState<number>();
-
     const lastValue = useRef<number | undefined>(toNumber(props.valueAttribute));
 
     const value = toNumber(props.valueAttribute);
@@ -22,43 +19,34 @@ export function Slider(props: Props): ReactElement {
     const validProps = validationMessages.length === 0;
     const editable = props.editable !== "never" && !props.valueAttribute.readOnly && validProps;
     const styles = flattenStyles(defaultSliderStyle, props.style);
-    // We have to fix the decimal count ourselves because of an unresolved bug in the library: https://github.com/ptomasroos/react-native-multi-slider/issues/211
+
     const decimalCount = useCallback(
-        (value: Option<Big>): number => value?.toString().split(".")?.[1]?.length || 0,
+        (val: Big | undefined): number => val?.toString().split(".")?.[1]?.length || 0,
         []
     );
 
-    const customMarker =
-        () =>
-        (markerProps: MarkerProps): JSX.Element =>
-            <Marker {...markerProps} testID={`${props.name}$marker`} />;
-
-    const onLayout = useCallback((event: LayoutChangeEvent): void => {
-        setWidth(event.nativeEvent.layout.width);
-    }, []);
-
     const onSlide = useCallback(
-        (values: number[]): void => {
-            if (values[0] === null) {
+        (newValue: number): void => {
+            if (newValue === null) {
                 return;
             }
 
             if (props.stepSize.status === ValueStatus.Available) {
-                props.valueAttribute.setValue(new Big(values[0].toFixed(decimalCount(props.stepSize.value))));
+                props.valueAttribute.setValue(new Big(newValue.toFixed(decimalCount(props.stepSize.value))));
             }
         },
         [props.valueAttribute, props.stepSize, decimalCount]
     );
 
     const onChange = useCallback(
-        (values: number[]): void => {
-            if (values[0] === null || lastValue.current === values[0]) {
+        (newValue: number): void => {
+            if (newValue === null || lastValue.current === newValue) {
                 return;
             }
 
-            lastValue.current = values[0];
+            lastValue.current = newValue;
             if (props.stepSize.status === ValueStatus.Available) {
-                props.valueAttribute.setValue(new Big(values[0].toFixed(decimalCount(props.stepSize.value))));
+                props.valueAttribute.setValue(new Big(newValue.toFixed(decimalCount(props.stepSize.value))));
             }
 
             executeAction(props.onChange);
@@ -67,22 +55,29 @@ export function Slider(props: Props): ReactElement {
     );
 
     return (
-        <View onLayout={onLayout} style={styles.container} testID={props.name}>
-            <MultiSlider
-                values={value != null ? [value] : undefined}
-                min={validProps ? toNumber(props.minimumValue) : undefined}
-                max={validProps ? toNumber(props.maximumValue) : undefined}
+        <View style={styles.container} testID={props.name}>
+            <RNSlider
+                testID={`${props.name}$slider`}
+                value={value != null ? value : undefined}
+                minimumValue={validProps ? toNumber(props.minimumValue) : undefined}
+                maximumValue={validProps ? toNumber(props.maximumValue) : undefined}
                 step={validProps ? toNumber(props.stepSize) : undefined}
-                enabledOne={editable}
-                markerStyle={editable ? styles.marker : styles.markerDisabled}
-                trackStyle={editable ? styles.track : styles.trackDisabled}
-                selectedStyle={editable ? styles.highlight : styles.highlightDisabled}
-                pressedMarkerStyle={styles.markerActive}
-                onValuesChange={onSlide}
-                onValuesChangeFinish={onChange}
-                sliderLength={width}
-                allowOverlap
-                customMarker={customMarker()}
+                disabled={!editable}
+                minimumTrackTintColor={
+                    editable
+                        ? styles.sliderColors?.minimumTrackTintColor
+                        : styles.sliderColors?.minimumTrackTintColorDisabled
+                }
+                maximumTrackTintColor={
+                    editable
+                        ? styles.sliderColors?.maximumTrackTintColor
+                        : styles.sliderColors?.maximumTrackTintColorDisabled
+                }
+                thumbTintColor={
+                    editable ? styles.sliderColors?.thumbTintColor : styles.sliderColors?.thumbTintColorDisabled
+                }
+                onValueChange={onSlide}
+                onSlidingComplete={onChange}
             />
             {!validProps && <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>}
             {props.valueAttribute.validation && (

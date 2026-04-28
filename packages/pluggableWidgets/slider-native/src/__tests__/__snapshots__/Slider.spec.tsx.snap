@@ -2,162 +2,63 @@
 
 exports[`Slider renders 1`] = `
 <View
-  onLayout={[Function]}
   style={{}}
   testID="slider-test"
 >
   <View
+    onLayout={[Function]}
     style={
       [
+        [
+          {},
+          undefined,
+        ],
         {
-          "height": 50,
           "justifyContent": "center",
-          "position": "relative",
         },
-        undefined,
       ]
     }
   >
-    <View
+    <RNCSlider
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      disabled={false}
+      inverted={false}
+      lowerLimit={-9007199254740991}
+      maximumTrackTintColor="rgba(98,0,238, 0.3)"
+      maximumValue={280}
+      minimumTrackTintColor="rgb(98,0,238)"
+      minimumValue={0}
+      onChange={[Function]}
+      onRNCSliderAccessibilityAction={null}
+      onRNCSliderSlidingComplete={[Function]}
+      onRNCSliderSlidingStart={null}
+      onRNCSliderValueChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      step={1}
       style={
         [
           {
-            "flexDirection": "row",
+            "width": 0,
+            "zIndex": 1,
           },
+          {},
           {
-            "width": 280,
+            "alignContent": "center",
+            "alignItems": "center",
           },
         ]
       }
-    >
-      <View
-        style={
-          [
-            {
-              "backgroundColor": "#CECECE",
-              "height": 2,
-            },
-            {
-              "backgroundColor": "rgba(98,0,238, 0.3)",
-            },
-            {
-              "backgroundColor": "rgb(98,0,238)",
-            },
-            {
-              "width": 140,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          [
-            {
-              "backgroundColor": "#CECECE",
-              "height": 2,
-            },
-            {
-              "backgroundColor": "rgba(98,0,238, 0.3)",
-            },
-            undefined,
-            {
-              "width": 140,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "height": 48,
-              "justifyContent": "center",
-              "position": "absolute",
-              "width": 48,
-            },
-            {
-              "left": 116,
-              "top": -24,
-            },
-            undefined,
-            false,
-          ]
-        }
-      >
-        <View
-          onMoveShouldSetResponder={[Function]}
-          onMoveShouldSetResponderCapture={[Function]}
-          onResponderEnd={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderReject={[Function]}
-          onResponderRelease={[Function]}
-          onResponderStart={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          onStartShouldSetResponderCapture={[Function]}
-          style={
-            [
-              {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "backgroundColor": "transparent",
-                "justifyContent": "center",
-              },
-              {
-                "borderRadius": 15,
-              },
-            ]
-          }
-        >
-          <View
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            focusable={false}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            testID="slider-test$marker"
-          >
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#0D8675",
-                    "borderRadius": 12,
-                    "height": 12,
-                    "width": 12,
-                  },
-                  [
-                    undefined,
-                    {
-                      "backgroundColor": "rgb(98,0,238)",
-                      "borderColor": "rgb(98,0,238)",
-                    },
-                  ],
-                  undefined,
-                  undefined,
-                ]
-              }
-            />
-          </View>
-        </View>
-      </View>
-    </View>
+      tapToSeek={false}
+      testID="slider-test$slider"
+      thumbTintColor="rgb(98,0,238)"
+      upperLimit={9007199254740991}
+      value={140}
+    />
   </View>
 </View>
 `;
