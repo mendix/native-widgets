@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react-native";
+import { render, act } from "@testing-library/react-native";
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
@@ -12,8 +12,8 @@ jest.mock("react-native-device-info", () => ({
 }));
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
-    getItem: jest.fn().mockResolvedValue("gone"),
-    setValue: jest.fn().mockResolvedValue(null)
+    getItem: jest.fn().mockResolvedValue(null),
+    setItem: jest.fn().mockResolvedValue(null)
 }));
 
 describe("Intro Screen", () => {
@@ -40,39 +40,42 @@ describe("Intro Screen", () => {
             hasNotch: jest.fn(),
             getDeviceId: jest.fn().mockReturnValue("iPhone")
         }));
-
-        jest.useFakeTimers();
     });
 
-    it("renders", () => {
+    it("renders", async () => {
         const component = render(<IntroScreen {...defaultProps} />);
+        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with 1 bottom button", () => {
+    it("renders with 1 bottom button", async () => {
         const component = render(
             <IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"nextDone"} />
         );
+        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with 2 bottom button", () => {
+    it("renders with 2 bottom button", async () => {
         const component = render(<IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"all"} />);
+        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with active slide attribute", () => {
+    it("renders with active slide attribute", async () => {
         const component = render(
             <IntroScreen
                 {...defaultProps}
                 activeSlideAttribute={new EditableValueBuilder<Big>().withValue(new Big(1)).build()}
             />
         );
+        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with async storage identifier", () => {
+    it("renders with async storage identifier", async () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
+        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
