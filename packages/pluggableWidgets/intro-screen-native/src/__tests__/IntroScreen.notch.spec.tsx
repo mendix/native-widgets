@@ -37,24 +37,24 @@ describe("Intro Screen", () => {
         };
     });
 
-    it("renders", async () => {
+    it("renders", () => {
         const component = render(<IntroScreen {...defaultProps} />);
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with 1 bottom button", async () => {
+    it("renders with 1 bottom button", () => {
         const component = render(
             <IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"nextDone"} />
         );
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with 2 bottom button", async () => {
+    it("renders with 2 bottom button", () => {
         const component = render(<IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"all"} />);
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with active slide attribute", async () => {
+    it("renders with active slide attribute", () => {
         const component = render(
             <IntroScreen
                 {...defaultProps}
@@ -66,6 +66,7 @@ describe("Intro Screen", () => {
 
     it("renders with async storage identifier", async () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
+        // Wait for async storage to resolve
         await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
