@@ -35,9 +35,6 @@ patchedDependencies:
   '@ptomasroos/react-native-multi-slider@1.0.0':
     hash: b5e11465e4305f5284e90a78fc4575401f791921f34dbbafb9831f19ecae94da
     path: patches/@ptomasroos+react-native-multi-slider+1.0.0.patch
-  react-native-action-button@2.8.5:
-    hash: 593bb64b27425a7f3805ad9567928d1369fd4cf939ab5d3eb43411a759565c48
-    path: patches/react-native-action-button+2.8.5.patch
   react-native-gesture-handler@2.30.0:
     hash: 10e538f7cf8a69122ef742c51cb8285f723512c9d8596d9bc6db6ebae0651573
     path: patches/react-native-gesture-handler+2.30.0.patch
@@ -515,12 +512,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      deprecated-react-native-prop-types:
-        specifier: ^4.0.0
-        version: 4.2.3
-      react-native-action-button:
-        specifier: ^2.8.5
-        version: 2.8.5(patch_hash=593bb64b27425a7f3805ad9567928d1369fd4cf939ab5d3eb43411a759565c48)(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.8.0
@@ -6458,11 +6449,6 @@ packages:
 
   react-is@19.2.4:
     resolution: {integrity: sha512-W+EWGn2v0ApPKgKKCy/7s7WHXkboGcsrXE+2joLyVxkbyVQfO3MUEaUQDHoSmb8TFFrSKYa9mw64WZHNHSDzYA==}
-
-  react-native-action-button@2.8.5:
-    resolution: {integrity: sha512-BvGZpzuGeuFR2Y6j93+vKiSqDhsF87VHvNXFs/qEYKfzT4b1ASAT/GQbgS6gNt4jRJCUnJWYrIwlBzRjesZQmQ==}
-    peerDependencies:
-      react-native: 0.83.3
 
   react-native-animatable@1.3.3:
     resolution: {integrity: sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==}
@@ -15060,11 +15046,6 @@ snapshots:
   react-is@18.3.1: {}
 
   react-is@19.2.4: {}
-
-  react-native-action-button@2.8.5(patch_hash=593bb64b27425a7f3805ad9567928d1369fd4cf939ab5d3eb43411a759565c48)(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4)):
-    dependencies:
-      prop-types: 15.8.1
-      react-native: 0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4)
 
   react-native-animatable@1.3.3:
     dependencies:
