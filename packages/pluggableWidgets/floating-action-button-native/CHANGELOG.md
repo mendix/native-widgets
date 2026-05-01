@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Replaced `react-native-action-button` library with custom implementation using React Native's Animated API for better maintainability and reduced bundle size.
+
+-   Removed deprecated `react-native-prop-types` dependency.
+
 ## [4.1.0] - 2024-12-3
 
 ### Changed
