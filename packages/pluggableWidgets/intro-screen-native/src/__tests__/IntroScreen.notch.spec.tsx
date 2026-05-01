@@ -39,7 +39,6 @@ describe("Intro Screen", () => {
 
     it("renders", async () => {
         const component = render(<IntroScreen {...defaultProps} />);
-        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
@@ -47,13 +46,11 @@ describe("Intro Screen", () => {
         const component = render(
             <IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"nextDone"} />
         );
-        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("renders with 2 bottom button", async () => {
         const component = render(<IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"all"} />);
-        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
@@ -64,7 +61,6 @@ describe("Intro Screen", () => {
                 activeSlideAttribute={new EditableValueBuilder<Big>().withValue(new Big(1)).build()}
             />
         );
-        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 
