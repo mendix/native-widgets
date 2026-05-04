@@ -87,10 +87,12 @@ describe("VideoPlayer", () => {
 
     describe("VideoPlayerAndroid", () => {
         beforeAll(() => {
-            jest.mock("react-native/Libraries/Utilities/Platform", () => ({
-                OS: "android",
-                select: jest.fn(dict => dict.android)
-            }));
+            jest.mock("react-native/Libraries/Utilities/Platform", () => {
+                const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
+                Platform.OS = "android";
+                Platform.default = { ...Platform.default, OS: "android" };
+                return Platform;
+            });
         });
         it("render video with controls", () => {
             const component = render(<VideoPlayer {...defaultProps} />);

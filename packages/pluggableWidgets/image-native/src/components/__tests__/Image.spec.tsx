@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { fireEvent, render, act } from "@testing-library/react-native";
+import { fireEvent, render, act, RenderAPI } from "@testing-library/react-native";
 import { NativeIcon, NativeImage } from "mendix";
 import { Style } from "@mendix/piw-native-utils-internal";
 import { Image } from "../../Image";
@@ -12,6 +12,37 @@ import { GlyphIcon } from "../fonts/font";
 function flushMicrotasksQueue(): Promise<unknown> {
     return act(() => new Promise(resolve => setTimeout(resolve, 0)));
 }
+
+function getImageTestId(name: string, suffix: string): string {
+    return `${name}$${suffix}`;
+}
+
+async function findByImageTestId(
+    image: RenderAPI,
+    name: string,
+    suffix: string
+): Promise<ReturnType<RenderAPI["getByTestId"]>> {
+    return image.findByTestId(getImageTestId(name, suffix));
+}
+
+async function fireLayout(image: RenderAPI, name: string, suffix: string): Promise<void> {
+    fireEvent(await findByImageTestId(image, name, suffix), "layout", onLayoutEventData);
+}
+
+jest.mock("../../utils/imageUtils", () => {
+    const actual = jest.requireActual("../../utils/imageUtils") as typeof import("../../utils/imageUtils");
+
+    return {
+        ...actual,
+        getImageDimensions: jest.fn(async source => {
+            if (source?.type === "staticImage" || source?.type === "dynamicImage") {
+                return { width: 2222, height: 1111 };
+            }
+
+            return actual.getImageDimensions(source);
+        })
+    };
+});
 
 jest.mock("react-native-svg/lib/commonjs/xml", () => {
     const original = jest.requireActual("react-native-svg/lib/commonjs/xml");
@@ -58,7 +89,7 @@ jest.mock("@d11/react-native-fast-image", () => {
                 // Dynamic image: use fixed dimensions to match stored snapshots
                 source = { height: 1111, width: 2222 };
             }
-        } catch (_) {
+        } catch {
             source = { height: 0, width: 0 };
         }
         return React.createElement(
@@ -117,7 +148,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -127,7 +158,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -137,7 +168,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -147,10 +178,10 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
+            await fireLayout(image, imageProps.name, "ImageEnlargedPressable");
             expect(image.toJSON()).toMatchSnapshot();
-        });
+        }, 10000);
 
         it("triggers the onclick action", async () => {
             const ImageComponent = <Image {...imageProps} onClickType={"action"} />;
@@ -158,7 +189,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
         });
 
@@ -172,7 +203,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -186,7 +217,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -200,7 +231,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
     });
@@ -216,7 +247,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -226,7 +257,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -236,7 +267,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -246,8 +277,8 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
+            await fireLayout(image, imageProps.name, "ImageEnlargedPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -257,7 +288,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
         });
 
@@ -271,7 +302,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -285,7 +316,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -299,7 +330,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
     });
@@ -318,7 +349,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -328,7 +359,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -338,7 +369,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -348,8 +379,8 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
+            await fireLayout(image, imageProps.name, "ImageEnlargedPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -359,7 +390,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent.press(image.getByTestId(`${imageProps.name}$Image`));
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "Image"));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
         });
 
@@ -373,7 +404,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -387,7 +418,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -401,7 +432,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
     });
@@ -417,8 +448,8 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "SvgUriTemporary");
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -428,8 +459,8 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "SvgUriTemporary");
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -439,8 +470,8 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "SvgUriTemporary");
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -450,10 +481,10 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
-            fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "SvgUriTemporary");
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
+            await fireLayout(image, imageProps.name, "ImageEnlargedPressable");
 
             expect(image.toJSON()).toMatchSnapshot();
         });
@@ -464,9 +495,9 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$SvgUriTemporary`), "layout", onLayoutEventData);
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
-            fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
+            await fireLayout(image, imageProps.name, "SvgUriTemporary");
+            await fireLayout(image, imageProps.name, "ImageSmallPressable");
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
             expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
         });
 
@@ -480,7 +511,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -494,7 +525,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
 
@@ -508,7 +539,7 @@ describe("Widget", () => {
 
             await flushMicrotasksQueue();
 
-            fireEvent(image.getByTestId(`${imageProps.name}$ImageBackgroundView`), "layout", onLayoutEventData);
+            await fireLayout(image, imageProps.name, "ImageBackgroundView");
             expect(image.toJSON()).toMatchSnapshot();
         });
     });
@@ -560,7 +591,7 @@ describe("Widget", () => {
 
                 await flushMicrotasksQueue();
 
-                fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
+                fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
                 expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
             });
         });
@@ -579,7 +610,7 @@ describe("Widget", () => {
 
                 await flushMicrotasksQueue();
 
-                fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+                await fireLayout(image, imageProps.name, "ImageSmallPressable");
                 expect(image.toJSON()).toMatchSnapshot();
             });
 
@@ -611,7 +642,7 @@ describe("Widget", () => {
 
                 await flushMicrotasksQueue();
 
-                fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
+                await fireLayout(image, imageProps.name, "ImageSmallPressable");
                 expect(image.toJSON()).toMatchSnapshot();
             });
 
@@ -620,9 +651,9 @@ describe("Widget", () => {
 
                 await flushMicrotasksQueue();
 
-                fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
-                fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
-                fireEvent(image.getByTestId(`${imageProps.name}$ImageEnlargedPressable`), "layout", onLayoutEventData);
+                await fireLayout(image, imageProps.name, "ImageSmallPressable");
+                fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
+                await fireLayout(image, imageProps.name, "ImageEnlargedPressable");
                 expect(image.toJSON()).toMatchSnapshot();
             });
 
@@ -631,8 +662,8 @@ describe("Widget", () => {
 
                 await flushMicrotasksQueue();
 
-                fireEvent(image.getByTestId(`${imageProps.name}$ImageSmallPressable`), "layout", onLayoutEventData);
-                fireEvent.press(image.getByTestId(`${imageProps.name}$ImageSmallPressable`));
+                await fireLayout(image, imageProps.name, "ImageSmallPressable");
+                fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
                 expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
             });
         });

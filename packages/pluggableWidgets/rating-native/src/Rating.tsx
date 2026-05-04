@@ -65,7 +65,6 @@ export class Rating extends Component<Props, State> {
                 disabled={disabled}
                 selectedStar={this.onChangeHandler}
                 halfStarEnabled={false}
-                iconSet={undefined}
                 containerStyle={containerStyle}
                 starStyle={this.iconStyle}
                 fullStar={this.props.icon ? (this.props.icon.value as any) : this.state.imageSourceCache![fullIcon]}

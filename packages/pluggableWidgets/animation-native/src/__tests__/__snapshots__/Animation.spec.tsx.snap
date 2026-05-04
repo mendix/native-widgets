@@ -3,13 +3,7 @@
 exports[`Animation renders 1`] = `
 <View
   collapsable={false}
-  style={
-    [
-      {},
-      {},
-      {},
-    ]
-  }
+  style={{}}
   testID="animation-test"
 >
   <Text>

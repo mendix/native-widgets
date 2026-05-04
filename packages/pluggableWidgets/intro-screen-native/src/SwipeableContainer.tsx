@@ -128,7 +128,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             const isActive = index === activeIndex;
             return (
                 <View
-                    style={[{ width, flex: 1 }]}
+                    style={{ width, height }}
                     importantForAccessibility={isActive ? "auto" : "no-hide-descendants"}
                     accessibilityElementsHidden={!isActive}
                 >
