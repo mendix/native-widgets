@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @react-native-async-storage/async-storage from version v2.0.0 to v2.2.0.
+-   Updated react-native-permissions from version v5.4.2 to v5.5.1.
+
 ## [6.3.0] Nanoflow Commons - 2026-2-3
 
 -   Added a "Download web file" nanoflow action that triggers file download for web applications.

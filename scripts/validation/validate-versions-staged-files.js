@@ -1,6 +1,6 @@
 const { readFile } = require("fs").promises;
 const { promisify } = require("util");
-const { join, dirname } = require("path");
+const { join } = require("path");
 const { exec } = require("child_process");
 const { parseStringPromise } = require("xml2js");
 
@@ -12,24 +12,11 @@ preCommit().catch(error => {
 });
 
 async function preCommit() {
-    const [{ stdout: pnpmPackages }, { stdout: stagedFiles }] = await Promise.all([
-        execAsync("pnpm -r list --json"),
-        execAsync("git diff --staged --name-only")
-    ]);
-    const packages = JSON.parse(pnpmPackages);
-    const staged = stagedFiles.trim().split("\n");
-    const changedWidgetPackages = packages
-        .filter(({ path }) => path.match(/(pluggable|custom)Widgets/))
-        .filter(({ path }) =>
-            staged.some(
-                changedFilePath =>
-                    dirname(join(process.cwd(), changedFilePath)).includes(path) &&
-                    changedFilePath
-                        .split("/")
-                        .pop()
-                        .match(/package\.(json|xml)$/)
-            )
-        );
+    const { stdout: stagedFiles } = await execAsync("git diff --staged --name-only");
+    const staged = stagedFiles.trim().split("\n").filter(Boolean);
+    const changedWidgetPackages = [...new Set(staged.map(getChangedWidgetPackagePath).filter(Boolean))].map(path => ({
+        path: join(process.cwd(), path)
+    }));
 
     if (changedWidgetPackages.length) {
         const validationPromises = [];
@@ -73,4 +60,14 @@ async function preCommit() {
             throw new Error("Widget version validation failed. See above for details.");
         }
     }
+}
+
+function getChangedWidgetPackagePath(changedFilePath) {
+    if (!changedFilePath.match(/package\.(json|xml)$/)) {
+        return null;
+    }
+
+    const changedWidgetPackageMatch = changedFilePath.match(/^packages\/(pluggable|custom)Widgets\/[^/]+/);
+
+    return changedWidgetPackageMatch ? changedWidgetPackageMatch[0] : null;
 }

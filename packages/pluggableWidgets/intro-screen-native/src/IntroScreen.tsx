@@ -26,12 +26,9 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
                 }
             });
         } else {
-            // Show modal on next frame when there's no identifier to prevent flash of content
-            queueMicrotask(() => {
-                if (isMounted) {
-                    setVisible(true);
-                }
-            });
+            if (isMounted) {
+                setVisible(true);
+            }
         }
 
         return () => {

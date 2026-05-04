@@ -1,7 +1,7 @@
 {
   "name": "app-events-native",
   "widgetName": "AppEvents",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
-    "@react-native-community/netinfo": "11.4.1"
+    "@react-native-community/netinfo": "11.5.2"
   },
   "devDependencies": {
     "@mendix/piw-utils-internal": "*",

@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react-native";
+import { render, act } from "@testing-library/react-native";
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
@@ -12,8 +12,8 @@ jest.mock("react-native-device-info", () => ({
 }));
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
-    getItem: jest.fn().mockResolvedValue("gone"),
-    setValue: jest.fn().mockResolvedValue(null)
+    getItem: jest.fn().mockResolvedValue(null),
+    setItem: jest.fn().mockResolvedValue(null)
 }));
 
 describe("Intro Screen", () => {
@@ -35,8 +35,6 @@ describe("Intro Screen", () => {
             hideIndicatorLastSlide: false,
             identifier: ""
         };
-
-        jest.useFakeTimers();
     });
 
     it("renders", () => {
@@ -66,8 +64,10 @@ describe("Intro Screen", () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with async storage identifier", () => {
+    it("renders with async storage identifier", async () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
+        // Wait for async storage to resolve
+        await act(async () => {});
         expect(component.toJSON()).toMatchSnapshot();
     });
 });

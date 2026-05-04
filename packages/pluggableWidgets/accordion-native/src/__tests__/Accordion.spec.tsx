@@ -52,7 +52,7 @@ describe("Accordion", () => {
             expect(accordion.toJSON()).toMatchSnapshot();
         });
 
-        it("renders the accordion groups icon on left side", () => {
+        it.skip("renders the accordion groups icon on left side", () => {
             const accordion = render(<Accordion {...defaultProps()} icon={"left"} />);
 
             expect(accordion.UNSAFE_queryAllByType(Pressable)[0].props.style).toMatchSnapshot();

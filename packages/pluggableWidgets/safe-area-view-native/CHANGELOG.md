@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @react-navigation/bottom-tabs from version v6.6.1 to v7.15.2.
+-   Updated react-native-safe-area-context from version v5.2.0 to v5.7.0.
+
 ## [3.1.0] - 2025-7-7
 
 -   We fixed the issue where navigation buttons were being overlapped due to improper safe area handling.

@@ -25,7 +25,7 @@ export const Image: FunctionComponent<ImageProps<Style>> = props => {
                 );
                 setSource(convertedImageProps);
             } catch (e) {
-                console.error(e);
+                console.error(e instanceof Error ? e.message : String(e));
             }
         };
         setSourceToConvertedImageProps();
@@ -43,7 +43,7 @@ export const Image: FunctionComponent<ImageProps<Style>> = props => {
                     });
                 }
             } catch (e) {
-                console.error(e);
+                console.error(e instanceof Error ? e.message : String(e));
             }
         };
         setImageDimensions();

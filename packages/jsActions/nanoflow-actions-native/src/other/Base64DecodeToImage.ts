@@ -77,7 +77,10 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
     }
 
     // Other platforms
-    const blob = new Blob([Base64.toUint8Array(base64)], { type: "image/png" });
+    const bytes = Base64.toUint8Array(base64);
+    const buffer = new ArrayBuffer(bytes.byteLength);
+    new Uint8Array(buffer).set(bytes);
+    const blob = new Blob([buffer], { type: "image/png" });
 
     return new Promise((resolve, reject) => {
         mx.data.saveDocument(image.getGuid(), "camera image", {}, blob, () => resolve(true), reject);

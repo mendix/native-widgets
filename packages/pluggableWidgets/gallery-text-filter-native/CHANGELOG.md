@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
 ## [2.0.2] - 2026-3-14
 
 ### Fixed

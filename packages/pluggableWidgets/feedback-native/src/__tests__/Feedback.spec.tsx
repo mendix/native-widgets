@@ -1,5 +1,5 @@
 import { FeedbackStyle } from "../ui/styles";
-import { render, cleanup, userEvent } from "@testing-library/react-native";
+import { render, cleanup, fireEvent, waitFor } from "@testing-library/react-native";
 import { FeedbackProps } from "../../typings/FeedbackProps";
 import { Feedback } from "../Feedback";
 import { dynamicValue } from "@mendix/piw-utils-internal";
@@ -15,6 +15,7 @@ global.fetch = jest.fn(() =>
 jest.mock("react-native/Libraries/Utilities/Platform", () => {
     const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
     Platform.OS = "ios";
+    Platform.default = { ...Platform.default, OS: "ios" };
     return Platform;
 });
 
@@ -51,24 +52,28 @@ describe("Feedback", () => {
 
     it("should call the api when sending", async () => {
         const feedbackMsg = "unittest";
-        const user = userEvent.setup();
         const component = render(<Feedback {...defaultProps} />);
 
-        await user.press(component.getByTestId("feedback-test$button"));
+        fireEvent.press(component.getByTestId("feedback-test$button"));
 
-        await user.type(component.getByTestId("feedback-test$input"), feedbackMsg);
+        // Wait for async captureScreen mock to resolve and dialog to render
+        await waitFor(() => component.getByTestId("feedback-test$input"));
 
-        await user.press(component.getByTestId("feedback-test$send"));
+        fireEvent.changeText(component.getByTestId("feedback-test$input"), feedbackMsg);
 
-        expect(fetch).toHaveBeenCalledWith(
-            "https://feedback-api.mendix.com/rest/v3/feedbackapi/projects/sprintr-app-id/issues",
-            {
-                body: '{"title":"unittest","description":"","issueType":"Issue","submitter":{"userId":"","email":"unknown@example.com","displayName":"Unknown Native User"},"metadata":{"userRoles":"","location":"","form":"","userAgent":"Native for ios","screenWidth":750,"screenHeight":1334},"imageAttachment":""}',
-                headers: { ClientIdentifier: "feedback-native-v2", "Content-Type": "application/json" },
-                method: "POST",
-                mode: "no-cors",
-                referrer: "no-referrer"
-            }
+        fireEvent.press(component.getByTestId("feedback-test$send"));
+
+        await waitFor(() =>
+            expect(fetch).toHaveBeenCalledWith(
+                "https://feedback-api.mendix.com/rest/v3/feedbackapi/projects/sprintr-app-id/issues",
+                {
+                    body: '{"title":"unittest","description":"","issueType":"Issue","submitter":{"userId":"","email":"unknown@example.com","displayName":"Unknown Native User"},"metadata":{"userRoles":"","location":"","form":"","userAgent":"Native for ios","screenWidth":750,"screenHeight":1334},"imageAttachment":""}',
+                    headers: { ClientIdentifier: "feedback-native-v2", "Content-Type": "application/json" },
+                    method: "POST",
+                    mode: "no-cors",
+                    referrer: "no-referrer"
+                }
+            )
         );
-    }, 8000); // increased timeout due to slow test execution on Github
+    }, 15000);
 });
