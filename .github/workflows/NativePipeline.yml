@@ -475,7 +475,21 @@ jobs:
         run: pod install
       - name: "Build iOS app"
         working-directory: native-template/ios
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -workspace NativeTemplate.xcworkspace \
+            -scheme nativeTemplate \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -derivedDataPath build \
+            -destination 'generic/platform=iOS Simulator' \
+            -quiet \
+            ONLY_ACTIVE_ARCH=YES \
+            ARCHS=arm64 \
+            EXCLUDED_ARCHS= \
+            COMPILER_INDEX_STORE_ENABLE=NO \
+            build
       - name: "Archive iOS app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
@@ -537,6 +551,26 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: "AVD cache"
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-api35-google_apis-x86_64-pixel-v1
+      - name: "Create AVD snapshot for cache"
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel
+          force-avd-creation: false
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-audio -memory 4096 -cores 4"
+          disable-animations: true
+          script: echo "Generated AVD snapshot for caching."
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
         with:
@@ -544,14 +578,15 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          force-avd-creation: false
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-audio -no-snapshot-save -memory 4096 -cores 4"
           disable-animations: true
           script: |
             chmod +x maestro/helpers/prepare_android.sh
             chmod +x maestro/run_maestro_widget_tests.sh
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}"
-      
+
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
         with:
@@ -703,6 +738,26 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: "AVD cache"
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-api35-google_apis-x86_64-pixel-v1
+      - name: "Create AVD snapshot for cache"
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel
+          force-avd-creation: false
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-audio -memory 4096 -cores 4"
+          disable-animations: true
+          script: echo "Generated AVD snapshot for caching."
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
         with:
@@ -710,7 +765,8 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          force-avd-creation: false
+          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-audio -no-snapshot-save -memory 4096 -cores 4"
           disable-animations: true
           script: |
             chmod +x maestro/helpers/prepare_android.sh

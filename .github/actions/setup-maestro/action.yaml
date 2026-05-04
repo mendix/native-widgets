@@ -1,21 +1,30 @@
 name: "Setup Maestro"
 description: "Install and cache Maestro"
+inputs:
+  maestro-version:
+    description: "Maestro CLI version"
+    required: false
+    default: "2.5.1"
 runs:
   using: "composite"
   steps:
     - name: "Cache Maestro"
+      id: cache-maestro
       uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
       with:
-        path: $HOME/.local/bin/maestro
-        key: maestro-${{ runner.os }}-v1
-    
+        path: ~/.local/bin/maestro
+        key: maestro-${{ runner.os }}-${{ inputs.maestro-version }}
+
     - name: "Install Maestro"
+      if: steps.cache-maestro.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        if [ ! -f "$HOME/.local/bin/maestro/bin/maestro" ]; then
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
-        fi
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        mkdir -p "$HOME/.local/bin"
+        curl -fsSL "https://github.com/mobile-dev-inc/maestro/releases/download/cli-${{ inputs.maestro-version }}/maestro.zip" -o maestro.zip
+        unzip -q maestro.zip -d "$HOME/.local/bin"
+        chmod +x "$HOME/.local/bin/maestro/bin/maestro"
+        rm maestro.zip
+
+    - name: "Add Maestro to PATH"
+      shell: bash
+      run: echo "$HOME/.local/bin/maestro/bin" >> "$GITHUB_PATH"
