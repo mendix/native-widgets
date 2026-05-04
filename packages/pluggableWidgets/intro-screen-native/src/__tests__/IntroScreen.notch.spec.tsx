@@ -3,7 +3,7 @@ import { render, act } from "@testing-library/react-native";
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
-import { View } from "react-native";
+import { InteractionManager, View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
@@ -16,6 +16,9 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
     getItem: jest.fn().mockResolvedValue(null),
     setItem: jest.fn().mockResolvedValue(null)
 }));
+
+const flushInteractions = (): Promise<void> =>
+    act(() => new Promise<void>(resolve => InteractionManager.runAfterInteractions(resolve)));
 
 describe("Intro Screen", () => {
     let defaultProps: IntroScreenProps<IntroScreenStyle>;
@@ -40,9 +43,7 @@ describe("Intro Screen", () => {
 
     it("renders", async () => {
         const component = render(<IntroScreen {...defaultProps} />);
-        await act(async () => {
-            /* Wait for any async operations to complete */
-        });
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
@@ -50,17 +51,13 @@ describe("Intro Screen", () => {
         const component = render(
             <IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"nextDone"} />
         );
-        await act(async () => {
-            /* Wait for any async operations to complete */
-        });
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("renders with 2 bottom button", async () => {
         const component = render(<IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"all"} />);
-        await act(async () => {
-            /* Wait for any async operations to complete */
-        });
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
@@ -71,17 +68,13 @@ describe("Intro Screen", () => {
                 activeSlideAttribute={new EditableValueBuilder<Big>().withValue(new Big(1)).build()}
             />
         );
-        await act(async () => {
-            /* Wait for any async operations to complete */
-        });
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("renders with async storage identifier", async () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
-        await act(async () => {
-            /* Wait for any async operations to complete */
-        });
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
