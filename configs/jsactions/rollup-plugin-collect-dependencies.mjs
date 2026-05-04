@@ -178,30 +178,40 @@ export async function copyJsModule(moduleSourcePath, to) {
         actualSourcePath = realpathSync(moduleSourcePath);
     }
 
-    cpSync(actualSourcePath, to, {
-        recursive: true,
-        dereference: true, // Follow symlinks and copy the actual files
-        filter: (src, dest) => {
-            const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
+    try {
+        cpSync(actualSourcePath, to, {
+            recursive: true,
+            dereference: true, // Follow symlinks and copy the actual files
+            force: true,
+            errorOnExist: false,
+            filter: (src, dest) => {
+                const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
 
-            // Skip certain directories
-            if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
-                return false;
-            }
+                // Skip certain directories
+                if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
+                    return false;
+                }
 
-            // Skip certain file types
-            if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
-                return false;
-            }
+                // Skip certain file types
+                if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
+                    return false;
+                }
 
-            // Include LICENSE files
-            if (relativePath.match(/license/i)) {
+                // Include LICENSE files
+                if (relativePath.match(/license/i)) {
+                    return true;
+                }
+
                 return true;
             }
-
-            return true;
-        }
-    });
+        });
+    } catch (err) {
+        // EEXIST can surface here when pnpm's symlinked node_modules layout causes cpSync's
+        // recursive walk to revisit the same realpath via different symlinks. Copies are
+        // idempotent (same source → same bytes), so treating this specific error as success
+        // is safe. Any other failure still propagates.
+        if (err?.code !== "EEXIST") throw err;
+    }
 }
 
 function getModuleName(modulePath) {
