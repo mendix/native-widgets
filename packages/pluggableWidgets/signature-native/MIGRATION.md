@@ -28,7 +28,7 @@ You must assign an object of an entity with generalization `System.Image` to the
 
 1. In your domain model, ensure you have an entity with generalization `System.Image`.
 2. In your page, create or retrieve an instance of that entity and pass it as the data source of the widget.
-3. In the widget's **Image** property, select that object.
+3. In the widget's **Image** property, select the image type as Dynamic and assign the object to the entity property.
 
 ---
 
