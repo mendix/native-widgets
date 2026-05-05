@@ -17,9 +17,16 @@ runs:
         node-version-file: .nvmrc
         package-manager-cache: false
 
+    - name: "Setup Python for m2ee-tools"
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      with:
+        python-version: "3.12"
+        cache: pip
+        cache-dependency-path: .github/scripts/m2ee-requirements.txt
+
     - name: "Install m2ee-tools Python dependencies"
       shell: bash
-      run: pip install --quiet --break-system-packages PyYAML httplib2
+      run: pip install -r .github/scripts/m2ee-requirements.txt
 
     - name: "Setup Java 21"
       id: setup-java
