@@ -19,7 +19,7 @@ runs:
 
     - name: "Install m2ee-tools Python dependencies"
       shell: bash
-      run: pip install --quiet PyYAML httplib2
+      run: pip install --quiet --break-system-packages PyYAML httplib2
 
     - name: "Setup Java 21"
       id: setup-java
