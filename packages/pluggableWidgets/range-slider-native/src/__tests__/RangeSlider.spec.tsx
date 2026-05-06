@@ -1,10 +1,22 @@
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { View } from "react-native";
-import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
-import { ReactTestInstance } from "react-test-renderer";
+import { fireEvent, render } from "@testing-library/react-native";
 import { ValueStatus, DynamicValue } from "mendix";
 import { Props, RangeSlider } from "../RangeSlider";
+
+jest.mock("@miblanchard/react-native-slider", () => {
+    const { View } = require("react-native");
+    return {
+        Slider: (props: any) => (
+            <View
+                testID="mocked-slider"
+                {...props}
+                onValueChange={(values: number[]) => props.onValueChange?.(values)}
+                onSlidingComplete={(values: number[]) => props.onSlidingComplete?.(values)}
+            />
+        )
+    };
+});
 
 describe("RangeSlider", () => {
     const noValue: DynamicValue<Big> = { status: ValueStatus.Unavailable, value: undefined };
@@ -32,7 +44,7 @@ describe("RangeSlider", () => {
         const component = render(
             <RangeSlider {...defaultProps} lowerValueAttribute={new EditableValueBuilder<Big>().isLoading().build()} />
         );
-        expect(component.queryByTestId(`${defaultProps.name}-validation-message`)).toBeNull();
+        expect(component.queryByTestId(`${defaultProps.name}-validation-messages`)).toBeNull();
     });
 
     it("renders an error when no minimum value is provided", () => {
@@ -102,29 +114,6 @@ describe("RangeSlider", () => {
         expect(component.queryByText("The upper value must be equal or less than the maximum value.")).not.toBeNull();
     });
 
-    it("renders with the width of the parent view", () => {
-        const component = render(
-            <RangeSlider
-                {...defaultProps}
-                style={[
-                    {
-                        container: { width: 100 },
-                        highlight: {},
-                        highlightDisabled: {},
-                        marker: {},
-                        markerActive: {},
-                        markerDisabled: {},
-                        track: {},
-                        trackDisabled: {},
-                        validationMessage: {}
-                    }
-                ]}
-            />
-        );
-        fireEvent(component.getByTestId("range-slider-test"), "layout", { nativeEvent: { layout: { width: 100 } } });
-        expect(component.getByTestId("range-slider-test").findByProps({ sliderLength: 100 })).not.toBeNull();
-    });
-
     it("renders a validation message", () => {
         const value = new EditableValueBuilder<Big>().withValidation("Invalid").build();
         const component = render(
@@ -134,71 +123,85 @@ describe("RangeSlider", () => {
         expect(component.getAllByText("Invalid")).toHaveLength(2);
     });
 
-    it("changes the lower value when swiping", () => {
-        const onChangeAction = actionValue();
-        const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
+    it("renders as disabled when editable is never", () => {
+        const component = render(<RangeSlider {...defaultProps} editable={"never"} />);
+        const slider = component.getByTestId("mocked-slider");
+        expect(slider.props.disabled).toBe(true);
+    });
 
-        fireEvent(getHandle(component), "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(getHandle(component), "responderMove", responderMove(50));
+    it("renders as enabled when editable is default", () => {
+        const component = render(<RangeSlider {...defaultProps} />);
+        const slider = component.getByTestId("mocked-slider");
+        expect(slider.props.disabled).toBe(false);
+    });
 
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
+    it("passes correct min/max/step to the slider", () => {
+        const component = render(<RangeSlider {...defaultProps} />);
+        const slider = component.getByTestId("mocked-slider");
+        expect(slider.props.minimumValue).toBe(0);
+        expect(slider.props.maximumValue).toBe(280);
+        expect(slider.props.step).toBe(1);
+    });
 
-        fireEvent(getHandle(component), "responderRelease", {});
+    it("passes range values as array", () => {
+        const component = render(<RangeSlider {...defaultProps} />);
+        const slider = component.getByTestId("mocked-slider");
+        expect(slider.props.value).toEqual([70, 210]);
+    });
 
-        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(120));
+    it("calls onValueChange when sliding", () => {
+        const component = render(<RangeSlider {...defaultProps} />);
+        const slider = component.getByTestId("mocked-slider");
+
+        fireEvent(slider, "onValueChange", [100, 210]);
+
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(100));
         expect(defaultProps.upperValueAttribute.setValue).toHaveBeenCalledWith(new Big(210));
-        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
     });
 
-    it("changes the upper value when swiping", () => {
+    it("calls onChange action on sliding complete", () => {
         const onChangeAction = actionValue();
         const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
+        const slider = component.getByTestId("mocked-slider");
 
-        fireEvent(getHandle(component, 1), "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(getHandle(component, 1), "responderMove", responderMove(-50));
+        fireEvent(slider, "onSlidingComplete", [100, 250]);
 
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-
-        fireEvent(getHandle(component, 1), "responderRelease", {});
-
-        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(70));
-        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenCalledWith(new Big(160));
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(100));
+        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenCalledWith(new Big(250));
         expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
     });
 
-    it("does not change the value when non editable", () => {
+    it("does not call onChange when values haven't changed", () => {
         const onChangeAction = actionValue();
-        const component = render(<RangeSlider {...defaultProps} editable={"never"} onChange={onChangeAction} />);
+        const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
+        const slider = component.getByTestId("mocked-slider");
 
-        fireEvent(getHandle(component), "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(getHandle(component), "responderMove", responderMove(50));
-        fireEvent(getHandle(component), "responderRelease", {});
+        fireEvent(slider, "onSlidingComplete", [70, 210]);
 
         expect(onChangeAction.execute).not.toHaveBeenCalled();
-        expect(defaultProps.lowerValueAttribute.setValue).not.toHaveBeenCalled();
-        expect(defaultProps.upperValueAttribute.setValue).not.toHaveBeenCalled();
+    });
+
+    it("applies custom styles", () => {
+        const component = render(
+            <RangeSlider
+                {...defaultProps}
+                style={[
+                    {
+                        container: { width: 100 },
+                        track: {},
+                        trackDisabled: {},
+                        minimumTrack: {},
+                        minimumTrackDisabled: {},
+                        maximumTrack: {},
+                        maximumTrackDisabled: {},
+                        thumb: {},
+                        thumbActive: {},
+                        thumbDisabled: {},
+                        validationMessage: {}
+                    }
+                ]}
+            />
+        );
+        expect(component.toJSON()).toMatchSnapshot("with custom styles");
     });
 });
-
-function getHandle(component: RenderAPI, index = 0): ReactTestInstance {
-    return component.UNSAFE_getAllByType(View).filter(instance => instance.props.onMoveShouldSetResponder)[index];
-}
-
-function responderMove(dx: number): any {
-    return {
-        touchHistory: {
-            numberActiveTouches: 1,
-            indexOfSingleActiveTouch: 0,
-            touchBank: [
-                {
-                    touchActive: true,
-                    currentTimeStamp: Date.now(),
-                    currentPageX: dx,
-                    currentPageY: 0,
-                    previousPageX: 0,
-                    previousPageY: 0
-                }
-            ]
-        }
-    };
-}

@@ -1,267 +1,99 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`RangeSlider applies custom styles: with custom styles 1`] = `
+<View
+  style={
+    {
+      "width": 100,
+    }
+  }
+  testID="range-slider-test"
+>
+  <View
+    disabled={false}
+    maximumTrackStyle={
+      {
+        "backgroundColor": "rgba(98,0,238, 0.3)",
+      }
+    }
+    maximumValue={280}
+    minimumTrackStyle={
+      {
+        "backgroundColor": "rgb(98,0,238)",
+      }
+    }
+    minimumValue={0}
+    onSlidingComplete={[Function]}
+    onValueChange={[Function]}
+    step={1}
+    testID="mocked-slider"
+    thumbStyle={
+      {
+        "backgroundColor": "rgb(98,0,238)",
+        "borderRadius": 12,
+        "height": 12,
+        "width": 12,
+      }
+    }
+    trackStyle={
+      {
+        "borderRadius": 2,
+        "height": 4,
+      }
+    }
+    value={
+      [
+        70,
+        210,
+      ]
+    }
+  />
+</View>
+`;
+
 exports[`RangeSlider renders 1`] = `
 <View
-  onLayout={[Function]}
   style={{}}
   testID="range-slider-test"
 >
   <View
-    style={
+    disabled={false}
+    maximumTrackStyle={
+      {
+        "backgroundColor": "rgba(98,0,238, 0.3)",
+      }
+    }
+    maximumValue={280}
+    minimumTrackStyle={
+      {
+        "backgroundColor": "rgb(98,0,238)",
+      }
+    }
+    minimumValue={0}
+    onSlidingComplete={[Function]}
+    onValueChange={[Function]}
+    step={1}
+    testID="mocked-slider"
+    thumbStyle={
+      {
+        "backgroundColor": "rgb(98,0,238)",
+        "borderRadius": 12,
+        "height": 12,
+        "width": 12,
+      }
+    }
+    trackStyle={
+      {
+        "borderRadius": 2,
+        "height": 4,
+      }
+    }
+    value={
       [
-        {
-          "height": 50,
-          "justifyContent": "center",
-          "position": "relative",
-        },
-        undefined,
+        70,
+        210,
       ]
     }
-  >
-    <View
-      style={
-        [
-          {
-            "flexDirection": "row",
-          },
-          {
-            "width": 280,
-          },
-        ]
-      }
-    >
-      <View
-        style={
-          [
-            {
-              "backgroundColor": "#CECECE",
-              "height": 2,
-            },
-            {
-              "backgroundColor": "rgba(98,0,238, 0.3)",
-            },
-            undefined,
-            {
-              "width": 70,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          [
-            {
-              "backgroundColor": "#CECECE",
-              "height": 2,
-            },
-            {
-              "backgroundColor": "rgba(98,0,238, 0.3)",
-            },
-            {
-              "backgroundColor": "rgb(98,0,238)",
-            },
-            {
-              "width": 140,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          [
-            {
-              "backgroundColor": "#CECECE",
-              "height": 2,
-            },
-            {
-              "backgroundColor": "rgba(98,0,238, 0.3)",
-            },
-            undefined,
-            {
-              "width": 70,
-            },
-          ]
-        }
-      />
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "height": 48,
-              "justifyContent": "center",
-              "position": "absolute",
-              "width": 48,
-            },
-            {
-              "left": 46,
-              "top": -24,
-            },
-            undefined,
-            false,
-          ]
-        }
-      >
-        <View
-          onMoveShouldSetResponder={[Function]}
-          onMoveShouldSetResponderCapture={[Function]}
-          onResponderEnd={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderReject={[Function]}
-          onResponderRelease={[Function]}
-          onResponderStart={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          onStartShouldSetResponderCapture={[Function]}
-          style={
-            [
-              {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "backgroundColor": "transparent",
-                "justifyContent": "center",
-              },
-              {
-                "borderRadius": 15,
-              },
-            ]
-          }
-        >
-          <View
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            focusable={false}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            testID="range-slider-test$leftMarker"
-          >
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#0D8675",
-                    "borderRadius": 12,
-                    "height": 12,
-                    "width": 12,
-                  },
-                  [
-                    undefined,
-                    {
-                      "backgroundColor": "rgb(98,0,238)",
-                      "borderColor": "rgb(98,0,238)",
-                    },
-                  ],
-                  undefined,
-                  undefined,
-                ]
-              }
-            />
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "height": 48,
-              "justifyContent": "center",
-              "position": "absolute",
-              "width": 48,
-            },
-            {
-              "right": 46,
-              "top": -24,
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          onMoveShouldSetResponder={[Function]}
-          onMoveShouldSetResponderCapture={[Function]}
-          onResponderEnd={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderReject={[Function]}
-          onResponderRelease={[Function]}
-          onResponderStart={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          onStartShouldSetResponderCapture={[Function]}
-          style={
-            [
-              {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "backgroundColor": "transparent",
-                "justifyContent": "center",
-              },
-              {
-                "borderRadius": 15,
-              },
-            ]
-          }
-        >
-          <View
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            focusable={false}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            testID="range-slider-test$rightMarker"
-          >
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#0D8675",
-                    "borderRadius": 12,
-                    "height": 12,
-                    "width": 12,
-                  },
-                  {
-                    "backgroundColor": "rgb(98,0,238)",
-                    "borderColor": "rgb(98,0,238)",
-                  },
-                  undefined,
-                  undefined,
-                ]
-              }
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  </View>
+  />
 </View>
 `;

@@ -5,11 +5,13 @@ export interface RangeSliderStyle extends Style {
     container: ViewStyle;
     track: ViewStyle;
     trackDisabled: ViewStyle;
-    highlight: ViewStyle;
-    highlightDisabled: ViewStyle;
-    marker: ViewStyle;
-    markerActive: ViewStyle;
-    markerDisabled: ViewStyle;
+    minimumTrack: ViewStyle;
+    minimumTrackDisabled: ViewStyle;
+    maximumTrack: ViewStyle;
+    maximumTrackDisabled: ViewStyle;
+    thumb: ViewStyle;
+    thumbActive: ViewStyle;
+    thumbDisabled: ViewStyle;
     validationMessage: TextStyle;
 }
 
@@ -22,34 +24,67 @@ const purpleLightest = "rgba(98,0,238, 0.1)";
 export const defaultRangeSliderStyle: RangeSliderStyle = {
     container: {},
     track: {
-        backgroundColor: Platform.select({ ios: blueLighter, android: purpleLighter })
+        height: 4,
+        borderRadius: 2
     },
     trackDisabled: {
+        height: 4,
+        borderRadius: 2,
         ...Platform.select({
-            ios: {
-                opacity: 0.4,
-                backgroundColor: blueLighter
-            },
-            android: {
-                backgroundColor: "#EEE"
-            }
+            ios: { opacity: 0.4 },
+            android: {}
         })
     },
-    highlight: {
+    minimumTrack: {
         backgroundColor: Platform.select({ ios: blue, android: purple })
     },
-    highlightDisabled: {
+    minimumTrackDisabled: {
         backgroundColor: Platform.select({ ios: blue, android: "#AAA" })
     },
-    marker: {
+    maximumTrack: {
+        backgroundColor: Platform.select({ ios: blueLighter, android: purpleLighter })
+    },
+    maximumTrackDisabled: {
         ...Platform.select({
+            ios: { backgroundColor: blueLighter },
+            android: { backgroundColor: "#EEE" }
+        })
+    },
+    thumb: {
+        ...Platform.select({
+            ios: {
+                height: 30,
+                width: 30,
+                borderRadius: 30,
+                borderWidth: 1,
+                borderColor: "#DDDDDD",
+                backgroundColor: "#FFFFFF",
+                shadowColor: "#000000",
+                shadowOffset: { width: 0, height: 3 },
+                shadowRadius: 1,
+                shadowOpacity: 0.2
+            },
             android: {
-                borderColor: purple,
+                height: 12,
+                width: 12,
+                borderRadius: 12,
                 backgroundColor: purple
             }
         })
     },
-    markerDisabled: {
+    thumbActive: {
+        ...Platform.select({
+            android: {
+                height: 20,
+                width: 20,
+                borderRadius: 20,
+                borderWidth: 5,
+                borderColor: purpleLightest,
+                backgroundColor: purple
+            }
+        })
+    },
+    thumbDisabled: {
         ...Platform.select({
             ios: {
                 backgroundColor: "#FFF",
@@ -59,14 +94,6 @@ export const defaultRangeSliderStyle: RangeSliderStyle = {
             android: {
                 elevation: 0,
                 backgroundColor: "#AAA"
-            }
-        })
-    },
-    markerActive: {
-        ...Platform.select({
-            android: {
-                borderWidth: 5,
-                borderColor: purpleLightest
             }
         })
     },
