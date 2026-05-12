@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.1.2] - 2026-5-12
+
 ### Fixed
 
 -   We fixed an issue with the TalkBack/VoiceOver traversal in the IntroScreen widget, where the order was not correct.
