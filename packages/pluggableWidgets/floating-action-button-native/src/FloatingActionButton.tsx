@@ -193,6 +193,7 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
                                     },
                                     secondaryLabelHorizontal
                                 ]}
+                                pointerEvents="none"
                             >
                                 <Text numberOfLines={1} style={styles.secondaryButtonCaption}>
                                     {button.caption.value}

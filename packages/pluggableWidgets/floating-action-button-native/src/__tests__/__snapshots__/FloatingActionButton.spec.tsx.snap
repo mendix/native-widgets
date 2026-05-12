@@ -96,6 +96,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
     <View
       collapsable={false}
+      pointerEvents="none"
       style={
         {
           "alignItems": "flex-end",
@@ -204,6 +205,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
     <View
       collapsable={false}
+      pointerEvents="none"
       style={
         {
           "alignItems": "flex-end",
@@ -312,6 +314,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
     <View
       collapsable={false}
+      pointerEvents="none"
       style={
         {
           "alignItems": "flex-end",

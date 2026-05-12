@@ -12,6 +12,7 @@ appId: "${APP_ID}"
     text: "Music w/ action"
 - tapOn:
     id: "floatingActionButtonBottomLeft"
+- waitForAnimationToEnd
 - assertVisible:
     text: "Zooooom"
 - tapOn:
