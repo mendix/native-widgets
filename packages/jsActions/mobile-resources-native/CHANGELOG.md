@@ -6,9 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [10.1.17] Native Mobile Resources - 2026-5-12
 ### Changed
 
 -   We replaced the depricated CameraRoll.saveToCameraRoll with CameraRoll.saveAsset in SaveToPictureLibrary activity.
+
+## [3.4.1] Feedback
+### Added
+
+-   Translation support for all widget text through configurable properties in Studio Pro.
+-   Visible label above feedback input field to ensure WCAG compliance.
+
+### Fixed
+
+-   Fixed logo overlap issue where custom logo appeared on top of default icon instead of replacing it.
+
+## [4.1.2] IntroScreen
+### Fixed
+
+-   We fixed an issue with the TalkBack/VoiceOver traversal in the IntroScreen widget, where the order was not correct.
 
 ## [10.1.16] Native Mobile Resources - 2026-3-14
 

@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.4.1] - 2026-5-12
+
 ### Added
 
 -   Translation support for all widget text through configurable properties in Studio Pro.
