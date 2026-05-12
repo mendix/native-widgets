@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [7.0.0] Nanoflow Commons - 2026-5-12
+
 ### Changed
 
 -   Updated @react-native-async-storage/async-storage from version v2.0.0 to v2.2.0.
