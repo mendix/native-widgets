@@ -1,9 +1,9 @@
 import { createElement } from "react";
-import { render } from "@testing-library/react-native";
+import { render, act } from "@testing-library/react-native";
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
-import { View } from "react-native";
+import { InteractionManager, View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
@@ -13,9 +13,12 @@ jest.mock("react-native-device-info", () => ({
 }));
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
-    getItem: jest.fn().mockResolvedValue("gone"),
-    setValue: jest.fn().mockResolvedValue(null)
+    getItem: jest.fn().mockResolvedValue(null),
+    setItem: jest.fn().mockResolvedValue(null)
 }));
+
+const flushInteractions = (): Promise<void> =>
+    act(() => new Promise<void>(resolve => InteractionManager.runAfterInteractions(resolve)));
 
 describe("Intro Screen", () => {
     let defaultProps: IntroScreenProps<IntroScreenStyle>;
@@ -36,39 +39,42 @@ describe("Intro Screen", () => {
             hideIndicatorLastSlide: false,
             identifier: ""
         };
-
-        jest.useFakeTimers();
     });
 
-    it("renders", () => {
+    it("renders", async () => {
         const component = render(<IntroScreen {...defaultProps} />);
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with 1 bottom button", () => {
+    it("renders with 1 bottom button", async () => {
         const component = render(
             <IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"nextDone"} />
         );
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with 2 bottom button", () => {
+    it("renders with 2 bottom button", async () => {
         const component = render(<IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"all"} />);
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with active slide attribute", () => {
+    it("renders with active slide attribute", async () => {
         const component = render(
             <IntroScreen
                 {...defaultProps}
                 activeSlideAttribute={new EditableValueBuilder<Big>().withValue(new Big(1)).build()}
             />
         );
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 
-    it("renders with async storage identifier", () => {
+    it("renders with async storage identifier", async () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
+        await flushInteractions();
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
