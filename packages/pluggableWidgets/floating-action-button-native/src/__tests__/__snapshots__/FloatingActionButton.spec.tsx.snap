@@ -99,11 +99,9 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       pointerEvents="none"
       style={
         {
-          "alignItems": "flex-end",
           "bottom": 30,
           "height": 40,
           "justifyContent": "center",
-          "marginHorizontal": 15,
           "opacity": 0,
           "position": "absolute",
           "right": 92,
@@ -116,12 +114,20 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         }
       }
     >
-      <Text
-        numberOfLines={1}
-        style={{}}
+      <View
+        style={
+          {
+            "marginHorizontal": 15,
+          }
+        }
       >
-        caption1
-      </Text>
+        <Text
+          numberOfLines={1}
+          style={{}}
+        >
+          caption1
+        </Text>
+      </View>
     </View>
   </View>
   <View
@@ -208,11 +214,9 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       pointerEvents="none"
       style={
         {
-          "alignItems": "flex-end",
           "bottom": 30,
           "height": 40,
           "justifyContent": "center",
-          "marginHorizontal": 15,
           "opacity": 0,
           "position": "absolute",
           "right": 92,
@@ -225,12 +229,20 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         }
       }
     >
-      <Text
-        numberOfLines={1}
-        style={{}}
+      <View
+        style={
+          {
+            "marginHorizontal": 15,
+          }
+        }
       >
-        caption2
-      </Text>
+        <Text
+          numberOfLines={1}
+          style={{}}
+        >
+          caption2
+        </Text>
+      </View>
     </View>
   </View>
   <View
@@ -317,11 +329,9 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       pointerEvents="none"
       style={
         {
-          "alignItems": "flex-end",
           "bottom": 30,
           "height": 40,
           "justifyContent": "center",
-          "marginHorizontal": 15,
           "opacity": 0,
           "position": "absolute",
           "right": 92,
@@ -334,12 +344,20 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         }
       }
     >
-      <Text
-        numberOfLines={1}
-        style={{}}
+      <View
+        style={
+          {
+            "marginHorizontal": 15,
+          }
+        }
       >
-        caption3
-      </Text>
+        <Text
+          numberOfLines={1}
+          style={{}}
+        >
+          caption3
+        </Text>
+      </View>
     </View>
   </View>
   <View

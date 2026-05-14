@@ -180,7 +180,6 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
                         {button.caption?.value && (
                             <Animated.View
                                 style={[
-                                    styles.secondaryButtonCaptionContainer,
                                     {
                                         position: "absolute",
                                         opacity,
@@ -188,16 +187,17 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
                                         top: buttonTop,
                                         bottom: buttonBottom,
                                         height: secondaryButtonSize,
-                                        justifyContent: "center",
-                                        alignItems: labelOnRight ? "flex-start" : "flex-end"
+                                        justifyContent: "center"
                                     },
                                     secondaryLabelHorizontal
                                 ]}
                                 pointerEvents="none"
                             >
-                                <Text numberOfLines={1} style={styles.secondaryButtonCaption}>
-                                    {button.caption.value}
-                                </Text>
+                                <View style={styles.secondaryButtonCaptionContainer}>
+                                    <Text numberOfLines={1} style={styles.secondaryButtonCaption}>
+                                        {button.caption.value}
+                                    </Text>
+                                </View>
                             </Animated.View>
                         )}
                     </View>
