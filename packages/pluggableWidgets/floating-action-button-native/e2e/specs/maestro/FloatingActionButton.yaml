@@ -12,6 +12,8 @@ appId: "${APP_ID}"
     text: "Music w/ action"
 - tapOn:
     id: "floatingActionButtonBottomLeft"
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/floating_action_test"
 - assertVisible:
     text: "Zooooom"
 - tapOn:
