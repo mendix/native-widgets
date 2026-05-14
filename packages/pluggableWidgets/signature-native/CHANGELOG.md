@@ -6,8 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   Added direct image upload to System.Image object using the `imageSource` property with `allowUpload` enabled
+-   Added optional `hasSignatureAttribute` Boolean attribute to track whether a signature has been captured or cleared
+
 ### Changed
 
+-   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
+-   Removed `imageAttribute` property in favor of unified `imageSource` property
 -   Updated react-native-webview from version v13.13.2 to v13.16.1.
 
 ## [2.3.0] - 2025-7-7

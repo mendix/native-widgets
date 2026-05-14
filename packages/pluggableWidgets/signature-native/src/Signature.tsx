@@ -10,6 +10,12 @@ import { SignatureStyle, defaultSignatureStyle, webStyles } from "./ui/Styles";
 
 export type Props = SignatureProps<SignatureStyle>;
 
+async function dataUriToFile(dataUri: string): Promise<File> {
+    const response = await fetch(dataUri);
+    const blob = await response.blob();
+    return new File([blob], `signature_${Date.now()}.png`, { type: "image/png", lastModified: Date.now() });
+}
+
 export function Signature(props: Props): ReactElement {
     const ref = useRef<SignatureViewRef>(null);
     const styles = mergeNativeStyles(defaultSignatureStyle, props.style);
@@ -28,11 +34,22 @@ export function Signature(props: Props): ReactElement {
     const buttonCaptionSave = props.buttonCaptionSave?.value ?? "Save";
 
     const handleSignature = useCallback(
-        (base64signature: string): void => {
-            props.imageAttribute.setValue(base64signature);
-            executeAction(props.onSave);
+        async (dataUri: string): Promise<void> => {
+            try {
+                /*
+                if (props.imageSource.status !== "available" || props.imageSource.readOnly) {
+                 return;
+                } This check needs to add once the EditableImageValue<NativeImage> is released from widget tools
+                */
+                const blob = await dataUriToFile(dataUri);
+                (props.imageSource as any)?.setValue(blob); // as any hack needs to remove once the EditableImageValue<NativeImage> is released from widget tools
+                props.hasSignatureAttribute?.setValue(true);
+                executeAction(props.onSignEndAction);
+            } catch (error) {
+                console.error("Signature: failed to save image", error);
+            }
         },
-        [props.imageAttribute, props.onSave]
+        [props.imageSource, props.hasSignatureAttribute, props.onSignEndAction]
     );
 
     return (
@@ -43,7 +60,10 @@ export function Signature(props: Props): ReactElement {
                 onEmpty={() => executeAction(props.onEmpty)}
                 onEnd={() => executeAction(props.onEnd)}
                 onOK={handleSignature}
-                onClear={() => executeAction(props.onClear)}
+                onClear={() => {
+                    props.hasSignatureAttribute?.setValue(false);
+                    executeAction(props.onClear);
+                }}
                 webStyle={webStyles}
                 {...signatureProps}
             />
