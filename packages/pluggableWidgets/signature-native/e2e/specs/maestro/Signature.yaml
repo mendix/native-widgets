@@ -20,6 +20,6 @@ appId: "${APP_ID}"
     text: "Save"
 - extendedWaitUntil:
     visible: 
-        text: "Base64"
+        text: "Name"
     timeout: 30000
     optional: true
