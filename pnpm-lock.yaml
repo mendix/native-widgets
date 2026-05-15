@@ -151,8 +151,8 @@ importers:
         specifier: 20.1.0
         version: 20.1.0(@react-native-firebase/app@20.1.0(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4))(react@19.2.4))
       '@sbaiahmed1/react-native-biometrics':
-        specifier: 0.10.0
-        version: 0.10.0(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4))(react@19.2.4)
+        specifier: 0.15.0
+        version: 0.15.0(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4))(react@19.2.4)
       '@swan-io/react-native-browser':
         specifier: 1.0.1
         version: 1.0.1(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4))(react@19.2.4)
@@ -2682,8 +2682,8 @@ packages:
       rollup:
         optional: true
 
-  '@sbaiahmed1/react-native-biometrics@0.10.0':
-    resolution: {integrity: sha512-GGmy0YD3/C8RhP1eUaRu/o25c9GK/6J/Ua8TJxtKh83Tfie+3Lo+tes4Jy3S5/HWReY07O4iVETXnpLeSNnmQQ==}
+  '@sbaiahmed1/react-native-biometrics@0.15.0':
+    resolution: {integrity: sha512-z/CWCcQZWGj8WRSsxu8flNydLAOS33Cv9tFPY4EuUm7Z47ADxjenoi/RFWNmJEQ5dIbGYC+q8WyzP0yWebawQA==}
     peerDependencies:
       react: 19.2.4
       react-native: 0.83.3
@@ -10429,7 +10429,7 @@ snapshots:
     optionalDependencies:
       rollup: 3.30.0
 
-  '@sbaiahmed1/react-native-biometrics@0.10.0(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4))(react@19.2.4)':
+  '@sbaiahmed1/react-native-biometrics@0.15.0(react-native@0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-native: 0.83.3(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@types/react@19.2.14)(react@19.2.4)
