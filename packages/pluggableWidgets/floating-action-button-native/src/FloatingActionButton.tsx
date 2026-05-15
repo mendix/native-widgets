@@ -94,7 +94,6 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
         top: 0,
         bottom: 0,
         direction: "ltr",
-        zIndex: 999,
         pointerEvents: "box-none"
     };
 
@@ -126,6 +125,8 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
                     outputRange: [0, yOffset]
                 });
 
+                // For bottom FABs, use top positioning with translated offset
+                // This ensures proper rendering when multiple FABs are on screen
                 const buttonTop = props.verticalPosition === "top" ? margin : undefined;
                 const buttonBottom = props.verticalPosition === "bottom" ? margin : undefined;
 
@@ -141,7 +142,8 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
                                     top: buttonTop,
                                     bottom: buttonBottom,
                                     width: secondaryButtonSize,
-                                    height: secondaryButtonSize
+                                    height: secondaryButtonSize,
+                                    zIndex: 100
                                 },
                                 secondaryButtonHorizontal
                             ]}
@@ -187,7 +189,8 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
                                         top: buttonTop,
                                         bottom: buttonBottom,
                                         height: secondaryButtonSize,
-                                        justifyContent: "center"
+                                        justifyContent: "center",
+                                        zIndex: 100
                                     },
                                     secondaryLabelHorizontal
                                 ]}
@@ -212,7 +215,8 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
                         top: mainButtonTop,
                         bottom: mainButtonBottom,
                         width: mainButtonSize,
-                        height: mainButtonSize
+                        height: mainButtonSize,
+                        zIndex: 200
                     },
                     mainButtonHorizontal
                 ]}

@@ -12,12 +12,12 @@ appId: "${APP_ID}"
     text: "Music w/ action"
 - tapOn:
     id: "floatingActionButtonBottomLeft"
-# - assertVisible:
-#     text: "Zooooom"
+- assertVisible:
+    text: "Zooooom"
 - tapOn:
     id: "floatingActionButtonBottomRight"
-# - assertVisible:
-#     text: "Email"
+- assertVisible:
+    text: "Email"
 - tapOn:
     id: "floatingActionButtonTopRight"
 - takeScreenshot:

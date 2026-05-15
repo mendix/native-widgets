@@ -11,7 +11,6 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       "position": "absolute",
       "right": 0,
       "top": 0,
-      "zIndex": 999,
     }
   }
 >
@@ -34,6 +33,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
             },
           ],
           "width": 40,
+          "zIndex": 100,
         }
       }
     >
@@ -111,6 +111,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
               "translateY": 0,
             },
           ],
+          "zIndex": 100,
         }
       }
     >
@@ -149,6 +150,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
             },
           ],
           "width": 40,
+          "zIndex": 100,
         }
       }
     >
@@ -226,6 +228,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
               "translateY": 0,
             },
           ],
+          "zIndex": 100,
         }
       }
     >
@@ -264,6 +267,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
             },
           ],
           "width": 40,
+          "zIndex": 100,
         }
       }
     >
@@ -341,6 +345,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
               "translateY": 0,
             },
           ],
+          "zIndex": 100,
         }
       }
     >
@@ -369,6 +374,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
           "position": "absolute",
           "top": undefined,
           "width": 54,
+          "zIndex": 200,
         },
         {
           "right": 30,
@@ -465,7 +471,6 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
       "position": "absolute",
       "right": 0,
       "top": 0,
-      "zIndex": 999,
     }
   }
 >
@@ -478,6 +483,7 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
           "position": "absolute",
           "top": undefined,
           "width": 54,
+          "zIndex": 200,
         },
         {
           "right": 30,
@@ -574,7 +580,6 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
       "position": "absolute",
       "right": 0,
       "top": 0,
-      "zIndex": 999,
     }
   }
 >
@@ -587,6 +592,7 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
           "position": "absolute",
           "top": undefined,
           "width": 54,
+          "zIndex": 200,
         },
         {
           "right": 30,
@@ -683,7 +689,6 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
       "position": "absolute",
       "right": 0,
       "top": 0,
-      "zIndex": 999,
     }
   }
 >
@@ -696,6 +701,7 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
           "position": "absolute",
           "top": 30,
           "width": 54,
+          "zIndex": 200,
         },
         {
           "right": 30,
