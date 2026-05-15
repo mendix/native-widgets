@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [12.0.0] Native Mobile Resources - 2026-5-15
+
 ### Changed
 
 -   We replaced the deprecated CameraRoll.saveToCameraRoll with CameraRoll.saveAsset in SaveToPictureLibrary activity.
@@ -18,6 +20,89 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native-file-viewer-turbo from version v0.6.0 to v0.7.4.
 -   Updated react-native-localize from version v3.2.1 to v3.7.0.
 -   Updated react-native-permissions from version v5.4.2 to v5.5.1.
+
+## [5.1.0] AppEvents
+
+### Changed
+
+-   Updated @react-native-community/netinfo from version v11.4.1 to v11.5.2.
+
+## [3.6.0] Feedback
+
+### Changed
+
+-   Replaced the deprecated InteractionManager in Feedback widget.
+
+### Added
+
+-   Translation support for all widget text through configurable properties in Studio Pro.
+-   Visible label above feedback input field to ensure WCAG compliance.
+
+### Fixed
+
+-   Fixed logo overlap issue where custom logo appeared on top of default icon instead of replacing it.
+
+## [2.1.0] GalleryTextFilter
+
+### Changed
+
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
+## [3.1.0] Image
+
+### Changed
+
+-   Updated @d11/react-native-fast-image from version v8.11.1 to v8.13.0.
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
+## [4.4.0] IntroScreen
+
+### Fixed
+
+-   We fixed an issue with the TalkBack/VoiceOver traversal in the IntroScreen widget, where the order was not correct.
+
+## [3.4.0] ListViewSwipe
+
+### Changed
+
+-   Updated react-native-gesture-handler from version v2.24.0 to v2.30.0.
+
+## [5.2.0] Maps
+
+### Changed
+
+-   Updated react-native-maps from version v1.14.0 to v1.20.1.
+
+## [4.1.0] QRCode
+
+### Changed
+
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
+## [3.2.0] SafeAreaView
+
+### Changed
+
+-   Updated @react-navigation/bottom-tabs from version v6.6.1 to v7.15.2.
+-   Updated react-native-safe-area-context from version v5.2.0 to v5.7.0.
+
+## [2.4.0] Signature
+
+### Changed
+
+-   Updated react-native-webview from version v13.13.2 to v13.16.1.
+
+## [6.4.0] VideoPlayer
+
+### Changed
+
+-   Updated react-native-video from version v6.10.2 to v6.19.0.
+
+## [4.4.0] WebView
+
+### Changed
+
+-   Updated react-native-webview from version v13.13.2 to v13.16.1.
 
 ## [11.4.1] Native Mobile Resources - 2026-3-14
 

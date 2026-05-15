@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-5-15
+
 ### Changed
 
 -   Updated @react-navigation/bottom-tabs from version v6.6.1 to v7.15.2.
