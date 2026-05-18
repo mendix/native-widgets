@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+-   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
+
 ## [3.1.0] - 2026-5-15
 
 ### Changed
