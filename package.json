@@ -43,7 +43,7 @@
     "@actions/core": "^1.11.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@react-native/babel-preset": "0.83.4",
+    "@react-native/babel-preset": "0.84.1",
     "@testing-library/react-native": "^13.3.3",
     "@types/big.js": "^6.2.2",
     "@types/concurrently": "^6.4.0",
@@ -66,7 +66,7 @@
     "pixelmatch": "^5.3.0",
     "pngjs": "^6.0.0",
     "pretty-quick": "^3.3.1",
-    "react-dom": "19.2.4",
+    "react-dom": "19.2.3",
     "recursive-copy": "^2.0.14",
     "ts-node": "^10.9.2"
   },
@@ -76,23 +76,23 @@
     ]
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.11"
   },
   "pnpm": {
     "overrides": {
       "@mendix/pluggable-widgets-tools": "11.8.0",
       "@rollup/plugin-typescript": "12.3.0",
       "mendix": "11.8.0",
-      "react": "19.2.4",
-      "react-dom": "19.2.4",
-      "react-native": "0.83.3",
+      "react": "19.2.3",
+      "react-dom": "19.2.3",
+      "react-native": "0.84.1",
       "@types/react": "~19.2.14",
       "@types/react-dom": "~19.2.3",
       "@prettier/plugin-xml": "2.2.0",
       "cheerio": "1.0.0-rc.12",
       "typescript": "~5.9.3",
       "rollup": "3.30.0",
-      "react-test-renderer": "19.2.4",
+      "react-test-renderer": "19.2.3",
       "@xmldom/xmldom": ">=0.8.13",
       "flatted": ">=3.4.2",
       "immutable": ">=5.1.5",
@@ -107,7 +107,7 @@
       "@mendix/pluggable-widgets-tools@11.8.0": "patches/@mendix+pluggable-widgets-tools+11.8.0.patch",
       "@ptomasroos/react-native-multi-slider@1.0.0": "patches/@ptomasroos+react-native-multi-slider+1.0.0.patch",
       "react-native-action-button@2.8.5": "patches/react-native-action-button+2.8.5.patch",
-      "react-native-gesture-handler@2.30.0": "patches/react-native-gesture-handler+2.30.0.patch",
+      "react-native-gesture-handler@2.31.2": "patches/react-native-gesture-handler+2.31.2.patch",
       "react-native-slider@0.11.0": "patches/react-native-slider+0.11.0.patch",
       "react-native-snap-carousel@3.9.1": "patches/react-native-snap-carousel+3.9.1.patch",
       "react-native-track-player@4.1.2": "patches/react-native-track-player@4.1.2.patch"
