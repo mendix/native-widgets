@@ -1,251 +1,362 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
+import { executeAction } from "@mendix/piw-utils-internal";
 import { Icon } from "mendix/components/native/Icon";
-import { ReactElement, useState, useRef, useEffect } from "react";
-import { View, TouchableOpacity, Text, ViewStyle, Animated } from "react-native";
+import { Component, JSX } from "react";
+import { Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
+import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { FloatingActionButtonProps } from "../typings/FloatingActionButtonProps";
 import { defaultFloatingActionButtonStyle, FloatingActionButtonStyle } from "./ui/styles";
-import { executeAction } from "@mendix/piw-utils-internal";
+
+interface State {
+    active: boolean;
+}
 
 const defaultIconSource = { type: "glyph", iconClass: "glyphicon-plus" } as const;
 const defaultActiveIconSource = { type: "glyph", iconClass: "glyphicon-remove" } as const;
+const SECONDARY_GAP = 16;
 
-export function FloatingActionButton(props: FloatingActionButtonProps<FloatingActionButtonStyle>): ReactElement {
-    const [isOpen, setIsOpen] = useState(false);
+interface AnimatedMainIconProps {
+    active: boolean;
+    hasSecondaryButtons: boolean;
+    style: FloatingActionButtonStyle;
+    icon: FloatingActionButtonProps<FloatingActionButtonStyle>["icon"];
+    iconActive: FloatingActionButtonProps<FloatingActionButtonStyle>["iconActive"];
+}
 
-    const styles = flattenStyles(defaultFloatingActionButtonStyle, props.style);
-    const animation = useRef(new Animated.Value(0)).current;
+function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
+    const { active, hasSecondaryButtons, style, icon, iconActive } = props;
 
-    useEffect(() => {
-        Animated.spring(animation, {
-            toValue: isOpen ? 1 : 0,
-            friction: 7,
-            tension: 40,
-            useNativeDriver: true
-        }).start();
-    }, [isOpen, animation]);
-
-    const iconRotation = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0deg", "180deg"]
+    const progress = useSharedValue(active && hasSecondaryButtons ? 1 : 0);
+    progress.value = withTiming(active && hasSecondaryButtons ? 1 : 0, {
+        duration: 200,
+        easing: Easing.out(Easing.ease)
     });
 
-    const handlePress = (): void => {
-        if (props.secondaryButtons?.length > 0) {
-            setIsOpen(!isOpen);
-        } else {
-            executeAction(props.onClick);
-        }
-    };
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [
+            {
+                rotate: `${interpolate(progress.value, [0, 1], [0, -180])}deg`
+            }
+        ]
+    }));
 
-    const margin = (styles.container.margin as number) ?? 30;
-    const mainButtonSize = styles.button.size ?? 54;
-    const secondaryButtonSize = styles.secondaryButton.size ?? 40;
-
-    const isVerticalUp = props.verticalPosition === "bottom";
-    const verticalDirection = isVerticalUp ? -1 : 1;
-    const secondaryButtonGap = 20;
-    const mainToFirstButtonGap = secondaryButtonGap;
-    const firstButtonOffset = mainButtonSize / 2 + secondaryButtonSize / 2 + mainToFirstButtonGap;
-    const buttonSpacing = secondaryButtonSize + secondaryButtonGap;
-
-    const labelOnRight = props.horizontalPosition === "left";
-    const captionSpacing = (styles.secondaryButtonCaptionContainer.marginHorizontal as number) ?? 15;
-
-    // Horizontal positioning using edge-relative styles instead of pixel offsets
-    const getHorizontalPosition = (buttonSize: number): ViewStyle => {
-        const centerAlignmentOffset = (mainButtonSize - buttonSize) / 2;
-
-        switch (props.horizontalPosition) {
-            case "left":
-                return { left: margin + centerAlignmentOffset };
-            case "right":
-                return { right: margin + centerAlignmentOffset };
-            case "center":
-            default:
-                return { left: "50%", marginLeft: -buttonSize / 2 };
-        }
-    };
-
-    const mainButtonHorizontal = getHorizontalPosition(mainButtonSize);
-    const secondaryButtonHorizontal = getHorizontalPosition(secondaryButtonSize);
-    const secondaryCenterAlignmentOffset = (mainButtonSize - secondaryButtonSize) / 2;
-
-    const getLabelHorizontalPosition = (): ViewStyle => {
-        switch (props.horizontalPosition) {
-            case "left":
-                return { left: margin + secondaryCenterAlignmentOffset + secondaryButtonSize + captionSpacing };
-            case "right":
-                return { right: margin + secondaryCenterAlignmentOffset + secondaryButtonSize + captionSpacing };
-            case "center":
-            default:
-                return labelOnRight
-                    ? { left: "50%", marginLeft: secondaryButtonSize / 2 + captionSpacing }
-                    : { right: "50%", marginRight: secondaryButtonSize / 2 + captionSpacing };
-        }
-    };
-
-    const secondaryLabelHorizontal = getLabelHorizontalPosition();
-
-    const containerStyle: ViewStyle = {
-        position: "absolute",
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        direction: "ltr",
-        pointerEvents: "box-none"
-    };
-
-    const mainButtonTop = props.verticalPosition === "top" ? margin : undefined;
-    const mainButtonBottom = props.verticalPosition === "bottom" ? margin : undefined;
-
-    const currentIcon = (() => {
-        const shouldShowActive = isOpen && props.secondaryButtons.length > 0;
-        return shouldShowActive
-            ? props.iconActive?.value || defaultActiveIconSource
-            : props.icon?.value || defaultIconSource;
-    })();
+    const iconSource = icon?.value ? icon.value : defaultIconSource;
+    const activeIconSource = iconActive?.value ? iconActive.value : defaultActiveIconSource;
+    const source = active && hasSecondaryButtons ? activeIconSource : iconSource;
 
     return (
-        <View style={containerStyle}>
-            {/* Secondary buttons */}
-            {props.secondaryButtons?.map((button, index) => {
-                const yOffset = verticalDirection * (firstButtonOffset + index * buttonSpacing);
-                const staggerDelay = Math.min(index * 0.08, 0.4);
-
-                const opacity = animation.interpolate({
-                    inputRange: [0, staggerDelay, Math.min(staggerDelay + 0.2, 1)],
-                    outputRange: [0, 0, 1],
-                    extrapolate: "clamp"
-                });
-
-                const translateY = animation.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, yOffset]
-                });
-
-                // For bottom FABs, use top positioning with translated offset
-                // This ensures proper rendering when multiple FABs are on screen
-                const buttonTop = props.verticalPosition === "top" ? margin : undefined;
-                const buttonBottom = props.verticalPosition === "bottom" ? margin : undefined;
-
-                return (
-                    <View key={`button${index}`} pointerEvents="box-none">
-                        {/* Button */}
-                        <Animated.View
-                            style={[
-                                {
-                                    position: "absolute",
-                                    opacity,
-                                    transform: [{ translateY }],
-                                    top: buttonTop,
-                                    bottom: buttonBottom,
-                                    width: secondaryButtonSize,
-                                    height: secondaryButtonSize,
-                                    zIndex: 100
-                                },
-                                secondaryButtonHorizontal
-                            ]}
-                        >
-                            <TouchableOpacity
-                                testID={`${props.name}$button${index}`}
-                                accessibilityRole="button"
-                                accessibilityLabel={button.caption?.value}
-                                style={[
-                                    styles.secondaryButton,
-                                    {
-                                        width: secondaryButtonSize,
-                                        height: secondaryButtonSize,
-                                        borderRadius: secondaryButtonSize / 2,
-                                        justifyContent: "center",
-                                        alignItems: "center"
-                                    }
-                                ]}
-                                onPress={() => {
-                                    setIsOpen(false);
-                                    executeAction(button.onClick);
-                                }}
-                                activeOpacity={0.2}
-                            >
-                                {button.icon.value && (
-                                    <Icon
-                                        icon={button.icon.value}
-                                        size={styles.secondaryButtonIcon.size}
-                                        color={styles.secondaryButtonIcon.color}
-                                    />
-                                )}
-                            </TouchableOpacity>
-                        </Animated.View>
-
-                        {/* Label */}
-                        {button.caption?.value && (
-                            <Animated.View
-                                style={[
-                                    {
-                                        position: "absolute",
-                                        opacity,
-                                        transform: [{ translateY }],
-                                        top: buttonTop,
-                                        bottom: buttonBottom,
-                                        height: secondaryButtonSize,
-                                        justifyContent: "center",
-                                        zIndex: 100
-                                    },
-                                    secondaryLabelHorizontal
-                                ]}
-                                pointerEvents="none"
-                            >
-                                <View style={styles.secondaryButtonCaptionContainer}>
-                                    <Text numberOfLines={1} style={styles.secondaryButtonCaption}>
-                                        {button.caption.value}
-                                    </Text>
-                                </View>
-                            </Animated.View>
-                        )}
-                    </View>
-                );
-            })}
-
-            {/* Main FAB button */}
-            <View
-                style={[
-                    {
-                        position: "absolute",
-                        top: mainButtonTop,
-                        bottom: mainButtonBottom,
-                        width: mainButtonSize,
-                        height: mainButtonSize,
-                        zIndex: 200
-                    },
-                    mainButtonHorizontal
-                ]}
-            >
-                <TouchableOpacity
-                    testID={props.name}
-                    accessibilityRole="button"
-                    accessibilityLabel="Floating action button"
-                    accessibilityState={{ expanded: isOpen }}
-                    onPress={handlePress}
-                    activeOpacity={0.2}
-                    style={[
-                        styles.button,
-                        styles.buttonContainer,
-                        {
-                            width: mainButtonSize,
-                            height: mainButtonSize,
-                            borderRadius: mainButtonSize / 2
-                        }
-                    ]}
-                >
-                    <Animated.View
-                        testID={`${props.name}$IconView`}
-                        style={[styles.buttonIconContainer, { transform: [{ rotate: iconRotation }] }]}
-                    >
-                        <Icon icon={currentIcon} size={styles.buttonIcon.size} color={styles.buttonIcon.color} />
-                    </Animated.View>
-                </TouchableOpacity>
-            </View>
+        <View testID={"FloatingAction$IconView"} style={[style.button, style.buttonContainer]}>
+            <Animated.View style={[style.buttonIconContainer, animatedStyle]}>
+                <Icon icon={source} size={style.buttonIcon.size} color={style.buttonIcon.color} />
+            </Animated.View>
         </View>
     );
 }
+
+interface SecondaryActionItemProps {
+    active: boolean;
+    index: number;
+    direction: "up" | "down";
+    horizontalPosition: "left" | "right" | "center";
+    name: string;
+    button: FloatingActionButtonProps<FloatingActionButtonStyle>["secondaryButtons"][number];
+    style: FloatingActionButtonStyle;
+    mainButtonSize: number;
+    secondaryButtonSize: number;
+    onPress: () => void;
+}
+
+function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
+    const {
+        active,
+        index,
+        direction,
+        horizontalPosition,
+        name,
+        button,
+        style,
+        mainButtonSize,
+        secondaryButtonSize,
+        onPress
+    } = props;
+
+    const progress = useSharedValue(active ? 1 : 0);
+    progress.value = withTiming(active ? 1 : 0, {
+        duration: 200,
+        easing: Easing.out(Easing.ease)
+    });
+
+    const labelOnRight = horizontalPosition === "left";
+    const labelOnLeft = horizontalPosition === "right";
+
+    const animatedStyle = useAnimatedStyle(() => {
+        const centerToCenterDistance =
+            (mainButtonSize + secondaryButtonSize) / 2 + SECONDARY_GAP + index * (secondaryButtonSize + SECONDARY_GAP);
+
+        return {
+            opacity: progress.value,
+            transform: [
+                {
+                    translateY: interpolate(
+                        progress.value,
+                        [0, 1],
+                        [0, direction === "up" ? -centerToCenterDistance : centerToCenterDistance]
+                    )
+                },
+                { scale: interpolate(progress.value, [0, 1], [0.8, 1]) }
+            ]
+        };
+    });
+
+    const anchorStyle: ViewStyle = {
+        left: 0,
+        right: 0,
+        top: (mainButtonSize - secondaryButtonSize) / 2,
+        alignItems: "center"
+    };
+
+    return (
+        <Animated.View
+            pointerEvents={active ? "auto" : "none"}
+            style={[styles.secondaryAnchor, anchorStyle, animatedStyle]}
+        >
+            <View
+                style={[
+                    styles.secondaryRow,
+                    horizontalPosition === "left"
+                        ? styles.rowAlignLeft
+                        : horizontalPosition === "right"
+                        ? styles.rowAlignRight
+                        : styles.rowAlignCenter
+                ]}
+            >
+                {labelOnLeft && button.caption?.value ? (
+                    <View
+                        style={[
+                            styles.captionInlineContainer,
+                            styles.captionBeforeButton,
+                            style.secondaryButtonCaptionContainer
+                        ]}
+                    >
+                        <Text numberOfLines={1} style={[style.secondaryButtonCaption, styles.captionText]}>
+                            {button.caption.value}
+                        </Text>
+                    </View>
+                ) : null}
+
+                <Pressable
+                    testID={`${name}$button${index}`}
+                    onPress={onPress}
+                    style={({ pressed }) => [
+                        styles.secondaryButtonBase,
+                        style.secondaryButton,
+                        {
+                            width: secondaryButtonSize,
+                            height: secondaryButtonSize,
+                            borderRadius: secondaryButtonSize / 2,
+                            opacity: pressed ? 0.2 : 1
+                        }
+                    ]}
+                >
+                    {button.icon.value ? (
+                        <Icon
+                            icon={button.icon.value}
+                            size={style.secondaryButtonIcon.size}
+                            color={style.secondaryButtonIcon.color}
+                        />
+                    ) : null}
+                </Pressable>
+
+                {labelOnRight && button.caption?.value ? (
+                    <View
+                        style={[
+                            styles.captionInlineContainer,
+                            styles.captionAfterButton,
+                            style.secondaryButtonCaptionContainer
+                        ]}
+                    >
+                        <Text numberOfLines={1} style={[style.secondaryButtonCaption, styles.captionText]}>
+                            {button.caption.value}
+                        </Text>
+                    </View>
+                ) : null}
+            </View>
+        </Animated.View>
+    );
+}
+
+export class FloatingActionButton extends Component<FloatingActionButtonProps<FloatingActionButtonStyle>, State> {
+    readonly state: State = {
+        active: false
+    };
+
+    private readonly onPressHandler = this.onPress.bind(this);
+
+    render(): JSX.Element {
+        const style = flattenStyles(defaultFloatingActionButtonStyle, this.props.style);
+        const buttonStyle = { ...style.button };
+        delete buttonStyle.rippleColor;
+
+        const mainButtonSize = style.button.size ?? 54;
+        const secondaryButtonSize = style.secondaryButton.size ?? 40;
+        const horizontalPosition = this.props.horizontalPosition ?? "right";
+        const hasSecondaryButtons = !!this.props.secondaryButtons?.length;
+
+        return (
+            <View pointerEvents="box-none" style={[styles.wrapper, style.container, this.getPositionStyle()]}>
+                {this.renderButtons(style, mainButtonSize, secondaryButtonSize, horizontalPosition)}
+
+                <Pressable
+                    testID={this.props.name}
+                    onPress={this.onPressHandler}
+                    style={({ pressed }) => [
+                        styles.mainButtonBase,
+                        buttonStyle,
+                        {
+                            width: mainButtonSize,
+                            height: mainButtonSize,
+                            borderRadius: mainButtonSize / 2,
+                            opacity: pressed ? 0.2 : 1
+                        }
+                    ]}
+                >
+                    <AnimatedMainIcon
+                        active={this.state.active}
+                        hasSecondaryButtons={hasSecondaryButtons}
+                        style={style}
+                        icon={this.props.icon}
+                        iconActive={this.props.iconActive}
+                    />
+                </Pressable>
+            </View>
+        );
+    }
+
+    private renderButtons(
+        style: FloatingActionButtonStyle,
+        mainButtonSize: number,
+        secondaryButtonSize: number,
+        horizontalPosition: "left" | "right" | "center"
+    ): JSX.Element[] | undefined {
+        return this.props.secondaryButtons?.map((button, index) => (
+            <SecondaryActionItem
+                key={`button${index}`}
+                active={this.state.active}
+                index={index}
+                direction={this.verticalOrientation}
+                horizontalPosition={horizontalPosition}
+                name={this.props.name}
+                button={button}
+                style={style}
+                mainButtonSize={mainButtonSize}
+                secondaryButtonSize={secondaryButtonSize}
+                onPress={() => {
+                    this.setState({ active: false });
+                    executeAction(button.onClick);
+                }}
+            />
+        ));
+    }
+
+    private get verticalOrientation(): "up" | "down" {
+        switch (this.props.verticalPosition) {
+            case "bottom":
+                return "up";
+            case "top":
+                return "down";
+            default:
+                return "down";
+        }
+    }
+
+    private getPositionStyle(): ViewStyle {
+        const positionStyle: ViewStyle = {
+            position: "absolute",
+            left: 0,
+            right: 0,
+            zIndex: 999
+        };
+
+        switch (this.props.verticalPosition) {
+            case "bottom":
+                positionStyle.bottom = 0;
+                break;
+            case "top":
+            default:
+                positionStyle.top = 0;
+                break;
+        }
+
+        switch (this.props.horizontalPosition) {
+            case "left":
+                positionStyle.alignItems = "flex-start";
+                break;
+            case "center":
+                positionStyle.alignItems = "center";
+                break;
+            case "right":
+            default:
+                positionStyle.alignItems = "flex-end";
+                break;
+        }
+
+        return positionStyle;
+    }
+
+    private onPress(): void {
+        if (this.props.secondaryButtons?.length) {
+            // eslint-disable-next-line react/no-access-state-in-setstate
+            this.setState({ active: !this.state.active });
+            return;
+        }
+
+        executeAction(this.props.onClick);
+    }
+}
+
+const styles = StyleSheet.create({
+    wrapper: {
+        justifyContent: "flex-end"
+    },
+    mainButtonBase: {
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    secondaryAnchor: {
+        position: "absolute"
+    },
+    secondaryRow: {
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    rowAlignLeft: {
+        justifyContent: "flex-start"
+    },
+    rowAlignRight: {
+        justifyContent: "flex-end"
+    },
+    rowAlignCenter: {
+        justifyContent: "center"
+    },
+    secondaryButtonBase: {
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0
+    },
+    captionInlineContainer: {
+        flexShrink: 0
+    },
+    captionBeforeButton: {
+        marginRight: 8,
+        alignItems: "flex-end"
+    },
+    captionAfterButton: {
+        marginLeft: 8,
+        alignItems: "flex-start"
+    },
+    captionText: {
+        flexShrink: 0
+    }
+});

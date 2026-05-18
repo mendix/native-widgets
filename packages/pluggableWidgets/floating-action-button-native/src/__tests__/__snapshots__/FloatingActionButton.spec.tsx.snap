@@ -11,6 +11,7 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       "position": "absolute",
       "right": 0,
       "top": 0,
+      "zIndex": 1000,
     }
   }
 >
@@ -19,22 +20,60 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
   >
     <View
       collapsable={false}
-      style={
+      jestAnimatedProps={
         {
-          "bottom": 30,
-          "height": 40,
-          "opacity": 0,
-          "position": "absolute",
-          "right": 37,
-          "top": undefined,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
-          "width": 40,
-          "zIndex": 100,
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "position": "absolute",
+            "top": undefined,
+            "width": 40,
+            "zIndex": 100,
+          },
+          {
+            "right": 37,
+          },
+        ]
+      }
+      style={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "position": "absolute",
+            "top": undefined,
+            "width": 40,
+            "zIndex": 100,
+          },
+          {
+            "right": 37,
+          },
+          {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
       }
     >
       <View
@@ -96,23 +135,61 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
     <View
       collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "justifyContent": "center",
+            "position": "absolute",
+            "top": undefined,
+            "zIndex": 100,
+          },
+          {
+            "right": 92,
+          },
+        ]
+      }
       pointerEvents="none"
       style={
-        {
-          "bottom": 30,
-          "height": 40,
-          "justifyContent": "center",
-          "opacity": 0,
-          "position": "absolute",
-          "right": 92,
-          "top": undefined,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
-          "zIndex": 100,
-        }
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "justifyContent": "center",
+            "position": "absolute",
+            "top": undefined,
+            "zIndex": 100,
+          },
+          {
+            "right": 92,
+          },
+          {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
       }
     >
       <View
@@ -136,22 +213,60 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
   >
     <View
       collapsable={false}
-      style={
+      jestAnimatedProps={
         {
-          "bottom": 30,
-          "height": 40,
-          "opacity": 0,
-          "position": "absolute",
-          "right": 37,
-          "top": undefined,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
-          "width": 40,
-          "zIndex": 100,
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "position": "absolute",
+            "top": undefined,
+            "width": 40,
+            "zIndex": 100,
+          },
+          {
+            "right": 37,
+          },
+        ]
+      }
+      style={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "position": "absolute",
+            "top": undefined,
+            "width": 40,
+            "zIndex": 100,
+          },
+          {
+            "right": 37,
+          },
+          {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
       }
     >
       <View
@@ -213,23 +328,61 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
     <View
       collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "justifyContent": "center",
+            "position": "absolute",
+            "top": undefined,
+            "zIndex": 100,
+          },
+          {
+            "right": 92,
+          },
+        ]
+      }
       pointerEvents="none"
       style={
-        {
-          "bottom": 30,
-          "height": 40,
-          "justifyContent": "center",
-          "opacity": 0,
-          "position": "absolute",
-          "right": 92,
-          "top": undefined,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
-          "zIndex": 100,
-        }
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "justifyContent": "center",
+            "position": "absolute",
+            "top": undefined,
+            "zIndex": 100,
+          },
+          {
+            "right": 92,
+          },
+          {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
       }
     >
       <View
@@ -253,22 +406,60 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
   >
     <View
       collapsable={false}
-      style={
+      jestAnimatedProps={
         {
-          "bottom": 30,
-          "height": 40,
-          "opacity": 0,
-          "position": "absolute",
-          "right": 37,
-          "top": undefined,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
-          "width": 40,
-          "zIndex": 100,
+          "value": {},
         }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "position": "absolute",
+            "top": undefined,
+            "width": 40,
+            "zIndex": 100,
+          },
+          {
+            "right": 37,
+          },
+        ]
+      }
+      style={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "position": "absolute",
+            "top": undefined,
+            "width": 40,
+            "zIndex": 100,
+          },
+          {
+            "right": 37,
+          },
+          {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
       }
     >
       <View
@@ -330,23 +521,61 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
     <View
       collapsable={false}
+      jestAnimatedProps={
+        {
+          "value": {},
+        }
+      }
+      jestAnimatedStyle={
+        {
+          "value": {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        }
+      }
+      jestInlineStyle={
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "justifyContent": "center",
+            "position": "absolute",
+            "top": undefined,
+            "zIndex": 100,
+          },
+          {
+            "right": 92,
+          },
+        ]
+      }
       pointerEvents="none"
       style={
-        {
-          "bottom": 30,
-          "height": 40,
-          "justifyContent": "center",
-          "opacity": 0,
-          "position": "absolute",
-          "right": 92,
-          "top": undefined,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
-          "zIndex": 100,
-        }
+        [
+          {
+            "bottom": 30,
+            "height": 40,
+            "justifyContent": "center",
+            "position": "absolute",
+            "top": undefined,
+            "zIndex": 100,
+          },
+          {
+            "right": 92,
+          },
+          {
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          },
+        ]
       }
     >
       <View
@@ -437,17 +666,46 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     >
       <View
         collapsable={false}
-        style={
+        jestAnimatedProps={
           {
-            "alignItems": "center",
-            "flexShrink": 1,
-            "justifyContent": "center",
-            "transform": [
-              {
-                "rotate": "0deg",
-              },
-            ],
+            "value": {},
           }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+            {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          ]
         }
         testID="FloatingAction$IconView"
       >
@@ -471,6 +729,7 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
       "position": "absolute",
       "right": 0,
       "top": 0,
+      "zIndex": 1000,
     }
   }
 >
@@ -546,17 +805,46 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
     >
       <View
         collapsable={false}
-        style={
+        jestAnimatedProps={
           {
-            "alignItems": "center",
-            "flexShrink": 1,
-            "justifyContent": "center",
-            "transform": [
-              {
-                "rotate": "0deg",
-              },
-            ],
+            "value": {},
           }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+            {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          ]
         }
         testID="FloatingAction$IconView"
       >
@@ -580,6 +868,7 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
       "position": "absolute",
       "right": 0,
       "top": 0,
+      "zIndex": 1000,
     }
   }
 >
@@ -655,17 +944,46 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
     >
       <View
         collapsable={false}
-        style={
+        jestAnimatedProps={
           {
-            "alignItems": "center",
-            "flexShrink": 1,
-            "justifyContent": "center",
-            "transform": [
-              {
-                "rotate": "0deg",
-              },
-            ],
+            "value": {},
           }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+            {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          ]
         }
         testID="FloatingAction$IconView"
       >
@@ -689,6 +1007,7 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
       "position": "absolute",
       "right": 0,
       "top": 0,
+      "zIndex": 999,
     }
   }
 >
@@ -764,17 +1083,46 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
     >
       <View
         collapsable={false}
-        style={
+        jestAnimatedProps={
           {
-            "alignItems": "center",
-            "flexShrink": 1,
-            "justifyContent": "center",
-            "transform": [
-              {
-                "rotate": "0deg",
-              },
-            ],
+            "value": {},
           }
+        }
+        jestAnimatedStyle={
+          {
+            "value": {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          }
+        }
+        jestInlineStyle={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+            {
+              "transform": [
+                {
+                  "rotate": "0deg",
+                },
+              ],
+            },
+          ]
         }
         testID="FloatingAction$IconView"
       >
