@@ -6,6 +6,16 @@ import { actionValue, dynamicValue } from "@mendix/piw-utils-internal";
 import { NativeIcon } from "mendix";
 import { Icon } from "mendix/components/native/Icon";
 
+jest.mock("react-native-reanimated", () => {
+    const Reanimated = jest.requireActual("react-native-reanimated/lib/module/mock");
+
+    if (Reanimated?.default && typeof Reanimated.default === "object") {
+        Reanimated.default.call = () => undefined;
+    }
+
+    return Reanimated;
+});
+
 describe("FloatingActionButton", () => {
     let defaultProps: FloatingActionButtonProps<FloatingActionButtonStyle>;
     const secondaryButtons = [
