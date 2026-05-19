@@ -11,7 +11,7 @@
   "marketplace": {
     "name": "Native Mobile Resources",
     "description": "Download this module to access a rich set of widgets and nanoflow actions created for native mobile, including authentication, network, platform, and more. A must-have for native mobile development!",
-    "minimumMXVersion": "11.10.0",
+    "minimumMXVersion": "11.11.0",
     "marketplaceId": 109513
   },
   "testProject": {
