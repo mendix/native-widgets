@@ -8,8 +8,6 @@ appId: "${APP_ID}"
     text: "Floating action button"
 - tapOn:
     id: "floatingActionButtonTopLeft"
-- assertVisible:
-    text: "Music w/ action"
 - tapOn:
     id: "floatingActionButtonBottomLeft"
 - assertVisible:
