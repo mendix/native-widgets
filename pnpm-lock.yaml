@@ -152,8 +152,8 @@ importers:
         specifier: 20.1.0
         version: 20.1.0(@react-native-firebase/app@20.1.0(react-native@0.84.1(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.15)(react@19.2.3))(react@19.2.3))
       '@sbaiahmed1/react-native-biometrics':
-        specifier: 0.10.0
-        version: 0.10.0(react-native@0.84.1(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.15)(react@19.2.3))(react@19.2.3)
+        specifier: 0.15.0
+        version: 0.15.0(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3)
       '@swan-io/react-native-browser':
         specifier: 1.0.1
         version: 1.0.1(react-native@0.84.1(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.15)(react@19.2.3))(react@19.2.3)
@@ -2309,8 +2309,8 @@ packages:
       '@react-native-masked-view/masked-view':
         optional: true
 
-  '@react-navigation/native@7.2.4':
-    resolution: {integrity: sha512-eWC2D3JjhYLId2fVTZhhCiUpWIaPhO9XyEb7Wq8ElmOHyIODlbOzgZ0rKia02OIsDKr9BzZl2sK1dL70yMxDaw==}
+  '@react-navigation/native@6.1.18':
+    resolution: {integrity: sha512-mIT9MiL/vMm4eirLcmw2h6h/Nm5FICtnYSdohq4vTLA2FF/6PNhByM7s8ffqoVfE5L0uAa6Xda1B7oddolUiGg==}
     peerDependencies:
       react: 19.2.3
       react-native: 0.84.1
@@ -2416,8 +2416,8 @@ packages:
       rollup:
         optional: true
 
-  '@sbaiahmed1/react-native-biometrics@0.10.0':
-    resolution: {integrity: sha512-GGmy0YD3/C8RhP1eUaRu/o25c9GK/6J/Ua8TJxtKh83Tfie+3Lo+tes4Jy3S5/HWReY07O4iVETXnpLeSNnmQQ==}
+  '@sbaiahmed1/react-native-biometrics@0.15.0':
+    resolution: {integrity: sha512-z/CWCcQZWGj8WRSsxu8flNydLAOS33Cv9tFPY4EuUm7Z47ADxjenoi/RFWNmJEQ5dIbGYC+q8WyzP0yWebawQA==}
     peerDependencies:
       react: 19.2.3
       react-native: 0.84.1
@@ -9462,7 +9462,7 @@ snapshots:
     optionalDependencies:
       rollup: 3.30.0
 
-  '@sbaiahmed1/react-native-biometrics@0.10.0(react-native@0.84.1(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.15)(react@19.2.3))(react@19.2.3)':
+  '@sbaiahmed1/react-native-biometrics@0.15.0(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-native: 0.84.1(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.15)(react@19.2.3)

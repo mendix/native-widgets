@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Updated @sbaiahmed1/react-native-biometrics from version v0.10.0 to v0.15.0.
+
 ## [12.0.0] Native Mobile Resources - 2026-5-15
 
 ### Changed
