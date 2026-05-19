@@ -155,8 +155,8 @@ importers:
         specifier: 20.1.0
         version: 20.1.0(@react-native-firebase/app@20.1.0(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3))
       '@sbaiahmed1/react-native-biometrics':
-        specifier: 0.10.0
-        version: 0.10.0(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3)
+        specifier: 0.15.0
+        version: 0.15.0(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3)
       '@swan-io/react-native-browser':
         specifier: 1.0.1
         version: 1.0.1(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3)
@@ -2493,7 +2493,6 @@ packages:
 
   '@react-navigation/native@6.1.18':
     resolution: {integrity: sha512-mIT9MiL/vMm4eirLcmw2h6h/Nm5FICtnYSdohq4vTLA2FF/6PNhByM7s8ffqoVfE5L0uAa6Xda1B7oddolUiGg==}
-    deprecated: This version is no longer supported
     peerDependencies:
       react: 19.2.3
       react-native: 0.84.1
@@ -10223,7 +10222,7 @@ snapshots:
     optionalDependencies:
       rollup: 3.30.0
 
-  '@sbaiahmed1/react-native-biometrics@0.10.0(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3)':
+  '@sbaiahmed1/react-native-biometrics@0.15.0(react-native@0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-native: 0.84.1(@babel/core@7.28.0)(@react-native-community/cli@14.1.0(typescript@5.9.3))(@react-native/metro-config@0.85.3(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.3)
