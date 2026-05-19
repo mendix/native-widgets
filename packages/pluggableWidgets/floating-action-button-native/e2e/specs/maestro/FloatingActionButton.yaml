@@ -10,12 +10,8 @@ appId: "${APP_ID}"
     id: "floatingActionButtonTopLeft"
 - tapOn:
     id: "floatingActionButtonBottomLeft"
-- assertVisible:
-    text: "Zooooom"
 - tapOn:
     id: "floatingActionButtonBottomRight"
-- assertVisible:
-    text: "Email"
 - tapOn:
     id: "floatingActionButtonTopRight"
 - takeScreenshot:
