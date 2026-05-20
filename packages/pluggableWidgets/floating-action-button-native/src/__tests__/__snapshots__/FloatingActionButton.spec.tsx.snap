@@ -5,69 +5,46 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
   pointerEvents="box-none"
   style={
     [
-      [
-        {
-          "backgroundColor": "transparent",
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        {
-          "elevation": 5,
-          "justifyContent": "flex-end",
-          "zIndex": 999,
-        },
-      ],
+      {
+        "justifyContent": "flex-end",
+      },
       {
         "margin": 30,
+      },
+      {
+        "alignItems": "flex-end",
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "zIndex": 999,
       },
     ]
   }
 >
   <View
-    collapsable={false}
     pointerEvents="none"
     style={
-      {
-        "backgroundColor": "transparent",
-        "bottom": 0,
-        "elevation": 5,
-        "justifyContent": "flex-end",
-        "left": 0,
-        "opacity": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-        "zIndex": 999,
-      }
-    }
-  />
-  <View
-    pointerEvents="box-none"
-    style={
       [
-        [
-          {
-            "backgroundColor": "transparent",
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          {
-            "elevation": 5,
-            "justifyContent": "flex-end",
-            "zIndex": 999,
-          },
-        ],
         {
-          "alignItems": "flex-end",
+          "position": "absolute",
         },
         {
-          "paddingVertical": 0,
+          "alignItems": "center",
+          "left": 0,
+          "right": 0,
+          "top": 7,
+        },
+        {
+          "opacity": 0,
+          "transform": [
+            {
+              "translateY": undefined,
+            },
+            {
+              "scale": undefined,
+            },
+          ],
         },
       ]
     }
@@ -76,36 +53,46 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       style={
         [
           {
-            "borderRadius": 27,
-            "right": 0,
-            "width": 54,
-            "zIndex": 999,
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
           },
           {
-            "elevation": 5,
-            "shadowColor": "#000",
-            "shadowOffset": {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.35,
-            "shadowRadius": 3,
-          },
-          {
-            "backgroundColor": "#e74c3c",
-            "elevation": 5,
-            "shadowColor": "#000",
-            "shadowOffset": {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.3,
-            "shadowRadius": 3,
-            "size": 54,
+            "justifyContent": "flex-end",
           },
         ]
       }
     >
+      <View
+        style={
+          [
+            {
+              "flexShrink": 0,
+            },
+            {
+              "alignItems": "flex-end",
+              "marginRight": 8,
+            },
+            {
+              "marginHorizontal": 15,
+            },
+          ]
+        }
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            [
+              {},
+              {
+                "flexShrink": 0,
+              },
+            ]
+          }
+        >
+          caption1
+        </Text>
+      </View>
       <View
         accessibilityState={
           {
@@ -127,14 +114,9 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         accessible={true}
         collapsable={false}
         focusable={true}
-        nativeBackgroundAndroid={
-          {
-            "attribute": "selectableItemBackground",
-            "rippleRadius": undefined,
-            "type": "ThemeAttrAndroid",
-          }
-        }
+        onBlur={[Function]}
         onClick={[Function]}
+        onFocus={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -142,80 +124,418 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          {
-            "backgroundColor": "rgba(0, 0, 0, 0)",
-            "borderRadius": 27,
-            "height": 54,
-            "width": 54,
-          }
-        }
-        testID="FloatingAction"
-      >
-        <View
-          collapsable={false}
-          style={
+          [
             {
               "alignItems": "center",
-              "borderRadius": 27,
-              "height": 54,
+              "flexShrink": 0,
               "justifyContent": "center",
-              "transform": [
-                {
-                  "scale": 1,
-                },
-                {
-                  "rotate": "0deg",
-                },
-              ],
-              "width": 54,
-            }
+            },
+            {
+              "backgroundColor": "#fff",
+              "elevation": 5,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.3,
+              "shadowRadius": 3,
+              "size": 40,
+            },
+            {
+              "borderRadius": 20,
+              "height": 40,
+              "opacity": 1,
+              "width": 40,
+            },
+          ]
+        }
+        testID="FloatingAction$button0"
+      >
+        <View
+          testId="icon"
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    pointerEvents="none"
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
+          "alignItems": "center",
+          "left": 0,
+          "right": 0,
+          "top": 7,
+        },
+        {
+          "opacity": 0,
+          "transform": [
+            {
+              "translateY": undefined,
+            },
+            {
+              "scale": undefined,
+            },
+          ],
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+          {
+            "justifyContent": "flex-end",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "flexShrink": 0,
+            },
+            {
+              "alignItems": "flex-end",
+              "marginRight": 8,
+            },
+            {
+              "marginHorizontal": 15,
+            },
+          ]
+        }
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            [
+              {},
+              {
+                "flexShrink": 0,
+              },
+            ]
           }
         >
-          <View
-            style={
-              [
+          caption2
+        </Text>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 0,
+              "justifyContent": "center",
+            },
+            {
+              "backgroundColor": "#fff",
+              "elevation": 5,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.3,
+              "shadowRadius": 3,
+              "size": 40,
+            },
+            {
+              "borderRadius": 20,
+              "height": 40,
+              "opacity": 1,
+              "width": 40,
+            },
+          ]
+        }
+        testID="FloatingAction$button1"
+      >
+        <View
+          testId="icon"
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    pointerEvents="none"
+    style={
+      [
+        {
+          "position": "absolute",
+        },
+        {
+          "alignItems": "center",
+          "left": 0,
+          "right": 0,
+          "top": 7,
+        },
+        {
+          "opacity": 0,
+          "transform": [
+            {
+              "translateY": undefined,
+            },
+            {
+              "scale": undefined,
+            },
+          ],
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+          {
+            "justifyContent": "flex-end",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "flexShrink": 0,
+            },
+            {
+              "alignItems": "flex-end",
+              "marginRight": 8,
+            },
+            {
+              "marginHorizontal": 15,
+            },
+          ]
+        }
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            [
+              {},
+              {
+                "flexShrink": 0,
+              },
+            ]
+          }
+        >
+          caption3
+        </Text>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 0,
+              "justifyContent": "center",
+            },
+            {
+              "backgroundColor": "#fff",
+              "elevation": 5,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": 5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.3,
+              "shadowRadius": 3,
+              "size": 40,
+            },
+            {
+              "borderRadius": 20,
+              "height": 40,
+              "opacity": 1,
+              "width": 40,
+            },
+          ]
+        }
+        testID="FloatingAction$button2"
+      >
+        <View
+          testId="icon"
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        },
+        {
+          "backgroundColor": "#e74c3c",
+          "elevation": 5,
+          "shadowColor": "#000",
+          "shadowOffset": {
+            "height": 5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.3,
+          "shadowRadius": 3,
+          "size": 54,
+        },
+        {
+          "borderRadius": 27,
+          "height": 54,
+          "opacity": 1,
+          "width": 54,
+        },
+      ]
+    }
+    testID="FloatingAction"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#e74c3c",
+            "elevation": 5,
+            "rippleColor": "rgba(0, 0, 0, 0.4)",
+            "shadowColor": "#000",
+            "shadowOffset": {
+              "height": 5,
+              "width": 0,
+            },
+            "shadowOpacity": 0.3,
+            "shadowRadius": 3,
+            "size": 54,
+          },
+          {
+            "alignItems": "center",
+            "borderRadius": 27,
+            "height": 54,
+            "justifyContent": "center",
+            "width": 54,
+          },
+        ]
+      }
+      testID="FloatingAction$IconView"
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexShrink": 1,
+              "justifyContent": "center",
+            },
+            {
+              "transform": [
                 {
-                  "backgroundColor": "#e74c3c",
-                  "elevation": 5,
-                  "rippleColor": "rgba(0, 0, 0, 0.4)",
-                  "shadowColor": "#000",
-                  "shadowOffset": {
-                    "height": 5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.3,
-                  "shadowRadius": 3,
-                  "size": 54,
+                  "rotate": "undefineddeg",
                 },
-                {
-                  "alignItems": "center",
-                  "borderRadius": 27,
-                  "height": 54,
-                  "justifyContent": "center",
-                  "width": 54,
-                },
-              ]
-            }
-            testID="FloatingAction$IconView"
-          >
-            <View
-              style={
-                [
-                  {},
-                  {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-            >
-              <View
-                testId="icon"
-              />
-            </View>
-          </View>
-        </View>
+              ],
+            },
+          ]
+        }
+      >
+        <View
+          testId="icon"
+        />
       </View>
     </View>
   </View>
@@ -227,95 +547,88 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
   pointerEvents="box-none"
   style={
     [
-      [
-        {
-          "backgroundColor": "transparent",
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        {
-          "elevation": 5,
-          "justifyContent": "flex-end",
-          "zIndex": 999,
-        },
-      ],
+      {
+        "justifyContent": "flex-end",
+      },
       {
         "margin": 30,
+      },
+      {
+        "alignItems": "flex-end",
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "zIndex": 999,
       },
     ]
   }
 >
   <View
-    collapsable={false}
-    pointerEvents="none"
-    style={
+    accessibilityState={
       {
-        "backgroundColor": "transparent",
-        "bottom": 0,
-        "elevation": 5,
-        "justifyContent": "flex-end",
-        "left": 0,
-        "opacity": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-        "zIndex": 999,
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
     }
-  />
-  <View
-    pointerEvents="box-none"
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       [
-        [
-          {
-            "backgroundColor": "transparent",
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          {
-            "elevation": 5,
-            "justifyContent": "flex-end",
-            "zIndex": 999,
-          },
-        ],
         {
-          "alignItems": "flex-end",
+          "alignItems": "center",
+          "justifyContent": "center",
         },
         {
-          "paddingVertical": 0,
+          "backgroundColor": "#e74c3c",
+          "elevation": 5,
+          "shadowColor": "#000",
+          "shadowOffset": {
+            "height": 5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.3,
+          "shadowRadius": 3,
+          "size": 54,
+        },
+        {
+          "borderRadius": 27,
+          "height": 54,
+          "opacity": 1,
+          "width": 54,
         },
       ]
     }
+    testID="FloatingAction"
   >
     <View
       style={
         [
           {
-            "borderRadius": 27,
-            "right": 0,
-            "width": 54,
-            "zIndex": 999,
-          },
-          {
-            "elevation": 5,
-            "shadowColor": "#000",
-            "shadowOffset": {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.35,
-            "shadowRadius": 3,
-          },
-          {
             "backgroundColor": "#e74c3c",
             "elevation": 5,
+            "rippleColor": "rgba(0, 0, 0, 0.4)",
             "shadowColor": "#000",
             "shadowOffset": {
               "height": 5,
@@ -325,119 +638,38 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
             "shadowRadius": 3,
             "size": 54,
           },
-        ]
-      }
-    >
-      <View
-        accessibilityState={
           {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        nativeBackgroundAndroid={
-          {
-            "attribute": "selectableItemBackground",
-            "rippleRadius": undefined,
-            "type": "ThemeAttrAndroid",
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          {
-            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "alignItems": "center",
             "borderRadius": 27,
             "height": 54,
+            "justifyContent": "center",
             "width": 54,
-          }
-        }
-        testID="FloatingAction"
-      >
-        <View
-          collapsable={false}
-          style={
+          },
+        ]
+      }
+      testID="FloatingAction$IconView"
+    >
+      <View
+        style={
+          [
             {
               "alignItems": "center",
-              "borderRadius": 27,
-              "height": 54,
+              "flexShrink": 1,
               "justifyContent": "center",
+            },
+            {
               "transform": [
                 {
-                  "scale": 1,
-                },
-                {
-                  "rotate": "0deg",
+                  "rotate": "undefineddeg",
                 },
               ],
-              "width": 54,
-            }
-          }
-        >
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#e74c3c",
-                  "elevation": 5,
-                  "rippleColor": "rgba(0, 0, 0, 0.4)",
-                  "shadowColor": "#000",
-                  "shadowOffset": {
-                    "height": 5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.3,
-                  "shadowRadius": 3,
-                  "size": 54,
-                },
-                {
-                  "alignItems": "center",
-                  "borderRadius": 27,
-                  "height": 54,
-                  "justifyContent": "center",
-                  "width": 54,
-                },
-              ]
-            }
-            testID="FloatingAction$IconView"
-          >
-            <View
-              style={
-                [
-                  {},
-                  {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-            >
-              <View
-                testId="icon"
-              />
-            </View>
-          </View>
-        </View>
+            },
+          ]
+        }
+      >
+        <View
+          testId="icon"
+        />
       </View>
     </View>
   </View>
@@ -449,95 +681,88 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
   pointerEvents="box-none"
   style={
     [
-      [
-        {
-          "backgroundColor": "transparent",
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        {
-          "elevation": 5,
-          "justifyContent": "flex-end",
-          "zIndex": 999,
-        },
-      ],
+      {
+        "justifyContent": "flex-end",
+      },
       {
         "margin": 30,
+      },
+      {
+        "alignItems": "flex-end",
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "zIndex": 999,
       },
     ]
   }
 >
   <View
-    collapsable={false}
-    pointerEvents="none"
-    style={
+    accessibilityState={
       {
-        "backgroundColor": "transparent",
-        "bottom": 0,
-        "elevation": 5,
-        "justifyContent": "flex-end",
-        "left": 0,
-        "opacity": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-        "zIndex": 999,
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
     }
-  />
-  <View
-    pointerEvents="box-none"
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       [
-        [
-          {
-            "backgroundColor": "transparent",
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          {
-            "elevation": 5,
-            "justifyContent": "flex-end",
-            "zIndex": 999,
-          },
-        ],
         {
-          "alignItems": "flex-end",
+          "alignItems": "center",
+          "justifyContent": "center",
         },
         {
-          "paddingVertical": 0,
+          "backgroundColor": "#e74c3c",
+          "elevation": 5,
+          "shadowColor": "#000",
+          "shadowOffset": {
+            "height": 5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.3,
+          "shadowRadius": 3,
+          "size": 54,
+        },
+        {
+          "borderRadius": 27,
+          "height": 54,
+          "opacity": 1,
+          "width": 54,
         },
       ]
     }
+    testID="FloatingAction"
   >
     <View
       style={
         [
           {
-            "borderRadius": 27,
-            "right": 0,
-            "width": 54,
-            "zIndex": 999,
-          },
-          {
-            "elevation": 5,
-            "shadowColor": "#000",
-            "shadowOffset": {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.35,
-            "shadowRadius": 3,
-          },
-          {
             "backgroundColor": "#e74c3c",
             "elevation": 5,
+            "rippleColor": "rgba(0, 0, 0, 0.4)",
             "shadowColor": "#000",
             "shadowOffset": {
               "height": 5,
@@ -547,119 +772,38 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
             "shadowRadius": 3,
             "size": 54,
           },
-        ]
-      }
-    >
-      <View
-        accessibilityState={
           {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        nativeBackgroundAndroid={
-          {
-            "attribute": "selectableItemBackground",
-            "rippleRadius": undefined,
-            "type": "ThemeAttrAndroid",
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          {
-            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "alignItems": "center",
             "borderRadius": 27,
             "height": 54,
+            "justifyContent": "center",
             "width": 54,
-          }
-        }
-        testID="FloatingAction"
-      >
-        <View
-          collapsable={false}
-          style={
+          },
+        ]
+      }
+      testID="FloatingAction$IconView"
+    >
+      <View
+        style={
+          [
             {
               "alignItems": "center",
-              "borderRadius": 27,
-              "height": 54,
+              "flexShrink": 1,
               "justifyContent": "center",
+            },
+            {
               "transform": [
                 {
-                  "scale": 1,
-                },
-                {
-                  "rotate": "0deg",
+                  "rotate": "undefineddeg",
                 },
               ],
-              "width": 54,
-            }
-          }
-        >
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#e74c3c",
-                  "elevation": 5,
-                  "rippleColor": "rgba(0, 0, 0, 0.4)",
-                  "shadowColor": "#000",
-                  "shadowOffset": {
-                    "height": 5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.3,
-                  "shadowRadius": 3,
-                  "size": 54,
-                },
-                {
-                  "alignItems": "center",
-                  "borderRadius": 27,
-                  "height": 54,
-                  "justifyContent": "center",
-                  "width": 54,
-                },
-              ]
-            }
-            testID="FloatingAction$IconView"
-          >
-            <View
-              style={
-                [
-                  {},
-                  {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-            >
-              <View
-                testId="icon"
-              />
-            </View>
-          </View>
-        </View>
+            },
+          ]
+        }
+      >
+        <View
+          testId="icon"
+        />
       </View>
     </View>
   </View>
@@ -671,95 +815,88 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
   pointerEvents="box-none"
   style={
     [
-      [
-        {
-          "backgroundColor": "transparent",
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        },
-        {
-          "elevation": 5,
-          "justifyContent": "flex-start",
-          "zIndex": 999,
-        },
-      ],
+      {
+        "justifyContent": "flex-end",
+      },
       {
         "margin": 30,
+      },
+      {
+        "alignItems": "flex-end",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "zIndex": 999,
       },
     ]
   }
 >
   <View
-    collapsable={false}
-    pointerEvents="none"
-    style={
+    accessibilityState={
       {
-        "backgroundColor": "transparent",
-        "bottom": 0,
-        "elevation": 5,
-        "justifyContent": "flex-start",
-        "left": 0,
-        "opacity": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-        "zIndex": 999,
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
       }
     }
-  />
-  <View
-    pointerEvents="box-none"
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       [
-        [
-          {
-            "backgroundColor": "transparent",
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          {
-            "elevation": 5,
-            "justifyContent": "flex-start",
-            "zIndex": 999,
-          },
-        ],
         {
-          "alignItems": "flex-end",
+          "alignItems": "center",
+          "justifyContent": "center",
         },
         {
-          "paddingVertical": 0,
+          "backgroundColor": "#e74c3c",
+          "elevation": 5,
+          "shadowColor": "#000",
+          "shadowOffset": {
+            "height": 5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.3,
+          "shadowRadius": 3,
+          "size": 54,
+        },
+        {
+          "borderRadius": 27,
+          "height": 54,
+          "opacity": 1,
+          "width": 54,
         },
       ]
     }
+    testID="FloatingAction"
   >
     <View
       style={
         [
           {
-            "borderRadius": 27,
-            "right": 0,
-            "width": 54,
-            "zIndex": 999,
-          },
-          {
-            "elevation": 5,
-            "shadowColor": "#000",
-            "shadowOffset": {
-              "height": 5,
-              "width": 0,
-            },
-            "shadowOpacity": 0.35,
-            "shadowRadius": 3,
-          },
-          {
             "backgroundColor": "#e74c3c",
             "elevation": 5,
+            "rippleColor": "rgba(0, 0, 0, 0.4)",
             "shadowColor": "#000",
             "shadowOffset": {
               "height": 5,
@@ -769,119 +906,38 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
             "shadowRadius": 3,
             "size": 54,
           },
-        ]
-      }
-    >
-      <View
-        accessibilityState={
           {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        nativeBackgroundAndroid={
-          {
-            "attribute": "selectableItemBackground",
-            "rippleRadius": undefined,
-            "type": "ThemeAttrAndroid",
-          }
-        }
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          {
-            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "alignItems": "center",
             "borderRadius": 27,
             "height": 54,
+            "justifyContent": "center",
             "width": 54,
-          }
-        }
-        testID="FloatingAction"
-      >
-        <View
-          collapsable={false}
-          style={
+          },
+        ]
+      }
+      testID="FloatingAction$IconView"
+    >
+      <View
+        style={
+          [
             {
               "alignItems": "center",
-              "borderRadius": 27,
-              "height": 54,
+              "flexShrink": 1,
               "justifyContent": "center",
+            },
+            {
               "transform": [
                 {
-                  "scale": 1,
-                },
-                {
-                  "rotate": "0deg",
+                  "rotate": "undefineddeg",
                 },
               ],
-              "width": 54,
-            }
-          }
-        >
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#e74c3c",
-                  "elevation": 5,
-                  "rippleColor": "rgba(0, 0, 0, 0.4)",
-                  "shadowColor": "#000",
-                  "shadowOffset": {
-                    "height": 5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.3,
-                  "shadowRadius": 3,
-                  "size": 54,
-                },
-                {
-                  "alignItems": "center",
-                  "borderRadius": 27,
-                  "height": 54,
-                  "justifyContent": "center",
-                  "width": 54,
-                },
-              ]
-            }
-            testID="FloatingAction$IconView"
-          >
-            <View
-              style={
-                [
-                  {},
-                  {
-                    "alignItems": "center",
-                    "flexShrink": 1,
-                    "justifyContent": "center",
-                  },
-                ]
-              }
-            >
-              <View
-                testId="icon"
-              />
-            </View>
-          </View>
-        </View>
+            },
+          ]
+        }
+      >
+        <View
+          testId="icon"
+        />
       </View>
     </View>
   </View>
