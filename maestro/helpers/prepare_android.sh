@@ -4,8 +4,14 @@ MAX_RETRIES=5
 RETRY_DELAY=10
 RETRIES=0
 
+# Ensure ADB daemon is running
+echo "Starting ADB server..."
+adb start-server
+sleep 5
+
 # Add a delay to ensure the emulator is fully booted
 echo "Waiting for emulator to be ready..."
+adb wait-for-device
 sleep 30
 
 # Function to install the Android app on the emulator
