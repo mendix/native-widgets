@@ -157,6 +157,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
 
     const onChange = useCallback(
         (index: number) => {
+            "worklet";
             // Determine if the drawer is opening or closing based on index changes
             const hasOpened = lastIndexRef === -1 && index === collapsedIndex; // Initial open to collapsed
             const hasClosed = index === -1; // Fully closed
