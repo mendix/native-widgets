@@ -178,30 +178,41 @@ export async function copyJsModule(moduleSourcePath, to) {
         actualSourcePath = realpathSync(moduleSourcePath);
     }
 
-    cpSync(actualSourcePath, to, {
-        recursive: true,
-        dereference: true, // Follow symlinks and copy the actual files
-        filter: (src, dest) => {
-            const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
+    try {
+        cpSync(actualSourcePath, to, {
+            recursive: true,
+            dereference: true, // Follow symlinks and copy the actual files
+            filter: (src, dest) => {
+                const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
 
-            // Skip certain directories
-            if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
-                return false;
-            }
+                // Skip certain directories
+                if (
+                    relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)
+                ) {
+                    return false;
+                }
 
-            // Skip certain file types
-            if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
-                return false;
-            }
+                // Skip certain file types
+                if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
+                    return false;
+                }
 
-            // Include LICENSE files
-            if (relativePath.match(/license/i)) {
+                // Include LICENSE files
+                if (relativePath.match(/license/i)) {
+                    return true;
+                }
+
                 return true;
             }
-
-            return true;
+        });
+    } catch (error) {
+        // Handle race condition: if another parallel build process already created this directory,
+        // ignore EEXIST errors and verify the directory now exists
+        if (error.code === "EEXIST" && existsSync(to)) {
+            return;
         }
-    });
+        throw error;
+    }
 }
 
 function getModuleName(modulePath) {
