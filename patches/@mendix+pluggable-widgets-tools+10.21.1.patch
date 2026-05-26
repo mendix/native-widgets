@@ -104,6 +104,16 @@ index 682cf9fc4259a1f431e7cc3b17a319fdb072929e..5be03c770f8247637223f78738c3cdec
      /^react-native-svg($|\/)/,
      /^react-native-vector-icons($|\/)/,
      /^@?react-navigation($|\/)/,
+@@ -195,7 +195,8 @@ export default async args => {
+             getBabelInputPlugin({
+                 sourceMaps: config.sourceMaps,
+                 babelrc: false,
+-                babelHelpers: "bundled",
++                babelHelpers: "bundled",
++                plugins: ["react-native-reanimated/plugin"],
+                 overrides: [
+                     {
+                         test: /node_modules/,
 diff --git a/configs/tsconfig.base.json b/configs/tsconfig.base.json
 index 5cee5d4d880e152576fc7cad69dd8c22dfbedee8..62627fd52bf0d5847d9ebec37fadac3142ed71a7 100644
 --- a/configs/tsconfig.base.json

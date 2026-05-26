@@ -5,9 +5,27 @@ import { BottomSheetProps } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle } from "../ui/Styles";
 import { Text } from "react-native";
 
-jest.mock("react-native-device-info", () => ({
-    getDeviceId: () => "iPhone10,6"
-}));
+jest.mock("@gorhom/bottom-sheet", () => {
+    const { View, ScrollView } = require("react-native");
+    const React = require("react");
+    const MockBottomSheet = React.forwardRef(({ children }: any, ref: any) => {
+        React.useImperativeHandle(ref, () => ({
+            snapToIndex: jest.fn(),
+            close: jest.fn(),
+            expand: jest.fn(),
+            collapse: jest.fn()
+        }));
+        return React.createElement(View, { testID: "bottom-sheet" }, children);
+    });
+    MockBottomSheet.displayName = "MockBottomSheet";
+    return {
+        __esModule: true,
+        default: MockBottomSheet,
+        BottomSheetBackdrop: (props: any) => React.createElement(View, props),
+        BottomSheetScrollView: ({ children, ...props }: any) => React.createElement(ScrollView, props, children),
+        BottomSheetView: ({ children, ...props }: any) => React.createElement(View, props, children)
+    };
+});
 
 jest.mock("react-native/Libraries/Utilities/Platform", () => ({
     OS: "ios",
