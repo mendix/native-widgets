@@ -17,7 +17,6 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
-    "prepare": "pnpm build",
     "postinstall": "pnpm build"
   },
   "devDependencies": {

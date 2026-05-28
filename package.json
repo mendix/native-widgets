@@ -8,7 +8,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "prepare": "npx husky install && pnpm -r run prepare",
+    "prepare": "npx husky install",
     "postinstall": "pnpm -r run postinstall",
     "reinstall": "pnpm store prune && git clean -dfx && find . -type dir -name node_modules | xargs rm -rf && pnpm install && pnpm run postinstall",
     "prettier": "prettier --config \"./prettier.config.js\" --write \"**/*.{js,jsx,ts,tsx,scss,html,xml,yml,yaml}\"",
