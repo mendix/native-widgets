@@ -1,7 +1,9 @@
-import { ReactElement, useCallback, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
     ActionSheetIOS,
     Appearance,
+    Dimensions,
+    LayoutChangeEvent,
     Modal,
     Platform,
     Pressable,
@@ -10,7 +12,11 @@ import {
     TouchableHighlight,
     View
 } from "react-native";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+    BottomSheetBackdrop,
+    BottomSheetBackdropProps,
+    BottomSheetScrollView
+} from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { ItemsBasicType } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle, ModalItemContainerStyle } from "../ui/Styles";
@@ -28,6 +34,7 @@ let lastIndexRef = -1;
 
 export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
+    const [contentHeight, setContentHeight] = useState(0);
 
     const isAvailable = props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available;
     const isOpen =
@@ -35,19 +42,19 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         props.triggerAttribute.status === ValueStatus.Available &&
         props.triggerAttribute.value;
 
-    const manageBottomSheet = () => {
+    const manageBottomSheet = useCallback(() => {
         if (props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available) {
             if (props.triggerAttribute.value) {
-                bottomSheetRef.current?.expand();
+                bottomSheetRef.current?.snapToIndex(0);
             } else {
                 bottomSheetRef.current?.close();
             }
         }
-    };
+    }, [props.triggerAttribute]);
 
     useEffect(() => {
         manageBottomSheet();
-    }, [props.triggerAttribute]);
+    }, [manageBottomSheet]);
 
     useEffect(() => {
         // Only show the ActionSheet if using native on iOS and the trigger is active.
@@ -78,16 +85,33 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         }
     }, [isOpen]);
 
-    const renderBackdrop = (backdropProps: BottomSheetBackdropProps) => (
-        <Pressable style={{ flex: 1 }} onPress={close}>
-            <BottomSheetBackdrop
-                {...backdropProps}
-                pressBehavior={"close"}
-                opacity={0.3}
-                appearsOnIndex={0}
-                disappearsOnIndex={-1}
-            />
-        </Pressable>
+    const close = useCallback(() => {
+        bottomSheetRef.current?.close();
+    }, []);
+
+    const renderBackdrop = useCallback(
+        (backdropProps: BottomSheetBackdropProps) => (
+            <Pressable style={{ flex: 1 }} onPress={close}>
+                <BottomSheetBackdrop
+                    {...backdropProps}
+                    pressBehavior="close"
+                    opacity={0.3}
+                    appearsOnIndex={0}
+                    disappearsOnIndex={-1}
+                />
+            </Pressable>
+        ),
+        [close]
+    );
+
+    const onLayoutHandler = useCallback(
+        (event: LayoutChangeEvent) => {
+            const height = event.nativeEvent.layout.height;
+            if (height > 0 && height !== contentHeight) {
+                setContentHeight(height);
+            }
+        },
+        [contentHeight]
     );
 
     const actionHandler = useCallback(
@@ -146,37 +170,49 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         return [styles.sheetContainer, props.styles.container];
     };
 
-    const handleSheetChanges = (index: number) => {
-        if (!isAvailable) {
-            return;
-        }
-        const hasOpened = lastIndexRef === -1 && index === 0;
-        const hasClosed = index === -1;
-        lastIndexRef = index;
+    const handleSheetChanges = useCallback(
+        (index: number) => {
+            if (!isAvailable) {
+                return;
+            }
+            const hasOpened = lastIndexRef === -1 && index === 0;
+            const hasClosed = index === -1;
+            lastIndexRef = index;
 
-        if (hasOpened) {
-            props.triggerAttribute?.setValue(true);
+            if (hasOpened) {
+                props.triggerAttribute?.setValue(true);
+            }
+            if (hasClosed) {
+                props.triggerAttribute?.setValue(false);
+            }
+        },
+        [isAvailable, props.triggerAttribute]
+    );
+
+    const snapPoints = useMemo(() => {
+        if (contentHeight === 0) {
+            return [1]; // During measurement
         }
-        if (hasClosed) {
-            props.triggerAttribute?.setValue(false);
-        }
-    };
+
+        // Use actual measured height, cap at 90% screen
+        const maxHeight = Dimensions.get("screen").height * 0.9;
+
+        const snapHeight = Math.min(contentHeight, maxHeight);
+        return [snapHeight];
+    }, [contentHeight]);
 
     if (props.useNative && Platform.OS === "ios") {
         return <View></View>;
     }
 
-    const close = () => {
-        bottomSheetRef.current?.close();
-    };
-
     return (
         <Modal onRequestClose={close} transparent visible={isOpen}>
             <BottomSheet
                 ref={bottomSheetRef}
-                index={isOpen ? 0 : -1} // Start closed.
+                index={isOpen && contentHeight > 0 ? 0 : -1}
+                snapPoints={snapPoints}
                 enablePanDownToClose
-                animateOnMount
+                animateOnMount={false}
                 onClose={() => handleSheetChanges(-1)}
                 onChange={handleSheetChanges}
                 style={getContainerStyle()}
@@ -185,9 +221,9 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                 handleComponent={null}
                 handleStyle={{ display: "none" }}
             >
-                <BottomSheetView style={[{ flex: 1, paddingBottom: 16 }]}>
+                <BottomSheetScrollView contentContainerStyle={{ paddingBottom: 16 }} onLayout={onLayoutHandler}>
                     {props.itemsBasic.map((item, index) => renderItem(item, index))}
-                </BottomSheetView>
+                </BottomSheetScrollView>
             </BottomSheet>
         </Modal>
     );
