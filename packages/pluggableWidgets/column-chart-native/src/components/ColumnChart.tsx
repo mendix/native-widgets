@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useMemo, useState } from "react";
 import { LayoutChangeEvent, Text, TextStyle, View } from "react-native";
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "victory-native";
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryLabel, VictoryStack } from "victory-native";
 import { BarProps } from "victory-bar";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 
@@ -114,6 +114,7 @@ export function ColumnChart({
                 <VictoryBar
                     key={index}
                     data={dataPoints}
+                    labelComponent={<VictoryLabel />}
                     width={columnStyles.width}
                     cornerRadius={columnStyles.cornerRadius}
                     style={{

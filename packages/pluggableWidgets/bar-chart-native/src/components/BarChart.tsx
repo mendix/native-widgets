@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useMemo, useState } from "react";
 import { LayoutChangeEvent, Text, View } from "react-native";
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "victory-native";
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryLabel, VictoryStack } from "victory-native";
 import { BarProps } from "victory-bar";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 
@@ -108,6 +108,7 @@ export function BarChart({
                     horizontal
                     key={index}
                     data={dataPoints}
+                    labelComponent={<VictoryLabel />}
                     width={barStyles.width}
                     cornerRadius={barStyles.cornerRadius}
                     style={{
@@ -226,12 +227,14 @@ export function BarChart({
                                         <VictoryAxis
                                             orientation={"bottom"}
                                             dependentAxis
+                                            tickLabelComponent={<VictoryLabel />}
                                             style={mapToAxisStyle(style.grid, style.xAxis)}
                                             {...(firstSeries?.xFormatter
                                                 ? { tickFormat: firstSeries.xFormatter }
                                                 : undefined)}
                                         />
                                         <VictoryAxis
+                                            tickLabelComponent={<VictoryLabel />}
                                             style={mapToAxisStyle(style.grid, style.yAxis)}
                                             orientation={"left"}
                                             {...(firstSeries?.yFormatter
