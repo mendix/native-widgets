@@ -123,8 +123,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image 1`
         "width": "100%",
       },
       {
-        "alignItems": "center",
-        "justifyContent": "center",
+        "opacity": 0,
       },
     ]
   }
@@ -158,8 +157,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
         "width": "100%",
       },
       {
-        "alignItems": "center",
-        "justifyContent": "center",
+        "opacity": 0,
       },
     ]
   }
@@ -193,8 +191,7 @@ exports[`Widget Dynamic Image SVG renders the structure as a background image wi
         "width": "100%",
       },
       {
-        "alignItems": "center",
-        "justifyContent": "center",
+        "opacity": 0,
       },
     ]
   }
