@@ -100,6 +100,11 @@ index 51c3265d054fdbcb491768d0600beb151f7ac37d..352ef3bf2539e33ee836762f962fe9f5
 -    /^react-native-vector-icons($|\/)/,
 +    /^@react-native-vector-icons\/common($|\/)/,
      /^@?react-navigation($|\/)/,
+@@ -234,3 +234,3 @@ export default async args => {
+             image(),
+-            production ? terser({ mangle: false }) : null,
++            production ? terser({ mangle: false, compress: { directives: false } }) : null,
+             // We need to create .mpk and copy results to test project after bundling is finished.
 diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
 index 8346a68bb08ee24c3249691a2895ab8ba1fc7164..f85a77f91f1bcbfef0a6d3d2fb4b4af5f65ebf11 100644
 --- a/test-config/jest.native.config.js
