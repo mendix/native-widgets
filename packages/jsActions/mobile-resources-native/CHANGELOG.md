@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.9] Native Mobile Resources - 2026-6-2
+
+## [5.0.4] BottomSheet
+
+### Fixed
+
+-   Fixed the “non‑worklet function called on the UI thread” error in bottom sheet coming from @gorhom/bottom-sheet usage.
+
 ## [11.3.8] Native Mobile Resources - 2026-4-10
 
 ## [2.1.0] Gallery
