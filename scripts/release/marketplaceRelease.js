@@ -44,6 +44,8 @@ async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMX
         const postResponse = await createDraft(marketplaceId, version, minimumMXVersion);
         await publishDraft(postResponse.UUID);
         console.log(`Successfully uploaded ${pkgName} to the Mendix Marketplace.`);
+
+        await verifyReleasePublished(marketplaceId, version, pkgName);
     } catch (error) {
         error.message = `Failed uploading ${pkgName} to appstore with error: ${error.message}`;
         throw error;
@@ -175,4 +177,91 @@ function packageMetadata() {
     const pkgPath = join(process.cwd(), "package.json");
     const { name, widgetName, version, marketplace } = require(pkgPath);
     return { name, widgetName, version, marketplace };
+}
+
+async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
+    const normalizedExpectedVersion = expectedVersion.startsWith("v") ? expectedVersion.substring(1) : expectedVersion;
+
+    console.log(`Verifying release ${normalizedExpectedVersion} is published for content ID ${contentId}...`);
+
+    const patToken = process.env.MENDIX_PAT_TOKEN;
+    if (!patToken) {
+        console.warn("WARNING: MENDIX_PAT_TOKEN environment variable is not set. Skipping release verification.");
+        return;
+    }
+
+    const maxRetries = 5;
+    const retryDelayMs = 7000;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        console.log(`Verification attempt ${attempt}/${maxRetries}: Checking for version ${expectedVersion}`);
+
+        try {
+            // Call the Mendix Content API to get all versions
+            const versionsResponse = await nodefetch(
+                `https://marketplace-api.mendix.com/v1/content/${contentId}/versions`,
+                {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `MxToken ${patToken}`
+                    }
+                }
+            );
+
+            if (!versionsResponse.ok) {
+                const errorText = await versionsResponse.text();
+                throw new Error(
+                    `Content API returned status ${versionsResponse.status}: ${versionsResponse.statusText}. Response: ${errorText}`
+                );
+            }
+
+            const responseData = await versionsResponse.json();
+
+            if (!responseData.items || !Array.isArray(responseData.items)) {
+                throw new Error(`Unexpected API response structure: ${JSON.stringify(responseData)}`);
+            }
+
+            const versions = responseData.items;
+
+            const versionFound = versions.some(v => v.versionNumber === normalizedExpectedVersion);
+
+            if (versionFound) {
+                console.log(
+                    `✓ Successfully verified: Version ${normalizedExpectedVersion} is published on Mendix Marketplace!`
+                );
+                const matchedVersion = versions.find(v => v.versionNumber === normalizedExpectedVersion);
+                console.log(`Version ID: ${matchedVersion.versionId}`);
+                console.log(`Publication Date: ${matchedVersion.publicationDate}`);
+                return;
+            }
+
+            if (attempt < maxRetries) {
+                console.log(
+                    `Version ${normalizedExpectedVersion} not found yet. Waiting ${
+                        retryDelayMs / 1000
+                    }s before retry...`
+                );
+                console.log(
+                    `Available versions: ${versions
+                        .map(v => v.versionNumber)
+                        .slice(0, 5)
+                        .join(", ")}...`
+                );
+                await new Promise(resolve => setTimeout(resolve, retryDelayMs));
+            }
+        } catch (error) {
+            console.error(`Error during verification attempt ${attempt}: ${error.message}`);
+            if (attempt < maxRetries) {
+                console.log(`Waiting ${retryDelayMs / 1000}s before retry...`);
+                await new Promise(resolve => setTimeout(resolve, retryDelayMs));
+            }
+        }
+    }
+
+    throw new Error(
+        `Release verification FAILED: Version ${normalizedExpectedVersion} for ${pkgName} (content ID: ${contentId}) ` +
+            `was not found on Mendix Marketplace after ${maxRetries} attempts. ` +
+            `The publish step reported success, but the version is not publicly available. `
+    );
 }
