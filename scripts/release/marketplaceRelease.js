@@ -190,8 +190,8 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
         return;
     }
 
-    const maxRetries = 5;
-    const retryDelayMs = 7000;
+    const maxRetries = 10;
+    const retryDelayMs = 10000;
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         console.log(`Verification attempt ${attempt}/${maxRetries}: Checking for version ${expectedVersion}`);
