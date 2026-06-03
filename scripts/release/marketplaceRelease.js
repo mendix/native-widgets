@@ -237,23 +237,11 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
             }
 
             if (attempt < maxRetries) {
-                console.log(
-                    `Version ${normalizedExpectedVersion} not found yet. Waiting ${
-                        retryDelayMs / 1000
-                    }s before retry...`
-                );
-                console.log(
-                    `Available versions: ${versions
-                        .map(v => v.versionNumber)
-                        .slice(0, 5)
-                        .join(", ")}...`
-                );
                 await new Promise(resolve => setTimeout(resolve, retryDelayMs));
             }
         } catch (error) {
             console.error(`Error during verification attempt ${attempt}: ${error.message}`);
             if (attempt < maxRetries) {
-                console.log(`Waiting ${retryDelayMs / 1000}s before retry...`);
                 await new Promise(resolve => setTimeout(resolve, retryDelayMs));
             }
         }
