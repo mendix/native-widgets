@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated react-native-gesture-handler from version v2.30.0 to v2.31.2.
+-   Updated react-native-reanimated from version v4.2.2 to v4.3.1.
+-   Updated react-native-worklets from version v0.7.4 to v0.8.3.
+-   Updated @gorhom/bottom-sheet from version v5.2.8 to v5.2.14.
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
 ## [5.0.4] - 2026-4-9
 
 ### Fixed

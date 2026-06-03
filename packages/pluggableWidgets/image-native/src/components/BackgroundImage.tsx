@@ -1,4 +1,4 @@
-import { ReactNode, FunctionComponent, useState, useCallback } from "react";
+import { ReactNode, FunctionComponent, useState, useCallback, useRef, useEffect } from "react";
 import { ImageStyle, LayoutChangeEvent, View } from "react-native";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { ResizeModeEnum } from "../../typings/ImageProps";
@@ -24,11 +24,28 @@ export const BackgroundImage: FunctionComponent<BackgroundImageProps> = props =>
     const [dimensions, setDimensions] = useState<DimensionsType>();
     const { source, initialDimensions, children, opacity, styles, name } = props;
     const [svgProps] = extractStyles(styles.image as ImageStyle, ["width", "height"]);
+    const dimensionsResolved = !!((dimensions?.width || svgProps?.width) && (dimensions?.height || svgProps?.height));
+    const containerLayoutRef = useRef<{ width: number; height: number } | null>(null);
+
     const onLayoutSetDimensionsCallback = useCallback(
-        ({ nativeEvent: { layout } }: LayoutChangeEvent) =>
-            onLayoutSetDimensions(layout.width, layout.height, setDimensions, initialDimensions),
+        ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+            containerLayoutRef.current = { width: layout.width, height: layout.height };
+            onLayoutSetDimensions(layout.width, layout.height, setDimensions, initialDimensions);
+        },
         [initialDimensions]
     );
+
+    // Re-compute dimensions when initialDimensions arrives after onLayout already fired (static images only)
+    useEffect(() => {
+        if (!dimensionsResolved && initialDimensions && containerLayoutRef.current) {
+            onLayoutSetDimensions(
+                containerLayoutRef.current.width,
+                containerLayoutRef.current.height,
+                setDimensions,
+                initialDimensions
+            );
+        }
+    }, [initialDimensions, dimensionsResolved]);
 
     return (
         <View
@@ -43,7 +60,7 @@ export const BackgroundImage: FunctionComponent<BackgroundImageProps> = props =>
                     width: svgProps?.width ?? dimensions?.width ?? "100%",
                     height: svgProps?.height ?? dimensions?.height ?? "100%"
                 },
-                styles.container
+                dimensionsResolved ? styles.container : { opacity: 0 }
             ]}
         >
             <View

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
+
 ## [5.1.0] - 2024-12-3
 
 ### Changed
