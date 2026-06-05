@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated react-native from version 0.83.4 to 0.84.1.
+
 ## [7.0.0] Nanoflow Commons - 2026-5-12
 
 ### Changed
