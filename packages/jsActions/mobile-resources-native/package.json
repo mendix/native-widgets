@@ -11,7 +11,7 @@
   "marketplace": {
     "name": "Native Mobile Resources",
     "description": "Download this module to access a rich set of widgets and nanoflow actions created for native mobile, including authentication, network, platform, and more. A must-have for native mobile development!",
-    "minimumMXVersion": "11.10.0",
+    "minimumMXVersion": "11.11.0",
     "marketplaceId": 109513
   },
   "testProject": {
@@ -31,7 +31,7 @@
     "@notifee/react-native": "9.1.8",
     "@react-native-camera-roll/camera-roll": "7.10.2",
     "@react-native-firebase/messaging": "20.1.0",
-    "@sbaiahmed1/react-native-biometrics": "0.10.0",
+    "@sbaiahmed1/react-native-biometrics": "0.15.0",
     "@swan-io/react-native-browser": "1.0.1",
     "fbjs": "3.0.4",
     "mime": "3.0.0",

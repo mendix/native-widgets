@@ -1,7 +1,7 @@
 {
   "name": "image-native",
   "widgetName": "Image",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Display an image and enlarge it on click",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "license": "Apache-2.0",
@@ -25,9 +25,9 @@
     "@d11/react-native-fast-image": "8.13.0",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "@react-native-vector-icons/common": "12.4.0",
+    "@react-native-vector-icons/common": "12.4.2",
     "@react-native-vector-icons/get-image": "12.3.0",
-    "react-native-svg": "15.15.3"
+    "react-native-svg": "15.15.4"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"

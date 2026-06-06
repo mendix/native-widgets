@@ -36,6 +36,7 @@ exports[`Intro Screen renders 1`] = `
               "flex": 1,
               "flexDirection": "row",
             },
+            undefined,
           ]
         }
       >
@@ -46,6 +47,11 @@ exports[`Intro Screen renders 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
+          maintainVisibleContentPosition={
+            {
+              "minIndexForVisible": 0,
+            }
+          }
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
@@ -55,6 +61,16 @@ exports[`Intro Screen renders 1`] = `
           testID="intro-screen-notch-test"
         >
           <View>
+            <View
+              style={
+                {
+                  "height": 0,
+                  "left": 1000000,
+                  "position": "absolute",
+                  "top": 0,
+                }
+              }
+            />
             <View
               style={
                 {
@@ -246,6 +262,7 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
               "flex": 1,
               "flexDirection": "row",
             },
+            undefined,
           ]
         }
       >
@@ -256,6 +273,11 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
+          maintainVisibleContentPosition={
+            {
+              "minIndexForVisible": 0,
+            }
+          }
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
@@ -265,6 +287,16 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
           testID="intro-screen-notch-test"
         >
           <View>
+            <View
+              style={
+                {
+                  "height": 0,
+                  "left": 1000000,
+                  "position": "absolute",
+                  "top": 0,
+                }
+              }
+            />
             <View
               style={
                 {
@@ -470,6 +502,7 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
               "flex": 1,
               "flexDirection": "row",
             },
+            undefined,
           ]
         }
       >
@@ -480,6 +513,11 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
+          maintainVisibleContentPosition={
+            {
+              "minIndexForVisible": 0,
+            }
+          }
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
@@ -489,6 +527,16 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
           testID="intro-screen-notch-test"
         >
           <View>
+            <View
+              style={
+                {
+                  "height": 0,
+                  "left": 1000000,
+                  "position": "absolute",
+                  "top": 0,
+                }
+              }
+            />
             <View
               style={
                 {
@@ -694,6 +742,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
               "flex": 1,
               "flexDirection": "row",
             },
+            undefined,
           ]
         }
       >
@@ -704,6 +753,11 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
+          maintainVisibleContentPosition={
+            {
+              "minIndexForVisible": 0,
+            }
+          }
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
@@ -713,6 +767,16 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           testID="intro-screen-notch-test"
         >
           <View>
+            <View
+              style={
+                {
+                  "height": 0,
+                  "left": 1000000,
+                  "position": "absolute",
+                  "top": 0,
+                }
+              }
+            />
             <View
               style={
                 {
@@ -904,6 +968,7 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
               "flex": 1,
               "flexDirection": "row",
             },
+            undefined,
           ]
         }
       >
@@ -914,6 +979,11 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
+          maintainVisibleContentPosition={
+            {
+              "minIndexForVisible": 0,
+            }
+          }
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
@@ -923,6 +993,16 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
           testID="intro-screen-notch-test"
         >
           <View>
+            <View
+              style={
+                {
+                  "height": 0,
+                  "left": 1000000,
+                  "position": "absolute",
+                  "top": 0,
+                }
+              }
+            />
             <View
               style={
                 {

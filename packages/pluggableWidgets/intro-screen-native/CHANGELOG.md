@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
 ## [4.4.0] - 2026-5-15
 
 ### Fixed
