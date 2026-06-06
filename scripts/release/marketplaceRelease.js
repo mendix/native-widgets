@@ -191,13 +191,13 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
     }
 
     const maxRetries = 10;
-    const retryDelayMs = 10000;
+    const retryDelayMs = 30000; // Keeping it high as it can take some time for the release to be available after publish API call returns success
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         console.log(`Verification attempt ${attempt}/${maxRetries}: Checking for version ${expectedVersion}`);
 
         try {
-            // Call the Mendix Content API to get all versions
+            // Call the Mendix Content API to get all released module versions
             const versionsResponse = await nodefetch(
                 `https://marketplace-api.mendix.com/v1/content/${contentId}/versions`,
                 {
@@ -228,11 +228,8 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
 
             if (versionFound) {
                 console.log(
-                    `✓ Successfully verified: Version ${normalizedExpectedVersion} is published on Mendix Marketplace!`
+                    `Successfully verified: Version ${normalizedExpectedVersion} is published on Mendix Marketplace!`
                 );
-                const matchedVersion = versions.find(v => v.versionNumber === normalizedExpectedVersion);
-                console.log(`Version ID: ${matchedVersion.versionId}`);
-                console.log(`Publication Date: ${matchedVersion.publicationDate}`);
                 return;
             }
 
