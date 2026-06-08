@@ -1,4 +1,3 @@
-const nodefetch = require("node-fetch");
 const { join } = require("path");
 
 const config = {
@@ -63,7 +62,7 @@ async function getGithubAssetUrl() {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         console.log(`Attempt ${attempt}/${maxRetries}: Fetching release for tag ${tag}`);
 
-        const releaseData = await fetch(
+        const releaseData = await fetchData(
             "GET",
             `https://api.github.com/repos/mendix/native-widgets/releases/tags/${tag}`
         );
@@ -128,13 +127,13 @@ async function fetchContributor(method, path, body) {
     const pass = process.env.CPAPI_PASS_PROD;
     const credentials = `${user}:${pass}`;
 
-    return fetch(method, `${config.contributorUrl}/${path}`, body, {
+    return fetchData(method, `${config.contributorUrl}/${path}`, body, {
         OpenID: config.openIdUrl,
         Authorization: `Basic ${Buffer.from(credentials).toString("base64")}`
     });
 }
 
-async function fetch(method, url, body, additionalHeaders) {
+async function fetchData(method, url, body, additionalHeaders) {
     let response;
     const httpsOptions = {
         method,
@@ -149,7 +148,7 @@ async function fetch(method, url, body, additionalHeaders) {
 
     console.log(`Fetching URL (${method}): ${url}`);
     try {
-        response = await nodefetch(url, httpsOptions);
+        response = await fetch(url, httpsOptions);
     } catch (error) {
         throw new Error(`An error occurred while retrieving data from ${url}. Technical error: ${error.message}`);
     }
@@ -203,7 +202,7 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
 
         try {
             // Call the Mendix Content API to get all released module versions
-            const versionsResponse = await nodefetch(
+            const versionsResponse = await fetch(
                 `https://marketplace-api.mendix.com/v1/content/${contentId}/versions`,
                 {
                     method: "GET",
