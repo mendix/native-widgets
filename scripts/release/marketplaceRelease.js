@@ -192,8 +192,11 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
         return;
     }
 
-    const maxRetries = 10;
-    const retryDelayMs = 30000; // Keeping it high as it can take some time for the release to be available after publish API call returns success
+    const maxRetries = 5;
+    const initialDelayMs = 60000;
+    const retryDelayMs = 60000;
+
+    await new Promise(resolve => setTimeout(resolve, initialDelayMs));
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         console.log(`Verification attempt ${attempt}/${maxRetries}: Checking for version ${expectedVersion}`);
