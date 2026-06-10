@@ -6,8 +6,95 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [12.1.0] Native Mobile Resources - 2026-6-10
+
 -   Updated react-native from version 0.83.4 to 0.84.1.
 -   Updated @sbaiahmed1/react-native-biometrics from version v0.10.0 to v0.15.0.
+
+## [3.2.1] BarChart
+
+### Fixed
+
+-   We have resolved an issue preventing Bar chart from rendering correctly.
+
+## [5.3.0] BottomSheet
+
+### Changed
+
+-   Updated react-native-gesture-handler from version v2.30.0 to v2.31.2.
+-   Updated react-native-reanimated from version v4.2.2 to v4.3.1.
+-   Updated react-native-worklets from version v0.7.4 to v0.8.3.
+-   Updated @gorhom/bottom-sheet from version v5.2.8 to v5.2.14.
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
+## [2.2.1] ColumnChart
+
+### Fixed
+
+-   We have resolved an issue preventing Column chart from rendering correctly
+
+## [3.6.1] Feedback
+
+### Changed
+
+-   Updated react-native-view-shot from version v4.0.3 to 5.1.0.
+
+## [4.2.1] FloatingActionButton
+
+### Changed
+
+-   Replaced `react-native-action-button` library with custom implementation using React Native's Animated API for better maintainability and reduced bundle size.
+
+-   Removed deprecated `react-native-prop-types` dependency.
+
+## [2.2.1] Gallery
+
+### Changed
+
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
+## [2.1.1] GalleryTextFilter
+
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+
+## [3.1.1] Image
+
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+-   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
+
+## [4.4.1] IntroScreen
+
+### Changed
+
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
+## [3.5.0] ListViewSwipe
+
+### Changed
+
+-   Updated react-native-gesture-handler from version v2.30.0 to v2.31.2.
+
+## [4.1.1] QRCode
+
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+
+## [5.2.1] Rating
+
+### Changed
+
+-   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
+
+## [6.4.1] VideoPlayer
+
+### Changed
+
+-   Updated react-native-video from version v6.19.0 to v6.19.2.
 
 ## [12.0.0] Native Mobile Resources - 2026-5-15
 

@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-6-10
+
 ### Changed
 
 -   Replaced `react-native-action-button` library with custom implementation using React Native's Animated API for better maintainability and reduced bundle size.

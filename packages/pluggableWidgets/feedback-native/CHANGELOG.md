@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.6.1] - 2026-6-10
+
 ### Changed
 
 -   Updated react-native-view-shot from version v4.0.3 to 5.1.0.

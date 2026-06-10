@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.2.1] - 2026-6-10
+
 ### Changed
 
 -   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
