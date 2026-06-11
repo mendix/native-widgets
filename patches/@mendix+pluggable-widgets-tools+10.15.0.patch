@@ -1,8 +1,9 @@
-diff --git a/configs/rollup-plugin-collect-dependencies.js b/configs/rollup-plugin-collect-dependencies.js
---- a/configs/rollup-plugin-collect-dependencies.js
-+++ b/configs/rollup-plugin-collect-dependencies.js
+diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js
+index b794026..2921c50 100644
+--- a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js
++++ b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js
 @@ -2,10 +2,8 @@
-
+ 
  import fg from "fast-glob";
  import { readJson, writeJson } from "fs-extra";
 -import { existsSync, readFileSync, writeFileSync } from "fs";
@@ -58,3 +59,4 @@ diff --git a/configs/rollup-plugin-collect-dependencies.js b/configs/rollup-plug
 +        }
      });
  }
+ 
