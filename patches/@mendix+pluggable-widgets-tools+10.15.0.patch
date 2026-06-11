@@ -1,0 +1,62 @@
+diff --git a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js
+index b794026..2921c50 100644
+--- a/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js
++++ b/node_modules/@mendix/pluggable-widgets-tools/configs/rollup-plugin-collect-dependencies.js
+@@ -2,10 +2,8 @@
+ 
+ import fg from "fast-glob";
+ import { readJson, writeJson } from "fs-extra";
+-import { existsSync, readFileSync, writeFileSync } from "fs";
++import { cpSync, existsSync, lstatSync, readFileSync, realpathSync, writeFileSync } from "fs";
+ import { dirname, join, parse } from "path";
+-import copy from "recursive-copy";
+-import { promisify } from "util";
+ import resolve from "resolve";
+ import _ from "lodash";
+ import moment from "moment";
+@@ -95,7 +93,7 @@
+                     } else if (!transitiveDependency.startsWith(dependency)) {
+                         await copyJsModule(
+                             transitiveDependency,
+-                            join(destinationPath, "node_modules", getModuleName(transitiveDependency))
++                            join(outputDir, "node_modules", getModuleName(transitiveDependency))
+                         );
+                     }
+                 }
+@@ -169,14 +167,28 @@
+     if (existsSync(to)) {
+         return;
+     }
+-    return promisify(copy)(moduleSourcePath, to, {
+-        filter: [
+-            "**/*.*",
+-            LICENSE_GLOB,
+-            "!**/{android,ios,windows,mac,jest,github,gradle,__*__,docs,jest,example*}/**/*",
+-            "!**/*.{config,setup}.*",
+-            "!**/*.{podspec,flow}"
+-        ]
++
++    let actualSourcePath = moduleSourcePath;
++    if (lstatSync(moduleSourcePath).isSymbolicLink()) {
++        actualSourcePath = realpathSync(moduleSourcePath);
++    }
++
++    cpSync(actualSourcePath, to, {
++        recursive: true,
++        dereference: true,
++        filter: src => {
++            const relativePath = src.replace(actualSourcePath, "").replace(/^[\/]/, "");
++
++            if (relativePath.match(/[\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\/]/)) {
++                return false;
++            }
++
++            if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
++                return false;
++            }
++
++            return true;
++        }
+     });
+ }
+ 
