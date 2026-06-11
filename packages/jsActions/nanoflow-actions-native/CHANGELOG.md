@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Close offline database connection before navigating between pages with OpenURL nanoflow action.
+
 ## [7.1.0] Nanoflow Commons - 2026-6-5
 
 ### Changed
