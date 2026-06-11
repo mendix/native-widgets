@@ -13,13 +13,13 @@ exports[`Slider applies custom styles: with custom styles 1`] = `
     disabled={false}
     maximumTrackStyle={
       {
-        "backgroundColor": "rgba(98,0,238, 0.3)",
+        "backgroundColor": "#E7E7E7",
       }
     }
     maximumValue={280}
     minimumTrackStyle={
       {
-        "backgroundColor": "rgb(98,0,238)",
+        "backgroundColor": "rgb(0,122,255)",
       }
     }
     minimumValue={0}
@@ -29,10 +29,20 @@ exports[`Slider applies custom styles: with custom styles 1`] = `
     testID="mocked-slider"
     thumbStyle={
       {
-        "backgroundColor": "rgb(98,0,238)",
-        "borderRadius": 12,
-        "height": 12,
-        "width": 12,
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDDDDD",
+        "borderRadius": 30,
+        "borderWidth": 1,
+        "elevation": 3,
+        "height": 30,
+        "shadowColor": "#000000",
+        "shadowOffset": {
+          "height": 3,
+          "width": 0,
+        },
+        "shadowOpacity": 0.2,
+        "shadowRadius": 1,
+        "width": 30,
       }
     }
     trackStyle={
@@ -55,13 +65,13 @@ exports[`Slider renders 1`] = `
     disabled={false}
     maximumTrackStyle={
       {
-        "backgroundColor": "rgba(98,0,238, 0.3)",
+        "backgroundColor": "#E7E7E7",
       }
     }
     maximumValue={280}
     minimumTrackStyle={
       {
-        "backgroundColor": "rgb(98,0,238)",
+        "backgroundColor": "rgb(0,122,255)",
       }
     }
     minimumValue={0}
@@ -71,10 +81,20 @@ exports[`Slider renders 1`] = `
     testID="mocked-slider"
     thumbStyle={
       {
-        "backgroundColor": "rgb(98,0,238)",
-        "borderRadius": 12,
-        "height": 12,
-        "width": 12,
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDDDDD",
+        "borderRadius": 30,
+        "borderWidth": 1,
+        "elevation": 3,
+        "height": 30,
+        "shadowColor": "#000000",
+        "shadowOffset": {
+          "height": 3,
+          "width": 0,
+        },
+        "shadowOpacity": 0.2,
+        "shadowRadius": 1,
+        "width": 30,
       }
     }
     trackStyle={
