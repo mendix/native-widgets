@@ -181,6 +181,47 @@ describe("RangeSlider", () => {
         expect(onChangeAction.execute).not.toHaveBeenCalled();
     });
 
+    it("renders with the width of the parent view", () => {
+        const component = render(
+            <RangeSlider
+                {...defaultProps}
+                style={[
+                    {
+                        container: { width: 100 },
+                        track: {},
+                        trackDisabled: {},
+                        minimumTrack: {},
+                        minimumTrackDisabled: {},
+                        maximumTrack: {},
+                        maximumTrackDisabled: {},
+                        thumb: {},
+                        thumbActive: {},
+                        thumbDisabled: {},
+                        validationMessage: {}
+                    }
+                ]}
+            />
+        );
+        const container = component.getByTestId("range-slider-test");
+        expect(container.props.style).toEqual(expect.objectContaining({ width: 100 }));
+    });
+
+    it("changes the lower value when swiping", () => {
+        const onChangeAction = actionValue();
+        const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
+        const slider = component.getByTestId("mocked-slider");
+
+        fireEvent(slider, "onValueChange", [120, 210]);
+
+        expect(onChangeAction.execute).not.toHaveBeenCalled();
+
+        fireEvent(slider, "onSlidingComplete", [120, 210]);
+
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(120));
+        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenCalledWith(new Big(210));
+        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
+    });
+
     it("applies custom styles", () => {
         const component = render(
             <RangeSlider

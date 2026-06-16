@@ -15,7 +15,7 @@ export interface RangeSliderStyle extends Style {
     validationMessage: TextStyle;
 }
 
-const blue = "rgb(0,122,255)";
+const blue = "rgb(30, 76, 231)";
 
 const trackBase: ViewStyle = {
     height: 4,

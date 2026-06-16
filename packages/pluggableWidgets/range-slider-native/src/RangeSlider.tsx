@@ -27,7 +27,7 @@ export function RangeSlider(props: Props): ReactElement {
 
     const onValueChange = useCallback(
         (values: number[]): void => {
-            if (values[0] === null || values[0] === undefined || values[1] === null || values[1] === undefined) {
+            if (values[0] == null || values[1] == null) {
                 return;
             }
             props.lowerValueAttribute.setValue(new Big(values[0]));
@@ -39,10 +39,8 @@ export function RangeSlider(props: Props): ReactElement {
     const onSlidingComplete = useCallback(
         (values: number[]): void => {
             if (
-                values[0] === null ||
-                values[0] === undefined ||
-                values[1] === null ||
-                values[1] === undefined ||
+                values[0] == null ||
+                values[1] == null ||
                 (lastLowerValue.current === values[0] && lastUpperValue.current === values[1])
             ) {
                 return;

@@ -19,7 +19,7 @@ exports[`RangeSlider applies custom styles: with custom styles 1`] = `
     maximumValue={280}
     minimumTrackStyle={
       {
-        "backgroundColor": "rgb(0,122,255)",
+        "backgroundColor": "rgb(30, 76, 231)",
       }
     }
     minimumValue={0}
@@ -76,7 +76,7 @@ exports[`RangeSlider renders 1`] = `
     maximumValue={280}
     minimumTrackStyle={
       {
-        "backgroundColor": "rgb(0,122,255)",
+        "backgroundColor": "rgb(30, 76, 231)",
       }
     }
     minimumValue={0}
