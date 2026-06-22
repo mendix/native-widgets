@@ -1,18 +1,16 @@
 import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
     ActionSheetIOS,
-    Animated,
     Appearance,
-    Dimensions,
-    LayoutChangeEvent,
     Modal,
     Platform,
-    Pressable,
     StyleSheet,
     Text,
     TouchableHighlight,
+    useWindowDimensions,
     View
 } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
@@ -23,19 +21,11 @@ import { ItemsBasicType } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle, ModalItemContainerStyle } from "../ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
 
-const BACKDROP_FADE_IN_DURATION = 200;
-const BACKDROP_FADE_OUT_DURATION = 150;
-// Delay before animating sheet open to ensure Modal and BottomSheet are fully laid out
-const SHEET_ANIMATION_DELAY = 50;
-
-// Styles for off-screen measurement container
-const MEASUREMENT_CONTAINER_STYLE = {
-    position: "absolute" as const,
-    opacity: 0,
-    top: -10000, // Position far off-screen to avoid any layout interference
-    left: 0,
-    pointerEvents: "none" as const
-};
+const ITEM_ROW_HEIGHT = 44;
+const CONTAINER_PADDING_TOP = 12;
+const CONTAINER_PADDING_BOTTOM = 8;
+const SCROLL_PADDING_BOTTOM = 16;
+const VERTICAL_PADDING = CONTAINER_PADDING_TOP + CONTAINER_PADDING_BOTTOM + SCROLL_PADDING_BOTTOM;
 
 interface NativeBottomSheetProps {
     name: string;
@@ -45,56 +35,28 @@ interface NativeBottomSheetProps {
     styles: BottomSheetStyle;
 }
 
-let lastIndexRef = -1;
-
 export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
-    const [contentHeight, setContentHeight] = useState(0);
-    const [isMeasured, setIsMeasured] = useState(false);
-    const backdropOpacity = useRef(new Animated.Value(0)).current;
+    const { height: windowHeight } = useWindowDimensions();
 
-    const isAvailable = props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available;
-    const isOpen =
-        props.triggerAttribute &&
-        props.triggerAttribute.status === ValueStatus.Available &&
-        props.triggerAttribute.value;
+    const externalOpen =
+        props.triggerAttribute?.status === ValueStatus.Available && props.triggerAttribute.value === true;
 
-    const manageBottomSheet = useCallback(() => {
-        if (props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available) {
-            if (props.triggerAttribute.value) {
-                requestAnimationFrame(() => {
-                    // Fade in backdrop - this helps smooth the transition as the sheet opens, reducing the perception of any initial stuttering.
-                    Animated.timing(backdropOpacity, {
-                        toValue: 1,
-                        duration: BACKDROP_FADE_IN_DURATION,
-                        useNativeDriver: true
-                    }).start();
-                    // Delay animation to ensure Modal and BottomSheet are fully mounted and laid out
-                    setTimeout(() => {
-                        bottomSheetRef.current?.snapToIndex(0);
-                    }, SHEET_ANIMATION_DELAY);
-                });
-            } else {
-                bottomSheetRef.current?.close();
-                Animated.timing(backdropOpacity, {
-                    toValue: 0,
-                    duration: BACKDROP_FADE_OUT_DURATION,
-                    useNativeDriver: true
-                }).start();
-            }
-        }
-    }, [props.triggerAttribute, backdropOpacity]);
+    const [mounted, setMounted] = useState(externalOpen);
+    const [ready, setReady] = useState(false);
+    const didOpenRef = useRef(false);
+
+    if (externalOpen && !mounted) {
+        setMounted(true);
+    }
+
+    const handleModalShow = useCallback(() => {
+        setReady(true);
+    }, []);
 
     useEffect(() => {
-        manageBottomSheet();
-    }, [manageBottomSheet]);
-
-    useEffect(() => {
-        // Only show the ActionSheet if using native on iOS and the trigger is active.
-        if (props.useNative && Platform.OS === "ios" && isOpen) {
-            // Create the options from props.itemsBasic captions.
+        if (props.useNative && Platform.OS === "ios" && externalOpen) {
             const options = props.itemsBasic.map(item => item.caption);
-            // Append a cancel option.
             options.push("Cancel");
             const cancelButtonIndex = options.length - 1;
 
@@ -106,58 +68,48 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                 },
                 buttonIndex => {
                     if (buttonIndex !== cancelButtonIndex) {
-                        // Execute the corresponding action from itemsBasic.
                         executeAction(props.itemsBasic[buttonIndex].action);
                     }
-                    // Reset the trigger so the ActionSheet will not show again until triggered.
                     if (props.triggerAttribute && !props.triggerAttribute.readOnly) {
                         props.triggerAttribute.setValue(false);
                     }
                 }
             );
         }
-    }, [isOpen]);
+    }, [externalOpen]);
 
     const close = useCallback(() => {
         bottomSheetRef.current?.close();
     }, []);
 
-    const renderBackdrop = useCallback(
-        (backdropProps: BottomSheetBackdropProps) => (
-            <Animated.View
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: "rgba(0, 0, 0, 0.3)",
-                    opacity: backdropOpacity
-                }}
-            >
-                <Pressable style={{ flex: 1 }} onPress={close}>
-                    <BottomSheetBackdrop
-                        {...backdropProps}
-                        pressBehavior="close"
-                        opacity={0}
-                        appearsOnIndex={0}
-                        disappearsOnIndex={-1}
-                    />
-                </Pressable>
-            </Animated.View>
-        ),
-        [close, backdropOpacity]
-    );
+    const handleChange = useCallback(
+        (index: number) => {
+            if (index === 0) {
+                didOpenRef.current = true;
+                return;
+            }
 
-    const onLayoutHandler = useCallback(
-        (event: LayoutChangeEvent) => {
-            const height = event.nativeEvent.layout.height;
-            if (height > 0 && height !== contentHeight) {
-                setContentHeight(height);
-                setIsMeasured(true);
+            if (index === -1 && didOpenRef.current) {
+                didOpenRef.current = false;
+                setReady(false);
+                props.triggerAttribute?.setValue(false);
+                setMounted(false);
             }
         },
-        [contentHeight]
+        [props.triggerAttribute]
+    );
+
+    const renderBackdrop = useCallback(
+        (backdropProps: BottomSheetBackdropProps) => (
+            <BottomSheetBackdrop
+                {...backdropProps}
+                pressBehavior="close"
+                opacity={0.3}
+                appearsOnIndex={0}
+                disappearsOnIndex={-1}
+            />
+        ),
+        []
     );
 
     const actionHandler = useCallback(
@@ -181,7 +133,6 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         return [styles.buttonContainer, buttonContainerStyle];
     };
 
-    // Render items with conditional style based on theme and platform.
     const renderItem = (item: ItemsBasicType, index: number) => {
         if (Platform.OS === "android" || !props.useNative) {
             return (
@@ -216,74 +167,40 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         return [styles.sheetContainer, props.styles.container];
     };
 
-    const handleSheetChanges = useCallback(
-        (index: number) => {
-            if (!isAvailable) {
-                return;
-            }
-            const hasOpened = lastIndexRef === -1 && index === 0;
-            const hasClosed = index === -1;
-            lastIndexRef = index;
-
-            if (hasOpened) {
-                props.triggerAttribute?.setValue(true);
-            }
-            if (hasClosed) {
-                props.triggerAttribute?.setValue(false);
-            }
-        },
-        [isAvailable, props.triggerAttribute]
-    );
-
     const snapPoints = useMemo(() => {
-        if (contentHeight === 0) {
-            return [1]; // During measurement
-        }
-
-        // Use actual measured height, cap at 90% screen
-        const maxHeight = Dimensions.get("screen").height * 0.9;
-
-        const snapHeight = Math.min(contentHeight, maxHeight);
-        return [snapHeight];
-    }, [contentHeight]);
+        const maxHeight = windowHeight * 0.9;
+        return [Math.min(props.itemsBasic.length * ITEM_ROW_HEIGHT + VERTICAL_PADDING, maxHeight)];
+    }, [props.itemsBasic.length, windowHeight]);
 
     if (props.useNative && Platform.OS === "ios") {
         return <View></View>;
     }
 
     return (
-        <>
-            {/* Off-screen measurement - measure content before showing Modal to prevent sudden jumps in layout */}
-            {!isMeasured && (
-                <View
-                    style={[MEASUREMENT_CONTAINER_STYLE, { width: Dimensions.get("screen").width }]}
-                    onLayout={onLayoutHandler}
-                >
-                    {props.itemsBasic.map((item, index) => renderItem(item, index))}
-                </View>
-            )}
-
-            <Modal onRequestClose={close} transparent visible={isOpen && isMeasured}>
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={-1}
-                    snapPoints={snapPoints}
-                    enablePanDownToClose
-                    animateOnMount={false}
-                    onClose={() => handleSheetChanges(-1)}
-                    onChange={handleSheetChanges}
-                    style={getContainerStyle()}
-                    backdropComponent={renderBackdrop}
-                    backgroundStyle={props.styles.container}
-                    handleComponent={null}
-                    handleStyle={{ display: "none" }}
-                >
-                    <BottomSheetScrollView contentContainerStyle={{ paddingBottom: 16 }}>
-                        {props.itemsBasic.map((item, index) => renderItem(item, index))}
-                    </BottomSheetScrollView>
-                </BottomSheet>
-            </Modal>
-        </>
+        <Modal onRequestClose={close} transparent animationType="none" visible={mounted} onShow={handleModalShow}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                {ready && (
+                    <BottomSheet
+                        ref={bottomSheetRef}
+                        index={0}
+                        snapPoints={snapPoints}
+                        animateOnMount
+                        enablePanDownToClose
+                        onChange={handleChange}
+                        onClose={() => handleChange(-1)}
+                        style={getContainerStyle()}
+                        backdropComponent={renderBackdrop}
+                        backgroundStyle={props.styles.container}
+                        handleComponent={null}
+                        handleStyle={{ display: "none" }}
+                    >
+                        <BottomSheetScrollView contentContainerStyle={{ paddingBottom: SCROLL_PADDING_BOTTOM }}>
+                            {props.itemsBasic.map((item, index) => renderItem(item, index))}
+                        </BottomSheetScrollView>
+                    </BottomSheet>
+                )}
+            </GestureHandlerRootView>
+        </Modal>
     );
 };
 
