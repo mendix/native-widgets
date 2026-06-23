@@ -11,8 +11,8 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: "Setup Python and dependencies"
-      uses: ./.github/actions/setup-python
+    # NOTE: Python setup was removed here. It was only needed by the old m2ee-based
+    # runtime; the portable app package starts via bin/start (JVM) with no Python.
 
     - name: "Setup Node and dependencies"
       uses: ./.github/actions/setup-node-with-cache
