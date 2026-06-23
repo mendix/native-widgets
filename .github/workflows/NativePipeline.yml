@@ -664,34 +664,6 @@ jobs:
         widget: ${{ fromJson(needs.scope.outputs.widgets_to_test) }}
       fail-fast: false
     steps:
-      - name: "Force cleanup workspace"
-        run: |
-          # Kill all Git and Xcode processes aggressively
-          sudo pkill -9 -f git || true
-          sudo pkill -9 -f xcodebuild || true
-          sudo pkill -9 -f node || true
-          
-          # Wait for processes to be killed
-          sleep 5
-          
-          # Clean the workspace contents while preserving directory structure
-          cd /Users/runner/work/native-widgets
-          if [ -d "native-widgets" ]; then
-            cd native-widgets
-            
-            # Force remove all git state and locks with extreme prejudice
-            sudo rm -rf .git || true
-            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
-            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
-            
-            # Remove all other contents
-            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
-          fi
-          
-          # Final wait and process cleanup
-          sudo pkill -9 -f git || true
-          sleep 3
-        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -827,33 +799,6 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 90
     steps:
-      - name: "Clean up any Git locks"
-        run: |
-          # Kill all git and related processes aggressively
-          sudo pkill -9 -f git || true
-          sudo pkill -9 -f node || true
-          
-          # Wait for processes to be killed
-          sleep 5
-          
-          # Clean the workspace contents while preserving directory structure
-          cd /Users/runner/work/native-widgets
-          if [ -d "native-widgets" ]; then
-            cd native-widgets
-            
-            # Force remove git state and locks
-            sudo rm -rf .git || true
-            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
-            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
-            
-            # Remove all other contents
-            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
-          fi
-          
-          # Final cleanup
-          sudo pkill -9 -f git || true
-          sleep $((RANDOM % 5 + 3))
-        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
