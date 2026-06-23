@@ -1,0 +1,63 @@
+name: "Start Mendix runtime (portable app)"
+description: "Extract the portable app package, start it in the background, and wait until it actually serves requests"
+inputs:
+  app-package:
+    description: "Path to the portable app package zip produced by 'mxbuild --target=portable-app-package'"
+    required: false
+    default: "app.zip"
+  java-home:
+    description: "JAVA_HOME to run the runtime with (defaults to the JAVA_HOME already in the environment)"
+    required: false
+    default: ""
+  admin-pass:
+    description: "Value for M2EE_ADMIN_PASS (secures the runtime admin port)"
+    required: false
+    default: "Password1!"
+  runtime-url:
+    description: "URL polled until the runtime responds, confirming readiness"
+    required: false
+    default: "http://localhost:8080/"
+  timeout-seconds:
+    description: "How long to wait for the runtime to become ready before failing"
+    required: false
+    default: "300"
+runs:
+  using: "composite"
+  steps:
+    - name: "Start runtime and wait until ready"
+      shell: bash
+      env:
+        APP_PACKAGE: ${{ inputs.app-package }}
+        INPUT_JAVA_HOME: ${{ inputs.java-home }}
+        M2EE_ADMIN_PASS: ${{ inputs.admin-pass }}
+        RUNTIME_URL: ${{ inputs.runtime-url }}
+        TIMEOUT_SECONDS: ${{ inputs.timeout-seconds }}
+      run: |
+        set -euo pipefail
+
+        # Allow an explicit JAVA_HOME override; otherwise rely on the one set up earlier.
+        if [ -n "$INPUT_JAVA_HOME" ]; then
+          export JAVA_HOME="$INPUT_JAVA_HOME"
+        fi
+        echo "Using JAVA_HOME=${JAVA_HOME:-<from PATH>}"
+
+        rm -rf runtime-app
+        mkdir -p runtime-app log
+        unzip -qq "$APP_PACKAGE" -d runtime-app
+        chmod +x runtime-app/bin/start
+
+        # Start the bundled runtime in the background; it must outlive this step.
+        (cd runtime-app && nohup ./bin/start etc/Default > "$GITHUB_WORKSPACE/log/runtime.log" 2>&1 &)
+
+        echo "Waiting up to ${TIMEOUT_SECONDS}s for the runtime at ${RUNTIME_URL} ..."
+        deadline=$(( SECONDS + TIMEOUT_SECONDS ))
+        until curl -fsS -o /dev/null "$RUNTIME_URL"; do
+          if [ "$SECONDS" -ge "$deadline" ]; then
+            echo "::error::Mendix runtime did not become ready within ${TIMEOUT_SECONDS}s"
+            echo "----- last 100 lines of runtime.log -----"
+            tail -n 100 "$GITHUB_WORKSPACE/log/runtime.log" 2>/dev/null || echo "(no log)"
+            exit 1
+          fi
+          sleep 3
+        done
+        echo "Mendix runtime is ready and serving at ${RUNTIME_URL}"

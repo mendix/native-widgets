@@ -39,5 +39,10 @@ The JS action tests run against a full test project that requires all widgets to
 
 -   **determine-nt-version.py** - Determines the Native Template version based on Mendix version
 -   **mxbuild.Dockerfile** - Docker image for mxbuild
--   **setup-runtime.sh** - Sets up the Mendix runtime
--   **start-runtime-with-verification.sh** - Starts the runtime with health verification
+
+> The Mendix runtime for the test jobs is now produced as a **portable app package**
+> (`mxbuild --target=portable-app-package`) in the `project` job and started by the
+> `start-mendix-runtime` composite action, which waits for a real readiness probe.
+> This replaced the old `setup-runtime.sh` / `start-runtime-with-verification.sh`
+> scripts and the `m2ee-native.yml` config (which cloned m2ee-tools and downloaded
+> the runtime from the CDN).

@@ -24,17 +24,9 @@ runs:
         distribution: "temurin"
         java-version: "21"
 
-    - name: "Cache Mendix runtime"
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 #v5
-      with:
-        path: tmp/runtime.tar.gz
-        key: mendix-runtime-${{ inputs.mendix_version }}
-
-    - name: "Cache m2ee-tools"
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 #v5
-      with:
-        path: tmp/m2ee
-        key: m2ee-tools-v1
+    # NOTE: the Mendix-runtime tarball and m2ee-tools caches were removed here.
+    # The portable app package bundles the runtime, so the test jobs no longer
+    # download the runtime from the CDN or clone m2ee-tools.
 
     - name: "Install Maestro"
       uses: ./.github/actions/setup-maestro

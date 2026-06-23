@@ -297,11 +297,23 @@ jobs:
       - name: "Force rebuild test project"
         run: |
           mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      - name: "Build portable app package (self-contained runtime)"
+        # Output must live inside the project root: mxbuild's WhitelistAware path check
+        # rejects arbitrary output paths for the portable-app-package target.
+        run: |
+          mxbuild --target=portable-app-package \
+            -o Native-Mobile-Resources-main/app.zip \
+            --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
       - name: "Upload MDA"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: mda
           path: automation.mda
+      - name: "Upload portable app package"
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
+        with:
+          name: app-package
+          path: Native-Mobile-Resources-main/app.zip
   android-bundle:
     needs: [project, mendix-version]
     runs-on: ubuntu-26.04
@@ -495,10 +507,10 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only when specific run id is provided when triggering the jbo
       - name: "Download Android app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -521,14 +533,10 @@ jobs:
         with:
           mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
 
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          timeout_minutes: 20
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -602,10 +610,10 @@ jobs:
           fetch-tags: false
           clean: true
           ref: ${{ github.sha }}
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only for local testing, will be empty on GitHub
       - name: "Download iOS app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -627,14 +635,10 @@ jobs:
         uses: ./.github/actions/setup-tools
         with:
           mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
   
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
@@ -662,10 +666,10 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only for local testing, will be empty on GitHub
       - name: "Download Android app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -687,14 +691,10 @@ jobs:
         uses: ./.github/actions/setup-tools
         with:
           mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -761,10 +761,10 @@ jobs:
           fetch-depth: 1
           fetch-tags: false
           clean: true
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only for local testing, will be empty on GitHub
       - name: "Download iOS app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -786,14 +786,10 @@ jobs:
         uses: ./.github/actions/setup-tools
         with:
           mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
       
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
