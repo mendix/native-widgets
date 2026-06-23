@@ -363,10 +363,6 @@ jobs:
     runs-on: ubuntu-26.04
     # Skip this job if we're using artifacts from a specific run, but allow it to run if android-bundle was skipped
     if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.android-bundle.result == 'success') }}
-    env:
-      # Must match the NDK version the native-template/React Native gradle build requests,
-      # otherwise gradle will download a different one anyway. Bump together with native-template.
-      ANDROID_NDK_VERSION: "27.0.12077973"
     steps:
       - name: Debug branch value
         run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
@@ -376,6 +372,19 @@ jobs:
           repository: mendix/native-template
           ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
+      - name: "Detect Android NDK version from native-template"
+        shell: bash
+        run: |
+          set -euo pipefail
+          # native-template declares e.g. ndkVersion = "27.3.13750724" in android/build.gradle
+          NDK=$(grep -oE 'ndkVersion[[:space:]]*=?[[:space:]]*"[0-9.]+"' native-template/android/build.gradle \
+                | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
+          if [ -z "$NDK" ]; then
+            echo "::warning::Could not detect ndkVersion from native-template; gradle will resolve/download it."
+          else
+            echo "Detected NDK version: $NDK"
+          fi
+          echo "ANDROID_NDK_VERSION=$NDK" >> "$GITHUB_ENV"
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -415,17 +424,19 @@ jobs:
           distribution: temurin
           cache: gradle
 
-      # Install the NDK explicitly and cache it, instead of letting the gradle build
-      # download ~1GB every run. (${{ }} expressions are expanded by Actions, so they
-      # are safe in cache `path` — unlike shell $VARs.)
+      # Install the NDK explicitly and cache it (keyed on the version detected from
+      # native-template), instead of letting the gradle build download ~1GB every run.
+      # (${{ }} expressions are expanded by Actions, so they are safe in cache `path`
+      # — unlike shell $VARs.) If detection failed, these no-op and gradle resolves it.
       - name: "Cache Android NDK"
         id: cache-ndk
+        if: env.ANDROID_NDK_VERSION != ''
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}
           key: ${{ runner.os }}-android-ndk-${{ env.ANDROID_NDK_VERSION }}
       - name: "Install Android NDK"
-        if: steps.cache-ndk.outputs.cache-hit != 'true'
+        if: env.ANDROID_NDK_VERSION != '' && steps.cache-ndk.outputs.cache-hit != 'true'
         shell: bash
         run: yes | sdkmanager "ndk;${ANDROID_NDK_VERSION}"
 
