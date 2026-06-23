@@ -517,8 +517,41 @@ jobs:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
 
+  android-avd-cache:
+    runs-on: ubuntu-26.04
+    # Warm a booted-emulator snapshot once and cache it, so the per-widget Android shards
+    # restore it instead of cold-booting (~1-2 min saved per shard). Pure speed optimization:
+    # shards fall back to a cold boot on cache miss, so a failure here doesn't block tests.
+    steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: "AVD cache"
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          # Keep in sync with the emulator config and the restore step in the test jobs.
+          key: avd-android-35-x86_64-google_apis-pixel
+      - name: "Create AVD and generate snapshot for caching"
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel
+          force-avd-creation: false
+          emulator-options: "-no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096 -cores 4"
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
   android-widget-tests:
-    needs: [scope, mendix-version, project, android-app]
+    needs: [scope, mendix-version, project, android-app, android-avd-cache]
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-26.04
@@ -568,6 +601,14 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: "Restore AVD snapshot"
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          # Must match the key in the android-avd-cache job.
+          key: avd-android-35-x86_64-google_apis-pixel
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
         with:
@@ -575,7 +616,9 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          # Boot from the cached snapshot (don't overwrite it); falls back to a cold boot on cache miss.
+          force-avd-creation: false
+          emulator-options: "-no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save -memory 4096 -cores 4"
           disable-animations: true
           script: |
             chmod +x maestro/helpers/prepare_android.sh
@@ -682,7 +725,7 @@ jobs:
           test-type: ${{ matrix.widget }}
 
   android-js-tests:
-    needs: [scope, mendix-version, project, android-app]
+    needs: [scope, mendix-version, project, android-app, android-avd-cache]
     # Run if JS actions changed and project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
     if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-26.04
@@ -726,6 +769,14 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: "Restore AVD snapshot"
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          # Must match the key in the android-avd-cache job.
+          key: avd-android-35-x86_64-google_apis-pixel
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
         with:
@@ -733,7 +784,9 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          # Boot from the cached snapshot (don't overwrite it); falls back to a cold boot on cache miss.
+          force-avd-creation: false
+          emulator-options: "-no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save -memory 4096 -cores 4"
           disable-animations: true
           script: |
             chmod +x maestro/helpers/prepare_android.sh
