@@ -438,7 +438,20 @@ jobs:
       - name: "Install Android NDK"
         if: env.ANDROID_NDK_VERSION != '' && steps.cache-ndk.outputs.cache-hit != 'true'
         shell: bash
-        run: yes | sdkmanager "ndk;${ANDROID_NDK_VERSION}"
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          SDKMANAGER="$SDK/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "${SDKMANAGER:-}" ] || [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(find "$SDK" -type f -name sdkmanager 2>/dev/null | head -1)"
+          fi
+          echo "Using sdkmanager: $SDKMANAGER"
+          # Accept licenses first (yes can SIGPIPE under pipefail, so tolerate it), then install.
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" "ndk;${ANDROID_NDK_VERSION}"
 
       - name: "Build Android app"
         working-directory: native-template/android
