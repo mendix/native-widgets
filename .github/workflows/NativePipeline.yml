@@ -442,12 +442,9 @@ jobs:
 
       - name: "Build Android app"
         working-directory: native-template/android
-        run: |
-          ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
-          if [ $? -ne 0 ]; then
-            echo "Build failed!"
-            exit 1
-          fi
+        # The CI emulator is x86_64, so only compile that ABI's native code instead of all
+        # four (arm64-v8a, armeabi-v7a, x86, x86_64) — cuts the C/C++ build by ~75%.
+        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest -PreactNativeArchitectures=x86_64
       - name: "List APK files"
         run: |
           echo "Listing APK files in the output directory:"
