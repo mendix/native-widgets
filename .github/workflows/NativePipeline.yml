@@ -182,7 +182,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Check if docker image already exists"
         run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
+          docker manifest inspect ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
           echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -196,7 +196,7 @@ jobs:
           build-args: |
             MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
           push: true
-          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+          tags: ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
   resources:
     needs: [scope, mendix-version]
     runs-on: ubuntu-26.04
@@ -249,7 +249,7 @@ jobs:
     needs: [resources, mendix-version]
     runs-on: ubuntu-26.04
     container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      image: ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -320,7 +320,7 @@ jobs:
     # Skip this job if we're using artifacts from a specific run
     if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      image: ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -342,7 +342,7 @@ jobs:
     # Skip this job if we're using artifacts from a specific run
     if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      image: ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
