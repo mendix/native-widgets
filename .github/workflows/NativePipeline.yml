@@ -78,13 +78,17 @@ on:
 
 # Use default name in case no input
 run-name: ${{ github.event.inputs.run_name || 'Run Native Pipeline' }}
+# Cancel superseded runs for the same PR/branch; a new push should not race an in-flight pipeline.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 env:
   LOCAL_TEST_ARTIFACT_RUN_ID: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID || '' }}
 permissions:
   packages: write
 jobs:
   scope:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       scope: ${{ steps.scope.outputs.scope }}
       widgets: ${{ steps.scope.outputs.widgets }}
@@ -107,7 +111,7 @@ jobs:
           echo "Widgets to test: ${{ steps.scope.outputs.widgets_to_test }}"
           echo "JS actions changed: ${{ steps.scope.outputs.js_actions_changed }}"
   mendix-version:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     outputs:
       mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
     steps:
@@ -127,7 +131,7 @@ jobs:
           echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
   determine-nt-version:
     needs: [mendix-version]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       nt_branch: ${{ steps.set-output.outputs.nt_branch }}
     steps:
@@ -168,7 +172,7 @@ jobs:
           echo "Final nt_branch value: ${{ steps.set-output.outputs.nt_branch }}"
   docker-images:
     needs: [mendix-version]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: "Login to GitHub Container Registry"
         uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
@@ -195,7 +199,7 @@ jobs:
           tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
   resources:
     needs: [scope, mendix-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     permissions:
       packages: read
       contents: read
@@ -204,15 +208,8 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: .nvmrc
-          package-manager-cache: false
-      - name: "Setup pnpm"
-        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
-      - name: "Install dependencies"
-        run: pnpm install --frozen-lockfile
+      - name: "Setup Node and dependencies (with pnpm store cache)"
+        uses: ./.github/actions/setup-node-with-cache
       - name: "Force rebuild resources"
         run: |
           # Build JS actions if needed (when js_actions_changed is true OR when workspace explicitly includes them)
@@ -250,7 +247,7 @@ jobs:
             packages/jsActions/nanoflow-actions-native/dist/**/*
   project:
     needs: [resources, mendix-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     container:
       image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
@@ -307,7 +304,7 @@ jobs:
           path: automation.mda
   android-bundle:
     needs: [project, mendix-version]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # Skip this job if we're using artifacts from a specific run
     if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
@@ -329,7 +326,7 @@ jobs:
           mda-file: automation.mda
   ios-bundle:
     needs: [project, mendix-version]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # Skip this job if we're using artifacts from a specific run
     if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
     container:
@@ -351,7 +348,7 @@ jobs:
           mda-file: automation.mda
   android-app:
     needs: [android-bundle, determine-nt-version]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # Skip this job if we're using artifacts from a specific run, but allow it to run if android-bundle was skipped
     if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.android-bundle.result == 'success') }}
     steps:
@@ -421,7 +418,7 @@ jobs:
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
     needs: [ios-bundle, determine-nt-version]
-    runs-on: macos-15
+    runs-on: macos-26
     # Skip this job if we're using artifacts from a specific run, but allow it to run if ios-bundle was skipped
     if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.ios-bundle.result == 'success') }}
     steps:
@@ -486,7 +483,7 @@ jobs:
     needs: [scope, mendix-version, project, android-app]
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     strategy:
       max-parallel: 5
@@ -562,7 +559,7 @@ jobs:
     needs: [scope, mendix-version, project, ios-app]
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 60
     strategy:
       max-parallel: 5
@@ -658,7 +655,7 @@ jobs:
     needs: [scope, mendix-version, project, android-app]
     # Run if JS actions changed and project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
     if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 90
     steps:
       - name: "Check out code"
@@ -728,7 +725,7 @@ jobs:
     needs: [scope, mendix-version, project, ios-app]
     # Run if JS actions changed and project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
     if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 90
     steps:
       - name: "Clean up any Git locks"
@@ -814,7 +811,7 @@ jobs:
           test-type: js-actions
   compare-screenshots:
     needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     if: always()
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
