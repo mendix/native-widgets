@@ -514,7 +514,11 @@ jobs:
       - name: "Setup Pods cache"
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
-          path: native-template/Pods
+          # Also cache CocoaPods' own download cache so `pod install` is fast even when
+          # the Pods/ dir misses. (~ is expanded by actions/cache.)
+          path: |
+            native-template/Pods
+            ~/Library/Caches/CocoaPods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
@@ -523,7 +527,10 @@ jobs:
         run: pod install
       - name: "Build iOS app"
         working-directory: native-template/ios
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
+        # Build for the simulator's native arch (arm64 on Apple Silicon runners).
+        # ONLY_ACTIVE_ARCH=YES already limits to the active arch; the old
+        # VALID_ARCHS="i386 x86_64" forced dead/foreign archs and broke on macos-26.
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES
       - name: "Archive iOS app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
