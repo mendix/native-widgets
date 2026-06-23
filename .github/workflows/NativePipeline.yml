@@ -84,6 +84,8 @@ concurrency:
   cancel-in-progress: true
 env:
   LOCAL_TEST_ARTIFACT_RUN_ID: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID || '' }}
+  # Opt out of Maestro's anonymous analytics (avoids a network call, keeps runs deterministic).
+  MAESTRO_CLI_NO_ANALYTICS: "1"
 permissions:
   packages: write
 jobs:
@@ -622,12 +624,13 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: "Restore AVD snapshot"
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        # Restore-only: the android-avd-cache job is the sole writer, so shards don't
+        # each try to re-save the same key. Must match that job's key.
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          # Must match the key in the android-avd-cache job.
           key: avd-android-35-x86_64-google_apis-pixel
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
@@ -762,12 +765,13 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: "Restore AVD snapshot"
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        # Restore-only: the android-avd-cache job is the sole writer, so shards don't
+        # each try to re-save the same key. Must match that job's key.
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          # Must match the key in the android-avd-cache job.
           key: avd-android-35-x86_64-google_apis-pixel
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
