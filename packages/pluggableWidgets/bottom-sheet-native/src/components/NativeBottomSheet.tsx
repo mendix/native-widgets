@@ -4,13 +4,13 @@ import {
     Appearance,
     Modal,
     Platform,
+    Pressable,
     StyleSheet,
     Text,
     TouchableHighlight,
     useWindowDimensions,
     View
 } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
@@ -101,15 +101,17 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     const renderBackdrop = useCallback(
         (backdropProps: BottomSheetBackdropProps) => (
-            <BottomSheetBackdrop
-                {...backdropProps}
-                pressBehavior="close"
-                opacity={0.3}
-                appearsOnIndex={0}
-                disappearsOnIndex={-1}
-            />
+            <Pressable style={{ flex: 1 }} onPress={close}>
+                <BottomSheetBackdrop
+                    {...backdropProps}
+                    pressBehavior="close"
+                    opacity={0.3}
+                    appearsOnIndex={0}
+                    disappearsOnIndex={-1}
+                />
+            </Pressable>
         ),
-        []
+        [close]
     );
 
     const actionHandler = useCallback(
@@ -178,28 +180,26 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     return (
         <Modal onRequestClose={close} transparent animationType="none" visible={mounted} onShow={handleModalShow}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-                {ready && (
-                    <BottomSheet
-                        ref={bottomSheetRef}
-                        index={0}
-                        snapPoints={snapPoints}
-                        animateOnMount
-                        enablePanDownToClose
-                        onChange={handleChange}
-                        onClose={() => handleChange(-1)}
-                        style={getContainerStyle()}
-                        backdropComponent={renderBackdrop}
-                        backgroundStyle={props.styles.container}
-                        handleComponent={null}
-                        handleStyle={{ display: "none" }}
-                    >
-                        <BottomSheetScrollView contentContainerStyle={{ paddingBottom: SCROLL_PADDING_BOTTOM }}>
-                            {props.itemsBasic.map((item, index) => renderItem(item, index))}
-                        </BottomSheetScrollView>
-                    </BottomSheet>
-                )}
-            </GestureHandlerRootView>
+            {ready && (
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    index={0}
+                    snapPoints={snapPoints}
+                    animateOnMount
+                    enablePanDownToClose
+                    onChange={handleChange}
+                    onClose={() => handleChange(-1)}
+                    style={getContainerStyle()}
+                    backdropComponent={renderBackdrop}
+                    backgroundStyle={props.styles.container}
+                    handleComponent={null}
+                    handleStyle={{ display: "none" }}
+                >
+                    <BottomSheetScrollView contentContainerStyle={{ paddingBottom: SCROLL_PADDING_BOTTOM }}>
+                        {props.itemsBasic.map((item, index) => renderItem(item, index))}
+                    </BottomSheetScrollView>
+                </BottomSheet>
+            )}
         </Modal>
     );
 };
