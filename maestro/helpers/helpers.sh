@@ -6,7 +6,9 @@ RETRY_DELAY=10
 # Function to restart the iOS simulator
 restart_simulator() {
     echo "🔄 Restarting iOS Simulator..."
-    xcrun simctl shutdown "$IOS_DEVICE"
+    # Shut down whatever is booted; the device is auto-selected in prepare_ios.sh,
+    # so we don't depend on a hardcoded device name here.
+    xcrun simctl shutdown all || true
     sleep 10
     bash ./maestro/helpers/prepare_ios.sh
 }

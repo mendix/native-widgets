@@ -15,7 +15,6 @@ if [ "$1" == "android" ]; then
 elif [ "$1" == "ios" ]; then
   APP_ID="com.mendix.native.template"
   PLATFORM="ios"
-  IOS_DEVICE="iPhone 16"
 else
   echo "Usage: $0 [android|ios] [widget]"
   exit 1

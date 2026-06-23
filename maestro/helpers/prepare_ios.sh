@@ -1,45 +1,48 @@
 #!/bin/bash
 
-# Configuration - modify these values as needed
-DEVICE_TYPE="iPhone 16"
-IOS_VERSION="18.5"
-
+# Auto-select the newest available iPhone simulator (highest iOS runtime + highest iPhone
+# model) instead of hardcoding a device/iOS version that breaks on every runner-image bump.
 start_simulator() {
-    echo "Starting iOS Simulator..."
-    echo "Looking for: $DEVICE_TYPE with iOS $IOS_VERSION"
-    
-    # List available simulators to debug
-    # echo "Available simulators:"
-    # xcrun simctl list devices available
-    
-    # Try to find the specified device with the specified iOS version
-    DEVICE_ID=$(xcrun simctl list devices available | grep -A1 "iOS $IOS_VERSION" | grep "$DEVICE_TYPE " | head -1 | grep -o "[A-F0-9-]{36}")
-    
+    echo "Selecting the newest available iPhone simulator..."
+
+    # Parse `simctl list` JSON: pick the available iPhone with the highest (iOS version, model).
+    read -r DEVICE_ID DEVICE_NAME RUNTIME_VER < <(
+        xcrun simctl list -j devices available | python3 -c '
+import json, sys, re
+data = json.load(sys.stdin).get("devices", {})
+best = None
+for runtime, devices in data.items():
+    m = re.search(r"iOS-(\d+)-(\d+)", runtime)
+    if not m:
+        continue
+    ios_ver = (int(m.group(1)), int(m.group(2)))
+    for d in devices:
+        if not d.get("isAvailable", False):
+            continue
+        name = d.get("name", "")
+        if not name.startswith("iPhone"):
+            continue
+        mm = re.search(r"iPhone (\d+)", name)
+        model = int(mm.group(1)) if mm else 0
+        key = (ios_ver, model)
+        if best is None or key > best[0]:
+            best = (key, d["udid"], name, ios_ver)
+if best:
+    print(best[1], best[2], f"{best[3][0]}.{best[3][1]}")
+'
+    )
+
     if [ -z "$DEVICE_ID" ]; then
-        echo "No $DEVICE_TYPE with iOS $IOS_VERSION found. Trying to create one..."
-        # Try to create the device with the specified iOS version
-        IOS_RUNTIME="com.apple.CoreSimulator.SimRuntime.iOS-${IOS_VERSION//./-}"
-        DEVICE_TYPE_ID="com.apple.CoreSimulator.SimDeviceType.${DEVICE_TYPE// /-}"
-        DEVICE_ID=$(xcrun simctl create "${DEVICE_TYPE} Test" "$DEVICE_TYPE_ID" "$IOS_RUNTIME" 2>/dev/null)
-        
-        if [ -z "$DEVICE_ID" ]; then
-            echo "Failed to create $DEVICE_TYPE with iOS $IOS_VERSION. Using any available $DEVICE_TYPE."
-            DEVICE_ID=$(xcrun simctl list devices available | grep "$DEVICE_TYPE " | head -1 | grep -o "[A-F0-9-]{36}")
-        fi
-    fi
-    
-    if [ -z "$DEVICE_ID" ]; then
-        echo "Error: Could not find or create any $DEVICE_TYPE device"
+        echo "Error: no available iPhone simulator found"
+        xcrun simctl list devices available || true
         exit 1
     fi
-    
-    echo "Using device ID: $DEVICE_ID"
+
+    echo "Using $DEVICE_NAME (iOS $RUNTIME_VER), UDID: $DEVICE_ID"
     export SIMULATOR_DEVICE_ID="$DEVICE_ID"
-    
-    # Boot the device
+
     xcrun simctl boot "$DEVICE_ID" || echo "Simulator already booted"
-    sleep 30
-    xcrun simctl bootstatus "$DEVICE_ID" || echo "Simulator booted successfully"
+    xcrun simctl bootstatus "$DEVICE_ID" -b || echo "Simulator booted"
 }
 
 set_status_bar() {
