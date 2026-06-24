@@ -5,7 +5,10 @@
 # future macos-NN bump drops/renames it), fall back to the newest available iPhone and warn
 # loudly that baselines likely need regenerating — degrade gracefully instead of hard-failing
 # like the old hardcoded device did. Override the pin via PREFERRED_IOS_DEVICE.
-PREFERRED_IOS_DEVICE="${PREFERRED_IOS_DEVICE:-iPhone 17 Pro}"
+# Exported (not just assigned) so the python3 process in the pipeline below inherits it.
+# A `VAR=x cmd | python3` prefix only applies to `cmd`, NOT to python3 (separate pipeline
+# process), so without `export` python sees an empty preferred name and always falls back.
+export PREFERRED_IOS_DEVICE="${PREFERRED_IOS_DEVICE:-iPhone 17 Pro}"
 
 start_simulator() {
     echo "Selecting iOS simulator (preferred: '$PREFERRED_IOS_DEVICE')..."
@@ -13,7 +16,7 @@ start_simulator() {
     # Parse `simctl list` JSON. Output is TAB-delimited (device names contain spaces) as:
     #   <udid>\t<name>\t<ios_ver>\t<status>   where status is "pinned" or "fallback".
     IFS=$'\t' read -r DEVICE_ID DEVICE_NAME RUNTIME_VER SELECT_STATUS < <(
-        PREFERRED_IOS_DEVICE="$PREFERRED_IOS_DEVICE" xcrun simctl list -j devices available | python3 -c '
+        xcrun simctl list -j devices available | python3 -c '
 import json, os, sys, re
 preferred = os.environ.get("PREFERRED_IOS_DEVICE", "")
 data = json.load(sys.stdin).get("devices", {})

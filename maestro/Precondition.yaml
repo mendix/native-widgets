@@ -1,7 +1,7 @@
 appId: "${APP_ID}"
 ---
 - retry:
-    maxRetries: 3
+    maxRetries: 2
     commands:
       - launchApp:
           clearState: true
@@ -10,4 +10,8 @@ appId: "${APP_ID}"
             notifications: allow
       - extendedWaitUntil:
           visible: "Widgets menu"
-          timeout: 240000 # A long timeout since app startup is quite unstable due to resources when executed on Github runners
+          # 60s per attempt × 2 retries. Was 240s × 3 (= up to 12 min PER flow), which is what
+          # turned a broken/sluggish shard into a 60-min timeout. The up-front smoke check
+          # (Smoke.yaml) already absorbs a fundamentally-broken build; this keeps a small
+          # retry budget for genuine GitHub-runner sluggishness without the amplification.
+          timeout: 60000

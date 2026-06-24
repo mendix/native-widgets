@@ -91,6 +91,27 @@ run_tests() {
   done
 }
 
+# Fast-fail smoke check (S6): verify the app launches and the Widgets menu renders ONCE,
+# before running any widget flows. If it fails the build is fundamentally broken, so abort
+# the shard immediately rather than burning every flow × retries up to the job timeout.
+smoke_check() {
+  local script_dir
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+  echo "🔎 Smoke check: app launches and 'Widgets menu' renders?"
+  if [ "$PLATFORM" == "android" ]; then
+    ensure_emulator_ready
+    set_status_bar
+  fi
+  if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$script_dir/Smoke.yaml"; then
+    echo "✅ Smoke check passed — running widget flows."
+    return 0
+  else
+    echo "❌ Smoke check FAILED — app did not launch / 'Widgets menu' never rendered."
+    echo "   Build/bundle is likely broken; aborting shard fast instead of retrying every flow."
+    return 1
+  fi
+}
+
 # Function to rerun failed tests
 rerun_failed_tests() {
   local retry_failed_tests=("$@")
