@@ -338,31 +338,38 @@ jobs:
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
             mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
-      - name: "Build native bundles (deploy + native-packager)"
-        # Compiles the model and emits the Android/iOS JS bundles in native-template-ready
-        # layout at deployment/native/bundle/{android,iOS}. This is the supported replacement
-        # for the old create-native-bundle hack (which called mxbuild's internal RN CLI by
-        # hand), so the android-bundle/ios-bundle jobs are gone — bundling happens here.
-        run: |
-          mxbuild --target=deploy --native-packager \
-            --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
       - name: "Build portable app package (self-contained runtime)"
+        # Run this BEFORE the native-packager deploy: portable-app-package re-prepares and
+        # CLEANS the project's deployment/ directory, which would wipe the native bundles.
+        # app.zip lives outside deployment/, so the later deploy's clean doesn't touch it.
         # Output must live inside the project root: mxbuild's WhitelistAware path check
         # rejects arbitrary output paths for the portable-app-package target.
         run: |
           mxbuild --target=portable-app-package \
             -o Native-Mobile-Resources-main/app.zip \
             --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      - name: "Build native bundles (deploy + native-packager)"
+        # Compiles the model and emits the Android/iOS JS bundles in native-template-ready
+        # layout at deployment/native/bundle/{android,iOS}. Supported replacement for the old
+        # create-native-bundle hack. Runs LAST so nothing cleans deployment/ afterward.
+        run: |
+          mxbuild --target=deploy --native-packager \
+            --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+          echo "=== native bundle output ==="
+          ls -R Native-Mobile-Resources-main/deployment/native/bundle 2>/dev/null \
+            || find Native-Mobile-Resources-main -name 'index.*.bundle' -o -name 'bundle' -type d 2>/dev/null
       - name: "Upload Android bundle"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: android-bundle
           path: Native-Mobile-Resources-main/deployment/native/bundle/android
+          if-no-files-found: error
       - name: "Upload iOS bundle"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: ios-bundle
           path: Native-Mobile-Resources-main/deployment/native/bundle/iOS
+          if-no-files-found: error
       - name: "Upload portable app package"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
