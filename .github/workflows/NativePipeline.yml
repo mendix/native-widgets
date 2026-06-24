@@ -81,8 +81,10 @@ on:
     branches:
       - main
 
-# Use default name in case no input
-run-name: ${{ github.event.inputs.run_name || 'Run Native Pipeline' }}
+# Surface capture mode in the run title (workflow_dispatch inputs aren't shown in the UI),
+# otherwise fall back to the provided run_name / default. inputs.update_baselines is the
+# typed boolean from workflow_dispatch (null on pull_request).
+run-name: ${{ inputs.update_baselines && '🔄 Capture screenshot baselines' || (github.event.inputs.run_name || 'Run Native Pipeline') }}
 # Cancel superseded runs for the same PR/branch; a new push should not race an in-flight pipeline.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
