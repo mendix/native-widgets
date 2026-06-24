@@ -15,3 +15,5 @@ appId: "${APP_ID}"
     index: 14
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/safe_area_view_list_view"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/safe_area_view_list_view.png"

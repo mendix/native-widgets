@@ -16,3 +16,5 @@ appId: "${APP_ID}"
      timeout: 15000 # 15 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_layout_grid"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bg_image_layout_grid.png"

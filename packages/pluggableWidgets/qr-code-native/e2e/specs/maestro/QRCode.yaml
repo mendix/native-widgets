@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     id: "qRCodeNormal"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/qr_code"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/qr_code.png"

@@ -19,3 +19,5 @@ appId: "${APP_ID}"
 
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_basic_non_native"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bottom_sheet_modal_basic_non_native.png"

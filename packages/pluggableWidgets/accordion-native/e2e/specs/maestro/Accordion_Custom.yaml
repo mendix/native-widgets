@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     text: "Custom"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/accordion_custom"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/accordion_custom.png"

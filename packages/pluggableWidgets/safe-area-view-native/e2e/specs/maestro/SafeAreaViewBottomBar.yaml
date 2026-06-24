@@ -15,3 +15,5 @@ appId: "${APP_ID}"
     \ - Bottom bar starts directly below safe area"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/safe_area_view_bottom_bar"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/safe_area_view_bottom_bar.png"

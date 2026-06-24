@@ -19,6 +19,11 @@ on:
         description: "Workflow run ID for local artifact download (leave empty for normal CI). Use the full run ID from the URL, not the run number displayed in UI."
         required: false
         default: ""
+      update_baselines:
+        description: "Capture new screenshot baselines instead of asserting. Tests still run (to produce screenshots) but visual mismatches won't fail the run; download the *-screenshots-* artifacts and commit them under maestro/images/expected/."
+        required: false
+        default: false
+        type: boolean
       workspace:
         description: "Select a widget to test (Default will run all)"
         required: true
@@ -86,6 +91,9 @@ env:
   LOCAL_TEST_ARTIFACT_RUN_ID: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID || '' }}
   # Opt out of Maestro's anonymous analytics (avoids a network call, keeps runs deterministic).
   MAESTRO_CLI_NO_ANALYTICS: "1"
+  # When "true" (set via the update_baselines dispatch input), the maestro run steps tolerate
+  # assertScreenshot failures so a capture run can produce fresh baselines without going red.
+  UPDATE_BASELINES: ${{ github.event.inputs.update_baselines || 'false' }}
 permissions:
   packages: write
 jobs:
@@ -645,7 +653,7 @@ jobs:
             chmod +x maestro/helpers/prepare_android.sh
             chmod +x maestro/run_maestro_widget_tests.sh
             bash maestro/helpers/prepare_android.sh
-            bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}"
+            bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
@@ -709,7 +717,7 @@ jobs:
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_widget_tests.sh
           bash maestro/helpers/prepare_ios.sh
-          bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}"
+          bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
@@ -786,7 +794,7 @@ jobs:
             chmod +x maestro/helpers/prepare_android.sh
             chmod +x maestro/run_maestro_jsactions_tests.sh
             bash maestro/helpers/prepare_android.sh
-            bash maestro/run_maestro_jsactions_tests.sh android
+            bash maestro/run_maestro_jsactions_tests.sh android || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
@@ -844,79 +852,10 @@ jobs:
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_jsactions_tests.sh
           bash maestro/helpers/prepare_ios.sh
-          bash maestro/run_maestro_jsactions_tests.sh ios
+          bash maestro/run_maestro_jsactions_tests.sh ios || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
           test-type: js-actions
-  compare-screenshots:
-    needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
-    runs-on: ubuntu-26.04
-    if: always()
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-  
-      - name: "Download Android screenshots"
-        run: |
-          widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
-          mkdir -p images/actual/android/
-          for widget in $widgets; do
-            echo "Downloading android-screenshots-${widget}"
-            gh run download ${{ github.run_id }} --name android-screenshots-${widget} --dir images/actual/android/ || true
-            ls -l images/actual/android/
-          done
-          # Download JS actions screenshots
-          echo "Downloading android-screenshots-js-actions"
-          gh run download ${{ github.run_id }} --name android-screenshots-js-actions --dir images/actual/android/ || true
-          ls -l images/actual/android/
-      
-      - name: "Download iOS screenshots"
-        run: |
-          widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
-          mkdir -p images/actual/ios/
-          for widget in $widgets; do
-            echo "Downloading ios-screenshots-${widget}"
-            gh run download ${{ github.run_id }} --name ios-screenshots-${widget} --dir images/actual/ios/ || true
-            ls -l images/actual/ios/
-          done
-          # Download JS actions screenshots
-          echo "Downloading ios-screenshots-js-actions"
-          gh run download ${{ github.run_id }} --name ios-screenshots-js-actions --dir images/actual/ios/ || true
-          ls -l images/actual/ios/
-
-      - name: "Setup Node and dependencies"
-        uses: ./.github/actions/setup-node-with-cache
-    
-      - name: "Compare Android screenshots"
-        continue-on-error: true 
-        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js android
-
-      - name: "Compare iOS screenshots"
-        continue-on-error: true
-        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js ios
-  
-      - name: "Archive diff results"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-        with:
-          name: screenshot-diffs
-          path: images/diffs
-          if-no-files-found: ignore
-
-      - name: "Archive comparison results"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-        with:
-          name: comparison-results
-          path: compare_output.txt
-          if-no-files-found: ignore
-
-      - name: "Fail if comparisons failed"
-        run: |
-          if [ "$ANDROID_COMPARISON_FAILED" == "true" ] || [ "$IOS_COMPARISON_FAILED" == "true" ]; then
-            echo "One or more comparisons failed."
-            exit 1
-          fi

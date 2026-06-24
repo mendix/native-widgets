@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     text: "Dynamic ranges"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/range_slider"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/range_slider.png"

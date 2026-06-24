@@ -13,6 +13,8 @@ appId: "${APP_ID}"
     timeout: 10000
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/background_gradient"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/background_gradient.png"
 - tapOn:
     id: "bgGradientTwoColors"
 - assertVisible:
