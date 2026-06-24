@@ -1,16 +1,24 @@
 #!/bin/bash
 
-# Auto-select the newest available iPhone simulator (highest iOS runtime + highest iPhone
-# model) instead of hardcoding a device/iOS version that breaks on every runner-image bump.
-start_simulator() {
-    echo "Selecting the newest available iPhone simulator..."
+# Screenshot baselines are device/resolution-specific, so prefer a PINNED device for
+# reproducible visual regression. If that exact device isn't on the runner image (e.g. a
+# future macos-NN bump drops/renames it), fall back to the newest available iPhone and warn
+# loudly that baselines likely need regenerating — degrade gracefully instead of hard-failing
+# like the old hardcoded device did. Override the pin via PREFERRED_IOS_DEVICE.
+PREFERRED_IOS_DEVICE="${PREFERRED_IOS_DEVICE:-iPhone 17 Pro}"
 
-    # Parse `simctl list` JSON: pick the available iPhone with the highest (iOS version, model).
-    read -r DEVICE_ID DEVICE_NAME RUNTIME_VER < <(
-        xcrun simctl list -j devices available | python3 -c '
-import json, sys, re
+start_simulator() {
+    echo "Selecting iOS simulator (preferred: '$PREFERRED_IOS_DEVICE')..."
+
+    # Parse `simctl list` JSON. Output is TAB-delimited (device names contain spaces) as:
+    #   <udid>\t<name>\t<ios_ver>\t<status>   where status is "pinned" or "fallback".
+    IFS=$'\t' read -r DEVICE_ID DEVICE_NAME RUNTIME_VER SELECT_STATUS < <(
+        PREFERRED_IOS_DEVICE="$PREFERRED_IOS_DEVICE" xcrun simctl list -j devices available | python3 -c '
+import json, os, sys, re
+preferred = os.environ.get("PREFERRED_IOS_DEVICE", "")
 data = json.load(sys.stdin).get("devices", {})
-best = None
+best = None      # newest available iPhone overall (fallback)
+pinned = None    # highest iOS runtime for the preferred device name
 for runtime, devices in data.items():
     m = re.search(r"iOS-(\d+)-(\d+)", runtime)
     if not m:
@@ -22,13 +30,17 @@ for runtime, devices in data.items():
         name = d.get("name", "")
         if not name.startswith("iPhone"):
             continue
+        if name == preferred and (pinned is None or ios_ver > pinned[0]):
+            pinned = (ios_ver, d["udid"], name)
         mm = re.search(r"iPhone (\d+)", name)
         model = int(mm.group(1)) if mm else 0
         key = (ios_ver, model)
         if best is None or key > best[0]:
             best = (key, d["udid"], name, ios_ver)
-if best:
-    print(best[1], best[2], f"{best[3][0]}.{best[3][1]}")
+if pinned:
+    print("\t".join([pinned[1], pinned[2], f"{pinned[0][0]}.{pinned[0][1]}", "pinned"]))
+elif best:
+    print("\t".join([best[1], best[2], f"{best[3][0]}.{best[3][1]}", "fallback"]))
 '
     )
 
@@ -38,7 +50,11 @@ if best:
         exit 1
     fi
 
-    echo "Using $DEVICE_NAME (iOS $RUNTIME_VER), UDID: $DEVICE_ID"
+    if [ "$SELECT_STATUS" = "fallback" ]; then
+        echo "::warning::Pinned iOS device '$PREFERRED_IOS_DEVICE' not available; using newest '$DEVICE_NAME' (iOS $RUNTIME_VER). Screenshot baselines may differ — regenerate with update_baselines=true if visual asserts fail."
+    fi
+
+    echo "Using $DEVICE_NAME (iOS $RUNTIME_VER) [$SELECT_STATUS], UDID: $DEVICE_ID"
     export SIMULATOR_DEVICE_ID="$DEVICE_ID"
 
     xcrun simctl boot "$DEVICE_ID" || echo "Simulator already booted"
