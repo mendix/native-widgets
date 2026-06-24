@@ -1,7 +1,16 @@
 #!/bin/bash
 
-MAX_RETRIES=3
+# One retry after the initial run (2 attempts total). Was 3, which combined with the
+# initial run in run_tests meant up to 4 attempts per failing test — a genuinely broken
+# build burned ~25 min instead of failing fast (S6: retry amplification).
+MAX_RETRIES=1
 RETRY_DELAY=10
+
+# Timeout for the Maestro driver (instrumentation) to come up. Maestro's default is 15s;
+# CI emulators/simulators are slower, but 5 min (300000) was the per-attempt multiplier that
+# amplified broken-build runs to ~25 min. 2 min is generous for the driver to start while
+# keeping the worst-case failure time bounded.
+MAESTRO_DRIVER_STARTUP_TIMEOUT=120000
 
 # Function to restart the iOS simulator
 restart_simulator() {
@@ -69,7 +78,7 @@ run_tests() {
       ensure_emulator_ready
       set_status_bar
     fi
-    if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
+    if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$yaml_test_file"; then
       echo "✅ Test passed: $yaml_test_file"
       passed_tests+=("$yaml_test_file")
     else
@@ -97,7 +106,7 @@ rerun_failed_tests() {
     fi
     local attempt=0
     while [ $attempt -lt $MAX_RETRIES ]; do
-      if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=300000 "$yaml_test_file"; then
+      if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$yaml_test_file"; then
         echo "✅ Test passed: $yaml_test_file"
         passed_tests+=("$yaml_test_file")
         break
