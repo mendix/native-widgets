@@ -106,6 +106,7 @@ jobs:
       widgets: ${{ steps.scope.outputs.widgets }}
       widgets_to_test: ${{ steps.scope.outputs.widgets_to_test }}
       js_actions_changed: ${{ steps.scope.outputs.js_actions_changed }}
+      full_build: ${{ steps.scope.outputs.full_build }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -222,24 +223,57 @@ jobs:
           fetch-depth: 0
       - name: "Setup Node and dependencies (with pnpm store cache)"
         uses: ./.github/actions/setup-node-with-cache
-      - name: "Force rebuild resources"
+      - name: "Restore built resources (dist) cache"
+        id: resources-cache
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          # Built widget .mpk / JS-action dist are reproducible from source + toolchain, so
+          # key on widget/JS-action src + their package.json + the lockfile. An infra-only
+          # change (no src touched) keeps the same key → exact hit → skip the rebuild below.
+          path: |
+            packages/pluggableWidgets/*/dist
+            packages/jsActions/*/dist
+          key: resources-dist-v1-${{ hashFiles('packages/pluggableWidgets/*/src/**', 'packages/jsActions/*/src/**', 'packages/pluggableWidgets/*/package.json', 'packages/jsActions/*/package.json', 'pnpm-lock.yaml') }}
+      - name: "Build resources"
+        # On a full build with an exact cache hit every widget's dist is already current, so
+        # skip the slow rollup/babel rebuild. Otherwise build the scoped widgets + JS actions
+        # in one pnpm invocation (multiple --filter targets run concurrently) instead of the
+        # old one-at-a-time loop.
         run: |
-          # Build JS actions if needed (when js_actions_changed is true OR when workspace explicitly includes them)
+          if [ "${{ needs.scope.outputs.full_build }}" = "true" ] && [ "${{ steps.resources-cache.outputs.cache-hit }}" = "true" ]; then
+            echo "Full build with cached resources — skipping rebuild."
+            exit 0
+          fi
+
+          filters=()
           if [ "${{ needs.scope.outputs.js_actions_changed }}" = "true" ] || \
             [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
             [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
             [ "${{ github.event_name }}" = "schedule" ]; then
-            pnpm --filter=mobile-resources-native run build
-            pnpm --filter=nanoflow-actions-native run build
+            filters+=(--filter=mobile-resources-native --filter=nanoflow-actions-native)
           fi
+          while read -r w; do
+            [ -n "$w" ] && filters+=(--filter="$w")
+          done < <(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
 
-          # Build widgets from scope
-          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
-          for w in $widgets; do
-            pnpm --filter=$w run build
-          done
+          if [ ${#filters[@]} -gt 0 ]; then
+            echo "Building: ${filters[*]}"
+            pnpm "${filters[@]}" run build
+          else
+            echo "Nothing to build."
+          fi
       - name: "Unit test"
         run: pnpm -r --filter="${{ needs.scope.outputs.scope }}" run test
+      - name: "Save built resources (dist) cache"
+        # Only after a full build (every widget built), so a partial build never populates the
+        # shared cache with an incomplete dist set under a key a later full build could hit.
+        if: ${{ needs.scope.outputs.full_build == 'true' && steps.resources-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            packages/pluggableWidgets/*/dist
+            packages/jsActions/*/dist
+          key: ${{ steps.resources-cache.outputs.cache-primary-key }}
       - name: "Upload JS actions resources artifact"
         if: ${{ github.event.inputs.workspace == 'js-actions' }}
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7

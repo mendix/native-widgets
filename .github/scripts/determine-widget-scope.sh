@@ -47,6 +47,9 @@ if [ "$event_name" == "pull_request" ]; then
   # Note: widgets output is used for both BUILDING and the widget TEST MATRIX
   # When only JS actions change, widgets_to_test is empty (no widget tests needed)
   # but we still need to build all widgets for the test project
+  # full_build=true when every widget is (re)built — used by the resources job to safely
+  # restore/save a content-hashed dist cache. It is false for partial builds (a specific
+  # subset of widgets), whose dist set is incomplete and must not populate the shared cache.
   if [[ -n "$selected_workspaces" ]] && [[ "$js_actions_changed" == "true" ]]; then
     # Both widgets and JS actions changed
     # Convert space-separated widget names to JSON array format
@@ -55,6 +58,7 @@ if [ "$event_name" == "pull_request" ]; then
     echo "widgets=[\"$widget_array\"]" >> $GITHUB_OUTPUT
     echo "widgets_to_test=[\"$widget_array\"]" >> $GITHUB_OUTPUT
     echo "js_actions_changed=true" >> $GITHUB_OUTPUT
+    echo "full_build=false" >> $GITHUB_OUTPUT
   elif [[ -n "$selected_workspaces" ]] && [[ "$js_actions_changed" == "false" ]]; then
     # Only widgets changed
     widget_array=$(echo "$selected_workspaces" | sed 's/ /","/g')
@@ -62,20 +66,23 @@ if [ "$event_name" == "pull_request" ]; then
     echo "widgets=[\"$widget_array\"]" >> $GITHUB_OUTPUT
     echo "widgets_to_test=[\"$widget_array\"]" >> $GITHUB_OUTPUT
     echo "js_actions_changed=false" >> $GITHUB_OUTPUT
+    echo "full_build=false" >> $GITHUB_OUTPUT
   elif [[ -z "$selected_workspaces" ]] && [[ "$js_actions_changed" == "true" ]]; then
-    # Only JS actions changed - need to build ALL widgets because JS action tests 
+    # Only JS actions changed - need to build ALL widgets because JS action tests
     # require the full test project with all widgets to function properly
     # But widget tests should NOT run (empty widgets_to_test)
     echo "scope=--all --include '*-native mobile-resources-native nanoflow-actions-native'" >> $GITHUB_OUTPUT
     echo "widgets=${all_widgets}" >> $GITHUB_OUTPUT
     echo "widgets_to_test=[]" >> $GITHUB_OUTPUT
     echo "js_actions_changed=true" >> $GITHUB_OUTPUT
+    echo "full_build=true" >> $GITHUB_OUTPUT
   else
     # No specific changes detected in widgets or JS actions, run everything
     echo "scope=--all --include '*-native mobile-resources-native nanoflow-actions-native'" >> $GITHUB_OUTPUT
     echo "widgets=${all_widgets}" >> $GITHUB_OUTPUT
     echo "widgets_to_test=${all_widgets}" >> $GITHUB_OUTPUT
     echo "js_actions_changed=true" >> $GITHUB_OUTPUT
+    echo "full_build=true" >> $GITHUB_OUTPUT
   fi
 else
   if [ -n "$input_workspace" ] && [ "$input_workspace" != "*-native" ] && [ "$input_workspace" != "js-actions" ]; then
@@ -85,6 +92,7 @@ else
     echo "widgets=[\"$input_workspace\"]" >> $GITHUB_OUTPUT
     echo "widgets_to_test=[\"$input_workspace\"]" >> $GITHUB_OUTPUT
     echo "js_actions_changed=false" >> $GITHUB_OUTPUT
+    echo "full_build=false" >> $GITHUB_OUTPUT
   elif [ "$input_workspace" == "js-actions" ]; then
     # JS actions selected - need to build ALL widgets because JS action tests
     # require the full test project with all widgets to function properly
@@ -93,12 +101,14 @@ else
     echo "widgets=${all_widgets}" >> $GITHUB_OUTPUT
     echo "widgets_to_test=[]" >> $GITHUB_OUTPUT
     echo "js_actions_changed=true" >> $GITHUB_OUTPUT
+    echo "full_build=true" >> $GITHUB_OUTPUT
   else
     # All widgets (*-native) or default - run everything
     echo "scope=--all --include '*-native mobile-resources-native nanoflow-actions-native'" >> $GITHUB_OUTPUT
     echo "widgets=${all_widgets}" >> $GITHUB_OUTPUT
     echo "widgets_to_test=${all_widgets}" >> $GITHUB_OUTPUT
     echo "js_actions_changed=true" >> $GITHUB_OUTPUT
+    echo "full_build=true" >> $GITHUB_OUTPUT
   fi
 fi
 
