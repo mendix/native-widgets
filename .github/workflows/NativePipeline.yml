@@ -134,10 +134,10 @@ jobs:
         id: set-mendix-version
         run: |
           if [[ -n "${{ github.event.inputs.mendix_version }}" ]]; then
-            echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> $GITHUB_OUTPUT
+            echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> "$GITHUB_OUTPUT"
           else
             MENDIX_VERSION=$(jq -r '.latest' configs/e2e/mendix-versions.json)
-            echo "MENDIX_VERSION=$MENDIX_VERSION" >> $GITHUB_OUTPUT
+            echo "MENDIX_VERSION=$MENDIX_VERSION" >> "$GITHUB_OUTPUT"
           fi
       - name: "Debug Mendix Version"
         run: |
@@ -155,11 +155,11 @@ jobs:
         run: |
           if [[ -n "${{ github.event.inputs.nt_branch }}" ]]; then
             echo "Using specified nt_branch: ${{ github.event.inputs.nt_branch }}"
-            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
-            echo "source=input" >> $GITHUB_OUTPUT
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> "$GITHUB_OUTPUT"
+            echo "source=input" >> "$GITHUB_OUTPUT"
           else
             echo "No nt_branch specified, will determine from mendix_version"
-            echo "source=auto" >> $GITHUB_OUTPUT
+            echo "source=auto" >> "$GITHUB_OUTPUT"
           fi
       - name: "Download mendix_version.json from native-template repo"
         if: steps.check-input.outputs.source == 'auto'
@@ -176,9 +176,9 @@ jobs:
         id: set-output
         run: |
           if [[ "${{ steps.check-input.outputs.source }}" == "input" ]]; then
-            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> "$GITHUB_OUTPUT"
           else
-            echo "nt_branch=${{ steps.determine-nt-branch.outputs.nt_branch }}" >> $GITHUB_OUTPUT
+            echo "nt_branch=${{ steps.determine-nt-branch.outputs.nt_branch }}" >> "$GITHUB_OUTPUT"
           fi
       - name: "Debug final branch output"
         run: |
@@ -196,7 +196,7 @@ jobs:
       - name: "Check if docker image already exists"
         run: |
           docker manifest inspect ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
-          echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
+          echo "IMAGE_MISSING=$EXIT_CODE" >> "$GITHUB_ENV"
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         if: ${{ env.IMAGE_MISSING != 0 }}
@@ -321,8 +321,8 @@ jobs:
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
-              mv -f $oldPath $newPath
+              newPath="Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
+              mv -f "$oldPath" "$newPath"
             done
             mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
           fi
@@ -477,7 +477,12 @@ jobs:
         working-directory: native-template/android
         # The CI emulator is x86_64, so only compile that ABI's native code instead of all
         # four (arm64-v8a, armeabi-v7a, x86, x86_64) — cuts the C/C++ build by ~75%.
-        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest -PreactNativeArchitectures=x86_64
+        #
+        # --build-cache turns on Gradle's local build cache (task-output content cache). It lives
+        # under ~/.gradle/caches/build-cache-1, already persisted by setup-java's `cache: gradle`,
+        # so unchanged tasks (incl. RN libs' native compiles, which don't change run-to-run) are
+        # reused instead of recompiled. Safe: a cache miss just rebuilds.
+        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest -PreactNativeArchitectures=x86_64 --build-cache
       - name: "List APK files"
         run: |
           echo "Listing APK files in the output directory:"
@@ -516,6 +521,10 @@ jobs:
           cache: npm
           cache-dependency-path: native-template/package-lock.json
       - name: "Cache iOS Build"
+        # `build/` is the derivedDataPath, so this also persists Xcode 26's compilation cache
+        # (CAS, under build/), enabled via COMPILATION_CACHE_ENABLE_CACHING in the build step.
+        # restore-keys means even a partial-input change still restores the latest CAS, so
+        # unchanged pod/RN compilation units are reused across runs.
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: native-template/ios/build
@@ -553,7 +562,14 @@ jobs:
         # Build for the simulator's native arch (arm64 on Apple Silicon runners).
         # ONLY_ACTIVE_ARCH=YES already limits to the active arch; the old
         # VALID_ARCHS="i386 x86_64" forced dead/foreign archs and broke on macos-26.
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES
+        #
+        # COMPILATION_CACHE_ENABLE_CACHING=YES turns on Xcode 26's LLVM-CAS compilation cache.
+        # Unlike DerivedData product reuse (unreliable across CI runs), the CAS survives `clean`
+        # and is keyed by compilation-unit content, so unchanged RN/pod sources aren't recompiled
+        # run-to-run. The CAS lives inside the DerivedData root (here `build/`), so the existing
+        # "Cache iOS Build" step already persists it — no extra cache path needed. Requires
+        # Xcode 26 (macos-26 ships it).
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES COMPILATION_CACHE_ENABLE_CACHING=YES
       - name: "Archive iOS app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
