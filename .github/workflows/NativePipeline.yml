@@ -15,6 +15,11 @@ on:
         default: ""
         required: false
         type: string
+      test_project_ref:
+        description: "mendix/Native-Mobile-Resources ref (commit SHA) to build against (leave empty for the pinned default)"
+        default: ""
+        required: false
+        type: string
       LOCAL_TEST_ARTIFACT_RUN_ID:
         description: "Workflow run ID for local artifact download (leave empty for normal CI). Use the full run ID from the URL, not the run number displayed in UI."
         required: false
@@ -96,6 +101,10 @@ env:
   # When "true" (set via the update_baselines dispatch input), the maestro run steps tolerate
   # assertScreenshot failures so a capture run can produce fresh baselines without going red.
   UPDATE_BASELINES: ${{ github.event.inputs.update_baselines || 'false' }}
+  # Pin the test project (mendix/Native-Mobile-Resources) to a SHA for reproducibility instead
+  # of tracking a moving `main`. Single source of truth — bump deliberately. The repo publishes
+  # no tags, so a commit SHA is the only stable ref. Override per run via the dispatch input.
+  NATIVE_MOBILE_RESOURCES_REF: ${{ github.event.inputs.test_project_ref || 'f0e7c2278578022cc742f82a087e6c4fff2f7159' }}
 permissions:
   packages: write
 jobs:
@@ -318,9 +327,16 @@ jobs:
           apt update
           apt install -y curl unzip
       - name: "Download test project"
-        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+        # Pinned to a SHA (NATIVE_MOBILE_RESOURCES_REF) for reproducible builds.
+        run: curl -L -o project.zip "https://github.com/mendix/Native-Mobile-Resources/archive/${NATIVE_MOBILE_RESOURCES_REF}.zip"
       - name: "Extract test project"
-        run: unzip -qq project.zip -d .
+        # GitHub names the archive's top dir after the ref (Native-Mobile-Resources-<ref>);
+        # rename it back to the stable Native-Mobile-Resources-main that the rest of the job
+        # references, so pinning the ref doesn't ripple through every downstream path.
+        run: |
+          unzip -qq project.zip -d .
+          rm -rf Native-Mobile-Resources-main
+          mv "Native-Mobile-Resources-${NATIVE_MOBILE_RESOURCES_REF}" Native-Mobile-Resources-main
       - name: "Download resources artifact"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -328,7 +344,7 @@ jobs:
           path: resources
       - name: "List resources"
         run: ls -R resources
-      - name: "Move widgets"
+      - name: "Overlay built widget mpks"
         if: ${{ github.event.inputs.workspace != 'js-actions' }}
         shell: bash
         run: |
@@ -337,8 +353,14 @@ jobs:
               newPath="Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
               mv -f "$oldPath" "$newPath"
             done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
           fi
+      - name: "Register widgets in the test project"
+        # Run unconditionally: update-widgets must sync the project's widget definitions with the
+        # mpks in widgets/ regardless of whether THIS run overlaid fresh ones. Previously it was
+        # nested in the mpk-move guard, so a `js-actions` dispatch (or any run that builds no
+        # mpks) skipped it and left stale Atlas widget defs for the portable-app build.
+        shell: bash
+        run: mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
       - name: "Move mobile-resources"
         shell: bash
         run: |
@@ -666,8 +688,6 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools  
         uses: ./.github/actions/setup-tools
-        with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
 
       - name: "Start Mendix runtime"
         uses: ./.github/actions/start-mendix-runtime
@@ -762,8 +782,6 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools
         uses: ./.github/actions/setup-tools
-        with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Start Mendix runtime"
         uses: ./.github/actions/start-mendix-runtime
         with:
@@ -820,8 +838,6 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools
         uses: ./.github/actions/setup-tools
-        with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Start Mendix runtime"
         uses: ./.github/actions/start-mendix-runtime
         with:
@@ -904,8 +920,6 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools
         uses: ./.github/actions/setup-tools
-        with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
       - name: "Start Mendix runtime"
         uses: ./.github/actions/start-mendix-runtime
         with:
