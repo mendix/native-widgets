@@ -1,5 +1,5 @@
-import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Dimensions, LayoutChangeEvent, Modal, Pressable } from "react-native";
+import { ReactElement, ReactNode, useCallback, useRef, useState } from "react";
+import { Modal, Pressable, useWindowDimensions } from "react-native";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
@@ -16,36 +16,50 @@ interface CustomModalSheetProps {
 
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
-    const [contentHeight, setContentHeight] = useState(0);
-    const [currentStatus, setCurrentStatus] = useState(false);
+    const { height: windowHeight } = useWindowDimensions();
 
-    const isAvailable = props.triggerAttribute && props.triggerAttribute.status === ValueStatus.Available;
+    const externalOpen =
+        props.triggerAttribute?.status === ValueStatus.Available && props.triggerAttribute.value === true;
 
-    const isOpen =
-        props.triggerAttribute &&
-        props.triggerAttribute.status === ValueStatus.Available &&
-        props.triggerAttribute.value;
+    const [mounted, setMounted] = useState(externalOpen);
+    const [ready, setReady] = useState(false);
+    const didOpenRef = useRef(false);
 
-    const onContentLayoutHandler = useCallback(
-        (event: LayoutChangeEvent): void => {
-            const layoutHeight = event.nativeEvent.layout.height;
-            if (layoutHeight > 0 && layoutHeight !== contentHeight) {
-                setContentHeight(layoutHeight);
-            }
-        },
-        [contentHeight]
-    );
+    if (externalOpen && !mounted) {
+        setMounted(true);
+    }
 
     const close = useCallback(() => {
         bottomSheetRef.current?.close();
     }, []);
+
+    const handleModalShow = useCallback(() => {
+        setReady(true);
+    }, []);
+
+    const handleChange = useCallback(
+        (index: number) => {
+            if (index === 0) {
+                didOpenRef.current = true;
+                return;
+            }
+
+            if (index === -1 && didOpenRef.current) {
+                didOpenRef.current = false;
+                setReady(false);
+                props.triggerAttribute?.setValue(false);
+                setMounted(false);
+            }
+        },
+        [props.triggerAttribute]
+    );
 
     const renderBackdrop = useCallback(
         (backdropProps: BottomSheetBackdropProps) => (
             <Pressable style={{ flex: 1 }} onPress={close}>
                 <BottomSheetBackdrop
                     {...backdropProps}
-                    pressBehavior={"close"}
+                    pressBehavior="close"
                     opacity={0.3}
                     appearsOnIndex={0}
                     disappearsOnIndex={-1}
@@ -55,72 +69,32 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         [close]
     );
 
-    const snapPoints = useMemo(() => {
-        if (contentHeight === 0) {
-            return [1]; // During measurement
-        }
-
-        // Use actual measured content height, cap at 90% screen
-        const maxHeight = Dimensions.get("screen").height * 0.9;
-        const snapHeight = Math.min(contentHeight, maxHeight);
-        return [snapHeight];
-    }, [contentHeight]);
-
-    const handleSheetChanges = useCallback(
-        (index: number) => {
-            if (!isAvailable) {
-                return;
-            }
-
-            const hasClosed = index === -1;
-            if (hasClosed && props.triggerAttribute?.value) {
-                props.triggerAttribute?.setValue(false);
-                setCurrentStatus(false);
-            }
-        },
-        [isAvailable, props.triggerAttribute]
-    );
-
-    useEffect(() => {
-        if (!isAvailable) {
-            return;
-        }
-
-        const shouldBeOpen = props.triggerAttribute?.value === true;
-
-        if (shouldBeOpen && !currentStatus) {
-            requestAnimationFrame(() => {
-                setCurrentStatus(true);
-            });
-        } else if (!shouldBeOpen && currentStatus) {
-            bottomSheetRef.current?.close();
-            setCurrentStatus(false);
-        }
-    }, [props.triggerAttribute?.value, currentStatus, isAvailable]);
+    const maxHeight = windowHeight * 0.9;
 
     return (
-        <Modal onRequestClose={close} transparent visible={!!isOpen}>
-            <BottomSheet
-                ref={bottomSheetRef}
-                index={isOpen ? 0 : -1}
-                snapPoints={snapPoints}
-                onClose={() => handleSheetChanges(-1)}
-                onChange={handleSheetChanges}
-                backdropComponent={renderBackdrop}
-                style={[props.styles.modal]}
-                backgroundStyle={props.styles.container}
-                enablePanDownToClose={false}
-                handleComponent={null}
-                handleStyle={{ display: "none" }}
-            >
-                <BottomSheetScrollView
-                    style={[{ flex: 1 }]}
-                    contentContainerStyle={{ paddingBottom: 16 }}
-                    onLayout={onContentLayoutHandler}
+        <Modal transparent animationType="none" visible={mounted} onRequestClose={close} onShow={handleModalShow}>
+            {ready && (
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    index={0}
+                    animateOnMount
+                    enableDynamicSizing
+                    maxDynamicContentSize={maxHeight}
+                    containerHeight={windowHeight}
+                    enablePanDownToClose
+                    onChange={handleChange}
+                    onClose={() => handleChange(-1)}
+                    backdropComponent={renderBackdrop}
+                    style={[props.styles.modal]}
+                    backgroundStyle={props.styles.container}
+                    handleComponent={null}
+                    handleStyle={{ display: "none" }}
                 >
-                    {props.content}
-                </BottomSheetScrollView>
-            </BottomSheet>
+                    <BottomSheetScrollView style={[{ flex: 1 }]} contentContainerStyle={{ paddingBottom: 16 }}>
+                        {props.content}
+                    </BottomSheetScrollView>
+                </BottomSheet>
+            )}
         </Modal>
     );
 };
