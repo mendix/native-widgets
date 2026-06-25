@@ -52,15 +52,24 @@ stop_recording() {
   [ "$RECORD_VIDEO" = "true" ] || return 0
   local keep="$1"
   [ -z "$REC_PID" ] && return 0
-  # SIGINT lets the recorder finalize the file (moov atom / flush); SIGKILL would corrupt it.
-  kill -INT "$REC_PID" 2>/dev/null || true
-  wait "$REC_PID" 2>/dev/null || true
   if [ "$PLATFORM" == "android" ]; then
-    sleep 2  # let screenrecord flush to /sdcard before pulling
+    # CRITICAL: stop the ON-DEVICE screenrecord, not just the local adb client. Killing only
+    # REC_PID (the `adb shell screenrecord` client) leaves the recorder running on the device
+    # until its --time-limit (180s), so `wait` would block ~2.5 min per flow and blow the job
+    # timeout. `pkill -INT` makes screenrecord finalize the mp4 (moov atom) promptly.
+    adb shell pkill -INT screenrecord >/dev/null 2>&1 || true
+    sleep 2  # let screenrecord write the trailer + flush to /sdcard
+    kill "$REC_PID" 2>/dev/null || true   # client should already be gone; ensure it, never block
+    wait "$REC_PID" 2>/dev/null || true
     if [ "$keep" == "keep" ]; then
       adb pull "$ANDROID_REC_DEVICE_PATH" "$REC_FILE" >/dev/null 2>&1 || true
     fi
     adb shell rm -f "$ANDROID_REC_DEVICE_PATH" >/dev/null 2>&1 || true
+  else
+    # iOS: SIGINT lets simctl recordVideo finalize the file (moov atom); SIGKILL would corrupt it.
+    # recordVideo has no time-limit, so the client exits promptly on the signal.
+    kill -INT "$REC_PID" 2>/dev/null || true
+    wait "$REC_PID" 2>/dev/null || true
   fi
   REC_PID=""
   if [ "$keep" != "keep" ]; then
