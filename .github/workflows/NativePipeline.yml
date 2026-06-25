@@ -744,10 +744,13 @@ jobs:
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-26
-    # 20 min per widget shard (see android-widget-tests rationale). iOS needs the larger budget
-    # more than Android: sim cold-boot + Maestro driver startup + runtime-ready wait eat several
-    # minutes before any flow runs, and slow-but-healthy iOS shards were getting truncated at 15.
-    timeout-minutes: 20
+    # 30 min per widget shard, matching android-widget-tests. iOS needs the budget more than
+    # Android: sim cold-boot + Maestro driver startup + runtime-ready wait eat several minutes
+    # before any flow runs, so on a free macOS runner slow-but-healthy shards were getting
+    # truncated — at 20 min several shards (accordion, background-image, bottom-sheet,
+    # color-picker, safe-area-view) were cancelled mid-flow. If a shard still hits 30 the cause
+    # is real app instability, not the cap.
+    timeout-minutes: 30
     strategy:
       max-parallel: 4
       matrix:
@@ -954,32 +957,29 @@ jobs:
     # screenshots/logs we want to inspect.
     if: ${{ always() }}
     runs-on: ubuntu-26.04
+    # The workflow-level block grants only packages:write, so every other scope defaults to
+    # none. This job needs contents:read (to check out the triage script) and actions:read
+    # (the script reads each shard's conclusion and logs via the Actions API).
+    permissions:
+      contents: read
+      actions: read
     steps:
+      - name: "Check out code"
+        # Needed only for the triage script below; the merge steps don't touch the repo.
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 1
       - name: "Write test result summary"
-        # Consolidated pass/fail table for every widget/JS shard, rendered on the run's Summary
-        # tab. Each shard's result lives in its own matrix job; we read them back from the API
-        # (this job `needs:` them all, so conclusions are final by the time this runs).
+        # Triage table for every widget/JS shard, rendered on the run's Summary tab. Beyond
+        # pass/fail it classifies each red shard (timeout / emulator / runtime / artifact /
+        # screenshot mismatch / …) so a reviewer can tell a real failure from an infra flake
+        # without opening logs. Each shard's result lives in its own matrix job; the script
+        # reads them back from the API (this job `needs:` them all, so conclusions are final).
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          {
-            echo "## Native widget E2E results"
-            echo ""
-            echo "| Shard | Result |"
-            echo "| --- | --- |"
-          } >> "$GITHUB_STEP_SUMMARY"
-          gh api --paginate \
-            "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs?per_page=100" \
-            --jq '.jobs[]
-                  | select(.name | test("widget-tests|js-tests"))
-                  | "| \(.name) | " + (
-                      if   .conclusion == "success"   then "✅ pass"
-                      elif .conclusion == "failure"   then "❌ fail"
-                      elif .conclusion == "cancelled" then "🚫 cancelled"
-                      elif .conclusion == "skipped"   then "⏭️ skipped"
-                      else (.conclusion // .status)
-                      end) + " |"' \
-            >> "$GITHUB_STEP_SUMMARY"
+          bash .github/scripts/triage-test-results.sh \
+            "${{ github.repository }}" "${{ github.run_id }}" >> "$GITHUB_STEP_SUMMARY"
       - name: "Merge screenshots"
         uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         # continue-on-error: a run that produced no screenshots (e.g. only JS-action tests) has
@@ -989,6 +989,15 @@ jobs:
           name: all-screenshots
           pattern: "*-screenshots-*"
           # Keep each shard's PNGs in its own subdir so identically-named actual/ files don't collide.
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge screenshot diffs"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        # Only mismatching flows produce a diff; a run with no screenshot failures has none.
+        continue-on-error: true
+        with:
+          name: all-screenshot-diffs
+          pattern: "*-diffs-*"
           separate-directories: true
           delete-merged: true
       - name: "Merge runtime logs"
