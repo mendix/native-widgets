@@ -18,6 +18,15 @@ all_widgets=$(echo "$widget_dirs" | jq -R -s -c 'split("\n") | map(select(length
 # Combined widgets and JS actions for default cases
 all_widgets_and_js=$(echo "$widget_dirs" | jq -R -s -c 'split("\n") | map(select(length > 0)) + ["mobile-resources-native", "nanoflow-actions-native"]')
 
+# Convert a space-separated list of widget names into a JSON array (or [] when empty).
+to_json_array() {
+  if [[ -z "$1" ]]; then
+    echo "[]"
+  else
+    echo "[\"$(echo "$1" | sed 's/ /","/g')\"]"
+  fi
+}
+
 if [ "$event_name" == "pull_request" ]; then
   if git cat-file -e "$before_commit" 2>/dev/null; then
     changed_files=$(git diff --name-only "$before_commit" "$current_commit")
@@ -26,22 +35,35 @@ if [ "$event_name" == "pull_request" ]; then
     changed_files=$(git diff --name-only HEAD~1 "$current_commit")
   fi
 
+  # selected_workspaces = widgets to TEST (any change under the widget folder).
+  # build_workspaces   = widgets to BUILD (only when a build-affecting file changed).
   selected_workspaces=""
+  build_workspaces=""
   js_actions_changed=false
-  
+
   for file in $changed_files; do
     if [[ $file == packages/pluggableWidgets/* ]]; then
       widget=$(echo $file | cut -d'/' -f3)
+      subdir=$(echo $file | cut -d'/' -f4)
       if [[ ! $selected_workspaces =~ $widget ]]; then
         selected_workspaces="$selected_workspaces $widget"
+      fi
+      # A change confined to the widget's e2e/ folder (Maestro flows + screenshots) changes
+      # only the TEST, not the built artifact — so it should NOT trigger a rebuild. The widget
+      # still goes into selected_workspaces above (it gets TESTED), but it's kept out of the
+      # BUILD scope; its .mpk comes from the test project's committed baseline, exactly like
+      # every other not-rebuilt widget in a partial run.
+      if [[ "$subdir" != "e2e" ]] && [[ ! $build_workspaces =~ $widget ]]; then
+        build_workspaces="$build_workspaces $widget"
       fi
     elif [[ $file == packages/jsActions/mobile-resources-native/* ]] || [[ $file == packages/jsActions/nanoflow-actions-native/* ]]; then
       js_actions_changed=true
     fi
   done
 
-  # Trim leading and trailing spaces from selected_workspaces
+  # Trim leading and trailing spaces
   selected_workspaces=$(echo $selected_workspaces | xargs)
+  build_workspaces=$(echo $build_workspaces | xargs)
 
   # Build the final scope and widgets output
   # Note: widgets output is used for both BUILDING and the widget TEST MATRIX
@@ -51,20 +73,19 @@ if [ "$event_name" == "pull_request" ]; then
   # restore/save a content-hashed dist cache. It is false for partial builds (a specific
   # subset of widgets), whose dist set is incomplete and must not populate the shared cache.
   if [[ -n "$selected_workspaces" ]] && [[ "$js_actions_changed" == "true" ]]; then
-    # Both widgets and JS actions changed
-    # Convert space-separated widget names to JSON array format
-    widget_array=$(echo "$selected_workspaces" | sed 's/ /","/g')
+    # Both widgets and JS actions changed. Build only build-affected widgets (+ JS actions),
+    # but test every changed widget. build_workspaces may be empty (all changes were e2e-only),
+    # in which case no widgets are rebuilt and they test against the baseline project.
     echo "scope=--all --include '$selected_workspaces mobile-resources-native nanoflow-actions-native'" >> $GITHUB_OUTPUT
-    echo "widgets=[\"$widget_array\"]" >> $GITHUB_OUTPUT
-    echo "widgets_to_test=[\"$widget_array\"]" >> $GITHUB_OUTPUT
+    echo "widgets=$(to_json_array "$build_workspaces")" >> $GITHUB_OUTPUT
+    echo "widgets_to_test=$(to_json_array "$selected_workspaces")" >> $GITHUB_OUTPUT
     echo "js_actions_changed=true" >> $GITHUB_OUTPUT
     echo "full_build=false" >> $GITHUB_OUTPUT
   elif [[ -n "$selected_workspaces" ]] && [[ "$js_actions_changed" == "false" ]]; then
-    # Only widgets changed
-    widget_array=$(echo "$selected_workspaces" | sed 's/ /","/g')
+    # Only widgets changed. Build only build-affected widgets; test every changed widget.
     echo "scope=--all --include '$selected_workspaces'" >> $GITHUB_OUTPUT
-    echo "widgets=[\"$widget_array\"]" >> $GITHUB_OUTPUT
-    echo "widgets_to_test=[\"$widget_array\"]" >> $GITHUB_OUTPUT
+    echo "widgets=$(to_json_array "$build_workspaces")" >> $GITHUB_OUTPUT
+    echo "widgets_to_test=$(to_json_array "$selected_workspaces")" >> $GITHUB_OUTPUT
     echo "js_actions_changed=false" >> $GITHUB_OUTPUT
     echo "full_build=false" >> $GITHUB_OUTPUT
   elif [[ -z "$selected_workspaces" ]] && [[ "$js_actions_changed" == "true" ]]; then

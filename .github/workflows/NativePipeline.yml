@@ -273,12 +273,25 @@ jobs:
             packages/pluggableWidgets/*/dist
             packages/jsActions/*/dist
           key: ${{ steps.resources-cache.outputs.cache-primary-key }}
+      - name: "Write resources manifest"
+        # Guarantees the resources artifact always contains at least one file, so the
+        # download in the `project` job never fails. A widgets-PR whose only changes are
+        # under e2e/ builds nothing (those widgets test against the baseline project), which
+        # would otherwise leave the artifact empty → not created → project download error.
+        run: |
+          {
+            echo "built widgets: ${{ needs.scope.outputs.widgets }}"
+            echo "tested widgets: ${{ needs.scope.outputs.widgets_to_test }}"
+            echo "js_actions_changed: ${{ needs.scope.outputs.js_actions_changed }}"
+            echo "full_build: ${{ needs.scope.outputs.full_build }}"
+          } > resources-manifest.txt
       - name: "Upload JS actions resources artifact"
         if: ${{ github.event.inputs.workspace == 'js-actions' }}
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: resources
           path: |
+            resources-manifest.txt
             packages/jsActions/mobile-resources-native/dist/**/*
             packages/jsActions/nanoflow-actions-native/dist/**/*
       - name: "Upload widget and JS actions resources artifact"
@@ -287,6 +300,7 @@ jobs:
         with:
           name: resources
           path: |
+            resources-manifest.txt
             packages/pluggableWidgets/**/dist/*/*.mpk
             packages/jsActions/mobile-resources-native/dist/**/*
             packages/jsActions/nanoflow-actions-native/dist/**/*
