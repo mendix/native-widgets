@@ -21,6 +21,17 @@ inputs:
     description: "How long to wait for the runtime to become ready before failing"
     required: false
     default: "300"
+  session-timeout-ms:
+    description: >
+      Server-side session idle timeout (ms). The runtime uses a trial license capped at
+      6 concurrent named users, and every Maestro flow does `launchApp clearState: true`,
+      which starts a FRESH server session while the previous one lingers for the full
+      timeout. With Mendix's 10-min default, a widget with >5 flows piles past 6 sessions
+      and the next login fails with "Maximum number of sessions exceeded". A short idle
+      timeout lets each flow's session expire before the next ones accumulate. Active
+      sessions aren't affected — client requests keep resetting the idle timer mid-flow.
+    required: false
+    default: "60000"
 runs:
   using: "composite"
   steps:
@@ -32,6 +43,13 @@ runs:
         M2EE_ADMIN_PASS: ${{ inputs.admin-pass }}
         RUNTIME_URL: ${{ inputs.runtime-url }}
         TIMEOUT_SECONDS: ${{ inputs.timeout-seconds }}
+        # Read by the portable app's HOCON config (etc/variables.conf: ${?RUNTIME_PARAMS_*}),
+        # inherited by the JVM started below. Caps session pile-up under the 6-user trial
+        # license — see the session-timeout-ms input for the full rationale.
+        RUNTIME_PARAMS_SESSIONTIMEOUT: ${{ inputs.session-timeout-ms }}
+        # Reap expired sessions promptly (default cluster cleanup runs only every 5 min, which
+        # would hold license slots long after the sessions go idle).
+        RUNTIME_PARAMS_CLUSTERMANAGERACTIONINTERVAL: "30000"
       run: |
         set -euo pipefail
 

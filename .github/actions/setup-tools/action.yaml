@@ -7,11 +7,11 @@ outputs:
 runs:
   using: "composite"
   steps:
-    # NOTE: Python and Node/pnpm setup were both removed here.
-    #  - Python was only needed by the old m2ee runtime (replaced by the portable app package).
-    #  - Node/pnpm `install` ran the root `prepare` lifecycle (building tool packages), which the
-    #    maestro test jobs don't need and which flaked with ENOTEMPTY. Maestro is a standalone
-    #    binary, so the test jobs need only Java + Maestro.
+    # Test jobs need only Java + Maestro:
+    #  - the portable app package bundles the runtime, so there's no CDN runtime download and no
+    #    m2ee tooling to set up (and nothing here needs Python).
+    #  - Maestro is a standalone binary, so there's no Node/pnpm install — which would also run the
+    #    root `prepare` lifecycle the test jobs don't need (a known ENOTEMPTY flake source).
 
     - name: "Setup Java 21"
       id: setup-java
@@ -19,10 +19,6 @@ runs:
       with:
         distribution: "temurin"
         java-version: "21"
-
-    # NOTE: the Mendix-runtime tarball and m2ee-tools caches were removed here.
-    # The portable app package bundles the runtime, so the test jobs no longer
-    # download the runtime from the CDN or clone m2ee-tools.
 
     - name: "Install Maestro"
       uses: ./.github/actions/setup-maestro

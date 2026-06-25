@@ -64,14 +64,14 @@ would fail.
 
 -   **determine-nt-version.mjs** — resolves the Native Template release/branch from the
     Mendix version. Node ESM, no external deps (uses global `fetch` + a small version
-    comparator); run with the runner's preinstalled `node`. Replaced the former
-    `determine-nt-version.py` (the Python toolchain — `setup-python` / `pip install` —
-    was dropped). Fails loudly rather than silently pinning `master`.
+    comparator); run with the runner's preinstalled `node`. Fails loudly rather than
+    silently pinning `master`.
 -   **mxbuild.Dockerfile** — Docker image for mxbuild.
 
 > The Mendix runtime for the test jobs is produced as a **portable app package**
 > (`mxbuild --target=portable-app-package`) in the `project` job and started by the
 > `start-mendix-runtime` composite action, which waits for a real readiness probe.
-> This replaced the old `setup-runtime.sh` / `start-runtime-with-verification.sh`
-> scripts and the `m2ee-native.yml` config (which cloned m2ee-tools and downloaded
-> the runtime from the CDN).
+> That runtime runs under a 6-user trial license, so the action shortens the server
+> session idle timeout (`RUNTIME_PARAMS_SESSIONTIMEOUT`) — each Maestro flow opens a
+> fresh session via `launchApp clearState`, and a short timeout lets them expire
+> between flows instead of piling up past the cap.

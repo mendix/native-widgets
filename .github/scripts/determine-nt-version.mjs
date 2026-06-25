@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 // Resolve which Native Template release/branch to build against, given the resolved Mendix
-// version. Ported from determine-nt-version.py (Phase 5, D3: standardise pipeline scripting on
-// Node/JS and drop the Python toolchain — no more setup-python / `pip install`). No external
-// deps: uses the global fetch + a small dotted-version comparator instead of requests/packaging.
+// version. No external deps: uses the global fetch + a small dotted-version comparator, so it
+// runs on the runner's preinstalled node with no setup step.
 
 import fs from "node:fs";
 
