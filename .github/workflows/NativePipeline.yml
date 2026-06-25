@@ -534,10 +534,8 @@ jobs:
           cache: npm
           cache-dependency-path: native-template/package-lock.json
       - name: "Cache iOS Build"
-        # `build/` is the derivedDataPath, so this also persists Xcode 26's compilation cache
-        # (CAS, under build/), enabled via COMPILATION_CACHE_ENABLE_CACHING in the build step.
-        # restore-keys means even a partial-input change still restores the latest CAS, so
-        # unchanged pod/RN compilation units are reused across runs.
+        # Persists the DerivedData root (`build/`) so unchanged products can be reused across
+        # runs; restore-keys falls back to the latest entry on a partial-input change.
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: native-template/ios/build
@@ -575,14 +573,7 @@ jobs:
         # Build for the simulator's native arch (arm64 on Apple Silicon runners).
         # ONLY_ACTIVE_ARCH=YES already limits to the active arch; the old
         # VALID_ARCHS="i386 x86_64" forced dead/foreign archs and broke on macos-26.
-        #
-        # COMPILATION_CACHE_ENABLE_CACHING=YES turns on Xcode 26's LLVM-CAS compilation cache.
-        # Unlike DerivedData product reuse (unreliable across CI runs), the CAS survives `clean`
-        # and is keyed by compilation-unit content, so unchanged RN/pod sources aren't recompiled
-        # run-to-run. The CAS lives inside the DerivedData root (here `build/`), so the existing
-        # "Cache iOS Build" step already persists it — no extra cache path needed. Requires
-        # Xcode 26 (macos-26 ships it).
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES COMPILATION_CACHE_ENABLE_CACHING=YES
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES
       - name: "Archive iOS app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
