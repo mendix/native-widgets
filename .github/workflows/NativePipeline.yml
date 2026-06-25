@@ -120,12 +120,15 @@ jobs:
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 2 # Fetch the latest two commits and its parent commit
+          # Full history so the scope script can diff against the PR base merge-base
+          # (covers every commit in the PR, not just the latest).
+          fetch-depth: 0
       - name: "Determine scope"
         id: scope
+        # Pass the PR base SHA (empty on non-PR events → the script's dispatch path handles it).
         run: |
           chmod +x ./.github/scripts/determine-widget-scope.sh
-          ./.github/scripts/determine-widget-scope.sh "${{ github.event_name }}" "${{ github.event.inputs.workspace }}" "${{ github.event.before }}" "${{ github.sha }}"
+          ./.github/scripts/determine-widget-scope.sh "${{ github.event_name }}" "${{ github.event.inputs.workspace }}" "${{ github.event.pull_request.base.sha || github.event.before }}" "${{ github.sha }}"
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"

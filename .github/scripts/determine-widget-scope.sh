@@ -28,10 +28,19 @@ to_json_array() {
 }
 
 if [ "$event_name" == "pull_request" ]; then
+  # Diff against the MERGE-BASE with the PR base branch so every commit in the PR is
+  # considered, not just the latest. `before_commit` is the PR base SHA
+  # (github.event.pull_request.base.sha); the merge-base is where the PR branched off.
+  # Requires full history — the scope job checks out with fetch-depth: 0.
+  diff_base=""
   if git cat-file -e "$before_commit" 2>/dev/null; then
-    changed_files=$(git diff --name-only "$before_commit" "$current_commit")
+    diff_base=$(git merge-base "$before_commit" "$current_commit" 2>/dev/null || echo "$before_commit")
+  fi
+  if [ -n "$diff_base" ]; then
+    echo "Diffing against PR merge-base: $diff_base"
+    changed_files=$(git diff --name-only "$diff_base" "$current_commit")
   else
-    echo "Previous commit not found, using HEAD~1 as fallback"
+    echo "PR base commit unavailable, using HEAD~1 as fallback"
     changed_files=$(git diff --name-only HEAD~1 "$current_commit")
   fi
 
