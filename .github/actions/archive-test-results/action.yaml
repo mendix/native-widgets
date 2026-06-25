@@ -38,3 +38,14 @@ runs:
         name: ${{ inputs.platform }}-artifacts-${{ inputs.test-type }}
         path: packages/pluggableWidgets/**/artifacts/
         if-no-files-found: ignore
+
+    # Per-flow videos are recorded for every flow but kept only for FAILED flows (passing
+    # clips are deleted in helpers.sh to save storage), so on a fully-green shard this dir is
+    # empty and the upload is a no-op (if-no-files-found: ignore).
+    - name: Archive failure videos
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
+      if: always()
+      with:
+        name: ${{ inputs.platform }}-videos-${{ inputs.test-type }}
+        path: maestro/videos/*.mp4
+        if-no-files-found: ignore

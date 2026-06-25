@@ -12,6 +12,63 @@ RETRY_DELAY=10
 # keeping the worst-case failure time bounded.
 MAESTRO_DRIVER_STARTUP_TIMEOUT=120000
 
+# --- Per-flow video recording (BrowserStack-style debugging) ----------------------------
+# We record a screen video around every flow, then KEEP it only if the flow FAILS and DELETE
+# it on pass — so artifact storage holds just the videos you actually need to debug, each a
+# short clip of exactly the failing interaction (not one giant reel to scrub).
+#   iOS:     `simctl io booted recordVideo` — runs until SIGINT, no length cap. SIGINT (not
+#            SIGKILL) so the trailing moov atom is written and the mp4 is playable.
+#   Android: `adb shell screenrecord` — caps at 180s/segment; a longer flow is truncated but
+#            still useful. Started AFTER `adb root`/status-bar setup so adbd restarts don't
+#            kill the recording mid-flow.
+# Toggle with RECORD_VIDEO=false (default on) if recording ever worsens flake on the
+# constrained CI runners.
+RECORD_VIDEO="${RECORD_VIDEO:-true}"
+VIDEO_DIR="${VIDEO_DIR:-$PWD/maestro/videos}"
+ANDROID_REC_DEVICE_PATH="/sdcard/maestro-recording.mp4"
+REC_PID=""
+REC_FILE=""
+
+start_recording() {
+  [ "$RECORD_VIDEO" = "true" ] || return 0
+  local label="$1"
+  REC_PID=""
+  mkdir -p "$VIDEO_DIR"
+  # Sanitize the label into a filename; one widget per shard so collisions are intra-flow only
+  # (a retry overwrites the first attempt's clip, which is what we want).
+  REC_FILE="$VIDEO_DIR/${PLATFORM}-$(echo "$label" | tr -c 'A-Za-z0-9._-' '_').mp4"
+  rm -f "$REC_FILE"
+  if [ "$PLATFORM" == "android" ]; then
+    adb shell screenrecord --bit-rate 4000000 --time-limit 180 "$ANDROID_REC_DEVICE_PATH" >/dev/null 2>&1 &
+    REC_PID=$!
+  else
+    xcrun simctl io booted recordVideo --codec h264 --force "$REC_FILE" >/dev/null 2>&1 &
+    REC_PID=$!
+  fi
+}
+
+# stop_recording <keep|discard>
+stop_recording() {
+  [ "$RECORD_VIDEO" = "true" ] || return 0
+  local keep="$1"
+  [ -z "$REC_PID" ] && return 0
+  # SIGINT lets the recorder finalize the file (moov atom / flush); SIGKILL would corrupt it.
+  kill -INT "$REC_PID" 2>/dev/null || true
+  wait "$REC_PID" 2>/dev/null || true
+  if [ "$PLATFORM" == "android" ]; then
+    sleep 2  # let screenrecord flush to /sdcard before pulling
+    if [ "$keep" == "keep" ]; then
+      adb pull "$ANDROID_REC_DEVICE_PATH" "$REC_FILE" >/dev/null 2>&1 || true
+    fi
+    adb shell rm -f "$ANDROID_REC_DEVICE_PATH" >/dev/null 2>&1 || true
+  fi
+  REC_PID=""
+  if [ "$keep" != "keep" ]; then
+    rm -f "$REC_FILE"
+  fi
+  REC_FILE=""
+}
+
 # Function to restart the iOS simulator
 restart_simulator() {
     echo "🔄 Restarting iOS Simulator..."
@@ -78,11 +135,14 @@ run_tests() {
       ensure_emulator_ready
       set_status_bar
     fi
+    start_recording "$(basename "${yaml_test_file%.yaml}")"
     if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$yaml_test_file"; then
       echo "✅ Test passed: $yaml_test_file"
+      stop_recording discard
       passed_tests+=("$yaml_test_file")
     else
       echo "❌ Test failed: $yaml_test_file"
+      stop_recording keep
       failed_tests+=("$yaml_test_file")
     fi
     completed_tests=$((completed_tests + 1))
@@ -109,10 +169,14 @@ smoke_check() {
       ensure_emulator_ready
       set_status_bar
     fi
+    start_recording "smoke-attempt-$attempt"
     if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$script_dir/Smoke.yaml"; then
       echo "✅ Smoke check passed — running widget flows."
+      stop_recording discard
       return 0
     fi
+    # Keep this attempt's clip — a launch crash / blank screen here is exactly what we want to see.
+    stop_recording keep
     if [ "$attempt" -lt "$max_attempts" ]; then
       echo "⚠️  Smoke check attempt $attempt failed — resetting driver/simulator and retrying once."
       # Reset the layer that actually flakes: on iOS restart the sim (re-runs prepare_ios.sh,
@@ -145,12 +209,15 @@ rerun_failed_tests() {
     fi
     local attempt=0
     while [ $attempt -lt $MAX_RETRIES ]; do
+      start_recording "$(basename "${yaml_test_file%.yaml}")"
       if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$yaml_test_file"; then
         echo "✅ Test passed: $yaml_test_file"
+        stop_recording discard
         passed_tests+=("$yaml_test_file")
         break
       else
         echo "❌ Test failed: $yaml_test_file (Attempt $((attempt + 1))/$MAX_RETRIES)"
+        stop_recording keep
         attempt=$((attempt + 1))
         if [ $attempt -lt $MAX_RETRIES ]; then
           echo "Retrying in $RETRY_DELAY seconds..."

@@ -704,6 +704,10 @@ jobs:
             bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): the test step exits non-zero on a failing shard, which would otherwise
+        # SKIP this step — i.e. we'd capture screenshots/logs/videos for green shards but NOT
+        # for the failing ones we actually need to debug. Run regardless of test outcome.
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: android
@@ -771,6 +775,8 @@ jobs:
           bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
@@ -851,6 +857,8 @@ jobs:
             bash maestro/run_maestro_jsactions_tests.sh android || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: android
@@ -909,6 +917,8 @@ jobs:
           bash maestro/run_maestro_jsactions_tests.sh ios || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
@@ -975,5 +985,14 @@ jobs:
         with:
           name: all-debug-artifacts
           pattern: "*-artifacts-*"
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge failure videos"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        # Only failing flows leave a video behind; a fully-green run has none to merge.
+        continue-on-error: true
+        with:
+          name: all-failure-videos
+          pattern: "*-videos-*"
           separate-directories: true
           delete-merged: true
