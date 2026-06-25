@@ -97,19 +97,37 @@ run_tests() {
 smoke_check() {
   local script_dir
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-  echo "🔎 Smoke check: app launches and 'Widgets menu' renders?"
-  if [ "$PLATFORM" == "android" ]; then
-    ensure_emulator_ready
-    set_status_bar
-  fi
-  if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$script_dir/Smoke.yaml"; then
-    echo "✅ Smoke check passed — running widget flows."
-    return 0
-  else
-    echo "❌ Smoke check FAILED — app did not launch / 'Widgets menu' never rendered."
-    echo "   Build/bundle is likely broken; aborting shard fast instead of retrying every flow."
-    return 1
-  fi
+  # 2 attempts. The first failure is usually a transient Maestro driver/simulator attach
+  # flake (e.g. iOS "Unable to set permissions … Failed to connect to 127.0.0.1:<port>")
+  # that kills an otherwise-healthy shard. We restart the driver/sim and retry ONCE — a
+  # genuinely broken build still fails fast (~2 short attempts), so the fast-fail intent holds.
+  local max_attempts=2
+  local attempt=1
+  while [ "$attempt" -le "$max_attempts" ]; do
+    echo "🔎 Smoke check (attempt $attempt/$max_attempts): app launches and 'Widgets menu' renders?"
+    if [ "$PLATFORM" == "android" ]; then
+      ensure_emulator_ready
+      set_status_bar
+    fi
+    if $HOME/.local/bin/maestro/bin/maestro test --env APP_ID=$APP_ID --env PLATFORM=$PLATFORM --env MAESTRO_DRIVER_STARTUP_TIMEOUT=$MAESTRO_DRIVER_STARTUP_TIMEOUT "$script_dir/Smoke.yaml"; then
+      echo "✅ Smoke check passed — running widget flows."
+      return 0
+    fi
+    if [ "$attempt" -lt "$max_attempts" ]; then
+      echo "⚠️  Smoke check attempt $attempt failed — resetting driver/simulator and retrying once."
+      # Reset the layer that actually flakes: on iOS restart the sim (re-runs prepare_ios.sh,
+      # re-establishing the Maestro driver); on Android just re-confirm the emulator is up.
+      if [ "$PLATFORM" == "android" ]; then
+        ensure_emulator_ready
+      else
+        restart_simulator
+      fi
+    fi
+    attempt=$((attempt + 1))
+  done
+  echo "❌ Smoke check FAILED after $max_attempts attempts — app did not launch / 'Widgets menu' never rendered."
+  echo "   Build/bundle is likely broken; aborting shard fast instead of retrying every flow."
+  return 1
 }
 
 # Function to rerun failed tests

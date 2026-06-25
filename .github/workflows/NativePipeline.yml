@@ -620,11 +620,13 @@ jobs:
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-26.04
-    # 15 min per widget shard. With the up-front smoke check (fast-fail on a broken build) and
+    # 20 min per widget shard. With the up-front smoke check (fast-fail on a broken build) and
     # the trimmed Precondition waits (60s×2, was 240s×3), a healthy widget — even the largest
     # (web-view: 9 flows) — finishes well under this; a broken/hung one no longer grinds to the
     # old 60-min cap. Backstop only; the smoke check should catch broken builds in ~1 min.
-    timeout-minutes: 15
+    # (Was 15: a few legit-but-slow shards were truncated at the cap; 20 gives headroom without
+    # re-opening the runaway-hang window.)
+    timeout-minutes: 20
     strategy:
       # 5 parallel Linux shards. Bounded by GitHub Free's 20 total concurrent-job cap (not the
       # macOS-5 cap that limits the iOS matrix), so there's headroom. iOS stays at 4 to keep a
@@ -713,9 +715,10 @@ jobs:
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-26
-    # 15 min per widget shard (see android-widget-tests rationale). The two iOS widgets that hit
-    # the old 60-min cap (background-image-native, popup-menu-native) will now fail in minutes.
-    timeout-minutes: 15
+    # 20 min per widget shard (see android-widget-tests rationale). iOS needs the larger budget
+    # more than Android: sim cold-boot + Maestro driver startup + runtime-ready wait eat several
+    # minutes before any flow runs, and slow-but-healthy iOS shards were getting truncated at 15.
+    timeout-minutes: 20
     strategy:
       max-parallel: 4
       matrix:
@@ -911,3 +914,42 @@ jobs:
         with:
           platform: ios
           test-type: js-actions
+
+  # Each widget/JS shard uploads its own per-shard screenshots/logs/artifacts (one set of three
+  # per matrix entry → dozens of tiny artifacts). This job merges them into a handful of combined
+  # zips so a reviewer can grab everything in one download. `delete-merged` removes the per-shard
+  # sources after a successful merge, leaving just the combined artifacts.
+  aggregate-test-results:
+    needs: [android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
+    # Run even when shards fail/cancel — the failing shards are exactly the ones whose
+    # screenshots/logs we want to inspect.
+    if: ${{ always() }}
+    runs-on: ubuntu-26.04
+    steps:
+      - name: "Merge screenshots"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        # continue-on-error: a run that produced no screenshots (e.g. only JS-action tests) has
+        # nothing to merge and the action would otherwise hard-fail. Same for the two below.
+        continue-on-error: true
+        with:
+          name: all-screenshots
+          pattern: "*-screenshots-*"
+          # Keep each shard's PNGs in its own subdir so identically-named actual/ files don't collide.
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge runtime logs"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        continue-on-error: true
+        with:
+          name: all-runtime-logs
+          pattern: "*-runtime-logs-*"
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge debug artifacts"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        continue-on-error: true
+        with:
+          name: all-debug-artifacts
+          pattern: "*-artifacts-*"
+          separate-directories: true
+          delete-merged: true
