@@ -169,9 +169,8 @@ jobs:
       - name: "Determine Native Template version based on Mendix version"
         if: steps.check-input.outputs.source == 'auto'
         id: determine-nt-branch
-        run: |
-          pip install requests packaging
-          python ./.github/scripts/determine-nt-version.py "${{ needs.mendix-version.outputs.mendix_version }}"
+        # Node (preinstalled on the runner) — no setup-python / pip; the script has no deps.
+        run: node ./.github/scripts/determine-nt-version.mjs "${{ needs.mendix-version.outputs.mendix_version }}"
       - name: "Set output nt_branch"
         id: set-output
         run: |
@@ -926,6 +925,31 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-26.04
     steps:
+      - name: "Write test result summary"
+        # Consolidated pass/fail table for every widget/JS shard, rendered on the run's Summary
+        # tab. Each shard's result lives in its own matrix job; we read them back from the API
+        # (this job `needs:` them all, so conclusions are final by the time this runs).
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "## Native widget E2E results"
+            echo ""
+            echo "| Shard | Result |"
+            echo "| --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          gh api --paginate \
+            "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs?per_page=100" \
+            --jq '.jobs[]
+                  | select(.name | test("widget-tests|js-tests"))
+                  | "| \(.name) | " + (
+                      if   .conclusion == "success"   then "✅ pass"
+                      elif .conclusion == "failure"   then "❌ fail"
+                      elif .conclusion == "cancelled" then "🚫 cancelled"
+                      elif .conclusion == "skipped"   then "⏭️ skipped"
+                      else (.conclusion // .status)
+                      end) + " |"' \
+            >> "$GITHUB_STEP_SUMMARY"
       - name: "Merge screenshots"
         uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         # continue-on-error: a run that produced no screenshots (e.g. only JS-action tests) has
