@@ -212,7 +212,10 @@ jobs:
       - name: "Setup pnpm"
         uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
       - name: "Install dependencies"
-        run: pnpm install --frozen-lockfile
+        # Avoid running workspace lifecycle builds during install; the internal utilities are built once below.
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: "Building internal utilities"
+        run: pnpm run build:internal-utils
       - name: "Force rebuild resources"
         run: |
           # Build JS actions if needed (when js_actions_changed is true OR when workspace explicitly includes them)

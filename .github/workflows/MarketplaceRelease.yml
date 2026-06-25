@@ -32,7 +32,10 @@ jobs:
       - name: "Setup pnpm"
         uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
       - name: "Installing dependencies"
-        run: pnpm install
+        # Avoid running workspace lifecycle builds during install; the internal utilities are built once below.
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: "Building internal utilities"
+        run: pnpm run build:internal-utils
       - name: "Building native widgets and js actions"
         run: pnpm -r run release
       - name: "Updating Native Mobile Resources project"

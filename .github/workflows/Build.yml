@@ -55,7 +55,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - name: "Installing dependencies"
-        run: pnpm install
+        # Avoid running workspace lifecycle builds during install; the internal utilities are built once below.
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: "Building internal utilities"
+        run: pnpm run build:internal-utils
       - name: "Running build for development"
         run: pnpm -r --filter='!native-widgets' --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi) run build
         env:
