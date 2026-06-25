@@ -1,9 +1,5 @@
 name: "Setup Tools"
 description: "Common setup for widget and js test jobs"
-inputs:
-  mendix_version:
-    description: "Mendix version"
-    required: true
 outputs:
   java-path:
     description: "Path to the installed Java"
