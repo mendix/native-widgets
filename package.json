@@ -22,6 +22,7 @@
     "test:e2e:android": "pnpm -r run test:e2e:android",
     "test:e2e:ios": "pnpm -r run test:e2e:ios",
     "build": "pnpm -r run build",
+    "build:internal-utils": "pnpm --filter @mendix/piw-utils-internal --filter @mendix/piw-native-utils-internal run build",
     "release": "pnpm -r run release",
     "release:marketplace": "pnpm -r run release:marketplace",
     "release-github:widget": "node ./scripts/release/createWidgetRelease.js",
