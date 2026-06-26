@@ -17,3 +17,5 @@ appId: "${APP_ID}"
      timeout: 5000 # 5 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_custom"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bottom_sheet_modal_custom.png"

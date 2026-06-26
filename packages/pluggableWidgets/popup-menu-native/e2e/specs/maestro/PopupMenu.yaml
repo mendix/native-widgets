@@ -17,5 +17,7 @@ appId: "${APP_ID}"
     text: "Alert"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/popup_menu_alert"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/popup_menu_alert.png"
 
 

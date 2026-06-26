@@ -40,7 +40,6 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@actions/core": "^1.11.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@react-native/babel-preset": "0.84.1",
@@ -63,8 +62,6 @@
     "image-js": "^0.37.0",
     "lint-staged": "^11.2.6",
     "mendix-client": "^7.15.8",
-    "pixelmatch": "^5.3.0",
-    "pngjs": "^6.0.0",
     "pretty-quick": "^3.3.1",
     "react-dom": "19.2.3",
     "recursive-copy": "^2.0.14",

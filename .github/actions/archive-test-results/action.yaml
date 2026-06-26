@@ -30,11 +30,46 @@ runs:
         name: ${{ inputs.platform }}-screenshots-${{ inputs.test-type }}
         path: ${{ inputs.workspace-path }}/maestro/images/actual/${{ inputs.platform }}/**/*.png
         if-no-files-found: ignore
-    
+
+    - name: Collect screenshot diffs
+      # On a failed assertScreenshot, Maestro writes the visual diff (the most useful artifact
+      # for triaging a mismatch) next to the baseline — but under a *doubled* path, e.g.
+      # maestro/images/expected/ios/maestro/images/expected/ios/<name>_diff.png, because it
+      # resolves the diff name against the baseline's own relative path. That nested location
+      # was never matched by the screenshots glob above, so diffs were silently lost. Gather
+      # any *_diff.png from wherever it landed into one flat dir for upload.
+      if: always()
+      shell: bash
+      run: |
+        dest="${{ inputs.workspace-path }}/maestro/images/diff/${{ inputs.platform }}"
+        mkdir -p "$dest"
+        find "${{ inputs.workspace-path }}/maestro/images" -name '*_diff.png' \
+          -not -path "$dest/*" -exec cp -f {} "$dest/" \; 2>/dev/null || true
+        ls -1 "$dest" 2>/dev/null || true
+
+    - name: Archive screenshot diffs
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
+      if: always()
+      with:
+        name: ${{ inputs.platform }}-diffs-${{ inputs.test-type }}
+        path: ${{ inputs.workspace-path }}/maestro/images/diff/${{ inputs.platform }}/*.png
+        if-no-files-found: ignore
+
     - name: Archive artifacts
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
       if: always()
       with:
         name: ${{ inputs.platform }}-artifacts-${{ inputs.test-type }}
         path: packages/pluggableWidgets/**/artifacts/
+        if-no-files-found: ignore
+
+    # Per-flow videos are recorded for every flow but kept only for FAILED flows (passing
+    # clips are deleted in helpers.sh to save storage), so on a fully-green shard this dir is
+    # empty and the upload is a no-op (if-no-files-found: ignore).
+    - name: Archive failure videos
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
+      if: always()
+      with:
+        name: ${{ inputs.platform }}-videos-${{ inputs.test-type }}
+        path: maestro/videos/*.mp4
         if-no-files-found: ignore

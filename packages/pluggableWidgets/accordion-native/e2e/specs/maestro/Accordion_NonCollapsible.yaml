@@ -12,3 +12,5 @@ appId: "${APP_ID}"
     id: "staticImage"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/accordion_noncollapsible"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/accordion_noncollapsible.png"

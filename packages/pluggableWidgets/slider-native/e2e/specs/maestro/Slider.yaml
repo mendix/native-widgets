@@ -9,3 +9,5 @@ appId: "${APP_ID}"
 - assertVisible: "Dynamic ranges"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/slider"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/slider.png"

@@ -1,0 +1,14 @@
+appId: "${APP_ID}"
+---
+# Fast-fail smoke check (S6). Run ONCE per shard before any widget flows: if the app can't
+# launch and render the "Widgets menu", the build/bundle is fundamentally broken and every
+# flow would fail the same way. Bail in ~1.5 min instead of grinding 8-9 flows × retries up
+# to the job timeout. Short timeout + NO retry block on purpose — this is the cheap probe.
+- launchApp:
+    clearState: true
+    permissions:
+      camera: allow
+      notifications: allow
+- extendedWaitUntil:
+    visible: "Widgets menu"
+    timeout: 60000

@@ -12,3 +12,5 @@ appId: "${APP_ID}"
     text: "Color picker - Normal"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/color_picker_normal"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/color_picker_normal.png"

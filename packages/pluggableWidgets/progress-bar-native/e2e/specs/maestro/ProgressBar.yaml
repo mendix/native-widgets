@@ -10,4 +10,6 @@ appId: "${APP_ID}"
     text: "Dynamic values:"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/progress_bar"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/progress_bar.png"
 
