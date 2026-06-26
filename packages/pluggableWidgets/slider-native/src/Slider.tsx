@@ -60,9 +60,9 @@ export function Slider(props: Props): ReactElement {
                 step={validProps ? toNumber(props.stepSize) ?? 1 : 1}
                 disabled={!editable}
                 trackStyle={editable ? styles.track : styles.trackDisabled}
-                minimumTrackStyle={editable ? styles.minimumTrack : styles.minimumTrackDisabled}
-                maximumTrackStyle={editable ? styles.maximumTrack : styles.maximumTrackDisabled}
-                thumbStyle={editable ? styles.thumb : styles.thumbDisabled}
+                minimumTrackStyle={editable ? styles.highlight : styles.highlightDisabled}
+                maximumTrackStyle={editable ? styles.track : styles.trackDisabled}
+                thumbStyle={editable ? styles.marker : styles.markerDisabled}
                 onValueChange={onValueChange}
                 onSlidingComplete={onSlidingComplete}
             />

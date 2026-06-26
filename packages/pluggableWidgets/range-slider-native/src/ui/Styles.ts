@@ -5,13 +5,11 @@ export interface RangeSliderStyle extends Style {
     container: ViewStyle;
     track: ViewStyle;
     trackDisabled: ViewStyle;
-    minimumTrack: ViewStyle;
-    minimumTrackDisabled: ViewStyle;
-    maximumTrack: ViewStyle;
-    maximumTrackDisabled: ViewStyle;
-    thumb: ViewStyle;
-    thumbActive: ViewStyle;
-    thumbDisabled: ViewStyle;
+    highlight: ViewStyle;
+    highlightDisabled: ViewStyle;
+    marker: ViewStyle;
+    markerActive: ViewStyle;
+    markerDisabled: ViewStyle;
     validationMessage: TextStyle;
 }
 
@@ -40,12 +38,10 @@ export const defaultRangeSliderStyle: RangeSliderStyle = {
     container: {},
     track: trackBase,
     trackDisabled: { ...trackBase, opacity: 0.4 },
-    minimumTrack: { backgroundColor: blue },
-    minimumTrackDisabled: { backgroundColor: blue },
-    maximumTrack: { backgroundColor: "#E7E7E7" },
-    maximumTrackDisabled: { backgroundColor: "#E7E7E7" },
-    thumb: thumbBase,
-    thumbActive: thumbBase,
-    thumbDisabled: thumbBase,
+    highlight: { backgroundColor: blue },
+    highlightDisabled: { backgroundColor: blue },
+    marker: thumbBase,
+    markerActive: { ...thumbBase, backgroundColor: blue },
+    markerDisabled: thumbBase,
     validationMessage: { color: "#ed1c24" }
 };

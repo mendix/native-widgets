@@ -65,9 +65,9 @@ export function RangeSlider(props: Props): ReactElement {
                 step={validProps ? toNumber(props.stepSize) ?? 1 : 1}
                 disabled={!isEnabled}
                 trackStyle={isEnabled ? styles.track : styles.trackDisabled}
-                minimumTrackStyle={isEnabled ? styles.minimumTrack : styles.minimumTrackDisabled}
-                maximumTrackStyle={isEnabled ? styles.maximumTrack : styles.maximumTrackDisabled}
-                thumbStyle={isEnabled ? styles.thumb : styles.thumbDisabled}
+                minimumTrackStyle={isEnabled ? styles.highlight : styles.highlightDisabled}
+                maximumTrackStyle={isEnabled ? styles.track : styles.tracktDisabled}
+                thumbStyle={isEnabled ? styles.marker : styles.markerDisabled}
                 onValueChange={onValueChange}
                 onSlidingComplete={onSlidingComplete}
             />
