@@ -11,4 +11,6 @@ appId: "${APP_ID}"
 - assertVisible: "Static SVG images"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_static_svg"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bg_image_static_svg.png"
 

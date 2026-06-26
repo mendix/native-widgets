@@ -12,3 +12,5 @@ appId: "${APP_ID}"
     text: "Header 1 - Text 2"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/accordion_multiple"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/accordion_multiple.png"

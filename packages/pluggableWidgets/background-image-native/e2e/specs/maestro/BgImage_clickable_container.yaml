@@ -12,3 +12,5 @@ appId: "${APP_ID}"
     id: "clickableContainer"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_clickable_container"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bg_image_clickable_container.png"

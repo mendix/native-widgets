@@ -19,3 +19,5 @@ appId: "${APP_ID}"
      timeout: 15000 # 15 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/pie_chart_multiple_data_points"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/pie_chart_multiple_data_points.png"

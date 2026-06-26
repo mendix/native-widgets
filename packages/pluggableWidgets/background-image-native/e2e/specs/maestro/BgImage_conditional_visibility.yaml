@@ -11,3 +11,5 @@ appId: "${APP_ID}"
 - assertVisible: "Condtional visibility"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bg_image_conditional_visibility"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bg_image_conditional_visibility.png"

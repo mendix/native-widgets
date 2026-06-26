@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     text: "With default text:"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/progress_circle"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/progress_circle.png"

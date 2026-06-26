@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     text: "Normal:"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/rating"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/rating.png"

@@ -10,3 +10,5 @@ appId: "${APP_ID}"
     text: "Vertical radio buttons"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/radio_buttons"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/radio_buttons.png"

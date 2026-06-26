@@ -15,10 +15,20 @@ on:
         default: ""
         required: false
         type: string
+      test_project_ref:
+        description: "mendix/Native-Mobile-Resources ref (commit SHA) to build against (leave empty for the pinned default)"
+        default: ""
+        required: false
+        type: string
       LOCAL_TEST_ARTIFACT_RUN_ID:
         description: "Workflow run ID for local artifact download (leave empty for normal CI). Use the full run ID from the URL, not the run number displayed in UI."
         required: false
         default: ""
+      update_baselines:
+        description: "Capture new screenshot baselines instead of asserting. Tests still run (to produce screenshots) but visual mismatches won't fail the run; download the *-screenshots-* artifacts and commit them under maestro/images/expected/."
+        required: false
+        default: false
+        type: boolean
       workspace:
         description: "Select a widget to test (Default will run all)"
         required: true
@@ -76,30 +86,49 @@ on:
     branches:
       - main
 
-# Use default name in case no input
-run-name: ${{ github.event.inputs.run_name || 'Run Native Pipeline' }}
+# Surface capture mode in the run title (workflow_dispatch inputs aren't shown in the UI),
+# otherwise fall back to the provided run_name / default. inputs.update_baselines is the
+# typed boolean from workflow_dispatch (null on pull_request).
+run-name: ${{ inputs.update_baselines && '🔄 Capture screenshot baselines' || (github.event.inputs.run_name || 'Run Native Pipeline') }}
+# Cancel superseded runs for the same PR/branch; a new push should not race an in-flight pipeline.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 env:
   LOCAL_TEST_ARTIFACT_RUN_ID: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID || '' }}
+  # Opt out of Maestro's anonymous analytics (avoids a network call, keeps runs deterministic).
+  MAESTRO_CLI_NO_ANALYTICS: "1"
+  # When "true" (set via the update_baselines dispatch input), the maestro run steps tolerate
+  # assertScreenshot failures so a capture run can produce fresh baselines without going red.
+  UPDATE_BASELINES: ${{ github.event.inputs.update_baselines || 'false' }}
+  # Pin the test project (mendix/Native-Mobile-Resources) to a SHA for reproducibility instead
+  # of tracking a moving `main`. Single source of truth — bump deliberately. The repo publishes
+  # no tags, so a commit SHA is the only stable ref. Override per run via the dispatch input.
+  NATIVE_MOBILE_RESOURCES_REF: ${{ github.event.inputs.test_project_ref || 'f0e7c2278578022cc742f82a087e6c4fff2f7159' }}
 permissions:
   packages: write
 jobs:
   scope:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       scope: ${{ steps.scope.outputs.scope }}
       widgets: ${{ steps.scope.outputs.widgets }}
       widgets_to_test: ${{ steps.scope.outputs.widgets_to_test }}
       js_actions_changed: ${{ steps.scope.outputs.js_actions_changed }}
+      full_build: ${{ steps.scope.outputs.full_build }}
     steps:
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          fetch-depth: 2 # Fetch the latest two commits and its parent commit
+          # Full history so the scope script can diff against the PR base merge-base
+          # (covers every commit in the PR, not just the latest).
+          fetch-depth: 0
       - name: "Determine scope"
         id: scope
+        # Pass the PR base SHA (empty on non-PR events → the script's dispatch path handles it).
         run: |
           chmod +x ./.github/scripts/determine-widget-scope.sh
-          ./.github/scripts/determine-widget-scope.sh "${{ github.event_name }}" "${{ github.event.inputs.workspace }}" "${{ github.event.before }}" "${{ github.sha }}"
+          ./.github/scripts/determine-widget-scope.sh "${{ github.event_name }}" "${{ github.event.inputs.workspace }}" "${{ github.event.pull_request.base.sha || github.event.before }}" "${{ github.sha }}"
       - name: "Debug Scope Output"
         run: |
           echo "Scope is: ${{ steps.scope.outputs.scope }}"
@@ -107,7 +136,7 @@ jobs:
           echo "Widgets to test: ${{ steps.scope.outputs.widgets_to_test }}"
           echo "JS actions changed: ${{ steps.scope.outputs.js_actions_changed }}"
   mendix-version:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     outputs:
       mendix_version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}
     steps:
@@ -117,17 +146,17 @@ jobs:
         id: set-mendix-version
         run: |
           if [[ -n "${{ github.event.inputs.mendix_version }}" ]]; then
-            echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> $GITHUB_OUTPUT
+            echo "MENDIX_VERSION=${{ github.event.inputs.mendix_version }}" >> "$GITHUB_OUTPUT"
           else
             MENDIX_VERSION=$(jq -r '.latest' configs/e2e/mendix-versions.json)
-            echo "MENDIX_VERSION=$MENDIX_VERSION" >> $GITHUB_OUTPUT
+            echo "MENDIX_VERSION=$MENDIX_VERSION" >> "$GITHUB_OUTPUT"
           fi
       - name: "Debug Mendix Version"
         run: |
           echo "Mendix Version: ${{ steps.set-mendix-version.outputs.MENDIX_VERSION }}"
   determine-nt-version:
     needs: [mendix-version]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       nt_branch: ${{ steps.set-output.outputs.nt_branch }}
     steps:
@@ -138,11 +167,11 @@ jobs:
         run: |
           if [[ -n "${{ github.event.inputs.nt_branch }}" ]]; then
             echo "Using specified nt_branch: ${{ github.event.inputs.nt_branch }}"
-            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
-            echo "source=input" >> $GITHUB_OUTPUT
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> "$GITHUB_OUTPUT"
+            echo "source=input" >> "$GITHUB_OUTPUT"
           else
             echo "No nt_branch specified, will determine from mendix_version"
-            echo "source=auto" >> $GITHUB_OUTPUT
+            echo "source=auto" >> "$GITHUB_OUTPUT"
           fi
       - name: "Download mendix_version.json from native-template repo"
         if: steps.check-input.outputs.source == 'auto'
@@ -152,23 +181,22 @@ jobs:
       - name: "Determine Native Template version based on Mendix version"
         if: steps.check-input.outputs.source == 'auto'
         id: determine-nt-branch
-        run: |
-          pip install requests packaging
-          python ./.github/scripts/determine-nt-version.py "${{ needs.mendix-version.outputs.mendix_version }}"
+        # Node (preinstalled on the runner) — no setup-python / pip; the script has no deps.
+        run: node ./.github/scripts/determine-nt-version.mjs "${{ needs.mendix-version.outputs.mendix_version }}"
       - name: "Set output nt_branch"
         id: set-output
         run: |
           if [[ "${{ steps.check-input.outputs.source }}" == "input" ]]; then
-            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> $GITHUB_OUTPUT
+            echo "nt_branch=${{ github.event.inputs.nt_branch }}" >> "$GITHUB_OUTPUT"
           else
-            echo "nt_branch=${{ steps.determine-nt-branch.outputs.nt_branch }}" >> $GITHUB_OUTPUT
+            echo "nt_branch=${{ steps.determine-nt-branch.outputs.nt_branch }}" >> "$GITHUB_OUTPUT"
           fi
       - name: "Debug final branch output"
         run: |
           echo "Final nt_branch value: ${{ steps.set-output.outputs.nt_branch }}"
   docker-images:
     needs: [mendix-version]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: "Login to GitHub Container Registry"
         uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
@@ -178,8 +206,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Check if docker image already exists"
         run: |
-          docker manifest inspect ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
-          echo "IMAGE_MISSING=$EXIT_CODE" >> $GITHUB_ENV
+          docker manifest inspect ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }} || EXIT_CODE=$?
+          echo "IMAGE_MISSING=$EXIT_CODE" >> "$GITHUB_ENV"
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         if: ${{ env.IMAGE_MISSING != 0 }}
@@ -192,10 +220,10 @@ jobs:
           build-args: |
             MENDIX_VERSION=${{ needs.mendix-version.outputs.mendix_version }}
           push: true
-          tags: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+          tags: ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
   resources:
     needs: [scope, mendix-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     permissions:
       packages: read
       contents: read
@@ -204,42 +232,77 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Set up node"
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      - name: "Setup Node and dependencies (with pnpm store cache)"
+        uses: ./.github/actions/setup-node-with-cache
+      - name: "Restore built resources (dist) cache"
+        id: resources-cache
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
-          node-version-file: .nvmrc
-          package-manager-cache: false
-      - name: "Setup pnpm"
-        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
-      - name: "Install dependencies"
-        # Avoid running workspace lifecycle builds during install; the internal utilities are built once below.
-        run: pnpm install --frozen-lockfile --ignore-scripts
-      - name: "Building internal utilities"
-        run: pnpm run build:internal-utils
-      - name: "Force rebuild resources"
+          # Built widget .mpk / JS-action dist are reproducible from source + toolchain, so
+          # key on widget/JS-action src + their package.json + the lockfile. An infra-only
+          # change (no src touched) keeps the same key → exact hit → skip the rebuild below.
+          path: |
+            packages/pluggableWidgets/*/dist
+            packages/jsActions/*/dist
+          key: resources-dist-v1-${{ hashFiles('packages/pluggableWidgets/*/src/**', 'packages/jsActions/*/src/**', 'packages/pluggableWidgets/*/package.json', 'packages/jsActions/*/package.json', 'pnpm-lock.yaml') }}
+      - name: "Build resources"
+        # On a full build with an exact cache hit every widget's dist is already current, so
+        # skip the slow rollup/babel rebuild. Otherwise build the scoped widgets + JS actions
+        # in one pnpm invocation (multiple --filter targets run concurrently).
         run: |
-          # Build JS actions if needed (when js_actions_changed is true OR when workspace explicitly includes them)
+          if [ "${{ needs.scope.outputs.full_build }}" = "true" ] && [ "${{ steps.resources-cache.outputs.cache-hit }}" = "true" ]; then
+            echo "Full build with cached resources — skipping rebuild."
+            exit 0
+          fi
+
+          filters=()
           if [ "${{ needs.scope.outputs.js_actions_changed }}" = "true" ] || \
             [ "${{ github.event.inputs.workspace }}" = "js-actions" ] || \
             [ "${{ github.event.inputs.workspace }}" = "*-native" ] || \
             [ "${{ github.event_name }}" = "schedule" ]; then
-            pnpm --filter=mobile-resources-native run build
-            pnpm --filter=nanoflow-actions-native run build
+            filters+=(--filter=mobile-resources-native --filter=nanoflow-actions-native)
           fi
+          while read -r w; do
+            [ -n "$w" ] && filters+=(--filter="$w")
+          done < <(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
 
-          # Build widgets from scope
-          widgets=$(echo '${{ needs.scope.outputs.widgets }}' | jq -r '.[]')
-          for w in $widgets; do
-            pnpm --filter=$w run build
-          done
+          if [ ${#filters[@]} -gt 0 ]; then
+            echo "Building: ${filters[*]}"
+            pnpm "${filters[@]}" run build
+          else
+            echo "Nothing to build."
+          fi
       - name: "Unit test"
         run: pnpm -r --filter="${{ needs.scope.outputs.scope }}" run test
+      - name: "Save built resources (dist) cache"
+        # Only after a full build (every widget built), so a partial build never populates the
+        # shared cache with an incomplete dist set under a key a later full build could hit.
+        if: ${{ needs.scope.outputs.full_build == 'true' && steps.resources-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            packages/pluggableWidgets/*/dist
+            packages/jsActions/*/dist
+          key: ${{ steps.resources-cache.outputs.cache-primary-key }}
+      - name: "Write resources manifest"
+        # Guarantees the resources artifact always contains at least one file, so the
+        # download in the `project` job never fails. A widgets-PR whose only changes are
+        # under e2e/ builds nothing (those widgets test against the baseline project), which
+        # would otherwise leave the artifact empty → not created → project download error.
+        run: |
+          {
+            echo "built widgets: ${{ needs.scope.outputs.widgets }}"
+            echo "tested widgets: ${{ needs.scope.outputs.widgets_to_test }}"
+            echo "js_actions_changed: ${{ needs.scope.outputs.js_actions_changed }}"
+            echo "full_build: ${{ needs.scope.outputs.full_build }}"
+          } > resources-manifest.txt
       - name: "Upload JS actions resources artifact"
         if: ${{ github.event.inputs.workspace == 'js-actions' }}
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: resources
           path: |
+            resources-manifest.txt
             packages/jsActions/mobile-resources-native/dist/**/*
             packages/jsActions/nanoflow-actions-native/dist/**/*
       - name: "Upload widget and JS actions resources artifact"
@@ -248,28 +311,34 @@ jobs:
         with:
           name: resources
           path: |
+            resources-manifest.txt
             packages/pluggableWidgets/**/dist/*/*.mpk
             packages/jsActions/mobile-resources-native/dist/**/*
             packages/jsActions/nanoflow-actions-native/dist/**/*
   project:
     needs: [resources, mendix-version]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
+      image: ghcr.io/${{ github.repository }}/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: "Make sure curl is installed"
+      - name: "Install curl and unzip"
         run: |
-          apt update && apt upgrade -y
-          apt install curl -y
+          apt update
+          apt install -y curl unzip
       - name: "Download test project"
-        run: curl -L -o project.zip https://github.com/mendix/Native-Mobile-Resources/archive/refs/heads/main.zip
+        # Pinned to a SHA (NATIVE_MOBILE_RESOURCES_REF) for reproducible builds.
+        run: curl -L -o project.zip "https://github.com/mendix/Native-Mobile-Resources/archive/${NATIVE_MOBILE_RESOURCES_REF}.zip"
       - name: "Extract test project"
-        uses: montudor/action-zip@0852c26906e00f8a315c704958823928d8018b28 # v1.0.0
-        with:
-          args: unzip -qq project.zip -d .
+        # GitHub names the archive's top dir after the ref (Native-Mobile-Resources-<ref>);
+        # rename it back to the stable Native-Mobile-Resources-main that the rest of the job
+        # references, so pinning the ref doesn't ripple through every downstream path.
+        run: |
+          unzip -qq project.zip -d .
+          rm -rf Native-Mobile-Resources-main
+          mv "Native-Mobile-Resources-${NATIVE_MOBILE_RESOURCES_REF}" Native-Mobile-Resources-main
       - name: "Download resources artifact"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -277,17 +346,23 @@ jobs:
           path: resources
       - name: "List resources"
         run: ls -R resources
-      - name: "Move widgets"
+      - name: "Overlay built widget mpks"
         if: ${{ github.event.inputs.workspace != 'js-actions' }}
         shell: bash
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
-              mv -f $oldPath $newPath
+              newPath="Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
+              mv -f "$oldPath" "$newPath"
             done
-            mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
           fi
+      - name: "Register widgets in the test project"
+        # Run unconditionally: update-widgets must sync the project's widget definitions with the
+        # mpks in widgets/ regardless of whether THIS run overlaid fresh ones. Must NOT be nested
+        # in the mpk-move guard — a `js-actions` dispatch (or any run that builds no mpks) would
+        # then skip it and leave stale Atlas widget defs for the portable-app build.
+        shell: bash
+        run: mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
       - name: "Move mobile-resources"
         shell: bash
         run: |
@@ -300,63 +375,49 @@ jobs:
           if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
             mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
-      - name: "Force rebuild test project"
+      - name: "Build portable app package (self-contained runtime)"
+        # Run this BEFORE the native-packager deploy: portable-app-package re-prepares and
+        # CLEANS the project's deployment/ directory, which would wipe the native bundles.
+        # app.zip lives outside deployment/, so the later deploy's clean doesn't touch it.
+        # Output must live inside the project root: mxbuild's WhitelistAware path check
+        # rejects arbitrary output paths for the portable-app-package target.
         run: |
-          mxbuild -o automation.mda --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
-      - name: "Upload MDA"
+          mxbuild --target=portable-app-package \
+            -o Native-Mobile-Resources-main/app.zip \
+            --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      - name: "Build native bundles (deploy + native-packager)"
+        # Compiles the model and emits the Android/iOS JS bundles in native-template-ready
+        # layout at deployment/native/bundle/{android,iOS}. Supported replacement for the old
+        # create-native-bundle hack. Runs LAST so nothing cleans deployment/ afterward.
+        run: |
+          mxbuild --target=deploy --native-packager \
+            --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+          echo "=== native bundle output ==="
+          ls -R Native-Mobile-Resources-main/deployment/native/bundle 2>/dev/null \
+            || find Native-Mobile-Resources-main -name 'index.*.bundle' -o -name 'bundle' -type d 2>/dev/null
+      - name: "Upload Android bundle"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
-          name: mda
-          path: automation.mda
-  android-bundle:
-    needs: [project, mendix-version]
-    runs-on: ubuntu-24.04
-    # Skip this job if we're using artifacts from a specific run
-    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
-    container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: "Download deployment package"
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+          name: android-bundle
+          path: Native-Mobile-Resources-main/deployment/native/bundle/android
+          if-no-files-found: error
+      - name: "Upload iOS bundle"
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
-          name: mda
-      - name: "Create Android bundle"
-        uses: ./.github/actions/create-native-bundle
+          name: ios-bundle
+          path: Native-Mobile-Resources-main/deployment/native/bundle/iOS
+          if-no-files-found: error
+      - name: "Upload portable app package"
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
-          platform: android
-          mda-file: automation.mda
-  ios-bundle:
-    needs: [project, mendix-version]
-    runs-on: ubuntu-24.04
-    # Skip this job if we're using artifacts from a specific run
-    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' }}
-    container:
-      image: ghcr.io/mendix/native-widgets/mxbuild:${{ needs.mendix-version.outputs.mendix_version }}
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: "Check out code"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: "Download project MDA file"
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          name: mda
-      - name: "Create iOS bundle"
-        uses: ./.github/actions/create-native-bundle
-        with:
-          platform: ios
-          mda-file: automation.mda
+          name: app-package
+          path: Native-Mobile-Resources-main/app.zip
   android-app:
-    needs: [android-bundle, determine-nt-version]
-    runs-on: ubuntu-24.04
-    # Skip this job if we're using artifacts from a specific run, but allow it to run if android-bundle was skipped
-    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.android-bundle.result == 'success') }}
+    needs: [project, determine-nt-version]
+    runs-on: ubuntu-26.04
+    # Skip this job if we're using artifacts from a specific run; the native bundles now come
+    # from the project job (deploy + native-packager), so gate on project success.
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.project.result == 'success') }}
     steps:
       - name: Debug branch value
         run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
@@ -366,6 +427,19 @@ jobs:
           repository: mendix/native-template
           ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
+      - name: "Detect Android NDK version from native-template"
+        shell: bash
+        run: |
+          set -euo pipefail
+          # native-template declares e.g. ndkVersion = "27.3.13750724" in android/build.gradle
+          NDK=$(grep -oE 'ndkVersion[[:space:]]*=?[[:space:]]*"[0-9.]+"' native-template/android/build.gradle \
+                | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
+          if [ -z "$NDK" ]; then
+            echo "::warning::Could not detect ndkVersion from native-template; gradle will resolve/download it."
+          else
+            echo "Detected NDK version: $NDK"
+          fi
+          echo "ANDROID_NDK_VERSION=$NDK" >> "$GITHUB_ENV"
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -390,8 +464,10 @@ jobs:
             ${{ runner.os }}-android-build-
       - name: "Copy files to the right location"
         run: |
-          mv bundles/android/index.android.bundle native-template/android/app/src/main/assets/index.android.bundle
-          cp -r bundles/android/assets/* native-template/android/app/src/main/res/
+          # native-packager output is pre-split: bundle/android/{assets/index.android.bundle, res/...}
+          # maps directly onto app/src/main/{assets,res} (per the official manual-build doc).
+          mkdir -p native-template/android/app/src/main
+          cp -r bundles/android/* native-template/android/app/src/main/
           mv native-widgets/configs/e2e/config.json native-template
           mv native-widgets/configs/e2e/google-services.json native-template/android/app
           node native-widgets/scripts/test/add-native-dependencies.js
@@ -405,14 +481,45 @@ jobs:
           distribution: temurin
           cache: gradle
 
+      # Install the NDK explicitly and cache it (keyed on the version detected from
+      # native-template), instead of letting the gradle build download ~1GB every run.
+      # (${{ }} expressions are expanded by Actions, so they are safe in cache `path`
+      # — unlike shell $VARs.) If detection failed, these no-op and gradle resolves it.
+      - name: "Cache Android NDK"
+        id: cache-ndk
+        if: env.ANDROID_NDK_VERSION != ''
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}
+          key: ${{ runner.os }}-android-ndk-${{ env.ANDROID_NDK_VERSION }}
+      - name: "Install Android NDK"
+        if: env.ANDROID_NDK_VERSION != '' && steps.cache-ndk.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          SDKMANAGER="$SDK/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "${SDKMANAGER:-}" ] || [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(find "$SDK" -type f -name sdkmanager 2>/dev/null | head -1)"
+          fi
+          echo "Using sdkmanager: $SDKMANAGER"
+          # Accept licenses first (yes can SIGPIPE under pipefail, so tolerate it), then install.
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" "ndk;${ANDROID_NDK_VERSION}"
+
       - name: "Build Android app"
         working-directory: native-template/android
-        run: |
-          ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
-          if [ $? -ne 0 ]; then
-            echo "Build failed!"
-            exit 1
-          fi
+        # The CI emulator is x86_64, so only compile that ABI's native code instead of all
+        # four (arm64-v8a, armeabi-v7a, x86, x86_64) — cuts the C/C++ build by ~75%.
+        #
+        # --build-cache turns on Gradle's local build cache (task-output content cache). It lives
+        # under ~/.gradle/caches/build-cache-1, already persisted by setup-java's `cache: gradle`,
+        # so unchanged tasks (incl. RN libs' native compiles, which don't change run-to-run) are
+        # reused instead of recompiled. Safe: a cache miss just rebuilds.
+        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest -PreactNativeArchitectures=x86_64 --build-cache
       - name: "List APK files"
         run: |
           echo "Listing APK files in the output directory:"
@@ -423,10 +530,11 @@ jobs:
           name: android-app
           path: native-template/android/app/build/outputs/apk/**/*.apk
   ios-app:
-    needs: [ios-bundle, determine-nt-version]
-    runs-on: macos-15
-    # Skip this job if we're using artifacts from a specific run, but allow it to run if ios-bundle was skipped
-    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.ios-bundle.result == 'success') }}
+    needs: [project, determine-nt-version]
+    runs-on: macos-26
+    # Skip this job if we're using artifacts from a specific run; the native bundles now come
+    # from the project job (deploy + native-packager), so gate on project success.
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.project.result == 'success') }}
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -450,6 +558,8 @@ jobs:
           cache: npm
           cache-dependency-path: native-template/package-lock.json
       - name: "Cache iOS Build"
+        # Persists the DerivedData root (`build/`) so unchanged products can be reused across
+        # runs; restore-keys falls back to the latest entry on a partial-input change.
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: native-template/ios/build
@@ -458,8 +568,10 @@ jobs:
             ${{ runner.os }}-ios-build-
       - name: "Copy files to the right location"
         run: |
-          mv bundles/ios/index.ios.bundle native-template/ios/Bundle/index.ios.bundle
-          mv bundles/ios/assets/assets native-template/ios/Bundle/
+          # native-packager emits bundle/iOS/{index.ios.bundle, assets/...}; copy the lot into
+          # ios/Bundle (per the official manual-build doc).
+          mkdir -p native-template/ios/Bundle
+          cp -r bundles/ios/* native-template/ios/Bundle/
           mv native-widgets/configs/e2e/config.json native-template
           node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Install Node dependencies"
@@ -469,7 +581,11 @@ jobs:
       - name: "Setup Pods cache"
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
-          path: native-template/Pods
+          # Also cache CocoaPods' own download cache so `pod install` is fast even when
+          # the Pods/ dir misses. (~ is expanded by actions/cache.)
+          path: |
+            native-template/Pods
+            ~/Library/Caches/CocoaPods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
@@ -478,20 +594,70 @@ jobs:
         run: pod install
       - name: "Build iOS app"
         working-directory: native-template/ios
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES VALID_ARCHS="i386 x86_64"
+        # Build for the simulator's native arch (arm64 on Apple Silicon runners).
+        # ONLY_ACTIVE_ARCH=YES already limits to the active arch; the old
+        # VALID_ARCHS="i386 x86_64" forced dead/foreign archs and broke on macos-26.
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES
       - name: "Archive iOS app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
 
+  android-avd-cache:
+    runs-on: ubuntu-26.04
+    # Warm a booted-emulator snapshot once and cache it, so the per-widget Android shards
+    # restore it instead of cold-booting (~1-2 min saved per shard). Pure speed optimization:
+    # shards fall back to a cold boot on cache miss, so a failure here doesn't block tests.
+    steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: "AVD cache"
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          # Keep in sync with the emulator config and the restore step in the test jobs.
+          key: avd-android-35-x86_64-google_apis-pixel
+      - name: "Create AVD and generate snapshot for caching"
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel
+          force-avd-creation: false
+          # 2 vCPUs for the emulator. GitHub-hosted Linux runners have only 4 vCPUs total, so
+          # leave 2 for the host (adb, Maestro, the JS bundler proxy). This is the action's
+          # default and the sweet spot on free runners; it's written to the AVD's config.ini
+          # (hw.cpu.ncore) and is what the emulator actually honors — a `-cores N` in
+          # emulator-options below would be silently overridden, so we set it here instead.
+          cores: 2
+          emulator-options: "-no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096"
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
   android-widget-tests:
-    needs: [scope, mendix-version, project, android-app]
+    needs: [scope, mendix-version, project, android-app, android-avd-cache]
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    runs-on: ubuntu-26.04
+    # 30 min hard cap per widget shard. A healthy widget's flows run in ~30s each; the cap is a
+    # backstop for genuinely wedged shards. Bumped 20→30 after a run where shards were cancelled
+    # at 20 min — that was traced to a video-recording bug (the on-device screenrecord wasn't
+    # being stopped, adding ~2.5 min/flow); with that fixed 30 is comfortable headroom. If shards
+    # still hit 30, the cause is real app instability, not the cap — needs a different fix.
+    timeout-minutes: 30
     strategy:
+      # 5 parallel Linux shards. Bounded by GitHub Free's 20 total concurrent-job cap (not the
+      # macOS-5 cap that limits the iOS matrix), so there's headroom. iOS stays at 4 to keep a
+      # macOS slot of headroom under that 5-job ceiling.
       max-parallel: 5
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets_to_test) }}
@@ -501,10 +667,10 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only when specific run id is provided when triggering the jbo
       - name: "Download Android app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -524,22 +690,25 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools  
         uses: ./.github/actions/setup-tools
-        with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
 
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          timeout_minutes: 20
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: "Restore AVD snapshot"
+        # Restore-only: the android-avd-cache job is the sole writer, so shards don't
+        # each try to re-save the same key. Must match that job's key.
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-android-35-x86_64-google_apis-pixel
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
         with:
@@ -547,15 +716,24 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          # Boot from the cached snapshot (don't overwrite it); falls back to a cold boot on cache miss.
+          force-avd-creation: false
+          # 2 vCPUs: free GitHub runners have 4 total; leave 2 for the host. Set via the action
+          # input (written to config.ini hw.cpu.ncore) — a `-cores N` emulator-option is overridden.
+          cores: 2
+          emulator-options: "-no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save -memory 4096"
           disable-animations: true
           script: |
             chmod +x maestro/helpers/prepare_android.sh
             chmod +x maestro/run_maestro_widget_tests.sh
             bash maestro/helpers/prepare_android.sh
-            bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}"
+            bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): the test step exits non-zero on a failing shard, which would otherwise
+        # SKIP this step — i.e. we'd capture screenshots/logs/videos for green shards but NOT
+        # for the failing ones we actually need to debug. Run regardless of test outcome.
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: android
@@ -565,42 +743,20 @@ jobs:
     needs: [scope, mendix-version, project, ios-app]
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
     if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
-    runs-on: macos-15
-    timeout-minutes: 60
+    runs-on: macos-26
+    # 30 min per widget shard, matching android-widget-tests. iOS needs the budget more than
+    # Android: sim cold-boot + Maestro driver startup + runtime-ready wait eat several minutes
+    # before any flow runs, so on a free macOS runner slow-but-healthy shards were getting
+    # truncated — at 20 min several shards (accordion, background-image, bottom-sheet,
+    # color-picker, safe-area-view) were cancelled mid-flow. If a shard still hits 30 the cause
+    # is real app instability, not the cap.
+    timeout-minutes: 30
     strategy:
-      max-parallel: 5
+      max-parallel: 4
       matrix:
         widget: ${{ fromJson(needs.scope.outputs.widgets_to_test) }}
       fail-fast: false
     steps:
-      - name: "Force cleanup workspace"
-        run: |
-          # Kill all Git and Xcode processes aggressively
-          sudo pkill -9 -f git || true
-          sudo pkill -9 -f xcodebuild || true
-          sudo pkill -9 -f node || true
-          
-          # Wait for processes to be killed
-          sleep 5
-          
-          # Clean the workspace contents while preserving directory structure
-          cd /Users/runner/work/native-widgets
-          if [ -d "native-widgets" ]; then
-            cd native-widgets
-            
-            # Force remove all git state and locks with extreme prejudice
-            sudo rm -rf .git || true
-            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
-            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
-            
-            # Remove all other contents
-            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
-          fi
-          
-          # Final wait and process cleanup
-          sudo pkill -9 -f git || true
-          sleep 3
-        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -608,10 +764,10 @@ jobs:
           fetch-tags: false
           clean: true
           ref: ${{ github.sha }}
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only for local testing, will be empty on GitHub
       - name: "Download iOS app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -631,16 +787,10 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools
         uses: ./.github/actions/setup-tools
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
   
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
@@ -649,29 +799,31 @@ jobs:
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_widget_tests.sh
           bash maestro/helpers/prepare_ios.sh
-          bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}"
+          bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
           test-type: ${{ matrix.widget }}
 
   android-js-tests:
-    needs: [scope, mendix-version, project, android-app]
+    needs: [scope, mendix-version, project, android-app, android-avd-cache]
     # Run if JS actions changed and project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
     if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 90
     steps:
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only for local testing, will be empty on GitHub
       - name: "Download Android app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -691,21 +843,24 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools
         uses: ./.github/actions/setup-tools
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: "Restore AVD snapshot"
+        # Restore-only: the android-avd-cache job is the sole writer, so shards don't
+        # each try to re-save the same key. Must match that job's key.
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-android-35-x86_64-google_apis-pixel
       - name: "Run android tests"
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
         with:
@@ -713,15 +868,22 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: "-no-window -gpu swiftshader_indirect -no-boot-anim -no-snapshot -memory 4096 -cores 4"
+          # Boot from the cached snapshot (don't overwrite it); falls back to a cold boot on cache miss.
+          force-avd-creation: false
+          # 2 vCPUs: free GitHub runners have 4 total; leave 2 for the host. Set via the action
+          # input (written to config.ini hw.cpu.ncore) — a `-cores N` emulator-option is overridden.
+          cores: 2
+          emulator-options: "-no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save -memory 4096"
           disable-animations: true
           script: |
             chmod +x maestro/helpers/prepare_android.sh
             chmod +x maestro/run_maestro_jsactions_tests.sh
             bash maestro/helpers/prepare_android.sh
-            bash maestro/run_maestro_jsactions_tests.sh android
+            bash maestro/run_maestro_jsactions_tests.sh android || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: android
@@ -731,46 +893,19 @@ jobs:
     needs: [scope, mendix-version, project, ios-app]
     # Run if JS actions changed and project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
     if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 90
     steps:
-      - name: "Clean up any Git locks"
-        run: |
-          # Kill all git and related processes aggressively
-          sudo pkill -9 -f git || true
-          sudo pkill -9 -f node || true
-          
-          # Wait for processes to be killed
-          sleep 5
-          
-          # Clean the workspace contents while preserving directory structure
-          cd /Users/runner/work/native-widgets
-          if [ -d "native-widgets" ]; then
-            cd native-widgets
-            
-            # Force remove git state and locks
-            sudo rm -rf .git || true
-            find . -name "*.lock" -type f -exec sudo rm -f {} \; 2>/dev/null || true
-            find . -name ".git*" -exec sudo rm -rf {} \; 2>/dev/null || true
-            
-            # Remove all other contents
-            sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
-          fi
-          
-          # Final cleanup
-          sudo pkill -9 -f git || true
-          sleep $((RANDOM % 5 + 3))
-        continue-on-error: true
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 1
           fetch-tags: false
           clean: true
-      - name: "Download project MDA file"
+      - name: "Download portable app package"
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: mda
+          name: app-package
       # Used only for local testing, will be empty on GitHub
       - name: "Download iOS app from specific run"
         if: ${{ env.LOCAL_TEST_ARTIFACT_RUN_ID != '' }}
@@ -790,16 +925,10 @@ jobs:
       - name: "Setup needed tools"
         id: setup-needed-tools
         uses: ./.github/actions/setup-tools
+      - name: "Start Mendix runtime"
+        uses: ./.github/actions/start-mendix-runtime
         with:
-          mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
-      - name: "Start runtime with retry"
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: |
-            chmod +x .github/scripts/start-runtime-with-verification.sh
-            .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
+          java-home: ${{ steps.setup-needed-tools.outputs.java-path }}
       
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
@@ -808,79 +937,91 @@ jobs:
           chmod +x maestro/helpers/prepare_ios.sh
           chmod +x maestro/run_maestro_jsactions_tests.sh
           bash maestro/helpers/prepare_ios.sh
-          bash maestro/run_maestro_jsactions_tests.sh ios
+          bash maestro/run_maestro_jsactions_tests.sh ios || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
+        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
+        if: ${{ always() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
           test-type: js-actions
-  compare-screenshots:
-    needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
-    runs-on: ubuntu-latest
-    if: always()
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Each widget/JS shard uploads its own per-shard screenshots/logs/artifacts (one set of three
+  # per matrix entry → dozens of tiny artifacts). This job merges them into a handful of combined
+  # zips so a reviewer can grab everything in one download. `delete-merged` removes the per-shard
+  # sources after a successful merge, leaving just the combined artifacts.
+  aggregate-test-results:
+    needs: [android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
+    # Run even when shards fail/cancel — the failing shards are exactly the ones whose
+    # screenshots/logs we want to inspect.
+    if: ${{ always() }}
+    runs-on: ubuntu-26.04
+    # The workflow-level block grants only packages:write, so every other scope defaults to
+    # none. This job needs contents:read (to check out the triage script) and actions:read
+    # (the script reads each shard's conclusion and logs via the Actions API).
+    permissions:
+      contents: read
+      actions: read
     steps:
       - name: "Check out code"
+        # Needed only for the triage script below; the merge steps don't touch the repo.
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-  
-      - name: "Download Android screenshots"
+        with:
+          fetch-depth: 1
+      - name: "Write test result summary"
+        # Triage table for every widget/JS shard, rendered on the run's Summary tab. Beyond
+        # pass/fail it classifies each red shard (timeout / emulator / runtime / artifact /
+        # screenshot mismatch / …) so a reviewer can tell a real failure from an infra flake
+        # without opening logs. Each shard's result lives in its own matrix job; the script
+        # reads them back from the API (this job `needs:` them all, so conclusions are final).
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
-          mkdir -p images/actual/android/
-          for widget in $widgets; do
-            echo "Downloading android-screenshots-${widget}"
-            gh run download ${{ github.run_id }} --name android-screenshots-${widget} --dir images/actual/android/ || true
-            ls -l images/actual/android/
-          done
-          # Download JS actions screenshots
-          echo "Downloading android-screenshots-js-actions"
-          gh run download ${{ github.run_id }} --name android-screenshots-js-actions --dir images/actual/android/ || true
-          ls -l images/actual/android/
-      
-      - name: "Download iOS screenshots"
-        run: |
-          widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
-          mkdir -p images/actual/ios/
-          for widget in $widgets; do
-            echo "Downloading ios-screenshots-${widget}"
-            gh run download ${{ github.run_id }} --name ios-screenshots-${widget} --dir images/actual/ios/ || true
-            ls -l images/actual/ios/
-          done
-          # Download JS actions screenshots
-          echo "Downloading ios-screenshots-js-actions"
-          gh run download ${{ github.run_id }} --name ios-screenshots-js-actions --dir images/actual/ios/ || true
-          ls -l images/actual/ios/
-
-      - name: "Setup Node and dependencies"
-        uses: ./.github/actions/setup-node-with-cache
-    
-      - name: "Compare Android screenshots"
-        continue-on-error: true 
-        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js android
-
-      - name: "Compare iOS screenshots"
+          bash .github/scripts/triage-test-results.sh \
+            "${{ github.repository }}" "${{ github.run_id }}" >> "$GITHUB_STEP_SUMMARY"
+      - name: "Merge screenshots"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        # continue-on-error: a run that produced no screenshots (e.g. only JS-action tests) has
+        # nothing to merge and the action would otherwise hard-fail. Same for the two below.
         continue-on-error: true
-        run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js ios
-  
-      - name: "Archive diff results"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
-          name: screenshot-diffs
-          path: images/diffs
-          if-no-files-found: ignore
-
-      - name: "Archive comparison results"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
+          name: all-screenshots
+          pattern: "*-screenshots-*"
+          # Keep each shard's PNGs in its own subdir so identically-named actual/ files don't collide.
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge screenshot diffs"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        # Only mismatching flows produce a diff; a run with no screenshot failures has none.
+        continue-on-error: true
         with:
-          name: comparison-results
-          path: compare_output.txt
-          if-no-files-found: ignore
-
-      - name: "Fail if comparisons failed"
-        run: |
-          if [ "$ANDROID_COMPARISON_FAILED" == "true" ] || [ "$IOS_COMPARISON_FAILED" == "true" ]; then
-            echo "One or more comparisons failed."
-            exit 1
-          fi
+          name: all-screenshot-diffs
+          pattern: "*-diffs-*"
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge runtime logs"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        continue-on-error: true
+        with:
+          name: all-runtime-logs
+          pattern: "*-runtime-logs-*"
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge debug artifacts"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        continue-on-error: true
+        with:
+          name: all-debug-artifacts
+          pattern: "*-artifacts-*"
+          separate-directories: true
+          delete-merged: true
+      - name: "Merge failure videos"
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        # Only failing flows leave a video behind; a fully-green run has none to merge.
+        continue-on-error: true
+        with:
+          name: all-failure-videos
+          pattern: "*-videos-*"
+          separate-directories: true
+          delete-merged: true
