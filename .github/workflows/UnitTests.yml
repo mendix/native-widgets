@@ -54,7 +54,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - name: "Installing dependencies"
-        run: pnpm install
+        # Avoid running workspace lifecycle builds during install; the internal utilities are built once below.
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: "Building internal utilities"
+        run: pnpm run build:internal-utils
       - name: "Linting code"
         run: pnpm -r --filter=${{ steps.variables.outputs.arg }} run lint
       - name: "Running unit tests"
