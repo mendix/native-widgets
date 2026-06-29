@@ -12,3 +12,5 @@ appId: "${APP_ID}"
     text: "Image Icon"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/image_icon"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/image_icon.png"

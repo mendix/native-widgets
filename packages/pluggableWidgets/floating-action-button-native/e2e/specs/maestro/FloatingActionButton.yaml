@@ -16,4 +16,6 @@ appId: "${APP_ID}"
     id: "floatingActionButtonTopRight"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/floating_action_button"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/floating_action_button.png"
 

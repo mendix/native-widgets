@@ -17,4 +17,6 @@ appId: "${APP_ID}"
      timeout: 15000 # 15 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/doughnut_chart_multiple_data_points"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/doughnut_chart_multiple_data_points.png"
 

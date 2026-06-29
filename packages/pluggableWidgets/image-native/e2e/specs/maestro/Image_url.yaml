@@ -16,4 +16,6 @@ appId: "${APP_ID}"
      timeout: 20000 # 20 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/image_url"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/image_url.png"
 

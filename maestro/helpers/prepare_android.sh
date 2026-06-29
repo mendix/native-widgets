@@ -3,10 +3,27 @@
 MAX_RETRIES=5
 RETRY_DELAY=10
 RETRIES=0
+BOOT_TIMEOUT=300
 
-# Add a delay to ensure the emulator is fully booted
-echo "Waiting for emulator to be ready..."
-sleep 30
+# Wait until the emulator is actually ready instead of guessing with a fixed sleep:
+# device attached -> sys.boot_completed=1 -> package manager responds. Bounded so a
+# never-booting emulator fails fast instead of hanging.
+wait_for_emulator() {
+    echo "Waiting for emulator to be ready..."
+    adb wait-for-device
+    local deadline=$(( $(date +%s) + BOOT_TIMEOUT ))
+    until [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ] \
+       && adb shell pm list packages >/dev/null 2>&1; do
+        if [ "$(date +%s)" -ge "$deadline" ]; then
+            echo "Emulator not ready after ${BOOT_TIMEOUT}s"
+            exit 1
+        fi
+        sleep 2
+    done
+    echo "Emulator is ready."
+}
+
+wait_for_emulator
 
 # Function to install the Android app on the emulator
 install_android_app() {

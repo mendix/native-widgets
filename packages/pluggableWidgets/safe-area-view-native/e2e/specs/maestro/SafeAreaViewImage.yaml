@@ -12,3 +12,5 @@ appId: "${APP_ID}"
     id: "image1"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/safe_area_view_image"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/safe_area_view_image.png"

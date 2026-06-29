@@ -22,6 +22,7 @@
     "test:e2e:android": "pnpm -r run test:e2e:android",
     "test:e2e:ios": "pnpm -r run test:e2e:ios",
     "build": "pnpm -r run build",
+    "build:internal-utils": "pnpm --filter @mendix/piw-utils-internal --filter @mendix/piw-native-utils-internal run build",
     "release": "pnpm -r run release",
     "release:marketplace": "pnpm -r run release:marketplace",
     "release-github:widget": "node ./scripts/release/createWidgetRelease.js",
@@ -40,7 +41,6 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@actions/core": "^1.11.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@react-native/babel-preset": "0.84.1",
@@ -63,8 +63,6 @@
     "image-js": "^0.37.0",
     "lint-staged": "^11.2.6",
     "mendix-client": "^7.15.8",
-    "pixelmatch": "^5.3.0",
-    "pngjs": "^6.0.0",
     "pretty-quick": "^3.3.1",
     "react-dom": "19.2.3",
     "recursive-copy": "^2.0.14",

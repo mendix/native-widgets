@@ -52,9 +52,6 @@ importers:
 
   .:
     devDependencies:
-      '@actions/core':
-        specifier: ^1.11.1
-        version: 1.11.1
       '@commitlint/cli':
         specifier: ^19.8.1
         version: 19.8.1(@types/node@20.19.41)(typescript@5.9.3)
@@ -121,12 +118,6 @@ importers:
       mendix-client:
         specifier: ^7.15.8
         version: 7.15.8
-      pixelmatch:
-        specifier: ^5.3.0
-        version: 5.3.0
-      pngjs:
-        specifier: ^6.0.0
-        version: 6.0.0
       pretty-quick:
         specifier: ^3.3.1
         version: 3.3.1(prettier@2.8.8)
@@ -974,18 +965,6 @@ importers:
         version: 6.1.3
 
 packages:
-
-  '@actions/core@1.11.1':
-    resolution: {integrity: sha512-hXJCSrkwfA46Vd9Z3q4cpEpHB1rL5NG04+/rbqW9d3+CSvtB1tYe8UTpAlixa1vj0m/ULglfEK2UKxMGxCxv5A==}
-
-  '@actions/exec@1.1.1':
-    resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
-
-  '@actions/http-client@2.2.3':
-    resolution: {integrity: sha512-mx8hyJi/hjFvbPokCg4uRd4ZX78t+YyRPtnKWwIl+RzNaVuFpQHfmlGVfsKEJN8LwTCvL+DfVgAM04XaHkm6bA==}
-
-  '@actions/io@1.1.3':
-    resolution: {integrity: sha512-wi9JjgKLYS7U/z8PPbco+PvTb/nRWjeoFlJ1Qer83k/3C5PHQi28hiVdeE2kHXmIL99mQFawx8qt/JPjZilJ8Q==}
 
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
@@ -5650,10 +5629,6 @@ packages:
     resolution: {integrity: sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==}
     engines: {node: '>= 6'}
 
-  pixelmatch@5.3.0:
-    resolution: {integrity: sha512-o8mkY4E/+LNUf6LzX96ht6k6CEDi65k9G2rjMtBe9Oo+VPKSvl+0GKHuH/AlG+GA5LPG/i5hrekkxUc3s2HU+Q==}
-    hasBin: true
-
   pkg-dir@3.0.0:
     resolution: {integrity: sha512-/E57AYkoeQ25qkxMj5PBOVgF8Kiu/h7cYS30Z5+R7WaiCCBfLq58ZI/dSeaEKb9WVJV5n/03QwrN3IeWIFllvw==}
     engines: {node: '>=6'}
@@ -5672,10 +5647,6 @@ packages:
   pngjs@5.0.0:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
-
-  pngjs@6.0.0:
-    resolution: {integrity: sha512-TRzzuFRRmEoSW/p1KVAmiOgPco2Irlah+bGFCeNfJXxxYGwSw7YwAOAcd7X28K/m5bjBWKsC29KyoMfHbypayg==}
-    engines: {node: '>=12.13.0'}
 
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
@@ -6967,10 +6938,6 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  tunnel@0.0.6:
-    resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
-    engines: {node: '>=0.6.11 <=0.7.0 || >=0.7.3'}
-
   two-product@1.0.2:
     resolution: {integrity: sha512-vOyrqmeYvzjToVM08iU52OFocWT6eB/I5LUWYnxeAPGXAhAxXYU/Yr/R2uY5/5n4bvJQL9AQulIuxpIsMoT8XQ==}
 
@@ -7037,10 +7004,6 @@ packages:
 
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
-
-  undici@8.3.0:
-    resolution: {integrity: sha512-TkUDgb6tl7KOGZ+7e8E3d2FYgUQgF6z5YypqjWmixVQSQERFcVrVg0ySADm2LVLRh5ljAaHTCR5Fmz3Q34rB7Q==}
-    engines: {node: '>=22.19.0'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
     resolution: {integrity: sha512-dA8WbNeb2a6oQzAQ55YlT5vQAWGV9WXOsi3SskE3bcCdM0P4SDd+24zS/OCacdRq5BkdsRj9q3Pg6YyQoxIGqg==}
@@ -7477,22 +7440,6 @@ packages:
     engines: {node: '>= 6'}
 
 snapshots:
-
-  '@actions/core@1.11.1':
-    dependencies:
-      '@actions/exec': 1.1.1
-      '@actions/http-client': 2.2.3
-
-  '@actions/exec@1.1.1':
-    dependencies:
-      '@actions/io': 1.1.3
-
-  '@actions/http-client@2.2.3':
-    dependencies:
-      tunnel: 0.0.6
-      undici: 8.3.0
-
-  '@actions/io@1.1.3': {}
 
   '@adobe/css-tools@4.4.4': {}
 
@@ -13497,10 +13444,6 @@ snapshots:
 
   pirates@4.0.7: {}
 
-  pixelmatch@5.3.0:
-    dependencies:
-      pngjs: 6.0.0
-
   pkg-dir@3.0.0:
     dependencies:
       find-up: 3.0.0
@@ -13520,8 +13463,6 @@ snapshots:
       xmlbuilder: 15.1.1
 
   pngjs@5.0.0: {}
-
-  pngjs@6.0.0: {}
 
   possible-typed-array-names@1.1.0: {}
 
@@ -14930,8 +14871,6 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tunnel@0.0.6: {}
-
   two-product@1.0.2: {}
 
   two-sum@1.0.0: {}
@@ -14998,8 +14937,6 @@ snapshots:
       which-boxed-primitive: 1.1.1
 
   undici-types@6.21.0: {}
-
-  undici@8.3.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 

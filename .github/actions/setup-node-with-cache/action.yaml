@@ -25,5 +25,8 @@ runs:
           ${{ runner.os }}-pnpm-store-
     
     - name: "Install dependencies"
-      run: pnpm install --frozen-lockfile
+      run: pnpm install --frozen-lockfile --ignore-scripts
+      shell: bash
+    - name: "Building internal utilities"
+      run: pnpm run build:internal-utils
       shell: bash
