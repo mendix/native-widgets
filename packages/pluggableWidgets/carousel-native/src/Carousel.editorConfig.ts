@@ -1,4 +1,5 @@
 import { RowLayoutProps, StructurePreviewProps, topBar } from "@mendix/piw-utils-internal";
+import { hidePropertiesIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import paginationSVG from "./assets/pagination.svg";
 
@@ -36,4 +37,12 @@ export function getPreview(values: CarouselPreviewProps, isDarkMode: boolean): S
     ];
 
     return topBar("Carousel", content, isDarkMode);
+}
+
+export function getProperties(values: CarouselPreviewProps, defaultProperties: Properties): Properties {
+    if (!values.activeSelection) {
+        hidePropertiesIn(defaultProperties, values, ["onChangeAction", "animateExpression"]);
+    }
+
+    return defaultProperties;
 }
