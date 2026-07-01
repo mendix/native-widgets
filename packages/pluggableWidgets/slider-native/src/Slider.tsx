@@ -1,20 +1,17 @@
 import { available, flattenStyles, toNumber, unavailable } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { ValueStatus, Option } from "mendix";
-import MultiSlider, { MarkerProps } from "@ptomasroos/react-native-multi-slider";
-import { ReactElement, useCallback, useRef, useState, JSX } from "react";
-import { LayoutChangeEvent, Text, View } from "react-native";
+import { Slider as RNSlider } from "@miblanchard/react-native-slider";
+import { ReactElement, useCallback, useRef } from "react";
+import { Text, View } from "react-native";
 import { Big } from "big.js";
 
 import { SliderProps } from "../typings/SliderProps";
-import { Marker } from "./Marker";
 import { defaultSliderStyle, SliderStyle } from "./ui/Styles";
 
 export type Props = SliderProps<SliderStyle>;
 
 export function Slider(props: Props): ReactElement {
-    const [width, setWidth] = useState<number>();
-
     const lastValue = useRef<number | undefined>(toNumber(props.valueAttribute));
 
     const value = toNumber(props.valueAttribute);
@@ -22,24 +19,12 @@ export function Slider(props: Props): ReactElement {
     const validProps = validationMessages.length === 0;
     const editable = props.editable !== "never" && !props.valueAttribute.readOnly && validProps;
     const styles = flattenStyles(defaultSliderStyle, props.style);
-    // We have to fix the decimal count ourselves because of an unresolved bug in the library: https://github.com/ptomasroos/react-native-multi-slider/issues/211
-    const decimalCount = useCallback(
-        (value: Option<Big>): number => value?.toString().split(".")?.[1]?.length || 0,
-        []
-    );
 
-    const customMarker =
-        () =>
-        (markerProps: MarkerProps): JSX.Element =>
-            <Marker {...markerProps} testID={`${props.name}$marker`} />;
+    const decimalCount = useCallback((val: Option<Big>): number => val?.toString().split(".")?.[1]?.length || 0, []);
 
-    const onLayout = useCallback((event: LayoutChangeEvent): void => {
-        setWidth(event.nativeEvent.layout.width);
-    }, []);
-
-    const onSlide = useCallback(
+    const onValueChange = useCallback(
         (values: number[]): void => {
-            if (values[0] === null) {
+            if (values[0] === null || values[0] === undefined) {
                 return;
             }
 
@@ -50,9 +35,9 @@ export function Slider(props: Props): ReactElement {
         [props.valueAttribute, props.stepSize, decimalCount]
     );
 
-    const onChange = useCallback(
+    const onSlidingComplete = useCallback(
         (values: number[]): void => {
-            if (values[0] === null || lastValue.current === values[0]) {
+            if (values[0] === null || values[0] === undefined || lastValue.current === values[0]) {
                 return;
             }
 
@@ -67,22 +52,19 @@ export function Slider(props: Props): ReactElement {
     );
 
     return (
-        <View onLayout={onLayout} style={styles.container} testID={props.name}>
-            <MultiSlider
-                values={value != null ? [value] : undefined}
-                min={validProps ? toNumber(props.minimumValue) : undefined}
-                max={validProps ? toNumber(props.maximumValue) : undefined}
-                step={validProps ? toNumber(props.stepSize) : undefined}
-                enabledOne={editable}
-                markerStyle={editable ? styles.marker : styles.markerDisabled}
+        <View style={styles.container} testID={props.name}>
+            <RNSlider
+                value={value != null ? value : 0}
+                minimumValue={validProps ? toNumber(props.minimumValue) ?? 0 : 0}
+                maximumValue={validProps ? toNumber(props.maximumValue) ?? 100 : 100}
+                step={validProps ? toNumber(props.stepSize) ?? 1 : 1}
+                disabled={!editable}
                 trackStyle={editable ? styles.track : styles.trackDisabled}
-                selectedStyle={editable ? styles.highlight : styles.highlightDisabled}
-                pressedMarkerStyle={styles.markerActive}
-                onValuesChange={onSlide}
-                onValuesChangeFinish={onChange}
-                sliderLength={width}
-                allowOverlap
-                customMarker={customMarker()}
+                minimumTrackStyle={editable ? styles.highlight : styles.highlightDisabled}
+                maximumTrackStyle={editable ? styles.track : styles.trackDisabled}
+                thumbStyle={editable ? styles.marker : styles.markerDisabled}
+                onValueChange={onValueChange}
+                onSlidingComplete={onSlidingComplete}
             />
             {!validProps && <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>}
             {props.valueAttribute.validation && (
