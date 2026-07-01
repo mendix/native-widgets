@@ -13,7 +13,8 @@ exports[`RangeSlider applies custom styles: with custom styles 1`] = `
     disabled={false}
     maximumTrackStyle={
       {
-        "backgroundColor": "#E7E7E7",
+        "borderRadius": 2,
+        "height": 4,
       }
     }
     maximumValue={280}
@@ -70,7 +71,8 @@ exports[`RangeSlider renders 1`] = `
     disabled={false}
     maximumTrackStyle={
       {
-        "backgroundColor": "#E7E7E7",
+        "borderRadius": 2,
+        "height": 4,
       }
     }
     maximumValue={280}

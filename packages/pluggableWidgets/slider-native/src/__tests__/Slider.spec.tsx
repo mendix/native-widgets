@@ -178,7 +178,11 @@ describe("Slider", () => {
                         thumb: {},
                         thumbActive: {},
                         thumbDisabled: {},
-                        validationMessage: {}
+                        validationMessage: {},
+                        highlight: {},
+                        highlightDisabled: {},
+                        marker: {},
+                        markerDisabled: {}
                     }
                 ]}
             />

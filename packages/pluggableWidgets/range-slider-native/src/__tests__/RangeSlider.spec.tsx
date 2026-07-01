@@ -197,7 +197,12 @@ describe("RangeSlider", () => {
                         thumb: {},
                         thumbActive: {},
                         thumbDisabled: {},
-                        validationMessage: {}
+                        validationMessage: {},
+                        highlight: {},
+                        highlightDisabled: {},
+                        marker: {},
+                        markerActive: {},
+                        markerDisabled: {}
                     }
                 ]}
             />
@@ -238,7 +243,12 @@ describe("RangeSlider", () => {
                         thumb: {},
                         thumbActive: {},
                         thumbDisabled: {},
-                        validationMessage: {}
+                        validationMessage: {},
+                        highlight: {},
+                        highlightDisabled: {},
+                        marker: {},
+                        markerActive: {},
+                        markerDisabled: {}
                     }
                 ]}
             />
