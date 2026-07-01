@@ -9,6 +9,7 @@ declare namespace mx {
         }) => Promise<void>;
     }
     interface data {
+        closeDbConnection: () => Promise<void>;
         update: (param: { guid?: string | undefined; entity?: string | undefined; callback?: () => void }) => void;
     }
     interface session {
