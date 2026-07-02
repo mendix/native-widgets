@@ -10,7 +10,7 @@ import Geolocation, {
     GeolocationError,
     GeolocationOptions,
     GeolocationResponse
-} from "@react-native-community/geolocation";
+} from "react-native-nitro-geolocation/src/compat";
 
 import type { Platform, NativeModules } from "react-native";
 import type { GeoError, GeoPosition, GeoOptions } from "../../typings/Geolocation";
@@ -44,7 +44,7 @@ export async function GetCurrentLocationMinimumAccuracy(
     // BEGIN USER CODE
 
     let reactNativeModule: { NativeModules: typeof NativeModules; Platform: typeof Platform } | undefined;
-    let geolocationModule: typeof import("@react-native-community/geolocation").default | Geolocation;
+    let geolocationModule: typeof import("react-native-nitro-geolocation/src/compat").default | Geolocation;
 
     if (navigator && navigator.product === "ReactNative") {
         reactNativeModule = require("react-native");
@@ -53,13 +53,7 @@ export async function GetCurrentLocationMinimumAccuracy(
             return Promise.reject(new Error("React Native module could not be found"));
         }
 
-        if (reactNativeModule.NativeModules.RNFusedLocation) {
-            geolocationModule = (await import("@react-native-community/geolocation")).default;
-        } else if (reactNativeModule.NativeModules.RNCGeolocation) {
-            geolocationModule = Geolocation;
-        } else {
-            return Promise.reject(new Error("Geolocation module could not be found"));
-        }
+        geolocationModule = Geolocation;
     } else if (navigator && navigator.geolocation) {
         geolocationModule = navigator.geolocation;
     } else {

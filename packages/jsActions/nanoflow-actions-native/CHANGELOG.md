@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Migrated the geolocation actions (`Get current location` and `Get current location with minimum accuracy`) from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.
+
 ## [7.1.0] Nanoflow Commons - 2026-6-5
 
 ### Changed

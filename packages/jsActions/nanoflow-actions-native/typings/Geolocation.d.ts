@@ -1,15 +1,17 @@
 import type {
-    AuthorizationLevel,
-    AuthorizationResult,
-    GeoError,
-    GeoPosition,
-    GeoOptions,
+    GeolocationError,
+    GeolocationOptions,
+    GeolocationResponse,
     getCurrentPosition,
     requestAuthorization,
     watchPosition,
     clearWatch,
     stopObserving
-} from "@react-native-community/geolocation";
+} from "react-native-nitro-geolocation/src/compat";
+
+type GeoError = GeolocationError;
+type GeoPosition = GeolocationResponse;
+type GeoOptions = GeolocationOptions;
 
 type GeolocationServiceStatic = {
     getCurrentPosition: typeof getCurrentPosition;
@@ -19,4 +21,4 @@ type GeolocationServiceStatic = {
     stopObserving: typeof stopObserving;
 };
 
-export type { GeolocationServiceStatic, AuthorizationLevel, AuthorizationResult, GeoError, GeoPosition, GeoOptions };
+export type { GeolocationServiceStatic, GeoError, GeoPosition, GeoOptions };
