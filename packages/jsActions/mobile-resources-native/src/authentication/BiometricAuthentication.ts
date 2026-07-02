@@ -18,7 +18,7 @@ export async function BiometricAuthentication(reason?: string): Promise<boolean>
     // BEGIN USER CODE
     // Documentation https://github.com/sbaiahmed1/react-native-biometrics
 
-    return simplePrompt(reason ?? "")
+    return simplePrompt(reason ?? " ")
         .then(result => result.success)
         .catch(() => false);
 
