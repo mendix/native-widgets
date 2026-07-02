@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.10] Native Mobile Resources - 2026-7-2
+
+## [5.0.5] BottomSheet
+
+### Fixed
+
+-   Fixed flickering issue on Android when opening bottom sheet (both basic and custom render types).
+-   Improved backdrop animation with smooth fade-in/fade-out transitions.
+
 ## [11.3.9] Native Mobile Resources - 2026-6-2
 
 ## [5.0.4] BottomSheet
