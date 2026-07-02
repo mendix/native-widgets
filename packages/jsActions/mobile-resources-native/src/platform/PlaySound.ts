@@ -6,6 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import TrackPlayer, { State, Event } from "react-native-track-player";
+import RNBlobUtil from "react-native-blob-util";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -34,13 +35,38 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
     const changedDate = audioFile.get("changedDate") as number;
 
     try {
-        const url = await mx.data.getDocumentUrl(guid, changedDate);
-        // Initialize the player if it hasn't been set up yet
-        const state = await TrackPlayer.getPlaybackState();
-        if (state.state === State.None) {
+        const documentUrl = await mx.data.getDocumentUrl(guid, changedDate);
+        let url = /^[a-z]+:\/\//i.test(documentUrl) ? documentUrl : `file://${documentUrl}`;
+        // Mendix stores documents on disk without a file extension. For local files
+        // AVFoundation infers the codec from the extension (it ignores contentType),
+        // so an extension-less path fails with "ios_track_unplayable". Copy the
+        // document to a temp file that keeps the original extension and play that.
+        if (!/^https?:\/\//i.test(url)) {
+            const fileName = audioFile.get("Name") as string;
+            const extension = fileName && fileName.includes(".") ? fileName.split(".").pop() : "mp3";
+            const sourcePath = documentUrl.replace(/^file:\/\//i, "");
+            // Key the temp file on guid + changedDate so an unchanged document is
+            // copied once and reused, while a replaced file gets a fresh copy.
+            const tempPath = `${RNBlobUtil.fs.dirs.CacheDir}/mx-playsound-${guid}-${changedDate}.${extension}`;
+            if (!(await RNBlobUtil.fs.exists(tempPath))) {
+                await RNBlobUtil.fs.cp(sourcePath, tempPath);
+            }
+            url = `file://${tempPath}`;
+        }
+
+        // Initialize the player if it hasn't been set up yet.
+        // We cannot probe the state first (e.g. via getPlaybackState), because the
+        // native module rejects every call with "The player is not initialized" until
+        // setupPlayer has run. Instead we attempt setup and ignore the error raised
+        // when the player was already initialized by a previous invocation.
+        try {
             await TrackPlayer.setupPlayer({
                 maxCacheSize: 1024
             });
+        } catch (setupError) {
+            if ((setupError as { code?: string }).code !== "player_already_initialized") {
+                throw setupError;
+            }
         }
 
         await TrackPlayer.reset();
