@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import TrackPlayer, { State, Event } from "react-native-track-player";
+import Sound from "react-native-sound";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -19,7 +19,7 @@ import TrackPlayer, { State, Event } from "react-native-track-player";
  */
 export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://rntp.dev
+    // Documentation https://github.com/zmxv/react-native-sound
 
     if (!audioFile) {
         return Promise.reject(new Error("Input parameter 'Audio file' is required"));
@@ -35,33 +35,22 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
 
     try {
         const url = await mx.data.getDocumentUrl(guid, changedDate);
-        // Initialize the player if it hasn't been set up yet
-        const state = await TrackPlayer.getPlaybackState();
-        if (state.state === State.None) {
-            await TrackPlayer.setupPlayer({
-                maxCacheSize: 1024
-            });
-        }
 
-        await TrackPlayer.reset();
-        await TrackPlayer.add({
-            id: guid,
-            url,
-            title: `Audio ${guid}`,
-            artist: "Mendix App"
-        });
-
-        await TrackPlayer.play();
-
-        return new Promise<void>((resolve, reject) => {
-            const subscription = TrackPlayer.addEventListener(Event.PlaybackState, event => {
-                if (event.state === State.Stopped || event.state === State.Ended) {
-                    subscription.remove();
-                    resolve();
-                } else if (event.state === State.Error) {
-                    subscription.remove();
-                    reject(new Error(event.error.message || "Playback error"));
+        return await new Promise<void>((resolve, reject) => {
+            const sound = new Sound(url, "", error => {
+                if (error) {
+                    reject(new Error(`Failed to load audio: ${error.message ?? error}`));
+                    return;
                 }
+
+                sound.play(success => {
+                    sound.release();
+                    if (success) {
+                        resolve();
+                    } else {
+                        reject(new Error("Playback failed due to an audio encoding error"));
+                    }
+                });
             });
         });
     } catch (error) {
