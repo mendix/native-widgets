@@ -28,7 +28,6 @@
     "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
   },
   "dependencies": {
-    "@notifee/react-native": "9.1.8",
     "@react-native-camera-roll/camera-roll": "7.4.0",
     "@react-native-firebase/messaging": "20.1.0",
     "@sbaiahmed1/react-native-biometrics": "0.4.0",
@@ -40,6 +39,7 @@
     "react-native-file-viewer-turbo": "0.6.0",
     "react-native-image-picker": "7.2.3",
     "react-native-localize": "3.2.1",
+    "react-native-notify-kit": "10.4.7",
     "react-native-permissions": "5.4.2",
     "react-native-track-player": "4.1.2",
     "url-parse": "^1.4.7"
