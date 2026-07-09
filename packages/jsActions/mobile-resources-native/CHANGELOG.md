@@ -6,10 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   We switched to a new sound library for the Play sound action to support react-native 0.84+.
+
 ## [12.2.0] Native Mobile Resources - 2026-7-3
 
-
 ## [5.3.1] BottomSheet
+
 ### Fixed
 
 -   Fixed flickering issue on Android when opening bottom sheet (both basic and custom render types).
