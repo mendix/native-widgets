@@ -6,10 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+
 ## [12.2.0] Native Mobile Resources - 2026-7-3
 
-
 ## [5.3.1] BottomSheet
+
 ### Fixed
 
 -   Fixed flickering issue on Android when opening bottom sheet (both basic and custom render types).
