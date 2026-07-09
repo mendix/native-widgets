@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+
 ## [12.1.0] Native Mobile Resources - 2026-6-10
 
 -   Updated react-native from version 0.83.4 to 0.84.1.
