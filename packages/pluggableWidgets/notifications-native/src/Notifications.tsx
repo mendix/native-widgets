@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import { ActionValue, ValueStatus, Option } from "mendix";
 import "@react-native-firebase/app";
-import notifee, { EventType } from "@notifee/react-native";
+import notifee, { EventType } from "react-native-notify-kit";
 
 import { ActionsType, NotificationsProps } from "../typings/NotificationsProps";
 
