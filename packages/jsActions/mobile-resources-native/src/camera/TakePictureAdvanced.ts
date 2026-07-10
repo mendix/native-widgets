@@ -171,9 +171,10 @@ export async function TakePictureAdvanced(
 
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            fetch(uri)
-                .then(response => response.blob())
-                .then(blob => {
+            NativeModules.MxFileSystem.read(uri.replace("file://", ""))
+                .then((nativeBlob: unknown) => {
+                    const blob = new Blob();
+                    Object.assign(blob, { data: nativeBlob });
                     // eslint-disable-next-line no-useless-escape
                     const filename = /[^\/]*$/.exec(uri)![0];
                     const filePathWithoutFileScheme = uri.replace("file://", "");
