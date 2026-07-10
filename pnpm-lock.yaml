@@ -164,7 +164,7 @@ importers:
         specifier: 3.7.0
         version: 3.7.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
       react-native-notify-kit:
-        specifier: ^10.0.0
+        specifier: 10.4.7
         version: 10.4.7(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))
       react-native-permissions:
         specifier: 5.5.1
@@ -650,7 +650,7 @@ importers:
         specifier: 20.1.0
         version: 20.1.0(@react-native-firebase/app@20.1.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3))
       react-native-notify-kit:
-        specifier: ^10.0.0
+        specifier: 10.4.7
         version: 10.4.7(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))
     devDependencies:
       '@mendix/pluggable-widgets-tools':

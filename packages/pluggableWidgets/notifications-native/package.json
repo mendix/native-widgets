@@ -1,7 +1,7 @@
 {
   "name": "notifications-native",
   "widgetName": "Notifications",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "react-native-notify-kit": "^10.0.0",
+    "react-native-notify-kit": "10.4.7",
     "@react-native-firebase/app": "20.1.0",
     "@react-native-firebase/messaging": "20.1.0"
   },
