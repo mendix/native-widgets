@@ -85,6 +85,7 @@ on:
   pull_request:
     branches:
       - main
+      - 'mx/**'
 
 # Surface capture mode in the run title (workflow_dispatch inputs aren't shown in the UI),
 # otherwise fall back to the provided run_name / default. inputs.update_baselines is the

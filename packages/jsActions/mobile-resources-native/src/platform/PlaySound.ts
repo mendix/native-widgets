@@ -5,9 +5,68 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import TrackPlayer, { State, Event } from "react-native-track-player";
+import Sound from "react-native-sound";
+import RNBlobUtil from "react-native-blob-util";
+import { Platform } from "react-native";
 
 // BEGIN EXTRA CODE
+// Audio downloaded for online (network) documents is cached here. CacheDir is used
+// on purpose: the OS is allowed to reclaim it under storage pressure, so we do not
+// have to own the cleanup lifecycle ourselves.
+const SOUND_CACHE_DIR = `${RNBlobUtil.fs.dirs.CacheDir}/mx-play-sound`;
+
+function getFileExtension(fileName?: string): string {
+    if (!fileName) {
+        return "";
+    }
+    const dotIndex = fileName.lastIndexOf(".");
+    return dotIndex >= 0 ? fileName.slice(dotIndex) : "";
+}
+
+// Resolves a path the Android media player can actually play.
+//
+// For online documents the URL points at the runtime and requires the Mendix session
+// cookie. The Android media player does not forward that cookie, so playback fails.
+// react-native-blob-util shares the platform cookie jar, so we download the file with
+// it and hand the local copy to the player instead.
+//
+// The download is cached by content version (guid + changedDate):
+// - the same file is never downloaded twice;
+// - when the source changes, changedDate changes, so a fresh copy is fetched even
+//   though the file name stayed the same;
+// - stale versions of the same document are removed before fetching a new one, so the
+//   cache does not grow unbounded.
+async function resolveAndroidSoundPath(
+    url: string,
+    guid: string,
+    changedDate: number,
+    fileName?: string
+): Promise<string> {
+    // Offline documents already resolve to a local file path; play it directly.
+    if (!/^https?:\/\//i.test(url)) {
+        return url;
+    }
+
+    if (!(await RNBlobUtil.fs.exists(SOUND_CACHE_DIR))) {
+        await RNBlobUtil.fs.mkdir(SOUND_CACHE_DIR);
+    }
+
+    const cachedPath = `${SOUND_CACHE_DIR}/${guid}_${changedDate}${getFileExtension(fileName)}`;
+    if (await RNBlobUtil.fs.exists(cachedPath)) {
+        return cachedPath;
+    }
+
+    // Drop previously cached versions of this document (same guid, other changedDate).
+    const entries = await RNBlobUtil.fs.ls(SOUND_CACHE_DIR);
+    await Promise.all(
+        entries
+            .filter(entry => entry.startsWith(`${guid}_`))
+            .map(entry => RNBlobUtil.fs.unlink(`${SOUND_CACHE_DIR}/${entry}`).catch(() => undefined))
+    );
+
+    const response = await RNBlobUtil.config({ fileCache: true, path: cachedPath }).fetch("GET", url);
+    return response.path();
+}
 // END EXTRA CODE
 
 /**
@@ -19,7 +78,7 @@ import TrackPlayer, { State, Event } from "react-native-track-player";
  */
 export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> {
     // BEGIN USER CODE
-    // Documentation https://rntp.dev
+    // Documentation https://github.com/zmxv/react-native-sound
 
     if (!audioFile) {
         return Promise.reject(new Error("Input parameter 'Audio file' is required"));
@@ -32,36 +91,29 @@ export async function PlaySound(audioFile?: mendix.lib.MxObject): Promise<void> 
 
     const guid = audioFile.getGuid();
     const changedDate = audioFile.get("changedDate") as number;
+    const fileName = audioFile.get("Name") as string;
 
     try {
         const url = await mx.data.getDocumentUrl(guid, changedDate);
-        // Initialize the player if it hasn't been set up yet
-        const state = await TrackPlayer.getPlaybackState();
-        if (state.state === State.None) {
-            await TrackPlayer.setupPlayer({
-                maxCacheSize: 1024
-            });
-        }
+        // iOS forwards the session cookie for remote URLs, so it can stream directly.
+        // Android cannot, so we download the file first (see resolveAndroidSoundPath).
+        const path = Platform.OS === "ios" ? url : await resolveAndroidSoundPath(url, guid, changedDate, fileName);
 
-        await TrackPlayer.reset();
-        await TrackPlayer.add({
-            id: guid,
-            url,
-            title: `Audio ${guid}`,
-            artist: "Mendix App"
-        });
-
-        await TrackPlayer.play();
-
-        return new Promise<void>((resolve, reject) => {
-            const subscription = TrackPlayer.addEventListener(Event.PlaybackState, event => {
-                if (event.state === State.Stopped || event.state === State.Ended) {
-                    subscription.remove();
-                    resolve();
-                } else if (event.state === State.Error) {
-                    subscription.remove();
-                    reject(new Error(event.error.message || "Playback error"));
+        return await new Promise<void>((resolve, reject) => {
+            const sound = new Sound(path, "", error => {
+                if (error) {
+                    reject(new Error(`Failed to load audio: ${error.message ?? error}`));
+                    return;
                 }
+
+                sound.play(success => {
+                    sound.release();
+                    if (success) {
+                        resolve();
+                    } else {
+                        reject(new Error("Playback failed due to an audio encoding error"));
+                    }
+                });
             });
         });
     } catch (error) {
