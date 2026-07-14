@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Replaced @notifee/react-native with react-native-notify-kit library.
 
+-   We have fixed the biometric authentication issue where it was not working on Android and crashing on iOS.
+
 ## [12.2.0] Native Mobile Resources - 2026-7-3
 
 ## [5.3.1] BottomSheet
