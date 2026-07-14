@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Fixed an issue where base64-to-image decoding was failing.
+
+## [7.2.0] Nanoflow Commons - 2026-7-3
+
 -   Close offline database connection before navigating between pages with OpenURL nanoflow action.
 
 ## [7.1.0] Nanoflow Commons - 2026-6-5
