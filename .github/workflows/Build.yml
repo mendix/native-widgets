@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      - 'mx/release/**'
+      - 'mx/**'
   pull_request:
     branches:
       - main
-      - 'mx/release/**'
+      - 'mx/**'
 jobs:
   test:
     name: "Build (${{ matrix.os }})"

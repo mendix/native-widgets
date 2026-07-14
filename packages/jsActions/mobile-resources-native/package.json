@@ -41,7 +41,7 @@
     "react-native-image-picker": "7.2.3",
     "react-native-localize": "3.7.0",
     "react-native-permissions": "5.5.1",
-    "react-native-track-player": "4.1.2",
+    "react-native-sound": "0.13.0",
     "url-parse": "^1.4.7"
   },
   "devDependencies": {
