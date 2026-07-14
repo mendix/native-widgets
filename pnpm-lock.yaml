@@ -41,9 +41,6 @@ patchedDependencies:
   react-native-snap-carousel@3.9.1:
     hash: 3a4c1b0f17629becc5d99ef1958df5a2f55c46e45f45670862aaeda12ab2f4e1
     path: patches/react-native-snap-carousel+3.9.1.patch
-  react-native-track-player@4.1.2:
-    hash: 530fb9e20337a03d6000b7812e3a86cd1d266394959cc8dd59767410c3a83c4c
-    path: patches/react-native-track-player@4.1.2.patch
 
 importers:
 
@@ -169,9 +166,9 @@ importers:
       react-native-permissions:
         specifier: 5.5.1
         version: 5.5.1(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
-      react-native-track-player:
-        specifier: 4.1.2
-        version: 4.1.2(patch_hash=530fb9e20337a03d6000b7812e3a86cd1d266394959cc8dd59767410c3a83c4c)(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
+      react-native-sound:
+        specifier: 0.13.0
+        version: 0.13.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
       url-parse:
         specifier: ^1.4.7
         version: 1.5.10
@@ -6172,24 +6169,17 @@ packages:
       react: 19.2.3
       react-native: 0.84.1
 
+  react-native-sound@0.13.0:
+    resolution: {integrity: sha512-SnREzaV0fmpYNuDV1Y8M7FutmaYei0pKBgpldULKKJMkoA3DBv5ppyRxY+oxRQ7HwEpt6LsonrKgM+13GH/tCw==}
+    peerDependencies:
+      react: 19.2.3
+      react-native: 0.84.1
+
   react-native-svg@15.15.4:
     resolution: {integrity: sha512-boT/vIRgj6zZKBpfTPJJiYWMbZE9duBMOwPK6kCSTgxsS947IFMOq9OgIFkpWZTB7t229H24pDRkh3W9ZK/J1A==}
     peerDependencies:
       react: 19.2.3
       react-native: 0.84.1
-
-  react-native-track-player@4.1.2:
-    resolution: {integrity: sha512-cIgMlqVJx/95hirUWPRW8CHxiBFj9Rjl/voKHh2jF/2URYMTQyt76t/m2FKvjeYUW2doKv4QSCBIOUmtyDLtJw==}
-    peerDependencies:
-      react: 19.2.3
-      react-native: 0.84.1
-      react-native-windows: '>=0.63.0'
-      shaka-player: ^4.7.9
-    peerDependenciesMeta:
-      react-native-windows:
-        optional: true
-      shaka-player:
-        optional: true
 
   react-native-video@6.19.2:
     resolution: {integrity: sha512-gh5dBMGSHywKr8+p4azRXrFQgT+QTmS1tI4sz6kVRjSENORfsrGGLQzmyo/7S9m+ZOTLWQJ3h8ONaXxR4F2Fcw==}
@@ -14006,6 +13996,11 @@ snapshots:
       react-addons-shallow-compare: 15.6.2
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
 
+  react-native-sound@0.13.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+      react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
+
   react-native-svg@15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3):
     dependencies:
       css-select: 5.2.2
@@ -14013,11 +14008,6 @@ snapshots:
       react: 19.2.3
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
       warn-once: 0.1.1
-
-  react-native-track-player@4.1.2(patch_hash=530fb9e20337a03d6000b7812e3a86cd1d266394959cc8dd59767410c3a83c4c)(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3):
-    dependencies:
-      react: 19.2.3
-      react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
 
   react-native-video@6.19.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3):
     dependencies:
