@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Gallery rendering rendering with load more button it shouldn't render the paging button if hasn't more item 1`] = `
 <View
