@@ -81,6 +81,8 @@
       "@mendix/pluggable-widgets-tools": "11.12.0",
       "@rollup/plugin-typescript": "12.3.0",
       "mendix": "11.8.0",
+      "eslint": "~8.57.0",
+      "eslint-plugin-react-hooks": "~5.1.0",
       "react": "19.2.3",
       "react-dom": "19.2.3",
       "react-native": "0.84.1",
