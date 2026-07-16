@@ -3,8 +3,8 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ActionValue, DynamicValue, EditableValue, NativeIcon } from "mendix";
+import { ComponentType, CSSProperties, ReactNode } from "react";
 import { Big } from "big.js";
 
 export interface SlidesType {

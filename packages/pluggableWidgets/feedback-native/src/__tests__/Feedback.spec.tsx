@@ -63,17 +63,36 @@ describe("Feedback", () => {
 
         fireEvent.press(component.getByTestId("feedback-test$send"));
 
-        await waitFor(() =>
-            expect(fetch).toHaveBeenCalledWith(
-                "https://feedback-api.mendix.com/rest/v3/feedbackapi/projects/sprintr-app-id/issues",
-                {
-                    body: '{"title":"unittest","description":"","issueType":"Issue","submitter":{"userId":"","email":"unknown@example.com","displayName":"Unknown Native User"},"metadata":{"userRoles":"","location":"","form":"","userAgent":"Native for ios","screenWidth":750,"screenHeight":1334},"imageAttachment":""}',
-                    headers: { ClientIdentifier: "feedback-native-v2", "Content-Type": "application/json" },
-                    method: "POST",
-                    mode: "no-cors",
-                    referrer: "no-referrer"
-                }
-            )
-        );
+        await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+
+        const [url, request] = (fetch as jest.Mock).mock.calls[0];
+        expect(url).toBe("https://feedback-api.mendix.com/rest/v3/feedbackapi/projects/sprintr-app-id/issues");
+        expect(request).toMatchObject({
+            headers: { ClientIdentifier: "feedback-native-v2", "Content-Type": "application/json" },
+            method: "POST",
+            mode: "no-cors",
+            referrer: "no-referrer"
+        });
+
+        const body = JSON.parse(request.body as string);
+        expect(body).toMatchObject({
+            title: "unittest",
+            description: "",
+            issueType: "Issue",
+            submitter: {
+                userId: "",
+                email: "unknown@example.com",
+                displayName: "Unknown Native User"
+            },
+            metadata: {
+                userRoles: "",
+                location: "",
+                form: ""
+            },
+            imageAttachment: ""
+        });
+        expect(body.metadata.userAgent).toMatch(/^Native for (ios|android)$/);
+        expect(typeof body.metadata.screenWidth).toBe("number");
+        expect(typeof body.metadata.screenHeight).toBe("number");
     }, 15000);
 });

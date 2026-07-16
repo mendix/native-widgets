@@ -3,8 +3,8 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { CSSProperties } from "react";
 import { ActionValue, EditableValue } from "mendix";
+import { CSSProperties } from "react";
 
 export type FormatEnum = "hex" | "hsl" | "hsv" | "rgb";
 

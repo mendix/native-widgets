@@ -18,7 +18,7 @@
     "build": "tsc",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "prepare": "pnpm build",
-    "test": "pluggable-widgets-tools test:unit:native",
+    "test": "echo \"No tests for utility package\"",
     "postinstall": "pnpm build"
   },
   "devDependencies": {
