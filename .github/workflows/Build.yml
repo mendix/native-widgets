@@ -23,7 +23,7 @@ jobs:
         uses: softprops/diffset@d60d53313c1b61c12ccb0fc76cbde5a14ae5d330 # v3
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         with:
-          base: main
+          base: mx/11.12.x
           global_files: |
             !{packages/**/*,configs/e2e/*.json,scripts/**/*,data/**/*}
         env:
@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Fetching main to compare"
+      - name: "Fetching base branch to compare"
         if: github.event_name == 'pull_request' && steps.files.outputs.global_files == ''
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - name: "Defining node version"
@@ -60,6 +60,6 @@ jobs:
       - name: "Building internal utilities"
         run: pnpm run build:internal-utils
       - name: "Running build for development"
-        run: pnpm -r --filter='!native-widgets' --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi) run build
+        run: pnpm -r --filter='!native-widgets' --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/mx/11.12.x]'; else echo '**'; fi) run build
         env:
           NODE_OPTIONS: --max_old_space_size=8192
