@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue that caused images from entities to not render on Android in Online Synchronization mode
+
 ## [3.1.1] - 2026-6-10
 
 ### Changed

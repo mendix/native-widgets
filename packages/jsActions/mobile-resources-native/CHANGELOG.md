@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We switched to a new sound library for the Play sound action to support react-native 0.84+.
 -   The Play sound action now plays audio files from online (network) documents on Android by downloading them to a version-based cache before playback.
 -   We have fixed the biometric authentication issue where it was not working on Android and crashing on iOS.
+-   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions failed to capture photos on Android.
 
 ## [12.2.0] Native Mobile Resources - 2026-7-3
 
