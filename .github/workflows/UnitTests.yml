@@ -2,9 +2,9 @@ name: Run unit tests
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'mx/11.12.x']
   pull_request:
-    branches: [main]
+    branches: [main, 'mx/11.12.x']
 
 jobs:
   test:
@@ -17,7 +17,7 @@ jobs:
         uses: softprops/diffset@d60d53313c1b61c12ccb0fc76cbde5a14ae5d330 # v3
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         with:
-          base: main
+          base: mx/11.12.x
           global_files: |
             !{packages/**/*,configs/e2e/*.json,scripts/**/*,data/**/*}
         env:
@@ -26,12 +26,12 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - name: "Fetching main to compare"
+      - name: "Fetching base branch to compare"
         if: github.event_name == 'pull_request' && steps.files.outputs.global_files == ''
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - name: "Defining environment variables"
         id: variables
-        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
+        run: echo "arg=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/mx/11.12.x]'; else echo '**'; fi)" >> ${{ runner.os == 'Windows' && '$env:GITHUB_OUTPUT' || '$GITHUB_OUTPUT' }}
       - name: "Defining node version"
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
