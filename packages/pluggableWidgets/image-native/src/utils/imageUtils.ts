@@ -31,6 +31,12 @@ function getBundledAssetSource(value: NativeImage | Readonly<ImageURISource | st
     return undefined;
 }
 
+function toAndroidUri(uri: string): string {
+    // Online images are served by the Mendix runtime as http(s) URLs and must be requested as
+    // such so cookies are attached; only local file paths need the file:/// scheme prepended.
+    return Platform.OS === "android" && !/^https?:\/\//i.test(uri) ? `file:///${uri}` : uri;
+}
+
 export async function convertImageProps(
     datasource: DatasourceEnum,
     imageIcon: DynamicValue<NativeIcon> | undefined,
@@ -74,14 +80,14 @@ export async function convertImageProps(
             } else if (typeof imageValue === "object" && imageValue?.uri && imageValue?.name?.endsWith(".svg")) {
                 return {
                     type: "dynamicSVG", // Dynamic image SVG
-                    image: (Platform.OS === "android" ? "file:///" : "") + imageValue.uri
+                    image: toAndroidUri(imageValue.uri as string)
                 };
             } else if (typeof imageValue === "object" && imageValue?.uri) {
                 return {
                     type: "dynamicImage", // Dynamic image
                     image: {
                         ...imageValue,
-                        uri: (Platform.OS === "android" ? "file:///" : "") + imageValue.uri
+                        uri: toAndroidUri(imageValue.uri as string)
                     }
                 };
             }

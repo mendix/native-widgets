@@ -1,5 +1,5 @@
 import { FunctionComponent, Fragment, useCallback } from "react";
-import { View } from "react-native";
+import { ImageURISource, Platform, View } from "react-native";
 import { SvgUri, SvgXml } from "react-native-svg";
 import FastImageComponent, { Source } from "@d11/react-native-fast-image";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
@@ -64,11 +64,19 @@ export const ImageIconSVG: FunctionComponent<ImageIconSVGProps> = props => {
     );
 
     if (image && (type === "staticImage" || type === "dynamicImage")) {
+        // FastImage's Glide/OkHttp client on Android can be initialized before the app wires up
+        // its cookie-decrypting network interceptor, causing remote (online document) images to
+        // fail to load with 401s. RN's own Image component always picks up the interceptor, so
+        // fall back to it for remote urls on Android.
+        const uri = typeof image === "object" ? (image as ImageURISource)?.uri : undefined;
+        const useFallback = Platform.OS === "android" && typeof uri === "string" && /^https?:\/\//i.test(uri);
+
         return (
             <FastImageComponent
                 testID={`${name}$Image`} // Broken because of https://github.com/DylanVann/react-native-fast-image/issues/221
                 source={image as Source | number}
                 resizeMode={resizeMode || "contain"}
+                fallback={useFallback}
                 style={[
                     initialDimensions?.aspectRatio ? { aspectRatio: +initialDimensions.aspectRatio?.toFixed(2) } : {},
                     width && height ? { width, height } : {},
