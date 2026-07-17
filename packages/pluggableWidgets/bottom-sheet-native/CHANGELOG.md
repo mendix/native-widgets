@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.3.1] - 2026-7-17
+
 ### Fixed
 
 -   Fixed flickering issue on Android when opening bottom sheet (both basic and custom render types).

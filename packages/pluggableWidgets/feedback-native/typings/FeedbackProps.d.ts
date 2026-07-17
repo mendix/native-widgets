@@ -38,7 +38,7 @@ export interface FeedbackPreviewProps {
     translate: (text: string) => string;
     sprintrapp: string;
     allowScreenshot: boolean;
-    logo: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    logo: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
     titleSendFeedback: string;
     titleSending: string;
     titleResult: string;

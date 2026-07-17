@@ -29,7 +29,7 @@ export interface BackgroundImagePreviewProps {
     readOnly: boolean;
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
-    image: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    image: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
     resizeMode: ResizeModeEnum;
     opacity: number | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
