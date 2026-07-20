@@ -5,15 +5,8 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Big } from "big.js";
-import Geolocation, {
-    GeolocationError,
-    GeolocationOptions,
-    GeolocationResponse
-} from "@react-native-community/geolocation";
-
-import type { Platform, NativeModules } from "react-native";
-import type { GeoError, GeoPosition, GeoOptions } from "../../typings/Geolocation";
+import { watchPosition, unwatch, LocationError, GeolocationResponse } from "react-native-nitro-geolocation";
+import { buildLocationOptions, mapPositionToMxObject } from "./utils";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -25,7 +18,7 @@ import type { GeoError, GeoPosition, GeoOptions } from "../../typings/Geolocatio
  *
  * On hybrid and native platforms the permission should be requested with the `RequestLocationPermission` action.
  *
- * For good user experience, disable the nanoflow during action using property `Disabled during action` if you’re using `Call a nanoflow button` to run JS Action `Get current location with minimum accuracy`.
+ * For good user experience, disable the nanoflow during action using property `Disabled during action` if you're using `Call a nanoflow button` to run JS Action `Get current location with minimum accuracy`.
  *
  * Best practices:
  * https://developers.google.com/web/fundamentals/native-hardware/user-location/
@@ -43,63 +36,16 @@ export async function GetCurrentLocationMinimumAccuracy(
 ): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
 
-    let reactNativeModule: { NativeModules: typeof NativeModules; Platform: typeof Platform } | undefined;
-    let geolocationModule: typeof import("@react-native-community/geolocation").default | Geolocation;
-
-    if (navigator && navigator.product === "ReactNative") {
-        reactNativeModule = require("react-native");
-
-        if (!reactNativeModule) {
-            return Promise.reject(new Error("React Native module could not be found"));
-        }
-
-        if (reactNativeModule.NativeModules.RNFusedLocation) {
-            geolocationModule = (await import("@react-native-community/geolocation")).default;
-        } else if (reactNativeModule.NativeModules.RNCGeolocation) {
-            geolocationModule = Geolocation;
-        } else {
-            return Promise.reject(new Error("Geolocation module could not be found"));
-        }
-    } else if (navigator && navigator.geolocation) {
-        geolocationModule = navigator.geolocation;
-    } else {
-        return Promise.reject(new Error("Geolocation module could not be found"));
-    }
-
     return new Promise((resolve, reject) => {
-        if (!geolocationModule) {
-            return reject(new Error("Geolocation module could not be found"));
-        }
+        const options = buildLocationOptions(timeout, maximumAge, highAccuracy);
+        let lastAccruedPosition: GeolocationResponse | undefined;
 
-        const options = getOptions();
-
-        // This action is only required while running in PWA or hybrid.
-        if (navigator && (!navigator.product || navigator.product !== "ReactNative")) {
-            // This ensures the browser will not ignore the maximumAge https://stackoverflow.com/questions/3397585/navigator-geolocation-getcurrentposition-sometimes-works-sometimes-doesnt/31916631#31916631
-            geolocationModule.getCurrentPosition(
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                () => {},
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                () => {},
-                {}
-            );
-        }
-
-        const timeoutId = setTimeout(onTimeout, Number(timeout));
-        const watchId: number = geolocationModule.watchPosition(onSuccess, onError, options);
-        let lastAccruedPosition: GeolocationResponse | GeoPosition;
-
-        function createGeolocationObject(position: GeolocationResponse | GeoPosition): void {
-            mx.data.create({
-                entity: "NanoflowCommons.Geolocation",
-                callback: mxObject => resolve(mapPositionToMxObject(mxObject, position)),
-                error: () =>
-                    reject(new Error("Could not create 'NanoflowCommons.Geolocation' object to store location"))
-            });
-        }
+        const timeoutMs = timeout ? timeout.toNumber() : 30000;
+        const timeoutId = setTimeout(onTimeout, timeoutMs);
+        const token = watchPosition(onSuccess, onError, options);
 
         function onTimeout(): void {
-            geolocationModule?.clearWatch(watchId);
+            unwatch(token);
 
             if (lastAccruedPosition) {
                 createGeolocationObject(lastAccruedPosition);
@@ -108,10 +54,10 @@ export async function GetCurrentLocationMinimumAccuracy(
             }
         }
 
-        function onSuccess(position: GeolocationResponse | GeoPosition): void {
+        function onSuccess(position: GeolocationResponse): void {
             if (!minimumAccuracy || Number(minimumAccuracy) >= position.coords.accuracy) {
                 clearTimeout(timeoutId);
-                geolocationModule?.clearWatch(watchId);
+                unwatch(token);
                 createGeolocationObject(position);
             } else {
                 if (!lastAccruedPosition || position.coords.accuracy < lastAccruedPosition.coords.accuracy) {
@@ -120,53 +66,19 @@ export async function GetCurrentLocationMinimumAccuracy(
             }
         }
 
-        function onError(error: GeolocationError | GeoError): void {
-            return reject(new Error(error.message));
+        function onError(error: LocationError): void {
+            clearTimeout(timeoutId);
+            unwatch(token);
+            reject(new Error(error.message));
         }
 
-        function getOptions(): GeolocationOptions | GeoOptions {
-            let timeoutNumber = timeout && Number(timeout.toString());
-            const maximumAgeNumber = maximumAge && Number(maximumAge.toString());
-
-            // If the timeout is 0 or undefined (empty), it causes a crash on iOS.
-            // If the timeout is undefined (empty); we set timeout to 30 sec (default timeout)
-            // If the timeout is 0; we set timeout to 1 hour (no timeout)
-            if (reactNativeModule?.Platform.OS === "ios") {
-                if (timeoutNumber === undefined) {
-                    timeoutNumber = 30000;
-                } else if (timeoutNumber === 0) {
-                    timeoutNumber = 3600000;
-                }
-            }
-
-            return {
-                timeout: timeoutNumber,
-                maximumAge: maximumAgeNumber,
-                enableHighAccuracy: highAccuracy
-            };
-        }
-
-        function mapPositionToMxObject(
-            mxObject: mendix.lib.MxObject,
-            position: GeolocationResponse | GeoPosition
-        ): mendix.lib.MxObject {
-            mxObject.set("Timestamp", new Date(position.timestamp));
-            mxObject.set("Latitude", new Big(position.coords.latitude.toFixed(8)));
-            mxObject.set("Longitude", new Big(position.coords.longitude.toFixed(8)));
-            mxObject.set("Accuracy", new Big(position.coords.accuracy.toFixed(8)));
-            if (position.coords.altitude != null) {
-                mxObject.set("Altitude", new Big(position.coords.altitude.toFixed(8)));
-            }
-            if (position.coords.altitudeAccuracy != null && position.coords.altitudeAccuracy !== -1) {
-                mxObject.set("AltitudeAccuracy", new Big(position.coords.altitudeAccuracy.toFixed(8)));
-            }
-            if (position.coords.heading != null && position.coords.heading !== -1) {
-                mxObject.set("Heading", new Big(position.coords.heading.toFixed(8)));
-            }
-            if (position.coords.speed != null && position.coords.speed !== -1) {
-                mxObject.set("Speed", new Big(position.coords.speed.toFixed(8)));
-            }
-            return mxObject;
+        function createGeolocationObject(position: GeolocationResponse): void {
+            mx.data.create({
+                entity: "NanoflowCommons.Geolocation",
+                callback: mxObject => resolve(mapPositionToMxObject(mxObject, position)),
+                error: () =>
+                    reject(new Error("Could not create 'NanoflowCommons.Geolocation' object to store location"))
+            });
         }
     });
 
