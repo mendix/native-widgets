@@ -72,6 +72,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const [activeIndex, setActiveIndex] = useState(0);
     const flashList = useRef<FlashListRef<any>>(null);
     const isInitializing = useRef(true);
+    const isInternalUpdate = useRef(false);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -91,6 +92,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     );
 
     useEffect(() => {
+        // Skip if this change was triggered by our own navigation
+        if (isInternalUpdate.current) {
+            isInternalUpdate.current = false;
+            return;
+        }
+
         const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
         if (width && props.activeSlide?.status === ValueStatus.Available && slide !== activeIndex) {
             goToSlide(slide);
@@ -190,6 +197,8 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const onSlideChange = useCallback(
         (newIndex: number, lastIndex: number): void => {
             if (props.activeSlide && !props.activeSlide.readOnly) {
+                // Mark this as an internal update before setting the value
+                isInternalUpdate.current = true;
                 props.activeSlide.setValue(new Big(newIndex + 1));
             }
             if (props.onSlideChange) {
