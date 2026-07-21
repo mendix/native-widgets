@@ -30,7 +30,7 @@
     "invariant": "^2.2.4",
     "js-base64": "~3.7.2",
     "react-native-nitro-geolocation": "1.4.3",
-    "react-native-nitro-modules": "0.22.0",
+    "react-native-nitro-modules": "0.36.1",
     "react-native-permissions": "5.5.1",
     "react-native-geocoder": "0.5.0"
   },
