@@ -105,7 +105,7 @@ env:
   # Pin the test project (mendix/Native-Mobile-Resources) to a SHA for reproducibility instead
   # of tracking a moving `main`. Single source of truth — bump deliberately. The repo publishes
   # no tags, so a commit SHA is the only stable ref. Override per run via the dispatch input.
-  NATIVE_MOBILE_RESOURCES_REF: ${{ github.event.inputs.test_project_ref || 'f0e7c2278578022cc742f82a087e6c4fff2f7159' }}
+  NATIVE_MOBILE_RESOURCES_REF: ${{ github.event.inputs.test_project_ref || 'a915484ef2cfed403cfbdfa531638df3c46c9d00' }}
 permissions:
   packages: write
 jobs:
