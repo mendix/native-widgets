@@ -34,7 +34,8 @@ export default async args => {
         types: ["mendix-client", "react-native"],
         allowSyntheticDefaultImports: true,
         compilerOptions: {
-            newLine: "CRLF"
+            newLine: "CRLF",
+            jsx: "react-native"
         }
     });
 
