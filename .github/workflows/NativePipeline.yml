@@ -796,11 +796,14 @@ jobs:
       - name: "Optimize simulator with simslim"
         run: |
           brew install mobai-app/tap/simslim
-          # Apply simslim optimization to all available simulators
-          simslim list --json | jq -r '.[].udid' | while read -r udid; do
-            echo "Optimizing simulator: $udid"
-            simslim on "$udid" || true
-          done
+          # Only optimize the iPhone 17 Pro used for testing (saves ~3-4 min vs optimizing all simulators)
+          UDID=$(simslim list --json | jq -r '.[] | select(.name == "iPhone 17 Pro") | .udid' | head -1)
+          if [ -n "$UDID" ]; then
+            echo "Optimizing iPhone 17 Pro ($UDID)..."
+            simslim on "$UDID"
+          else
+            echo "::warning::iPhone 17 Pro not found, skipping simslim optimization"
+          fi
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
@@ -942,11 +945,14 @@ jobs:
       - name: "Optimize simulator with simslim"
         run: |
           brew install mobai-app/tap/simslim
-          # Apply simslim optimization to all available simulators
-          simslim list --json | jq -r '.[].udid' | while read -r udid; do
-            echo "Optimizing simulator: $udid"
-            simslim on "$udid" || true
-          done
+          # Only optimize the iPhone 17 Pro used for testing (saves ~3-4 min vs optimizing all simulators)
+          UDID=$(simslim list --json | jq -r '.[] | select(.name == "iPhone 17 Pro") | .udid' | head -1)
+          if [ -n "$UDID" ]; then
+            echo "Optimizing iPhone 17 Pro ($UDID)..."
+            simslim on "$UDID"
+          else
+            echo "::warning::iPhone 17 Pro not found, skipping simslim optimization"
+          fi
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
