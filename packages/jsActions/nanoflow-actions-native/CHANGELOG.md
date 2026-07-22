@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [7.2.1] Nanoflow Commons - 2026-7-22
 -   Fixed an issue where base64-to-image decoding was failing.
 
 ## [7.2.0] Nanoflow Commons - 2026-7-3
