@@ -796,7 +796,11 @@ jobs:
       - name: "Optimize simulator with simslim"
         run: |
           brew install mobai-app/tap/simslim
-          simslim apply --all-simulators
+          # Apply simslim optimization to all available simulators
+          simslim list --json | jq -r '.[].udid' | while read -r udid; do
+            echo "Optimizing simulator: $udid"
+            simslim on "$udid" || true
+          done
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
@@ -938,7 +942,11 @@ jobs:
       - name: "Optimize simulator with simslim"
         run: |
           brew install mobai-app/tap/simslim
-          simslim apply --all-simulators
+          # Apply simslim optimization to all available simulators
+          simslim list --json | jq -r '.[].udid' | while read -r udid; do
+            echo "Optimizing simulator: $udid"
+            simslim on "$udid" || true
+          done
       - name: "Run iOS tests"
         run: |
           chmod +x maestro/helpers/prepare_ios.sh
