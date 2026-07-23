@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+
 ## [12.2.2] Native Mobile Resources - 2026-7-21
 -   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions did not properly clean up temporary files.
 
