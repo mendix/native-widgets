@@ -28,8 +28,8 @@
     "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
   },
   "dependencies": {
-    "@notifee/react-native": "9.1.8",
     "@react-native-camera-roll/camera-roll": "7.10.2",
+    "react-native-notify-kit": "10.4.7",
     "@react-native-firebase/messaging": "20.1.0",
     "@sbaiahmed1/react-native-biometrics": "0.15.0",
     "@swan-io/react-native-browser": "1.0.1",
