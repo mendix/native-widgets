@@ -64,6 +64,34 @@ elif best:
     xcrun simctl bootstatus "$DEVICE_ID" -b || echo "Simulator booted"
 }
 
+# Cut UIKit animation time, mirroring `disable-animations: true` on the Android emulator
+# (NativePipeline.yml) — iOS previously had no equivalent, so every navigation push/modal
+# played at full length on a 3-vCPU runner while Android's ran instantly.
+#
+# Scope: this shortens SYSTEM transitions (nav pushes, modal presents, alerts). React
+# Native's `Animated` does NOT read this flag automatically, so widget-internal animations
+# (carousel, animation-native) are unaffected — this is not a substitute for the per-flow
+# waits those need.
+#
+# Requires a BOOTED device (`simctl spawn`), so call after start_simulator. The value is
+# written to the device's persistent domain and survives shutdown/boot, so a
+# restart_simulator in helpers.sh keeps it.
+reduce_motion() {
+    echo "Reducing motion on iOS Simulator..."
+    if [ -z "$SIMULATOR_DEVICE_ID" ]; then
+        echo "Error: SIMULATOR_DEVICE_ID not set"
+        return 1
+    fi
+    # Best-effort: a future runtime that drops/renames these keys should not fail the shard,
+    # since tests still pass with animations on (just slower).
+    xcrun simctl spawn "$SIMULATOR_DEVICE_ID" defaults write com.apple.Accessibility ReduceMotionEnabled -bool true \
+        || echo "::warning::Could not set ReduceMotionEnabled; animations stay at full length"
+    # Replaces the sliding push/pop transition with a cross-fade — the slide is what Maestro
+    # most often races against when asserting right after a navigation tap.
+    xcrun simctl spawn "$SIMULATOR_DEVICE_ID" defaults write com.apple.Accessibility ReduceMotionReduceSlideTransitionsEnabled -bool true \
+        || echo "::warning::Could not set ReduceMotionReduceSlideTransitionsEnabled"
+}
+
 set_status_bar() {
     echo "Setting status bar on iOS Simulator..."
     if [ -z "$SIMULATOR_DEVICE_ID" ]; then
@@ -92,6 +120,7 @@ verify_installed_app() {
 }
 
 start_simulator
+reduce_motion
 set_status_bar
 install_ios_app
 verify_installed_app

@@ -8,6 +8,10 @@ appId: "${APP_ID}"
     text: "Bottom Sheet"
 - tapOn:
     text: "Modal basic non native"
+# Wait for the page to fully load before tapping Open
+- extendedWaitUntil:
+    visible: "Open"
+    timeout: 10000
 - tapOn:
     text: "Open"
 

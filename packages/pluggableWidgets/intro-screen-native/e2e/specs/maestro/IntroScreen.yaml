@@ -6,9 +6,12 @@ appId: "${APP_ID}"
     text: "I"
 - tapOn:
     text: "Intro screen"
+# Opening the page mounts the widget and waits on the runtime, unlike the in-flow waits
+# below which only cover an on-device slide transition. 5s was flaky on the CI simulator
+# (3 vCPU, shared with the Mendix runtime JVM); 15s matches the repo's usual budget.
 - extendedWaitUntil:
     visible: "Active slide: 2"
-    timeout: 5000
+    timeout: 15000
 - assertVisible:
     text: "Changes: 0"
 - swipe:
@@ -42,11 +45,16 @@ appId: "${APP_ID}"
 - tapOn: "Go back"
 - tapOn:
     text: "Intro screen"
+# Re-entry remounts the widget, which must reposition to the attribute's slide — same
+# page-entry cost as the first open, so the same 15s budget rather than 5s.
 - extendedWaitUntil:
     visible: "Active slide: 2"
-    timeout: 5000
+    timeout: 15000
 - tapOn:
     text: "NEXT"
+- extendedWaitUntil:
+    visible: "Active slide: 3"
+    timeout: 5000
 - tapOn:
     text: "FINISH"
 - extendedWaitUntil:

@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue where reopening a page containing the intro screen would show the first slide instead of the slide referenced by the active slide attribute, and would report a slide change that the user did not make.
+-   We fixed an issue where the initial slide was scrolled to with an animation, which briefly left the slide content unavailable to screen readers.
+-   We fixed an issue where moving to a slide with the next, previous or pagination controls could jump back to the first slide and report an extra slide change.
+
 ## [4.4.1] - 2026-6-10
 
 ### Changed

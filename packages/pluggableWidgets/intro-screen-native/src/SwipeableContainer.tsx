@@ -69,9 +69,17 @@ const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: Editabl
 export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement => {
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
+    // Start on the slide the attribute points at, so activeIndex never lags the slide that
+    // initialScrollIndex renders. Otherwise the first Next/Previous press moves relative to
+    // slide 0 instead of the visible slide.
+    const [activeIndex, setActiveIndex] = useState(() => refreshActiveSlideAttribute(props.slides, props.activeSlide));
     const flashList = useRef<FlashListRef<any>>(null);
-    const isInitializing = useRef(true);
+    const hasAppliedInitialScroll = useRef(false);
+    const isUserDragging = useRef(false);
+    // Slide a programmatic scroll is currently heading for, or null when the list is
+    // wherever the user left it. Used to recognise momentum events that contradict the
+    // scroll we just asked for; see onMomentumScrollEnd.
+    const pendingScrollTarget = useRef<number | null>(null);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -79,11 +87,13 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     );
 
     const goToSlide = useCallback(
-        (pageNum: number) => {
+        (pageNum: number, animated = true) => {
             setActiveIndex(pageNum);
             if (flashList && flashList.current) {
+                pendingScrollTarget.current = pageNum;
                 flashList.current.scrollToOffset({
-                    offset: rtlSafeIndex(pageNum) * width
+                    offset: rtlSafeIndex(pageNum) * width,
+                    animated
                 });
             }
         },
@@ -91,19 +101,21 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     );
 
     useEffect(() => {
+        if (!width || props.activeSlide?.status !== ValueStatus.Available) {
+            return;
+        }
         const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
-        if (width && props.activeSlide?.status === ValueStatus.Available && slide !== activeIndex) {
+        // Once width is known, force the list to the attribute's slide even when activeIndex
+        // already matches: initialScrollIndex is applied before layout, so on remount the list
+        // can sit at offset 0 while activeIndex says otherwise.
+        if (!hasAppliedInitialScroll.current) {
+            hasAppliedInitialScroll.current = true;
+            // Jump without animation: activeIndex is applied immediately, and it drives which
+            // slide is exposed to accessibility. An animated scroll would leave the exposed
+            // slide off-screen until the animation lands.
+            goToSlide(slide, false);
+        } else if (slide !== activeIndex) {
             goToSlide(slide);
-            if (isInitializing.current) {
-                if (isInitializing.current) {
-                    // Use requestAnimationFrame twice to wait for the next frame after scroll.
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            isInitializing.current = false;
-                        });
-                    });
-                }
-            }
         }
     }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
 
@@ -315,15 +327,46 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         );
     };
 
+    const onScrollBeginDrag = useCallback(() => {
+        isUserDragging.current = true;
+        // The user takes over from here, so any programmatic scroll still in flight no
+        // longer describes where the list is heading. Clearing the target also keeps it
+        // from latching when a scroll never reports a momentum end of its own.
+        pendingScrollTarget.current = null;
+    }, []);
+
     const onMomentumScrollEnd = useCallback(
         (event: NativeSyntheticEvent<any>) => {
+            const wasUserDragging = isUserDragging.current;
+            isUserDragging.current = false;
+
+            if (!width) {
+                return;
+            }
             const offset = event.nativeEvent.contentOffset.x;
             const newIndex = rtlSafeIndex(Math.round(offset / width));
+
+            // While a programmatic scroll is in flight the list can report a momentum end
+            // for the position it is leaving rather than the one it is heading to. Trusting
+            // that offset rewrites activeIndex to a slide that is not on screen, and the
+            // drag flag cannot tell the two apart because a fling reports momentum without
+            // a fresh drag. Anything that disagrees with the requested slide is stale.
+            const pendingTarget = pendingScrollTarget.current;
+            if (pendingTarget !== null) {
+                if (newIndex === pendingTarget) {
+                    pendingScrollTarget.current = null;
+                }
+                return;
+            }
+
             if (newIndex === activeIndex) {
                 return;
             }
 
-            if (isInitializing.current) {
+            // Only a user swipe reports a change here. Programmatic scrolls (initial positioning,
+            // Next/Previous/pagination) already fired onSlideChange, so re-firing would double
+            // count the change and, on remount, emit a spurious change back to slide 1.
+            if (!wasUserDragging) {
                 setActiveIndex(newIndex);
                 return;
             }
@@ -366,6 +409,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
                 bounces={false}
                 style={styles.flatList}
                 renderItem={renderItem}
+                onScrollBeginDrag={onScrollBeginDrag}
                 onMomentumScrollEnd={onMomentumScrollEnd}
                 scrollEventThrottle={50}
                 extraData={[width, activeIndex]}
