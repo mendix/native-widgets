@@ -8,9 +8,10 @@ RETRY_DELAY=10
 
 # Timeout for the Maestro driver (instrumentation) to come up. Maestro's default is 15s;
 # CI emulators/simulators are slower, but 5 min (300000) was the per-attempt multiplier that
-# amplified broken-build runs to ~25 min. 2 min is generous for the driver to start while
-# keeping the worst-case failure time bounded.
-MAESTRO_DRIVER_STARTUP_TIMEOUT=120000
+# amplified broken-build runs to ~25 min. 3 min balances driver startup on loaded CI runners
+# (macos-26 with 4 parallel shards) while still failing fast on genuinely broken builds.
+# Override via env var if needed: export MAESTRO_DRIVER_STARTUP_TIMEOUT=240000
+MAESTRO_DRIVER_STARTUP_TIMEOUT="${MAESTRO_DRIVER_STARTUP_TIMEOUT:-180000}"
 
 # --- Per-flow video recording (BrowserStack-style debugging) ----------------------------
 # We record a screen video around every flow, then KEEP it only if the flow FAILS and DELETE
