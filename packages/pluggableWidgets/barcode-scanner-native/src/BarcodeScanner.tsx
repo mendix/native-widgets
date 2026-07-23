@@ -58,7 +58,8 @@ export function BarcodeScanner(props: Props): ReactElement {
             "ean-13",
             "ean-8",
             "upc-a",
-            "upc-e"
+            "upc-e",
+            "pdf-417"
         ],
         onCodeScanned
     });
