@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
--   We added support for QR of type pdf417 in barcode scanner functinality.
+-   We added support for QR of available remaining types including pdf417 in barcode scanner functinality.
 
 ## [4.2.2] - 2025-12-23
 
