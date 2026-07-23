@@ -42,7 +42,15 @@ appId: "${APP_ID}"
     timeout: 5000
 - tapOn:
     text: "OK"
+# Wait for dialog to dismiss before navigating back
+- extendedWaitUntil:
+    visible: "Go back"
+    timeout: 3000
 - tapOn: "Go back"
+# Wait for widgets menu to appear before tapping intro screen again
+- extendedWaitUntil:
+    visible: "Widgets menu"
+    timeout: 5000
 - tapOn:
     text: "Intro screen"
 # Re-entry remounts the widget, which must reposition to the attribute's slide — same
