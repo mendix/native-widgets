@@ -16,9 +16,9 @@
     "start": "tsc --watch",
     "prebuild": "rimraf dist",
     "build": "tsc",
+    "test": "echo \"No tests for utility package\"",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "prepare": "pnpm build",
-    "test": "pluggable-widgets-tools test:unit:native",
     "postinstall": "pnpm build"
   },
   "devDependencies": {

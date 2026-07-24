@@ -1,9 +1,9 @@
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
-import { render } from "@testing-library/react-native";
+import { render, waitFor } from "@testing-library/react-native";
 import { BottomSheet } from "../BottomSheet";
 import { BottomSheetProps } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle } from "../ui/Styles";
-import { ActionSheetIOS, Text } from "react-native";
+import { ActionSheetIOS, Platform, Text } from "react-native";
 
 jest.mock("react-native-worklets", () => jest.requireActual("react-native-worklets/lib/module/mock"));
 
@@ -52,7 +52,13 @@ describe("Bottom sheet", () => {
     // RN 0.83 test renderer may serialize iOS SafeAreaView as a plain View,
     // so snapshots in this suite no longer prove iOS-specific rendering by host tag.
     // This test explicitly verifies our Platform.OS override by asserting the iOS native path.
-    it("uses iOS native action sheet when native implementation is enabled", () => {
+    it("uses iOS native action sheet when native implementation is enabled", async () => {
+        const platformOsDescriptor = Object.getOwnPropertyDescriptor(Platform, "OS");
+        Object.defineProperty(Platform, "OS", {
+            configurable: true,
+            value: "ios"
+        });
+
         const actionSheetSpy = jest
             .spyOn(ActionSheetIOS, "showActionSheetWithOptions")
             .mockImplementation(() => undefined);
@@ -63,7 +69,9 @@ describe("Bottom sheet", () => {
 
         render(<BottomSheet {...props} />);
 
-        expect(actionSheetSpy).toHaveBeenCalled();
+        await waitFor(() => {
+            expect(actionSheetSpy).toHaveBeenCalled();
+        });
         expect(actionSheetSpy).toHaveBeenCalledWith(
             expect.objectContaining({
                 options: ["Item 1", "Item 2", "Cancel"],
@@ -72,6 +80,9 @@ describe("Bottom sheet", () => {
             expect.any(Function)
         );
         actionSheetSpy.mockRestore();
+        if (platformOsDescriptor) {
+            Object.defineProperty(Platform, "OS", platformOsDescriptor);
+        }
     });
 
     it("renders a native bottom action sheet for ios (Basic modal)", () => {

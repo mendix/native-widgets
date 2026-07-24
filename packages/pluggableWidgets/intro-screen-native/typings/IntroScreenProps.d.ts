@@ -3,8 +3,8 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ActionValue, DynamicValue, EditableValue, NativeIcon } from "mendix";
+import { ComponentType, CSSProperties, ReactNode } from "react";
 import { Big } from "big.js";
 
 export interface SlidesType {
@@ -64,13 +64,29 @@ export interface IntroScreenPreviewProps {
     hideIndicatorLastSlide: boolean;
     identifier: string;
     skipCaption: string;
-    skipIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    skipIcon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     previousCaption: string;
-    previousIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    previousIcon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     nextCaption: string;
-    nextIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    nextIcon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     doneCaption: string;
-    doneIcon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    doneIcon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     activeSlideAttribute: string;
     onSlideChange: {} | null;
     onDone: {} | null;

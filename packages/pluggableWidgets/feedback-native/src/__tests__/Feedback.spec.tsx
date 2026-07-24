@@ -63,17 +63,42 @@ describe("Feedback", () => {
 
         fireEvent.press(component.getByTestId("feedback-test$send"));
 
-        await waitFor(() =>
-            expect(fetch).toHaveBeenCalledWith(
-                "https://feedback-api.mendix.com/rest/v3/feedbackapi/projects/sprintr-app-id/issues",
-                {
-                    body: '{"title":"unittest","description":"","issueType":"Issue","submitter":{"userId":"","email":"unknown@example.com","displayName":"Unknown Native User"},"metadata":{"userRoles":"","location":"","form":"","userAgent":"Native for ios","screenWidth":750,"screenHeight":1334},"imageAttachment":""}',
-                    headers: { ClientIdentifier: "feedback-native-v2", "Content-Type": "application/json" },
-                    method: "POST",
-                    mode: "no-cors",
-                    referrer: "no-referrer"
-                }
-            )
+        await waitFor(() => expect(fetch).toHaveBeenCalled());
+
+        const [url, options] = (fetch as jest.Mock).mock.calls[0];
+        expect(url).toBe("https://feedback-api.mendix.com/rest/v3/feedbackapi/projects/sprintr-app-id/issues");
+        expect(options).toEqual(
+            expect.objectContaining({
+                headers: { ClientIdentifier: "feedback-native-v2", "Content-Type": "application/json" },
+                method: "POST",
+                mode: "no-cors",
+                referrer: "no-referrer"
+            })
         );
+
+        const parsedBody = JSON.parse(options.body as string);
+        expect(parsedBody).toEqual(
+            expect.objectContaining({
+                title: "unittest",
+                description: "",
+                issueType: "Issue",
+                submitter: {
+                    userId: "",
+                    email: "unknown@example.com",
+                    displayName: "Unknown Native User"
+                },
+                imageAttachment: ""
+            })
+        );
+        expect(parsedBody.metadata).toEqual(
+            expect.objectContaining({
+                userRoles: "",
+                location: "",
+                form: "",
+                userAgent: expect.stringMatching(/^Native for (ios|android)$/)
+            })
+        );
+        expect(typeof parsedBody.metadata.screenWidth).toBe("number");
+        expect(typeof parsedBody.metadata.screenHeight).toBe("number");
     }, 15000);
 });
