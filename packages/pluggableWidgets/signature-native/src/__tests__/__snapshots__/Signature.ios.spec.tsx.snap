@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Signature iOS renders with custom styles 1`] = `
 <View
@@ -975,8 +975,15 @@ exports[`Signature iOS renders with custom styles 1`] = `
         }
       }
       accessible={false}
-      collapsable={false}
       focusable={true}
+      nativeForegroundAndroid={
+        {
+          "borderless": false,
+          "color": 855638016,
+          "rippleRadius": undefined,
+          "type": "RippleAndroid",
+        }
+      }
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -986,44 +993,35 @@ exports[`Signature iOS renders with custom styles 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
+          "alignItems": "center",
           "backgroundColor": "red",
           "borderColor": "#0595DB",
           "borderRadius": 8,
           "borderStyle": "solid",
           "borderWidth": 1,
           "flex": 1,
+          "justifyContent": "center",
           "marginRight": 8,
-          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
         }
       }
       testID="signature-test$ClearButton$Touchable"
     >
-      <View
+      <Text
         style={
           {
-            "alignItems": "center",
-            "flexGrow": 0,
-            "flexShrink": 0,
-            "justifyContent": "center",
-            "paddingHorizontal": 8,
-            "paddingVertical": 8,
+            "color": "black",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "lineHeight": 18,
           }
         }
+        testID="signature-test$ClearButton$caption"
       >
-        <Text
-          style={
-            {
-              "color": "black",
-              "fontSize": 12,
-              "fontWeight": "bold",
-              "lineHeight": 18,
-            }
-          }
-          testID="signature-test$ClearButton$caption"
-        >
-          Clear
-        </Text>
-      </View>
+        Clear
+      </Text>
     </View>
     <View
       accessibilityState={
@@ -1044,8 +1042,15 @@ exports[`Signature iOS renders with custom styles 1`] = `
         }
       }
       accessible={false}
-      collapsable={false}
       focusable={true}
+      nativeForegroundAndroid={
+        {
+          "borderless": false,
+          "color": 855638016,
+          "rippleRadius": undefined,
+          "type": "RippleAndroid",
+        }
+      }
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1055,44 +1060,35 @@ exports[`Signature iOS renders with custom styles 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
+          "alignItems": "center",
           "backgroundColor": "red",
           "borderColor": "#0595DB",
           "borderRadius": 8,
           "borderStyle": "solid",
           "borderWidth": 1,
           "flex": 1,
+          "justifyContent": "center",
           "marginLeft": 8,
-          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
         }
       }
       testID="signature-test$SaveButton$Touchable"
     >
-      <View
+      <Text
         style={
           {
-            "alignItems": "center",
-            "flexGrow": 0,
-            "flexShrink": 0,
-            "justifyContent": "center",
-            "paddingHorizontal": 8,
-            "paddingVertical": 8,
+            "color": "black",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "lineHeight": 18,
           }
         }
+        testID="signature-test$SaveButton$caption"
       >
-        <Text
-          style={
-            {
-              "color": "black",
-              "fontSize": 12,
-              "fontWeight": "bold",
-              "lineHeight": 18,
-            }
-          }
-          testID="signature-test$SaveButton$caption"
-        >
-          Save
-        </Text>
-      </View>
+        Save
+      </Text>
     </View>
   </View>
 </View>
@@ -2070,8 +2066,15 @@ exports[`Signature iOS renders with default styles 1`] = `
         }
       }
       accessible={false}
-      collapsable={false}
       focusable={true}
+      nativeForegroundAndroid={
+        {
+          "borderless": false,
+          "color": 855638016,
+          "rippleRadius": undefined,
+          "type": "RippleAndroid",
+        }
+      }
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -2081,44 +2084,35 @@ exports[`Signature iOS renders with default styles 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
+          "alignItems": "center",
           "backgroundColor": "transparent",
           "borderColor": "#0595DB",
           "borderRadius": 8,
           "borderStyle": "solid",
           "borderWidth": 1,
           "flex": 1,
+          "justifyContent": "center",
           "marginRight": 8,
-          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
         }
       }
       testID="signature-test$ClearButton$Touchable"
     >
-      <View
+      <Text
         style={
           {
-            "alignItems": "center",
-            "flexGrow": 0,
-            "flexShrink": 0,
-            "justifyContent": "center",
-            "paddingHorizontal": 8,
-            "paddingVertical": 8,
+            "color": "#0595DB",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "lineHeight": 18,
           }
         }
+        testID="signature-test$ClearButton$caption"
       >
-        <Text
-          style={
-            {
-              "color": "#0595DB",
-              "fontSize": 12,
-              "fontWeight": "bold",
-              "lineHeight": 18,
-            }
-          }
-          testID="signature-test$ClearButton$caption"
-        >
-          Clear
-        </Text>
-      </View>
+        Clear
+      </Text>
     </View>
     <View
       accessibilityState={
@@ -2139,8 +2133,15 @@ exports[`Signature iOS renders with default styles 1`] = `
         }
       }
       accessible={false}
-      collapsable={false}
       focusable={true}
+      nativeForegroundAndroid={
+        {
+          "borderless": false,
+          "color": 855638016,
+          "rippleRadius": undefined,
+          "type": "RippleAndroid",
+        }
+      }
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -2150,44 +2151,35 @@ exports[`Signature iOS renders with default styles 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
+          "alignItems": "center",
           "backgroundColor": "#0595DB",
           "borderColor": "#0595DB",
           "borderRadius": 8,
           "borderStyle": "solid",
           "borderWidth": 1,
           "flex": 1,
+          "justifyContent": "center",
           "marginLeft": 8,
-          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
         }
       }
       testID="signature-test$SaveButton$Touchable"
     >
-      <View
+      <Text
         style={
           {
-            "alignItems": "center",
-            "flexGrow": 0,
-            "flexShrink": 0,
-            "justifyContent": "center",
-            "paddingHorizontal": 8,
-            "paddingVertical": 8,
+            "color": "#FFF",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "lineHeight": 18,
           }
         }
+        testID="signature-test$SaveButton$caption"
       >
-        <Text
-          style={
-            {
-              "color": "#FFF",
-              "fontSize": 12,
-              "fontWeight": "bold",
-              "lineHeight": 18,
-            }
-          }
-          testID="signature-test$SaveButton$caption"
-        >
-          Save
-        </Text>
-      </View>
+        Save
+      </Text>
     </View>
   </View>
 </View>
