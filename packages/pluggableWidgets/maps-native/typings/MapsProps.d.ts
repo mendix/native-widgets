@@ -3,9 +3,9 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { CSSProperties } from "react";
-import { ActionValue, DynamicValue, ListValue, NativeIcon, ListActionValue, ListAttributeValue } from "mendix";
+import { ActionValue, DynamicValue, ListActionValue, ListAttributeValue, ListValue, NativeIcon } from "mendix";
 import { Big } from "big.js";
+import { CSSProperties } from "react";
 
 export type LocationTypeEnum = "address" | "latlng";
 
@@ -56,7 +56,11 @@ export interface MarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    icon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     iconSize: number | null;
     iconColor: string;
 }
@@ -70,7 +74,11 @@ export interface DynamicMarkersPreviewType {
     title: string;
     description: string;
     onClick: {} | null;
-    icon: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    icon:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
     iconSize: number | null;
     iconColor: string;
 }
