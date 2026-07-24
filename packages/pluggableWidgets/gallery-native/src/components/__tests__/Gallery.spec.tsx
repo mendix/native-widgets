@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { Text, TextInput } from "react-native";
 import { ObjectItem, GUID, DynamicValue, ValueStatus } from "mendix";
 import { render, fireEvent, act } from "@testing-library/react-native";
