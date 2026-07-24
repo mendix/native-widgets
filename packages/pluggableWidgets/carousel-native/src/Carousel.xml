@@ -18,6 +18,20 @@
                     <caption>Content</caption>
                     <description/>
                 </property>
+                <property key="activeSelection" type="association" selectableObjects="contentSource" onChange="onChangeAction" required="false">
+                    <caption>Active selection</caption>
+                    <description/>
+                    <associationTypes>
+                        <associationType name="Reference"/>
+                    </associationTypes>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Effects">
+                <property key="animateExpression" type="expression" required="false">
+                    <caption>Animate changed</caption>
+                    <description>Animate when 'Active selection' association is changed, animation on user swiping will always be on.</description>
+                    <returnType type="Boolean" />
+                </property>
             </propertyGroup>
             <propertyGroup caption="Display">
                 <property key="layout" type="enumeration" defaultValue="card">
@@ -39,6 +53,12 @@
                         <enumerationValue key="center">Center</enumerationValue>
                         <enumerationValue key="start">Beginning</enumerationValue>
                     </enumerationValues>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Events">
+                <property key="onChangeAction" type="action" required="false">
+                    <caption>On change</caption>
+                    <description>When active selection association is changed.</description>
                 </property>
             </propertyGroup>
 <!--            Library has a bug with loops-->
