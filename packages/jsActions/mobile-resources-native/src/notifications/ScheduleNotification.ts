@@ -13,7 +13,7 @@ import notifee, {
     AndroidImportance,
     Notification,
     AlarmType
-} from "@notifee/react-native";
+} from "react-native-notify-kit";
 // BEGIN EXTRA CODE
 // END EXTRA CODE
 
