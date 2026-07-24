@@ -97,6 +97,16 @@ run_jsactions_tests() {
   fi
 }
 
+# Clean up any stale XCTest processes before starting (iOS only)
+if [ "$PLATFORM" == "ios" ]; then
+  cleanup_xctest_processes
+fi
+
+# Fast-fail smoke check before running jsActions tests (same as widget tests)
+if ! smoke_check; then
+  exit 1
+fi
+
 # Run jsActions tests
 run_jsactions_tests
 if [ $? -ne 0 ]; then

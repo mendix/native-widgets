@@ -78,9 +78,24 @@ stop_recording() {
   REC_FILE=""
 }
 
+# Function to clean up stale XCTest processes (iOS only)
+cleanup_xctest_processes() {
+    if [ "$PLATFORM" != "ios" ]; then
+        return 0
+    fi
+    echo "🧹 Cleaning up stale XCTest processes..."
+    # Kill any leftover XCTest runner processes that might be blocking driver initialization
+    pkill -9 -f "XCTRunner" 2>/dev/null || true
+    pkill -9 -f "xctest" 2>/dev/null || true
+    pkill -9 -f "maestro.*driver" 2>/dev/null || true
+    sleep 2
+}
+
 # Function to restart the iOS simulator
 restart_simulator() {
     echo "🔄 Restarting iOS Simulator..."
+    # Clean up XCTest processes first
+    cleanup_xctest_processes
     # Shut down whatever is booted; the device is auto-selected in prepare_ios.sh,
     # so we don't depend on a hardcoded device name here.
     xcrun simctl shutdown all || true
