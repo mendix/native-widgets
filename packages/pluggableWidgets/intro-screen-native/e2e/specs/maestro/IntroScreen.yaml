@@ -4,6 +4,11 @@ appId: "${APP_ID}"
     file: "../../../../../../maestro/Precondition.yaml"
 - tapOn:
     text: "I"
+# Tapping the alphabet index re-renders the widget list; wait for the
+# entry before tapping it, otherwise the tap races that render.
+- extendedWaitUntil:
+    visible: "Intro screen"
+    timeout: 10000
 - tapOn:
     text: "Intro screen"
 # Opening the page mounts the widget and waits on the runtime, unlike the in-flow waits

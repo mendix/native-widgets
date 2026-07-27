@@ -4,6 +4,11 @@ appId: "${APP_ID}"
     file: "../../../../../../maestro/Precondition.yaml"
 - tapOn:
     text: "R"
+# Tapping the alphabet index re-renders the widget list; wait for the
+# entry before tapping it, otherwise the tap races that render.
+- extendedWaitUntil:
+    visible: "Rating"
+    timeout: 10000
 - tapOn:
     text: "Rating"
 - assertVisible:
