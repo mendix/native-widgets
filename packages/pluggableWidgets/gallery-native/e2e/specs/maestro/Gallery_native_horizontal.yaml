@@ -10,8 +10,11 @@ appId: "${APP_ID}"
     text: "Gallery"
 - assertVisible:
     text: ".*Title 0.*"
-- scrollUntilVisible:
-    element:
-      text: ".*Title 20.*"
-    direction: LEFT
-    timeout: 60000
+- repeat:
+    times: 35
+    commands:
+      - swipe:
+          start: 90%, 10%
+          end: 15%, 10%
+- assertVisible:
+    text: ".*Title 20.*"
