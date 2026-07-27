@@ -11,10 +11,14 @@ appId: "${APP_ID}"
 - assertVisible:
     text: ".*Title 0.*"
 - repeat:
-    while:
-      notVisible:
-        text: ".*Title 20.*"
-    timeout: 60000
+    times: 30
     commands:
-      - swipe:
-          direction: LEFT
+      - runFlow:
+          when:
+            notVisible:
+              text: ".*Title 20.*"
+          commands:
+            - swipe:
+                direction: LEFT
+- assertVisible:
+    text: ".*Title 20.*"
