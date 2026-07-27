@@ -10,8 +10,11 @@ appId: "${APP_ID}"
     text: "Gallery"
 - assertVisible:
     text: ".*Title 0.*"
-- swipeUntilVisible:
-    direction: LEFT
+- repeat:
+    while:
+      notVisible:
+        text: ".*Title 20.*"
     timeout: 60000
-    element:
-      text: ".*Title 20.*"
+    commands:
+      - swipe:
+          direction: LEFT
