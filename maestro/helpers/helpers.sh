@@ -92,14 +92,48 @@ cleanup_xctest_processes() {
 }
 
 # Function to restart the iOS simulator
+#
+# This is the recovery path taken when the Maestro/XCTest driver wedges ("iOS driver not
+# ready in time"), so it has to ACTUALLY restart the device. It previously did not: the
+# shutdown result was discarded with `|| true`, and the following prepare_ios.sh reported
+#
+#     Monitoring boot status for iPhone 17 Pro (...).
+#     Device already booted, nothing to do.
+#
+# i.e. the device never went down and the shard only got an app reinstall on top of the
+# same wedged runtime. So we now verify the device reaches Shutdown and say so loudly if
+# it doesn't, rather than silently continuing with a half-reset simulator.
 restart_simulator() {
     echo "🔄 Restarting iOS Simulator..."
-    # Clean up XCTest processes first
+    # Kill the XCTest runner FIRST: while it holds the device, shutdown can fail.
     cleanup_xctest_processes
-    # Shut down whatever is booted; the device is auto-selected in prepare_ios.sh,
-    # so we don't depend on a hardcoded device name here.
-    xcrun simctl shutdown all || true
-    sleep 10
+
+    # Target the device prepare_ios.sh selected when we know it; `all` otherwise (first
+    # call in a shard, where SIMULATOR_DEVICE_ID isn't exported into this shell yet).
+    local target="${SIMULATOR_DEVICE_ID:-all}"
+    echo "Shutting down simulator ($target)..."
+    if ! xcrun simctl shutdown "$target" 2>&1; then
+        # Already-shutdown is a benign error, so don't fail here — the poll below is what
+        # decides whether the device is actually down.
+        echo "shutdown reported an error; verifying device state anyway"
+    fi
+
+    # `simctl shutdown <udid>` is synchronous (measured ~3s), but poll rather than trust
+    # it: this replaces a blind `sleep 10` that padded every retry whether or not it was
+    # needed. Bounded so a stuck device surfaces as a warning instead of hanging.
+    local deadline=$((SECONDS + 30))
+    while [ "$SECONDS" -lt "$deadline" ]; do
+        if [ -n "${SIMULATOR_DEVICE_ID:-}" ]; then
+            xcrun simctl list devices | grep -q "$SIMULATOR_DEVICE_ID.*Shutdown" && break
+        else
+            xcrun simctl list devices | grep -q "(Booted)" || break
+        fi
+        sleep 1
+    done
+    if [ "$SECONDS" -ge "$deadline" ]; then
+        echo "::warning::Simulator did not reach Shutdown within 30s; the driver may still be wedged after this restart"
+    fi
+
     bash ./maestro/helpers/prepare_ios.sh
 }
 
