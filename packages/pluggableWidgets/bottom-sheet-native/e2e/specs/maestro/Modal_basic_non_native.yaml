@@ -20,10 +20,10 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Open"
 
-# Wait until the sheet is actually open (button label changes)
-- extendedWaitUntil:
-    visible: randText
-    optional: true
+# Wait for the screen to stop changing (image decode / sheet animation)
+# rather than sleeping a fixed time: this returns as soon as the UI
+# settles, and still caps at 25s.
+- waitForAnimationToEnd:
     timeout: 25000
 
 - takeScreenshot:

@@ -13,11 +13,11 @@ appId: "${APP_ID}"
     text: "Bottom Sheet"
 - tapOn:
     text: "Expanding fullscreen"
-# Because the image loading and animation can take some time due to resources on emulator, we need to wait
-- extendedWaitUntil:
-     visible: randText  # Any random text that does not exist in the UI
-     optional: true  # This should be true so that the test won't fail
-     timeout: 15000 # 15 seconds to allow for animation to complete
+# Wait for the screen to stop changing (image decode / sheet animation)
+# rather than sleeping a fixed time: this returns as soon as the UI
+# settles, and still caps at 15s.
+- waitForAnimationToEnd:
+    timeout: 15000
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_expanding_fullscreen"
 - assertScreenshot:
