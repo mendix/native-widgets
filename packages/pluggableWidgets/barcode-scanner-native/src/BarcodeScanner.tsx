@@ -60,11 +60,7 @@ export function BarcodeScanner(props: Props): ReactElement {
             "upc-a",
             "upc-e",
             "pdf-417",
-            "gs1-data-bar",
-            "gs1-data-bar-limited",
-            "gs1-data-bar-expanded",
-            "itf",
-            "itf-14"
+            "itf"
         ],
         onCodeScanned
     });
