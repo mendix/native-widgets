@@ -1,4 +1,4 @@
-import { render, act } from "@testing-library/react-native";
+import { render, act, fireEvent, RenderAPI } from "@testing-library/react-native";
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
@@ -15,6 +15,14 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
     getItem: jest.fn().mockResolvedValue(null),
     setItem: jest.fn().mockResolvedValue(null)
 }));
+
+// The slides are sized from the measured width, so the list only mounts after a layout pass. The
+// test renderer never lays out, so the layout event has to be dispatched by hand.
+const layout = (component: RenderAPI, name: string): void => {
+    fireEvent(component.getByTestId(name), "layout", {
+        nativeEvent: { layout: { width: 400, height: 800 } }
+    });
+};
 
 describe("Intro Screen", () => {
     let defaultProps: IntroScreenProps<IntroScreenStyle>;
@@ -39,6 +47,7 @@ describe("Intro Screen", () => {
 
     it("renders", () => {
         const component = render(<IntroScreen {...defaultProps} />);
+        layout(component, "intro-screen-notch-test");
         expect(component.toJSON()).toMatchSnapshot();
     });
 
@@ -46,11 +55,13 @@ describe("Intro Screen", () => {
         const component = render(
             <IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"nextDone"} />
         );
+        layout(component, "intro-screen-notch-test");
         expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("renders with 2 bottom button", () => {
         const component = render(<IntroScreen {...defaultProps} slideIndicators={"above"} buttonPattern={"all"} />);
+        layout(component, "intro-screen-notch-test");
         expect(component.toJSON()).toMatchSnapshot();
     });
 
@@ -61,6 +72,7 @@ describe("Intro Screen", () => {
                 activeSlideAttribute={new EditableValueBuilder<Big>().withValue(new Big(1)).build()}
             />
         );
+        layout(component, "intro-screen-notch-test");
         expect(component.toJSON()).toMatchSnapshot();
     });
 
@@ -68,6 +80,7 @@ describe("Intro Screen", () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
         // Wait for async storage to resolve
         await act(async () => {});
+        layout(component, "intro-screen-notch-test");
         expect(component.toJSON()).toMatchSnapshot();
     });
 });

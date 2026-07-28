@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue where the IntroScreen could jump to the wrong slide and report an incorrect active slide, most noticeably when the widget was opened a second time.
+
 ## [4.4.1] - 2026-6-10
 
 ### Changed

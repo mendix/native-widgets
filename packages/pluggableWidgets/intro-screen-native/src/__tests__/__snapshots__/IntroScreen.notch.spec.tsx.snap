@@ -55,6 +55,7 @@ exports[`Intro Screen renders 1`] = `
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
@@ -115,8 +116,8 @@ exports[`Intro Screen renders 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -153,7 +154,7 @@ exports[`Intro Screen renders 1`] = `
                 "justifyContent": "center",
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -202,7 +203,7 @@ exports[`Intro Screen renders 1`] = `
                 "paddingVertical": 12,
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -281,6 +282,7 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
@@ -341,8 +343,8 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -521,6 +523,7 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
@@ -581,8 +584,8 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -761,6 +764,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
@@ -821,8 +825,8 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -859,7 +863,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
                 "justifyContent": "center",
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -908,7 +912,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
                 "paddingVertical": 12,
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -987,6 +991,7 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
           onLayout={[Function]}
           onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
@@ -1047,8 +1052,8 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -1085,7 +1090,7 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
                 "justifyContent": "center",
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -1134,7 +1139,7 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
                 "paddingVertical": 12,
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }

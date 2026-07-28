@@ -69,9 +69,11 @@ const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: Editabl
 export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement => {
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [activeIndex, setActiveIndex] = useState(() => refreshActiveSlideAttribute(props.slides, props.activeSlide));
     const flashList = useRef<FlashListRef<any>>(null);
-    const isInitializing = useRef(true);
+    // Momentum scroll end also fires when the list re-clamps its own offset after a layout or
+    // data change, so only a touch-initiated scroll may report a slide change.
+    const isDragging = useRef(false);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -94,16 +96,6 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         const slide = refreshActiveSlideAttribute(props.slides, props.activeSlide);
         if (width && props.activeSlide?.status === ValueStatus.Available && slide !== activeIndex) {
             goToSlide(slide);
-            if (isInitializing.current) {
-                if (isInitializing.current) {
-                    // Use requestAnimationFrame twice to wait for the next frame after scroll.
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            isInitializing.current = false;
-                        });
-                    });
-                }
-            }
         }
     }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
 
@@ -315,16 +307,22 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         );
     };
 
+    const onScrollBeginDrag = useCallback(() => {
+        isDragging.current = true;
+    }, []);
+
     const onMomentumScrollEnd = useCallback(
         (event: NativeSyntheticEvent<any>) => {
-            const offset = event.nativeEvent.contentOffset.x;
-            const newIndex = rtlSafeIndex(Math.round(offset / width));
-            if (newIndex === activeIndex) {
+            const wasDragging = isDragging.current;
+            isDragging.current = false;
+
+            if (!width || !wasDragging) {
                 return;
             }
 
-            if (isInitializing.current) {
-                setActiveIndex(newIndex);
+            const offset = event.nativeEvent.contentOffset.x;
+            const newIndex = rtlSafeIndex(Math.round(offset / width));
+            if (newIndex === activeIndex) {
                 return;
             }
 
@@ -353,26 +351,33 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         [width, height]
     );
 
+    // Slides are sized from the measured width, so mount the list only once it is known: earlier
+    // lays every slide out at width zero, stacking them all on the first page.
     return (
         <View style={styles.flexOne}>
-            <FlashList
-                testID={props.testID}
-                initialScrollIndex={refreshActiveSlideAttribute(props.slides, props.activeSlide)}
-                ref={flashList}
-                data={props.slides}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                bounces={false}
-                style={styles.flatList}
-                renderItem={renderItem}
-                onMomentumScrollEnd={onMomentumScrollEnd}
-                scrollEventThrottle={50}
-                extraData={[width, activeIndex]}
-                onLayout={onLayout}
-                keyExtractor={(_: any, index: number) => "screen_key_" + index}
-                importantForAccessibility="no"
-            />
+            {width > 0 ? (
+                <FlashList
+                    testID={props.testID}
+                    initialScrollIndex={activeIndex}
+                    ref={flashList}
+                    data={props.slides}
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    bounces={false}
+                    style={styles.flatList}
+                    renderItem={renderItem}
+                    onScrollBeginDrag={onScrollBeginDrag}
+                    onMomentumScrollEnd={onMomentumScrollEnd}
+                    scrollEventThrottle={50}
+                    extraData={[width, activeIndex]}
+                    onLayout={onLayout}
+                    keyExtractor={(_: any, index: number) => "screen_key_" + index}
+                    importantForAccessibility="no"
+                />
+            ) : (
+                <View testID={props.testID} style={styles.flatList} onLayout={onLayout} />
+            )}
             {renderPagination()}
         </View>
     );
