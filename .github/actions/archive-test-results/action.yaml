@@ -12,12 +12,14 @@ inputs:
     required: false
     default: ${{ github.workspace }}
 
+# `!cancelled()` rather than `always()` throughout: always() is exempt from cancellation,
+# so cancelling a run still uploaded every artifact set.
 runs:
   using: composite
   steps:
     - name: Archive runtime logs
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-      if: always()
+      if: ${{ !cancelled() }}
       with:
         name: ${{ inputs.platform }}-runtime-logs-${{ inputs.test-type }}
         path: log/*.log
@@ -25,7 +27,7 @@ runs:
     
     - name: Archive test screenshots
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-      if: always()
+      if: ${{ !cancelled() }}
       with:
         name: ${{ inputs.platform }}-screenshots-${{ inputs.test-type }}
         path: ${{ inputs.workspace-path }}/maestro/images/actual/${{ inputs.platform }}/**/*.png
@@ -38,7 +40,7 @@ runs:
       # resolves the diff name against the baseline's own relative path. That nested location
       # was never matched by the screenshots glob above, so diffs were silently lost. Gather
       # any *_diff.png from wherever it landed into one flat dir for upload.
-      if: always()
+      if: ${{ !cancelled() }}
       shell: bash
       run: |
         dest="${{ inputs.workspace-path }}/maestro/images/diff/${{ inputs.platform }}"
@@ -49,7 +51,7 @@ runs:
 
     - name: Archive screenshot diffs
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-      if: always()
+      if: ${{ !cancelled() }}
       with:
         name: ${{ inputs.platform }}-diffs-${{ inputs.test-type }}
         path: ${{ inputs.workspace-path }}/maestro/images/diff/${{ inputs.platform }}/*.png
@@ -57,10 +59,18 @@ runs:
 
     - name: Archive artifacts
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-      if: always()
+      if: ${{ !cancelled() }}
       with:
         name: ${{ inputs.platform }}-artifacts-${{ inputs.test-type }}
         path: packages/pluggableWidgets/**/artifacts/
+        if-no-files-found: ignore
+
+    - name: Archive maestro debug output
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
+      if: ${{ !cancelled() }}
+      with:
+        name: ${{ inputs.platform }}-debug-${{ inputs.test-type }}
+        path: ${{ inputs.workspace-path }}/maestro/debug/**
         if-no-files-found: ignore
 
     # Per-flow videos are recorded for every flow but kept only for FAILED flows (passing
@@ -68,7 +78,7 @@ runs:
     # empty and the upload is a no-op (if-no-files-found: ignore).
     - name: Archive failure videos
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-      if: always()
+      if: ${{ !cancelled() }}
       with:
         name: ${{ inputs.platform }}-videos-${{ inputs.test-type }}
         path: maestro/videos/*.mp4

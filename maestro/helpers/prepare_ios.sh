@@ -60,8 +60,51 @@ elif best:
     echo "Using $DEVICE_NAME (iOS $RUNTIME_VER) [$SELECT_STATUS], UDID: $DEVICE_ID"
     export SIMULATOR_DEVICE_ID="$DEVICE_ID"
 
+    # Leaves the device BOOTED and slim when it succeeds, so the boot below is a no-op.
+    slim_simulator "$DEVICE_ID"
+
     xcrun simctl boot "$DEVICE_ID" || echo "Simulator already booted"
     xcrun simctl bootstatus "$DEVICE_ID" -b || echo "Simulator booted"
+}
+
+# Boot with ~170 background daemons disabled (simslim), cutting memory ~4GB -> ~1GB. Cannot be
+# cached: the disables are not persisted to any file under the device (simslim 0.4.0 / iOS 26.5).
+slim_simulator() {
+    local udid="$1"
+
+    if [ "${SKIP_SIMSLIM:-false}" = "true" ]; then
+        echo "SKIP_SIMSLIM=true; booting a stock simulator."
+        return 0
+    fi
+
+    if ! command -v simslim >/dev/null 2>&1; then
+        if ! brew install mobai-app/tap/simslim; then
+            echo "::warning::Could not install simslim; booting a stock simulator."
+            return 0
+        fi
+    fi
+
+    # Full slim, no --except: per simslim's profiles.go no category touches the camera, MapKit
+    # rendering or local notifications, which the flows need.
+    echo "Slimming $udid (simslim); this takes several minutes but cuts simulator memory ~4GB -> ~1GB."
+    if ! simslim --boot-timeout 15m on "$udid"; then
+        echo "::warning::simslim failed; booting a stock simulator."
+        return 0
+    fi
+}
+
+# The counterpart to `disable-animations: true` on the Android emulator. SYSTEM transitions only —
+# React Native's `Animated` ignores this flag, so it is no substitute for the per-flow waits.
+reduce_motion() {
+    echo "Reducing motion on iOS Simulator..."
+    if [ -z "$SIMULATOR_DEVICE_ID" ]; then
+        echo "Error: SIMULATOR_DEVICE_ID not set"
+        return 1
+    fi
+    xcrun simctl spawn "$SIMULATOR_DEVICE_ID" defaults write com.apple.Accessibility ReduceMotionEnabled -bool true \
+        || echo "::warning::Could not set ReduceMotionEnabled; animations stay at full length"
+    xcrun simctl spawn "$SIMULATOR_DEVICE_ID" defaults write com.apple.Accessibility ReduceMotionReduceSlideTransitionsEnabled -bool true \
+        || echo "::warning::Could not set ReduceMotionReduceSlideTransitionsEnabled"
 }
 
 set_status_bar() {
@@ -91,7 +134,19 @@ verify_installed_app() {
     xcrun simctl get_app_container "$SIMULATOR_DEVICE_ID" com.mendix.native.template
 }
 
+# `grep -E`, not BRE: the alternation matched under zsh but not the bash CI runs, so every shard
+# logged 0 even on a fully slimmed simulator.
+report_slim_state() {
+    [ -n "${SIMULATOR_DEVICE_ID:-}" ] || return 0
+    local n
+    n=$(xcrun simctl spawn "$SIMULATOR_DEVICE_ID" launchctl print-disabled system 2>/dev/null \
+        | grep -cE '=> (disabled|true)' || true)
+    echo "Slim state: ${n:-0} disabled system daemons on $SIMULATOR_DEVICE_ID"
+}
+
 start_simulator
+report_slim_state
+reduce_motion
 set_status_bar
 install_ios_app
 verify_installed_app

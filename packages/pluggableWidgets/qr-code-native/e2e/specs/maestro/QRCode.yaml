@@ -2,8 +2,14 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "Q"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "Q"
+      - extendedWaitUntil:
+          visible: "QR code"
+          timeout: 10000
 - tapOn:
     text: "QR code"
 - assertVisible:
