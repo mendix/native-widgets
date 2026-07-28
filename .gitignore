@@ -20,6 +20,12 @@ mendixProject
 **/tests/testProject
 **/pluggableWidgets/**/artifacts
 
+# Per-flow e2e failure artifacts, produced into the workspace so CI can upload them
+# (helpers.sh). Local runs leave them behind too; they are never committed. *.log above
+# already covers maestro/debug/*/maestro.log, but not its screenshots or commands JSON.
+maestro/videos
+maestro/debug
+
 .pnpm-debug.log*
 .pnpm-store
 .pnpmfile.cjs
