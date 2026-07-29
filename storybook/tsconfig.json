@@ -1,0 +1,12 @@
+{
+    "extends": "@react-native/typescript-config",
+    "compilerOptions": {
+        // The real `mendix` module declares ValueStatus as an ambient const enum, which
+        // isolatedModules forbids reading. The widget packages compile without isolatedModules for the
+        // same reason, so match them instead of rewriting widget source to suit this host app.
+        "isolatedModules": false,
+        "verbatimModuleSyntax": false
+    },
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["**/node_modules", "**/Pods"]
+}
