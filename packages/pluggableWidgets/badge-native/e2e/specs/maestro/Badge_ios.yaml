@@ -2,8 +2,16 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "B"
+# Tapping the alphabet index re-renders the widget list; wait for the entry before tapping it,
+# otherwise the tap races that render.
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "B"
+      - extendedWaitUntil:
+          visible: "Badge"
+          timeout: 10000
 - tapOn:
     text: "Badge"
 - inputText:
