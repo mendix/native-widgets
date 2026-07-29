@@ -2,8 +2,14 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "F"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "F"
+      - extendedWaitUntil:
+          visible: "Floating action button"
+          timeout: 10000
 - tapOn:
     text: "Floating action button"
 - tapOn:
