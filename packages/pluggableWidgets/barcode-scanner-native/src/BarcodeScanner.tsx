@@ -11,6 +11,11 @@ import { executeAction } from "@mendix/piw-utils-internal";
 
 export type Props = BarcodeScannerProps<BarcodeScannerStyle>;
 
+type CodePositionInfo = {
+    isWithinMask: boolean;
+    distanceToMaskCenter: number;
+};
+
 export function BarcodeScanner(props: Props): ReactElement {
     const device = useCameraDevice("back");
 
@@ -23,51 +28,72 @@ export function BarcodeScanner(props: Props): ReactElement {
     const [cameraViewDimensions, setCameraViewDimensions] = useState<{ width: number; height: number } | null>(null);
 
     // Mask dimensions - should match the BarcodeMask component props
-    const maskWidth = 200;
-    const maskHeight = 200;
+    const maskWidth = styles.mask.width || 280;
+    const maskHeight = styles.mask.height || 260;
 
-    // Helper function to check if a code is within the mask bounds
-    const isCodeInMaskBounds = useCallback(
-        (code: Code, scanFrame: CodeScannerFrame): boolean => {
-            // If mask is not shown, allow all codes
+    /**
+     * Calculates:
+     * - Whether the code center lies inside the mask
+     * - Distance of the code center from the mask center
+     */
+    const getCodePositionInfo = useCallback(
+        (code: Code, scanFrame: CodeScannerFrame): CodePositionInfo => {
+            // Preserve existing behavior:
+            // If mask is hidden, allow all codes.
             if (!props.showMask) {
-                return true;
+                return {
+                    isWithinMask: true,
+                    distanceToMaskCenter: 0
+                };
             }
 
-            // If we don't have camera view dimensions or code frame, allow it
+            // Preserve existing behavior:
+            // If layout/frame data is unavailable, allow the code.
             if (!cameraViewDimensions || !code.frame) {
-                return true;
+                return {
+                    isWithinMask: true,
+                    distanceToMaskCenter: Number.MAX_SAFE_INTEGER
+                };
             }
 
             const { width: viewWidth, height: viewHeight } = cameraViewDimensions;
             const { width: frameWidth, height: frameHeight } = scanFrame;
 
-            // Calculate the mask position (centered in the view)
+            // Mask position (centered in camera view)
             const maskX = (viewWidth - maskWidth) / 2;
             const maskY = (viewHeight - maskHeight) / 2;
 
-            // Scale factor from scan frame to view dimensions
+            const maskCenterX = maskX + maskWidth / 2;
+            const maskCenterY = maskY + maskHeight / 2;
+
+            // Scale factor from scanner frame space to view space
             const scaleX = viewWidth / frameWidth;
             const scaleY = viewHeight / frameHeight;
 
-            // Convert code frame coordinates from scan frame space to view space
+            // Convert code frame coordinates into view coordinates
             const codeX = code.frame.x * scaleX;
             const codeY = code.frame.y * scaleY;
             const codeWidth = code.frame.width * scaleX;
             const codeHeight = code.frame.height * scaleY;
 
-            // Calculate the center of the code
+            // Code center
             const codeCenterX = codeX + codeWidth / 2;
             const codeCenterY = codeY + codeHeight / 2;
 
-            // Check if the center of the code is within the mask bounds
             const isWithinMask =
                 codeCenterX >= maskX &&
                 codeCenterX <= maskX + maskWidth &&
                 codeCenterY >= maskY &&
                 codeCenterY <= maskY + maskHeight;
 
-            return isWithinMask;
+            // Squared distance (no need for Math.sqrt since we only compare values)
+            const distanceToMaskCenter =
+                Math.pow(codeCenterX - maskCenterX, 2) + Math.pow(codeCenterY - maskCenterY, 2);
+
+            return {
+                isWithinMask,
+                distanceToMaskCenter
+            };
         },
         [props.showMask, cameraViewDimensions, maskWidth, maskHeight]
     );
@@ -83,14 +109,26 @@ export function BarcodeScanner(props: Props): ReactElement {
                 return;
             }
 
-            // Filter codes to only those within the mask bounds
-            const codesInMask = codes.filter(code => isCodeInMaskBounds(code, frame));
+            const candidates = codes
+                .map(code => ({
+                    code,
+                    ...getCodePositionInfo(code, frame)
+                }))
+                .filter(item => item.isWithinMask);
 
-            if (codesInMask.length === 0 || !codesInMask[0].value) {
+            if (candidates.length === 0) {
                 return;
             }
 
-            const { value } = codesInMask[0];
+            // Prefer the code closest to the center of the mask
+            const selectedCode = candidates.sort((a, b) => a.distanceToMaskCenter - b.distanceToMaskCenter)[0].code;
+
+            if (!selectedCode.value) {
+                return;
+            }
+
+            const { value } = selectedCode;
+
             if (value !== props.barcode.value) {
                 props.barcode.setValue(value);
             }
@@ -103,7 +141,7 @@ export function BarcodeScanner(props: Props): ReactElement {
                 isLockedRef.current = false;
             }, 2000);
         },
-        [props.barcode, props.onDetect, isCodeInMaskBounds]
+        [props.barcode, props.onDetect, getCodePositionInfo]
     );
 
     const codeScanner = useCodeScanner({
