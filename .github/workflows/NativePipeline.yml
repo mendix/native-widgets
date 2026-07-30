@@ -366,6 +366,18 @@ jobs:
           repository: mendix/native-template
           ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
+      - name: "Detect Android NDK version from native-template"
+        shell: bash
+        run: |
+          set -euo pipefail
+          NDK=$(grep -oE 'ndkVersion[[:space:]]*=?[[:space:]]*"[0-9.]+"' native-template/android/build.gradle \
+                | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
+          if [ -z "$NDK" ]; then
+            echo "::warning::Could not detect ndkVersion from native-template; gradle will resolve/download it."
+          else
+            echo "Detected NDK version: $NDK"
+          fi
+          echo "ANDROID_NDK_VERSION=$NDK" >> "$GITHUB_ENV"
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -405,14 +417,33 @@ jobs:
           distribution: temurin
           cache: gradle
 
+      - name: "Cache Android NDK"
+        id: cache-ndk
+        if: env.ANDROID_NDK_VERSION != ''
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}
+          key: ${{ runner.os }}-android-ndk-${{ env.ANDROID_NDK_VERSION }}
+      - name: "Install Android NDK"
+        if: env.ANDROID_NDK_VERSION != '' && steps.cache-ndk.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          SDKMANAGER="$SDK/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "${SDKMANAGER:-}" ] || [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(find "$SDK" -type f -name sdkmanager 2>/dev/null | head -1)"
+          fi
+          echo "Using sdkmanager: $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" "ndk;${ANDROID_NDK_VERSION}"
+
       - name: "Build Android app"
         working-directory: native-template/android
-        run: |
-          ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest
-          if [ $? -ne 0 ]; then
-            echo "Build failed!"
-            exit 1
-          fi
+        run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest -PreactNativeArchitectures=x86_64 --build-cache
       - name: "List APK files"
         run: |
           echo "Listing APK files in the output directory:"
