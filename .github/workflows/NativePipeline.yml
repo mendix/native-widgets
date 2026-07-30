@@ -350,12 +350,35 @@ jobs:
       - name: "Overlay built widget mpks"
         if: ${{ github.event.inputs.workspace != 'js-actions' }}
         shell: bash
+        # Located by `find` rather than a fixed-depth glob: upload-artifact strips the least-common
+        # ancestor of the paths it is given, so the depth here follows whatever else is in the
+        # artifact. Adding resources-manifest.txt at the repo root moved that ancestor from
+        # packages/ to the root, every path gained a packages/ prefix, and the old
+        # 'resources/pluggableWidgets/**' glob silently stopped matching — so no built mpk was
+        # installed and the e2e suite tested the baseline project's widgets instead.
+        #
+        # And it is fatal rather than silent: a widget that was built but not installed makes the
+        # e2e run test something other than the commit under test, which is worse than not running.
         run: |
-          if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
-            for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath="Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
-              mv -f "$oldPath" "$newPath"
-            done
+          found=0
+          while IFS= read -r oldPath; do
+            [ -n "$oldPath" ] || continue
+            found=$((found + 1))
+            echo "installing $(basename "$oldPath")"
+            mv -f "$oldPath" "Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
+          done < <(find resources -type f -path '*/dist/*/*.mpk')
+
+          # The scope this job was given, read from the manifest rather than needs.scope: `project`
+          # does not depend on `scope`, so its outputs are not visible here. Compared as a string
+          # rather than parsed as JSON: the manifest line is written by echoing an interpolated
+          # expression, and the shell strips the inner quotes on the way in, so it reads
+          # [a, b] rather than ["a","b"].
+          built=$(sed -n 's/^built widgets: //p' resources/resources-manifest.txt)
+          echo "mpks installed: ${found}; widgets in scope: ${built:-unknown}"
+          if [ "$found" -eq 0 ] && [ -n "$built" ] && [ "$built" != "[]" ]; then
+            echo "::error::Widgets ${built} were built but no .mpk was found under resources/ — the test project would run stale widgets."
+            find resources -type f | head -50
+            exit 1
           fi
       - name: "Register widgets in the test project"
         # Run unconditionally: update-widgets must sync the project's widget definitions with the
@@ -364,17 +387,24 @@ jobs:
         # then skip it and leave stale Atlas widget defs for the portable-app build.
         shell: bash
         run: mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      # Same layout-independence as the mpk overlay above: locate the dist dir rather than assume
+      # its depth in the artifact. Each guard also checks its OWN source dir — nanoflow-actions
+      # previously tested mobile-resources-native, so it moved either both or neither.
       - name: "Move mobile-resources"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
+          src=$(find resources -type d -path '*/mobile-resources-native/dist' | head -1)
+          if [ -n "$src" ]; then
+            echo "installing mobile-resources from $src"
+            mv -f "$src"/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
+          src=$(find resources -type d -path '*/nanoflow-actions-native/dist' | head -1)
+          if [ -n "$src" ]; then
+            echo "installing nanoflow-actions from $src"
+            mv -f "$src"/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Build portable app package (self-contained runtime)"
         # Run this BEFORE the native-packager deploy: portable-app-package re-prepares and
