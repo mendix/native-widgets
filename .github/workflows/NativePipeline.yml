@@ -353,10 +353,11 @@ jobs:
           platform: ios
           mda-file: automation.mda
   android-app:
-    needs: [android-bundle, determine-nt-version]
-    runs-on: ubuntu-24.04
-    # Skip this job if we're using artifacts from a specific run, but allow it to run if android-bundle was skipped
-    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.android-bundle.result == 'success') }}
+    needs: [project, determine-nt-version]
+    runs-on: ubuntu-26.04
+    # Skip this job if we're using artifacts from a specific run; the native bundles now come
+    # from the project job (deploy + native-packager), so gate on project success.
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && !cancelled() && (needs.project.result == 'success') }}
     steps:
       - name: Debug branch value
         run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
@@ -370,6 +371,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # native-template declares e.g. ndkVersion = "27.3.13750724" in android/build.gradle
           NDK=$(grep -oE 'ndkVersion[[:space:]]*=?[[:space:]]*"[0-9.]+"' native-template/android/build.gradle \
                 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
           if [ -z "$NDK" ]; then
@@ -387,45 +389,122 @@ jobs:
         with:
           name: android-bundle
           path: bundles/android
+      # Only the JS bundle can be swapped into a cached APK: aapt2 rewrites the artifact's res/
+      # density qualifiers into resources.arsc, so a resource change needs a full rebuild.
+      - name: "Resolve Android APK cache inputs"
+        shell: bash
+        run: |
+          set -euo pipefail
+          NT_SHA=$(git -C native-template rev-parse HEAD)
+          echo "NT_SHA=$NT_SHA" >> "$GITHUB_ENV"
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          BT_DIR=$(ls -1d "$SDK"/build-tools/* 2>/dev/null | sort -V | tail -1)
+          if [ -z "${BT_DIR:-}" ]; then
+            echo "::error::No Android build-tools found under $SDK; cannot align/sign a swapped APK."
+            exit 1
+          fi
+          echo "BUILD_TOOLS_DIR=$BT_DIR" >> "$GITHUB_ENV"
+          echo "BUILD_TOOLS_ID=$(basename "$BT_DIR")" >> "$GITHUB_ENV"
+          echo "native-template $NT_SHA, build-tools $(basename "$BT_DIR")"
+      - name: "Restore built Android APK"
+        id: android-apk-cache
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: android-apk-cache
+          # No restore-keys: a partial-input change must rebuild. gradle autolinks from
+          # native_dependencies.json, so it belongs in the key.
+          key: android-apk-v1-${{ runner.os }}-${{ env.BUILD_TOOLS_ID }}-${{ env.NT_SHA }}-${{ hashFiles('native-template/package-lock.json', 'native-widgets/configs/e2e/native_dependencies.json', 'native-widgets/configs/e2e/config.json', 'native-widgets/configs/e2e/google-services.json', 'native-widgets/scripts/test/add-native-dependencies.js') }}
+      - name: "Verify restored Android APK"
+        shell: bash
+        run: |
+          set -euo pipefail
+          cached=false
+          apk="android-apk-cache/app-appstore-debug.apk"
+          test_apk="android-apk-cache/app-appstore-debug-androidTest.apk"
+          if [ "${{ steps.android-apk-cache.outputs.cache-hit }}" = "true" ] && [ -f "$apk" ]; then
+            if ! unzip -l "$apk" | grep -q 'assets/index.android.bundle$'; then
+              echo "::warning::APK cache hit but no assets/index.android.bundle inside; rebuilding."
+            elif [ ! -f "$test_apk" ]; then
+              echo "::warning::APK cache hit but the androidTest APK is missing; rebuilding."
+            else
+              # aapt2's -v4 density suffix means paths differ, so compare by CONTENT.
+              stale=""
+              while IFS= read -r f; do
+                rel=${f#bundles/android/}
+                name=$(basename "$f")
+                entry=$(unzip -l "$apk" | awk '{print $4}' \
+                        | grep -E "^res/$(dirname "$rel" | sed 's|res/||')(-v[0-9]+)?/$name$" | head -1 || true)
+                if [ -z "$entry" ]; then stale="$stale $rel(absent)"; continue; fi
+                if ! cmp -s <(unzip -p "$apk" "$entry") "$f"; then stale="$stale $rel"; fi
+              done < <(find bundles/android/res -type f 2>/dev/null)
+              if [ -n "$stale" ]; then
+                echo "::warning::Bundle resources differ from the cached APK (${stale# }); rebuilding rather than swapping only the JS bundle."
+              else
+                cached=true
+                echo "APK_PATH=$apk" >> "$GITHUB_ENV"
+                echo "TEST_APK_PATH=$test_apk" >> "$GITHUB_ENV"
+                echo "Reusing cached APK: $apk"
+              fi
+            fi
+          else
+            echo "No usable Android APK cache; building."
+          fi
+          echo "ANDROID_APK_CACHED=$cached" >> "$GITHUB_ENV"
       - name: "Set up Node"
+        if: env.ANDROID_APK_CACHED != 'true'
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
           cache-dependency-path: native-template/package-lock.json
       - name: "Cache Android Build"
+        if: env.ANDROID_APK_CACHED != 'true'
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
-          path: native-template/android/app/build
+          path: |
+            native-template/android/app/build
+            !native-template/android/app/build/outputs
+            !native-template/android/app/build/intermediates
+            !native-template/android/app/build/tmp
+            !native-template/android/app/build/reports
           key: ${{ runner.os }}-android-build-${{ hashFiles('native-template/android/app/src/**/*.java', 'native-template/android/app/src/**/*.kt', 'native-template/android/app/build.gradle') }}
           restore-keys: |
             ${{ runner.os }}-android-build-
       - name: "Copy files to the right location"
+        if: env.ANDROID_APK_CACHED != 'true'
         run: |
-          mv bundles/android/index.android.bundle native-template/android/app/src/main/assets/index.android.bundle
-          cp -r bundles/android/assets/* native-template/android/app/src/main/res/
+          # native-packager output is pre-split: bundle/android/{assets/index.android.bundle, res/...}
+          # maps directly onto app/src/main/{assets,res} (per the official manual-build doc).
+          mkdir -p native-template/android/app/src/main
+          cp -r bundles/android/* native-template/android/app/src/main/
           mv native-widgets/configs/e2e/config.json native-template
           mv native-widgets/configs/e2e/google-services.json native-template/android/app
           node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Install dependencies"
+        if: env.ANDROID_APK_CACHED != 'true'
         working-directory: native-template
         run: npm i
       - name: "Setup JDK "
+        if: env.ANDROID_APK_CACHED != 'true'
         uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 #v5.2.0
         with:
           java-version: 21
           distribution: temurin
           cache: gradle
 
+      # Install the NDK explicitly and cache it (keyed on the version detected from
+      # native-template), instead of letting the gradle build download ~1GB every run.
+      # (${{ }} expressions are expanded by Actions, so they are safe in cache `path`
+      # — unlike shell $VARs.) If detection failed, these no-op and gradle resolves it.
       - name: "Cache Android NDK"
         id: cache-ndk
-        if: env.ANDROID_NDK_VERSION != ''
+        if: env.ANDROID_NDK_VERSION != '' && env.ANDROID_APK_CACHED != 'true'
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}
           key: ${{ runner.os }}-android-ndk-${{ env.ANDROID_NDK_VERSION }}
       - name: "Install Android NDK"
-        if: env.ANDROID_NDK_VERSION != '' && steps.cache-ndk.outputs.cache-hit != 'true'
+        if: env.ANDROID_NDK_VERSION != '' && env.ANDROID_APK_CACHED != 'true' && steps.cache-ndk.outputs.cache-hit != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -438,21 +517,94 @@ jobs:
             SDKMANAGER="$(find "$SDK" -type f -name sdkmanager 2>/dev/null | head -1)"
           fi
           echo "Using sdkmanager: $SDKMANAGER"
+          # Accept licenses first (yes can SIGPIPE under pipefail, so tolerate it), then install.
           yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
           "$SDKMANAGER" "ndk;${ANDROID_NDK_VERSION}"
 
       - name: "Build Android app"
+        if: env.ANDROID_APK_CACHED != 'true'
         working-directory: native-template/android
+        # The CI emulator is x86_64, so only compile that ABI's native code instead of all
+        # four (arm64-v8a, armeabi-v7a, x86, x86_64) — cuts the C/C++ build by ~75%.
+        #
+        # --build-cache turns on Gradle's local build cache (task-output content cache). It lives
+        # under ~/.gradle/caches/build-cache-1, already persisted by setup-java's `cache: gradle`,
+        # so unchanged tasks (incl. RN libs' native compiles, which don't change run-to-run) are
+        # reused instead of recompiled. Safe: a cache miss just rebuilds.
         run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest -PreactNativeArchitectures=x86_64 --build-cache
       - name: "List APK files"
+        if: env.ANDROID_APK_CACHED != 'true'
         run: |
           echo "Listing APK files in the output directory:"
           ls -R native-template/android/app/build/outputs/apk/
+      - name: "Stage the built APKs for caching"
+        if: env.ANDROID_APK_CACHED != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=native-template/android/app/build/outputs/apk
+          mkdir -p android-apk-cache
+          cp "$out/appstore/debug/app-appstore-debug.apk" android-apk-cache/
+          cp "$out/androidTest/appstore/debug/app-appstore-debug-androidTest.apk" android-apk-cache/
+          ls -l android-apk-cache
+      - name: "Save built Android APK"
+        if: env.ANDROID_APK_CACHED != 'true'
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: android-apk-cache
+          key: ${{ steps.android-apk-cache.outputs.cache-primary-key }}
+
+      - name: "Swap the JS bundle into the cached APK"
+        # -0 (store) is required — the bundle is Hermes bytecode mmapped out of the APK and
+        # `zip -u` would deflate it. Re-signing is required because the edit voids the signature.
+        if: env.ANDROID_APK_CACHED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f bundles/android/assets/index.android.bundle
+          KS="$HOME/.android/debug.keystore"
+          if [ ! -f "$KS" ]; then
+            mkdir -p "$HOME/.android"
+            keytool -genkeypair -keystore "$KS" -storepass android -keypass android \
+              -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10950 \
+              -dname "C=US, O=Android, CN=Android Debug"
+          fi
+          before=$(unzip -v "$APK_PATH" | awk '/assets\/index.android.bundle$/ {print $2}')
+          rm -rf apk-swap && mkdir -p apk-swap/assets
+          cp bundles/android/assets/index.android.bundle apk-swap/assets/
+          ( cd apk-swap && zip -q -X -0 -u "$OLDPWD/$APK_PATH" assets/index.android.bundle )
+          "$BUILD_TOOLS_DIR/zipalign" -p -f 4 "$APK_PATH" apk-swap/aligned.apk
+          "$BUILD_TOOLS_DIR/apksigner" sign --ks "$KS" --ks-pass pass:android \
+            --ks-key-alias androiddebugkey --key-pass pass:android apk-swap/aligned.apk
+          mv apk-swap/aligned.apk "$APK_PATH"
+          "$BUILD_TOOLS_DIR/apksigner" verify "$APK_PATH"
+          after=$(unzip -v "$APK_PATH" | awk '/assets\/index.android.bundle$/ {print $2}')
+          if [ "$after" != "Stored" ]; then
+            echo "::error::index.android.bundle is '$after', expected 'Stored' (was '$before'). Hermes bytecode must stay uncompressed."
+            exit 1
+          fi
+          cmp <(unzip -p "$APK_PATH" assets/index.android.bundle) bundles/android/assets/index.android.bundle
+          echo "Swapped JS bundle into $APK_PATH (Stored, signature verified)"
+      - name: "Collect APKs for upload"
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p apk-out/appstore/debug apk-out/androidTest/appstore/debug
+          if [ "$ANDROID_APK_CACHED" = "true" ]; then
+            cp "$APK_PATH" apk-out/appstore/debug/app-appstore-debug.apk
+            cp "$TEST_APK_PATH" apk-out/androidTest/appstore/debug/app-appstore-debug-androidTest.apk
+          else
+            out=native-template/android/app/build/outputs/apk
+            cp "$out/appstore/debug/app-appstore-debug.apk" apk-out/appstore/debug/
+            cp "$out/androidTest/appstore/debug/app-appstore-debug-androidTest.apk" apk-out/androidTest/appstore/debug/
+          fi
+          find apk-out -name '*.apk' -exec ls -l {} +
       - name: "Archive Android app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: android-app
-          path: native-template/android/app/build/outputs/apk/**/*.apk
+          path: apk-out/**/*.apk
+          if-no-files-found: error
   ios-app:
     needs: [ios-bundle, determine-nt-version]
     runs-on: macos-15
