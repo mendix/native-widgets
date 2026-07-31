@@ -153,10 +153,12 @@ run_maestro() {
   return "$status"
 }
 
-# Move a fault's evidence aside BEFORE the retry, which reuses both paths.
+# Move an attempt's evidence aside BEFORE the retry, which reuses both paths and would otherwise
+# delete it: start_recording rm -f's the same REC_FILE and run_maestro rm -rf's the same
+# DEBUG_RUN_DIR, so a flake that passes on retry left no video and no hierarchy to diagnose from.
 preserve_fault_artifacts() {
   local video="${1:-}"
-  local suffix="driver-fault"
+  local suffix="${2:-driver-fault}"
   if [ -n "$video" ] && [ -f "$video" ]; then
     mv -f "$video" "${video%.mp4}-${suffix}.mp4" 2>/dev/null || true
   fi
@@ -318,7 +320,12 @@ run_tests() {
       fi
     else
       echo "❌ Test failed: $yaml_test_file"
+      # Capture the path before stop_recording clears REC_FILE.
+      local failed_video="$REC_FILE"
       stop_recording keep
+      # The retry reuses both paths, so a flake that passes on retry would erase the only
+      # evidence of the failure. Keep this attempt's video and hierarchy under -attempt1.
+      preserve_fault_artifacts "$failed_video" "attempt1"
       failed_tests+=("$yaml_test_file")
     fi
     completed_tests=$((completed_tests + 1))

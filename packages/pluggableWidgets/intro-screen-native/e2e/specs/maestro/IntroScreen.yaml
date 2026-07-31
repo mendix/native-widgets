@@ -17,15 +17,33 @@ appId: "${APP_ID}"
     timeout: 5000
 - assertVisible:
     text: "Changes: 0"
+# Coordinates match Gallery_native_horizontal.yaml, which swipes a horizontal list reliably, and
+# keep the two directions symmetric — which `direction:` alone also does, but not visibly.
+#
+# The wait is the part that matters. A slide change writes the active slide attribute and waits for
+# the runtime to hand the value back, so the JS thread is still busy for a moment after the
+# assertions above pass. Swiping into that window loses the opening touch-move events, so the list
+# lags the finger and can be short of the halfway point when the touch lifts — it then snaps back,
+# with every counter correctly still on the old slide.
+#
+# Duration is deliberately left at the default: a paging list commits on position OR lift-off
+# velocity, so a slower drag is worse, not better — same distance travelled, less velocity to carry
+# it over, and on a slow device the position term is the part already degraded.
+- waitForAnimationToEnd:
+    timeout: 2000
 - swipe:
-    direction: LEFT
+    start: 90%, 10%
+    end: 15%, 10%
 - extendedWaitUntil:
     visible: "Active slide: 3"
     timeout: 5000
 - assertVisible:
     text: "Changes: 1"
+- waitForAnimationToEnd:
+    timeout: 2000
 - swipe:
-    direction: RIGHT
+    start: 15%, 10%
+    end: 90%, 10%
 - extendedWaitUntil:
     visible: "Active slide: 2"
     timeout: 5000
@@ -53,6 +71,11 @@ appId: "${APP_ID}"
     timeout: 5000
 - tapOn:
     text: "NEXT"
+# NEXT is what turns into FINISH on the last slide, so tapping straight through races the
+# re-render: wait for the slide the button belongs to before reaching for it.
+- extendedWaitUntil:
+    visible: "Active slide: 3"
+    timeout: 5000
 - tapOn:
     text: "FINISH"
 - extendedWaitUntil:
