@@ -449,10 +449,11 @@ jobs:
           fi
 
           echo "Using sdkmanager: $SDKMANAGER"
+          echo "Using SDK root: $SDK"
           echo "Installing platforms;android-${ANDROID_COMPILE_SDK}"
 
-          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
-          "$SDKMANAGER" --channel=3 \
+          yes | "$SDKMANAGER" --sdk_root="$SDK" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" --sdk_root="$SDK" --channel=3 \
             "platform-tools" \
             "platforms;android-${ANDROID_COMPILE_SDK}"
 
