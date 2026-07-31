@@ -353,8 +353,8 @@ jobs:
         run: |
           if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
             for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath="Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
-              mv -f "$oldPath" "$newPath"
+              newPath=Native-Mobile-Resources-main/widgets/$(basename $oldPath)
+              mv -f $oldPath $newPath
             done
           fi
       - name: "Register widgets in the test project"
