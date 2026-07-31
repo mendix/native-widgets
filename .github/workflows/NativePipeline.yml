@@ -447,9 +447,21 @@ jobs:
             echo "::error::Could not find sdkmanager under $SDK."
             exit 1
           fi
-          echo "Installing Android SDK platform ${ANDROID_COMPILE_SDK} with $SDKMANAGER"
+          PLATFORM_PACKAGE=$("$SDKMANAGER" --list --channel=3 | awk -v base="platforms;android-${ANDROID_COMPILE_SDK}" '
+            $1 == base { exact = $1 }
+            $1 == base ".0" { base_minor = $1 }
+            END {
+              if (exact != "") print exact
+              else if (base_minor != "") print base_minor
+            }
+          ')
+          if [ -z "$PLATFORM_PACKAGE" ]; then
+            echo "::error::Could not find an Android SDK platform package for compileSdk ${ANDROID_COMPILE_SDK}."
+            exit 1
+          fi
+          echo "Installing $PLATFORM_PACKAGE with $SDKMANAGER"
           yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
-          "$SDKMANAGER" "platforms;android-${ANDROID_COMPILE_SDK}"
+          "$SDKMANAGER" --channel=3 "$PLATFORM_PACKAGE"
 
       - name: "Cache Android NDK"
         id: cache-ndk
