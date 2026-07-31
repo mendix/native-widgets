@@ -69,8 +69,8 @@ on:
           - switch-native
           - toggle-buttons-native
           - video-player-native
-          - web-view-native 
-          
+          - web-view-native
+
   # Trigger on PR
   pull_request:
     branches:
@@ -447,21 +447,21 @@ jobs:
             echo "::error::Could not find sdkmanager under $SDK."
             exit 1
           fi
-          PLATFORM_PACKAGE=$("$SDKMANAGER" --list --channel=3 | awk -v base="platforms;android-${ANDROID_COMPILE_SDK}" '
-            $1 == base { exact = $1 }
-            $1 == base ".0" { base_minor = $1 }
-            END {
-              if (exact != "") print exact
-              else if (base_minor != "") print base_minor
-            }
-          ')
-          if [ -z "$PLATFORM_PACKAGE" ]; then
-            echo "::error::Could not find an Android SDK platform package for compileSdk ${ANDROID_COMPILE_SDK}."
+
+          echo "Using sdkmanager: $SDKMANAGER"
+          echo "Installing platforms;android-${ANDROID_COMPILE_SDK}"
+
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" --channel=3 \
+            "platform-tools" \
+            "platforms;android-${ANDROID_COMPILE_SDK}"
+
+          if [ ! -d "$SDK/platforms/android-${ANDROID_COMPILE_SDK}" ]; then
+            echo "::error::Expected SDK platform directory not found: $SDK/platforms/android-${ANDROID_COMPILE_SDK}"
+            echo "Installed platforms are:"
+            find "$SDK/platforms" -maxdepth 1 -type d | sort || true
             exit 1
           fi
-          echo "Installing $PLATFORM_PACKAGE with $SDKMANAGER"
-          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
-          "$SDKMANAGER" --channel=3 "$PLATFORM_PACKAGE"
 
       - name: "Cache Android NDK"
         id: cache-ndk
@@ -599,7 +599,7 @@ jobs:
           name: android-app
           path: android-app
       - name: "Setup needed tools"
-        id: setup-needed-tools  
+        id: setup-needed-tools
         uses: ./.github/actions/setup-tools
         with:
           mendix_version: ${{ needs.mendix-version.outputs.mendix_version }}
@@ -631,7 +631,7 @@ jobs:
             chmod +x maestro/run_maestro_widget_tests.sh
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}"
-      
+
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
         with:
@@ -656,10 +656,10 @@ jobs:
           sudo pkill -9 -f git || true
           sudo pkill -9 -f xcodebuild || true
           sudo pkill -9 -f node || true
-          
+
           # Wait for processes to be killed
           sleep 5
-          
+
           # Clean the workspace contents while preserving directory structure
           cd /Users/runner/work/native-widgets
           if [ -d "native-widgets" ]; then
@@ -673,7 +673,7 @@ jobs:
             # Remove all other contents
             sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
           fi
-          
+
           # Final wait and process cleanup
           sudo pkill -9 -f git || true
           sleep 3
@@ -718,7 +718,7 @@ jobs:
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
             .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
-  
+
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
       - name: "Run iOS tests"
@@ -727,7 +727,7 @@ jobs:
           chmod +x maestro/run_maestro_widget_tests.sh
           bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}"
-      
+
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
         with:
@@ -797,7 +797,7 @@ jobs:
             chmod +x maestro/run_maestro_jsactions_tests.sh
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_jsactions_tests.sh android
-      
+
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
         with:
@@ -816,10 +816,10 @@ jobs:
           # Kill all git and related processes aggressively
           sudo pkill -9 -f git || true
           sudo pkill -9 -f node || true
-          
+
           # Wait for processes to be killed
           sleep 5
-          
+
           # Clean the workspace contents while preserving directory structure
           cd /Users/runner/work/native-widgets
           if [ -d "native-widgets" ]; then
@@ -833,7 +833,7 @@ jobs:
             # Remove all other contents
             sudo find . -mindepth 1 -not -path "./.git*" -delete 2>/dev/null || true
           fi
-          
+
           # Final cleanup
           sudo pkill -9 -f git || true
           sleep $((RANDOM % 5 + 3))
@@ -877,7 +877,7 @@ jobs:
           command: |
             chmod +x .github/scripts/start-runtime-with-verification.sh
             .github/scripts/start-runtime-with-verification.sh automation.mda ${{ needs.mendix-version.outputs.mendix_version }} "${{ steps.setup-needed-tools.outputs.java-path }}" "${{ github.workspace }}"
-      
+
       - name: "Setup Xcode CLI Tools"
         uses: ./.github/actions/setup-xcode-cli-tools
       - name: "Run iOS tests"
@@ -886,14 +886,21 @@ jobs:
           chmod +x maestro/run_maestro_jsactions_tests.sh
           bash maestro/helpers/prepare_ios.sh
           bash maestro/run_maestro_jsactions_tests.sh ios
-      
+
       - name: Archive test results
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
           test-type: js-actions
   compare-screenshots:
-    needs: [scope, android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
+    needs:
+      [
+        scope,
+        android-widget-tests,
+        ios-widget-tests,
+        android-js-tests,
+        ios-js-tests,
+      ]
     runs-on: ubuntu-latest
     if: always()
     env:
@@ -901,7 +908,7 @@ jobs:
     steps:
       - name: "Check out code"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-  
+
       - name: "Download Android screenshots"
         run: |
           widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
@@ -915,7 +922,7 @@ jobs:
           echo "Downloading android-screenshots-js-actions"
           gh run download ${{ github.run_id }} --name android-screenshots-js-actions --dir images/actual/android/ || true
           ls -l images/actual/android/
-      
+
       - name: "Download iOS screenshots"
         run: |
           widgets=$(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
@@ -932,15 +939,15 @@ jobs:
 
       - name: "Setup Node and dependencies"
         uses: ./.github/actions/setup-node-with-cache
-    
+
       - name: "Compare Android screenshots"
-        continue-on-error: true 
+        continue-on-error: true
         run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js android
 
       - name: "Compare iOS screenshots"
         continue-on-error: true
         run: node ${{ github.workspace }}/maestro/helpers/compare_screenshots.js ios
-  
+
       - name: "Archive diff results"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
