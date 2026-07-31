@@ -8,7 +8,7 @@ on:
   schedule:
     # Run main branch at 10:00 PM (22:00 UTC)
     - cron: '0 22 * * *'
-    # Run version/mx/10 branch at 4:00 AM UTC
+    # Run mx/11.12.x branch at 4:00 AM UTC
     - cron: '0 4 * * *'
 
 jobs:
@@ -25,8 +25,8 @@ jobs:
             echo "branch=main" >> $GITHUB_OUTPUT
             echo "run-name=Nightly Main Branch Pipeline" >> $GITHUB_OUTPUT
           else
-            echo "branch=version/mx/10" >> $GITHUB_OUTPUT
-            echo "run-name=Nightly version/mx/10 Branch Pipeline" >> $GITHUB_OUTPUT
+            echo "branch=mx/11.12.x" >> $GITHUB_OUTPUT
+            echo "run-name=Nightly mx/11.12.x Branch Pipeline" >> $GITHUB_OUTPUT
           fi
 
   # This single job handles dispatching to the correct branch
