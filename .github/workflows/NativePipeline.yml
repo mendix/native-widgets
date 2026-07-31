@@ -366,10 +366,19 @@ jobs:
           repository: mendix/native-template
           ref: ${{ needs.determine-nt-version.outputs.nt_branch }}
           path: native-template
-      - name: "Detect Android NDK version from native-template"
+      - name: "Detect Android SDK versions from native-template"
         shell: bash
         run: |
           set -euo pipefail
+          COMPILE_SDK=$(grep -oE 'compileSdkVersion[[:space:]]*=?[[:space:]]*[0-9]+' native-template/android/build.gradle \
+                | grep -oE '[0-9]+' | head -1 || true)
+          if [ -z "$COMPILE_SDK" ]; then
+            echo "::error::Could not detect compileSdkVersion from native-template/android/build.gradle."
+            exit 1
+          fi
+          echo "Detected Android compile SDK: $COMPILE_SDK"
+          echo "ANDROID_COMPILE_SDK=$COMPILE_SDK" >> "$GITHUB_ENV"
+
           NDK=$(grep -oE 'ndkVersion[[:space:]]*=?[[:space:]]*"[0-9.]+"' native-template/android/build.gradle \
                 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
           if [ -z "$NDK" ]; then
@@ -421,6 +430,26 @@ jobs:
           java-version: 21
           distribution: temurin
           cache: gradle
+
+      - name: "Install Android SDK platform"
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          SDKMANAGER="$SDK/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "${SDKMANAGER:-}" ] || [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(find "$SDK" -type f -name sdkmanager 2>/dev/null | head -1)"
+          fi
+          if [ -z "${SDKMANAGER:-}" ] || [ ! -x "$SDKMANAGER" ]; then
+            echo "::error::Could not find sdkmanager under $SDK."
+            exit 1
+          fi
+          echo "Installing Android SDK platform ${ANDROID_COMPILE_SDK} with $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" "platforms;android-${ANDROID_COMPILE_SDK}"
 
       - name: "Cache Android NDK"
         id: cache-ndk
