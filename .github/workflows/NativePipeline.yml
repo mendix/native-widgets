@@ -245,13 +245,38 @@ jobs:
           path: |
             packages/pluggableWidgets/*/dist
             packages/jsActions/*/dist
-          key: resources-dist-v1-${{ hashFiles('packages/pluggableWidgets/*/src/**', 'packages/jsActions/*/src/**', 'packages/pluggableWidgets/*/package.json', 'packages/jsActions/*/package.json', 'pnpm-lock.yaml') }}
-      - name: "Build resources"
-        # On a full build with an exact cache hit every widget's dist is already current, so
-        # skip the slow rollup/babel rebuild. Otherwise build the scoped widgets + JS actions
-        # in one pnpm invocation (multiple --filter targets run concurrently).
+          key: resources-dist-v2-${{ hashFiles('packages/pluggableWidgets/*/src/**', 'packages/jsActions/*/src/**', 'packages/pluggableWidgets/*/package.json', 'packages/jsActions/*/package.json', 'pnpm-lock.yaml') }}
+      - name: "Validate restored dist cache"
+        # A cache hit is only worth trusting if its mpks are intact. Some earlier run saved a
+        # dist set whose mpks had empty node_modules/ trees, and because the key covers only
+        # src + package.json + the lockfile, every later run restored that same poisoned entry
+        # and skipped the rebuild — so the iOS bundle failed identically run after run and no
+        # amount of re-running fixed it (runs 30686955765, 30688314317, 30688977998).
+        #
+        # Probing here turns that permanent failure into a rebuild: a bad entry is discarded and
+        # the widgets build from source, so the run succeeds on its own. It cannot heal the cache
+        # (entries are immutable — see the save step), so the rebuild repeats until the entry ages
+        # out or the key changes. The v1 -> v2 key bump abandons the already-poisoned entry.
+        id: dist-cache-valid
+        if: ${{ steps.resources-cache.outputs.cache-hit == 'true' }}
+        shell: bash
         run: |
-          if [ "${{ needs.scope.outputs.full_build }}" = "true" ] && [ "${{ steps.resources-cache.outputs.cache-hit }}" = "true" ]; then
+          if bash .github/scripts/check-mpk-vendoring.sh --quiet; then
+            echo "usable=true" >> $GITHUB_OUTPUT
+            echo "Restored dist cache looks intact."
+          else
+            echo "usable=false" >> $GITHUB_OUTPUT
+            echo "::warning::Restored dist cache contains mpks with empty node_modules/ — discarding it and rebuilding from source."
+            rm -rf packages/pluggableWidgets/*/dist packages/jsActions/*/dist
+          fi
+      - name: "Build resources"
+        # On a full build with an exact — and validated — cache hit every widget's dist is
+        # already current, so skip the slow rollup/babel rebuild. Otherwise build the scoped
+        # widgets + JS actions in one pnpm invocation (multiple --filter targets run concurrently).
+        run: |
+          if [ "${{ needs.scope.outputs.full_build }}" = "true" ] && \
+             [ "${{ steps.resources-cache.outputs.cache-hit }}" = "true" ] && \
+             [ "${{ steps.dist-cache-valid.outputs.usable }}" = "true" ]; then
             echo "Full build with cached resources — skipping rebuild."
             exit 0
           fi
@@ -273,6 +298,23 @@ jobs:
           else
             echo "Nothing to build."
           fi
+      - name: "Verify built mpks vendor their native dependencies"
+        # A widget that declares a third-party runtime dependency must SHIP it inside the .mpk
+        # under node_modules/ — metro resolves widget imports from the mpk's own vendored copy,
+        # not from the app's node_modules. An .mpk carrying an EMPTY node_modules/ still installs
+        # and still passes `mx update-widgets`, then kills the iOS/Android bundle much later with
+        # "Unable to resolve module <dep> ... could not be found within the project".
+        #
+        # That is exactly how background-gradient-native failed: a restored dist cache supplied a
+        # BackgroundGradient.mpk built without its react-native-linear-gradient copy, the pipeline
+        # happily installed it, and the only symptom was a metro error four jobs downstream.
+        #
+        # Checked here, next to the build, so a bad artifact never reaches the project job — and
+        # so the failure names the poisoned widget instead of surfacing as a metro error four
+        # jobs downstream. Runs unconditionally: it also covers a freshly built mpk, not just a
+        # restored one, so it stays a backstop even after the cache validation above.
+        shell: bash
+        run: bash .github/scripts/check-mpk-vendoring.sh
       - name: "Unit test"
         # One --filter per workspace, exactly like "Build resources" above. Passing the whole
         # `scope` string as a single filter (--filter="--all --include 'a b'") makes pnpm treat
@@ -299,6 +341,13 @@ jobs:
       - name: "Save built resources (dist) cache"
         # Only after a full build (every widget built), so a partial build never populates the
         # shared cache with an incomplete dist set under a key a later full build could hit.
+        #
+        # Not attempted when the restored entry was discarded as poisoned: GitHub cache entries
+        # are immutable, so re-saving the same key cannot replace a bad entry (the save is just
+        # rejected as already-reserved). The "Validate restored dist cache" step keeps such a run
+        # correct by rebuilding from source, at the cost of that rebuild on every run until the
+        # entry is deleted or the key changes — so if that warning starts appearing under v2,
+        # delete the entry (gh cache delete) or bump the key prefix again.
         if: ${{ needs.scope.outputs.full_build == 'true' && steps.resources-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
