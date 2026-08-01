@@ -27,6 +27,21 @@ to_json_array() {
   fi
 }
 
+# Is $2 already present as a WHOLE word in the space-separated list $1?
+#
+# Must not use [[ $list =~ $widget ]]: that is an unanchored regex match, so a widget whose
+# name is a substring of one already in the list is silently dropped. Two such pairs exist
+# today — image-native ⊂ background-image-native and slider-native ⊂ range-slider-native —
+# and `git diff --name-only` emits sorted paths, so the LONGER name always lands first and
+# the shorter one is the one lost. A PR touching both built and tested only one of them.
+# The name is also interpolated into the regex, where `-` and `.` are metacharacters.
+contains_widget() {
+  case " $1 " in
+    *" $2 "*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 if [ "$event_name" == "pull_request" ]; then
   # Diff against the MERGE-BASE with the PR base branch so every commit in the PR is
   # considered, not just the latest. `before_commit` is the PR base SHA
@@ -54,7 +69,7 @@ if [ "$event_name" == "pull_request" ]; then
     if [[ $file == packages/pluggableWidgets/* ]]; then
       widget=$(echo $file | cut -d'/' -f3)
       subdir=$(echo $file | cut -d'/' -f4)
-      if [[ ! $selected_workspaces =~ $widget ]]; then
+      if ! contains_widget "$selected_workspaces" "$widget"; then
         selected_workspaces="$selected_workspaces $widget"
       fi
       # A change confined to the widget's e2e/ folder (Maestro flows + screenshots) changes
@@ -62,7 +77,7 @@ if [ "$event_name" == "pull_request" ]; then
       # still goes into selected_workspaces above (it gets TESTED), but it's kept out of the
       # BUILD scope; its .mpk comes from the test project's committed baseline, exactly like
       # every other not-rebuilt widget in a partial run.
-      if [[ "$subdir" != "e2e" ]] && [[ ! $build_workspaces =~ $widget ]]; then
+      if [[ "$subdir" != "e2e" ]] && ! contains_widget "$build_workspaces" "$widget"; then
         build_workspaces="$build_workspaces $widget"
       fi
     elif [[ $file == packages/jsActions/mobile-resources-native/* ]] || [[ $file == packages/jsActions/nanoflow-actions-native/* ]]; then
@@ -116,11 +131,15 @@ if [ "$event_name" == "pull_request" ]; then
   fi
 else
   if [ -n "$input_workspace" ] && [ "$input_workspace" != "*-native" ] && [ "$input_workspace" != "js-actions" ]; then
-    # Specific widget(s) selected
-    selected_workspaces=$(echo "$input_workspace" | sed 's/,/ /g')
+    # Specific widget(s) selected. The dispatch dropdown is single-select, but a comma-separated
+    # list is accepted (and already split for `scope` below) — so build the JSON arrays from the
+    # SPLIT list. "[\"$input_workspace\"]" would emit ["a,b"]: one array entry that matches no
+    # workspace, so nothing builds and the test matrix spawns a single shard for a widget that
+    # does not exist.
+    selected_workspaces=$(echo "$input_workspace" | sed 's/,/ /g' | xargs)
     echo "scope=--all --include '${selected_workspaces}'" >> $GITHUB_OUTPUT
-    echo "widgets=[\"$input_workspace\"]" >> $GITHUB_OUTPUT
-    echo "widgets_to_test=[\"$input_workspace\"]" >> $GITHUB_OUTPUT
+    echo "widgets=$(to_json_array "$selected_workspaces")" >> $GITHUB_OUTPUT
+    echo "widgets_to_test=$(to_json_array "$selected_workspaces")" >> $GITHUB_OUTPUT
     echo "js_actions_changed=false" >> $GITHUB_OUTPUT
     echo "full_build=false" >> $GITHUB_OUTPUT
   elif [ "$input_workspace" == "js-actions" ]; then
