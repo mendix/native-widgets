@@ -438,27 +438,50 @@ jobs:
       # its depth in the artifact. Each guard also checks its OWN source dir — nanoflow-actions
       # previously tested mobile-resources-native, so it moved either both or neither.
       #
-      # `cp -R <src>/.` rather than `mv <src>/*`: the destination in the test project already
-      # ships a populated node_modules/, and `mv` refuses to rename a directory over a non-empty
-      # one ("Directory not empty") instead of merging into it. cp recurses and merges, so the
-      # built files win per-file while packages the build treats as external (and therefore does
-      # not collect into dist/node_modules) survive in the project. The trailing /. copies the
-      # directory's contents including dotfiles, which <src>/* would miss.
+      # REPLACE the actions dir, don't merge into it. Three constraints force this:
+      #
+      #  1. `mv -f <src>/*` fails outright: the destination already ships a populated
+      #     node_modules/, and mv refuses to rename a directory over a non-empty one
+      #     ("Directory not empty") rather than merging.
+      #  2. `cp -Rf <src>/.` merges, so it succeeds — but it LEAVES BEHIND whatever the fresh
+      #     build no longer produces. mobile-resources 12.2.0 swapped @notifee/react-native for
+      #     react-native-notify-kit (a rename-fork: same internals, same "NotifeeSpec"
+      #     codegenConfig). Merging leaves BOTH trees under node_modules/, and the orphaned
+      #     @notifee copy is what broke `Bundling native app for iOS`.
+      #  3. A clean replace is safe because dist/ is a complete superset of what the project
+      #     needs: verified against the pinned ref that every action .js and every collected
+      #     package in the project also exists in a freshly built dist — @notifee being the sole
+      #     exception, and no action imports it any more.
+      #
+      # The rollup build already clears dist/ (`prebuild: rimraf dist`), so dist/ is exactly the
+      # intended contents of the actions dir. Externals like react-native-device-info and big.js
+      # are deliberately NOT in dist/ — they resolve from the app's own node_modules via
+      # configs/e2e/native_dependencies.json, not from here.
       - name: "Move mobile-resources"
         shell: bash
         run: |
+          set -euo pipefail
           src=$(find resources -type d -path '*/mobile-resources-native/dist' | head -1)
           if [ -n "$src" ]; then
-            echo "installing mobile-resources from $src"
-            cp -Rf "$src"/. Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
+            dest=Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions
+            echo "installing mobile-resources from $src (replacing $dest)"
+            rm -rf "$dest"
+            mkdir -p "$dest"
+            cp -R "$src"/. "$dest"/
+          else
+            echo "No mobile-resources dist in the artifact — leaving the project's actions as-is."
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
+          set -euo pipefail
           src=$(find resources -type d -path '*/nanoflow-actions-native/dist' | head -1)
           if [ -n "$src" ]; then
-            echo "installing nanoflow-actions from $src"
-            cp -Rf "$src"/. Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
+            dest=Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions
+            echo "installing nanoflow-actions from $src (replacing $dest)"
+            rm -rf "$dest"
+            mkdir -p "$dest"
+            cp -R "$src"/. "$dest"/
           fi
       - name: "Build portable app package (self-contained runtime)"
         # Run this BEFORE the native-packager deploy: portable-app-package re-prepares and
@@ -480,6 +503,32 @@ jobs:
           echo "=== native bundle output ==="
           ls -R Native-Mobile-Resources-main/deployment/native/bundle 2>/dev/null \
             || find Native-Mobile-Resources-main -name 'index.*.bundle' -o -name 'bundle' -type d 2>/dev/null
+      - name: "Dump native packager logs"
+        # mxbuild reports only "Packaging iOS failed, check <path> for more info" and exits — the
+        # metro output holding the ACTUAL resolution error stays inside the container and is lost
+        # when the job ends. Always print it: without this, an unresolved-module failure is
+        # indistinguishable from any other bundling error.
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          shopt -s nullglob
+          logs=(Native-Mobile-Resources-main/deployment/log/native_packager_*.txt)
+          if [ ${#logs[@]} -eq 0 ]; then
+            echo "No native packager logs found."
+            exit 0
+          fi
+          for f in "${logs[@]}"; do
+            echo "::group::$(basename "$f")"
+            cat "$f"
+            echo "::endgroup::"
+          done
+      - name: "Upload native packager logs"
+        if: ${{ always() }}
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
+        with:
+          name: native-packager-logs
+          path: Native-Mobile-Resources-main/deployment/log
+          if-no-files-found: ignore
       - name: "Upload Android bundle"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
