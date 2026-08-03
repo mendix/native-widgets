@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Fixed bottomsheet issue to close when the trigger attribute changes.
+
 ## [5.3.1] - 2026-7-3
 
 ### Fixed
