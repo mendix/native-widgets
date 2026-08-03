@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useCallback, useRef, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { Modal, Pressable, useWindowDimensions } from "react-native";
 import BottomSheet, {
     BottomSheetBackdrop,
@@ -32,6 +32,12 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
     const close = useCallback(() => {
         bottomSheetRef.current?.close();
     }, []);
+
+    useEffect(() => {
+        if (!externalOpen && mounted && didOpenRef.current) {
+            close();
+        }
+    }, [externalOpen, mounted, close]);
 
     const handleModalShow = useCallback(() => {
         setReady(true);
