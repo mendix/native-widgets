@@ -274,7 +274,28 @@ jobs:
             echo "Nothing to build."
           fi
       - name: "Unit test"
-        run: pnpm -r --filter="${{ needs.scope.outputs.scope }}" run test
+        # One --filter per workspace, exactly like "Build resources" above. Passing the whole
+        # `scope` string as a single filter (--filter="--all --include 'a b'") makes pnpm treat
+        # that entire string as ONE workspace pattern: it matches nothing, prints "No projects
+        # matched the filters" and exits 0 — so the unit tests silently never ran.
+        #
+        # Tests run for widgets_to_test, not `widgets`: a widget whose only change is under e2e/
+        # is deliberately not rebuilt but should still have its unit tests run.
+        run: |
+          filters=()
+          if [ "${{ needs.scope.outputs.js_actions_changed }}" = "true" ]; then
+            filters+=(--filter=mobile-resources-native --filter=nanoflow-actions-native)
+          fi
+          while read -r w; do
+            [ -n "$w" ] && filters+=(--filter="$w")
+          done < <(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
+
+          if [ ${#filters[@]} -eq 0 ]; then
+            echo "No workspaces in scope — nothing to unit test."
+            exit 0
+          fi
+          echo "Unit testing: ${filters[*]}"
+          pnpm -r "${filters[@]}" run test
       - name: "Save built resources (dist) cache"
         # Only after a full build (every widget built), so a partial build never populates the
         # shared cache with an incomplete dist set under a key a later full build could hit.
@@ -350,12 +371,61 @@ jobs:
       - name: "Overlay built widget mpks"
         if: ${{ github.event.inputs.workspace != 'js-actions' }}
         shell: bash
+        # Located by `find` rather than a fixed-depth glob: upload-artifact strips the least-common
+        # ancestor of the paths it is given, so the depth here follows whatever else is in the
+        # artifact. Adding resources-manifest.txt at the repo root moved that ancestor from
+        # packages/ to the root, every path gained a packages/ prefix, and the old
+        # 'resources/pluggableWidgets/**' glob silently stopped matching — so no built mpk was
+        # installed and the e2e suite tested the baseline project's widgets instead.
+        #
+        # And it is fatal rather than silent: a widget that was built but not installed makes the
+        # e2e run test something other than the commit under test, which is worse than not running.
         run: |
-          if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
-            for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath="Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
-              mv -f "$oldPath" "$newPath"
-            done
+          set -uo pipefail
+
+          # A widget's dist/ can hold MORE THAN ONE version dir (e.g. image-native ships
+          # dist/3.1.1 and dist/3.1.2 after a version bump, since the widget build does not clear
+          # dist/ the way the jsActions rollup does). Every version emits an identically-named
+          # .mpk, so installing them in `find` order let an arbitrary — in practice the OLDEST —
+          # build win and the e2e suite silently tested stale widget code.
+          #
+          # Deduplicate on the mpk basename, keeping the highest version dir per widget: key on
+          # the filename, sort by the parent dir with -V (version sort, so 3.1.10 > 3.1.2), and
+          # keep the last of each group.
+          find resources -type f -path '*/dist/*/*.mpk' \
+            | awk -F/ '{ print $NF "\t" $(NF-1) "\t" $0 }' \
+            | sort -t"$(printf '\t')" -k1,1 -k2,2V \
+            | awk -F'\t' '{ best[$1] = $3 } END { for (n in best) print best[n] }' \
+            | sort > /tmp/mpks.txt
+
+          found=0
+          while IFS= read -r oldPath; do
+            [ -n "$oldPath" ] || continue
+            found=$((found + 1))
+            echo "installing $(basename "$oldPath") (from ${oldPath#resources/})"
+            mv -f "$oldPath" "Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
+          done < /tmp/mpks.txt
+
+          # The scope this job was given, read from the manifest rather than needs.scope: `project`
+          # does not depend on `scope`, so its outputs are not visible here. Compared as a string
+          # rather than parsed as JSON: the manifest line is written by echoing an interpolated
+          # expression, and the shell strips the inner quotes on the way in, so it reads
+          # [a, b] rather than ["a","b"].
+          built=$(sed -n 's/^built widgets: //p' resources/resources-manifest.txt)
+          echo "mpks installed: ${found}; widgets in scope: ${built:-unknown}"
+
+          # Count the widgets the resources job says it built, and require an .mpk for EVERY one.
+          # Checking only `found -eq 0` passed a multi-widget run in which just one widget's mpk
+          # made it through — the rest silently tested the baseline project's stale build, which
+          # is the same class of failure the zero-check exists to prevent.
+          expected=$(printf '%s' "$built" | tr -d '[]' | tr ',' '\n' | sed 's/^ *//; s/ *$//' | grep -c . || true)
+          if [ "${expected:-0}" -gt 0 ] && [ "$found" -lt "$expected" ]; then
+            echo "::error::Expected ${expected} built widget mpk(s) (${built}) but installed ${found} — the test project would run stale widgets."
+            echo "--- mpks found under resources/ ---"
+            cat /tmp/mpks.txt
+            echo "--- all files under resources/ ---"
+            find resources -type f | head -50
+            exit 1
           fi
       - name: "Register widgets in the test project"
         # Run unconditionally: update-widgets must sync the project's widget definitions with the
@@ -364,17 +434,31 @@ jobs:
         # then skip it and leave stale Atlas widget defs for the portable-app build.
         shell: bash
         run: mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      # Same layout-independence as the mpk overlay above: locate the dist dir rather than assume
+      # its depth in the artifact. Each guard also checks its OWN source dir — nanoflow-actions
+      # previously tested mobile-resources-native, so it moved either both or neither.
+      #
+      # `cp -R <src>/.` rather than `mv <src>/*`: the destination in the test project already
+      # ships a populated node_modules/, and `mv` refuses to rename a directory over a non-empty
+      # one ("Directory not empty") instead of merging into it. cp recurses and merges, so the
+      # built files win per-file while packages the build treats as external (and therefore does
+      # not collect into dist/node_modules) survive in the project. The trailing /. copies the
+      # directory's contents including dotfiles, which <src>/* would miss.
       - name: "Move mobile-resources"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
+          src=$(find resources -type d -path '*/mobile-resources-native/dist' | head -1)
+          if [ -n "$src" ]; then
+            echo "installing mobile-resources from $src"
+            cp -Rf "$src"/. Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
+          src=$(find resources -type d -path '*/nanoflow-actions-native/dist' | head -1)
+          if [ -n "$src" ]; then
+            echo "installing nanoflow-actions from $src"
+            cp -Rf "$src"/. Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Build portable app package (self-contained runtime)"
         # Run this BEFORE the native-packager deploy: portable-app-package re-prepares and
