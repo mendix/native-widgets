@@ -33,9 +33,33 @@ export async function GetCurrentLocation(
 ): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
 
+    const isReactNative = navigator && navigator.product === "ReactNative";
+    const isWeb = navigator && navigator.geolocation;
+
+    if (!isReactNative && !isWeb) {
+        return Promise.reject(new Error("Geolocation module could not be found"));
+    }
+
     const options = buildLocationOptions(timeout, maximumAge, highAccuracy);
     try {
-        const position = await getCurrentPosition(options);
+        let position: GeolocationResponse;
+
+        if (isReactNative) {
+            position = await getCurrentPosition(options);
+        } else {
+            position = await new Promise<GeolocationResponse>((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(
+                    pos => resolve(pos as unknown as GeolocationResponse),
+                    err => reject(err),
+                    {
+                        timeout: options.timeout ?? undefined,
+                        maximumAge: options.maximumAge ?? undefined,
+                        enableHighAccuracy: highAccuracy ?? false
+                    }
+                );
+            });
+        }
+
         return new Promise((resolve, reject) => {
             mx.data.create({
                 entity: "NanoflowCommons.Geolocation",
