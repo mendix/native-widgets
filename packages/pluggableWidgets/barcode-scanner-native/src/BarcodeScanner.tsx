@@ -3,7 +3,7 @@ import { ValueStatus } from "mendix";
 import { ReactElement, useCallback, useMemo, useRef, useState } from "react";
 import { View, LayoutChangeEvent, Platform } from "react-native";
 import { Camera, useCodeScanner, Code, useCameraDevice, CodeScannerFrame } from "react-native-vision-camera";
-import BarcodeMask from "@meksiabdou/react-native-barcode-mask";
+import BarcodeMask from "./components/BarcodeMask";
 
 import { BarcodeScannerProps } from "../typings/BarcodeScannerProps";
 import { BarcodeScannerStyle, defaultBarcodeScannerStyle } from "./ui/styles";
