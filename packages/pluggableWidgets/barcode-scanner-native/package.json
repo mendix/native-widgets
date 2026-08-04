@@ -19,9 +19,9 @@
     "version": "pnpm release"
   },
   "dependencies": {
-    "@meksiabdou/react-native-barcode-mask": "^2.0.3",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
+    "react-native-svg": "15.12.1",
     "react-native-vision-camera": "4.7.3"
   },
   "devDependencies": {

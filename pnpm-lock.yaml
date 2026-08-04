@@ -352,15 +352,15 @@ importers:
 
   packages/pluggableWidgets/barcode-scanner-native:
     dependencies:
-      '@meksiabdou/react-native-barcode-mask':
-        specifier: ^2.0.3
-        version: 2.0.3(react-native-reanimated@3.17.5(@babel/core@7.29.7)(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
+      react-native-svg:
+        specifier: 15.12.1
+        version: 15.12.1(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       react-native-vision-camera:
         specifier: 4.7.3
         version: 4.7.3(react-native-reanimated@3.17.5(@babel/core@7.29.7)(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -2000,13 +2000,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-
-  '@meksiabdou/react-native-barcode-mask@2.0.3':
-    resolution: {integrity: sha512-XOv2mXDHujbQ5SzoPNmks917EeqeWl8uJGx62fAcqF18Q54spTbUNeya5Xn05KaGEYffBp/wtuNpkI/fmpbLvA==}
-    peerDependencies:
-      react: 19.0.0
-      react-native: 0.78.2
-      react-native-reanimated: '*'
 
   '@mendix/pluggable-widgets-tools@10.21.1':
     resolution: {integrity: sha512-azvqDeyiUvjBuSElmHBbvzI5rngAfpfczF2/HHtn/gzMgBtJFeFUoGaqtZ7Q7EYDmoLnGSLY7XpTRdN6oht5Ug==}
@@ -9116,12 +9109,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  '@meksiabdou/react-native-barcode-mask@2.0.3(react-native-reanimated@3.17.5(@babel/core@7.29.7)(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
-    dependencies:
-      react: 19.0.0
-      react-native: 0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0)
-      react-native-reanimated: 3.17.5(@babel/core@7.29.7)(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
 
   '@mendix/pluggable-widgets-tools@10.21.1(patch_hash=0795779d2dc9c5669a24b40e7f84d4294a99840d70ad6d6ac2afd48678733476)(@jest/transform@29.7.0)(@jest/types@30.4.1)(@types/babel__core@7.20.5)(@types/node@20.19.43)(encoding@0.1.13)(jest-util@30.4.1)(picomatch@4.0.5)(react-dom@19.0.0(react@19.0.0))(react-native@0.78.2(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)(tslib@2.8.1)':
     dependencies:
