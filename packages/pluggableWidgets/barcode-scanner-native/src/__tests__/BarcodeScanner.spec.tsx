@@ -15,7 +15,7 @@ jest.mock("react-native-vision-camera", () => ({
     }
 }));
 
-jest.mock("react-native-barcode-mask", () => "BarcodeMask");
+jest.mock("@meksiabdou/react-native-barcode-mask", () => "BarcodeMask");
 
 describe("BarcodeScanner", () => {
     let defaultProps: Props;
