@@ -138,6 +138,7 @@ export function BarcodeScanner(props: Props): ReactElement {
 
     const styles = useMemo(() => flattenStyles(defaultBarcodeScannerStyle, props.style), [props.style]);
 
+    // Ref to track the lock state
     const isLockedRef = useRef(false);
 
     const [cameraViewDimensions, setCameraViewDimensions] = useState<{ width: number; height: number } | null>(null);
@@ -167,11 +168,13 @@ export function BarcodeScanner(props: Props): ReactElement {
 
             const { width: viewWidth, height: viewHeight } = cameraViewDimensions;
 
+            // Barcode mask coordinates in view space
             const maskX = (viewWidth - maskWidth) / 2;
             const maskY = (viewHeight - maskHeight) / 2;
             const maskCenterX = maskX + maskWidth / 2;
             const maskCenterY = maskY + maskHeight / 2;
 
+            // Transform Qr barcode coordinates from camera sensor space to view space
             const { codeX, codeY, codeWidth, codeHeight } = transformCodeCoordinates(
                 code.frame,
                 scanFrame,
@@ -214,6 +217,7 @@ export function BarcodeScanner(props: Props): ReactElement {
 
     const onCodeScanned = useCallback(
         (codes: Code[], frame: CodeScannerFrame) => {
+            // Block if still in cooldown
             if (isLockedRef.current) {
                 return;
             }
@@ -250,6 +254,7 @@ export function BarcodeScanner(props: Props): ReactElement {
 
             executeAction(props.onDetect);
 
+            // Lock further scans for 2 seconds
             isLockedRef.current = true;
             setTimeout(() => {
                 isLockedRef.current = false;
