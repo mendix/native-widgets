@@ -49,19 +49,7 @@ export async function GetCurrentLocation(
         } else {
             position = await new Promise<GeolocationResponse>((resolve, reject) => {
                 navigator.geolocation.getCurrentPosition(
-                    pos =>
-                        resolve({
-                            coords: {
-                                latitude: pos.coords.latitude,
-                                longitude: pos.coords.longitude,
-                                altitude: pos.coords.altitude ?? null,
-                                accuracy: pos.coords.accuracy,
-                                altitudeAccuracy: pos.coords.altitudeAccuracy ?? null,
-                                heading: pos.coords.heading ?? null,
-                                speed: pos.coords.speed ?? null
-                            },
-                            timestamp: pos.timestamp
-                        }),
+                    pos => resolve(normalizeWebPosition(pos)),
                     err => reject(err),
                     {
                         timeout: options.timeout ?? undefined,
@@ -82,8 +70,8 @@ export async function GetCurrentLocation(
                     reject(new Error("Could not create 'NanoflowCommons.Geolocation' object to store location"))
             });
         });
-    } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
+    } catch (error: any) {
+        const message = error instanceof Error ? error.message : error?.message ?? String(error);
         return Promise.reject(new Error(`Could not get current location: ${message}`));
     }
 
@@ -112,6 +100,22 @@ export async function GetCurrentLocation(
             accuracy: highAccuracy ? { android: "high", ios: "best" } : { android: "balanced", ios: "hundredMeters" }
         };
     }
+
+    function normalizeWebPosition(pos: GeolocationPosition): GeolocationResponse {
+        return {
+            coords: {
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                altitude: pos.coords.altitude ?? null,
+                accuracy: pos.coords.accuracy,
+                altitudeAccuracy: pos.coords.altitudeAccuracy ?? null,
+                heading: pos.coords.heading ?? null,
+                speed: pos.coords.speed ?? null
+            },
+            timestamp: pos.timestamp
+        };
+    }
+
     function mapPositionToMxObject(mxObject: mendix.lib.MxObject, pos: GeolocationResponse): mendix.lib.MxObject {
         mxObject.set("Timestamp", new Date(pos.timestamp));
         mxObject.set("Latitude", new Big(pos.coords.latitude.toFixed(8)));
