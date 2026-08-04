@@ -126,7 +126,6 @@ async function createNativeMobileResourcesModule(): Promise<ArtifactResult> {
     log(`Native widget folders found: ${nativeWidgetFolders.length}`);
     const moduleInfo = {
         ...(await getPackageInfo(moduleFolder)),
-        version: inputs.version,
         moduleNameInModeler: "NativeMobileResources",
         moduleFolderNameInModeler: "nativemobileresources"
     };
@@ -140,7 +139,13 @@ async function createNativeMobileResourcesModule(): Promise<ArtifactResult> {
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
     log(`MPK created at: ${mpkOutput}`);
     log("Exporting module with widgets into MPK...");
-    await exportModuleWithWidgets(moduleInfo.moduleNameInModeler, mpkOutput, nativeWidgetFolders, ossFiles);
+    await exportModuleWithWidgets(
+        moduleInfo.moduleNameInModeler,
+        mpkOutput,
+        nativeWidgetFolders,
+        ossFiles,
+        inputs.version
+    );
     const versionedMpkOutput = await appendVersionToMpkFilename(mpkOutput);
     return {
         artifactPath: versionedMpkOutput,
@@ -158,7 +163,6 @@ async function createNanoflowCommonsModule(): Promise<ArtifactResult> {
     log(`Temp folder: ${tmpFolder}`);
     const moduleInfo = {
         ...(await getPackageInfo(moduleFolder)),
-        version: inputs.version,
         moduleNameInModeler: "NanoflowCommons",
         moduleFolderNameInModeler: "nanoflowcommons"
     };
@@ -174,7 +178,7 @@ async function createNanoflowCommonsModule(): Promise<ArtifactResult> {
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
     log(`MPK created at: ${mpkOutput}`);
     log("Copying OSS files into MPK...");
-    await copyFilesToMpk(ossFiles, mpkOutput, moduleInfo.moduleNameInModeler);
+    await copyFilesToMpk(ossFiles, mpkOutput, moduleInfo.moduleNameInModeler, inputs.version);
     const versionedMpkOutput = await appendVersionToMpkFilename(mpkOutput);
     return {
         artifactPath: versionedMpkOutput,

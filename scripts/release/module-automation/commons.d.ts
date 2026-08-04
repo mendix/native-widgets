@@ -12,9 +12,12 @@ export function cloneRepo(githubUrl: string, localFolder: string, branchName: st
 
 export function createMPK(tmpFolder: string, moduleInfo: any, excludeFilesRegExp: RegExp): Promise<string>;
 
+export function setVersionInMpkManifest(projectPath: string, moduleName: string, version: string): Promise<void>;
+
 export function exportModuleWithWidgets(
     moduleNameInModeler: string,
     mpkOutput: string,
     nativeWidgetFolders: string[],
-    ossFiles?: Array<{ src: string; dest: string }>
+    ossFiles: Array<{ src: string; dest: string }> | undefined,
+    version: string
 ): Promise<void>;

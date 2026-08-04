@@ -2,6 +2,7 @@ import { access, copyFile, rename, rm } from "fs/promises";
 import { basename, join } from "path";
 import { globSync } from "glob";
 import { exec } from "child_process";
+import { setVersionInMpkManifest } from "./commons";
 
 type OssReadMeValidationCriteria = {
     package: string;
@@ -33,7 +34,12 @@ export async function getOssFiles(
 
 type FilePathPair = { src: string; dest: string };
 
-export async function copyFilesToMpk(files: FilePathPair[], mpkOutput: string, moduleName: string): Promise<void> {
+export async function copyFilesToMpk(
+    files: FilePathPair[],
+    mpkOutput: string,
+    moduleName: string,
+    version: string
+): Promise<void> {
     const projectPath = mpkOutput.replace(".mpk", "");
     // Unzip the mpk
     await unzip(mpkOutput, projectPath);
@@ -42,6 +48,8 @@ export async function copyFilesToMpk(files: FilePathPair[], mpkOutput: string, m
     for await (const file of files) {
         await copyFile(file.src, join(projectPath, file.dest));
     }
+    // Set the module version in the manifest
+    await setVersionInMpkManifest(projectPath, moduleName, version);
     // Re-zip and rename
     await zip(projectPath, moduleName);
     await rename(`${projectPath}.zip`, mpkOutput);

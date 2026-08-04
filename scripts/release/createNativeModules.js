@@ -67,7 +67,13 @@ async function createNativeMobileResourcesModule() {
     await commitAndCreatePullRequest(moduleInfo);
     await updateNativeComponentsTestProject(moduleInfo, tmpFolder, nativeWidgetFolders);
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
-    await exportModuleWithWidgets(moduleInfo.moduleNameInModeler, mpkOutput, nativeWidgetFolders, ossFiles);
+    await exportModuleWithWidgets(
+        moduleInfo.moduleNameInModeler,
+        mpkOutput,
+        nativeWidgetFolders,
+        ossFiles,
+        moduleInfo.version
+    );
     await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
     if (process.env.CI !== "true") {
         try {
@@ -99,7 +105,7 @@ async function createNanoflowCommonsModule() {
     await commitAndCreatePullRequest(moduleInfo);
     await updateNativeComponentsTestProject(moduleInfo, tmpFolder);
     const mpkOutput = await createMPK(tmpFolder, moduleInfo, regex.excludeFiles);
-    await copyFilesToMpk(ossFiles, mpkOutput, moduleInfo.moduleNameInModeler);
+    await copyFilesToMpk(ossFiles, mpkOutput, moduleInfo.moduleNameInModeler, moduleInfo.version);
     await createGithubRelease(moduleInfo, moduleChangelogs, mpkOutput);
     if (process.env.CI !== "true") {
         try {
