@@ -66,8 +66,45 @@ async function getPackageInfo(path) {
     }
 }
 
+// Set the module version in the .mpr, so the packaged mpk carries it.
+// https://docs.mendix.com/refguide/mx-command-line-tool/module/
+async function setModuleVersionInDocker(sourceDir, projectFile, moduleName, mendixVersion, moduleVersion) {
+    console.log(`Setting version of module ${moduleName} to ${moduleVersion}..`);
+    let reportedVersion;
+    try {
+        // No `-t` here: with a tty docker merges stderr into stdout, and the `mx` wrapper traces the command it runs
+        // (`bash -x`), which would put ${moduleVersion} in the output and make the verification below always pass.
+        reportedVersion = await execShellCommand(
+            `docker run -v ${sourceDir}:/source --rm mxbuild:${mendixVersion} ` +
+                `bash -c "mx set-module-version /source/${projectFile} ${moduleName} ${moduleVersion} && ` +
+                `mx show-module-version /source/${projectFile} ${moduleName}"`
+        );
+    } catch (error) {
+        throw new Error(
+            `Failed to set version ${moduleVersion} on module ${moduleName} using the mx CLI of Mendix ${mendixVersion}. ` +
+                `mx set-module-version exits non-zero when the module has no version of its own, and it is not available ` +
+                `before Mendix 10. Refusing to build an mpk with an unknown module version. Original error: ${error.message}`
+        );
+    }
+    // Match on exact version boundaries, so setting 1.2.3 is not "verified" by a reported 11.2.34.
+    const reportedVersions = reportedVersion.match(/\d+\.\d+\.\d+/g) ?? [];
+    if (!reportedVersions.includes(moduleVersion)) {
+        throw new Error(
+            `Failed to verify the version of module ${moduleName}: expected ${moduleVersion}, but mx show-module-version ` +
+                `reported "${reportedVersion.trim()}". Refusing to build an mpk with an unknown module version.`
+        );
+    }
+    console.log(`Verified: module ${moduleName} is now at version ${moduleVersion}.`);
+}
+
 // Create reusable mxbuild image
-async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, excludeFilesRegExp) {
+async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, excludeFilesRegExp, moduleVersion) {
+    if (!/^\d+\.\d+\.\d+$/.test(moduleVersion ?? "")) {
+        throw new Error(
+            `Cannot create the mpk for module ${moduleName}: expected a SemVer module version, got "${moduleVersion}".`
+        );
+    }
+
     const existingImages = (await execShellCommand(`docker image ls -q mxbuild:${mendixVersion}`)).toString().trim();
     if (!existingImages) {
         console.log(`Creating new mxbuild docker image...`);
@@ -80,13 +117,14 @@ async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, exc
 
     // Build testProject via mxbuild
     const projectFile = basename((await getFiles(sourceDir, [`.mpr`]))[0]);
+    await setModuleVersionInDocker(sourceDir, projectFile, moduleName, mendixVersion, moduleVersion);
     await execShellCommand(
         `docker run -t -v ${sourceDir}:/source ` +
             `--rm mxbuild:${mendixVersion} bash -c "mx update-widgets --loose-version-check /source/${projectFile} && dotnet /tmp/mxbuild/modeler/mx.dll create-module-package ${
                 excludeFilesRegExp ? `--exclude-files='${excludeFilesRegExp}'` : ""
             } /source/${projectFile} ${moduleName}"`
     );
-    console.log(`Module ${moduleName} created successfully.`);
+    console.log(`Module ${moduleName} version ${moduleVersion} created successfully.`);
 }
 
 async function bumpVersionInPackageJson(moduleFolder, moduleInfo) {
@@ -223,7 +261,8 @@ async function createMPK(tmpFolder, moduleInfo, excludeFilesRegExp) {
         tmpFolder,
         moduleInfo.moduleNameInModeler,
         moduleInfo.minimumMXVersion,
-        excludeFilesRegExp
+        excludeFilesRegExp,
+        moduleInfo.version
     );
     return (await getFiles(tmpFolder, [`.mpk`]))[0];
 }
