@@ -7,13 +7,7 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
 import { Platform } from "react-native";
-import {
-    watchPosition,
-    unwatch,
-    LocationError,
-    GeolocationResponse,
-    LocationRequestOptions
-} from "react-native-nitro-geolocation";
+import { watchPosition, unwatch, GeolocationResponse, LocationRequestOptions } from "react-native-nitro-geolocation";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -43,16 +37,47 @@ export async function GetCurrentLocationMinimumAccuracy(
 ): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
 
+    const isReactNative = navigator && navigator.product === "ReactNative";
+    const isWeb = navigator && navigator.geolocation;
+
+    if (!isReactNative && !isWeb) {
+        return Promise.reject(new Error("Geolocation module could not be found"));
+    }
+
     return new Promise((resolve, reject) => {
         const options = buildLocationOptions(timeout, maximumAge, highAccuracy);
         let lastAccruedPosition: GeolocationResponse | undefined;
 
         const timeoutMs = timeout ? timeout.toNumber() : 30000;
         const timeoutId = setTimeout(onTimeout, timeoutMs);
-        const token = watchPosition(onSuccess, onError, options);
+
+        let clearWatch: () => void;
+
+        if (isReactNative) {
+            const token = watchPosition(onSuccess, onError, options);
+            clearWatch = () => unwatch(token);
+        } else {
+            // Workaround: browsers may ignore maximumAge on watchPosition unless getCurrentPosition is called first.
+            // https://stackoverflow.com/questions/3397585/navigator-geolocation-getcurrentposition-sometimes-works-sometimes-doesnt
+            navigator.geolocation.getCurrentPosition(
+                () => {},
+                () => {},
+                {}
+            );
+            const watchId = navigator.geolocation.watchPosition(
+                pos => onSuccess(normalizeWebPosition(pos)),
+                err => onError({ code: err.code, message: err.message }),
+                {
+                    timeout: options.timeout ?? undefined,
+                    maximumAge: options.maximumAge ?? undefined,
+                    enableHighAccuracy: highAccuracy ?? false
+                }
+            );
+            clearWatch = () => navigator.geolocation.clearWatch(watchId);
+        }
 
         function onTimeout(): void {
-            unwatch(token);
+            clearWatch();
 
             if (lastAccruedPosition) {
                 createGeolocationObject(lastAccruedPosition);
@@ -64,7 +89,7 @@ export async function GetCurrentLocationMinimumAccuracy(
         function onSuccess(position: GeolocationResponse): void {
             if (!minimumAccuracy || Number(minimumAccuracy) >= position.coords.accuracy) {
                 clearTimeout(timeoutId);
-                unwatch(token);
+                clearWatch();
                 createGeolocationObject(position);
             } else {
                 if (!lastAccruedPosition || position.coords.accuracy < lastAccruedPosition.coords.accuracy) {
@@ -73,9 +98,9 @@ export async function GetCurrentLocationMinimumAccuracy(
             }
         }
 
-        function onError(error: LocationError): void {
+        function onError(error: { code: number; message: string }): void {
             clearTimeout(timeoutId);
-            unwatch(token);
+            clearWatch();
             reject(new Error(error.message));
         }
 
@@ -114,6 +139,21 @@ export async function GetCurrentLocationMinimumAccuracy(
             accuracy: highAccuracy ? { android: "high", ios: "best" } : { android: "balanced", ios: "hundredMeters" }
         };
     }
+    function normalizeWebPosition(pos: GeolocationPosition): GeolocationResponse {
+        return {
+            coords: {
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                altitude: pos.coords.altitude ?? null,
+                accuracy: pos.coords.accuracy,
+                altitudeAccuracy: pos.coords.altitudeAccuracy ?? null,
+                heading: pos.coords.heading ?? null,
+                speed: pos.coords.speed ?? null
+            },
+            timestamp: pos.timestamp
+        };
+    }
+
     function mapPositionToMxObject(mxObject: mendix.lib.MxObject, pos: GeolocationResponse): mendix.lib.MxObject {
         mxObject.set("Timestamp", new Date(pos.timestamp));
         mxObject.set("Latitude", new Big(pos.coords.latitude.toFixed(8)));
