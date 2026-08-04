@@ -49,7 +49,19 @@ export async function GetCurrentLocation(
         } else {
             position = await new Promise<GeolocationResponse>((resolve, reject) => {
                 navigator.geolocation.getCurrentPosition(
-                    pos => resolve(pos as unknown as GeolocationResponse),
+                    pos =>
+                        resolve({
+                            coords: {
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude,
+                                altitude: pos.coords.altitude ?? null,
+                                accuracy: pos.coords.accuracy,
+                                altitudeAccuracy: pos.coords.altitudeAccuracy ?? null,
+                                heading: pos.coords.heading ?? null,
+                                speed: pos.coords.speed ?? null
+                            },
+                            timestamp: pos.timestamp
+                        }),
                     err => reject(err),
                     {
                         timeout: options.timeout ?? undefined,
