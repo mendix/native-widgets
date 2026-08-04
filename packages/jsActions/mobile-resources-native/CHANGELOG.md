@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [12.3.0] Native Mobile Resources - 2026-8-4
+### Changed
+
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+
+## [4.4.0] BarcodeScanner
+-   We added support for QR of available remaining types including pdf417 in barcode scanner functinality.
+
+## [5.3.2] BottomSheet
+### Fixed
+
+-   Fixed bottomsheet issue to close when the trigger attribute changes.
+
+## [5.3.0] Notifications
 ### Changed
 
 -   Replaced @notifee/react-native with react-native-notify-kit library.
