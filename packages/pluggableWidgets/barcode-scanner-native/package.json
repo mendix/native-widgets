@@ -21,7 +21,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-svg": "^15.15.4",
+    "react-native-svg": "15.15.4",
     "react-native-vision-camera": "4.7.3"
   },
   "devDependencies": {

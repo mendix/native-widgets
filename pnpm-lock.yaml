@@ -351,7 +351,7 @@ importers:
         specifier: '*'
         version: link:../../tools/piw-utils-internal
       react-native-svg:
-        specifier: ^15.15.4
+        specifier: 15.15.4
         version: 15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
       react-native-vision-camera:
         specifier: 4.7.3
