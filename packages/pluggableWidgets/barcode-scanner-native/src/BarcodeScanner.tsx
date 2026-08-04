@@ -52,7 +52,10 @@ function transformCodeCoordinates(
     const { width: frameWidth, height: frameHeight } = scanFrame;
     const isPortrait = viewHeight > viewWidth;
 
-    let codeX: number, codeY: number, codeWidth: number, codeHeight: number;
+    let codeX: number;
+    let codeY: number;
+    let codeWidth: number;
+    let codeHeight: number;
 
     if (isPortrait && Platform.OS === "ios") {
         // iOS: code.frame coordinates are in the sensor's native landscape space,
