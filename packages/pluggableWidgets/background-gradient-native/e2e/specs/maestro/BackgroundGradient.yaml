@@ -3,8 +3,14 @@ appId: "${APP_ID}"
 # Flow for background gradient
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "B"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "B"
+      - extendedWaitUntil:
+          visible: "Background gradient"
+          timeout: 10000
 - tapOn:
     text: "Background gradient"
 - extendedWaitUntil:

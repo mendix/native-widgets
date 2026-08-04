@@ -154,4 +154,21 @@ describe("Bottom sheet", () => {
 
         expect(component.toJSON()).toMatchSnapshot();
     });
+
+    it("closes custom modal when triggerAttribute is set to false", () => {
+        const triggerAttribute = new EditableValueBuilder<boolean>().withValue(true).build();
+        const props = {
+            ...defaultProps,
+            modalRendering: "custom" as const,
+            largeContent: <Text>Content</Text>,
+            triggerAttribute
+        };
+
+        const { rerender } = render(<BottomSheet {...props} />);
+
+        triggerAttribute.setValue(false);
+        rerender(<BottomSheet {...props} triggerAttribute={triggerAttribute} />);
+
+        expect(triggerAttribute.value).toBe(false);
+    });
 });

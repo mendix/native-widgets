@@ -82,6 +82,12 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         bottomSheetRef.current?.close();
     }, []);
 
+    useEffect(() => {
+        if (!externalOpen && mounted && didOpenRef.current) {
+            close();
+        }
+    }, [externalOpen, mounted, close]);
+
     const handleChange = useCallback(
         (index: number) => {
             if (index === 0) {
