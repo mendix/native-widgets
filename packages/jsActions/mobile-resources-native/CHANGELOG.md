@@ -6,7 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.11] Native Mobile Resources - 2026-8-5
+
 -   We have fixed the biometric authentication issue where it was not working on Android and crashing on iOS.
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+
+## [4.3.0] BarcodeScanner
+
+-   We added support for QR of available remaining types including pdf417 in barcode scanner functinality.
+
+## [5.0.6] BottomSheet
+
+### Fixed
+
+-   Fixed bottomsheet issue to close when the trigger attribute changes.
+
+## [5.2.0] Notifications
+
+### Changed
+
 -   Replaced @notifee/react-native with react-native-notify-kit library.
 
 ## [11.3.10] Native Mobile Resources - 2026-7-2
