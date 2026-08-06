@@ -1,3 +1,63 @@
+diff --git a/configs/rollup-plugin-collect-dependencies.mjs b/configs/rollup-plugin-collect-dependencies.mjs
+index d45c737bf32cb1029249fdc069b3df3f832d1ab4..9246919bd939c622447ba0227c5b695892f162a8 100644
+--- a/configs/rollup-plugin-collect-dependencies.mjs
++++ b/configs/rollup-plugin-collect-dependencies.mjs
+@@ -1,8 +1,7 @@
+ import fg from "fast-glob";
+ import fsExtra from "fs-extra";
+-import { existsSync, readFileSync, writeFileSync } from "fs";
++import { cpSync, existsSync, lstatSync, readFileSync, realpathSync, writeFileSync } from "fs";
+ import { dirname, join, parse } from "path";
+-import copy from "recursive-copy";
+ import { promisify } from "util";
+ import resolve from "resolve";
+ import _ from "lodash";
+@@ -95,7 +94,7 @@ export function collectDependencies({
+                     } else if (!transitiveDependency.startsWith(dependency)) {
+                         await copyJsModule(
+                             transitiveDependency,
+-                            join(destinationPath, "node_modules", getModuleName(transitiveDependency))
++                            join(outputDir, "node_modules", getModuleName(transitiveDependency))
+                         );
+                     }
+                 }
+@@ -169,14 +168,28 @@ async function copyJsModule(moduleSourcePath, to) {
+     if (existsSync(to)) {
+         return;
+     }
+-    return promisify(copy)(moduleSourcePath, to, {
+-        filter: [
+-            "**/*.*",
+-            LICENSE_GLOB,
+-            "!**/{android,ios,windows,mac,jest,github,gradle,__*__,docs,jest,example*}/**/*",
+-            "!**/*.{config,setup}.*",
+-            "!**/*.{podspec,flow}"
+-        ]
++
++    let actualSourcePath = moduleSourcePath;
++    if (lstatSync(moduleSourcePath).isSymbolicLink()) {
++        actualSourcePath = realpathSync(moduleSourcePath);
++    }
++
++    cpSync(actualSourcePath, to, {
++        recursive: true,
++        dereference: true,
++        filter: src => {
++            const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
++
++            if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
++                return false;
++            }
++
++            if (relativePath.match(/\.(config|setup)\.|\.podspec$|\.flow$/)) {
++                return false;
++            }
++
++            return true;
++        }
+     });
+ }
+ 
 diff --git a/configs/rollup.config.native.mjs b/configs/rollup.config.native.mjs
 index 62c5c82ddbd628e5d22709660f26e82855ddfceb..927c8e729238f8cb2971b752c2ccace3d9464606 100644
 --- a/configs/rollup.config.native.mjs
