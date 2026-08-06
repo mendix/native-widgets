@@ -7,11 +7,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 -   Fixed an issue where base64-to-image decoding was failing.
-
-## [7.3.0] Nanoflow Commons - 2026-8-6
-
-### Changed
-
 -   Migrated the geolocation actions from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.
 
 ### Fixed
