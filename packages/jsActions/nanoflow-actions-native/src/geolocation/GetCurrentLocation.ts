@@ -6,7 +6,6 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import { Platform } from "react-native";
 import { getCurrentPosition, GeolocationResponse, LocationRequestOptions } from "react-native-nitro-geolocation";
 
 // BEGIN EXTRA CODE
@@ -40,6 +39,9 @@ export async function GetCurrentLocation(
         return Promise.reject(new Error("Geolocation module could not be found"));
     }
 
+    // We keep a manual web branch (backed by `navigator.geolocation`) rather than relying on the
+    // library's web entry, because it is not guaranteed that the Mendix web client resolves the
+    // package's `browser`/`exports` condition. If that is ever confirmed, this branch can be dropped.
     const options = buildLocationOptions(timeout, maximumAge, highAccuracy);
     try {
         let position: GeolocationResponse;
@@ -52,8 +54,8 @@ export async function GetCurrentLocation(
                     pos => resolve(normalizeWebPosition(pos)),
                     err => reject(err),
                     {
-                        timeout: options.timeout ?? undefined,
-                        maximumAge: options.maximumAge ?? undefined,
+                        timeout: options.timeout,
+                        maximumAge: options.maximumAge,
                         enableHighAccuracy: highAccuracy ?? false
                     }
                 );
@@ -71,7 +73,7 @@ export async function GetCurrentLocation(
             });
         });
     } catch (error: any) {
-        const message = error instanceof Error ? error.message : error?.message ?? String(error);
+        const message = error?.message ?? String(error);
         return Promise.reject(new Error(`Could not get current location: ${message}`));
     }
 
@@ -86,7 +88,7 @@ export async function GetCurrentLocation(
         // If the timeout is 0 or undefined (empty), it causes a crash on iOS.
         // If the timeout is undefined (empty); we set timeout to 30 sec (default timeout)
         // If the timeout is 0; we set timeout to 1 hour (no timeout)
-        if (Platform.OS === "ios") {
+        if (isReactNative && require("react-native").Platform.OS === "ios") {
             if (timeoutNumber === undefined) {
                 timeoutNumber = 30000;
             } else if (timeoutNumber === 0) {
@@ -101,6 +103,9 @@ export async function GetCurrentLocation(
         };
     }
 
+    // NOTE: `normalizeWebPosition` is duplicated verbatim in `GetCurrentLocationMinimumAccuracy.ts`.
+    // The Mendix action model does not allow sharing code across action files, so if you change this
+    // function, keep the copy in the other action in sync.
     function normalizeWebPosition(pos: GeolocationPosition): GeolocationResponse {
         return {
             coords: {

@@ -6,7 +6,6 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import { Platform } from "react-native";
 import { watchPosition, unwatch, GeolocationResponse, LocationRequestOptions } from "react-native-nitro-geolocation";
 
 // BEGIN EXTRA CODE
@@ -19,7 +18,7 @@ import { watchPosition, unwatch, GeolocationResponse, LocationRequestOptions } f
  *
  * On hybrid and native platforms the permission should be requested with the `RequestLocationPermission` action.
  *
- * For good user experience, disable the nanoflow during action using property `Disabled during action` if you're using `Call a nanoflow button` to run JS Action `Get current location with minimum accuracy`.
+ * For good user experience, disable the nanoflow during action using property `Disabled during action` if you’re using `Call a nanoflow button` to run JS Action `Get current location with minimum accuracy`.
  *
  * Best practices:
  * https://developers.google.com/web/fundamentals/native-hardware/user-location/
@@ -48,7 +47,10 @@ export async function GetCurrentLocationMinimumAccuracy(
         const options = buildLocationOptions(timeout, maximumAge, highAccuracy);
         let lastAccruedPosition: GeolocationResponse | undefined;
 
-        const timeoutMs = timeout ? timeout.toNumber() : 30000;
+        // Derive the watchdog timeout from the same clamped value used for the location layer,
+        // so the two never disagree. `new Big(0)` is truthy, so we must not test `timeout`
+        // directly here or a configured `0` would fire the watchdog on the next tick.
+        const timeoutMs = options.timeout ?? 30000;
         const timeoutId = setTimeout(onTimeout, timeoutMs);
 
         let clearWatch: () => void;
@@ -68,8 +70,8 @@ export async function GetCurrentLocationMinimumAccuracy(
                 pos => onSuccess(normalizeWebPosition(pos)),
                 err => onError({ code: err.code, message: err.message }),
                 {
-                    timeout: options.timeout ?? undefined,
-                    maximumAge: options.maximumAge ?? undefined,
+                    timeout: options.timeout,
+                    maximumAge: options.maximumAge,
                     enableHighAccuracy: highAccuracy ?? false
                 }
             );
@@ -122,15 +124,15 @@ export async function GetCurrentLocationMinimumAccuracy(
         let timeoutNumber = timeout ? timeout.toNumber() : undefined;
         const maximumAgeNumber = maximumAge ? maximumAge.toNumber() : undefined;
 
-        // If the timeout is 0 or undefined (empty), it causes a crash on iOS.
-        // If the timeout is undefined (empty); we set timeout to 30 sec (default timeout)
-        // If the timeout is 0; we set timeout to 1 hour (no timeout)
-        if (Platform.OS === "ios") {
-            if (timeoutNumber === undefined) {
-                timeoutNumber = 30000;
-            } else if (timeoutNumber === 0) {
-                timeoutNumber = 3600000;
-            }
+        // Normalize the timeout so the watchdog and the location layer always agree, on every platform:
+        // - undefined (empty) -> 30 sec (default timeout)
+        // - 0 -> 1 hour (treated as "no timeout")
+        // A timeout of 0 or undefined also crashes on iOS, and on web `timeout: 0` means
+        // "fail immediately with TIMEOUT" on every update, so it must never reach the location layer.
+        if (timeoutNumber === undefined) {
+            timeoutNumber = 30000;
+        } else if (timeoutNumber === 0) {
+            timeoutNumber = 3600000;
         }
 
         return {
@@ -139,6 +141,9 @@ export async function GetCurrentLocationMinimumAccuracy(
             accuracy: highAccuracy ? { android: "high", ios: "best" } : { android: "balanced", ios: "hundredMeters" }
         };
     }
+    // NOTE: `normalizeWebPosition` is duplicated verbatim in `GetCurrentLocation.ts`.
+    // The Mendix action model does not allow sharing code across action files, so if you change this
+    // function, keep the copy in the other action in sync.
     function normalizeWebPosition(pos: GeolocationPosition): GeolocationResponse {
         return {
             coords: {
