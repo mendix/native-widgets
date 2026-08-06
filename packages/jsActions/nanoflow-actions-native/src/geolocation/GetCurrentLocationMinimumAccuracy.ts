@@ -103,7 +103,15 @@ export async function GetCurrentLocationMinimumAccuracy(
         function onError(error: { code: number; message: string }): void {
             clearTimeout(timeoutId);
             clearWatch();
-            reject(new Error(error.message));
+
+            // Best effort within a timeout: if we already captured a usable (though not yet
+            // minimum-accuracy) fix, return it instead of failing on a transient error such as
+            // POSITION_UNAVAILABLE. Mirrors the onTimeout fallback.
+            if (lastAccruedPosition) {
+                createGeolocationObject(lastAccruedPosition);
+            } else {
+                reject(new Error(error.message));
+            }
         }
 
         function createGeolocationObject(position: GeolocationResponse): void {
