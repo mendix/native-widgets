@@ -67,7 +67,7 @@ async function getPackageInfo(path) {
 }
 
 // Create reusable mxbuild image
-async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, excludeFilesRegExp) {
+async function ensureMxbuildImage(mendixVersion) {
     const existingImages = (await execShellCommand(`docker image ls -q mxbuild:${mendixVersion}`)).toString().trim();
     if (!existingImages) {
         console.log(`Creating new mxbuild docker image...`);
@@ -77,6 +77,10 @@ async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, exc
                 `-t mxbuild:${mendixVersion} ${process.cwd()}`
         );
     }
+}
+
+async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, excludeFilesRegExp) {
+    await ensureMxbuildImage(mendixVersion);
 
     // Build testProject via mxbuild
     const projectFile = basename((await getFiles(sourceDir, [`.mpr`]))[0]);
@@ -219,6 +223,13 @@ async function cloneRepo(githubUrl, localFolder, branchName) {
 
 async function createMPK(tmpFolder, moduleInfo, excludeFilesRegExp) {
     console.log("Creating module MPK..");
+    // Required lazily: createWidgetRelease.js loads this module under plain node, which
+    // cannot resolve a .ts file. Only the ts-node entry points reach createMPK.
+    const { setModuleVersion } = require("./moduleVersion");
+
+    await ensureMxbuildImage(moduleInfo.minimumMXVersion);
+    await setModuleVersion(tmpFolder, moduleInfo.moduleNameInModeler, moduleInfo.version, moduleInfo.minimumMXVersion);
+
     await createModuleMpkInDocker(
         tmpFolder,
         moduleInfo.moduleNameInModeler,
