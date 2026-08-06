@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Bottom sheet renders a custom bottom action sheet for ios (Basic modal) with custom style 1`] = `null`;
 
@@ -158,4 +158,4 @@ exports[`Bottom sheet renders a expanding fullscreen with custom styles 1`] = `
 </View>
 `;
 
-exports[`Bottom sheet renders a native bottom action sheet for ios (Basic modal) 1`] = `<View />`;
+exports[`Bottom sheet renders a native bottom action sheet for ios (Basic modal) 1`] = `null`;
