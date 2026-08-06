@@ -3,8 +3,8 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { CSSProperties } from "react";
 import { DynamicValue, NativeImage } from "mendix";
+import { CSSProperties } from "react";
 
 export interface FeedbackProps<Style> {
     name: string;
@@ -38,7 +38,7 @@ export interface FeedbackPreviewProps {
     translate: (text: string) => string;
     sprintrapp: string;
     allowScreenshot: boolean;
-    logo: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
+    logo: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
     titleSendFeedback: string;
     titleSending: string;
     titleResult: string;

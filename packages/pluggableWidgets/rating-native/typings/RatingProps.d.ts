@@ -3,11 +3,22 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue, NativeImage } from "mendix";
 import { Big } from "big.js";
+import { CSSProperties } from "react";
 
-export type AnimationEnum = "pulse" | "bounce" | "flash" | "jello" | "rotate" | "rubberBand" | "shake" | "swing" | "tada" | "wobble" | "none";
+export type AnimationEnum =
+    | "pulse"
+    | "bounce"
+    | "flash"
+    | "jello"
+    | "rotate"
+    | "rubberBand"
+    | "shake"
+    | "swing"
+    | "tada"
+    | "wobble"
+    | "none";
 
 export type EditableEnum = "default" | "never";
 
@@ -35,8 +46,8 @@ export interface RatingPreviewProps {
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
     ratingAttribute: string;
-    emptyIcon: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
-    icon: { type: "static"; imageUrl: string; } | { type: "dynamic"; entity: string; } | null;
+    emptyIcon: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
+    icon: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
     maximumValue: number | null;
     animation: AnimationEnum;
     editable: EditableEnum;

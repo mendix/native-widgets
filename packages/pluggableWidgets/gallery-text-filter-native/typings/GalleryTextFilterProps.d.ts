@@ -3,10 +3,21 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { CSSProperties } from "react";
 import { ActionValue, DynamicValue, EditableValue } from "mendix";
+import { CSSProperties } from "react";
 
-export type DefaultFilterEnum = "contains" | "startsWith" | "endsWith" | "greater" | "greaterEqual" | "equal" | "notEqual" | "smaller" | "smallerEqual" | "empty" | "notEmpty";
+export type DefaultFilterEnum =
+    | "contains"
+    | "startsWith"
+    | "endsWith"
+    | "greater"
+    | "greaterEqual"
+    | "equal"
+    | "notEqual"
+    | "smaller"
+    | "smallerEqual"
+    | "empty"
+    | "notEmpty";
 
 export interface GalleryTextFilterProps<Style> {
     name: string;
