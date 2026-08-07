@@ -5,6 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
+import { Big } from "big.js";
 import Sound from "react-native-sound";
 import RNBlobUtil from "react-native-blob-util";
 import { Platform } from "react-native";

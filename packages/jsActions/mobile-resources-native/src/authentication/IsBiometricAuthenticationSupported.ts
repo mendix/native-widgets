@@ -5,6 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
+import { Big } from "big.js";
 import { isSensorAvailable } from "@sbaiahmed1/react-native-biometrics";
 
 // BEGIN EXTRA CODE
