@@ -5,7 +5,6 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Big } from "big.js";
 import { Platform, NativeModules } from "react-native";
 import { check, Permission, PERMISSIONS as RNPermissions } from "react-native-permissions";
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
