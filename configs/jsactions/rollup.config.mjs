@@ -78,7 +78,18 @@ export default async args => {
 
                 code = header + code;
 
-                // 4. Fix export pattern: async function Name { } export { Name };
+                // 4. Add missing // BEGIN EXTRA CODE if // END EXTRA CODE exists without a BEGIN
+                if (code.includes('// END EXTRA CODE') && !code.includes('// BEGIN EXTRA CODE')) {
+                    // Find last import line, add BEGIN EXTRA CODE after it
+                    code = code.replace(/(^import .+$)/m, '$1\n\n// BEGIN EXTRA CODE');
+                }
+
+                // 5. If no EXTRA CODE markers at all, add empty block after imports
+                if (!code.includes('// BEGIN EXTRA CODE') && !code.includes('// END EXTRA CODE')) {
+                    code = code.replace(/(^import .+$)(\r?\n)+(?=\/?\*\*|export)/m, '$1\n\n// BEGIN EXTRA CODE\n// END EXTRA CODE\n\n');
+                }
+
+                // 6. Fix export pattern: async function Name { } export { Name };
                 //    → export async function Name { }
                 const exportMatch = code.match(/export\s*\{\s*(\w+)\s*\};?\s*$/m);
                 if (exportMatch) {
@@ -87,6 +98,26 @@ export default async args => {
                     code = code.replace(funcPattern, "export $1");
                     code = code.replace(/\nexport\s*\{\s*\w+\s*\};?\s*$/m, "");
                 }
+
+                // 7. Fix USER CODE marker indentation: Studio Pro uses tabs inside functions
+                //    Match any whitespace before the markers and replace with single tab
+                code = code.replace(/^[ \t]+(\/\/ BEGIN USER CODE)/gm, "\t$1");
+                code = code.replace(/^[ \t]+(\/\/ END USER CODE)/gm, "\t$1");
+
+                // 8. Ensure blank line before // BEGIN EXTRA CODE
+                code = code.replace(/([^\r\n])\r?\n(\/\/ BEGIN EXTRA CODE)/g, "$1\r\n\r\n$2");
+
+                // 9. Ensure blank line after // END EXTRA CODE
+                code = code.replace(/(\/\/ END EXTRA CODE)\r?\n([^\r\n])/g, "$1\r\n\r\n$2");
+
+                // 10. Normalize JSDoc formatting to match Studio Pro
+                //     - Empty JSDoc lines: ` *` (one space before asterisk, nothing after)
+                //     - Lines with text: ` * text` (one space before, one space after asterisk)
+                code = code.replace(/^[ \t]+\*[ \t]+$/gm, " *");  // Empty JSDoc lines: remove trailing whitespace
+                code = code.replace(/^[ \t]+\*[ \t]+(.+)$/gm, " * $1");  // JSDoc with text: normalize to 1 space before and after asterisk
+
+                // 11. Normalize all line endings to CRLF (Studio Pro expects \r\n everywhere)
+                code = code.replace(/\r?\n/g, "\r\n");
 
                 chunk.code = code;
             }
