@@ -1,9 +1,8 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { Icon } from "mendix/components/native/Icon";
-import { Component, JSX } from "react";
-import { Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
-import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Component, JSX, useEffect, useRef } from "react";
+import { Animated, Easing, Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 import { FloatingActionButtonProps } from "../typings/FloatingActionButtonProps";
 import { defaultFloatingActionButtonStyle, FloatingActionButtonStyle } from "./ui/styles";
@@ -27,19 +26,21 @@ interface AnimatedMainIconProps {
 function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
     const { active, hasSecondaryButtons, style, icon, iconActive } = props;
 
-    const progress = useSharedValue(active && hasSecondaryButtons ? 1 : 0);
-    progress.value = withTiming(active && hasSecondaryButtons ? 1 : 0, {
-        duration: 200,
-        easing: Easing.out(Easing.ease)
-    });
+    const progress = useRef(new Animated.Value(active && hasSecondaryButtons ? 1 : 0)).current;
 
-    const animatedStyle = useAnimatedStyle(() => ({
-        transform: [
-            {
-                rotate: `${interpolate(progress.value, [0, 1], [0, -180])}deg`
-            }
-        ]
-    }));
+    useEffect(() => {
+        Animated.timing(progress, {
+            toValue: active && hasSecondaryButtons ? 1 : 0,
+            duration: 200,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true
+        }).start();
+    }, [active, hasSecondaryButtons, progress]);
+
+    const rotate = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0deg", "-180deg"]
+    });
 
     const iconSource = icon?.value ? icon.value : defaultIconSource;
     const activeIconSource = iconActive?.value ? iconActive.value : defaultActiveIconSource;
@@ -47,7 +48,7 @@ function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
 
     return (
         <View testID={"FloatingAction$IconView"} style={[style.button, style.buttonContainer]}>
-            <Animated.View style={[style.buttonIconContainer, animatedStyle]}>
+            <Animated.View style={[style.buttonIconContainer, { transform: [{ rotate }] }]}>
                 <Icon icon={source} size={style.buttonIcon.size} color={style.buttonIcon.color} />
             </Animated.View>
         </View>
@@ -81,32 +82,31 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
         onPress
     } = props;
 
-    const progress = useSharedValue(active ? 1 : 0);
-    progress.value = withTiming(active ? 1 : 0, {
-        duration: 200,
-        easing: Easing.out(Easing.ease)
-    });
+    const progress = useRef(new Animated.Value(active ? 1 : 0)).current;
+
+    useEffect(() => {
+        Animated.timing(progress, {
+            toValue: active ? 1 : 0,
+            duration: 200,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true
+        }).start();
+    }, [active, progress]);
 
     const labelOnRight = horizontalPosition === "left";
     const labelOnLeft = horizontalPosition === "right";
 
-    const animatedStyle = useAnimatedStyle(() => {
-        const centerToCenterDistance =
-            (mainButtonSize + secondaryButtonSize) / 2 + SECONDARY_GAP + index * (secondaryButtonSize + SECONDARY_GAP);
+    const centerToCenterDistance =
+        (mainButtonSize + secondaryButtonSize) / 2 + SECONDARY_GAP + index * (secondaryButtonSize + SECONDARY_GAP);
 
-        return {
-            opacity: progress.value,
-            transform: [
-                {
-                    translateY: interpolate(
-                        progress.value,
-                        [0, 1],
-                        [0, direction === "up" ? -centerToCenterDistance : centerToCenterDistance]
-                    )
-                },
-                { scale: interpolate(progress.value, [0, 1], [0.8, 1]) }
-            ]
-        };
+    const translateY = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, direction === "up" ? -centerToCenterDistance : centerToCenterDistance]
+    });
+
+    const scale = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.8, 1]
     });
 
     const anchorStyle: ViewStyle = {
@@ -119,7 +119,14 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
     return (
         <Animated.View
             pointerEvents={active ? "auto" : "none"}
-            style={[styles.secondaryAnchor, anchorStyle, animatedStyle]}
+            style={[
+                styles.secondaryAnchor,
+                anchorStyle,
+                {
+                    opacity: progress,
+                    transform: [{ translateY }, { scale }]
+                }
+            ]}
         >
             <View
                 style={[
