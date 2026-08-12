@@ -13,6 +13,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import { collectDependencies, copyJsModule } from "./rollup-plugin-collect-dependencies.mjs";
 import { licenseCustomTemplate, copyLicenseFile } from "./rollup-helper.mjs";
+import { bigJsImportReplacer } from "./rollup-plugin-bigjs-import-replacer.mjs";
 
 const cwd = process.cwd();
 
@@ -74,6 +75,7 @@ export default async args => {
                 }),
                 nodeResolvePlugin,
                 typescriptPlugin,
+                bigJsImportReplacer(),
                 i === files.length - 1
                     ? command([
                           async () => copyLicenseFile(cwd, outDir),
