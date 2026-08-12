@@ -93,7 +93,7 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
         }).start();
     }, [active, progress]);
 
-    const labelOnRight = horizontalPosition === "left";
+    const labelOnRight = horizontalPosition === "left" || horizontalPosition === "center";
     const labelOnLeft = horizontalPosition === "right";
 
     const centerToCenterDistance =
