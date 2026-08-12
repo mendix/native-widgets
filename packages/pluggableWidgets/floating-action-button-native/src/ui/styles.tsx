@@ -1,5 +1,5 @@
 import { Style } from "@mendix/piw-native-utils-internal";
-import { TextStyle, ViewStyle } from "react-native";
+import { TextStyle, ViewStyle, StyleSheet } from "react-native";
 
 export interface FloatingActionButtonStyle extends Style {
     container: ViewStyle;
@@ -80,3 +80,49 @@ export const defaultFloatingActionButtonStyle: FloatingActionButtonStyle = {
         marginHorizontal: 15
     }
 };
+
+export const styles = StyleSheet.create({
+    wrapper: {
+        justifyContent: "flex-end"
+    },
+    mainButtonBase: {
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    secondaryAnchor: {
+        position: "absolute"
+    },
+    secondaryRow: {
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    rowAlignLeft: {
+        justifyContent: "flex-start"
+    },
+    rowAlignRight: {
+        justifyContent: "flex-end"
+    },
+    rowAlignCenter: {
+        justifyContent: "center"
+    },
+    secondaryButtonBase: {
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0
+    },
+    captionInlineContainer: {
+        flexShrink: 0
+    },
+    captionBeforeButton: {
+        marginRight: 8,
+        alignItems: "flex-end"
+    },
+    captionAfterButton: {
+        marginLeft: 8,
+        alignItems: "flex-start"
+    },
+    captionText: {
+        flexShrink: 0
+    }
+});
