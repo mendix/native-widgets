@@ -20,8 +20,7 @@
   },
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
-    "@mendix/piw-utils-internal": "*",
-    "react-native-reanimated": "^3.0.0"
+    "@mendix/piw-utils-internal": "*"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"
