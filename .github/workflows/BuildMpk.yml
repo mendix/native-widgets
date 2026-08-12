@@ -55,51 +55,6 @@ jobs:
           MODULE: ${{ inputs.module }}
           VERSION: ${{ steps.bump_version.outputs.VERSION }}
 
-      - name: "TEST: Capture JS actions before mxbuild regeneration"
-        run: |
-          TEST_FILE="tmp/${{ inputs.module }}/javascriptsource/nanoflowcommons/actions/Geocode.js"
-          if [ -f "$TEST_FILE" ]; then
-            echo "Capturing $TEST_FILE before mxbuild regeneration"
-            cp "$TEST_FILE" "$TEST_FILE.before"
-            head -30 "$TEST_FILE" > before.txt
-          else
-            echo "Test file not found at $TEST_FILE"
-            ls -la tmp/${{ inputs.module }}/javascriptsource/*/actions/ || true
-          fi
-
-      - name: "TEST: Run mxbuild to trigger JS action regeneration"
-        run: |
-          cd tmp/${{ inputs.module }}
-          MPR_FILE=$(ls *.mpr | head -1)
-          MENDIX_VERSION=$(grep -o '"mendixVersion": *"[^"]*"' ../../packages/jsActions/${{ inputs.module }}/package.json | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
-          echo "Running mxbuild $MENDIX_VERSION on $MPR_FILE to regenerate JS actions..."
-          docker run -t -v "$(pwd):/source" --rm mxbuild:$MENDIX_VERSION bash -c "mxbuild --target=package /source/$MPR_FILE" || echo "mxbuild failed, but continuing..."
-
-      - name: "TEST: Compare JS actions after mxbuild"
-        run: |
-          TEST_FILE="tmp/${{ inputs.module }}/javascriptsource/nanoflowcommons/actions/Geocode.js"
-          if [ -f "$TEST_FILE" ]; then
-            echo "=== BEFORE mxbuild (first 30 lines) ===" > comparison.txt
-            cat before.txt >> comparison.txt
-            echo "" >> comparison.txt
-            echo "=== AFTER mxbuild (first 30 lines) ===" >> comparison.txt
-            head -30 "$TEST_FILE" >> comparison.txt
-            echo "" >> comparison.txt
-            echo "=== DIFF ===" >> comparison.txt
-            diff "$TEST_FILE.before" "$TEST_FILE" >> comparison.txt || echo "Files differ!" >> comparison.txt
-            cat comparison.txt
-          fi
-
-      - name: "TEST: Upload comparison results"
-        if: always()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
-        with:
-          name: mxbuild-regeneration-test-${{ inputs.module }}
-          path: |
-            comparison.txt
-            before.txt
-          if-no-files-found: warn
-
       - name: "Upload MPK artifact"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
