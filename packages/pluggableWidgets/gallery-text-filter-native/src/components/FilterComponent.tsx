@@ -23,8 +23,8 @@ const textInputPropsKeys: Array<keyof InputStyleProps> = [
 ];
 
 export default function FilterComponent(props: FilterComponentProps): ReactElement {
-    const [value, setValue] = useState("");
-    const [valueInput, setValueInput] = useState("");
+    const [value, setValue] = useState(props.value ?? "");
+    const [valueInput, setValueInput] = useState(props.value ?? "");
     const [textInputContainerStyle, setTextInputContainerStyle] = useState<ViewStyle>(
         props.styles?.textInputContainer || {}
     );

@@ -76,19 +76,20 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const [height, setHeight] = useState(0);
     const [activeIndex, setActiveIndex] = useState(() => refreshActiveSlideAttribute(props.slides, props.activeSlide));
     const [listMounted, setListMounted] = useState(false);
-    const [initialScrollIndex] = useState(() => refreshActiveSlideAttribute(props.slides, props.activeSlide));
+    const [initialScrollIndex, setInitialScrollIndex] = useState<number | undefined>(undefined);
     const flashList = useRef<FlashListRef<any>>(null);
     const pendingWrite = useRef<{ replaced: number } | null>(null);
     const isUserScrolling = useRef(false);
     const activeSlidePending =
         props.activeSlide?.status === ValueStatus.Loading && props.activeSlide.value === undefined;
 
-    // Move initial index logic to effect to avoid ref access during render
+    // Set initialScrollIndex when transitioning from pending to available
     useEffect(() => {
         if (!listMounted && !activeSlidePending) {
             const newIndex = refreshActiveSlideAttribute(props.slides, props.activeSlide);
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- Setting initial scroll position when data becomes available
+            setInitialScrollIndex(newIndex);
             if (newIndex !== activeIndex) {
-                // eslint-disable-next-line react-hooks/set-state-in-effect -- Syncing external prop to internal state on mount
                 setActiveIndex(newIndex);
             }
         }
