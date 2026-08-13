@@ -63,3 +63,24 @@ export interface FloatingActionButtonPreviewProps {
     onClick: {} | null;
     secondaryButtons: SecondaryButtonsPreviewType[];
 }
+
+export interface AnimatedMainIconProps {
+    active: boolean;
+    hasSecondaryButtons: boolean;
+    style: FloatingActionButtonStyle;
+    icon: FloatingActionButtonProps<FloatingActionButtonStyle>["icon"];
+    iconActive: FloatingActionButtonProps<FloatingActionButtonStyle>["iconActive"];
+}
+
+export interface SecondaryActionItemProps {
+    active: boolean;
+    index: number;
+    direction: "up" | "down";
+    horizontalPosition: "left" | "right" | "center";
+    name: string;
+    button: FloatingActionButtonProps<FloatingActionButtonStyle>["secondaryButtons"][number];
+    style: FloatingActionButtonStyle;
+    mainButtonSize: number;
+    secondaryButtonSize: number;
+    onPress: () => void;
+}
