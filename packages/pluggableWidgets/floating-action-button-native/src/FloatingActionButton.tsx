@@ -202,6 +202,9 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
                 <Pressable
                     testID={`${name}$button${index}`}
                     onPress={onPress}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={button.caption?.value || `Action button ${index + 1}`}
                     style={({ pressed }) => [
                         styles.secondaryButtonBase,
                         style.secondaryButton,
@@ -299,6 +302,17 @@ export function FloatingActionButton(props: FloatingActionButtonProps<FloatingAc
             <Pressable
                 testID={props.name}
                 onPress={handlePress}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={hasSecondaryButtons ? "Floating action menu" : "Floating action button"}
+                accessibilityState={{ expanded: hasSecondaryButtons ? active : undefined }}
+                accessibilityHint={
+                    hasSecondaryButtons
+                        ? active
+                            ? "Collapse secondary actions"
+                            : "Expand to show secondary actions"
+                        : undefined
+                }
                 style={({ pressed }) => [
                     styles.mainButtonBase,
                     buttonStyle,
