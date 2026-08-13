@@ -7,15 +7,34 @@ import { Animated, Easing, Pressable, Text, View, ViewStyle } from "react-native
 import {
     FloatingActionButtonProps,
     HorizontalPositionEnum,
-    VerticalPositionEnum,
-    SecondaryActionItemProps,
-    AnimatedMainIconProps
+    VerticalPositionEnum
 } from "../typings/FloatingActionButtonProps";
 import { defaultFloatingActionButtonStyle, FloatingActionButtonStyle, styles } from "./ui/styles";
 
 const defaultIconSource = { type: "glyph", iconClass: "glyphicon-plus" } as const;
 const defaultActiveIconSource = { type: "glyph", iconClass: "glyphicon-remove" } as const;
 const SECONDARY_GAP = 16;
+
+interface AnimatedMainIconProps {
+    active: boolean;
+    hasSecondaryButtons: boolean;
+    style: FloatingActionButtonStyle;
+    icon: FloatingActionButtonProps<FloatingActionButtonStyle>["icon"];
+    iconActive: FloatingActionButtonProps<FloatingActionButtonStyle>["iconActive"];
+}
+
+interface SecondaryActionItemProps {
+    active: boolean;
+    index: number;
+    direction: "up" | "down";
+    horizontalPosition: "left" | "right" | "center";
+    name: string;
+    button: FloatingActionButtonProps<FloatingActionButtonStyle>["secondaryButtons"][number];
+    style: FloatingActionButtonStyle;
+    mainButtonSize: number;
+    secondaryButtonSize: number;
+    onPress: () => void;
+}
 
 function getVerticalOrientation(verticalPosition: VerticalPositionEnum): "up" | "down" {
     switch (verticalPosition) {
