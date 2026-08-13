@@ -27,6 +27,7 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
             });
         } else {
             if (isMounted) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect -- Setting initial visibility from AsyncStorage, guarded by isMounted
                 setVisible(true);
             }
         }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { ensure } from "@mendix/pluggable-widgets-tools";
 import { Big } from "big.js";
 import { ObjectItem } from "mendix";
@@ -22,9 +22,7 @@ interface DataPointsExtraction {
 // todo: test this hook.
 // todo: make types generic as different chart will *hopefully* use this hook
 export function useSeries(series: BarSeriesType[]): BarChartSeries[] | null {
-    const [chartSeries, setChartSeries] = useState<BarChartSeries[] | null>(null);
-
-    useEffect(() => {
+    const chartSeries = useMemo(() => {
         const loadedSeries: BarChartSeries[] = [];
 
         for (const element of series) {
@@ -32,8 +30,7 @@ export function useSeries(series: BarSeriesType[]): BarChartSeries[] | null {
                 const result = loadStaticSeries(element);
 
                 if (!result) {
-                    setChartSeries(null);
-                    return;
+                    return null;
                 }
 
                 loadedSeries.push(result);
@@ -41,15 +38,14 @@ export function useSeries(series: BarSeriesType[]): BarChartSeries[] | null {
                 const result = loadDynamicSeries(element);
 
                 if (!result) {
-                    setChartSeries(null);
-                    return;
+                    return null;
                 }
 
                 loadedSeries.push(...result);
             }
         }
 
-        setChartSeries(loadedSeries);
+        return loadedSeries;
     }, [series]);
 
     return chartSeries;

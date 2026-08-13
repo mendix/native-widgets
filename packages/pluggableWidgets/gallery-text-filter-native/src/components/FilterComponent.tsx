@@ -1,4 +1,4 @@
-import { ReactElement, useRef, useState, useEffect, useCallback } from "react";
+import { ReactElement, useRef, useState, useEffect, useMemo } from "react";
 import { View, TextInput, TouchableOpacity, ViewStyle } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { debounce } from "@mendix/piw-utils-internal";
@@ -46,22 +46,23 @@ export default function FilterComponent(props: FilterComponentProps): ReactEleme
 
     useEffect(() => props.updateFilters?.(value), [value]);
 
-    useEffect(() => {
+    // Sync external prop value to internal state using derived state pattern
+    const [prevPropsValue, setPrevPropsValue] = useState(props.value);
+    if (prevPropsValue !== props.value) {
+        setPrevPropsValue(props.value);
         setValueInput(props.value ?? "");
         setValue(props.value ?? "");
-    }, [props.value]);
+    }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const onChange = useCallback(
-        debounce((value: string) => setValue(value), props.delay),
-        [props.delay]
-    );
+    // Create debounced function with useMemo to maintain same instance
 
-    const focusInput = useCallback(() => {
+    const onChange = useMemo(() => debounce((value: string) => setValue(value), props.delay), [props.delay]);
+
+    const focusInput = (): void => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
-    }, [inputRef]);
+    };
 
     const onFocus = (): void =>
         setTextInputContainerStyle({

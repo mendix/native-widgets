@@ -33,23 +33,33 @@ export function PieDoughnutChart({ name, presentation, series, style, showLabels
     // fallback to a colour from the palette or the default color.
     const normalizedSliceColors: string[] = useMemo(() => {
         const sliceColorPalette = style.slices?.colorPalette?.split(";");
-        let index = 0;
 
-        return series.map(_series => {
-            const configuredStyle = _series.stylingKey
-                ? style.slices?.customStyles?.[_series.stylingKey]?.slice?.color
-                : null;
-            if (typeof configuredStyle !== "string") {
-                const color = sliceColorPalette?.[index] || DEFAULT_SLICE_COLOUR;
-                if (sliceColorPalette) {
-                    index = index + 1 === sliceColorPalette.length ? 0 : index + 1;
+        const result = series.reduce<{ colors: string[]; paletteIndex: number }>(
+            (acc, _series) => {
+                const configuredStyle = _series.stylingKey
+                    ? style.slices?.customStyles?.[_series.stylingKey]?.slice?.color
+                    : null;
+                if (typeof configuredStyle !== "string") {
+                    const color = sliceColorPalette?.[acc.paletteIndex] || DEFAULT_SLICE_COLOUR;
+                    const nextIndex = sliceColorPalette
+                        ? (acc.paletteIndex + 1) % sliceColorPalette.length
+                        : acc.paletteIndex;
+
+                    return {
+                        colors: [...acc.colors, color],
+                        paletteIndex: nextIndex
+                    };
                 }
 
-                return color;
-            }
+                return {
+                    colors: [...acc.colors, configuredStyle],
+                    paletteIndex: acc.paletteIndex
+                };
+            },
+            { colors: [], paletteIndex: 0 }
+        );
 
-            return configuredStyle;
-        });
+        return result.colors;
     }, [series, style]);
 
     const updateChartDimensions = useCallback(

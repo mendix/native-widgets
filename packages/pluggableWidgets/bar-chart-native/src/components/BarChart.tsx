@@ -68,25 +68,34 @@ export function BarChart({
     // fallback to a colour from the palette.
     const normalizedBarColors: string[] = useMemo(() => {
         const barColorPalette = style.bars?.barColorPalette?.split(";");
-        let index = 0;
 
-        return series.map(_series => {
-            const configuredStyle = !_series.customBarStyle
-                ? null
-                : style.bars?.customBarStyles?.[_series.customBarStyle]?.bar?.barColor;
+        const result = series.reduce<{ colors: string[]; paletteIndex: number }>(
+            (acc, _series) => {
+                const configuredStyle = !_series.customBarStyle
+                    ? null
+                    : style.bars?.customBarStyles?.[_series.customBarStyle]?.bar?.barColor;
 
-            if (typeof configuredStyle !== "string") {
-                const barColor = barColorPalette?.[index] || "black";
+                if (typeof configuredStyle !== "string") {
+                    const barColor = barColorPalette?.[acc.paletteIndex] || "black";
+                    const nextIndex = barColorPalette
+                        ? (acc.paletteIndex + 1) % barColorPalette.length
+                        : acc.paletteIndex;
 
-                if (barColorPalette) {
-                    index = index + 1 === barColorPalette.length ? 0 : index + 1;
+                    return {
+                        colors: [...acc.colors, barColor],
+                        paletteIndex: nextIndex
+                    };
                 }
 
-                return barColor;
-            }
+                return {
+                    colors: [...acc.colors, configuredStyle],
+                    paletteIndex: acc.paletteIndex
+                };
+            },
+            { colors: [], paletteIndex: 0 }
+        );
 
-            return configuredStyle;
-        });
+        return result.colors;
     }, [series, style]);
 
     const sortProps = useMemo(() => ({ sortOrder, sortKey: "x" }), [sortOrder]);
