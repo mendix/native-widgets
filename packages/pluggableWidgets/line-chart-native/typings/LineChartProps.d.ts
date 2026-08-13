@@ -3,9 +3,9 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { CSSProperties } from "react";
-import { DynamicValue, ListValue, ListAttributeValue, ListExpressionValue } from "mendix";
+import { DynamicValue, ListAttributeValue, ListExpressionValue, ListValue } from "mendix";
 import { Big } from "big.js";
+import { CSSProperties } from "react";
 
 export type DataSetEnum = "static" | "dynamic";
 

@@ -10,15 +10,17 @@
     "url": "https://github.com/mendix/native-widgets/"
   },
   "private": true,
+  "widgetName": "piwUtilsInternal",
+  "packagePath": "com.mendix.utils",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "tsc --watch",
     "prebuild": "rimraf dist",
     "build": "tsc",
+    "test": "pluggable-widgets-tools test:unit:native",
     "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
     "prepare": "pnpm build",
-    "test": "pluggable-widgets-tools test:unit:native",
     "postinstall": "pnpm build"
   },
   "devDependencies": {
