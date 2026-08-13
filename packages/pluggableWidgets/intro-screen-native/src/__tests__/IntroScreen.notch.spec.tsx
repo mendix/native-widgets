@@ -79,7 +79,6 @@ describe("Intro Screen", () => {
     it("renders with async storage identifier", async () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
         // Wait for async storage to resolve
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         await act(async () => {});
         layout(component, "intro-screen-notch-test");
         expect(component.toJSON()).toMatchSnapshot();
