@@ -246,8 +246,7 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
 export function FloatingActionButton(props: FloatingActionButtonProps<FloatingActionButtonStyle>): JSX.Element {
     const [active, setActive] = useState(false);
     const style = flattenStyles(defaultFloatingActionButtonStyle, props.style);
-    const buttonStyle = { ...style.button };
-    delete buttonStyle.rippleColor;
+    const { rippleColor: _, ...buttonStyle } = style.button;
 
     const mainButtonSize = style.button.size ?? 54;
     const secondaryButtonSize = style.secondaryButton.size ?? 40;
