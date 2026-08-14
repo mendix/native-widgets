@@ -27,6 +27,7 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
 
     useEffect(() => {
         if (props.contentSource?.status === ValueStatus.Available) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- Syncing external data source status to loading state
             setLoading(false);
         }
     }, [props.contentSource]);
@@ -35,19 +36,25 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
         setActiveSlide(index);
     }, []);
 
-    const renderItem = useCallback(({ item, index }: { item: ObjectItem; index: number }) => {
-        const viewStyle = layoutSpecificStyle.slideItem;
-        if (viewStyle) {
-            // We don't want to pass the already processed height to the item container
-            delete viewStyle.width;
-        }
+    const renderItem = useCallback(
+        ({ item, index }: { item: ObjectItem; index: number }) => {
+            let viewStyle = layoutSpecificStyle.slideItem;
+            if (viewStyle) {
+                // We don't want to pass the already processed width to the item container
+                // Create new object without width property instead of mutating
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { width, ...styleWithoutWidth } = viewStyle;
+                viewStyle = styleWithoutWidth;
+            }
 
-        return (
-            <View key={index} style={{ ...viewStyle }} testID={`${props.name}$content$${index}`} accessible>
-                {props.content.get(item)}
-            </View>
-        );
-    }, []);
+            return (
+                <View key={index} style={{ ...viewStyle }} testID={`${props.name}$content$${index}`} accessible>
+                    {props.content.get(item)}
+                </View>
+            );
+        },
+        [layoutSpecificStyle.slideItem, props.content, props.name]
+    );
 
     const renderPagination = useCallback(() => {
         if (!props.showPagination || carouselRef === undefined) {

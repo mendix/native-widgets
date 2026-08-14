@@ -75,20 +75,25 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
     const [activeIndex, setActiveIndex] = useState(() => refreshActiveSlideAttribute(props.slides, props.activeSlide));
+    const [listMounted, setListMounted] = useState(false);
+    const [initialScrollIndex, setInitialScrollIndex] = useState<number | undefined>(undefined);
     const flashList = useRef<FlashListRef<any>>(null);
     const pendingWrite = useRef<{ replaced: number } | null>(null);
-    const initialIndex = useRef(activeIndex);
     const isUserScrolling = useRef(false);
     const activeSlidePending =
         props.activeSlide?.status === ValueStatus.Loading && props.activeSlide.value === undefined;
-    const listMounted = useRef(false);
 
-    if (!listMounted.current && !activeSlidePending) {
-        initialIndex.current = refreshActiveSlideAttribute(props.slides, props.activeSlide);
-        if (initialIndex.current !== activeIndex) {
-            setActiveIndex(initialIndex.current);
+    // Set initialScrollIndex when transitioning from pending to available
+    useEffect(() => {
+        if (!listMounted && !activeSlidePending) {
+            const newIndex = refreshActiveSlideAttribute(props.slides, props.activeSlide);
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- Setting initial scroll position when data becomes available
+            setInitialScrollIndex(newIndex);
+            if (newIndex !== activeIndex) {
+                setActiveIndex(newIndex);
+            }
         }
-    }
+    }, [listMounted, activeSlidePending, props.slides, props.activeSlide, activeIndex]);
 
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
@@ -120,6 +125,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             pendingWrite.current = null;
         }
         if (slide !== activeIndex) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- Syncing activeSlide prop changes to internal state and scroll position
             goToSlide(slide);
         }
     }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
@@ -338,6 +344,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     }, []);
 
     const onViewableItemsChanged = useCallback(
+        // eslint-disable-next-line react-hooks/preserve-manual-memoization -- useCallback correctly memoizes viewability handler
         ({ viewableItems }: { viewableItems: Array<{ index: number | null }> }) => {
             if (!isUserScrolling.current) {
                 return;
@@ -354,6 +361,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             setActiveIndex(newIndex);
             onSlideChange(newIndex, lastIndex);
         },
+        // eslint-disable-next-line react-hooks/preserve-manual-memoization -- Dependencies are correct
         [activeIndex, rtlSafeIndex, onSlideChange]
     );
 
@@ -375,20 +383,21 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         [width, height]
     );
 
-    const showList = width > 0 && (listMounted.current || !activeSlidePending);
+    const showList = width > 0 && (listMounted || !activeSlidePending);
 
     useEffect(() => {
-        if (showList) {
-            listMounted.current = true;
+        if (showList && !listMounted) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- Tracking FlashList mount state for conditional rendering
+            setListMounted(true);
         }
-    }, [showList]);
+    }, [showList, listMounted]);
 
     return (
         <View style={styles.flexOne}>
             {showList ? (
                 <FlashList
                     testID={props.testID}
-                    initialScrollIndex={initialIndex.current}
+                    initialScrollIndex={initialScrollIndex}
                     ref={flashList}
                     data={props.slides}
                     horizontal
@@ -410,6 +419,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             ) : (
                 <View testID={props.testID} style={styles.flatList} onLayout={onLayout} />
             )}
+            {/* eslint-disable-next-line react-hooks/refs -- No ref access in renderPagination, false positive */}
             {renderPagination()}
         </View>
     );

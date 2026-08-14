@@ -57,26 +57,34 @@ export function LineChart(props: LineChartProps): ReactElement | null {
     // fallback to a colour from the palette.
     const normalizedLineColors: string[] = useMemo(() => {
         const lineColorPalette = style.lines?.lineColorPalette?.split(";");
-        let lineColorPaletteIndex = 0;
 
-        return lines.map(_series => {
-            const configuredStyle = !_series.customLineStyle
-                ? null
-                : style.lines?.customLineStyles?.[_series.customLineStyle]?.line?.lineColor;
+        const result = lines.reduce<{ colors: string[]; paletteIndex: number }>(
+            (acc, _series) => {
+                const configuredStyle = !_series.customLineStyle
+                    ? null
+                    : style.lines?.customLineStyles?.[_series.customLineStyle]?.line?.lineColor;
 
-            if (typeof configuredStyle !== "string") {
-                const lineColor = lineColorPalette?.[lineColorPaletteIndex] || "black";
+                if (typeof configuredStyle !== "string") {
+                    const lineColor = lineColorPalette?.[acc.paletteIndex] || "black";
+                    const nextIndex = lineColorPalette
+                        ? (acc.paletteIndex + 1) % lineColorPalette.length
+                        : acc.paletteIndex;
 
-                if (lineColorPalette) {
-                    const indexIncrement = lineColorPaletteIndex + 1;
-                    lineColorPaletteIndex = indexIncrement === lineColorPalette.length ? 0 : indexIncrement;
+                    return {
+                        colors: [...acc.colors, lineColor],
+                        paletteIndex: nextIndex
+                    };
                 }
 
-                return lineColor;
-            }
+                return {
+                    colors: [...acc.colors, configuredStyle],
+                    paletteIndex: acc.paletteIndex
+                };
+            },
+            { colors: [], paletteIndex: 0 }
+        );
 
-            return configuredStyle;
-        });
+        return result.colors;
     }, [lines, style]);
 
     const chartLines = useMemo(() => {

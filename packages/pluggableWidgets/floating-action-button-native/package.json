@@ -15,7 +15,7 @@
     "format": "pluggable-widgets-tools format",
     "test": "pluggable-widgets-tools test:unit:native",
     "release": "pluggable-widgets-tools release:native",
-    "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
     "version": "pnpm release"
   },
   "dependencies": {

@@ -20,7 +20,7 @@ export const parseStyle = (style = ""): { [key: string]: string } => {
             }
             return styleObject;
         }, {});
-    } catch (_) {
+    } catch {
         return {};
     }
 };
