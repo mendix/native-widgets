@@ -1,11 +1,909 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Intro Screen renders 1`] = `null`;
+exports[`Intro Screen renders 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={false}
+  visible={true}
+>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        bounces={false}
+        data={
+          [
+            {
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
+              "name": "Page 1",
+            },
+          ]
+        }
+        extraData={
+          [
+            400,
+            0,
+          ]
+        }
+        horizontal={true}
+        importantForAccessibility="no"
+        initialScrollIndex={0}
+        keyExtractor={[Function]}
+        maintainVisibleContentPosition={
+          {
+            "disabled": true,
+          }
+        }
+        onLayout={[Function]}
+        onScrollBeginDrag={[Function]}
+        onViewableItemsChanged={[Function]}
+        pagingEnabled={true}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+        testID="intro-screen-notch-test"
+        viewabilityConfig={
+          {
+            "itemVisiblePercentThreshold": 60,
+            "minimumViewTime": 250,
+          }
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "bottom": 22,
+              "justifyContent": "space-between",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+            },
+            {
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              {
+                "width": 133.33333333333334,
+              },
+            ]
+          }
+        />
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          nativeBackgroundAndroid={
+            {
+              "attribute": "selectableItemBackground",
+              "rippleRadius": undefined,
+              "type": "ThemeAttrAndroid",
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 12,
+              },
+              {
+                "width": 133.33333333333334,
+              },
+            ]
+          }
+          testID="intro-screen-notch-test$buttonDone"
+        >
+          <View
+            style={
+              {
+                "alignSelf": "center",
+              }
+            }
+          >
+            <View
+              testId="icon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
 
-exports[`Intro Screen renders with 1 bottom button 1`] = `null`;
+exports[`Intro Screen renders with 1 bottom button 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={false}
+  visible={true}
+>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        bounces={false}
+        data={
+          [
+            {
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
+              "name": "Page 1",
+            },
+          ]
+        }
+        extraData={
+          [
+            400,
+            0,
+          ]
+        }
+        horizontal={true}
+        importantForAccessibility="no"
+        initialScrollIndex={0}
+        keyExtractor={[Function]}
+        maintainVisibleContentPosition={
+          {
+            "disabled": true,
+          }
+        }
+        onLayout={[Function]}
+        onScrollBeginDrag={[Function]}
+        onViewableItemsChanged={[Function]}
+        pagingEnabled={true}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+        testID="intro-screen-notch-test"
+        viewabilityConfig={
+          {
+            "itemVisiblePercentThreshold": 60,
+            "minimumViewTime": 250,
+          }
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "bottom": 22,
+              "justifyContent": "space-between",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+            },
+            {},
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              {
+                "width": "100%",
+              },
+            ]
+          }
+        />
+        <View
+          style={
+            {
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginTop": 16,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              nativeBackgroundAndroid={
+                {
+                  "attribute": "selectableItemBackground",
+                  "rippleRadius": undefined,
+                  "type": "ThemeAttrAndroid",
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "paddingVertical": 12,
+                  },
+                  {},
+                ]
+              }
+              testID="intro-screen-notch-test$buttonDone"
+            >
+              <View
+                style={
+                  {
+                    "alignSelf": "center",
+                  }
+                }
+              >
+                <View
+                  testId="icon"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
 
-exports[`Intro Screen renders with 2 bottom button 1`] = `null`;
+exports[`Intro Screen renders with 2 bottom button 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={false}
+  visible={true}
+>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        bounces={false}
+        data={
+          [
+            {
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
+              "name": "Page 1",
+            },
+          ]
+        }
+        extraData={
+          [
+            400,
+            0,
+          ]
+        }
+        horizontal={true}
+        importantForAccessibility="no"
+        initialScrollIndex={0}
+        keyExtractor={[Function]}
+        maintainVisibleContentPosition={
+          {
+            "disabled": true,
+          }
+        }
+        onLayout={[Function]}
+        onScrollBeginDrag={[Function]}
+        onViewableItemsChanged={[Function]}
+        pagingEnabled={true}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+        testID="intro-screen-notch-test"
+        viewabilityConfig={
+          {
+            "itemVisiblePercentThreshold": 60,
+            "minimumViewTime": 250,
+          }
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "bottom": 22,
+              "justifyContent": "space-between",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+            },
+            {},
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              {
+                "width": "100%",
+              },
+            ]
+          }
+        />
+        <View
+          style={
+            {
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "marginTop": 16,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              nativeBackgroundAndroid={
+                {
+                  "attribute": "selectableItemBackground",
+                  "rippleRadius": undefined,
+                  "type": "ThemeAttrAndroid",
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "paddingVertical": 12,
+                  },
+                  {},
+                ]
+              }
+              testID="intro-screen-notch-test$buttonDone"
+            >
+              <View
+                style={
+                  {
+                    "alignSelf": "center",
+                  }
+                }
+              >
+                <View
+                  testId="icon"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
 
-exports[`Intro Screen renders with active slide attribute 1`] = `null`;
+exports[`Intro Screen renders with active slide attribute 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={false}
+  visible={true}
+>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        bounces={false}
+        data={
+          [
+            {
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
+              "name": "Page 1",
+            },
+          ]
+        }
+        extraData={
+          [
+            400,
+            0,
+          ]
+        }
+        horizontal={true}
+        importantForAccessibility="no"
+        initialScrollIndex={0}
+        keyExtractor={[Function]}
+        maintainVisibleContentPosition={
+          {
+            "disabled": true,
+          }
+        }
+        onLayout={[Function]}
+        onScrollBeginDrag={[Function]}
+        onViewableItemsChanged={[Function]}
+        pagingEnabled={true}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+        testID="intro-screen-notch-test"
+        viewabilityConfig={
+          {
+            "itemVisiblePercentThreshold": 60,
+            "minimumViewTime": 250,
+          }
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "bottom": 22,
+              "justifyContent": "space-between",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+            },
+            {
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              {
+                "width": 133.33333333333334,
+              },
+            ]
+          }
+        />
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          nativeBackgroundAndroid={
+            {
+              "attribute": "selectableItemBackground",
+              "rippleRadius": undefined,
+              "type": "ThemeAttrAndroid",
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 12,
+              },
+              {
+                "width": 133.33333333333334,
+              },
+            ]
+          }
+          testID="intro-screen-notch-test$buttonDone"
+        >
+          <View
+            style={
+              {
+                "alignSelf": "center",
+              }
+            }
+          >
+            <View
+              testId="icon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
 
-exports[`Intro Screen renders with async storage identifier 1`] = `null`;
+exports[`Intro Screen renders with async storage identifier 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={false}
+  visible={true}
+>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        bounces={false}
+        data={
+          [
+            {
+              "content": {
+                "$$typeof": Symbol(react.transitional.element),
+                "_owner": null,
+                "_store": {},
+                "key": null,
+                "props": {},
+                "type": [Function],
+              },
+              "name": "Page 1",
+            },
+          ]
+        }
+        extraData={
+          [
+            400,
+            0,
+          ]
+        }
+        horizontal={true}
+        importantForAccessibility="no"
+        initialScrollIndex={0}
+        keyExtractor={[Function]}
+        maintainVisibleContentPosition={
+          {
+            "disabled": true,
+          }
+        }
+        onLayout={[Function]}
+        onScrollBeginDrag={[Function]}
+        onViewableItemsChanged={[Function]}
+        pagingEnabled={true}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+        testID="intro-screen-notch-test"
+        viewabilityConfig={
+          {
+            "itemVisiblePercentThreshold": 60,
+            "minimumViewTime": 250,
+          }
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "bottom": 22,
+              "justifyContent": "space-between",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+            },
+            {
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              {
+                "width": 133.33333333333334,
+              },
+            ]
+          }
+        />
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          nativeBackgroundAndroid={
+            {
+              "attribute": "selectableItemBackground",
+              "rippleRadius": undefined,
+              "type": "ThemeAttrAndroid",
+            }
+          }
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingVertical": 12,
+              },
+              {
+                "width": 133.33333333333334,
+              },
+            ]
+          }
+          testID="intro-screen-notch-test$buttonDone"
+        >
+          <View
+            style={
+              {
+                "alignSelf": "center",
+              }
+            }
+          >
+            <View
+              testId="icon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
