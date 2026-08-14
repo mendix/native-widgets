@@ -10,6 +10,8 @@
     "url": "https://github.com/mendix/native-widgets/"
   },
   "private": true,
+  "widgetName": "piwUtilsInternal",
+  "packagePath": "com.mendix.utils",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
