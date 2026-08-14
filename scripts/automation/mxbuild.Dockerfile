@@ -5,7 +5,7 @@ RUN \
     echo "Installing Java 21..." && \
     apt-get -qq update && \
     apt-get -qq install -y wget libgdiplus && \
-    wget -q https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz -O /tmp/openjdk.tar.gz && \
+    wget -q https://download.java.net/java/GA/jdk21.0.2/f2283984656d49d69e91c558476027ac/13/GPL/openjdk-21.0.2_linux-x64_bin.tar.gz -O /tmp/openjdk.tar.gz && \
     mkdir -p /usr/lib/jvm && \
     tar xfz /tmp/openjdk.tar.gz --directory /usr/lib/jvm && \
     ls /usr/lib/jvm && \
