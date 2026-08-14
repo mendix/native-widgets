@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Intro Screen renders 1`] = `
 <Modal
@@ -47,30 +47,22 @@ exports[`Intro Screen renders 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
-          maintainVisibleContentPosition={
-            {
-              "minIndexForVisible": 0,
-            }
-          }
           onLayout={[Function]}
-          onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onViewableItemsChanged={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
           testID="intro-screen-notch-test"
+          viewabilityConfig={
+            {
+              "itemVisiblePercentThreshold": 60,
+              "minimumViewTime": 250,
+            }
+          }
         >
           <View>
-            <View
-              style={
-                {
-                  "height": 0,
-                  "left": 1000000,
-                  "position": "absolute",
-                  "top": 0,
-                }
-              }
-            />
             <View
               style={
                 {
@@ -115,8 +107,8 @@ exports[`Intro Screen renders 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -153,7 +145,7 @@ exports[`Intro Screen renders 1`] = `
                 "justifyContent": "center",
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -202,7 +194,7 @@ exports[`Intro Screen renders 1`] = `
                 "paddingVertical": 12,
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -273,30 +265,22 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
-          maintainVisibleContentPosition={
-            {
-              "minIndexForVisible": 0,
-            }
-          }
           onLayout={[Function]}
-          onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onViewableItemsChanged={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
           testID="intro-screen-notch-test"
+          viewabilityConfig={
+            {
+              "itemVisiblePercentThreshold": 60,
+              "minimumViewTime": 250,
+            }
+          }
         >
           <View>
-            <View
-              style={
-                {
-                  "height": 0,
-                  "left": 1000000,
-                  "position": "absolute",
-                  "top": 0,
-                }
-              }
-            />
             <View
               style={
                 {
@@ -341,8 +325,8 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -513,30 +497,22 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
-          maintainVisibleContentPosition={
-            {
-              "minIndexForVisible": 0,
-            }
-          }
           onLayout={[Function]}
-          onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onViewableItemsChanged={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
           testID="intro-screen-notch-test"
+          viewabilityConfig={
+            {
+              "itemVisiblePercentThreshold": 60,
+              "minimumViewTime": 250,
+            }
+          }
         >
           <View>
-            <View
-              style={
-                {
-                  "height": 0,
-                  "left": 1000000,
-                  "position": "absolute",
-                  "top": 0,
-                }
-              }
-            />
             <View
               style={
                 {
@@ -581,8 +557,8 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -753,30 +729,22 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
-          maintainVisibleContentPosition={
-            {
-              "minIndexForVisible": 0,
-            }
-          }
           onLayout={[Function]}
-          onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onViewableItemsChanged={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
           testID="intro-screen-notch-test"
+          viewabilityConfig={
+            {
+              "itemVisiblePercentThreshold": 60,
+              "minimumViewTime": 250,
+            }
+          }
         >
           <View>
-            <View
-              style={
-                {
-                  "height": 0,
-                  "left": 1000000,
-                  "position": "absolute",
-                  "top": 0,
-                }
-              }
-            />
             <View
               style={
                 {
@@ -821,8 +789,8 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -859,7 +827,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
                 "justifyContent": "center",
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -908,7 +876,7 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
                 "paddingVertical": 12,
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -979,30 +947,22 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
           importantForAccessibility="no"
           initialScrollIndex={0}
           keyExtractor={[Function]}
-          maintainVisibleContentPosition={
-            {
-              "minIndexForVisible": 0,
-            }
-          }
           onLayout={[Function]}
-          onMomentumScrollEnd={[Function]}
           onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onViewableItemsChanged={[Function]}
           pagingEnabled={true}
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
           testID="intro-screen-notch-test"
+          viewabilityConfig={
+            {
+              "itemVisiblePercentThreshold": 60,
+              "minimumViewTime": 250,
+            }
+          }
         >
           <View>
-            <View
-              style={
-                {
-                  "height": 0,
-                  "left": 1000000,
-                  "position": "absolute",
-                  "top": 0,
-                }
-              }
-            />
             <View
               style={
                 {
@@ -1047,8 +1007,8 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
                   importantForAccessibility="auto"
                   style={
                     {
-                      "height": 0,
-                      "width": 0,
+                      "height": 800,
+                      "width": 400,
                     }
                   }
                 >
@@ -1085,7 +1045,7 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
                 "justifyContent": "center",
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }
@@ -1134,7 +1094,7 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
                 "paddingVertical": 12,
               },
               {
-                "width": 0,
+                "width": 133.33333333333334,
               },
             ]
           }

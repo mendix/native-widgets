@@ -8,7 +8,6 @@ import { CSSProperties } from "react";
 export interface ActivityIndicatorProps<Style> {
     name: string;
     style: Style[];
-
 }
 
 export interface ActivityIndicatorPreviewProps {
@@ -22,5 +21,4 @@ export interface ActivityIndicatorPreviewProps {
     readOnly: boolean;
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
-
 }

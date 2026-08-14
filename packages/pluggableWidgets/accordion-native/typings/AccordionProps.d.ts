@@ -3,8 +3,8 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ComponentType, CSSProperties, ReactNode } from "react";
 import { ActionValue, DynamicValue, EditableValue, NativeIcon } from "mendix";
+import { ComponentType, CSSProperties, ReactNode } from "react";
 
 export type HeaderRenderModeEnum = "text" | "custom";
 
@@ -68,6 +68,14 @@ export interface AccordionPreviewProps {
     collapsible: boolean;
     collapseBehavior: CollapseBehaviorEnum;
     icon: IconEnum;
-    iconCollapsed: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
-    iconExpanded: { type: "glyph"; iconClass: string; } | { type: "image"; imageUrl: string; iconUrl: string; } | { type: "icon"; iconClass: string; } | undefined;
+    iconCollapsed:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
+    iconExpanded:
+        | { type: "glyph"; iconClass: string }
+        | { type: "image"; imageUrl: string; iconUrl: string }
+        | { type: "icon"; iconClass: string }
+        | undefined;
 }
