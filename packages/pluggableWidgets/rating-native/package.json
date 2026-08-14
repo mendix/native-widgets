@@ -19,7 +19,7 @@
     "version": "pnpm release"
   },
   "dependencies": {
-    "@react-native-vector-icons/common": "12.4.0",
+    "@react-native-vector-icons/common": "12.4.2",
     "@react-native-vector-icons/get-image": "12.3.0",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
