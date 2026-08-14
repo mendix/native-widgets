@@ -2,7 +2,7 @@ import { render, act, fireEvent, RenderAPI } from "@testing-library/react-native
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
-import { View } from "react-native";
+import { InteractionManager, View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
@@ -12,9 +12,21 @@ jest.mock("react-native-device-info", () => ({
 }));
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
-    getItem: jest.fn().mockResolvedValue("gone"),
-    setValue: jest.fn().mockResolvedValue(null)
+    getItem: jest.fn().mockResolvedValue(null),
+    setItem: jest.fn().mockResolvedValue(null)
 }));
+
+jest.mock("@shopify/flash-list", () => {
+    const React = jest.requireActual("react");
+    const { View } = jest.requireActual("react-native");
+    return {
+        FlashList: React.forwardRef((props: any, ref: any) => {
+            React.useImperativeHandle(ref, () => ({ scrollToOffset: jest.fn() }));
+            // Spread all props so tests can inspect FlashList props via .props
+            return React.createElement(View, props);
+        })
+    };
+});
 
 const layout = (component: RenderAPI, name: string): void => {
     fireEvent(component.getByTestId(name), "layout", {
@@ -47,7 +59,18 @@ describe("Intro Screen", () => {
             getDeviceId: jest.fn().mockReturnValue("iPhone")
         }));
 
+        jest.spyOn(InteractionManager, "runAfterInteractions").mockImplementation(callback => {
+            if (typeof callback === "function") {
+                callback();
+            }
+            return { cancel: jest.fn(), then: jest.fn(), done: jest.fn() };
+        });
+
         jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("renders", () => {
@@ -84,6 +107,7 @@ describe("Intro Screen", () => {
     it("renders with async storage identifier", async () => {
         const component = render(<IntroScreen {...defaultProps} identifier="test1" />);
         // Wait for async storage to resolve
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         await act(async () => {});
         layout(component, "intro-screen-test");
         expect(component.toJSON()).toMatchSnapshot();
@@ -245,7 +269,9 @@ describe("Intro Screen", () => {
             const component = render(<IntroScreen {...defaultProps} slides={threeSlides} />);
             layout(component, "intro-screen-test");
 
-            expect(component.getByTestId("intro-screen-test").props.maintainVisibleContentPosition).toBeUndefined();
+            expect(component.getByTestId("intro-screen-test").props.maintainVisibleContentPosition).toEqual({
+                disabled: true
+            });
         });
 
         it("holds the slides back until the attribute has a value to open on", () => {
