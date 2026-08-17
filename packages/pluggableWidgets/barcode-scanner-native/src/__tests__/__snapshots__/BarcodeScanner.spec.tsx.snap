@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`BarcodeScanner renders 1`] = `
 <View
@@ -15,6 +15,7 @@ exports[`BarcodeScanner renders 1`] = `
     codeScanner="mockCodeScanner"
     device="mock-device"
     isActive={true}
+    onLayout={[Function]}
     style={
       {
         "alignItems": "center",
@@ -42,6 +43,7 @@ exports[`BarcodeScanner renders with mask 1`] = `
     codeScanner="mockCodeScanner"
     device="mock-device"
     isActive={true}
+    onLayout={[Function]}
     style={
       {
         "alignItems": "center",
@@ -50,13 +52,14 @@ exports[`BarcodeScanner renders with mask 1`] = `
       }
     }
     testID="barcode-scanner-test"
-  >
-    <BarcodeMask
-      backgroundColor="rgba(0, 0, 0, 0.6)"
-      edgeColor="#62B1F6"
-      showAnimatedLine={false}
-    />
-  </View>
+  />
+  <BarcodeMask
+    backgroundColor="rgba(0, 0, 0, 0.6)"
+    edgeColor="#62B1F6"
+    height={260}
+    showAnimatedLine={false}
+    width={280}
+  />
 </View>
 `;
 
@@ -75,6 +78,7 @@ exports[`BarcodeScanner renders with mask with animated line 1`] = `
     codeScanner="mockCodeScanner"
     device="mock-device"
     isActive={true}
+    onLayout={[Function]}
     style={
       {
         "alignItems": "center",
@@ -83,12 +87,13 @@ exports[`BarcodeScanner renders with mask with animated line 1`] = `
       }
     }
     testID="barcode-scanner-test"
-  >
-    <BarcodeMask
-      backgroundColor="rgba(0, 0, 0, 0.6)"
-      edgeColor="#62B1F6"
-      showAnimatedLine={true}
-    />
-  </View>
+  />
+  <BarcodeMask
+    backgroundColor="rgba(0, 0, 0, 0.6)"
+    edgeColor="#62B1F6"
+    height={260}
+    showAnimatedLine={true}
+    width={280}
+  />
 </View>
 `;

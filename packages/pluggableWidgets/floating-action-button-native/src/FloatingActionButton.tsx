@@ -1,16 +1,15 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { Icon } from "mendix/components/native/Icon";
-import { Component, JSX } from "react";
-import { Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
-import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { JSX, useEffect, useRef, useState } from "react";
+import { Animated, Easing, Pressable, Text, View, ViewStyle } from "react-native";
 
-import { FloatingActionButtonProps } from "../typings/FloatingActionButtonProps";
-import { defaultFloatingActionButtonStyle, FloatingActionButtonStyle } from "./ui/styles";
-
-interface State {
-    active: boolean;
-}
+import {
+    FloatingActionButtonProps,
+    HorizontalPositionEnum,
+    VerticalPositionEnum
+} from "../typings/FloatingActionButtonProps";
+import { defaultFloatingActionButtonStyle, FloatingActionButtonStyle, styles } from "./ui/styles";
 
 const defaultIconSource = { type: "glyph", iconClass: "glyphicon-plus" } as const;
 const defaultActiveIconSource = { type: "glyph", iconClass: "glyphicon-remove" } as const;
@@ -24,36 +23,6 @@ interface AnimatedMainIconProps {
     iconActive: FloatingActionButtonProps<FloatingActionButtonStyle>["iconActive"];
 }
 
-function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
-    const { active, hasSecondaryButtons, style, icon, iconActive } = props;
-
-    const progress = useSharedValue(active && hasSecondaryButtons ? 1 : 0);
-    progress.value = withTiming(active && hasSecondaryButtons ? 1 : 0, {
-        duration: 200,
-        easing: Easing.out(Easing.ease)
-    });
-
-    const animatedStyle = useAnimatedStyle(() => ({
-        transform: [
-            {
-                rotate: `${interpolate(progress.value, [0, 1], [0, -180])}deg`
-            }
-        ]
-    }));
-
-    const iconSource = icon?.value ? icon.value : defaultIconSource;
-    const activeIconSource = iconActive?.value ? iconActive.value : defaultActiveIconSource;
-    const source = active && hasSecondaryButtons ? activeIconSource : iconSource;
-
-    return (
-        <View testID={"FloatingAction$IconView"} style={[style.button, style.buttonContainer]}>
-            <Animated.View style={[style.buttonIconContainer, animatedStyle]}>
-                <Icon icon={source} size={style.buttonIcon.size} color={style.buttonIcon.color} />
-            </Animated.View>
-        </View>
-    );
-}
-
 interface SecondaryActionItemProps {
     active: boolean;
     index: number;
@@ -65,6 +34,85 @@ interface SecondaryActionItemProps {
     mainButtonSize: number;
     secondaryButtonSize: number;
     onPress: () => void;
+}
+
+function getVerticalOrientation(verticalPosition: VerticalPositionEnum): "up" | "down" {
+    switch (verticalPosition) {
+        case "bottom":
+            return "up";
+        case "top":
+        default:
+            return "down";
+    }
+}
+
+function getPositionStyle(
+    verticalPosition: VerticalPositionEnum,
+    horizontalPosition: HorizontalPositionEnum
+): ViewStyle {
+    const positionStyle: ViewStyle = {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        zIndex: 999
+    };
+
+    switch (verticalPosition) {
+        case "bottom":
+            positionStyle.bottom = 0;
+            break;
+        case "top":
+        default:
+            positionStyle.top = 0;
+            break;
+    }
+
+    switch (horizontalPosition) {
+        case "left":
+            positionStyle.alignItems = "flex-start";
+            break;
+        case "center":
+            positionStyle.alignItems = "center";
+            break;
+        case "right":
+        default:
+            positionStyle.alignItems = "flex-end";
+            break;
+    }
+
+    return positionStyle;
+}
+
+function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
+    const { active, hasSecondaryButtons, style, icon, iconActive } = props;
+
+    const progress = useRef(new Animated.Value(active && hasSecondaryButtons ? 1 : 0)).current;
+
+    useEffect(() => {
+        Animated.timing(progress, {
+            toValue: active && hasSecondaryButtons ? 1 : 0,
+            duration: 200,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true
+        }).start();
+    }, [active, hasSecondaryButtons, progress]);
+
+    const rotate = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0deg", "-180deg"]
+    });
+
+    const iconSource = icon?.value ? icon.value : defaultIconSource;
+    const activeIconSource = iconActive?.value ? iconActive.value : defaultActiveIconSource;
+    const source = active && hasSecondaryButtons ? activeIconSource : iconSource;
+
+    return (
+        <View testID={"FloatingAction$IconView"} style={[style.button, style.buttonContainer]}>
+            <Animated.View style={[style.buttonIconContainer, { transform: [{ rotate }] }]}>
+                <Icon icon={source} size={style.buttonIcon.size} color={style.buttonIcon.color} />
+            </Animated.View>
+        </View>
+    );
 }
 
 function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
@@ -81,32 +129,31 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
         onPress
     } = props;
 
-    const progress = useSharedValue(active ? 1 : 0);
-    progress.value = withTiming(active ? 1 : 0, {
-        duration: 200,
-        easing: Easing.out(Easing.ease)
-    });
+    const progress = useRef(new Animated.Value(active ? 1 : 0)).current;
 
-    const labelOnRight = horizontalPosition === "left";
+    useEffect(() => {
+        Animated.timing(progress, {
+            toValue: active ? 1 : 0,
+            duration: 200,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true
+        }).start();
+    }, [active, progress]);
+
+    const labelOnRight = horizontalPosition === "left" || horizontalPosition === "center";
     const labelOnLeft = horizontalPosition === "right";
 
-    const animatedStyle = useAnimatedStyle(() => {
-        const centerToCenterDistance =
-            (mainButtonSize + secondaryButtonSize) / 2 + SECONDARY_GAP + index * (secondaryButtonSize + SECONDARY_GAP);
+    const centerToCenterDistance =
+        (mainButtonSize + secondaryButtonSize) / 2 + SECONDARY_GAP + index * (secondaryButtonSize + SECONDARY_GAP);
 
-        return {
-            opacity: progress.value,
-            transform: [
-                {
-                    translateY: interpolate(
-                        progress.value,
-                        [0, 1],
-                        [0, direction === "up" ? -centerToCenterDistance : centerToCenterDistance]
-                    )
-                },
-                { scale: interpolate(progress.value, [0, 1], [0.8, 1]) }
-            ]
-        };
+    const translateY = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, direction === "up" ? -centerToCenterDistance : centerToCenterDistance]
+    });
+
+    const scale = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.8, 1]
     });
 
     const anchorStyle: ViewStyle = {
@@ -119,7 +166,14 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
     return (
         <Animated.View
             pointerEvents={active ? "auto" : "none"}
-            style={[styles.secondaryAnchor, anchorStyle, animatedStyle]}
+            style={[
+                styles.secondaryAnchor,
+                anchorStyle,
+                {
+                    opacity: progress,
+                    transform: [{ translateY }, { scale }]
+                }
+            ]}
         >
             <View
                 style={[
@@ -148,6 +202,9 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
                 <Pressable
                     testID={`${name}$button${index}`}
                     onPress={onPress}
+                    accessible
+                    accessibilityRole="button"
+                    accessibilityLabel={button.caption?.value || `Action button ${index + 1}`}
                     style={({ pressed }) => [
                         styles.secondaryButtonBase,
                         style.secondaryButton,
@@ -186,177 +243,95 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
     );
 }
 
-export class FloatingActionButton extends Component<FloatingActionButtonProps<FloatingActionButtonStyle>, State> {
-    readonly state: State = {
-        active: false
+export function FloatingActionButton(props: FloatingActionButtonProps<FloatingActionButtonStyle>): JSX.Element {
+    const [active, setActive] = useState(false);
+    const style = flattenStyles(defaultFloatingActionButtonStyle, props.style);
+    const { rippleColor: _, ...buttonStyle } = style.button;
+
+    const mainButtonSize = style.button.size ?? 54;
+    const secondaryButtonSize = style.secondaryButton.size ?? 40;
+    const horizontalPosition = props.horizontalPosition ?? "right";
+    const hasSecondaryButtons = !!props.secondaryButtons?.length;
+
+    const handlePress = (): void => {
+        if (props.secondaryButtons?.length) {
+            setActive(prev => !prev);
+            return;
+        }
+
+        executeAction(props.onClick);
     };
 
-    private readonly onPressHandler = this.onPress.bind(this);
-
-    render(): JSX.Element {
-        const style = flattenStyles(defaultFloatingActionButtonStyle, this.props.style);
-        const buttonStyle = { ...style.button };
-        delete buttonStyle.rippleColor;
-
-        const mainButtonSize = style.button.size ?? 54;
-        const secondaryButtonSize = style.secondaryButton.size ?? 40;
-        const horizontalPosition = this.props.horizontalPosition ?? "right";
-        const hasSecondaryButtons = !!this.props.secondaryButtons?.length;
-
-        return (
-            <View pointerEvents="box-none" style={[styles.wrapper, style.container, this.getPositionStyle()]}>
-                {this.renderButtons(style, mainButtonSize, secondaryButtonSize, horizontalPosition)}
-
-                <Pressable
-                    testID={this.props.name}
-                    onPress={this.onPressHandler}
-                    style={({ pressed }) => [
-                        styles.mainButtonBase,
-                        buttonStyle,
-                        {
-                            width: mainButtonSize,
-                            height: mainButtonSize,
-                            borderRadius: mainButtonSize / 2,
-                            opacity: pressed ? 0.2 : 1
-                        }
-                    ]}
-                >
-                    <AnimatedMainIcon
-                        active={this.state.active}
-                        hasSecondaryButtons={hasSecondaryButtons}
-                        style={style}
-                        icon={this.props.icon}
-                        iconActive={this.props.iconActive}
-                    />
-                </Pressable>
-            </View>
-        );
-    }
-
-    private renderButtons(
+    const renderButtons = (
         style: FloatingActionButtonStyle,
         mainButtonSize: number,
         secondaryButtonSize: number,
         horizontalPosition: "left" | "right" | "center"
-    ): JSX.Element[] | undefined {
-        return this.props.secondaryButtons?.map((button, index) => (
+    ): JSX.Element[] | undefined => {
+        return props.secondaryButtons?.map((button, index) => (
             <SecondaryActionItem
                 key={`button${index}`}
-                active={this.state.active}
+                active={active}
                 index={index}
-                direction={this.verticalOrientation}
+                direction={getVerticalOrientation(props.verticalPosition)}
                 horizontalPosition={horizontalPosition}
-                name={this.props.name}
+                name={props.name}
                 button={button}
                 style={style}
                 mainButtonSize={mainButtonSize}
                 secondaryButtonSize={secondaryButtonSize}
                 onPress={() => {
-                    this.setState({ active: false });
+                    setActive(false);
                     executeAction(button.onClick);
                 }}
             />
         ));
-    }
+    };
 
-    private get verticalOrientation(): "up" | "down" {
-        switch (this.props.verticalPosition) {
-            case "bottom":
-                return "up";
-            case "top":
-                return "down";
-            default:
-                return "down";
-        }
-    }
+    return (
+        <View
+            pointerEvents="box-none"
+            style={[
+                styles.wrapper,
+                style.container,
+                getPositionStyle(props.verticalPosition, props.horizontalPosition)
+            ]}
+        >
+            {renderButtons(style, mainButtonSize, secondaryButtonSize, horizontalPosition)}
 
-    private getPositionStyle(): ViewStyle {
-        const positionStyle: ViewStyle = {
-            position: "absolute",
-            left: 0,
-            right: 0,
-            zIndex: 999
-        };
-
-        switch (this.props.verticalPosition) {
-            case "bottom":
-                positionStyle.bottom = 0;
-                break;
-            case "top":
-            default:
-                positionStyle.top = 0;
-                break;
-        }
-
-        switch (this.props.horizontalPosition) {
-            case "left":
-                positionStyle.alignItems = "flex-start";
-                break;
-            case "center":
-                positionStyle.alignItems = "center";
-                break;
-            case "right":
-            default:
-                positionStyle.alignItems = "flex-end";
-                break;
-        }
-
-        return positionStyle;
-    }
-
-    private onPress(): void {
-        if (this.props.secondaryButtons?.length) {
-            // eslint-disable-next-line react/no-access-state-in-setstate
-            this.setState({ active: !this.state.active });
-            return;
-        }
-
-        executeAction(this.props.onClick);
-    }
+            <Pressable
+                testID={props.name}
+                onPress={handlePress}
+                accessible
+                accessibilityRole="button"
+                accessibilityLabel={hasSecondaryButtons ? "Floating action menu" : "Floating action button"}
+                accessibilityState={{ expanded: hasSecondaryButtons ? active : undefined }}
+                accessibilityHint={
+                    hasSecondaryButtons
+                        ? active
+                            ? "Collapse secondary actions"
+                            : "Expand to show secondary actions"
+                        : undefined
+                }
+                style={({ pressed }) => [
+                    styles.mainButtonBase,
+                    buttonStyle,
+                    {
+                        width: mainButtonSize,
+                        height: mainButtonSize,
+                        borderRadius: mainButtonSize / 2,
+                        opacity: pressed ? 0.2 : 1
+                    }
+                ]}
+            >
+                <AnimatedMainIcon
+                    active={active}
+                    hasSecondaryButtons={hasSecondaryButtons}
+                    style={style}
+                    icon={props.icon}
+                    iconActive={props.iconActive}
+                />
+            </Pressable>
+        </View>
+    );
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        justifyContent: "flex-end"
-    },
-    mainButtonBase: {
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    secondaryAnchor: {
-        position: "absolute"
-    },
-    secondaryRow: {
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    rowAlignLeft: {
-        justifyContent: "flex-start"
-    },
-    rowAlignRight: {
-        justifyContent: "flex-end"
-    },
-    rowAlignCenter: {
-        justifyContent: "center"
-    },
-    secondaryButtonBase: {
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0
-    },
-    captionInlineContainer: {
-        flexShrink: 0
-    },
-    captionBeforeButton: {
-        marginRight: 8,
-        alignItems: "flex-end"
-    },
-    captionAfterButton: {
-        marginLeft: 8,
-        alignItems: "flex-start"
-    },
-    captionText: {
-        flexShrink: 0
-    }
-});

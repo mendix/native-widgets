@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { Big } from "big.js";
 import { dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Rating, Props } from "../Rating";
