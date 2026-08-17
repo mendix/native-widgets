@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
-    "querystringify": "^2.2.0",
+    "querystringify": "2.2.0",
     "react-native-dialog": "9.3.0",
     "react-native-view-shot": "5.1.0"
   },

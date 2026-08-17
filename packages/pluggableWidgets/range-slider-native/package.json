@@ -21,7 +21,7 @@
   "dependencies": {
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "@miblanchard/react-native-slider": "^2.6.0"
+    "@miblanchard/react-native-slider": "2.6.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"
