@@ -126,6 +126,7 @@ async function createNativeMobileResourcesModule(): Promise<ArtifactResult> {
     log(`Native widget folders found: ${nativeWidgetFolders.length}`);
     const moduleInfo = {
         ...(await getPackageInfo(moduleFolder)),
+        version: inputs.version,
         moduleNameInModeler: "NativeMobileResources",
         moduleFolderNameInModeler: "nativemobileresources"
     };
@@ -157,6 +158,7 @@ async function createNanoflowCommonsModule(): Promise<ArtifactResult> {
     log(`Temp folder: ${tmpFolder}`);
     const moduleInfo = {
         ...(await getPackageInfo(moduleFolder)),
+        version: inputs.version,
         moduleNameInModeler: "NanoflowCommons",
         moduleFolderNameInModeler: "nanoflowcommons"
     };
