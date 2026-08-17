@@ -19,11 +19,10 @@
     "version": "pnpm release"
   },
   "dependencies": {
-    "@react-native-vector-icons/common": "12.4.2",
-    "@react-native-vector-icons/get-image": "12.3.0",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-animatable": "1.4.0"
+    "react-native-animatable": "1.4.0",
+    "react-native-svg": "15.15.4"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
