@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`FloatingActionButton renders correct props with secondary buttons 1`] = `
 <View
@@ -23,30 +23,25 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
   }
 >
   <View
+    collapsable={false}
     pointerEvents="none"
     style={
-      [
-        {
-          "position": "absolute",
-        },
-        {
-          "alignItems": "center",
-          "left": 0,
-          "right": 0,
-          "top": 7,
-        },
-        {
-          "opacity": 0,
-          "transform": [
-            {
-              "translateY": undefined,
-            },
-            {
-              "scale": undefined,
-            },
-          ],
-        },
-      ]
+      {
+        "alignItems": "center",
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 7,
+        "transform": [
+          {
+            "translateY": 0,
+          },
+          {
+            "scale": 0.8,
+          },
+        ],
+      }
     }
   >
     <View
@@ -94,6 +89,8 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         </Text>
       </View>
       <View
+        accessibilityLabel="caption1"
+        accessibilityRole="button"
         accessibilityState={
           {
             "busy": undefined,
@@ -159,30 +156,25 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
   </View>
   <View
+    collapsable={false}
     pointerEvents="none"
     style={
-      [
-        {
-          "position": "absolute",
-        },
-        {
-          "alignItems": "center",
-          "left": 0,
-          "right": 0,
-          "top": 7,
-        },
-        {
-          "opacity": 0,
-          "transform": [
-            {
-              "translateY": undefined,
-            },
-            {
-              "scale": undefined,
-            },
-          ],
-        },
-      ]
+      {
+        "alignItems": "center",
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 7,
+        "transform": [
+          {
+            "translateY": 0,
+          },
+          {
+            "scale": 0.8,
+          },
+        ],
+      }
     }
   >
     <View
@@ -230,6 +222,8 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         </Text>
       </View>
       <View
+        accessibilityLabel="caption2"
+        accessibilityRole="button"
         accessibilityState={
           {
             "busy": undefined,
@@ -295,30 +289,25 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
   </View>
   <View
+    collapsable={false}
     pointerEvents="none"
     style={
-      [
-        {
-          "position": "absolute",
-        },
-        {
-          "alignItems": "center",
-          "left": 0,
-          "right": 0,
-          "top": 7,
-        },
-        {
-          "opacity": 0,
-          "transform": [
-            {
-              "translateY": undefined,
-            },
-            {
-              "scale": undefined,
-            },
-          ],
-        },
-      ]
+      {
+        "alignItems": "center",
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 7,
+        "transform": [
+          {
+            "translateY": 0,
+          },
+          {
+            "scale": 0.8,
+          },
+        ],
+      }
     }
   >
     <View
@@ -366,6 +355,8 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         </Text>
       </View>
       <View
+        accessibilityLabel="caption3"
+        accessibilityRole="button"
         accessibilityState={
           {
             "busy": undefined,
@@ -431,12 +422,15 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
   </View>
   <View
+    accessibilityHint="Expand to show secondary actions"
+    accessibilityLabel="Floating action menu"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
         "checked": undefined,
         "disabled": undefined,
-        "expanded": undefined,
+        "expanded": false,
         "selected": undefined,
       }
     }
@@ -516,21 +510,18 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
       testID="FloatingAction$IconView"
     >
       <View
+        collapsable={false}
         style={
-          [
-            {
-              "alignItems": "center",
-              "flexShrink": 1,
-              "justifyContent": "center",
-            },
-            {
-              "transform": [
-                {
-                  "rotate": "undefineddeg",
-                },
-              ],
-            },
-          ]
+          {
+            "alignItems": "center",
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "transform": [
+              {
+                "rotate": "0deg",
+              },
+            ],
+          }
         }
       >
         <View
@@ -565,6 +556,8 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
   }
 >
   <View
+    accessibilityLabel="Floating action button"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
@@ -650,21 +643,18 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
       testID="FloatingAction$IconView"
     >
       <View
+        collapsable={false}
         style={
-          [
-            {
-              "alignItems": "center",
-              "flexShrink": 1,
-              "justifyContent": "center",
-            },
-            {
-              "transform": [
-                {
-                  "rotate": "undefineddeg",
-                },
-              ],
-            },
-          ]
+          {
+            "alignItems": "center",
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "transform": [
+              {
+                "rotate": "0deg",
+              },
+            ],
+          }
         }
       >
         <View
@@ -699,6 +689,8 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
   }
 >
   <View
+    accessibilityLabel="Floating action button"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
@@ -784,21 +776,18 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
       testID="FloatingAction$IconView"
     >
       <View
+        collapsable={false}
         style={
-          [
-            {
-              "alignItems": "center",
-              "flexShrink": 1,
-              "justifyContent": "center",
-            },
-            {
-              "transform": [
-                {
-                  "rotate": "undefineddeg",
-                },
-              ],
-            },
-          ]
+          {
+            "alignItems": "center",
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "transform": [
+              {
+                "rotate": "0deg",
+              },
+            ],
+          }
         }
       >
         <View
@@ -833,6 +822,8 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
   }
 >
   <View
+    accessibilityLabel="Floating action button"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
@@ -918,21 +909,18 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
       testID="FloatingAction$IconView"
     >
       <View
+        collapsable={false}
         style={
-          [
-            {
-              "alignItems": "center",
-              "flexShrink": 1,
-              "justifyContent": "center",
-            },
-            {
-              "transform": [
-                {
-                  "rotate": "undefineddeg",
-                },
-              ],
-            },
-          ]
+          {
+            "alignItems": "center",
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "transform": [
+              {
+                "rotate": "0deg",
+              },
+            ],
+          }
         }
       >
         <View
