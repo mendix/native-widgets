@@ -9,13 +9,9 @@ import { RatingProps } from "../typings/RatingProps";
 import { defaultRatingStyle, IconStyle, RatingStyle } from "./ui/Styles";
 import { StarIcon } from "./lib/StarIcon";
 
-interface State {}
-
 export type Props = RatingProps<RatingStyle>;
 
-export class Rating extends Component<Props, State> {
-    readonly state: State = {};
-
+export class Rating extends Component<Props> {
     private readonly onChangeHandler = this.onChange.bind(this);
     private readonly styles = flattenStyles(defaultRatingStyle, this.props.style);
     private readonly iconStyle: IconStyle;
