@@ -89,6 +89,8 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         </Text>
       </View>
       <View
+        accessibilityLabel="caption1"
+        accessibilityRole="button"
         accessibilityState={
           {
             "busy": undefined,
@@ -220,6 +222,8 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         </Text>
       </View>
       <View
+        accessibilityLabel="caption2"
+        accessibilityRole="button"
         accessibilityState={
           {
             "busy": undefined,
@@ -351,6 +355,8 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
         </Text>
       </View>
       <View
+        accessibilityLabel="caption3"
+        accessibilityRole="button"
         accessibilityState={
           {
             "busy": undefined,
@@ -416,12 +422,15 @@ exports[`FloatingActionButton renders correct props with secondary buttons 1`] =
     </View>
   </View>
   <View
+    accessibilityHint="Expand to show secondary actions"
+    accessibilityLabel="Floating action menu"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
         "checked": undefined,
         "disabled": undefined,
-        "expanded": undefined,
+        "expanded": false,
         "selected": undefined,
       }
     }
@@ -547,6 +556,8 @@ exports[`FloatingActionButton renders correct props without secondary buttons 1`
   }
 >
   <View
+    accessibilityLabel="Floating action button"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
@@ -678,6 +689,8 @@ exports[`FloatingActionButton vertical position renders position bottom correctl
   }
 >
   <View
+    accessibilityLabel="Floating action button"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
@@ -809,6 +822,8 @@ exports[`FloatingActionButton vertical position renders position top correctly 1
   }
 >
   <View
+    accessibilityLabel="Floating action button"
+    accessibilityRole="button"
     accessibilityState={
       {
         "busy": undefined,
