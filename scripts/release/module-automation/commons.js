@@ -219,6 +219,11 @@ async function cloneRepo(githubUrl, localFolder, branchName) {
 
 async function createMPK(tmpFolder, moduleInfo, excludeFilesRegExp) {
     console.log("Creating module MPK..");
+    // Required lazily: createWidgetRelease.js loads this module under plain node, which
+    // cannot resolve a .ts file. Only the ts-node entry points reach createMPK.
+    const { setModuleVersion } = require("./moduleVersion");
+    await setModuleVersion(tmpFolder, moduleInfo.moduleNameInModeler, moduleInfo.version, moduleInfo.minimumMXVersion);
+
     await createModuleMpkInDocker(
         tmpFolder,
         moduleInfo.moduleNameInModeler,
