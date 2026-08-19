@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   We have removed the 'react-native-reanimated' library and used Animated API of react native for animation purpose.
+-   We fixed an issue of secondary button's caption not displayed if its horizontal position is center.
+-   We refactored code and migrated to functional component.
+
 ## [4.2.1] - 2026-6-10
 
 ### Changed
