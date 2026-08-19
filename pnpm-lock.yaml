@@ -778,7 +778,7 @@ importers:
         version: 1.4.0
       react-native-svg:
         specifier: 15.15.4
-        version: 15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.0(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
+        version: 15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
