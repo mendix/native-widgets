@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We updated deprecated-react-native-prop-types to 4.2.3.
+-   We pinned react-native-snap-carousel to 3.9.1.
+
 ## [3.1.0] - 2024-12-3
 
 ### Changed

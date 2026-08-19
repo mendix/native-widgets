@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We pinned prop-types to 15.8.1.
+
 ## [5.2.0] - 2026-5-15
 
 ### Changed
