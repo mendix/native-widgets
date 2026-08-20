@@ -23,7 +23,7 @@ async function preCommit() {
 
         for (const changedWidgetPackage of changedWidgetPackages) {
             validationPromises.push(
-                new Promise(async (resolve, reject) => {
+                (async () => {
                     const packageXmlAsJson = await parseStringPromise(
                         (await readFile(join(changedWidgetPackage.path, "src", "package.xml"))).toString(),
                         { ignoreAttrs: false }
@@ -35,16 +35,23 @@ async function preCommit() {
                     const packageJsonVersion = packageJson.version;
                     const filesMissingVersion = [];
 
-                    if (!packageXmlVersion) filesMissingVersion.push("package.xml");
-                    if (!packageJsonVersion) filesMissingVersion.push("package.json");
+                    if (!packageXmlVersion) {
+                        filesMissingVersion.push("package.xml");
+                    }
+                    if (!packageJsonVersion) {
+                        filesMissingVersion.push("package.json");
+                    }
 
-                    if (filesMissingVersion.length)
-                        reject(`[${packageJson.name}] ${filesMissingVersion.join(" and ")} missing version.`);
+                    if (filesMissingVersion.length) {
+                        throw new Error(`[${packageJson.name}] ${filesMissingVersion.join(" and ")} missing version.`);
+                    }
 
-                    if (packageJsonVersion === packageXmlVersion) resolve();
+                    if (packageJsonVersion === packageXmlVersion) {
+                        return;
+                    }
 
-                    reject(`[${packageJson.name}] package.json and package.xml versions do not match.`);
-                })
+                    throw new Error(`[${packageJson.name}] package.json and package.xml versions do not match.`);
+                })()
             );
         }
 

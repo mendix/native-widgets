@@ -1,5 +1,5 @@
 import { all } from "deepmerge";
-import { ReactElement, useCallback, useEffect, useMemo, useState, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import {
     executeAction,
     FilterType,
@@ -16,7 +16,8 @@ import { GalleryProps } from "../typings/GalleryProps";
 import { ObjectItem } from "mendix";
 
 export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
-    const viewStateFilters = useRef<FilterCondition | undefined>(undefined);
+    // Capture initial filter state once during mount
+    const [viewStateFilters] = useState<FilterCondition | undefined>(() => props.datasource.filter);
     const [filtered, setFiltered] = useState(false);
     const customFiltersState = useMultipleFiltering();
     const { FilterContext } = useFilterContext();
@@ -29,12 +30,6 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
         }
     }, [props.datasource, props.pageSize]);
 
-    useEffect(() => {
-        if (props.datasource.filter && !filtered && !viewStateFilters.current) {
-            viewStateFilters.current = props.datasource.filter;
-        }
-    }, [props.datasource, filtered]);
-
     const filterList = useMemo(
         () => props.filterList.reduce((filters, { filter }) => ({ ...filters, [filter.id]: filter }), {}),
         [props.filterList]
@@ -45,25 +40,31 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
             props.filterList.reduce(
                 (filters, { filter }) => ({
                     ...filters,
-                    [filter.id]: extractFilters(filter, viewStateFilters.current)
+                    [filter.id]: extractFilters(filter, viewStateFilters)
                 }),
                 {}
             ),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [props.filterList, viewStateFilters.current]
+        [props.filterList, viewStateFilters]
     );
 
-    const filters = Object.keys(customFiltersState)
-        .map((key: FilterType) => customFiltersState[key][0]?.getFilterCondition())
-        .filter((filter): filter is FilterCondition => filter !== undefined);
+    const filters = useMemo(
+        () =>
+            Object.keys(customFiltersState)
+                .map((key: FilterType) => customFiltersState[key][0]?.getFilterCondition())
+                .filter((filter): filter is FilterCondition => filter !== undefined),
+        [customFiltersState]
+    );
 
-    if (filters.length > 0) {
-        props.datasource.setFilter(filters.length > 1 ? and(...filters) : filters[0]);
-    } else if (filtered) {
-        props.datasource.setFilter(undefined);
-    } else {
-        props.datasource.setFilter(viewStateFilters.current);
-    }
+    // Move filter setting to useEffect to avoid side effects during render
+    useEffect(() => {
+        if (filters.length > 0) {
+            props.datasource.setFilter(filters.length > 1 ? and(...filters) : filters[0]);
+        } else if (filtered) {
+            props.datasource.setFilter(undefined);
+        } else {
+            props.datasource.setFilter(viewStateFilters);
+        }
+    }, [filters, filtered, props.datasource, viewStateFilters]);
 
     const loadMoreItems = useCallback(() => {
         props.datasource.setLimit((currentPage + 1) * props.pageSize);

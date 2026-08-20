@@ -11,13 +11,13 @@ jest.mock("react-native-gesture-handler", () => ({
     ScrollView,
     PanGestureHandler: View,
     TapGestureHandler: View,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     attachGestureHandler: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     createGestureHandler: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     dropGestureHandler: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     updateGestureHandler: () => {},
     Direction: {
         RIGHT: 1,

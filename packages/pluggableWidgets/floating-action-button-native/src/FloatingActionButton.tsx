@@ -1,7 +1,7 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { Icon } from "mendix/components/native/Icon";
-import { JSX, useEffect, useRef, useState } from "react";
+import { JSX, useEffect, useMemo, useState } from "react";
 import { Animated, Easing, Pressable, Text, View, ViewStyle } from "react-native";
 
 import {
@@ -86,7 +86,7 @@ function getPositionStyle(
 function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
     const { active, hasSecondaryButtons, style, icon, iconActive } = props;
 
-    const progress = useRef(new Animated.Value(active && hasSecondaryButtons ? 1 : 0)).current;
+    const [progress] = useState(() => new Animated.Value(active && hasSecondaryButtons ? 1 : 0));
 
     useEffect(() => {
         Animated.timing(progress, {
@@ -97,10 +97,14 @@ function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
         }).start();
     }, [active, hasSecondaryButtons, progress]);
 
-    const rotate = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0deg", "-180deg"]
-    });
+    const rotate = useMemo(
+        () =>
+            progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: ["0deg", "-180deg"]
+            }),
+        [progress]
+    );
 
     const iconSource = icon?.value ? icon.value : defaultIconSource;
     const activeIconSource = iconActive?.value ? iconActive.value : defaultActiveIconSource;
@@ -129,7 +133,7 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
         onPress
     } = props;
 
-    const progress = useRef(new Animated.Value(active ? 1 : 0)).current;
+    const [progress] = useState(() => new Animated.Value(active ? 1 : 0));
 
     useEffect(() => {
         Animated.timing(progress, {
@@ -146,15 +150,23 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
     const centerToCenterDistance =
         (mainButtonSize + secondaryButtonSize) / 2 + SECONDARY_GAP + index * (secondaryButtonSize + SECONDARY_GAP);
 
-    const translateY = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, direction === "up" ? -centerToCenterDistance : centerToCenterDistance]
-    });
+    const translateY = useMemo(
+        () =>
+            progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, direction === "up" ? -centerToCenterDistance : centerToCenterDistance]
+            }),
+        [progress, direction, centerToCenterDistance]
+    );
 
-    const scale = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0.8, 1]
-    });
+    const scale = useMemo(
+        () =>
+            progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0.8, 1]
+            }),
+        [progress]
+    );
 
     const anchorStyle: ViewStyle = {
         left: 0,

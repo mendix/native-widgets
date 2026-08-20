@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Animated, View } from "react-native";
 import Svg, { Line, Path } from "react-native-svg";
 import { barcodeMaskStyles as styles } from "../ui/styles";
@@ -29,8 +29,8 @@ export const BarcodeMask = (props: BarcodeMaskSvgProps): ReactElement => {
         backgroundColor = "rgba(0, 0, 0, 0.6)"
     } = props;
 
-    const lineY = useRef(new Animated.Value(0)).current;
-    const lineStrokeWidth = useRef(new Animated.Value(0)).current;
+    const [lineY] = useState(() => new Animated.Value(0));
+    const [lineStrokeWidth] = useState(() => new Animated.Value(0));
 
     useEffect(() => {
         lineY.setValue(0);
