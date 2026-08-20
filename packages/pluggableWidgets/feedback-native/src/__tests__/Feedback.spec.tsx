@@ -5,7 +5,7 @@ import { Feedback } from "../Feedback";
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { NativeImage } from "mendix";
 
-// @ts-ignore
+// @ts-expect-error - Mocking global fetch for tests
 global.fetch = jest.fn(() =>
     Promise.resolve({
         ok: true

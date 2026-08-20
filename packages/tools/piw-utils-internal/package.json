@@ -19,7 +19,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "test": "pluggable-widgets-tools test:unit:native",
-    "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
     "prepare": "pnpm build",
     "postinstall": "pnpm build"
   },

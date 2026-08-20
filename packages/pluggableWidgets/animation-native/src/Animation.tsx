@@ -71,7 +71,6 @@ export class Animation extends Component<Props> {
     }
 
     private log(message: string): void {
-        // eslint-disable-next-line no-console
         console.warn(message);
     }
 
