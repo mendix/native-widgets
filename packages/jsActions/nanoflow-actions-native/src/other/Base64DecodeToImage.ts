@@ -79,9 +79,11 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
                     {},
                     fileBlob,
                     () => {
+                        RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
                         resolve(true);
                     },
                     error => {
+                        RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
                         reject(error);
                     }
                 );
