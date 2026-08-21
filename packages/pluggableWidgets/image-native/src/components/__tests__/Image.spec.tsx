@@ -67,7 +67,6 @@ jest.mock("react-native/Libraries/Image/Image", () => {
 
 jest.mock("@d11/react-native-fast-image", () => {
     const React = jest.requireActual("react") as typeof import("react");
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { resolveAssetSource } = require("react-native/Libraries/Image/Image");
     const FastImage = ({
         testID,

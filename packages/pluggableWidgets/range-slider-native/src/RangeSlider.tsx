@@ -1,18 +1,16 @@
 import { available, flattenStyles, toNumber, unavailable } from "@mendix/piw-native-utils-internal";
-import MultiSlider, { MarkerProps } from "@ptomasroos/react-native-multi-slider";
-import { ReactElement, useCallback, useRef, useState, JSX } from "react";
-import { LayoutChangeEvent, Text, View } from "react-native";
+import { Slider } from "@miblanchard/react-native-slider";
+import { ReactElement, useCallback, useRef } from "react";
+import { Text, View } from "react-native";
 import { Big } from "big.js";
 
 import { RangeSliderProps } from "../typings/RangeSliderProps";
-import { Marker } from "./Marker";
 import { defaultRangeSliderStyle, RangeSliderStyle } from "./ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
 
 export type Props = RangeSliderProps<RangeSliderStyle>;
 
 export function RangeSlider(props: Props): ReactElement {
-    const [width, setWidth] = useState<number>();
     const styles = flattenStyles(defaultRangeSliderStyle, props.style);
 
     const lastLowerValue = useRef<number | undefined>(toNumber(props.lowerValueAttribute));
@@ -23,27 +21,13 @@ export function RangeSlider(props: Props): ReactElement {
     const validationMessages = validate(props);
     const validProps = validationMessages.length === 0;
     const editable = props.editable !== "never" && validProps;
-    const enabledOne = editable && lowerValue !== undefined && !props.lowerValueAttribute.readOnly;
-    const enabledTwo = editable && upperValue !== undefined && !props.upperValueAttribute.readOnly;
+    const enabledLower = editable && lowerValue !== undefined && !props.lowerValueAttribute.readOnly;
+    const enabledUpper = editable && upperValue !== undefined && !props.upperValueAttribute.readOnly;
+    const isEnabled = enabledLower || enabledUpper;
 
-    const customMarker =
-        (markerEnabled: boolean, testID: string) =>
-        (markerProps: MarkerProps): JSX.Element =>
-            (
-                <Marker
-                    {...markerProps}
-                    markerStyle={markerEnabled ? markerProps.markerStyle : styles.markerDisabled}
-                    testID={`${props.name}$${testID}`}
-                />
-            );
-
-    const onLayout = useCallback((event: LayoutChangeEvent): void => {
-        setWidth(event.nativeEvent.layout.width);
-    }, []);
-
-    const onSlide = useCallback(
+    const onValueChange = useCallback(
         (values: number[]): void => {
-            if (values[0] === null || values[1] === null) {
+            if (values[0] == null || values[1] == null) {
                 return;
             }
             props.lowerValueAttribute.setValue(new Big(values[0]));
@@ -52,11 +36,11 @@ export function RangeSlider(props: Props): ReactElement {
         [props.lowerValueAttribute, props.upperValueAttribute]
     );
 
-    const onChange = useCallback(
+    const onSlidingComplete = useCallback(
         (values: number[]): void => {
             if (
-                values[0] === null ||
-                values[1] === null ||
+                values[0] == null ||
+                values[1] == null ||
                 (lastLowerValue.current === values[0] && lastUpperValue.current === values[1])
             ) {
                 return;
@@ -73,24 +57,19 @@ export function RangeSlider(props: Props): ReactElement {
     );
 
     return (
-        <View onLayout={onLayout} style={styles.container} testID={props.name}>
-            <MultiSlider
-                values={lowerValue != null && upperValue != null ? [lowerValue, upperValue] : undefined}
-                min={validProps ? toNumber(props.minimumValue) : undefined}
-                max={validProps ? toNumber(props.maximumValue) : undefined}
-                step={validProps ? toNumber(props.stepSize) : undefined}
-                enabledOne={enabledOne}
-                enabledTwo={enabledTwo}
-                markerStyle={styles.marker}
-                trackStyle={enabledOne || enabledTwo ? styles.track : styles.trackDisabled}
-                selectedStyle={enabledOne || enabledTwo ? styles.highlight : styles.highlightDisabled}
-                pressedMarkerStyle={styles.markerActive}
-                onValuesChange={onSlide}
-                onValuesChangeFinish={onChange}
-                sliderLength={width}
-                isMarkersSeparated
-                customMarkerLeft={customMarker(enabledOne, "leftMarker")}
-                customMarkerRight={customMarker(enabledTwo, "rightMarker")}
+        <View style={styles.container} testID={props.name}>
+            <Slider
+                value={lowerValue != null && upperValue != null ? [lowerValue, upperValue] : [0, 100]}
+                minimumValue={validProps ? toNumber(props.minimumValue) ?? 0 : 0}
+                maximumValue={validProps ? toNumber(props.maximumValue) ?? 100 : 100}
+                step={validProps ? toNumber(props.stepSize) ?? 1 : 1}
+                disabled={!isEnabled}
+                trackStyle={isEnabled ? styles.track : styles.trackDisabled}
+                minimumTrackStyle={isEnabled ? styles.highlight : styles.highlightDisabled}
+                maximumTrackStyle={isEnabled ? styles.track : styles.tracktDisabled}
+                thumbStyle={isEnabled ? styles.marker : styles.markerDisabled}
+                onValueChange={onValueChange}
+                onSlidingComplete={onSlidingComplete}
             />
             {props.lowerValueAttribute.validation && (
                 <Text style={styles.validationMessage}>{props.lowerValueAttribute.validation}</Text>

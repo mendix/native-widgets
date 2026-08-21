@@ -2,24 +2,26 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "F"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "F"
+      - extendedWaitUntil:
+          visible: "Floating action button"
+          timeout: 10000
 - tapOn:
     text: "Floating action button"
 - tapOn:
     id: "floatingActionButtonTopLeft"
-- assertVisible:
-    text: "Music w/ action"
 - tapOn:
     id: "floatingActionButtonBottomLeft"
-- assertVisible:
-    text: "Zooooom"
 - tapOn:
     id: "floatingActionButtonBottomRight"
-- assertVisible:
-    text: "Email"
 - tapOn:
     id: "floatingActionButtonTopRight"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/floating_action_button"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/floating_action_button.png"
 

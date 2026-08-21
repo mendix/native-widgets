@@ -2,8 +2,14 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "I"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "I"
+      - extendedWaitUntil:
+          visible: "Intro screen"
+          timeout: 10000
 - tapOn:
     text: "Intro screen"
 - extendedWaitUntil:
@@ -11,15 +17,21 @@ appId: "${APP_ID}"
     timeout: 5000
 - assertVisible:
     text: "Changes: 0"
+- waitForAnimationToEnd:
+    timeout: 2000
 - swipe:
-    direction: LEFT
+    start: 90%, 10%
+    end: 15%, 10%
 - extendedWaitUntil:
     visible: "Active slide: 3"
     timeout: 5000
 - assertVisible:
     text: "Changes: 1"
+- waitForAnimationToEnd:
+    timeout: 2000
 - swipe:
-    direction: RIGHT
+    start: 15%, 10%
+    end: 90%, 10%
 - extendedWaitUntil:
     visible: "Active slide: 2"
     timeout: 5000
@@ -47,6 +59,9 @@ appId: "${APP_ID}"
     timeout: 5000
 - tapOn:
     text: "NEXT"
+- extendedWaitUntil:
+    visible: "Active slide: 3"
+    timeout: 5000
 - tapOn:
     text: "FINISH"
 - extendedWaitUntil:

@@ -6,6 +6,8 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Base64 } from "js-base64";
+import RNBlobUtil from "react-native-blob-util";
+import { NativeModules } from "react-native";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -29,15 +31,53 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
     // Native platform
     if (navigator && navigator.product === "ReactNative") {
         try {
-            const res = await fetch(base64);
-            const blob = await res.blob();
+            // Remove data URI prefix if present (e.g., "data:image/png;base64,")
+            let cleanBase64 = base64;
+            if (base64.includes(",")) {
+                cleanBase64 = base64.split(",")[1];
+            }
+
+            // Remove any whitespace/newlines
+            cleanBase64 = cleanBase64.replace(/\s/g, "");
+
+            // Validate base64 format
+            if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleanBase64)) {
+                throw new Error("Invalid base64 format");
+            }
+
+            // Create a temporary file path
+            const fileName = `image_${Date.now()}.png`;
+            const tempPath = `${RNBlobUtil.fs.dirs.CacheDir}/${fileName}`;
+
+            // Write Base64 data to a temporary file
+            await RNBlobUtil.fs.writeFile(tempPath, cleanBase64, "base64");
+
+            // Read the file into the native blob store so offline mode works:
+            // NativeFileBackend.storeFile calls NativeFileSystem.save(blob.data, path)
+            // and blob.close() — a plain object has no .data getter or .close(), which
+            // crashes iOS via [NSInvocation invokeWithTarget:].
+            const nativeBlob = await NativeModules.MxFileSystem.read(tempPath.replace("file://", ""));
+            // Normalize: MxFileSystem.read may return 'length' instead of 'size'.
+            const blobData = { ...(nativeBlob as any) };
+            if (blobData.size === undefined && blobData.length !== undefined) {
+                blobData.size = blobData.length;
+            }
+            const blob = new Blob();
+            Object.assign(blob, { data: blobData });
+
+            // Set nativePayload so the patched FormData.prototype.append in NativeFileBackend
+            // replaces the blob value with { uri, name, type } for online uploads. The patch
+            // reads the third append() argument (fileName) and writes it onto nativePayload.name,
+            // which FormData.getParts() uses as the Content-Disposition filename.
+            (blob as any).nativePayload = { uri: `file://${tempPath}`, name: fileName, type: "image/png" };
+            const fileBlob = blob as Blob;
 
             return new Promise((resolve, reject) => {
                 mx.data.saveDocument(
                     image.getGuid(),
-                    "camera image",
+                    fileName,
                     {},
-                    blob,
+                    fileBlob,
                     () => {
                         resolve(true);
                     },

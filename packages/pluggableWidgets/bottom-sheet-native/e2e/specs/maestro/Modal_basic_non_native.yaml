@@ -2,20 +2,32 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "B"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "B"
+      - extendedWaitUntil:
+          visible: "Bottom Sheet"
+          timeout: 10000
 - tapOn:
     text: "Bottom Sheet"
 - tapOn:
     text: "Modal basic non native"
+# Wait for the page to fully load before tapping Open
+- extendedWaitUntil:
+    visible: "Open"
+    timeout: 10000
 - tapOn:
     text: "Open"
 
-# Wait until the sheet is actually open (button label changes)
-- extendedWaitUntil:
-    visible: randText
-    optional: true
+# Wait for the screen to stop changing (image decode / sheet animation)
+# rather than sleeping a fixed time: this returns as soon as the UI
+# settles, and still caps at 25s.
+- waitForAnimationToEnd:
     timeout: 25000
 
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_basic_non_native"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bottom_sheet_modal_basic_non_native.png"

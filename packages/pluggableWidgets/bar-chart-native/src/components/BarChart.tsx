@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useMemo, useState } from "react";
 import { LayoutChangeEvent, Text, View } from "react-native";
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "victory-native";
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryLabel, VictoryStack } from "victory-native";
 import { BarProps } from "victory-bar";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 
@@ -68,25 +68,34 @@ export function BarChart({
     // fallback to a colour from the palette.
     const normalizedBarColors: string[] = useMemo(() => {
         const barColorPalette = style.bars?.barColorPalette?.split(";");
-        let index = 0;
 
-        return series.map(_series => {
-            const configuredStyle = !_series.customBarStyle
-                ? null
-                : style.bars?.customBarStyles?.[_series.customBarStyle]?.bar?.barColor;
+        const result = series.reduce<{ colors: string[]; paletteIndex: number }>(
+            (acc, _series) => {
+                const configuredStyle = !_series.customBarStyle
+                    ? null
+                    : style.bars?.customBarStyles?.[_series.customBarStyle]?.bar?.barColor;
 
-            if (typeof configuredStyle !== "string") {
-                const barColor = barColorPalette?.[index] || "black";
+                if (typeof configuredStyle !== "string") {
+                    const barColor = barColorPalette?.[acc.paletteIndex] || "black";
+                    const nextIndex = barColorPalette
+                        ? (acc.paletteIndex + 1) % barColorPalette.length
+                        : acc.paletteIndex;
 
-                if (barColorPalette) {
-                    index = index + 1 === barColorPalette.length ? 0 : index + 1;
+                    return {
+                        colors: [...acc.colors, barColor],
+                        paletteIndex: nextIndex
+                    };
                 }
 
-                return barColor;
-            }
+                return {
+                    colors: [...acc.colors, configuredStyle],
+                    paletteIndex: acc.paletteIndex
+                };
+            },
+            { colors: [], paletteIndex: 0 }
+        );
 
-            return configuredStyle;
-        });
+        return result.colors;
     }, [series, style]);
 
     const sortProps = useMemo(() => ({ sortOrder, sortKey: "x" }), [sortOrder]);
@@ -108,6 +117,7 @@ export function BarChart({
                     horizontal
                     key={index}
                     data={dataPoints}
+                    labelComponent={<VictoryLabel />}
                     width={barStyles.width}
                     cornerRadius={barStyles.cornerRadius}
                     style={{
@@ -226,12 +236,14 @@ export function BarChart({
                                         <VictoryAxis
                                             orientation={"bottom"}
                                             dependentAxis
+                                            tickLabelComponent={<VictoryLabel />}
                                             style={mapToAxisStyle(style.grid, style.xAxis)}
                                             {...(firstSeries?.xFormatter
                                                 ? { tickFormat: firstSeries.xFormatter }
                                                 : undefined)}
                                         />
                                         <VictoryAxis
+                                            tickLabelComponent={<VictoryLabel />}
                                             style={mapToAxisStyle(style.grid, style.yAxis)}
                                             orientation={"left"}
                                             {...(firstSeries?.yFormatter

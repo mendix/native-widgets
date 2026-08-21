@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [main]
 
+# Supersede in-flight runs: a new push to the same PR/branch cancels the previous run
+# instead of queueing beside it (this repo shares GitHub Free's 20-concurrent-job cap with
+# NativePipeline, so stale runs directly delay the ones that matter). Only PR runs are
+# cancelled — a push run on main/mx-* is the recorded result for that commit, so let it finish.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test:
     name: "Unit tests"
@@ -54,7 +62,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - name: "Installing dependencies"
-        run: pnpm install
+        # Avoid running workspace lifecycle builds during install; the internal utilities are built once below.
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: "Building internal utilities"
+        run: pnpm run build:internal-utils
       - name: "Linting code"
         run: pnpm -r --filter=${{ steps.variables.outputs.arg }} run lint
       - name: "Running unit tests"

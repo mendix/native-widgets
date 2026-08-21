@@ -1,10 +1,10 @@
 import messaging, { FirebaseMessagingTypes } from "@react-native-firebase/messaging";
 import { executeAction } from "@mendix/piw-utils-internal";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Platform } from "react-native";
 import { ActionValue, ValueStatus, Option } from "mendix";
 import "@react-native-firebase/app";
-import notifee, { EventType } from "@notifee/react-native";
+import notifee, { EventType } from "react-native-notify-kit";
 
 import { ActionsType, NotificationsProps } from "../typings/NotificationsProps";
 
@@ -23,8 +23,13 @@ interface Notification {
 
 export function Notifications(props: NotificationsProps<undefined>): null {
     const listeners = useRef<Array<() => void>>([]);
-    const [loadNotifications, setLoadNotifications] = useState(false);
     const knownIds = useRef(new Set<string>());
+
+    // Compute loadNotifications from props availability status
+    const loadNotifications = useMemo(() => {
+        const propsToCheck = [props.guid, props.title, props.subtitle, props.body, props.action];
+        return propsToCheck.every(prop => !prop || prop.status === ValueStatus.Available);
+    }, [props.guid, props.title, props.subtitle, props.body, props.action]);
     const handleNotification = useCallback(
         (
             notification: Notification,
@@ -155,20 +160,6 @@ export function Notifications(props: NotificationsProps<undefined>): null {
             };
         }
     }, [loadNotifications, onOpen, onReceive]);
-
-    useEffect(() => {
-        if (
-            (props.guid && props.guid.status !== ValueStatus.Available) ||
-            (props.title && props.title.status !== ValueStatus.Available) ||
-            (props.subtitle && props.subtitle.status !== ValueStatus.Available) ||
-            (props.body && props.body.status !== ValueStatus.Available) ||
-            (props.action && props.action.status !== ValueStatus.Available)
-        ) {
-            setLoadNotifications(false);
-            return;
-        }
-        setLoadNotifications(true);
-    }, [props.guid, props.title, props.subtitle, props.body, props.action]);
 
     return null;
 }

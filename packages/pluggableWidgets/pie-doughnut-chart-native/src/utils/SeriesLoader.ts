@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { ensure } from "@mendix/pluggable-widgets-tools";
 import { ValueStatus } from "mendix";
 
@@ -10,22 +10,19 @@ interface ChartSeries {
 }
 
 export function useSeries(series: SeriesType[], name: string): ChartSeries[] | null {
-    const [chartSeries, setChartSeries] = useState<ChartSeries[] | null>(null);
-
-    useEffect(() => {
+    const chartSeries = useMemo(() => {
         const loadedSeries: ChartSeries[] = [];
         let index = 0;
         for (const element of series) {
             const result = loadStaticSeries(element, index, name);
             if (!result) {
-                setChartSeries(null);
-                return;
+                return null;
             }
             loadedSeries.push(result);
             index++;
         }
-        setChartSeries(loadedSeries);
-    }, [series]);
+        return loadedSeries;
+    }, [series, name]);
 
     return chartSeries;
 }

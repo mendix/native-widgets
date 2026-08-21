@@ -2,8 +2,14 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "S"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "S"
+      - extendedWaitUntil:
+          visible: "Safe area view"
+          timeout: 10000
 - tapOn:
     text: "Safe area view"
 - tapOn:
@@ -15,3 +21,5 @@ appId: "${APP_ID}"
     Expected result: Text rendered in safe area and full blue background"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/safe_area_view_text"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/safe_area_view_text.png"

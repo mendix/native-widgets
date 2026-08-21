@@ -157,6 +157,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
 
     const onChange = useCallback(
         (index: number) => {
+            "worklet";
             // Determine if the drawer is opening or closing based on index changes
             const hasOpened = lastIndexRef === -1 && index === collapsedIndex; // Initial open to collapsed
             const hasClosed = index === -1; // Fully closed
@@ -177,9 +178,10 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     );
 
     const hasMinimumMeasurements = !isSmallContentValid || smallContentHeight > 0;
+    const headerHeight = isSmallContentValid ? smallContentHeight : 20; // Default header height if smallContent is not valid
 
     return (
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+        <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
             {renderMeasurementTree()}
 
             {hasMinimumMeasurements && snapPoints.length > 0 && (
@@ -195,13 +197,13 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                     enableDynamicSizing={false}
                 >
                     {/* Sticky header (smallContent) */}
-                    <BottomSheetView onLayout={onLayoutSmallContent} style={!isSmallContentValid ? { height: 20 } : {}}>
+                    <BottomSheetView onLayout={onLayoutSmallContent} style={{ height: headerHeight }}>
                         {props.smallContent}
                     </BottomSheetView>
 
                     {/* Scrollable content area */}
                     <BottomSheetScrollView
-                        style={{ flex: 1 }} // Allow it to take available space
+                        style={{ flex: 1, marginTop: headerHeight }} // Allow it to take available space
                         contentContainerStyle={{ paddingBottom: 16 }}
                     >
                         {/* Render largeContent and measure it if needed */}

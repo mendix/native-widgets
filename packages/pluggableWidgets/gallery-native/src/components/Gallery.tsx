@@ -121,7 +121,6 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 <TouchableOpacity {...buttonProps}>{renderButton}</TouchableOpacity>
             )
         ) : null;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         props.style.loadMoreButtonCaption,
         props.loadMoreButtonCaption,

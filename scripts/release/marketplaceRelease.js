@@ -1,9 +1,8 @@
-const nodefetch = require("node-fetch");
 const { join } = require("path");
 
 const config = {
     appStoreUrl: "https://appstore.home.mendix.com/rest/packagesapi/v2",
-    contributorUrl: "https://contributor.mendixcloud.com/apis/v1",
+    contributorUrl: "https://contributor.mendix.com/apis/v1",
     // This one, for some reasons, needs to be added as OpenID header to contributor request.
     // The open id  value (a39025a8-55b8-4532-bc5d-4e74901d11f9) is taken from widgets@mendix.com
     // account and could be found at Profile -> Advanced -> Personal Info -> View My Data -> Open id
@@ -44,6 +43,8 @@ async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMX
         const postResponse = await createDraft(marketplaceId, version, minimumMXVersion);
         await publishDraft(postResponse.UUID);
         console.log(`Successfully uploaded ${pkgName} to the Mendix Marketplace.`);
+
+        await verifyReleasePublished(marketplaceId, version, pkgName);
     } catch (error) {
         error.message = `Failed uploading ${pkgName} to appstore with error: ${error.message}`;
         throw error;
@@ -61,7 +62,7 @@ async function getGithubAssetUrl() {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         console.log(`Attempt ${attempt}/${maxRetries}: Fetching release for tag ${tag}`);
 
-        const releaseData = await fetch(
+        const releaseData = await fetchData(
             "GET",
             `https://api.github.com/repos/mendix/native-widgets/releases/tags/${tag}`
         );
@@ -126,13 +127,13 @@ async function fetchContributor(method, path, body) {
     const pass = process.env.CPAPI_PASS_PROD;
     const credentials = `${user}:${pass}`;
 
-    return fetch(method, `${config.contributorUrl}/${path}`, body, {
+    return fetchData(method, `${config.contributorUrl}/${path}`, body, {
         OpenID: config.openIdUrl,
         Authorization: `Basic ${Buffer.from(credentials).toString("base64")}`
     });
 }
 
-async function fetch(method, url, body, additionalHeaders) {
+async function fetchData(method, url, body, additionalHeaders) {
     let response;
     const httpsOptions = {
         method,
@@ -147,7 +148,7 @@ async function fetch(method, url, body, additionalHeaders) {
 
     console.log(`Fetching URL (${method}): ${url}`);
     try {
-        response = await nodefetch(url, httpsOptions);
+        response = await fetch(url, httpsOptions);
     } catch (error) {
         throw new Error(`An error occurred while retrieving data from ${url}. Technical error: ${error.message}`);
     }
@@ -177,4 +178,79 @@ function packageMetadata() {
     const pkgPath = join(process.cwd(), "package.json");
     const { name, widgetName, version, marketplace } = require(pkgPath);
     return { name, widgetName, version, marketplace };
+}
+
+async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
+    const normalizedExpectedVersion = expectedVersion.startsWith("v") ? expectedVersion.substring(1) : expectedVersion;
+
+    console.log(`Verifying release ${normalizedExpectedVersion} is published for content ID ${contentId}...`);
+
+    const patToken = process.env.MENDIX_PAT_TOKEN;
+    if (!patToken) {
+        console.warn("WARNING: MENDIX_PAT_TOKEN environment variable is not set. Skipping release verification.");
+        return;
+    }
+
+    const maxRetries = 5;
+    const initialDelayMs = 60000;
+    const retryDelayMs = 60000;
+
+    await new Promise(resolve => setTimeout(resolve, initialDelayMs));
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        console.log(`Verification attempt ${attempt}/${maxRetries}: Checking for version ${expectedVersion}`);
+
+        try {
+            // Call the Mendix Content API to get all released module versions
+            const versionsResponse = await fetch(
+                `https://marketplace-api.mendix.com/v1/content/${contentId}/versions`,
+                {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `MxToken ${patToken}`
+                    }
+                }
+            );
+
+            if (!versionsResponse.ok) {
+                const errorText = await versionsResponse.text();
+                throw new Error(
+                    `Content API returned status ${versionsResponse.status}: ${versionsResponse.statusText}. Response: ${errorText}`
+                );
+            }
+
+            const responseData = await versionsResponse.json();
+
+            if (!responseData.items || !Array.isArray(responseData.items)) {
+                throw new Error(`Unexpected API response structure: ${JSON.stringify(responseData)}`);
+            }
+
+            const versions = responseData.items;
+
+            const versionFound = versions.some(v => v.versionNumber === normalizedExpectedVersion);
+
+            if (versionFound) {
+                console.log(
+                    `Successfully verified: Version ${normalizedExpectedVersion} is published on Mendix Marketplace!`
+                );
+                return;
+            }
+
+            if (attempt < maxRetries) {
+                await new Promise(resolve => setTimeout(resolve, retryDelayMs));
+            }
+        } catch (error) {
+            console.error(`Error during verification attempt ${attempt}: ${error.message}`);
+            if (attempt < maxRetries) {
+                await new Promise(resolve => setTimeout(resolve, retryDelayMs));
+            }
+        }
+    }
+
+    throw new Error(
+        `Release verification FAILED: Version ${normalizedExpectedVersion} for ${pkgName} (content ID: ${contentId}) ` +
+            `was not found on Mendix Marketplace after ${maxRetries} attempts. ` +
+            `The publish step reported success, but the version is not publicly available. `
+    );
 }

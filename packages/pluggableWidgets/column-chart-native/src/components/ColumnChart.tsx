@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useMemo, useState } from "react";
 import { LayoutChangeEvent, Text, TextStyle, View } from "react-native";
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "victory-native";
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryLabel, VictoryStack } from "victory-native";
 import { BarProps } from "victory-bar";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 
@@ -72,25 +72,34 @@ export function ColumnChart({
     // fallback to a colour from the palette.
     const normalizedColumnColors: string[] = useMemo(() => {
         const columnColorPalette = style.columns?.columnColorPalette?.split(";");
-        let index = 0;
 
-        return sortedSeries.map(seriesItem => {
-            const configuredStyle = !seriesItem.customColumnStyle
-                ? null
-                : style.columns?.customColumnStyles?.[seriesItem.customColumnStyle]?.column?.columnColor;
+        const result = sortedSeries.reduce<{ colors: string[]; paletteIndex: number }>(
+            (acc, seriesItem) => {
+                const configuredStyle = !seriesItem.customColumnStyle
+                    ? null
+                    : style.columns?.customColumnStyles?.[seriesItem.customColumnStyle]?.column?.columnColor;
 
-            if (typeof configuredStyle !== "string") {
-                const columnColor = columnColorPalette?.[index] || "black";
+                if (typeof configuredStyle !== "string") {
+                    const columnColor = columnColorPalette?.[acc.paletteIndex] || "black";
+                    const nextIndex = columnColorPalette
+                        ? (acc.paletteIndex + 1) % columnColorPalette.length
+                        : acc.paletteIndex;
 
-                if (columnColorPalette) {
-                    index = index + 1 === columnColorPalette.length ? 0 : index + 1;
+                    return {
+                        colors: [...acc.colors, columnColor],
+                        paletteIndex: nextIndex
+                    };
                 }
 
-                return columnColor;
-            }
+                return {
+                    colors: [...acc.colors, configuredStyle],
+                    paletteIndex: acc.paletteIndex
+                };
+            },
+            { colors: [], paletteIndex: 0 }
+        );
 
-            return configuredStyle;
-        });
+        return result.colors;
     }, [sortedSeries, style]);
 
     const groupedOrStacked = useMemo(() => {
@@ -114,6 +123,7 @@ export function ColumnChart({
                 <VictoryBar
                     key={index}
                     data={dataPoints}
+                    labelComponent={<VictoryLabel />}
                     width={columnStyles.width}
                     cornerRadius={columnStyles.cornerRadius}
                     style={{

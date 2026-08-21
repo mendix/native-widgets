@@ -2,12 +2,20 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "P"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "P"
+      - extendedWaitUntil:
+          visible: "Progress bar"
+          timeout: 10000
 - tapOn:
     text: "Progress bar"
 - assertVisible:
     text: "Dynamic values:"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/progress_bar"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/progress_bar.png"
 

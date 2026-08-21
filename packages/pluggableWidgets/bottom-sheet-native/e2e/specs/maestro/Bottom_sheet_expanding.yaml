@@ -2,16 +2,24 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "B"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "B"
+      - extendedWaitUntil:
+          visible: "Bottom Sheet"
+          timeout: 10000
 - tapOn:
     text: "Bottom Sheet"
 - tapOn:
     text: "Expanding"
-# Because the image loading can take some time due to resources on emulator, we need to wait for the image to be visible
-- extendedWaitUntil: 
-     visible: randText  # Any random text that does not exist in the UI
-     optional: true  # This should be true so that the test won't fail
-     timeout: 10000 # 10 seconds
+# Wait for the screen to stop changing (image decode / sheet animation)
+# rather than sleeping a fixed time: this returns as soon as the UI
+# settles, and still caps at 10s.
+- waitForAnimationToEnd:
+    timeout: 10000
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/bottom_sheet_expanding"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bottom_sheet_expanding.png"

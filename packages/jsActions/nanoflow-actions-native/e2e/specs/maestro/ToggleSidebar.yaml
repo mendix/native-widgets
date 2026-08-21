@@ -19,5 +19,7 @@ appId: "${APP_ID}"
      timeout: 5000 # 5 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/toggle_sidebar"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/toggle_sidebar.png"
 
 

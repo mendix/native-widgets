@@ -2,11 +2,19 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "R"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "R"
+      - extendedWaitUntil:
+          visible: "Range slider"
+          timeout: 10000
 - tapOn:
     text: "Range slider"
 - assertVisible:
     text: "Dynamic ranges"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/range_slider"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/range_slider.png"

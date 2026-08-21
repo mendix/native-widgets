@@ -2,11 +2,19 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "R"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "R"
+      - extendedWaitUntil:
+          visible: "Radio buttons"
+          timeout: 10000
 - tapOn:
     text: "Radio buttons"
 - assertVisible:
     text: "Vertical radio buttons"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/radio_buttons"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/radio_buttons.png"

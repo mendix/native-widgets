@@ -8,6 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
+-   We fixed an issue where the IntroScreen did not show the slide set by the active slide attribute, and where swiping between slides did not work reliably on slower Android devices.
+
+## [4.4.1] - 2026-6-10
+
+### Changed
+
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
+## [4.4.0] - 2026-5-15
+
+### Fixed
+
 -   We fixed an issue with the TalkBack/VoiceOver traversal in the IntroScreen widget, where the order was not correct.
 
 ## [4.3.0] - 2026-4-9

@@ -1,21 +1,30 @@
 name: "Setup Maestro"
-description: "Install and cache Maestro"
+description: "Install and cache a pinned version of Maestro"
+inputs:
+  version:
+    description: "Maestro CLI version to install (release tag is cli-<version>)"
+    required: false
+    default: "2.6.1"
 runs:
   using: "composite"
   steps:
     - name: "Cache Maestro"
       uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
       with:
-        path: $HOME/.local/bin/maestro
-        key: maestro-${{ runner.os }}-v1
-    
+        # Use ~ rather than $HOME: actions/cache does not expand environment variables.
+        path: ~/.local/bin/maestro
+        key: maestro-${{ runner.os }}-${{ inputs.version }}
+
     - name: "Install Maestro"
       shell: bash
+      env:
+        MAESTRO_VERSION: ${{ inputs.version }}
       run: |
+        set -euo pipefail
         if [ ! -f "$HOME/.local/bin/maestro/bin/maestro" ]; then
-          mkdir -p $HOME/.local/bin
-          curl -L "https://github.com/mobile-dev-inc/maestro/releases/latest/download/maestro.zip" -o maestro.zip
-          unzip maestro.zip -d $HOME/.local/bin
-          chmod +x $HOME/.local/bin/maestro/bin/maestro
+          mkdir -p "$HOME/.local/bin"
+          curl -fL "https://github.com/mobile-dev-inc/maestro/releases/download/cli-${MAESTRO_VERSION}/maestro.zip" -o maestro.zip
+          unzip -q maestro.zip -d "$HOME/.local/bin"
+          chmod +x "$HOME/.local/bin/maestro/bin/maestro"
         fi
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        echo "$HOME/.local/bin" >> "$GITHUB_PATH"

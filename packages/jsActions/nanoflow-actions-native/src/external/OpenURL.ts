@@ -42,6 +42,7 @@ export async function OpenURL(url?: string): Promise<boolean> {
 
     // Web platform
     if (window) {
+        await mx.data.closeDbConnection();
         window.location.href = url;
         return Promise.resolve(true);
     }

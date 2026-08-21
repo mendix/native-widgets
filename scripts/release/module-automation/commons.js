@@ -60,7 +60,7 @@ async function getPackageInfo(path) {
             testProjectBranchName: testProject?.branchName,
             changelogPath: `${path}/CHANGELOG.md`
         };
-    } catch (error) {
+    } catch {
         console.error(`ERROR: Path does not exist: ${pkgPath}`);
         return null;
     }
@@ -219,6 +219,11 @@ async function cloneRepo(githubUrl, localFolder, branchName) {
 
 async function createMPK(tmpFolder, moduleInfo, excludeFilesRegExp) {
     console.log("Creating module MPK..");
+    // Required lazily: createWidgetRelease.js loads this module under plain node, which
+    // cannot resolve a .ts file. Only the ts-node entry points reach createMPK.
+    const { setModuleVersion } = require("./moduleVersion");
+    await setModuleVersion(tmpFolder, moduleInfo.moduleNameInModeler, moduleInfo.version, moduleInfo.minimumMXVersion);
+
     await createModuleMpkInDocker(
         tmpFolder,
         moduleInfo.moduleNameInModeler,
@@ -283,7 +288,9 @@ async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, ad
             // explicitly set the dest mode, in certain scenarios the file is read only
             // https://chmodcommand.com/chmod-644/
             await chmod(dest, 0o644);
-        } catch (_) {}
+        } catch {
+            // Ignore chmod errors
+        }
         await copyFile(src, dest);
     }
     // Add entries to the package.xml
@@ -296,7 +303,7 @@ async function exportModuleWithWidgets(moduleName, mpkOutput, widgetsFolders, ad
             const newContent = `${beginning}\t${filesContent}\n\t\t${filesEntry}${end}`;
             await writeFile(packageXmlFile, newContent);
         }
-    } catch (e) {
+    } catch {
         throw new Error(`Including widgets in module failed. package.xml of widget/module ${moduleName} not found`);
     }
     // Add additional files to the MPK

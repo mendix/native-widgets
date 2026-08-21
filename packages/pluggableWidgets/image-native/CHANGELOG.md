@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We fixed an issue that caused images from entities to not render on Android in Online Synchronization mode
+
+## [3.1.1] - 2026-6-10
+
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+-   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
+
+## [3.1.0] - 2026-5-15
+
 ### Changed
 
 -   Updated @d11/react-native-fast-image from version v8.11.1 to v8.13.0.

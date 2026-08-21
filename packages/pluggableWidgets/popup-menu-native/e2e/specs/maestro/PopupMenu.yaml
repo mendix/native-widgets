@@ -2,8 +2,14 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "P"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "P"
+      - extendedWaitUntil:
+          visible: "Popup menu"
+          timeout: 10000
 - tapOn:
     text: "Popup menu"
 - tapOn:
@@ -17,5 +23,7 @@ appId: "${APP_ID}"
     text: "Alert"
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/popup_menu_alert"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/popup_menu_alert.png"
 
 

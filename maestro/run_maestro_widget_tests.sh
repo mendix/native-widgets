@@ -15,7 +15,6 @@ if [ "$1" == "android" ]; then
 elif [ "$1" == "ios" ]; then
   APP_ID="com.mendix.native.template"
   PLATFORM="ios"
-  IOS_DEVICE="iPhone 16"
 else
   echo "Usage: $0 [android|ios] [widget]"
   exit 1
@@ -90,6 +89,12 @@ run_widget_tests() {
     return 0
   fi
 }
+
+# Fast-fail (S6): one cheap app-launch probe before any flows. A broken build fails here in
+# ~1 min instead of grinding every flow × retries up to the job timeout.
+if ! smoke_check; then
+  exit 1
+fi
 
 # Run tests for each widget
 for widget in "${widgets[@]}"; do

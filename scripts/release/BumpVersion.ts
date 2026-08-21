@@ -2,7 +2,6 @@ import { promises as fs } from "fs";
 import { join } from "path";
 import { spawnSync } from "child_process";
 
-// eslint-disable-next-line no-console
 main().catch(console.error);
 
 type BumpVersionType = "patch" | "minor" | "major" | string;

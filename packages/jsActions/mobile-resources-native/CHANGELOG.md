@@ -8,6 +8,108 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+-   We switched to a new sound library for the Play sound action to support react-native 0.84+.
+-   The Play sound action now plays audio files from online (network) documents on Android by downloading them to a version-based cache before playback.
+-   We have fixed the biometric authentication issue where it was not working on Android and crashing on iOS.
+-   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions failed to capture photos on Android.
+-   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions did not properly clean up temporary files.
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+
+## [12.1.0] Native Mobile Resources - 2026-6-10
+
+-   Updated react-native from version 0.83.4 to 0.84.1.
+-   Updated @sbaiahmed1/react-native-biometrics from version v0.10.0 to v0.15.0.
+
+## [3.2.1] BarChart
+
+### Fixed
+
+-   We have resolved an issue preventing Bar chart from rendering correctly.
+
+## [5.3.0] BottomSheet
+
+### Changed
+
+-   Updated react-native-gesture-handler from version v2.30.0 to v2.31.2.
+-   Updated react-native-reanimated from version v4.2.2 to v4.3.1.
+-   Updated react-native-worklets from version v0.7.4 to v0.8.3.
+-   Updated @gorhom/bottom-sheet from version v5.2.8 to v5.2.14.
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
+## [2.2.1] ColumnChart
+
+### Fixed
+
+-   We have resolved an issue preventing Column chart from rendering correctly
+
+## [3.6.1] Feedback
+
+### Changed
+
+-   Updated react-native-view-shot from version v4.0.3 to 5.1.0.
+
+## [4.2.1] FloatingActionButton
+
+### Changed
+
+-   Replaced `react-native-action-button` library with custom implementation using React Native's Animated API for better maintainability and reduced bundle size.
+
+-   Removed deprecated `react-native-prop-types` dependency.
+
+## [2.2.1] Gallery
+
+### Changed
+
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
+## [2.1.1] GalleryTextFilter
+
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+
+## [3.1.1] Image
+
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+-   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
+
+## [4.4.1] IntroScreen
+
+### Changed
+
+-   Updated @shopify/flash-list from version v2.2.2 to v2.3.1.
+
+## [3.5.0] ListViewSwipe
+
+### Changed
+
+-   Updated react-native-gesture-handler from version v2.30.0 to v2.31.2.
+
+## [4.1.1] QRCode
+
+### Changed
+
+-   Updated react-native-svg from version v15.15.3 to v15.15.4.
+
+## [5.2.1] Rating
+
+### Changed
+
+-   Updated @react-native-vector-icons/common from version v12.4.0 to v12.4.2.
+
+## [6.4.1] VideoPlayer
+
+### Changed
+
+-   Updated react-native-video from version v6.19.0 to v6.19.2.
+
+## [12.0.0] Native Mobile Resources - 2026-5-15
+
+### Changed
+
 -   We replaced the deprecated CameraRoll.saveToCameraRoll with CameraRoll.saveAsset in SaveToPictureLibrary activity.
 -   Add await to API calls updated to async in recent update
 -   Updated @react-native-camera-roll/camera-roll from version v7.4.0 to v7.10.2.
@@ -18,6 +120,89 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native-file-viewer-turbo from version v0.6.0 to v0.7.4.
 -   Updated react-native-localize from version v3.2.1 to v3.7.0.
 -   Updated react-native-permissions from version v5.4.2 to v5.5.1.
+
+## [5.1.0] AppEvents
+
+### Changed
+
+-   Updated @react-native-community/netinfo from version v11.4.1 to v11.5.2.
+
+## [3.6.0] Feedback
+
+### Changed
+
+-   Replaced the deprecated InteractionManager in Feedback widget.
+
+### Added
+
+-   Translation support for all widget text through configurable properties in Studio Pro.
+-   Visible label above feedback input field to ensure WCAG compliance.
+
+### Fixed
+
+-   Fixed logo overlap issue where custom logo appeared on top of default icon instead of replacing it.
+
+## [2.1.0] GalleryTextFilter
+
+### Changed
+
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
+## [3.1.0] Image
+
+### Changed
+
+-   Updated @d11/react-native-fast-image from version v8.11.1 to v8.13.0.
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
+## [4.4.0] IntroScreen
+
+### Fixed
+
+-   We fixed an issue with the TalkBack/VoiceOver traversal in the IntroScreen widget, where the order was not correct.
+
+## [3.4.0] ListViewSwipe
+
+### Changed
+
+-   Updated react-native-gesture-handler from version v2.24.0 to v2.30.0.
+
+## [5.2.0] Maps
+
+### Changed
+
+-   Updated react-native-maps from version v1.14.0 to v1.20.1.
+
+## [4.1.0] QRCode
+
+### Changed
+
+-   Updated react-native-svg from version v15.12.1 to v15.15.3.
+
+## [3.2.0] SafeAreaView
+
+### Changed
+
+-   Updated @react-navigation/bottom-tabs from version v6.6.1 to v7.15.2.
+-   Updated react-native-safe-area-context from version v5.2.0 to v5.7.0.
+
+## [2.4.0] Signature
+
+### Changed
+
+-   Updated react-native-webview from version v13.13.2 to v13.16.1.
+
+## [6.4.0] VideoPlayer
+
+### Changed
+
+-   Updated react-native-video from version v6.10.2 to v6.19.0.
+
+## [4.4.0] WebView
+
+### Changed
+
+-   Updated react-native-webview from version v13.13.2 to v13.16.1.
 
 ## [11.4.1] Native Mobile Resources - 2026-3-14
 

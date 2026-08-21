@@ -73,14 +73,6 @@ export const ListViewSwipe = (props: ListViewSwipeProps<ListViewSwipeStyle>): Re
         );
     };
 
-    const onSwipeLeft = useCallback((): void => {
-        performAnimation(props.leftRenderMode, props.onSwipeLeft);
-    }, [animation]);
-
-    const onSwipeRight = useCallback((): void => {
-        performAnimation(props.rightRenderMode, props.onSwipeRight);
-    }, [animation]);
-
     const performAnimation = useCallback(
         (renderMode: string, action?: ActionValue): void => {
             if (renderMode === "swipeOutReset" || renderMode === "toggle") {
@@ -101,6 +93,14 @@ export const ListViewSwipe = (props: ListViewSwipeProps<ListViewSwipeStyle>): Re
         },
         [animation]
     );
+
+    const onSwipeLeft = useCallback((): void => {
+        performAnimation(props.leftRenderMode, props.onSwipeLeft);
+    }, [performAnimation, props.leftRenderMode, props.onSwipeLeft]);
+
+    const onSwipeRight = useCallback((): void => {
+        performAnimation(props.rightRenderMode, props.onSwipeRight);
+    }, [performAnimation, props.rightRenderMode, props.onSwipeRight]);
 
     return (
         <Animated.View style={animate ? { height: animation } : {}}>

@@ -16,7 +16,6 @@ if [ "$1" == "android" ]; then
 elif [ "$1" == "ios" ]; then
   APP_ID="com.mendix.native.template"
   PLATFORM="ios"
-  IOS_DEVICE="iPhone 16"
 else
   echo "Usage: $0 [android|ios]"
   exit 1
@@ -97,6 +96,16 @@ run_jsactions_tests() {
     return 0
   fi
 }
+
+# Clean up any stale XCTest processes before starting (iOS only)
+if [ "$PLATFORM" == "ios" ]; then
+  cleanup_xctest_processes
+fi
+
+# Fast-fail smoke check before running jsActions tests (same as widget tests)
+if ! smoke_check; then
+  exit 1
+fi
 
 # Run jsActions tests
 run_jsactions_tests

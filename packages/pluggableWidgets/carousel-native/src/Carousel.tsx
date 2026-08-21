@@ -27,6 +27,7 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
 
     useEffect(() => {
         if (props.contentSource?.status === ValueStatus.Available) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- Syncing external data source status to loading state
             setLoading(false);
         }
     }, [props.contentSource]);
@@ -36,10 +37,13 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
     }, []);
 
     const renderItem = useCallback(({ item, index }: { item: ObjectItem; index: number }) => {
-        const viewStyle = layoutSpecificStyle.slideItem;
+        let viewStyle = layoutSpecificStyle.slideItem;
         if (viewStyle) {
-            // We don't want to pass the already processed height to the item container
-            delete viewStyle.width;
+            // We don't want to pass the already processed width to the item container
+            // Create new object without width property instead of mutating
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { width, ...styleWithoutWidth } = viewStyle;
+            viewStyle = styleWithoutWidth;
         }
 
         return (

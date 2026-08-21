@@ -1,9 +1,5 @@
 name: "Setup Tools"
 description: "Common setup for widget and js test jobs"
-inputs:
-  mendix_version:
-    description: "Mendix version"
-    required: true
 outputs:
   java-path:
     description: "Path to the installed Java"
@@ -11,30 +7,18 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: "Setup Python and dependencies"
-      uses: ./.github/actions/setup-python
+    # Test jobs need only Java + Maestro:
+    #  - the portable app package bundles the runtime, so there's no CDN runtime download and no
+    #    m2ee tooling to set up (and nothing here needs Python).
+    #  - Maestro is a standalone binary, so there's no Node/pnpm install — which would also run the
+    #    root `prepare` lifecycle the test jobs don't need (a known ENOTEMPTY flake source).
 
-    - name: "Setup Node and dependencies"
-      uses: ./.github/actions/setup-node-with-cache
-      
     - name: "Setup Java 21"
       id: setup-java
       uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 #v5.2.0
       with:
         distribution: "temurin"
         java-version: "21"
-
-    - name: "Cache Mendix runtime"
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 #v5
-      with:
-        path: tmp/runtime.tar.gz
-        key: mendix-runtime-${{ inputs.mendix_version }}
-
-    - name: "Cache m2ee-tools"
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 #v5
-      with:
-        path: tmp/m2ee
-        key: m2ee-tools-v1
 
     - name: "Install Maestro"
       uses: ./.github/actions/setup-maestro

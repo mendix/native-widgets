@@ -19,3 +19,5 @@ appId: "${APP_ID}"
      timeout: 5000 # 5 seconds
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/clipboard"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/clipboard.png"
