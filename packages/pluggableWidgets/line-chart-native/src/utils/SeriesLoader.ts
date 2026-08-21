@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { ensure } from "@mendix/pluggable-widgets-tools";
 import { Big } from "big.js";
 import { ObjectItem } from "mendix";
@@ -20,9 +20,7 @@ interface DataPointsExtraction {
 }
 
 export function useSeries(series: LinesType[]): LineChartSeries[] | null {
-    const [chartSeries, setChartSeries] = useState<LineChartSeries[] | null>(null);
-
-    useEffect(() => {
+    const chartSeries = useMemo(() => {
         const loadedSeries: LineChartSeries[] = [];
 
         for (const element of series) {
@@ -30,8 +28,7 @@ export function useSeries(series: LinesType[]): LineChartSeries[] | null {
                 const result = loadStaticSeries(element);
 
                 if (!result) {
-                    setChartSeries(null);
-                    return;
+                    return null;
                 }
 
                 loadedSeries.push(result);
@@ -39,15 +36,14 @@ export function useSeries(series: LinesType[]): LineChartSeries[] | null {
                 const result = loadDynamicSeries(element);
 
                 if (!result) {
-                    setChartSeries(null);
-                    return;
+                    return null;
                 }
 
                 loadedSeries.push(...result);
             }
         }
 
-        setChartSeries(loadedSeries);
+        return loadedSeries;
     }, [series]);
 
     return chartSeries;
