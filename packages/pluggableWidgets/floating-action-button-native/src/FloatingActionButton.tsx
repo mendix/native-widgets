@@ -1,7 +1,7 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { Icon } from "mendix/components/native/Icon";
-import { JSX, useEffect, useRef, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { Animated, Easing, Pressable, Text, View, ViewStyle } from "react-native";
 
 import {
@@ -86,7 +86,7 @@ function getPositionStyle(
 function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
     const { active, hasSecondaryButtons, style, icon, iconActive } = props;
 
-    const progress = useRef(new Animated.Value(active && hasSecondaryButtons ? 1 : 0)).current;
+    const [progress] = useState(() => new Animated.Value(active && hasSecondaryButtons ? 1 : 0));
 
     useEffect(() => {
         Animated.timing(progress, {
@@ -129,7 +129,7 @@ function SecondaryActionItem(props: SecondaryActionItemProps): JSX.Element {
         onPress
     } = props;
 
-    const progress = useRef(new Animated.Value(active ? 1 : 0)).current;
+    const [progress] = useState(() => new Animated.Value(active ? 1 : 0));
 
     useEffect(() => {
         Animated.timing(progress, {
