@@ -41,7 +41,7 @@ export class Rating extends Component<Props> {
             : createElement(StarIcon, { size, color: selectedColor });
         const emptyStarIcon = this.props.emptyIcon?.value
             ? (this.props.emptyIcon.value as any)
-            : createElement(StarIcon, { size, color });
+            : createElement(StarIcon, { size, color, fillMode: "stroke" });
 
         return (
             <StarRating
