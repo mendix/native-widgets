@@ -3,13 +3,13 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ActionValue, DynamicValue, EditableValue, NativeImage } from "mendix";
+import { ActionValue, DynamicValue, EditableImageValue, EditableValue, NativeImage } from "mendix";
 import { CSSProperties } from "react";
 
 export interface SignatureProps<Style> {
     name: string;
     style: Style[];
-    imageSource: DynamicValue<NativeImage>;
+    imageSource: EditableImageValue<NativeImage>;
     hasSignatureAttribute?: EditableValue<boolean>;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;

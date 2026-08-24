@@ -4,16 +4,59 @@ import { ReactElement, useCallback, useRef } from "react";
 import { View, Text } from "react-native";
 import SignatureScreen, { SignatureViewRef } from "react-native-signature-canvas";
 import { Touchable } from "./components/Touchable";
+import RNBlobUtil from "react-native-blob-util";
+import { NativeModules } from "react-native";
 
 import { SignatureProps } from "../typings/SignatureProps";
 import { SignatureStyle, defaultSignatureStyle, webStyles } from "./ui/Styles";
 
 export type Props = SignatureProps<SignatureStyle>;
 
-async function dataUriToFile(dataUri: string): Promise<File> {
-    const response = await fetch(dataUri);
-    const blob = await response.blob();
-    return new File([blob], `signature_${Date.now()}.png`, { type: "image/png", lastModified: Date.now() });
+async function dataUriToBlob(base64: string): Promise<File> {
+    // Remove data URI prefix if present (e.g., "data:image/png;base64,")
+    let cleanBase64 = base64;
+    if (base64.includes(",")) {
+        cleanBase64 = base64.split(",")[1];
+    }
+
+    // Remove any whitespace/newlines
+    cleanBase64 = cleanBase64.replace(/\s/g, "");
+
+    // Validate base64 format
+    if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleanBase64)) {
+        throw new Error("Invalid base64 format");
+    }
+
+    // Create a temporary file path
+    const fileName = `image_${Date.now()}.png`;
+    const tempPath = `${RNBlobUtil.fs.dirs.CacheDir}/${fileName}`;
+
+    // Write Base64 data to a temporary file
+    await RNBlobUtil.fs.writeFile(tempPath, cleanBase64, "base64");
+
+    // Read the file into the native blob store so offline mode works:
+    // NativeFileBackend.storeFile calls NativeFileSystem.save(blob.data, path)
+    // and blob.close() — a plain object has no .data getter or .close(), which
+    // crashes iOS via [NSInvocation invokeWithTarget:].
+    const nativeBlob = await NativeModules.MxFileSystem.read(tempPath.replace("file://", ""));
+    // Normalize: MxFileSystem.read may return 'length' instead of 'size'.
+    const blobData = { ...(nativeBlob as any) };
+    if (blobData.size === undefined && blobData.length !== undefined) {
+        blobData.size = blobData.length;
+    }
+    const blob = new Blob();
+    Object.assign(blob, {
+        data: blobData,
+        name: fileName,
+        lastModified: Date.now()
+    });
+    // Set nativePayload so the patched FormData.prototype.append in NativeFileBackend
+    // replaces the blob value with { uri, name, type } for online uploads. The patch
+    // reads the third append() argument (fileName) and writes it onto nativePayload.name,
+    // which FormData.getParts() uses as the Content-Disposition filename.
+    (blob as any).nativePayload = { uri: `file://${tempPath}`, name: fileName, type: "image/png" };
+    const fileBlob = blob as unknown as File;
+    return fileBlob;
 }
 
 export function Signature(props: Props): ReactElement {
@@ -36,13 +79,11 @@ export function Signature(props: Props): ReactElement {
     const handleSignature = useCallback(
         async (dataUri: string): Promise<void> => {
             try {
-                /*
-                if (props.imageSource.status !== "available" || props.imageSource.readOnly) {
-                 return;
-                } This check needs to add once the EditableImageValue<NativeImage> is released from widget tools
-                */
-                const blob = await dataUriToFile(dataUri);
-                (props.imageSource as any)?.setValue(blob); // as any hack needs to remove once the EditableImageValue<NativeImage> is released from widget tools
+                if (props.imageSource.readOnly) {
+                    return;
+                }
+                const blob = await dataUriToBlob(dataUri);
+                props.imageSource.setValue(blob);
                 props.hasSignatureAttribute?.setValue(true);
                 executeAction(props.onSignEndAction);
             } catch (error) {
