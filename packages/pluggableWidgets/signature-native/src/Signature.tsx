@@ -1,11 +1,10 @@
 import { mergeNativeStyles, extractStyles } from "@mendix/pluggable-widgets-tools";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { ReactElement, useCallback, useRef } from "react";
-import { View, Text } from "react-native";
+import { View, Text, NativeModules } from "react-native";
 import SignatureScreen, { SignatureViewRef } from "react-native-signature-canvas";
 import { Touchable } from "./components/Touchable";
 import RNBlobUtil from "react-native-blob-util";
-import { NativeModules } from "react-native";
 
 import { SignatureProps } from "../typings/SignatureProps";
 import { SignatureStyle, defaultSignatureStyle, webStyles } from "./ui/Styles";
