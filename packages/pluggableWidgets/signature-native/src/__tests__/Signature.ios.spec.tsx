@@ -15,6 +15,22 @@ global.fetch = jest.fn(() =>
 jest.mock("react-native", () => {
     const RN = jest.requireActual("react-native");
     RN.NativeModules.RNCWebView = { isFileUploadSupported: jest.fn(() => true) };
+    RN.NativeModules.MxFileSystem = {
+        read: jest.fn(() =>
+            Promise.resolve({
+                data: "mock-blob-data",
+                size: 1024,
+                type: "image/png",
+                name: "signature.png",
+                nativePayload: {
+                    uri: "file:///mock/path",
+                    name: "signature.png",
+                    type: "image/png"
+                },
+                close: jest.fn()
+            })
+        )
+    };
     return RN;
 });
 
@@ -46,6 +62,19 @@ jest.mock("react-native-webview", () => {
 
     return { WebView };
 });
+
+jest.mock("react-native-blob-util", () => ({
+    __esModule: true,
+    default: {
+        fs: {
+            dirs: {
+                CacheDir: "/mock/cache"
+            },
+            writeFile: jest.fn(() => Promise.resolve()),
+            unlink: jest.fn(() => Promise.resolve())
+        }
+    }
+}));
 
 describe("Signature iOS", () => {
     it("renders with default styles", () => {
