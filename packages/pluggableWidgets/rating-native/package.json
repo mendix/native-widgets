@@ -1,7 +1,7 @@
 {
   "name": "rating-native",
   "widgetName": "Rating",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -19,11 +19,10 @@
     "version": "pnpm release"
   },
   "dependencies": {
-    "@react-native-vector-icons/common": "12.4.0",
-    "@react-native-vector-icons/get-image": "12.3.0",
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
-    "react-native-animatable": "1.4.0"
+    "react-native-animatable": "1.4.0",
+    "react-native-svg": "15.15.4"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",

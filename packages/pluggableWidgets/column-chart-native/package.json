@@ -1,7 +1,7 @@
 {
   "name": "column-chart-native",
   "widgetName": "ColumnChart",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "victory-native": "^36.6.8"
+    "victory-native": "36.9.2"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"

@@ -21,6 +21,8 @@ appId: "${APP_ID}"
     text: "Basic"
 - tapOn:
     text: "Alert"
+- waitForAnimationToEnd:
+    timeout: 10000
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/popup_menu_alert"
 - assertScreenshot:
