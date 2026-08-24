@@ -1,6 +1,6 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
-// handled both vector icon names and image sources. This widget only uses image sources.
-import { Component } from "react";
+// handled both vector icon names and image sources. This widget supports both image sources and React components.
+import { Component, ReactElement, isValidElement } from "react";
 import {
     GestureResponderEvent,
     Image,
@@ -22,7 +22,7 @@ interface Props
     starSize: number;
     rating: number;
     onStarButtonPress: (rating: number) => void;
-    starIconName: Option<ImageSourcePropType>;
+    starIconName: Option<ImageSourcePropType | ReactElement>;
 }
 
 const defaultProps = {
@@ -62,7 +62,15 @@ class StarButton extends Component<Props> {
             ...StyleSheet.flatten(starStyle)
         } as ImageStyle;
 
-        return starIconName ? (
+        if (!starIconName) {
+            return null;
+        }
+
+        if (isValidElement(starIconName)) {
+            return <View style={newStarStyle}>{starIconName}</View>;
+        }
+
+        return (
             <Image
                 source={starIconName}
                 style={[
@@ -74,7 +82,7 @@ class StarButton extends Component<Props> {
                     newStarStyle
                 ]}
             />
-        ) : null;
+        );
     }
 
     render() {
