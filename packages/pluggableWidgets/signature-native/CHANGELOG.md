@@ -9,13 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 -   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
+-   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
 
 ## [2.4.0] - 2026-5-15
 
 ### Changed
 
--   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
--   Removed `imageAttribute` property in favor of unified `imageSource` property
 -   Updated react-native-webview from version v13.13.2 to v13.16.1.
 
 ## [2.3.0] - 2025-7-7
