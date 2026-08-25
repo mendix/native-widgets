@@ -13,7 +13,7 @@ export function check(values: SignaturePreviewProps): Problem[] {
         errors.push({
             property: "imageSource",
             severity: "error",
-            message: "Image Source must be a dynamic (entity) image. Static images cannot be uploaded to."
+            message: "Image must be a dynamic image type. Static images cannot be uploaded to."
         });
     }
 

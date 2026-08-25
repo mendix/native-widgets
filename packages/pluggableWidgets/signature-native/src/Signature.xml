@@ -10,7 +10,7 @@
             <propertyGroup caption="Data source">
                 <property key="imageSource" type="image" required="true" allowUpload="true">
                     <caption>Image</caption>
-                    <description>The System.Image (or specialization) object the signature will be saved into. Commit the object in your On sign end handler to persist it.</description>
+                    <description>The System.Image generalization object the signature will be saved into.</description>
                 </property>
                 <property key="hasSignatureAttribute" type="attribute" required="false">
                     <caption>Has signature</caption>
@@ -36,9 +36,9 @@
                 <caption>On clear</caption>
                 <description>Fired when the clear button is clicked.</description>
             </property>
-            <property key="onSignEndAction" type="action" required="false">
+            <property key="onSignEndAction" type="action" required="false" defaultType="CallNanoflow">
                 <caption>On sign end</caption>
-                <description>Fired after the signature image has been saved to the image object. Commit the object here to persist it.</description>
+                <description>Fired after the signature image has been saved to the image object.</description>
             </property>
             <property key="onEnd" type="action" required="false">
                 <caption>On end</caption>
