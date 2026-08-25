@@ -2,12 +2,14 @@ FROM mcr.microsoft.com/dotnet/runtime:8.0
 ARG MENDIX_VERSION
 
 RUN \
-    echo "Installing Java..." && \
+    echo "Installing Java 21..." && \
     apt-get -qq update && \
     apt-get -qq install -y wget libgdiplus && \
-    wget -q https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz -O /tmp/openjdk.tar.gz && \
-    mkdir /usr/lib/jvm && \
+    wget -q https://download.java.net/java/GA/jdk21.0.2/f2283984656d49d69e91c558476027ac/13/GPL/openjdk-21.0.2_linux-x64_bin.tar.gz -O /tmp/openjdk.tar.gz && \
+    mkdir -p /usr/lib/jvm && \
     tar xfz /tmp/openjdk.tar.gz --directory /usr/lib/jvm && \
+    ls /usr/lib/jvm && \
+    mv /usr/lib/jvm/jdk-21* /usr/lib/jvm/java-21-openjdk && \
     rm /tmp/openjdk.tar.gz 
 RUN \
     echo "Downloading mxbuild ${MENDIX_VERSION}..." && \
@@ -20,9 +22,11 @@ RUN \
     apt-get clean 
 RUN \
     echo "#!/bin/bash -x" >/bin/mxbuild && \
-    echo "dotnet /tmp/mxbuild/modeler/mxbuild.dll --java-home=/usr/lib/jvm/jdk-11.0.2 --java-exe-path=/usr/lib/jvm/jdk-11.0.2/bin/java \$@" >>/bin/mxbuild && \
+    echo "dotnet /tmp/mxbuild/modeler/mxbuild.dll --java-home=/usr/lib/jvm/java-21-openjdk --java-exe-path=/usr/lib/jvm/java-21-openjdk/bin/java \$@" >>/bin/mxbuild && \
     chmod +x /bin/mxbuild 
 RUN \
     echo "#!/bin/bash -x" >/bin/mx && \
     echo "dotnet /tmp/mxbuild/modeler/mx.dll \$@" >>/bin/mx && \
     chmod +x /bin/mx
+
+ENV M2EE_TOOLS_JAR=/tmp/mxbuild/modeler/tools/m2ee-tools.jar

@@ -5,7 +5,8 @@ export function bigJsImportReplacer() {
             const [filename] = Object.keys(bundle);
             const fileInfo = bundle[filename];
 
-            fileInfo.code = fileInfo.code.replace("import { Big } from 'big.js';", `import { Big } from "big.js";`);
+            // Remove Big import entirely - mxbuild will add it in the header at line 8
+            fileInfo.code = fileInfo.code.replace(/^import\s*\{\s*Big\s*\}\s*from\s*['"]big\.js['"];?\s*\r?\n/m, "");
         }
     };
 }

@@ -8,11 +8,8 @@
 import { Big } from "big.js";
 
 // BEGIN EXTRA CODE
-// END EXTRA CODE
 
 type DistanceUnit = "KILOMETER" | "STATUTE_MILE" | "NAUTICAL_MILE";
-
-// BEGIN EXTRA CODE
 
 function deg2rad(deg: Big): Big {
     return deg.times(Math.PI / 180);
