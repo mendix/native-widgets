@@ -1,5 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
-import { ReactElement, useEffect, useRef, useState, Fragment, useCallback } from "react";
+import { ReactElement, useEffect, useRef, useState, Fragment, useCallback, useMemo } from "react";
 import {
     ActivityIndicator,
     Platform,
@@ -27,18 +27,12 @@ const enum StatusEnum {
 }
 
 export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
-    const [styles, setStyles] = useState(flattenStyles(defaultVideoStyle, props.style));
-    const timeoutRef = useRef<NodeJS.Timeout>(null);
-    const playerRef = useRef<VideoRef>(null);
-    const fullScreenPlayerRef = useRef<VideoRef>(null);
-    const [status, setStatus] = useState(StatusEnum.NOT_READY);
     const [videoAspectRatio, setVideoAspectRatio] = useState(0);
-    const [fullScreen, setFullScreen] = useState(false);
-    const [showControls, setShowControls] = useState(false);
-    const [currentPlayTime, setCurrentPlayTime] = useState(0);
 
-    useEffect(() => {
-        const alteredStyles = deepmerge({}, styles);
+    // Compute styles from props synchronously using useMemo
+    const styles = useMemo(() => {
+        const baseStyles = flattenStyles(defaultVideoStyle, props.style);
+        const alteredStyles = deepmerge({}, baseStyles);
         if (props.aspectRatio && videoAspectRatio !== 0) {
             alteredStyles.video.aspectRatio = videoAspectRatio;
             alteredStyles.container.aspectRatio = videoAspectRatio;
@@ -51,8 +45,16 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                 alteredStyles.container.height = alteredStyles.video.height;
             }
         }
-        setStyles(alteredStyles);
+        return alteredStyles;
     }, [props.style, props.aspectRatio, videoAspectRatio]);
+
+    const timeoutRef = useRef<NodeJS.Timeout>(null);
+    const playerRef = useRef<VideoRef>(null);
+    const fullScreenPlayerRef = useRef<VideoRef>(null);
+    const [status, setStatus] = useState(StatusEnum.NOT_READY);
+    const [fullScreen, setFullScreen] = useState(false);
+    const [showControls, setShowControls] = useState(false);
+    const [currentPlayTime, setCurrentPlayTime] = useState(0);
 
     const showControlsHandler = useCallback((): void => {
         clearTimeout(timeoutRef.current as NodeJS.Timeout);
@@ -63,6 +65,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
 
     useEffect(() => {
         if (props.showControls) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- Syncing external showControls prop to internal state with timeout side effect
             showControlsHandler();
         }
         return () => {

@@ -1,7 +1,7 @@
 {
   "name": "bar-chart-native",
   "widgetName": "BarChart",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -15,13 +15,13 @@
     "build": "pluggable-widgets-tools build:native",
     "format": "pluggable-widgets-tools format",
     "release": "pluggable-widgets-tools release:native",
-    "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
     "test": "pluggable-widgets-tools test:unit:native",
     "version": "pnpm release"
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "victory-native": "^36.6.8"
+    "victory-native": "36.9.2"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"

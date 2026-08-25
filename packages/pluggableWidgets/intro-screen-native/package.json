@@ -1,7 +1,7 @@
 {
   "name": "intro-screen-native",
   "widgetName": "IntroScreen",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     "build": "pluggable-widgets-tools build:native",
     "format": "pluggable-widgets-tools format",
     "release": "pluggable-widgets-tools release:native",
-    "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
     "test": "pluggable-widgets-tools test:unit:native",
     "version": "pnpm release"
   },

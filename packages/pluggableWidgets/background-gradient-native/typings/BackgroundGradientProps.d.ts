@@ -4,8 +4,8 @@
  * @author Mendix Widgets Framework Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
-import { ActionValue } from "mendix";
 import { Big } from "big.js";
+import { ActionValue } from "mendix";
 
 export interface ColorListType {
     color: string;

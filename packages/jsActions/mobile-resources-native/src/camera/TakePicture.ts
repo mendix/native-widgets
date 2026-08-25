@@ -116,6 +116,15 @@ export async function TakePicture(
         });
     }
 
+    async function safeRemove(filePath: string): Promise<void> {
+        try {
+            await NativeModules.MxFileSystem.remove(filePath);
+        } catch (error) {
+            console.warn(`Failed to remove file at ${filePath}. Error: ${error}`);
+            // ignore error
+        }
+    }
+
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             NativeModules.MxFileSystem.read(uri.replace("file://", ""))
@@ -138,7 +147,7 @@ export async function TakePicture(
                         {},
                         blob,
                         async () => {
-                            await NativeModules.MendixNative.fsRemove(filePathWithoutFileScheme);
+                            await safeRemove(filePathWithoutFileScheme);
 
                             imageObject.set("Name", filename);
 
@@ -149,7 +158,7 @@ export async function TakePicture(
                             });
                         },
                         async (error: Error) => {
-                            await NativeModules.MendixNative.fsRemove(filePathWithoutFileScheme);
+                            await safeRemove(filePathWithoutFileScheme);
 
                             reject(error);
                         }

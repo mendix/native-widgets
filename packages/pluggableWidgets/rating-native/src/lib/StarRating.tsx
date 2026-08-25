@@ -1,6 +1,6 @@
 // this file has been copied from https://github.com/djchie/react-native-star-rating here since the original library
-// supported vector icon names as well as image sources. This widget only uses image sources.
-import { ClassicComponentClass, Component, JSX } from "react";
+// supported vector icon names as well as image sources. This widget supports both image sources and React components.
+import { ClassicComponentClass, Component, JSX, ReactElement } from "react";
 import { ImageSourcePropType, View, StyleSheet, ViewStyle } from "react-native";
 import { AnimatableProps, View as AnimatableView } from "react-native-animatable";
 import type { StarRatingProps } from "react-native-star-rating";
@@ -41,9 +41,9 @@ const defaultProps = {
 };
 
 interface Props extends Omit<StarRatingProps, "iconSet" | "emptyStar" | "fullStar" | "halfStar"> {
-    emptyStar?: ImageSourcePropType;
-    fullStar?: ImageSourcePropType;
-    halfStar?: ImageSourcePropType;
+    emptyStar?: ImageSourcePropType | ReactElement;
+    fullStar?: ImageSourcePropType | ReactElement;
+    halfStar?: ImageSourcePropType | ReactElement;
 }
 type AnimationFn = (duration: number) => Promise<{ finished: boolean }>;
 

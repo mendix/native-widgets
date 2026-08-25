@@ -2,8 +2,14 @@ appId: "${APP_ID}"
 ---
 - runFlow:
     file: "../../../../../../maestro/Precondition.yaml"
-- tapOn:
-    text: "P"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "P"
+      - extendedWaitUntil:
+          visible: "Pie doughnut chart"
+          timeout: 10000
 - tapOn:
     text: "Pie doughnut chart"
 - tapOn:
@@ -12,11 +18,11 @@ appId: "${APP_ID}"
     id: "container1"
 - assertVisible:
     id: "innerView"
-# Because the image loading can take some time due to resources on emulator, we need to wait for the image to be visible
-- extendedWaitUntil: 
-     visible: randText  # Any random text that does not exist in the UI
-     optional: true  # This should be true so that the test won't fail
-     timeout: 15000 # 15 seconds
+# Wait for the screen to stop changing (image decode / sheet animation)
+# rather than sleeping a fixed time: this returns as soon as the UI
+# settles, and still caps at 15s.
+- waitForAnimationToEnd:
+    timeout: 15000
 - takeScreenshot:
     path: "maestro/images/actual/${PLATFORM}/pie_chart_multiple_data_points"
 - assertScreenshot:

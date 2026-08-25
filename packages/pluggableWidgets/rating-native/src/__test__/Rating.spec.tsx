@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { Big } from "big.js";
 import { dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Rating, Props } from "../Rating";
@@ -11,9 +8,7 @@ import { ActionValue, EditableValue } from "mendix";
 import StarButton from "../lib/StarButton";
 
 jest.mock("react-native-animatable", () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const React = require("react");
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { View } = require("react-native");
 
     return {

@@ -105,7 +105,7 @@ env:
   # Pin the test project (mendix/Native-Mobile-Resources) to a SHA for reproducibility instead
   # of tracking a moving `main`. Single source of truth — bump deliberately. The repo publishes
   # no tags, so a commit SHA is the only stable ref. Override per run via the dispatch input.
-  NATIVE_MOBILE_RESOURCES_REF: ${{ github.event.inputs.test_project_ref || 'f0e7c2278578022cc742f82a087e6c4fff2f7159' }}
+  NATIVE_MOBILE_RESOURCES_REF: ${{ github.event.inputs.test_project_ref || '258f55e1d4b0a25529b1c08a5b17f76a43663e61' }}
 permissions:
   packages: write
 jobs:
@@ -274,7 +274,28 @@ jobs:
             echo "Nothing to build."
           fi
       - name: "Unit test"
-        run: pnpm -r --filter="${{ needs.scope.outputs.scope }}" run test
+        # One --filter per workspace, exactly like "Build resources" above. Passing the whole
+        # `scope` string as a single filter (--filter="--all --include 'a b'") makes pnpm treat
+        # that entire string as ONE workspace pattern: it matches nothing, prints "No projects
+        # matched the filters" and exits 0 — so the unit tests silently never ran.
+        #
+        # Tests run for widgets_to_test, not `widgets`: a widget whose only change is under e2e/
+        # is deliberately not rebuilt but should still have its unit tests run.
+        run: |
+          filters=()
+          if [ "${{ needs.scope.outputs.js_actions_changed }}" = "true" ]; then
+            filters+=(--filter=mobile-resources-native --filter=nanoflow-actions-native)
+          fi
+          while read -r w; do
+            [ -n "$w" ] && filters+=(--filter="$w")
+          done < <(echo '${{ needs.scope.outputs.widgets_to_test }}' | jq -r '.[]')
+
+          if [ ${#filters[@]} -eq 0 ]; then
+            echo "No workspaces in scope — nothing to unit test."
+            exit 0
+          fi
+          echo "Unit testing: ${filters[*]}"
+          pnpm -r "${filters[@]}" run test
       - name: "Save built resources (dist) cache"
         # Only after a full build (every widget built), so a partial build never populates the
         # shared cache with an incomplete dist set under a key a later full build could hit.
@@ -350,12 +371,61 @@ jobs:
       - name: "Overlay built widget mpks"
         if: ${{ github.event.inputs.workspace != 'js-actions' }}
         shell: bash
+        # Located by `find` rather than a fixed-depth glob: upload-artifact strips the least-common
+        # ancestor of the paths it is given, so the depth here follows whatever else is in the
+        # artifact. Adding resources-manifest.txt at the repo root moved that ancestor from
+        # packages/ to the root, every path gained a packages/ prefix, and the old
+        # 'resources/pluggableWidgets/**' glob silently stopped matching — so no built mpk was
+        # installed and the e2e suite tested the baseline project's widgets instead.
+        #
+        # And it is fatal rather than silent: a widget that was built but not installed makes the
+        # e2e run test something other than the commit under test, which is worse than not running.
         run: |
-          if compgen -G 'resources/pluggableWidgets/**/dist/*/*.mpk' > /dev/null; then
-            for oldPath in resources/pluggableWidgets/**/dist/*/*.mpk; do
-              newPath="Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
-              mv -f "$oldPath" "$newPath"
-            done
+          set -uo pipefail
+
+          # A widget's dist/ can hold MORE THAN ONE version dir (e.g. image-native ships
+          # dist/3.1.1 and dist/3.1.2 after a version bump, since the widget build does not clear
+          # dist/ the way the jsActions rollup does). Every version emits an identically-named
+          # .mpk, so installing them in `find` order let an arbitrary — in practice the OLDEST —
+          # build win and the e2e suite silently tested stale widget code.
+          #
+          # Deduplicate on the mpk basename, keeping the highest version dir per widget: key on
+          # the filename, sort by the parent dir with -V (version sort, so 3.1.10 > 3.1.2), and
+          # keep the last of each group.
+          find resources -type f -path '*/dist/*/*.mpk' \
+            | awk -F/ '{ print $NF "\t" $(NF-1) "\t" $0 }' \
+            | sort -t"$(printf '\t')" -k1,1 -k2,2V \
+            | awk -F'\t' '{ best[$1] = $3 } END { for (n in best) print best[n] }' \
+            | sort > /tmp/mpks.txt
+
+          found=0
+          while IFS= read -r oldPath; do
+            [ -n "$oldPath" ] || continue
+            found=$((found + 1))
+            echo "installing $(basename "$oldPath") (from ${oldPath#resources/})"
+            mv -f "$oldPath" "Native-Mobile-Resources-main/widgets/$(basename "$oldPath")"
+          done < /tmp/mpks.txt
+
+          # The scope this job was given, read from the manifest rather than needs.scope: `project`
+          # does not depend on `scope`, so its outputs are not visible here. Compared as a string
+          # rather than parsed as JSON: the manifest line is written by echoing an interpolated
+          # expression, and the shell strips the inner quotes on the way in, so it reads
+          # [a, b] rather than ["a","b"].
+          built=$(sed -n 's/^built widgets: //p' resources/resources-manifest.txt)
+          echo "mpks installed: ${found}; widgets in scope: ${built:-unknown}"
+
+          # Count the widgets the resources job says it built, and require an .mpk for EVERY one.
+          # Checking only `found -eq 0` passed a multi-widget run in which just one widget's mpk
+          # made it through — the rest silently tested the baseline project's stale build, which
+          # is the same class of failure the zero-check exists to prevent.
+          expected=$(printf '%s' "$built" | tr -d '[]' | tr ',' '\n' | sed 's/^ *//; s/ *$//' | grep -c . || true)
+          if [ "${expected:-0}" -gt 0 ] && [ "$found" -lt "$expected" ]; then
+            echo "::error::Expected ${expected} built widget mpk(s) (${built}) but installed ${found} — the test project would run stale widgets."
+            echo "--- mpks found under resources/ ---"
+            cat /tmp/mpks.txt
+            echo "--- all files under resources/ ---"
+            find resources -type f | head -50
+            exit 1
           fi
       - name: "Register widgets in the test project"
         # Run unconditionally: update-widgets must sync the project's widget definitions with the
@@ -364,17 +434,31 @@ jobs:
         # then skip it and leave stale Atlas widget defs for the portable-app build.
         shell: bash
         run: mx update-widgets --loose-version-check Native-Mobile-Resources-main/NativeComponentsTestProject.mpr
+      # Same layout-independence as the mpk overlay above: locate the dist dir rather than assume
+      # its depth in the artifact. Each guard also checks its OWN source dir — nanoflow-actions
+      # previously tested mobile-resources-native, so it moved either both or neither.
+      #
+      # `cp -R <src>/.` rather than `mv <src>/*`: the destination in the test project already
+      # ships a populated node_modules/, and `mv` refuses to rename a directory over a non-empty
+      # one ("Directory not empty") instead of merging into it. cp recurses and merges, so the
+      # built files win per-file while packages the build treats as external (and therefore does
+      # not collect into dist/node_modules) survive in the project. The trailing /. copies the
+      # directory's contents including dotfiles, which <src>/* would miss.
       - name: "Move mobile-resources"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/mobile-resources-native/* Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
+          src=$(find resources -type d -path '*/mobile-resources-native/dist' | head -1)
+          if [ -n "$src" ]; then
+            echo "installing mobile-resources from $src"
+            cp -Rf "$src"/. Native-Mobile-Resources-main/javascriptsource/nativemobileresources/actions/
           fi
       - name: "Move nanoflow-actions"
         shell: bash
         run: |
-          if compgen -G 'resources/jsActions/mobile-resources-native/*' > /dev/null; then
-            mv -f resources/jsActions/nanoflow-actions-native/* Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
+          src=$(find resources -type d -path '*/nanoflow-actions-native/dist' | head -1)
+          if [ -n "$src" ]; then
+            echo "installing nanoflow-actions from $src"
+            cp -Rf "$src"/. Native-Mobile-Resources-main/javascriptsource/nanoflowcommons/actions/
           fi
       - name: "Build portable app package (self-contained runtime)"
         # Run this BEFORE the native-packager deploy: portable-app-package re-prepares and
@@ -418,7 +502,7 @@ jobs:
     runs-on: ubuntu-26.04
     # Skip this job if we're using artifacts from a specific run; the native bundles now come
     # from the project job (deploy + native-packager), so gate on project success.
-    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.project.result == 'success') }}
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && !cancelled() && (needs.project.result == 'success') }}
     steps:
       - name: Debug branch value
         run: echo "Using branch ${{ needs.determine-nt-version.outputs.nt_branch }}"
@@ -450,20 +534,89 @@ jobs:
         with:
           name: android-bundle
           path: bundles/android
+      # Only the JS bundle can be swapped into a cached APK: aapt2 rewrites the artifact's res/
+      # density qualifiers into resources.arsc, so a resource change needs a full rebuild.
+      - name: "Resolve Android APK cache inputs"
+        shell: bash
+        run: |
+          set -euo pipefail
+          NT_SHA=$(git -C native-template rev-parse HEAD)
+          echo "NT_SHA=$NT_SHA" >> "$GITHUB_ENV"
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          BT_DIR=$(ls -1d "$SDK"/build-tools/* 2>/dev/null | sort -V | tail -1)
+          if [ -z "${BT_DIR:-}" ]; then
+            echo "::error::No Android build-tools found under $SDK; cannot align/sign a swapped APK."
+            exit 1
+          fi
+          echo "BUILD_TOOLS_DIR=$BT_DIR" >> "$GITHUB_ENV"
+          echo "BUILD_TOOLS_ID=$(basename "$BT_DIR")" >> "$GITHUB_ENV"
+          echo "native-template $NT_SHA, build-tools $(basename "$BT_DIR")"
+      - name: "Restore built Android APK"
+        id: android-apk-cache
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: android-apk-cache
+          # No restore-keys: a partial-input change must rebuild. gradle autolinks from
+          # native_dependencies.json, so it belongs in the key.
+          key: android-apk-v1-${{ runner.os }}-${{ env.BUILD_TOOLS_ID }}-${{ env.NT_SHA }}-${{ hashFiles('native-template/package-lock.json', 'native-widgets/configs/e2e/native_dependencies.json', 'native-widgets/configs/e2e/config.json', 'native-widgets/configs/e2e/google-services.json', 'native-widgets/scripts/test/add-native-dependencies.js') }}
+      - name: "Verify restored Android APK"
+        shell: bash
+        run: |
+          set -euo pipefail
+          cached=false
+          apk="android-apk-cache/app-appstore-debug.apk"
+          test_apk="android-apk-cache/app-appstore-debug-androidTest.apk"
+          if [ "${{ steps.android-apk-cache.outputs.cache-hit }}" = "true" ] && [ -f "$apk" ]; then
+            if ! unzip -l "$apk" | grep -q 'assets/index.android.bundle$'; then
+              echo "::warning::APK cache hit but no assets/index.android.bundle inside; rebuilding."
+            elif [ ! -f "$test_apk" ]; then
+              echo "::warning::APK cache hit but the androidTest APK is missing; rebuilding."
+            else
+              # aapt2's -v4 density suffix means paths differ, so compare by CONTENT.
+              stale=""
+              while IFS= read -r f; do
+                rel=${f#bundles/android/}
+                name=$(basename "$f")
+                entry=$(unzip -l "$apk" | awk '{print $4}' \
+                        | grep -E "^res/$(dirname "$rel" | sed 's|res/||')(-v[0-9]+)?/$name$" | head -1 || true)
+                if [ -z "$entry" ]; then stale="$stale $rel(absent)"; continue; fi
+                if ! cmp -s <(unzip -p "$apk" "$entry") "$f"; then stale="$stale $rel"; fi
+              done < <(find bundles/android/res -type f 2>/dev/null)
+              if [ -n "$stale" ]; then
+                echo "::warning::Bundle resources differ from the cached APK (${stale# }); rebuilding rather than swapping only the JS bundle."
+              else
+                cached=true
+                echo "APK_PATH=$apk" >> "$GITHUB_ENV"
+                echo "TEST_APK_PATH=$test_apk" >> "$GITHUB_ENV"
+                echo "Reusing cached APK: $apk"
+              fi
+            fi
+          else
+            echo "No usable Android APK cache; building."
+          fi
+          echo "ANDROID_APK_CACHED=$cached" >> "$GITHUB_ENV"
       - name: "Set up Node"
+        if: env.ANDROID_APK_CACHED != 'true'
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
           cache-dependency-path: native-template/package-lock.json
       - name: "Cache Android Build"
+        if: env.ANDROID_APK_CACHED != 'true'
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
-          path: native-template/android/app/build
+          path: |
+            native-template/android/app/build
+            !native-template/android/app/build/outputs
+            !native-template/android/app/build/intermediates
+            !native-template/android/app/build/tmp
+            !native-template/android/app/build/reports
           key: ${{ runner.os }}-android-build-${{ hashFiles('native-template/android/app/src/**/*.java', 'native-template/android/app/src/**/*.kt', 'native-template/android/app/build.gradle') }}
           restore-keys: |
             ${{ runner.os }}-android-build-
       - name: "Copy files to the right location"
+        if: env.ANDROID_APK_CACHED != 'true'
         run: |
           # native-packager output is pre-split: bundle/android/{assets/index.android.bundle, res/...}
           # maps directly onto app/src/main/{assets,res} (per the official manual-build doc).
@@ -473,9 +626,11 @@ jobs:
           mv native-widgets/configs/e2e/google-services.json native-template/android/app
           node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Install dependencies"
+        if: env.ANDROID_APK_CACHED != 'true'
         working-directory: native-template
         run: npm i
       - name: "Setup JDK "
+        if: env.ANDROID_APK_CACHED != 'true'
         uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 #v5.2.0
         with:
           java-version: 21
@@ -488,13 +643,13 @@ jobs:
       # — unlike shell $VARs.) If detection failed, these no-op and gradle resolves it.
       - name: "Cache Android NDK"
         id: cache-ndk
-        if: env.ANDROID_NDK_VERSION != ''
+        if: env.ANDROID_NDK_VERSION != '' && env.ANDROID_APK_CACHED != 'true'
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: /usr/local/lib/android/sdk/ndk/${{ env.ANDROID_NDK_VERSION }}
           key: ${{ runner.os }}-android-ndk-${{ env.ANDROID_NDK_VERSION }}
       - name: "Install Android NDK"
-        if: env.ANDROID_NDK_VERSION != '' && steps.cache-ndk.outputs.cache-hit != 'true'
+        if: env.ANDROID_NDK_VERSION != '' && env.ANDROID_APK_CACHED != 'true' && steps.cache-ndk.outputs.cache-hit != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -512,6 +667,7 @@ jobs:
           "$SDKMANAGER" "ndk;${ANDROID_NDK_VERSION}"
 
       - name: "Build Android app"
+        if: env.ANDROID_APK_CACHED != 'true'
         working-directory: native-template/android
         # The CI emulator is x86_64, so only compile that ABI's native code instead of all
         # four (arm64-v8a, armeabi-v7a, x86, x86_64) — cuts the C/C++ build by ~75%.
@@ -522,20 +678,84 @@ jobs:
         # reused instead of recompiled. Safe: a cache miss just rebuilds.
         run: ./gradlew assembleAppstoreDebug assembleAppstoreDebugAndroidTest -PreactNativeArchitectures=x86_64 --build-cache
       - name: "List APK files"
+        if: env.ANDROID_APK_CACHED != 'true'
         run: |
           echo "Listing APK files in the output directory:"
           ls -R native-template/android/app/build/outputs/apk/
+      - name: "Stage the built APKs for caching"
+        if: env.ANDROID_APK_CACHED != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=native-template/android/app/build/outputs/apk
+          mkdir -p android-apk-cache
+          cp "$out/appstore/debug/app-appstore-debug.apk" android-apk-cache/
+          cp "$out/androidTest/appstore/debug/app-appstore-debug-androidTest.apk" android-apk-cache/
+          ls -l android-apk-cache
+      - name: "Save built Android APK"
+        if: env.ANDROID_APK_CACHED != 'true'
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: android-apk-cache
+          key: ${{ steps.android-apk-cache.outputs.cache-primary-key }}
+
+      - name: "Swap the JS bundle into the cached APK"
+        # -0 (store) is required — the bundle is Hermes bytecode mmapped out of the APK and
+        # `zip -u` would deflate it. Re-signing is required because the edit voids the signature.
+        if: env.ANDROID_APK_CACHED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f bundles/android/assets/index.android.bundle
+          KS="$HOME/.android/debug.keystore"
+          if [ ! -f "$KS" ]; then
+            mkdir -p "$HOME/.android"
+            keytool -genkeypair -keystore "$KS" -storepass android -keypass android \
+              -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10950 \
+              -dname "C=US, O=Android, CN=Android Debug"
+          fi
+          before=$(unzip -v "$APK_PATH" | awk '/assets\/index.android.bundle$/ {print $2}')
+          rm -rf apk-swap && mkdir -p apk-swap/assets
+          cp bundles/android/assets/index.android.bundle apk-swap/assets/
+          ( cd apk-swap && zip -q -X -0 -u "$OLDPWD/$APK_PATH" assets/index.android.bundle )
+          "$BUILD_TOOLS_DIR/zipalign" -p -f 4 "$APK_PATH" apk-swap/aligned.apk
+          "$BUILD_TOOLS_DIR/apksigner" sign --ks "$KS" --ks-pass pass:android \
+            --ks-key-alias androiddebugkey --key-pass pass:android apk-swap/aligned.apk
+          mv apk-swap/aligned.apk "$APK_PATH"
+          "$BUILD_TOOLS_DIR/apksigner" verify "$APK_PATH"
+          after=$(unzip -v "$APK_PATH" | awk '/assets\/index.android.bundle$/ {print $2}')
+          if [ "$after" != "Stored" ]; then
+            echo "::error::index.android.bundle is '$after', expected 'Stored' (was '$before'). Hermes bytecode must stay uncompressed."
+            exit 1
+          fi
+          cmp <(unzip -p "$APK_PATH" assets/index.android.bundle) bundles/android/assets/index.android.bundle
+          echo "Swapped JS bundle into $APK_PATH (Stored, signature verified)"
+      - name: "Collect APKs for upload"
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p apk-out/appstore/debug apk-out/androidTest/appstore/debug
+          if [ "$ANDROID_APK_CACHED" = "true" ]; then
+            cp "$APK_PATH" apk-out/appstore/debug/app-appstore-debug.apk
+            cp "$TEST_APK_PATH" apk-out/androidTest/appstore/debug/app-appstore-debug-androidTest.apk
+          else
+            out=native-template/android/app/build/outputs/apk
+            cp "$out/appstore/debug/app-appstore-debug.apk" apk-out/appstore/debug/
+            cp "$out/androidTest/appstore/debug/app-appstore-debug-androidTest.apk" apk-out/androidTest/appstore/debug/
+          fi
+          find apk-out -name '*.apk' -exec ls -l {} +
       - name: "Archive Android app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: android-app
-          path: native-template/android/app/build/outputs/apk/**/*.apk
+          path: apk-out/**/*.apk
+          if-no-files-found: error
   ios-app:
     needs: [project, determine-nt-version]
     runs-on: macos-26
     # Skip this job if we're using artifacts from a specific run; the native bundles now come
     # from the project job (deploy + native-packager), so gate on project success.
-    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && always() && (needs.project.result == 'success') }}
+    if: ${{ github.event.inputs.LOCAL_TEST_ARTIFACT_RUN_ID == '' && !cancelled() && (needs.project.result == 'success') }}
     steps:
       - name: "Check out Native Template for Native Components Test Project"
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -552,22 +772,60 @@ jobs:
         with:
           name: ios-bundle
           path: bundles/ios
+      # `Bundle` is a folder reference resolved at launch by getJSBundleFile(), not compiled in,
+      # so a widget-only change can reuse the cached .app with that folder swapped.
+      - name: "Resolve iOS app cache inputs"
+        shell: bash
+        run: |
+          set -euo pipefail
+          NT_SHA=$(git -C native-template rev-parse HEAD)
+          echo "NT_SHA=$NT_SHA" >> "$GITHUB_ENV"
+          echo "XCODE_ID=$(xcodebuild -version | tr '\n' '-' | tr -d ' ')" >> "$GITHUB_ENV"
+          echo "native-template $NT_SHA"
+      - name: "Restore built iOS app"
+        id: ios-app-cache
+        uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: native-template/ios/build/Build/Products
+          # No restore-keys: `pod install` regenerates Podfile.lock from native_dependencies.json,
+          # so the lock alone is not enough.
+          key: ios-app-v1-${{ runner.os }}-${{ env.XCODE_ID }}-${{ env.NT_SHA }}-${{ hashFiles('native-template/package-lock.json', 'native-template/ios/Podfile', 'native-template/ios/Podfile.lock', 'native-widgets/configs/e2e/native_dependencies.json', 'native-widgets/configs/e2e/config.json', 'native-widgets/scripts/test/add-native-dependencies.js') }}
+      - name: "Verify restored iOS app"
+        shell: bash
+        run: |
+          set -euo pipefail
+          cached=false
+          # Keep in sync with install_ios_app() in maestro/helpers/prepare_ios.sh.
+          app="native-template/ios/build/Build/Products/Debug-iphonesimulator/NativeTemplate.app"
+          if [ "${{ steps.ios-app-cache.outputs.cache-hit }}" = "true" ]; then
+            if [ ! -d "$app" ]; then
+              echo "::warning::iOS app cache hit but $app is missing; rebuilding."
+              find native-template/ios/build/Build/Products -maxdepth 2 -name '*.app' 2>/dev/null || true
+            else
+              js=$(find "$app" -name 'index.ios.bundle' 2>/dev/null | head -1 || true)
+              if [ -z "$js" ]; then
+                echo "::warning::iOS app cache hit but no index.ios.bundle inside $app; rebuilding."
+              else
+                cached=true
+                echo "APP_PATH=$app" >> "$GITHUB_ENV"
+                echo "APP_BUNDLE_DIR=$(dirname "$js")" >> "$GITHUB_ENV"
+                echo "Reusing cached app: $app (bundle at $(dirname "$js"))"
+              fi
+            fi
+          else
+            echo "No usable iOS app cache; building."
+          fi
+          echo "IOS_APP_CACHED=$cached" >> "$GITHUB_ENV"
+
       - name: "Set up Node"
+        if: env.IOS_APP_CACHED != 'true'
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: native-template/.nvmrc
           cache: npm
           cache-dependency-path: native-template/package-lock.json
-      - name: "Cache iOS Build"
-        # Persists the DerivedData root (`build/`) so unchanged products can be reused across
-        # runs; restore-keys falls back to the latest entry on a partial-input change.
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: native-template/ios/build
-          key: ${{ runner.os }}-ios-build-${{ hashFiles('native-template/ios/**/*.swift', 'native-template/ios/**/*.h', 'native-template/ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-ios-build-
       - name: "Copy files to the right location"
+        if: env.IOS_APP_CACHED != 'true'
         run: |
           # native-packager emits bundle/iOS/{index.ios.bundle, assets/...}; copy the lot into
           # ios/Bundle (per the official manual-build doc).
@@ -576,10 +834,12 @@ jobs:
           mv native-widgets/configs/e2e/config.json native-template
           node native-widgets/scripts/test/add-native-dependencies.js
       - name: "Install Node dependencies"
+        if: env.IOS_APP_CACHED != 'true'
         working-directory: native-template
         run: npm i
 
       - name: "Setup Pods cache"
+        if: env.IOS_APP_CACHED != 'true'
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           # Also cache CocoaPods' own download cache so `pod install` is fast even when
@@ -591,19 +851,43 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
       - name: "Install Pod dependencies"
+        if: env.IOS_APP_CACHED != 'true'
         working-directory: native-template/ios
         run: pod install
       - name: "Build iOS app"
+        if: env.IOS_APP_CACHED != 'true'
         working-directory: native-template/ios
         # Build for the simulator's native arch (arm64 on Apple Silicon runners).
         # ONLY_ACTIVE_ARCH=YES already limits to the active arch; the old
         # VALID_ARCHS="i386 x86_64" forced dead/foreign archs and broke on macos-26.
         run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES
+      - name: "Save built iOS app"
+        if: env.IOS_APP_CACHED != 'true'
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: native-template/ios/build/Build/Products
+          key: ${{ steps.ios-app-cache.outputs.cache-primary-key }}
+
+      - name: "Swap the JS bundle into the cached app"
+        # _CodeSignature goes stale, which is fine: simulator apps are not signature verified.
+        if: env.IOS_APP_CACHED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$APP_BUNDLE_DIR"
+          mkdir -p "$APP_BUNDLE_DIR"
+          cp -R bundles/ios/. "$APP_BUNDLE_DIR"/
+          test -f "$APP_BUNDLE_DIR/index.ios.bundle"
+          echo "Swapped bundle into $APP_PATH"
+          ls -l "$APP_BUNDLE_DIR"
       - name: "Archive iOS app"
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7
         with:
           name: ios-app
           path: native-template/ios/build/Build/Products/**/*.app
+
+  # NOTE: no iOS counterpart to android-avd-cache — simslim's state is not persisted anywhere
+  # cacheable (see slim_simulator() in maestro/helpers/prepare_ios.sh), so each shard slims itself.
 
   android-avd-cache:
     runs-on: ubuntu-26.04
@@ -647,7 +931,7 @@ jobs:
   android-widget-tests:
     needs: [scope, mendix-version, project, android-app, android-avd-cache]
     # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
-    if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
+    if: ${{ needs.scope.outputs.widgets_to_test != '[]' && !cancelled() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-26.04
     # 30 min hard cap per widget shard. A healthy widget's flows run in ~30s each; the cap is a
     # backstop for genuinely wedged shards. Bumped 20→30 after a run where shards were cancelled
@@ -731,10 +1015,10 @@ jobs:
             bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
-        # always(): the test step exits non-zero on a failing shard, which would otherwise
+        # !cancelled(): the test step exits non-zero on a failing shard, which would otherwise
         # SKIP this step — i.e. we'd capture screenshots/logs/videos for green shards but NOT
-        # for the failing ones we actually need to debug. Run regardless of test outcome.
-        if: ${{ always() }}
+        # for the failing ones we actually need to debug. Unlike always(), a cancelled run stops.
+        if: ${{ !cancelled() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: android
@@ -742,16 +1026,9 @@ jobs:
 
   ios-widget-tests:
     needs: [scope, mendix-version, project, ios-app]
-    # Run if widgets need testing (widgets_to_test is not empty) and project succeeds
-    if: ${{ needs.scope.outputs.widgets_to_test != '[]' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
+    if: ${{ needs.scope.outputs.widgets_to_test != '[]' && !cancelled() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-26
-    # 30 min per widget shard, matching android-widget-tests. iOS needs the budget more than
-    # Android: sim cold-boot + Maestro driver startup + runtime-ready wait eat several minutes
-    # before any flow runs, so on a free macOS runner slow-but-healthy shards were getting
-    # truncated — at 20 min several shards (accordion, background-image, bottom-sheet,
-    # color-picker, safe-area-view) were cancelled mid-flow. If a shard still hits 30 the cause
-    # is real app instability, not the cap.
-    timeout-minutes: 30
+    timeout-minutes: 40
     strategy:
       max-parallel: 4
       matrix:
@@ -803,8 +1080,7 @@ jobs:
           bash maestro/run_maestro_widget_tests.sh ios "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
-        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
-        if: ${{ always() }}
+        if: ${{ !cancelled() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
@@ -813,7 +1089,7 @@ jobs:
   android-js-tests:
     needs: [scope, mendix-version, project, android-app, android-avd-cache]
     # Run if JS actions changed and project succeeds and either android-app succeeds OR we're using custom artifacts (android-app was skipped)
-    if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
+    if: ${{ needs.scope.outputs.js_actions_changed == 'true' && !cancelled() && needs.project.result == 'success' && (needs.android-app.result == 'success' || needs.android-app.result == 'skipped') }}
     runs-on: ubuntu-26.04
     timeout-minutes: 90
     steps:
@@ -883,8 +1159,7 @@ jobs:
             bash maestro/run_maestro_jsactions_tests.sh android || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
-        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
-        if: ${{ always() }}
+        if: ${{ !cancelled() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: android
@@ -893,7 +1168,7 @@ jobs:
   ios-js-tests:
     needs: [scope, mendix-version, project, ios-app]
     # Run if JS actions changed and project succeeds and either ios-app succeeds OR we're using custom artifacts (ios-app was skipped)
-    if: ${{ needs.scope.outputs.js_actions_changed == 'true' && always() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
+    if: ${{ needs.scope.outputs.js_actions_changed == 'true' && !cancelled() && needs.project.result == 'success' && (needs.ios-app.result == 'success' || needs.ios-app.result == 'skipped') }}
     runs-on: macos-26
     timeout-minutes: 90
     steps:
@@ -941,8 +1216,7 @@ jobs:
           bash maestro/run_maestro_jsactions_tests.sh ios || [ "$UPDATE_BASELINES" = "true" ]
       
       - name: Archive test results
-        # always(): capture failure artifacts (the failing shard's test step exits non-zero).
-        if: ${{ always() }}
+        if: ${{ !cancelled() }}
         uses: ./.github/actions/archive-test-results
         with:
           platform: ios
@@ -954,9 +1228,7 @@ jobs:
   # sources after a successful merge, leaving just the combined artifacts.
   aggregate-test-results:
     needs: [android-widget-tests, ios-widget-tests, android-js-tests, ios-js-tests]
-    # Run even when shards fail/cancel — the failing shards are exactly the ones whose
-    # screenshots/logs we want to inspect.
-    if: ${{ always() }}
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-26.04
     # The workflow-level block grants only packages:write, so every other scope defaults to
     # none. This job needs contents:read (to check out the triage script) and actions:read

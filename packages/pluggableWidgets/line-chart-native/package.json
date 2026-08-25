@@ -1,7 +1,7 @@
 {
   "name": "line-chart-native",
   "widgetName": "LineChart",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -14,13 +14,13 @@
     "build": "pluggable-widgets-tools build:native",
     "format": "pluggable-widgets-tools format",
     "release": "pluggable-widgets-tools release:native",
-    "lint": "eslint --config ../../../.eslintrc.js --ext .jsx,.js,.ts,.tsx src/",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
     "test": "pluggable-widgets-tools test:unit:native",
     "version": "pnpm release"
   },
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
-    "victory-native": "^36.6.8"
+    "victory-native": "36.9.2"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"

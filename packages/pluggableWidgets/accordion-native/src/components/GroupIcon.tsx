@@ -1,4 +1,4 @@
-import { ReactElement, useRef, useEffect } from "react";
+import { ReactElement, useState, useEffect, useMemo } from "react";
 import { Animated, Easing, View } from "react-native";
 import { DynamicValue, NativeIcon } from "mendix";
 import { Icon } from "mendix/components/native/Icon";
@@ -25,11 +25,18 @@ export function GroupIcon({ iconCollapsed, iconExpanded, isExpanded, style }: Gr
     const source = isExpanded ? customExpandedIconSource : customIconSource;
     const iconStyles = exclude(style, ["size", "color"]);
     const icon: GlyphIcon = { type: "glyph", iconClass: "glyphicon-chevron-down" };
-    const animatedValue = useRef(new Animated.Value(0)).current;
-    const animatedRotation = animatedValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0deg", "180deg"]
-    });
+
+    // Create stable Animated.Value using useState with lazy initializer (React Compiler compatible)
+    const [animatedValue] = useState(() => new Animated.Value(0));
+
+    const animatedRotation = useMemo(
+        () =>
+            animatedValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: ["0deg", "180deg"]
+            }),
+        [animatedValue]
+    );
 
     useEffect(() => {
         Animated.timing(animatedValue, {
