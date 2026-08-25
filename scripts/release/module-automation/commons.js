@@ -78,11 +78,14 @@ async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, exc
         );
     }
 
-    // Build testProject via mxbuild
+    // Build testProject and regenerate JS actions
+    // 1. mx update-widgets: Updates widget files
+    // 2. mxbuild --target=package: Regenerates JS action files in Studio Pro format (prevents phantom diffs)
+    // 3. mx create-module-package: Packages the module with the regenerated files
     const projectFile = basename((await getFiles(sourceDir, [`.mpr`]))[0]);
     await execShellCommand(
         `docker run -t -v ${sourceDir}:/source ` +
-            `--rm mxbuild:${mendixVersion} bash -c "mx update-widgets --loose-version-check /source/${projectFile} && dotnet /tmp/mxbuild/modeler/mx.dll create-module-package ${
+            `--rm mxbuild:${mendixVersion} bash -c "mx update-widgets --loose-version-check /source/${projectFile} && mxbuild --target=package /source/${projectFile} && dotnet /tmp/mxbuild/modeler/mx.dll create-module-package ${
                 excludeFilesRegExp ? `--exclude-files='${excludeFilesRegExp}'` : ""
             } /source/${projectFile} ${moduleName}"`
     );
