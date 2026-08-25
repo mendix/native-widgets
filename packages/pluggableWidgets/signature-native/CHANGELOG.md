@@ -8,8 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
--   Added direct image upload to System.Image object using the `imageSource` property with `allowUpload` enabled
--   Added optional `hasSignatureAttribute` Boolean attribute to track whether a signature has been captured or cleared
+-   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
 
 ## [2.4.0] - 2026-5-15
 

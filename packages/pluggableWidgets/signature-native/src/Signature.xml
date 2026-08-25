@@ -12,13 +12,6 @@
                     <caption>Image</caption>
                     <description>The System.Image generalization object the signature will be saved into.</description>
                 </property>
-                <property key="hasSignatureAttribute" type="attribute" required="false">
-                    <caption>Has signature</caption>
-                    <description>Optional Boolean attribute that is set to true when a signature has been captured and false when cleared. Useful for validation and conditional visibility.</description>
-                    <attributeTypes>
-                        <attributeType name="Boolean" />
-                    </attributeTypes>
-                </property>
             </propertyGroup>
             <propertyGroup caption="Buttons">
                 <property key="buttonCaptionClear" type="textTemplate" required="false">

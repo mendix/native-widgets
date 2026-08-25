@@ -10,7 +10,6 @@ export interface SignatureProps<Style> {
     name: string;
     style: Style[];
     imageSource: EditableImageValue<NativeImage>;
-    hasSignatureAttribute?: EditableValue<boolean>;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
     onClear?: ActionValue;
@@ -31,7 +30,6 @@ export interface SignaturePreviewProps {
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
     imageSource: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
-    hasSignatureAttribute: string;
     buttonCaptionClear: string;
     buttonCaptionSave: string;
     onClear: {} | null;

@@ -83,13 +83,12 @@ export function Signature(props: Props): ReactElement {
                 }
                 const blob = await dataUriToBlob(dataUri);
                 props.imageSource.setValue(blob);
-                props.hasSignatureAttribute?.setValue(true);
                 executeAction(props.onSignEndAction);
             } catch (error) {
                 console.error("Signature: failed to save image", error);
             }
         },
-        [props.imageSource, props.hasSignatureAttribute, props.onSignEndAction]
+        [props.imageSource, props.onSignEndAction]
     );
 
     return (
@@ -101,7 +100,6 @@ export function Signature(props: Props): ReactElement {
                 onEnd={() => executeAction(props.onEnd)}
                 onOK={handleSignature}
                 onClear={() => {
-                    props.hasSignatureAttribute?.setValue(false);
                     executeAction(props.onClear);
                 }}
                 webStyle={webStyles}
