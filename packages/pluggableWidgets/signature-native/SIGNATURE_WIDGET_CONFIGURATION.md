@@ -33,13 +33,12 @@ The `Image` property must be configured with an entity that **generalizes System
     ```
 
 2. **Configure the widget:**
-    - In the **Data source** section, set the `Image` property to your System.Image entity object.
-    - The image type must be **Dynamic** (not static).
+    - In the **Data source** section, for `Image` property select Image type as **Dynamic**.
+    - Set the `System.Image` entity object to it.
 
 **Studio Pro Validation:**
 
 -   Selecting Static images will display the error: _"Image must be a dynamic image type. Static images cannot be uploaded to."_
--   Dynamic System.Image entities will be accepted.
 
 ---
 
@@ -55,7 +54,7 @@ The `On sign end` action is **required** and triggers when the user clicks the S
 
 **Important:**
 
--   If the `On sign end` action is not configured with one of the supported action types, the signature will not be saved. The operation will fail silently without displaying a Studio Pro error.
+-   If the `On sign end` action is not configured with one of the supported action types, the signature will not be saved. The operation will fail silently without displaying a Studio Pro error. You can set any required actions (for ex.- show pages, close pages) inside that nanoflow/microflow.
 
 ---
 
@@ -67,10 +66,10 @@ Previously, you needed to store the base64-encoded signature string in a String 
 
 **Key Changes:**
 
-1. The widget now saves the signature directly to an entity that generalizes `System.Image`, instead of storing a base64-encoded string in a String attribute.
+1. The widget now saves the signature directly to an entity that generalizes `System.Image`, instead of storing a base64-encoded string in a String attribute and then converting it to Image.
 2. The **On save** event has been renamed to **On sign end** under the **Events** tab.
 
-### Example: Migrating from Studio Pro 10.24 or Earlier
+### Example: Migrating from Studio Pro 10.24 or Earlier 11.x.x
 
 The following is a step-by-step walkthrough of migrating a Mendix app from Studio Pro 10.24 or an earlier 11.x.x version to a version that includes the updated Signature widget.
 
@@ -132,3 +131,7 @@ The following is a step-by-step walkthrough of migrating a Mendix app from Studi
 2. Implement your project-specific logic inside the nanoflow or microflow. You can use other actions (for ex.- show page or close page) within the nanoflow or microflow as needed.
 
 ---
+
+## Breaking Changes
+
+-   With this update, the previous **Attribute** property has been removed. The widget no longer stores a base64-encoded string into it. If you were using that base64 value as input to any API, integration, or export, those values will be empty going forward, as nothing is written to that attribute anymore.
