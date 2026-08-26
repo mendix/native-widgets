@@ -1,6 +1,6 @@
 import { mergeNativeStyles, extractStyles } from "@mendix/pluggable-widgets-tools";
 import { executeAction } from "@mendix/piw-utils-internal";
-import { ReactElement, useCallback, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useRef } from "react";
 import { View, Text, NativeModules } from "react-native";
 import SignatureScreen, { SignatureViewRef } from "react-native-signature-canvas";
 import { Touchable } from "./components/Touchable";
@@ -11,7 +11,7 @@ import { SignatureStyle, defaultSignatureStyle, webStyles } from "./ui/Styles";
 
 export type Props = SignatureProps<SignatureStyle>;
 
-async function dataUriToBlob(base64: string): Promise<File> {
+async function dataUriToBlob(base64: string): Promise<{ blob: File; tempPath: string }> {
     // Remove data URI prefix if present (e.g., "data:image/png;base64,")
     let cleanBase64 = base64;
     if (base64.includes(",")) {
@@ -55,11 +55,13 @@ async function dataUriToBlob(base64: string): Promise<File> {
     // which FormData.getParts() uses as the Content-Disposition filename.
     (blob as any).nativePayload = { uri: `file://${tempPath}`, name: fileName, type: "image/png" };
     const fileBlob = blob as unknown as File;
-    return fileBlob;
+    return { blob: fileBlob, tempPath };
 }
 
 export function Signature(props: Props): ReactElement {
     const ref = useRef<SignatureViewRef>(null);
+    const pendingTempPathsRef = useRef<string[]>([]);
+    const wasExecutingRef = useRef<boolean>(false);
     const styles = mergeNativeStyles(defaultSignatureStyle, props.style);
     const [signatureProps, containerStyles] = extractStyles(styles.container, ["penColor", "backgroundColor"]);
     const [buttonClearContainerProps, buttonClearContainerStyles] = extractStyles(styles.buttonClearContainer, [
@@ -75,16 +77,35 @@ export function Signature(props: Props): ReactElement {
     const buttonCaptionClear = props.buttonCaptionClear?.value ?? "Clear";
     const buttonCaptionSave = props.buttonCaptionSave?.value ?? "Save";
 
+    useEffect(() => {
+        const isExecuting = props.onSignEndAction?.isExecuting ?? false;
+        if (wasExecutingRef.current && !isExecuting && pendingTempPathsRef.current.length > 0) {
+            const paths = pendingTempPathsRef.current.splice(0);
+            paths.forEach(p => RNBlobUtil.fs.unlink(p).catch(e => console.info("Temp file cleanup failed:", e)));
+        }
+        wasExecutingRef.current = isExecuting;
+    }, [props.onSignEndAction?.isExecuting]);
+
     const handleSignature = useCallback(
         async (dataUri: string): Promise<void> => {
+            let tempPath: string | undefined;
             try {
                 if (props.imageSource.readOnly) {
                     return;
                 }
-                const blob = await dataUriToBlob(dataUri);
-                props.imageSource.setValue(blob);
+                const result = await dataUriToBlob(dataUri);
+                tempPath = result.tempPath;
+                pendingTempPathsRef.current.push(tempPath);
+                props.imageSource.setValue(result.blob);
                 executeAction(props.onSignEndAction);
             } catch (error) {
+                if (tempPath) {
+                    const idx = pendingTempPathsRef.current.indexOf(tempPath);
+                    if (idx !== -1) {
+                        pendingTempPathsRef.current.splice(idx, 1);
+                    }
+                    RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
+                }
                 console.error("Signature: failed to save image", error);
             }
         },
