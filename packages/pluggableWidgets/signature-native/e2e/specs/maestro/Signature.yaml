@@ -24,6 +24,6 @@ appId: "${APP_ID}"
     end: 10%, 75% 
 - tapOn:
     text: "Save"
-# Widgets menu will be visible only after successfully saving the signature ,as nanoflow has an Close page action to navigate back to the widgets menu.
+# Widgets menu will be visible only after successfully saving the signature, as the nanoflow has a Close page action to navigate back to the widgets menu.
 - assertVisible: 
     text: "Widgets menu"
