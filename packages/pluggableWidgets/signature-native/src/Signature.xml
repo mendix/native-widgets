@@ -10,7 +10,7 @@
             <propertyGroup caption="Data source">
                 <property key="imageSource" type="image" required="true" allowUpload="true">
                     <caption>Image</caption>
-                    <description>The System.Image generalization object the signature will be saved into.</description>
+                    <description>The System.Image generalization object the signature will be saved into. Select the image type Dynamic</description>
                 </property>
             </propertyGroup>
             <propertyGroup caption="Buttons">
