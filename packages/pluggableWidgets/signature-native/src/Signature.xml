@@ -31,7 +31,7 @@
             </property>
             <property key="onSignEndAction" type="action" required="false" defaultType="CallNanoflow">
                 <caption>On sign end</caption>
-                <description>Fired after the signature image has been saved to the image object.</description>
+                <description>Fired when the save button is clicked which saves the signature to the image object. Must use a nanoflow, microflow or save changes action to save the signature.</description>
             </property>
             <property key="onEnd" type="action" required="false">
                 <caption>On end</caption>
