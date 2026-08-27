@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Removed the visible changes in NC and NMR modules during the first build of the app.
+
 ## [12.3.0] Native Mobile Resources - 2026-8-4
 
 ### Changed
