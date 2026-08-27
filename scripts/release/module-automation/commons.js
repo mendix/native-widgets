@@ -66,17 +66,9 @@ async function getPackageInfo(path) {
     }
 }
 
-// Create reusable mxbuild image
+// Create the module MPK with the published mxbuild image
 async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, excludeFilesRegExp) {
-    const existingImages = (await execShellCommand(`docker image ls -q mxbuild:${mendixVersion}`)).toString().trim();
-    if (!existingImages) {
-        console.log(`Creating new mxbuild docker image...`);
-        await execShellCommand(
-            `docker build -f ${join(process.cwd(), "scripts/automation/mxbuild.Dockerfile")} ` +
-                `--build-arg MENDIX_VERSION=${mendixVersion} ` +
-                `-t mxbuild:${mendixVersion} ${process.cwd()}`
-        );
-    }
+    const mxbuildImage = `ghcr.io/mendix/native-widgets/mxbuild:${mendixVersion}`;
 
     // Build testProject and regenerate JS actions
     // 1. mx update-widgets: Updates widget files
@@ -85,7 +77,7 @@ async function createModuleMpkInDocker(sourceDir, moduleName, mendixVersion, exc
     const projectFile = basename((await getFiles(sourceDir, [`.mpr`]))[0]);
     await execShellCommand(
         `docker run -t -v ${sourceDir}:/source ` +
-            `--rm mxbuild:${mendixVersion} bash -c "mx update-widgets --loose-version-check /source/${projectFile} && mxbuild --target=package /source/${projectFile} && dotnet /tmp/mxbuild/modeler/mx.dll create-module-package ${
+            `--rm ${mxbuildImage} bash -c "mx update-widgets --loose-version-check /source/${projectFile} && mxbuild --target=package /source/${projectFile} && dotnet /tmp/mxbuild/modeler/mx.dll create-module-package ${
                 excludeFilesRegExp ? `--exclude-files='${excludeFilesRegExp}'` : ""
             } /source/${projectFile} ${moduleName}"`
     );

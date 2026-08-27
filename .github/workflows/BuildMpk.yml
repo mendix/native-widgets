@@ -24,6 +24,9 @@ jobs:
   publish_release:
     name: "Build MPK"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     steps:
       - name: "Checking-out code"
@@ -49,6 +52,12 @@ jobs:
           echo "VERSION=${NEW_VER}" >> "$GITHUB_OUTPUT"
       - name: "Building native widgets and js actions"
         run: pnpm -r run release
+      - name: "Login to GitHub Container Registry"
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Updating Native Mobile Resources project"
         run: pnpm run build-mpk
         env:
