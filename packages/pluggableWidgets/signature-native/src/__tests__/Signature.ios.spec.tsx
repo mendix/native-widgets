@@ -2,11 +2,35 @@ import SignatureScreen from "react-native-signature-canvas";
 import { fireEvent, render } from "@testing-library/react-native";
 
 import { Signature, Props } from "../Signature";
-import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
+
+import { actionValue, dynamicValue } from "@mendix/piw-utils-internal";
+
+// Mock fetch for dataUriToFile
+global.fetch = jest.fn(() =>
+    Promise.resolve({
+        blob: () => Promise.resolve(new Blob())
+    })
+) as jest.Mock;
 
 jest.mock("react-native", () => {
     const RN = jest.requireActual("react-native");
     RN.NativeModules.RNCWebView = { isFileUploadSupported: jest.fn(() => true) };
+    RN.NativeModules.MxFileSystem = {
+        read: jest.fn(() =>
+            Promise.resolve({
+                data: "mock-blob-data",
+                size: 1024,
+                type: "image/png",
+                name: "signature.png",
+                nativePayload: {
+                    uri: "file:///mock/path",
+                    name: "signature.png",
+                    type: "image/png"
+                },
+                close: jest.fn()
+            })
+        )
+    };
     return RN;
 });
 
@@ -17,10 +41,14 @@ jest.mock("react-native/Libraries/Utilities/Platform", () => {
     return Platform;
 });
 
+const mockImageSource: any = {
+    setValue: jest.fn()
+};
+
 const defaultProps: Props = {
     name: "signature-test",
     style: [],
-    imageAttribute: new EditableValueBuilder<string>().withValue("").build(),
+    imageSource: mockImageSource,
     buttonCaptionClear: dynamicValue<string>("Clear"),
     buttonCaptionSave: dynamicValue<string>("Save")
 };
@@ -34,6 +62,19 @@ jest.mock("react-native-webview", () => {
 
     return { WebView };
 });
+
+jest.mock("react-native-blob-util", () => ({
+    __esModule: true,
+    default: {
+        fs: {
+            dirs: {
+                CacheDir: "/mock/cache"
+            },
+            writeFile: jest.fn(() => Promise.resolve()),
+            unlink: jest.fn(() => Promise.resolve())
+        }
+    }
+}));
 
 describe("Signature iOS", () => {
     it("renders with default styles", () => {
@@ -75,13 +116,17 @@ describe("Signature iOS", () => {
             fireEvent(canvas, "onClear");
             expect(onClearAction.execute).toHaveBeenCalledTimes(1);
         });
-        it("on save", () => {
-            const onSaveAction = actionValue();
-            const component = render(<Signature {...defaultProps} onSave={onSaveAction} />);
+        it("on sign end", async () => {
+            const onSignEndAction = actionValue();
+            const component = render(<Signature {...defaultProps} onSignEndAction={onSignEndAction} />);
             const canvas = component.UNSAFE_getByType(SignatureScreen);
 
-            fireEvent(canvas, "onOK");
-            expect(onSaveAction.execute).toHaveBeenCalledTimes(1);
+            await fireEvent(canvas, "onOK", "data:image/png;base64,test");
+
+            // Wait for async operations
+            await new Promise(resolve => setTimeout(resolve, 0));
+
+            expect(onSignEndAction.execute).toHaveBeenCalledTimes(1);
         });
         it("on empty", () => {
             const onEmptyAction = actionValue();
