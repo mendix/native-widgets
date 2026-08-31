@@ -12,7 +12,7 @@ import Geolocation, {
     GeolocationResponse
 } from "@react-native-community/geolocation";
 
-import type { Platform, NativeModules } from "react-native";
+import type { Platform } from "react-native";
 import type { GeoError, GeoPosition, GeoOptions } from "../../typings/Geolocation";
 
 // BEGIN EXTRA CODE
@@ -43,19 +43,21 @@ export async function GetCurrentLocationMinimumAccuracy(
 ): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
 
-    let reactNativeModule: { NativeModules: typeof NativeModules; Platform: typeof Platform } | undefined;
+    let reactNativeModule: { Platform: typeof Platform } | undefined;
     let geolocationModule: typeof import("@react-native-community/geolocation").default | Geolocation;
 
     if (navigator && navigator.product === "ReactNative") {
         reactNativeModule = require("react-native");
+        const { getNativeModule } =
+            require("mendix-native/native-modules") as typeof import("mendix-native/native-modules");
 
         if (!reactNativeModule) {
             return Promise.reject(new Error("React Native module could not be found"));
         }
 
-        if (reactNativeModule.NativeModules.RNFusedLocation) {
+        if (getNativeModule("RNFusedLocation")) {
             geolocationModule = (await import("@react-native-community/geolocation")).default;
-        } else if (reactNativeModule.NativeModules.RNCGeolocation) {
+        } else if (getNativeModule("RNCGeolocation")) {
             geolocationModule = Geolocation;
         } else {
             return Promise.reject(new Error("Geolocation module could not be found"));
