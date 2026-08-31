@@ -20,7 +20,8 @@ export function collectDependencies({
     outputDir,
     widgetName,
     licenseOptions = null,
-    copyJsModules = true
+    copyJsModules = true,
+    runtimeProvidedPackages = []
 }) {
     const licensePlugin = new LicensePlugin(licenseOptions);
     const managedDependencies = [];
@@ -54,6 +55,28 @@ export function collectDependencies({
             }
             return null;
         },
+        async transform(code, id) {
+            for (const packageName of runtimeProvidedPackages) {
+                const escapedPackageName = escapeRegExp(packageName);
+                const isRuntimeProvidedPackageRequired = new RegExp(
+                    `require\\(["']${escapedPackageName}(?:/[^"']+)?["']\\)|from\\s+["']${escapedPackageName}(?:/[^"']+)?["']`
+                ).test(code);
+
+                if (!isRuntimeProvidedPackageRequired) {
+                    continue;
+                }
+
+                const resolvedPackagePath = await resolvePackage(packageName, dirname(id));
+                if (resolvedPackagePath && !managedDependencies.includes(resolvedPackagePath)) {
+                    managedDependencies.push(resolvedPackagePath);
+                }
+                if (resolvedPackagePath && !dependencies.some(dependency => dependency.packagePath === resolvedPackagePath)) {
+                    dependencies.push({ packagePath: resolvedPackagePath, isTransitive: false });
+                }
+            }
+
+            return null;
+        },
         async generateBundle() {
             if (!licenseOptions) {
                 return;
@@ -84,7 +107,13 @@ export function collectDependencies({
             );
 
             for (const dependency of managedDependencies) {
+                const dependencyJson = await fsExtra.readJson(join(dependency, "package.json"));
                 const destinationPath = join(outputDir, "node_modules", getModuleName(dependency));
+                if (runtimeProvidedPackages.includes(dependencyJson.name)) {
+                    await copyRuntimeProvidedModule(dependency, destinationPath);
+                    continue;
+                }
+
                 await copyJsModule(dependency, destinationPath);
 
                 const transitiveDependencies = await getTransitiveDependencies(dependency, rollupOptions.external);
@@ -215,8 +244,29 @@ export async function copyJsModule(moduleSourcePath, to) {
     }
 }
 
+async function copyRuntimeProvidedModule(moduleSourcePath, destinationPath) {
+    await mkdirp(destinationPath);
+    cpSync(join(moduleSourcePath, "package.json"), join(destinationPath, "package.json"));
+
+    if (getModuleName(moduleSourcePath) === "mendix-native") {
+        for (const entryPoint of ["file-system", "native-modules", "navigation-mode"]) {
+            const sourcePath = join(moduleSourcePath, "lib", "module", entryPoint);
+            if (existsSync(sourcePath)) {
+                cpSync(sourcePath, join(destinationPath, "lib", "module", entryPoint), {
+                    recursive: true,
+                    dereference: true
+                });
+            }
+        }
+    }
+}
+
 function getModuleName(modulePath) {
     return modulePath.split(/[\\/]node_modules[\\/]/).pop();
+}
+
+function escapeRegExp(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 async function writeNativeDependenciesJson(nativeDependencies, outputDir, widgetName) {

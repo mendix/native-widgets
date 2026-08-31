@@ -6,7 +6,9 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import { Alert, Linking, NativeModules, Platform } from "react-native";
+import { Alert, Linking, Platform } from "react-native";
+import { NativeFileSystem } from "mendix-native/file-system";
+import { getNativeModule } from "mendix-native/native-modules";
 import {
     CameraOptions,
     ErrorCode,
@@ -46,7 +48,6 @@ export async function TakePictureAdvanced(
     maximumHeight?: Big
 ): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
-
     if (!picture) {
         return Promise.reject(new Error("Input parameter 'Picture' is required"));
     }
@@ -62,7 +63,9 @@ export async function TakePictureAdvanced(
     }
 
     // V3 dropped the feature of providing an action sheet so users can decide on which action to take, camera or library.
-    const nativeVersionMajor = NativeModules?.ImagePickerManager?.showImagePicker ? 2 : 4;
+    const nativeVersionMajor = getNativeModule<{ showImagePicker?: unknown }>("ImagePickerManager")?.showImagePicker
+        ? 2
+        : 4;
     const RNPermissions = nativeVersionMajor === 4 ? (await import("react-native-permissions")).default : null;
     const resultObject = await createMxObject("NativeMobileResources.ImageMetaData");
 
@@ -171,7 +174,7 @@ export async function TakePictureAdvanced(
 
     async function safeRemove(filePath: string): Promise<void> {
         try {
-            await NativeModules.MxFileSystem.remove(filePath);
+            await NativeFileSystem.remove(filePath);
         } catch (error) {
             console.warn(`Failed to remove file at ${filePath}. Error: ${error}`);
             // ignore error
@@ -180,7 +183,7 @@ export async function TakePictureAdvanced(
 
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            NativeModules.MxFileSystem.read(uri.replace("file://", ""))
+            NativeFileSystem.read(uri.replace("file://", ""))
                 .then((nativeBlob: unknown) => {
                     const blob = new Blob();
                     Object.assign(blob, { data: nativeBlob });
