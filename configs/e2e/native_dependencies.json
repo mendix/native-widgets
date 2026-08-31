@@ -19,5 +19,5 @@
     "react-native-webview": "13.16.1",
     "@sbaiahmed1/react-native-biometrics": "0.15.0",
     "react-native-sound": "0.13.0",
-    "mendix-native": "file:../native-widgets/configs/e2e/mendix-native-0.5.2.tgz"
+    "mendix-native": "file:../native-widgets/configs/e2e/mendix-native-0.6.0.tgz"
 }
