@@ -28,7 +28,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
     "js-base64": "~3.7.2",
-    "mendix-native": "file:../../../../mendix-native",
+    "mendix-native": "file:../../../configs/e2e/mendix-native-0.5.2.tgz",
     "react-native-nitro-geolocation": "1.4.3",
     "react-native-nitro-modules": "0.36.1",
     "react-native-permissions": "5.5.1",
