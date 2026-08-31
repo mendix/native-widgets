@@ -34,7 +34,7 @@
     "@sbaiahmed1/react-native-biometrics": "0.15.0",
     "@swan-io/react-native-browser": "1.0.1",
     "fbjs": "3.0.4",
-    "mendix-native": "file:../../../../mendix-native",
+    "mendix-native": "file:../../../configs/e2e/mendix-native-0.5.2.tgz",
     "mime": "3.0.0",
     "react-native-blob-util": "0.24.7",
     "react-native-device-info": "15.0.2",
