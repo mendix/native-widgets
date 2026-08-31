@@ -5468,7 +5468,7 @@ packages:
     resolution: {integrity: sha512-RazCdCHoLVNKUUeKDkSkIL6Lxx6fUaa4iiy+Ltp9ra8mLQhwyNqD33TIN7YZJ3HDjHc3eWh9cjiZWwh6Jg/cQg==}
 
   mendix-native@file:configs/e2e/mendix-native-0.5.2.tgz:
-    resolution: {integrity: sha512-HSJHp/IIyhcFCDvgEja0CM5l0qLim1v7KtWKs8ODVz6smhj1jxng3Hea2PeRsN5H8+1foJmLHTUGXi2BamfnnA==, tarball: file:configs/e2e/mendix-native-0.5.2.tgz}
+    resolution: {integrity: sha512-SG1YMglRj6W+0v6IzhpuLjiOTHJqwSWD4FPPWjJo3MuiJYNVY5BoNrYnBazCbEIIo9ncJhJIrpe5KXvOWBZegg==, tarball: file:configs/e2e/mendix-native-0.5.2.tgz}
     version: 0.5.2
     peerDependencies:
       '@op-engineering/op-sqlite': 15.2.5
