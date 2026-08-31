@@ -21,6 +21,7 @@
   "dependencies": {
     "@react-native-vector-icons/material-icons": "12.4.1",
     "@mendix/piw-native-utils-internal": "*",
+    "mendix-native": "file:../../../../mendix-native",
     "react-native-video": "6.19.2"
   },
   "devDependencies": {
