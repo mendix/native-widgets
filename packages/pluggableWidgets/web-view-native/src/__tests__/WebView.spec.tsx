@@ -6,8 +6,7 @@ import { Props, WebView } from "../WebView";
 
 jest.mock("react-native", () => {
     const RN = jest.requireActual("react-native");
-    const nativeModules = RN["Native" + "Modules"];
-    Object.assign(nativeModules, { RNCWebView: { isFileUploadSupported: jest.fn(() => true) } });
+    RN.NativeModules.RNCWebView = { isFileUploadSupported: jest.fn(() => true) };
     return RN;
 });
 

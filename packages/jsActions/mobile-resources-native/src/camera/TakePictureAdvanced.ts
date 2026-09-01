@@ -8,7 +8,7 @@
 import { Big } from "big.js";
 import { Alert, Linking, Platform } from "react-native";
 import { NativeFileSystem } from "mendix-native/file-system";
-import { getNativeModule } from "mendix-native/native-modules";
+import { ImagePickerManager } from "mendix-native/image-picker";
 import {
     CameraOptions,
     ErrorCode,
@@ -63,9 +63,7 @@ export async function TakePictureAdvanced(
     }
 
     // V3 dropped the feature of providing an action sheet so users can decide on which action to take, camera or library.
-    const nativeVersionMajor = getNativeModule<{ showImagePicker?: unknown }>("ImagePickerManager")?.showImagePicker
-        ? 2
-        : 4;
+    const nativeVersionMajor = ImagePickerManager.version;
     const RNPermissions = nativeVersionMajor === 4 ? (await import("react-native-permissions")).default : null;
     const resultObject = await createMxObject("NativeMobileResources.ImageMetaData");
 
