@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { getNativeModule } from "mendix-native/native-modules";
+import { RNFBMessagingModule } from "mendix-native/firebase-messaging";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -18,8 +18,6 @@ import { getNativeModule } from "mendix-native/native-modules";
 export async function HasNotificationPermission(): Promise<boolean> {
     // BEGIN USER CODE
     // Documentation https://rnfirebase.io/docs/v5.x.x/notifications/receiving-notifications
-    type FirebaseMessagingModule = { hasPermission: () => Promise<number> };
-
     const enum permissionStatus {
         NotDetermined = -1,
         Denied = 0,
@@ -28,13 +26,12 @@ export async function HasNotificationPermission(): Promise<boolean> {
     }
 
     const allowedAuthorizationStatuses = [permissionStatus.Authorized, permissionStatus.Provisional];
-    const messagingModule = getNativeModule<FirebaseMessagingModule>("RNFBMessagingModule");
 
-    if (!messagingModule) {
+    if (!RNFBMessagingModule.isAvailable) {
         return Promise.reject(new Error("Firebase module is not available in your app"));
     }
 
-    return messagingModule.hasPermission().then((authStatus: number) => {
+    return RNFBMessagingModule.hasPermission().then((authStatus: number) => {
         if (allowedAuthorizationStatuses.includes(authStatus)) {
             return Promise.resolve(true);
         } else {

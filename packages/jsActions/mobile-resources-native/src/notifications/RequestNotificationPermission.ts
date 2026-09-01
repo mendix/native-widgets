@@ -6,7 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { PermissionsAndroid, Platform } from "react-native";
-import { getNativeModule } from "mendix-native/native-modules";
+import { RNFBMessagingModule } from "mendix-native/firebase-messaging";
 import messaging from "@react-native-firebase/messaging";
 
 // BEGIN EXTRA CODE
@@ -21,7 +21,7 @@ export async function RequestNotificationPermission(): Promise<boolean> {
     // BEGIN USER CODE
     // Documentation https://rnfirebase.io/messaging/usage
 
-    if (!getNativeModule("RNFBMessagingModule")) {
+    if (!RNFBMessagingModule.isAvailable) {
         return Promise.reject(new Error("Firebase module is not available in your app"));
     }
 
