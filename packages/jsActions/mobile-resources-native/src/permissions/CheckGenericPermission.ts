@@ -6,7 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Platform } from "react-native";
-import { getNativeModule } from "mendix-native/native-modules";
+import { ScheduleEA } from "mendix-native/schedule-exact-alarm";
 import { check, Permission, PERMISSIONS as RNPermissions } from "react-native-permissions";
 import { ANDROIDPermissionName, IOSPermissionName } from "../../typings/RequestGenericPermission";
 
@@ -33,11 +33,7 @@ function mapPermissionName(permissionName: string): Permission | "android.permis
 }
 
 async function checkScheduleAlarm(): Promise<"granted" | "blocked"> {
-    const scheduleExactAlarmModule = getNativeModule<{
-        checkPermission: (callback: (isEnabled: boolean) => void) => void;
-    }>("ScheduleEA");
-
-    if (!scheduleExactAlarmModule) {
+    if (!ScheduleEA.isAvailable) {
         return Promise.reject(new Error("ScheduleEA module is not available in your app"));
     }
 
@@ -46,7 +42,7 @@ async function checkScheduleAlarm(): Promise<"granted" | "blocked"> {
     }
 
     const checkPermissionPromise = new Promise(resolve => {
-        scheduleExactAlarmModule.checkPermission((isEnabled: boolean) => {
+        ScheduleEA.checkPermission((isEnabled: boolean) => {
             resolve(isEnabled);
         });
     });
