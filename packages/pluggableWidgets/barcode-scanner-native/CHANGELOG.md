@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-9-2
+
 -   We fixed the barcode mask not visible issue and selection logic of QR code.
 
 ## [4.4.0] - 2026-8-4

@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-9-2
+
 ### Changed
 
 -   We updated react-native-segmented-control-tab to 3.4.1.
