@@ -1013,8 +1013,8 @@ jobs:
             chmod +x maestro/run_maestro_widget_tests.sh
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_widget_tests.sh android "${{ matrix.widget }}" || [ "$UPDATE_BASELINES" = "true" ]
-            mkdir -p log
-            adb logcat -d > log/logcat.log || true
+            mkdir -p "$GITHUB_WORKSPACE/log"
+            adb logcat -d > "$GITHUB_WORKSPACE/log/logcat.log" || true
       
       - name: Archive test results
         # !cancelled(): the test step exits non-zero on a failing shard, which would otherwise
@@ -1159,8 +1159,8 @@ jobs:
             chmod +x maestro/run_maestro_jsactions_tests.sh
             bash maestro/helpers/prepare_android.sh
             bash maestro/run_maestro_jsactions_tests.sh android || [ "$UPDATE_BASELINES" = "true" ]
-            mkdir -p log
-            adb logcat -d > log/logcat.log || true
+            mkdir -p "$GITHUB_WORKSPACE/log"
+            adb logcat -d > "$GITHUB_WORKSPACE/log/logcat.log" || true
       
       - name: Archive test results
         if: ${{ !cancelled() }}
