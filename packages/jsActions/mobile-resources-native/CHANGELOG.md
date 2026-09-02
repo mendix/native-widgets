@@ -6,9 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.12] Native Mobile Resources - 2026-9-2
+
 ### Fixed
 
 -   Removed the visible changes in NC and NMR modules during the first build of the app.
+
+## [4.4.0] BarcodeScanner
+
+-   We fixed the barcode mask not visible issue and selection logic of QR code.
+
+## [4.4.0] IntroScreen
+
+### Fixed
+
+-   We fixed an issue where the IntroScreen did not show the slide set by the active slide attribute, and where swiping between slides did not work reliably on slower Android devices.
 
 ## [11.3.11] Native Mobile Resources - 2026-8-5
 
