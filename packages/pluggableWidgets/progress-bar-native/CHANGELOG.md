@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.4.1] - 2026-9-2
+
 ### Changed
 
 -   We pinned react-native-progress to 5.0.1.

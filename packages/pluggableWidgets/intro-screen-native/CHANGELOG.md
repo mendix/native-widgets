@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-9-2
+
 ### Fixed
 
 -   We fixed an issue where the IntroScreen did not show the slide set by the active slide attribute, and where swiping between slides did not work reliably on slower Android devices.
