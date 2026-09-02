@@ -1,5 +1,5 @@
 import SignatureScreen from "react-native-signature-canvas";
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 
 import { Signature, Props } from "../Signature";
 
@@ -123,8 +123,9 @@ describe("Signature iOS", () => {
 
             await fireEvent(canvas, "onOK", "data:image/png;base64,test");
 
-            // Wait for async operations
-            await new Promise(resolve => setTimeout(resolve, 0));
+            await waitFor(() => {
+                expect(onSignEndAction.execute).toHaveBeenCalledTimes(1);
+            });
 
             expect(onSignEndAction.execute).toHaveBeenCalledTimes(1);
         });
