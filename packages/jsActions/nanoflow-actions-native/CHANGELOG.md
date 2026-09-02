@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [6.2.3] Nanoflow Commons - 2026-9-2
+
 ### Fixed
 
 -   Removed the visible changes in NC and NMR modules during the first build of the app.
