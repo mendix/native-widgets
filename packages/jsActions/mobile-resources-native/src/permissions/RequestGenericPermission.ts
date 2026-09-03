@@ -6,7 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Alert, Platform } from "react-native";
-import { ScheduleEA } from "mendix-native/schedule-exact-alarm";
+import { ScheduleEA } from "../../shared/ScheduleEA";
 import {
     check,
     request,
