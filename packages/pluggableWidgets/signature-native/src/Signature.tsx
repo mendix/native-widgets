@@ -60,7 +60,7 @@ async function dataUriToBlob(base64: string): Promise<{ blob: File; tempPath: st
 
 export function Signature(props: Props): ReactElement {
     const ref = useRef<SignatureViewRef>(null);
-    const pendingTempPathsRef = useRef<string[]>([]);
+    const pendingTempPathRef = useRef<string | null>(null);
     const wasExecutingRef = useRef<boolean>(false);
     const styles = mergeNativeStyles(defaultSignatureStyle, props.style);
     const [signatureProps, containerStyles] = extractStyles(styles.container, ["penColor", "backgroundColor"]);
@@ -77,16 +77,17 @@ export function Signature(props: Props): ReactElement {
     const buttonCaptionClear = props.buttonCaptionClear?.value ?? "Clear";
     const buttonCaptionSave = props.buttonCaptionSave?.value ?? "Save";
 
-    // Clean up temp files after onSignEndAction completes. We cannot await action.execute() (it returns void),
+    // Clean up temp file after onSignEndAction completes. We cannot await action.execute() (it returns void),
     // so we observe the isExecuting transition (true → false) as the signal that the action — including the
     // file upload triggered by publish("submit") inside callNanoflow/callMicroflow/saveChanges — has finished.
     useEffect(() => {
         const isExecuting = props.onSignEndAction?.isExecuting ?? false;
-        if (wasExecutingRef.current && !isExecuting && pendingTempPathsRef.current.length > 0) {
-            const paths = pendingTempPathsRef.current.splice(0);
-            paths.forEach(tempPath =>
-                RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e))
-            );
+        if (wasExecutingRef.current && !isExecuting && pendingTempPathRef.current) {
+            const tempPath = pendingTempPathRef.current;
+            pendingTempPathRef.current = null;
+            console.log("Cleaning up temp file:", tempPath);
+            RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
+            console.log("cleaning up temp file successful");
         }
         wasExecutingRef.current = isExecuting;
     }, [props.onSignEndAction?.isExecuting]);
@@ -100,15 +101,12 @@ export function Signature(props: Props): ReactElement {
                 }
                 const result = await dataUriToBlob(dataUri);
                 tempPath = result.tempPath;
-                pendingTempPathsRef.current.push(tempPath);
+                pendingTempPathRef.current = tempPath;
                 props.imageSource.setValue(result.blob);
                 executeAction(props.onSignEndAction);
             } catch (error) {
                 if (tempPath) {
-                    const idx = pendingTempPathsRef.current.indexOf(tempPath);
-                    if (idx !== -1) {
-                        pendingTempPathsRef.current.splice(idx, 1);
-                    }
+                    pendingTempPathRef.current = null;
                     RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
                 }
                 console.error("Signature: failed to save image", error);
