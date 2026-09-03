@@ -124,7 +124,7 @@ To enable it you can set the new SignIn action parameter `useAuthToken` to `true
     -   Base64DecodeToImage
     -   Base64Encode
     -   GetStraightLineDistance
--   New "Enum_DistanceUnit" enum is introduce for GetStraightLineDistance action
+-   New "Enum_DistanceUnit" enum is introduced for GetStraightLineDistance action
 
 ## [2.5.0] Nanoflow Commons - 2022-7-25
 
@@ -153,7 +153,7 @@ To enable it you can set the new SignIn action parameter `useAuthToken` to `true
 ### Added
 
 -   We introduced a new [Clear cached session data] action to clear the cached session data from local storage.
--   We introdcued a new [Reload] action that reloads the app.
+-   We introduced a new [Reload] action that reloads the app.
 
 ### Breaking
 
