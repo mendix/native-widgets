@@ -19,7 +19,5 @@
     "react-native-webview": "13.16.1",
     "@sbaiahmed1/react-native-biometrics": "0.15.0",
     "react-native-sound": "0.13.0",
-    "react-native-nitro-geolocation": "1.4.3",
-    "react-native-nitro-modules": "0.36.1",
     "mendix-native": "file:../native-widgets/configs/e2e/mendix-native-0.6.0.tgz"
 }
