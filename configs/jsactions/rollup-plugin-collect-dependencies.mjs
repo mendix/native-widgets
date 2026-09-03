@@ -249,15 +249,7 @@ async function copyRuntimeProvidedModule(moduleSourcePath, destinationPath) {
     cpSync(join(moduleSourcePath, "package.json"), join(destinationPath, "package.json"));
 
     if (getModuleName(moduleSourcePath) === "mendix-native") {
-        for (const entryPoint of [
-            "file-system",
-            "native-modules",
-            "navigation-mode",
-            "image-picker",
-            "notifee",
-            "firebase-messaging",
-            "schedule-exact-alarm"
-        ]) {
+        for (const entryPoint of ["file-system", "native-modules", "navigation-mode"]) {
             const sourcePath = join(moduleSourcePath, "lib", "module", entryPoint);
             if (existsSync(sourcePath)) {
                 cpSync(sourcePath, join(destinationPath, "lib", "module", entryPoint), {
