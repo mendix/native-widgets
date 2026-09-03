@@ -8,7 +8,7 @@
 import { Big } from "big.js";
 import { Alert, Linking, Platform } from "react-native";
 import { NativeFileSystem } from "mendix-native/file-system";
-import { ImagePickerManager } from "mendix-native/image-picker";
+import { ImagePickerManager } from "../../shared/ImagePickerManager";
 import {
     CameraOptions,
     ErrorCode,
