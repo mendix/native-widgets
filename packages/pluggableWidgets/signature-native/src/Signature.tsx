@@ -85,9 +85,7 @@ export function Signature(props: Props): ReactElement {
         if (wasExecutingRef.current && !isExecuting && pendingTempPathRef.current) {
             const tempPath = pendingTempPathRef.current;
             pendingTempPathRef.current = null;
-            console.log("Cleaning up temp file:", tempPath);
             RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
-            console.log("cleaning up temp file successful");
         }
         wasExecutingRef.current = isExecuting;
     }, [props.onSignEndAction?.isExecuting]);
