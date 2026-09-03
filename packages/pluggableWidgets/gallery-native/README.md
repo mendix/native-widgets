@@ -33,7 +33,7 @@ Defines the amount of data shown for each page or the limit to be presented.
 
 ### 2.3.2 Pagination
 
-You can choose between `Load more button` (button being presented below) or `Virtual scrolling` (mechanism that automatically loads data when the users reaches the bottom of the scrollbar).
+You can choose between `Load more button` (button being presented below) or `Virtual scrolling` (mechanism that automatically loads data when the user reaches the bottom of the scrollbar).
 
 ### 2.3.3 Empty Message
 
@@ -51,7 +51,7 @@ Triggers an action (such as a nanoflow, Show page, etc. action) when the end-use
 
 ### 2.4.2 On Pull Down Action
 
-Triggers an action (such as a nanoflow, Synchronize, etc. action) when the end-user swipe down of the list.
+Triggers an action (such as a nanoflow, Synchronize, etc. action) when the end-user swipes down on the list.
 
 ### Filtering
 
