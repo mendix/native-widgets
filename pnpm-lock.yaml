@@ -5468,10 +5468,10 @@ packages:
     resolution: {integrity: sha512-RazCdCHoLVNKUUeKDkSkIL6Lxx6fUaa4iiy+Ltp9ra8mLQhwyNqD33TIN7YZJ3HDjHc3eWh9cjiZWwh6Jg/cQg==}
 
   mendix-native@file:configs/e2e/mendix-native-0.5.2.tgz:
-    resolution: {integrity: sha512-EAHSlYfchouvh9GasxOq5XXhovkaNZsExu5/XTr0DL5ltdqR/mB7yODqhCKIXWat8il1DKmIwn1XeRAD1k8xoA==, tarball: file:configs/e2e/mendix-native-0.5.2.tgz}
+    resolution: {integrity: sha512-k3mQxvD8LlUSYeNPPpAJ9HPaoT1DKlLsBe36u/NfQmtwKwhqyMmFfqbo2AK3a8teNSdMfNac7zmg2Qj9Lgns3w==, tarball: file:configs/e2e/mendix-native-0.5.2.tgz}
     version: 0.5.2
     peerDependencies:
-      '@op-engineering/op-sqlite': 15.2.5
+      '@op-engineering/op-sqlite': '*'
       '@react-native-async-storage/async-storage': '*'
       react: 19.2.3
       react-native: 0.84.1
