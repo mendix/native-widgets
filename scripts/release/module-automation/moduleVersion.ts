@@ -18,8 +18,9 @@ function runCommand(command: string, workingDirectory: string): Promise<CommandR
 }
 
 function dockerMxCommand(mendixVersion: string, projectFile: string, mxArguments: string): string {
+    const mxbuildImage = `ghcr.io/mendix/native-widgets/mxbuild:${mendixVersion}`;
     return (
-        `docker run -t -v ${dirname(projectFile)}:/source --rm mxbuild:${mendixVersion} ` +
+        `docker run -t -v ${dirname(projectFile)}:/source --rm ${mxbuildImage} ` +
         `bash -c "mx ${mxArguments.replace("{project}", `/source/${basename(projectFile)}`)}"`
     );
 }
