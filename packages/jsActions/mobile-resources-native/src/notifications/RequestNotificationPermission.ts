@@ -6,7 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { PermissionsAndroid, Platform } from "react-native";
-import { RNFBMessagingModule } from "mendix-native/firebase-messaging";
+import { RNFBMessagingModule } from "../../shared/RNFBMessagingModule";
 import messaging from "@react-native-firebase/messaging";
 
 // BEGIN EXTRA CODE

@@ -6,7 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Platform } from "react-native";
-import { NotifeeApiModule } from "mendix-native/notifee";
+import { NotifeeApiModule } from "../../shared/NotifeeApiModule";
 import notifee, { AndroidChannel, AndroidImportance, Notification } from "react-native-notify-kit";
 
 // BEGIN EXTRA CODE
