@@ -8,6 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
+-   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
+
+## [5.3.2] - 2026-8-4
+
+### Fixed
+
+-   Fixed bottomsheet issue to close when the trigger attribute changes.
+
+## [5.3.1] - 2026-7-3
+
+### Fixed
+
 -   Fixed flickering issue on Android when opening bottom sheet (both basic and custom render types).
 -   Improved backdrop animation with smooth fade-in/fade-out transitions.
 -   Fixed bottomsheet issue to close when the trigger attribute changes.
