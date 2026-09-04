@@ -7,6 +7,7 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
 import { Alert, Linking, NativeModules, Platform } from "react-native";
+import { NativeFileSystem } from "mendix-native";
 import {
     CameraOptions,
     ErrorCode,
@@ -171,7 +172,7 @@ export async function TakePictureAdvanced(
 
     async function safeRemove(filePath: string): Promise<void> {
         try {
-            await NativeModules.MxFileSystem.remove(filePath);
+            await NativeFileSystem.remove(filePath);
         } catch (error) {
             console.warn(`Failed to remove file at ${filePath}. Error: ${error}`);
             // ignore error
@@ -180,8 +181,8 @@ export async function TakePictureAdvanced(
 
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            NativeModules.MxFileSystem.read(uri.replace("file://", ""))
-                .then((nativeBlob: unknown) => {
+            NativeFileSystem.read(uri.replace("file://", ""))
+                .then(nativeBlob => {
                     const blob = new Blob();
                     Object.assign(blob, { data: nativeBlob });
                     // eslint-disable-next-line no-useless-escape
