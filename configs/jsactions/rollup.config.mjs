@@ -145,7 +145,6 @@ export default async args => {
 
 const nativeExternal = [
     /^mendix\//,
-    /^mendix-native(\/|$)/,
     /^react-native(\/|$)/,
     /^react-native-windows(\/|$)/,
     /^react-native-web(\/|$)/,
