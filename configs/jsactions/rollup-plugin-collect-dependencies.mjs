@@ -20,8 +20,7 @@ export function collectDependencies({
     outputDir,
     widgetName,
     licenseOptions = null,
-    copyJsModules = true,
-    runtimeProvidedPackages = []
+    copyJsModules = true
 }) {
     const licensePlugin = new LicensePlugin(licenseOptions);
     const managedDependencies = [];
@@ -55,32 +54,6 @@ export function collectDependencies({
             }
             return null;
         },
-        async transform(code, id) {
-            // Note: This hook scans code for runtime-provided packages to ensure they're
-            // tracked for license generation even though they're marked external.
-            // Currently unused (runtimeProvidedPackages is empty) but kept for potential
-            // future use cases.
-            for (const packageName of runtimeProvidedPackages) {
-                const escapedPackageName = escapeRegExp(packageName);
-                const isRuntimeProvidedPackageRequired = new RegExp(
-                    `require\\(["']${escapedPackageName}(?:/[^"']+)?["']\\)|from\\s+["']${escapedPackageName}(?:/[^"']+)?["']`
-                ).test(code);
-
-                if (!isRuntimeProvidedPackageRequired) {
-                    continue;
-                }
-
-                const resolvedPackagePath = await resolvePackage(packageName, dirname(id));
-                if (resolvedPackagePath && !managedDependencies.includes(resolvedPackagePath)) {
-                    managedDependencies.push(resolvedPackagePath);
-                }
-                if (resolvedPackagePath && !dependencies.some(dependency => dependency.packagePath === resolvedPackagePath)) {
-                    dependencies.push({ packagePath: resolvedPackagePath, isTransitive: false });
-                }
-            }
-
-            return null;
-        },
         async generateBundle() {
             if (!licenseOptions) {
                 return;
@@ -111,9 +84,7 @@ export function collectDependencies({
             );
 
             for (const dependency of managedDependencies) {
-                const dependencyJson = await fsExtra.readJson(join(dependency, "package.json"));
                 const destinationPath = join(outputDir, "node_modules", getModuleName(dependency));
-
                 await copyJsModule(dependency, destinationPath);
 
                 const transitiveDependencies = await getTransitiveDependencies(dependency, rollupOptions.external);
@@ -246,10 +217,6 @@ export async function copyJsModule(moduleSourcePath, to) {
 
 function getModuleName(modulePath) {
     return modulePath.split(/[\\/]node_modules[\\/]/).pop();
-}
-
-function escapeRegExp(value) {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 async function writeNativeDependenciesJson(nativeDependencies, outputDir, widgetName) {
