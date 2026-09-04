@@ -1,7 +1,7 @@
-import { getNativeModule } from "mendix-native/native-modules";
+import { TurboModuleRegistry } from "react-native";
 
 export const NotifeeApiModule = {
     get isAvailable(): boolean {
-        return !!getNativeModule("NotifeeApiModule");
+        return !!TurboModuleRegistry.get("NotifeeApiModule");
     }
 };

@@ -1,14 +1,14 @@
-import { getNativeModule } from "mendix-native/native-modules";
+import { TurboModule, TurboModuleRegistry } from "react-native";
 
-interface FirebaseMessagingModuleSpec {
+interface FirebaseMessagingModuleSpec extends TurboModule {
     hasPermission(): Promise<number>;
 }
 
 export const RNFBMessagingModule = {
     get isAvailable(): boolean {
-        return !!getNativeModule<FirebaseMessagingModuleSpec>("RNFBMessagingModule");
+        return !!TurboModuleRegistry.get<FirebaseMessagingModuleSpec>("RNFBMessagingModule");
     },
     hasPermission(): Promise<number> {
-        return getNativeModule<FirebaseMessagingModuleSpec>("RNFBMessagingModule")!.hasPermission();
+        return TurboModuleRegistry.get<FirebaseMessagingModuleSpec>("RNFBMessagingModule")!.hasPermission();
     }
 };

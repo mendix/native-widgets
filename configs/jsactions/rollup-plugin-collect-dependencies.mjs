@@ -56,6 +56,10 @@ export function collectDependencies({
             return null;
         },
         async transform(code, id) {
+            // Note: This hook scans code for runtime-provided packages to ensure they're
+            // tracked for license generation even though they're marked external.
+            // Currently unused (runtimeProvidedPackages is empty) but kept for potential
+            // future use cases.
             for (const packageName of runtimeProvidedPackages) {
                 const escapedPackageName = escapeRegExp(packageName);
                 const isRuntimeProvidedPackageRequired = new RegExp(
@@ -109,10 +113,6 @@ export function collectDependencies({
             for (const dependency of managedDependencies) {
                 const dependencyJson = await fsExtra.readJson(join(dependency, "package.json"));
                 const destinationPath = join(outputDir, "node_modules", getModuleName(dependency));
-                if (runtimeProvidedPackages.includes(dependencyJson.name)) {
-                    await copyRuntimeProvidedModule(dependency, destinationPath);
-                    continue;
-                }
 
                 await copyJsModule(dependency, destinationPath);
 
@@ -241,23 +241,6 @@ export async function copyJsModule(moduleSourcePath, to) {
             return;
         }
         throw error;
-    }
-}
-
-async function copyRuntimeProvidedModule(moduleSourcePath, destinationPath) {
-    await mkdirp(destinationPath);
-    cpSync(join(moduleSourcePath, "package.json"), join(destinationPath, "package.json"));
-
-    if (getModuleName(moduleSourcePath) === "mendix-native") {
-        for (const entryPoint of ["file-system", "native-modules", "navigation-mode"]) {
-            const sourcePath = join(moduleSourcePath, "lib", "module", entryPoint);
-            if (existsSync(sourcePath)) {
-                cpSync(sourcePath, join(destinationPath, "lib", "module", entryPoint), {
-                    recursive: true,
-                    dereference: true
-                });
-            }
-        }
     }
 }
 
