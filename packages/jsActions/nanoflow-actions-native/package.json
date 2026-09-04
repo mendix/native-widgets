@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
-    "mendix": "11.8.0"
+    "mendix": "11.8.0",
+    "mendix-native": "https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz"
   }
 }
