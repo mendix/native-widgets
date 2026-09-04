@@ -22,7 +22,9 @@ export default async args => {
     const jsActionTargetFolder = `javascriptsource/${args.configProject ?? "nativemobileresources"}/actions`;
     const result = [];
     const posixPath = join(cwd, "src", "**/*.ts").split(sep).join(posix.sep); // Always use forward slashes
-    const files = await fg([posixPath]); // fast-glob only works with forward slashes
+    // `src/native` holds shared helpers, not actions, so it gets no bundle of its own; it lives under
+    // `src` because these packages have no tsconfig and TypeScript infers the source root from there.
+    const files = await fg([posixPath], { ignore: ["**/src/native/**"] }); // fast-glob only works with forward slashes
     const outDir = join(cwd, "dist");
 
     const nodeResolvePlugin = nodeResolve({ preferBuiltins: false, mainFields: ["module", "browser", "main"] });
@@ -143,6 +145,7 @@ export default async args => {
 
 const nativeExternal = [
     /^mendix\//,
+    /^mendix-native(\/|$)/,
     /^react-native(\/|$)/,
     /^react-native-windows(\/|$)/,
     /^react-native-web(\/|$)/,
