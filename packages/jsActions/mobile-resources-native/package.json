@@ -11,7 +11,7 @@
   "marketplace": {
     "name": "Native Mobile Resources",
     "description": "Download this module to access a rich set of widgets and nanoflow actions created for native mobile, including authentication, network, platform, and more. A must-have for native mobile development!",
-    "minimumMXVersion": "11.12.3",
+    "minimumMXVersion": "11.14.0",
     "marketplaceId": 109513
   },
   "testProject": {
@@ -49,6 +49,7 @@
     "@types/querystringify": "^2.0.0",
     "@types/url-parse": "^1.4.3",
     "mendix": "11.8.0",
+    "mendix-native": "https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz",
     "rimraf": "^6.1.2"
   }
 }
