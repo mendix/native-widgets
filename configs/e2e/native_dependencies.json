@@ -18,6 +18,5 @@
     "react-native-permissions": "5.5.1",
     "react-native-webview": "13.16.1",
     "@sbaiahmed1/react-native-biometrics": "0.15.0",
-    "react-native-sound": "0.13.0",
-    "mendix-native": "https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz"
+    "react-native-sound": "0.13.0"
 }
