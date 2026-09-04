@@ -5,7 +5,8 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Alert, Platform, NativeModules } from "react-native";
+import { Alert, Platform } from "react-native";
+import { ScheduleEA } from "../../shared/ScheduleEA";
 import {
     check,
     request,
@@ -66,7 +67,7 @@ function mapPermissionName(permissionName: string): Permission | "android.permis
 }
 
 async function checkScheduleAlarm(): Promise<"granted" | "blocked"> {
-    if (NativeModules && !NativeModules.ScheduleEA) {
+    if (!ScheduleEA.isAvailable) {
         return Promise.reject(new Error("ScheduleEA module is not available in your app"));
     }
 
@@ -75,7 +76,7 @@ async function checkScheduleAlarm(): Promise<"granted" | "blocked"> {
     }
 
     const checkPermissionPromise = new Promise(resolve => {
-        NativeModules.ScheduleEA.checkPermission((isEnabled: boolean) => {
+        ScheduleEA.checkPermission((isEnabled: boolean) => {
             resolve(isEnabled);
         });
     });

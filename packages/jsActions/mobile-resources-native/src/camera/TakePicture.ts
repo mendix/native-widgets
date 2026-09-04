@@ -6,7 +6,9 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import { Alert, Linking, NativeModules, Platform } from "react-native";
+import { Alert, Linking, Platform } from "react-native";
+import { NativeFileSystem } from "mendix-native/file-system";
+import { ImagePickerManager } from "../../shared/ImagePickerManager";
 import {
     CameraOptions,
     ErrorCode,
@@ -56,7 +58,7 @@ export async function TakePicture(
     }
 
     // V3 dropped the feature of providing an action sheet so users can decide on which action to take, camera or library.
-    const nativeVersionMajor = NativeModules?.ImagePickerManager?.showImagePicker ? 2 : 4;
+    const nativeVersionMajor = ImagePickerManager.version;
     const RNPermissions = nativeVersionMajor === 4 ? (await import("react-native-permissions")).default : null;
 
     try {
@@ -118,7 +120,7 @@ export async function TakePicture(
 
     async function safeRemove(filePath: string): Promise<void> {
         try {
-            await NativeModules.MxFileSystem.remove(filePath);
+            await NativeFileSystem.remove(filePath);
         } catch (error) {
             console.warn(`Failed to remove file at ${filePath}. Error: ${error}`);
             // ignore error
@@ -127,7 +129,7 @@ export async function TakePicture(
 
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            NativeModules.MxFileSystem.read(uri.replace("file://", ""))
+            NativeFileSystem.read(uri.replace("file://", ""))
                 .then((nativeBlob: unknown) => {
                     const blob = new Blob();
                     Object.assign(blob, { data: nativeBlob });
