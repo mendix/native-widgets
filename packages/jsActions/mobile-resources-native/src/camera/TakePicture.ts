@@ -7,7 +7,7 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
 import { Alert, Linking, Platform } from "react-native";
-import { NativeFileSystem } from "mendix-native/file-system";
+import { NativeFileSystem } from "mendix-native";
 import { ImagePickerManager } from "../../shared/ImagePickerManager";
 import {
     CameraOptions,
