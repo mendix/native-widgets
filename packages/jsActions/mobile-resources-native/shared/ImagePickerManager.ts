@@ -1,6 +1,6 @@
-import { getNativeModule } from "mendix-native/native-modules";
+import { TurboModule, TurboModuleRegistry } from "react-native";
 
-interface ImagePickerManagerSpec {
+interface ImagePickerManagerSpec extends TurboModule {
     showImagePicker?: unknown;
 }
 
@@ -11,6 +11,6 @@ export const ImagePickerManager = {
      * every call site.
      */
     get version(): 2 | 4 {
-        return getNativeModule<ImagePickerManagerSpec>("ImagePickerManager")?.showImagePicker ? 2 : 4;
+        return TurboModuleRegistry.get<ImagePickerManagerSpec>("ImagePickerManager")?.showImagePicker ? 2 : 4;
     }
 };
