@@ -92,7 +92,6 @@ export default async args => {
                     onlyNative: false,
                     outputDir: outDir,
                     widgetName: fileOutput,
-                    runtimeProvidedPackages: ["mendix-native"],
                     licenseOptions: {
                         thirdParty: {
                             includePrivate: true,
@@ -168,7 +167,7 @@ export default async args => {
 
 const nativeExternal = [
     /^mendix\//,
-    "mendix-native",
+    /^mendix-native(\/|$)/,
     /^react-native(\/|$)/,
     /^react-native-windows(\/|$)/,
     /^react-native-web(\/|$)/,

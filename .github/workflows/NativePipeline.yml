@@ -558,7 +558,7 @@ jobs:
           path: android-apk-cache
           # No restore-keys: a partial-input change must rebuild. gradle autolinks from
           # native_dependencies.json, so it belongs in the key.
-          key: android-apk-v1-${{ runner.os }}-${{ env.BUILD_TOOLS_ID }}-${{ env.NT_SHA }}-${{ hashFiles('native-template/package-lock.json', 'native-widgets/configs/e2e/native_dependencies.json', 'native-widgets/configs/e2e/*.tgz', 'native-widgets/configs/e2e/config.json', 'native-widgets/configs/e2e/google-services.json', 'native-widgets/scripts/test/add-native-dependencies.js') }}
+          key: android-apk-v1-${{ runner.os }}-${{ env.BUILD_TOOLS_ID }}-${{ env.NT_SHA }}-${{ hashFiles('native-template/package-lock.json', 'native-widgets/configs/e2e/native_dependencies.json', 'native-widgets/configs/e2e/config.json', 'native-widgets/configs/e2e/google-services.json', 'native-widgets/scripts/test/add-native-dependencies.js') }}
       - name: "Verify restored Android APK"
         shell: bash
         run: |
@@ -789,7 +789,7 @@ jobs:
           path: native-template/ios/build/Build/Products
           # No restore-keys: `pod install` regenerates Podfile.lock from native_dependencies.json,
           # so the lock alone is not enough.
-          key: ios-app-v1-${{ runner.os }}-${{ env.XCODE_ID }}-${{ env.NT_SHA }}-${{ hashFiles('native-template/package-lock.json', 'native-template/ios/Podfile', 'native-template/ios/Podfile.lock', 'native-widgets/configs/e2e/native_dependencies.json', 'native-widgets/configs/e2e/*.tgz', 'native-widgets/configs/e2e/config.json', 'native-widgets/scripts/test/add-native-dependencies.js') }}
+          key: ios-app-v1-${{ runner.os }}-${{ env.XCODE_ID }}-${{ env.NT_SHA }}-${{ hashFiles('native-template/package-lock.json', 'native-template/ios/Podfile', 'native-template/ios/Podfile.lock', 'native-widgets/configs/e2e/native_dependencies.json', 'native-widgets/configs/e2e/config.json', 'native-widgets/scripts/test/add-native-dependencies.js') }}
       - name: "Verify restored iOS app"
         shell: bash
         run: |
