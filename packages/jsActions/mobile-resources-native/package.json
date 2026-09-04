@@ -11,7 +11,7 @@
   "marketplace": {
     "name": "Native Mobile Resources",
     "description": "Download this module to access a rich set of widgets and nanoflow actions created for native mobile, including authentication, network, platform, and more. A must-have for native mobile development!",
-    "minimumMXVersion": "11.12.3",
+    "minimumMXVersion": "11.14.0",
     "marketplaceId": 109513
   },
   "testProject": {
@@ -34,6 +34,7 @@
     "@sbaiahmed1/react-native-biometrics": "0.15.0",
     "@swan-io/react-native-browser": "1.0.1",
     "fbjs": "3.0.4",
+    "mendix-native": "https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz",
     "mime": "3.0.0",
     "react-native-blob-util": "0.24.7",
     "react-native-device-info": "15.0.2",

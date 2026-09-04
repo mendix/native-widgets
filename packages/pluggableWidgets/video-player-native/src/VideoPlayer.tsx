@@ -9,7 +9,6 @@ import {
     View,
     Appearance,
     Modal,
-    NativeModules,
     Pressable
 } from "react-native";
 import Video, { OnProgressData, ReactVideoProps, VideoRef } from "react-native-video";
@@ -86,9 +85,11 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     }, [props.showControls, showControls, showControlsHandler]);
 
     async function fullScreenHandler(isFullScreen: boolean): Promise<void> {
+        // Dynamic import to avoid bundling mendix-native in web builds
+        const { AndroidNavigationBar } = require("mendix-native");
+
         setFullScreen(isFullScreen);
-        const { NavigationBar } = NativeModules;
-        if (NavigationBar) {
+        if (AndroidNavigationBar.isActive) {
             if (isFullScreen) {
                 StatusBar.setHidden(true);
             } else {
