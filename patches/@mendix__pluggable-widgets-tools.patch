@@ -62,7 +62,7 @@ diff --git a/configs/rollup.config.native.mjs b/configs/rollup.config.native.mjs
 index 62c5c82ddbd628e5d22709660f26e82855ddfceb..927c8e729238f8cb2971b752c2ccace3d9464606 100644
 --- a/configs/rollup.config.native.mjs
 +++ b/configs/rollup.config.native.mjs
-@@ -52,9 +52,11 @@ const nativeExternal = [
+@@ -52,9 +52,10 @@ const nativeExternal = [
      /^react($|\/)/,
      /^react-native-gesture-handler($|\/)/,
      /^react-native-reanimated($|\/)/,
@@ -71,8 +71,7 @@ index 62c5c82ddbd628e5d22709660f26e82855ddfceb..927c8e729238f8cb2971b752c2ccace3
      /^react-native-svg($|\/)/,
 -    /^react-native-vector-icons($|\/)/,
 +    /^@react-native-vector-icons\/common($|\/)/,
-+    /^@op-engineering\/op-sqlite($|\/)/,
-+    /^@react-native-async-storage\/async-storage($|\/)/,
++    /^mendix-native($|\/)/,
      /^@?react-navigation($|\/)/,
      /^react-native-safe-area-context($|\/)/,
      /^@d11\/react-native-fast-image($|\/)/
