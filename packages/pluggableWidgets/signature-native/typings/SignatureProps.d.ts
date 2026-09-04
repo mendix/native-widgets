@@ -3,17 +3,17 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ActionValue, DynamicValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableImageValue, NativeImage } from "mendix";
 import { CSSProperties } from "react";
 
 export interface SignatureProps<Style> {
     name: string;
     style: Style[];
-    imageAttribute: EditableValue<string>;
+    imageSource: EditableImageValue<NativeImage>;
     buttonCaptionClear?: DynamicValue<string>;
     buttonCaptionSave?: DynamicValue<string>;
     onClear?: ActionValue;
-    onSave?: ActionValue;
+    onSignEndAction?: ActionValue;
     onEnd?: ActionValue;
     onEmpty?: ActionValue;
 }
@@ -29,11 +29,11 @@ export interface SignaturePreviewProps {
     readOnly: boolean;
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
-    imageAttribute: string;
+    imageSource: { type: "static"; imageUrl: string } | { type: "dynamic"; entity: string } | null;
     buttonCaptionClear: string;
     buttonCaptionSave: string;
     onClear: {} | null;
-    onSave: {} | null;
+    onSignEndAction: {} | null;
     onEnd: {} | null;
     onEmpty: {} | null;
 }
