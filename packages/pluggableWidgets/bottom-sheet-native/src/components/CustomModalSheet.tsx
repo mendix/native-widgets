@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { Modal, Pressable, useWindowDimensions } from "react-native";
+import { useSharedValue } from "react-native-reanimated";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
@@ -17,6 +18,14 @@ interface CustomModalSheetProps {
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const { height: windowHeight } = useWindowDimensions();
+    const containerLayout = useSharedValue({
+        height: windowHeight,
+        offset: { top: 0, bottom: 0, left: 0, right: 0 }
+    });
+
+    useEffect(() => {
+        containerLayout.value = { height: windowHeight, offset: { top: 0, bottom: 0, left: 0, right: 0 } };
+    }, [windowHeight, containerLayout]);
 
     const externalOpen =
         props.triggerAttribute?.status === ValueStatus.Available && props.triggerAttribute.value === true;
@@ -86,7 +95,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                     animateOnMount
                     enableDynamicSizing
                     maxDynamicContentSize={maxHeight}
-                    containerHeight={windowHeight}
+                    containerLayoutState={containerLayout}
                     enablePanDownToClose
                     onChange={handleChange}
                     onClose={() => handleChange(-1)}
