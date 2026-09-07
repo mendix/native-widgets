@@ -86,7 +86,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
 
     async function fullScreenHandler(isFullScreen: boolean): Promise<void> {
         // Dynamic import to avoid bundling mendix-native in web builds
-        const { AndroidNavigationBar } = require("mendix-native/navigation-mode");
+        const { AndroidNavigationBar } = require("mendix-native");
 
         setFullScreen(isFullScreen);
         if (AndroidNavigationBar.isActive) {
