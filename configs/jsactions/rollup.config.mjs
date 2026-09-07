@@ -21,21 +21,9 @@ export default async args => {
     const require = createRequire(import.meta.url);
     const jsActionTargetFolder = `javascriptsource/${args.configProject ?? "nativemobileresources"}/actions`;
     const result = [];
-    const posixPath = join(cwd, "src", "**/*.ts").split(sep).join(posix.sep); // Always use forward slashes
-    const sharedPosixPath = join(cwd, "shared", "*.ts").split(sep).join(posix.sep);
-    const files = await fg([posixPath]); // fast-glob only works with forward slashes
-    const sharedFiles = await fg([sharedPosixPath]);
+    const posixPath = join(cwd, "src", "**/*.ts").split(sep).join(posix.sep);
+    const files = await fg([posixPath]);
     const outDir = join(cwd, "dist");
-
-    const externalizeShared = () => ({
-        name: "externalize-shared",
-        resolveId(source) {
-            if (source.includes("/shared/")) {
-                return { id: `./shared/${basename(source)}`, external: true };
-            }
-            return null;
-        }
-    });
 
     const nodeResolvePlugin = nodeResolve({ preferBuiltins: false, mainFields: ["module", "browser", "main"] });
     const typescriptPlugin = typescript({
@@ -57,22 +45,6 @@ export default async args => {
 
     const copyAsync = promisify(copy);
 
-    sharedFiles.forEach(file => {
-        const fileInput = relative(cwd, file);
-        const fileOutput = basename(file, ".ts");
-        result.push({
-            input: fileInput,
-            output: {
-                format: "es",
-                file: join(outDir, "shared", `${fileOutput}.js`),
-                sourcemap: false
-            },
-            external: nativeExternal,
-            plugins: [nodeResolvePlugin, typescriptPlugin],
-            onwarn
-        });
-    });
-
     files.forEach((file, i) => {
         const fileInput = relative(cwd, file);
         const fileOutput = basename(file, ".ts");
@@ -86,13 +58,11 @@ export default async args => {
             external: nativeExternal,
             plugins: [
                 i === 0 ? clear({ targets: [outDir] }) : null,
-                externalizeShared(),
                 collectDependencies({
                     copyJsModules: true,
                     onlyNative: false,
                     outputDir: outDir,
                     widgetName: fileOutput,
-                    runtimeProvidedPackages: ["mendix-native"],
                     licenseOptions: {
                         thirdParty: {
                             includePrivate: true,
@@ -168,7 +138,7 @@ export default async args => {
 
 const nativeExternal = [
     /^mendix\//,
-    "mendix-native",
+    /^mendix-native(\/|$)/,
     /^react-native(\/|$)/,
     /^react-native-windows(\/|$)/,
     /^react-native-web(\/|$)/,

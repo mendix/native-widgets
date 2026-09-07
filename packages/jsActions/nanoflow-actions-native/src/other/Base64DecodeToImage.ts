@@ -31,7 +31,7 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
     if (navigator && navigator.product === "ReactNative") {
         try {
             // Dynamic import to avoid bundling mendix-native in web builds
-            const { NativeFileSystem } = require("mendix-native/file-system");
+            const { NativeFileSystem } = require("mendix-native");
 
             // Remove data URI prefix if present (e.g., "data:image/png;base64,")
             let cleanBase64 = base64;
