@@ -6,14 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import Geolocation, {
-    GeolocationError,
-    GeolocationOptions,
-    GeolocationResponse
-} from "@react-native-community/geolocation";
-
-import type { Platform, NativeModules } from "react-native";
-import type { GeoError, GeoPosition, GeoOptions } from "../../typings/Geolocation";
+import { getCurrentPosition, GeolocationResponse, LocationRequestOptions } from "react-native-nitro-geolocation";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -39,94 +32,114 @@ export async function GetCurrentLocation(
 ): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
 
-    let reactNativeModule: { NativeModules: typeof NativeModules; Platform: typeof Platform } | undefined;
-    let geolocationModule: typeof import("@react-native-community/geolocation").default | Geolocation;
+    const isReactNative = navigator && navigator.product === "ReactNative";
+    const isWeb = navigator && navigator.geolocation;
 
-    if (navigator && navigator.product === "ReactNative") {
-        reactNativeModule = require("react-native");
-
-        if (!reactNativeModule) {
-            return Promise.reject(new Error("React Native module could not be found"));
-        }
-
-        if (reactNativeModule.NativeModules.RNFusedLocation) {
-            geolocationModule = (await import("@react-native-community/geolocation")).default;
-        } else if (reactNativeModule.NativeModules.RNCGeolocation) {
-            geolocationModule = Geolocation;
-        } else {
-            return Promise.reject(new Error("Geolocation module could not be found"));
-        }
-    } else if (navigator && navigator.geolocation) {
-        geolocationModule = navigator.geolocation;
-    } else {
+    if (!isReactNative && !isWeb) {
         return Promise.reject(new Error("Geolocation module could not be found"));
     }
 
-    return new Promise((resolve, reject) => {
-        const options = getOptions();
-        geolocationModule?.getCurrentPosition(onSuccess, onError, options);
+    // We keep a manual web branch (backed by `navigator.geolocation`) rather than relying on the
+    // library's web entry, because it is not guaranteed that the Mendix web client resolves the
+    // package's `browser`/`exports` condition. If that is ever confirmed, this branch can be dropped.
+    const options = buildLocationOptions(timeout, maximumAge, highAccuracy);
+    try {
+        let position: GeolocationResponse;
 
-        function onSuccess(position: GeolocationResponse | GeoPosition): void {
+        if (isReactNative) {
+            position = await getCurrentPosition(options);
+        } else {
+            position = await new Promise<GeolocationResponse>((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(
+                    pos => resolve(normalizeWebPosition(pos)),
+                    err => reject(err),
+                    {
+                        timeout: options.timeout,
+                        maximumAge: options.maximumAge,
+                        enableHighAccuracy: highAccuracy ?? false
+                    }
+                );
+            });
+        }
+
+        return new Promise((resolve, reject) => {
             mx.data.create({
                 entity: "NanoflowCommons.Geolocation",
                 callback: mxObject => {
-                    const geolocation = mapPositionToMxObject(mxObject, position);
-                    resolve(geolocation);
+                    resolve(mapPositionToMxObject(mxObject, position));
                 },
                 error: () =>
                     reject(new Error("Could not create 'NanoflowCommons.Geolocation' object to store location"))
             });
+        });
+    } catch (error: any) {
+        const message = error?.message ?? String(error);
+        return Promise.reject(new Error(`Could not get current location: ${message}`));
+    }
+
+    function buildLocationOptions(
+        timeout: Big | undefined,
+        maximumAge: Big | undefined,
+        highAccuracy: boolean | undefined
+    ): LocationRequestOptions {
+        let timeoutNumber = timeout ? timeout.toNumber() : undefined;
+        const maximumAgeNumber = maximumAge ? maximumAge.toNumber() : undefined;
+
+        // If the timeout is 0 or undefined (empty), it causes a crash on iOS.
+        // If the timeout is undefined (empty); we set timeout to 30 sec (default timeout)
+        // If the timeout is 0; we set timeout to 1 hour (no timeout)
+        if (isReactNative && require("react-native").Platform.OS === "ios") {
+            if (timeoutNumber === undefined) {
+                timeoutNumber = 30000;
+            } else if (timeoutNumber === 0) {
+                timeoutNumber = 3600000;
+            }
         }
 
-        function onError(error: GeolocationError | GeoError): void {
-            return reject(new Error(error.message));
+        return {
+            timeout: timeoutNumber,
+            maximumAge: maximumAgeNumber,
+            accuracy: highAccuracy ? { android: "high", ios: "best" } : { android: "balanced", ios: "hundredMeters" }
+        };
+    }
+
+    // NOTE: `normalizeWebPosition` is duplicated verbatim in `GetCurrentLocationMinimumAccuracy.ts`.
+    // The Mendix action model does not allow sharing code across action files, so if you change this
+    // function, keep the copy in the other action in sync.
+    function normalizeWebPosition(pos: GeolocationPosition): GeolocationResponse {
+        return {
+            coords: {
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                altitude: pos.coords.altitude ?? null,
+                accuracy: pos.coords.accuracy,
+                altitudeAccuracy: pos.coords.altitudeAccuracy ?? null,
+                heading: pos.coords.heading ?? null,
+                speed: pos.coords.speed ?? null
+            },
+            timestamp: pos.timestamp
+        };
+    }
+
+    function mapPositionToMxObject(mxObject: mendix.lib.MxObject, pos: GeolocationResponse): mendix.lib.MxObject {
+        mxObject.set("Timestamp", new Date(pos.timestamp));
+        mxObject.set("Latitude", new Big(pos.coords.latitude.toFixed(8)));
+        mxObject.set("Longitude", new Big(pos.coords.longitude.toFixed(8)));
+        mxObject.set("Accuracy", new Big(pos.coords.accuracy.toFixed(8)));
+        if (pos.coords.altitude != null) {
+            mxObject.set("Altitude", new Big(pos.coords.altitude.toFixed(8)));
         }
-
-        function getOptions(): GeolocationOptions | GeoOptions {
-            let timeoutNumber = timeout && Number(timeout.toString());
-            const maximumAgeNumber = maximumAge && Number(maximumAge.toString());
-
-            // If the timeout is 0 or undefined (empty), it causes a crash on iOS.
-            // If the timeout is undefined (empty); we set timeout to 30 sec (default timeout)
-            // If the timeout is 0; we set timeout to 1 hour (no timeout)
-            if (reactNativeModule?.Platform.OS === "ios") {
-                if (timeoutNumber === undefined) {
-                    timeoutNumber = 30000;
-                } else if (timeoutNumber === 0) {
-                    timeoutNumber = 3600000;
-                }
-            }
-
-            return {
-                timeout: timeoutNumber,
-                maximumAge: maximumAgeNumber,
-                enableHighAccuracy: highAccuracy
-            };
+        if (pos.coords.altitudeAccuracy != null && pos.coords.altitudeAccuracy !== -1) {
+            mxObject.set("AltitudeAccuracy", new Big(pos.coords.altitudeAccuracy.toFixed(8)));
         }
-
-        function mapPositionToMxObject(
-            mxObject: mendix.lib.MxObject,
-            position: GeolocationResponse | GeoPosition
-        ): mendix.lib.MxObject {
-            mxObject.set("Timestamp", new Date(position.timestamp));
-            mxObject.set("Latitude", new Big(position.coords.latitude.toFixed(8)));
-            mxObject.set("Longitude", new Big(position.coords.longitude.toFixed(8)));
-            mxObject.set("Accuracy", new Big(position.coords.accuracy.toFixed(8)));
-            if (position.coords.altitude != null) {
-                mxObject.set("Altitude", new Big(position.coords.altitude.toFixed(8)));
-            }
-            if (position.coords.altitudeAccuracy != null && position.coords.altitudeAccuracy !== -1) {
-                mxObject.set("AltitudeAccuracy", new Big(position.coords.altitudeAccuracy.toFixed(8)));
-            }
-            if (position.coords.heading != null && position.coords.heading !== -1) {
-                mxObject.set("Heading", new Big(position.coords.heading.toFixed(8)));
-            }
-            if (position.coords.speed != null && position.coords.speed !== -1) {
-                mxObject.set("Speed", new Big(position.coords.speed.toFixed(8)));
-            }
-            return mxObject;
+        if (pos.coords.heading != null && pos.coords.heading !== -1) {
+            mxObject.set("Heading", new Big(pos.coords.heading.toFixed(8)));
         }
-    });
+        if (pos.coords.speed != null && pos.coords.speed !== -1) {
+            mxObject.set("Speed", new Big(pos.coords.speed.toFixed(8)));
+        }
+        return mxObject;
+    }
 
     // END USER CODE
 }

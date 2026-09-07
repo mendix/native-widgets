@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   Migrated the geolocation actions from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.
+
 ## [7.3.0] Nanoflow Commons - 2026-9-2
+
 ### Fixed
 
 -   Removed the visible changes in NC and NMR modules during the first build of the app.
