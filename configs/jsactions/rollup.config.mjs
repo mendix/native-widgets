@@ -21,8 +21,8 @@ export default async args => {
     const require = createRequire(import.meta.url);
     const jsActionTargetFolder = `javascriptsource/${args.configProject ?? "nativemobileresources"}/actions`;
     const result = [];
-    const posixPath = join(cwd, "src", "**/*.ts").split(sep).join(posix.sep);
-    const files = await fg([posixPath]);
+    const posixPath = join(cwd, "src", "**/*.ts").split(sep).join(posix.sep); // Always use forward slashes
+    const files = await fg([posixPath]); // fast-glob only works with forward slashes
     const outDir = join(cwd, "dist");
 
     const nodeResolvePlugin = nodeResolve({ preferBuiltins: false, mainFields: ["module", "browser", "main"] });
