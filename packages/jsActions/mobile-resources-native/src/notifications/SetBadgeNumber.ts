@@ -6,7 +6,6 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import { NotifeeApiModule } from "../../shared/NotifeeApiModule";
 import notifee from "react-native-notify-kit";
 
 // BEGIN EXTRA CODE
@@ -19,10 +18,6 @@ import notifee from "react-native-notify-kit";
 export async function SetBadgeNumber(badgeNumber?: Big): Promise<void> {
     // BEGIN USER CODE
     // Documentation Documentation https://github.com/invertase/notifee
-
-    if (!NotifeeApiModule.isAvailable) {
-        return Promise.reject(new Error("Notifee native module is not available in your app"));
-    }
 
     if (!badgeNumber) {
         return Promise.reject(new Error("Input parameter 'Badge number' is required"));
