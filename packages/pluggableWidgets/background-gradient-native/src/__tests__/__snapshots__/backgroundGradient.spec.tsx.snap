@@ -40,57 +40,34 @@ exports[`Background gradient render background gradient with custom style 1`] = 
   testID="test"
 >
   <View
-    style={{}}
-  >
-    <BVLinearGradient
-      angle={0}
-      borderRadii={
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ]
-      }
-      colors={
-        [
-          -1,
-          -16777216,
-        ]
-      }
-      endPoint={
-        [
-          0.5,
-          1,
-        ]
-      }
-      locations={
-        [
-          NaN,
-          NaN,
-        ]
-      }
-      startPoint={
-        [
-          0.5,
-          0,
-        ]
-      }
-      style={
+    style={
+      [
+        {},
         {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-      useAngle={true}
-    />
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#fff",
+                  "positions": [
+                    "NaN%",
+                  ],
+                },
+                {
+                  "color": "#000",
+                  "positions": [
+                    "NaN%",
+                  ],
+                },
+              ],
+              "direction": "0deg",
+              "type": "linear-gradient",
+            },
+          ],
+        },
+      ]
+    }
+  >
     <Text>
       Test
     </Text>
@@ -138,57 +115,34 @@ exports[`Background gradient render background gradient with one color 1`] = `
   testID="test"
 >
   <View
-    style={{}}
-  >
-    <BVLinearGradient
-      angle={0}
-      borderRadii={
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ]
-      }
-      colors={
-        [
-          -1,
-          -1,
-        ]
-      }
-      endPoint={
-        [
-          0.5,
-          1,
-        ]
-      }
-      locations={
-        [
-          0,
-          0,
-        ]
-      }
-      startPoint={
-        [
-          0.5,
-          0,
-        ]
-      }
-      style={
+    style={
+      [
+        {},
         {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-      useAngle={true}
-    />
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#fff",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#fff",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+              ],
+              "direction": "0deg",
+              "type": "linear-gradient",
+            },
+          ],
+        },
+      ]
+    }
+  >
     <Text>
       Test
     </Text>
@@ -236,57 +190,34 @@ exports[`Background gradient render correctly 1`] = `
   testID="test"
 >
   <View
-    style={{}}
-  >
-    <BVLinearGradient
-      angle={0}
-      borderRadii={
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ]
-      }
-      colors={
-        [
-          -1,
-          -16777216,
-        ]
-      }
-      endPoint={
-        [
-          0.5,
-          1,
-        ]
-      }
-      locations={
-        [
-          0,
-          1,
-        ]
-      }
-      startPoint={
-        [
-          0.5,
-          0,
-        ]
-      }
-      style={
+    style={
+      [
+        {},
         {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-      useAngle={true}
-    />
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#fff",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#000",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "0deg",
+              "type": "linear-gradient",
+            },
+          ],
+        },
+      ]
+    }
+  >
     <Text>
       Test
     </Text>
@@ -334,57 +265,34 @@ exports[`Background gradient render with undefined angle 1`] = `
   testID="test"
 >
   <View
-    style={{}}
-  >
-    <BVLinearGradient
-      angle={0}
-      borderRadii={
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ]
-      }
-      colors={
-        [
-          -1,
-          -16777216,
-        ]
-      }
-      endPoint={
-        [
-          0.5,
-          1,
-        ]
-      }
-      locations={
-        [
-          0,
-          1,
-        ]
-      }
-      startPoint={
-        [
-          0.5,
-          0,
-        ]
-      }
-      style={
+    style={
+      [
+        {},
         {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-      useAngle={true}
-    />
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#fff",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#000",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "0deg",
+              "type": "linear-gradient",
+            },
+          ],
+        },
+      ]
+    }
+  >
     <Text>
       Test
     </Text>
@@ -432,57 +340,34 @@ exports[`Background gradient render with undefined opacity 1`] = `
   testID="test"
 >
   <View
-    style={{}}
-  >
-    <BVLinearGradient
-      angle={0}
-      borderRadii={
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ]
-      }
-      colors={
-        [
-          -1,
-          -16777216,
-        ]
-      }
-      endPoint={
-        [
-          0.5,
-          1,
-        ]
-      }
-      locations={
-        [
-          0,
-          1,
-        ]
-      }
-      startPoint={
-        [
-          0.5,
-          0,
-        ]
-      }
-      style={
+    style={
+      [
+        {},
         {
-          "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-      useAngle={true}
-    />
+          "experimental_backgroundImage": [
+            {
+              "colorStops": [
+                {
+                  "color": "#fff",
+                  "positions": [
+                    "0%",
+                  ],
+                },
+                {
+                  "color": "#000",
+                  "positions": [
+                    "100%",
+                  ],
+                },
+              ],
+              "direction": "0deg",
+              "type": "linear-gradient",
+            },
+          ],
+        },
+      ]
+    }
+  >
     <Text>
       Test
     </Text>
