@@ -7,7 +7,6 @@
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
 import { Alert, Linking, Platform } from "react-native";
-import { NativeFileSystem } from "mendix-native";
 import {
     CameraOptions,
     ErrorCode,
@@ -20,6 +19,7 @@ import { getLocales } from "react-native-localize";
 import { PictureQuality, PictureSource } from "../../typings/Camera";
 
 // BEGIN EXTRA CODE
+const loadMendixNative = () => import("mendix-native" + "");
 // END EXTRA CODE
 
 /**
@@ -126,6 +126,7 @@ export async function TakePictureAdvanced(
 
     async function safeRemove(filePath: string): Promise<void> {
         try {
+            const { NativeFileSystem } = await loadMendixNative();
             await NativeFileSystem.remove(filePath);
         } catch (error) {
             console.warn(`Failed to remove file at ${filePath}. Error: ${error}`);
@@ -135,7 +136,8 @@ export async function TakePictureAdvanced(
 
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            NativeFileSystem.read(uri.replace("file://", ""))
+            loadMendixNative()
+                .then(({ NativeFileSystem }) => NativeFileSystem.read(uri.replace("file://", "")))
                 .then((nativeBlob: unknown) => {
                     const blob = new Blob();
                     Object.assign(blob, { data: nativeBlob });
