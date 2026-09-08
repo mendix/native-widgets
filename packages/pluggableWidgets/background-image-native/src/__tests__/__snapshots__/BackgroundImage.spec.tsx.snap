@@ -2,13 +2,7 @@
 
 exports[`BackgroundImage renders content only when image is unavailable 1`] = `
 <View
-  style={
-    {
-      "flexBasis": "auto",
-      "flexGrow": 1,
-      "flexShrink": 1,
-    }
-  }
+  style={{}}
   testID="backgroundImageTest"
 >
   <Image
@@ -50,9 +44,6 @@ exports[`BackgroundImage renders with custom styles 1`] = `
 <View
   style={
     {
-      "flexBasis": "auto",
-      "flexGrow": 1,
-      "flexShrink": 1,
       "height": "80%",
     }
   }
@@ -94,13 +85,7 @@ exports[`BackgroundImage renders with custom styles 1`] = `
 
 exports[`BackgroundImage renders with default styles 1`] = `
 <View
-  style={
-    {
-      "flexBasis": "auto",
-      "flexGrow": 1,
-      "flexShrink": 1,
-    }
-  }
+  style={{}}
   testID="backgroundImageTest"
 >
   <Image
@@ -137,11 +122,14 @@ exports[`BackgroundImage renders with default styles 1`] = `
 exports[`BackgroundImage renders without content 1`] = `
 <View
   style={
-    {
-      "flexBasis": "auto",
-      "flexGrow": 1,
-      "flexShrink": 1,
-    }
+    [
+      {},
+      {
+        "flexBasis": "auto",
+        "flexGrow": 1,
+        "flexShrink": 1,
+      },
+    ]
   }
   testID="backgroundImageTest"
 >
@@ -175,13 +163,7 @@ exports[`BackgroundImage renders without content 1`] = `
 
 exports[`BackgroundImage use correct opacity when image opacity is out of range 1`] = `
 <View
-  style={
-    {
-      "flexBasis": "auto",
-      "flexGrow": 1,
-      "flexShrink": 1,
-    }
-  }
+  style={{}}
   testID="backgroundImageTest"
 >
   <Image
@@ -217,13 +199,7 @@ exports[`BackgroundImage use correct opacity when image opacity is out of range 
 
 exports[`BackgroundImage use correct opacity when image opacity is out of range 2`] = `
 <View
-  style={
-    {
-      "flexBasis": "auto",
-      "flexGrow": 1,
-      "flexShrink": 1,
-    }
-  }
+  style={{}}
   testID="backgroundImageTest"
 >
   <Image

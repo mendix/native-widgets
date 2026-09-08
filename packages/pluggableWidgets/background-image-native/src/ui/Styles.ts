@@ -11,10 +11,6 @@ export interface BackgroundImageStyle extends Style {
 }
 
 export const defaultBackgroundImageStyle: BackgroundImageStyle = {
-    container: {
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: "auto"
-    },
+    container: {},
     image: {}
 };

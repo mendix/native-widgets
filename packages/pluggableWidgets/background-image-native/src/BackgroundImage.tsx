@@ -33,8 +33,14 @@ export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle
         { opacity, resizeMode }
     ] as StyleProp<SvgImageStyle>;
 
+    // When there's no content, allow container to grow to fill available space
+    // When there's content, size container to content
+    const containerStyle = props.content
+        ? styles.container
+        : [styles.container, { flexGrow: 1, flexShrink: 1, flexBasis: "auto" as const }];
+
     return (
-        <View style={styles.container} testID={name}>
+        <View style={containerStyle} testID={name}>
             <Image source={image.value} style={imageStyle} color={styles.image.svgColor} testID={`${name}$image`} />
             {props.content}
         </View>
