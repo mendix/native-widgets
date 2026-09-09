@@ -5600,7 +5600,7 @@ packages:
     resolution: {integrity: sha512-RazCdCHoLVNKUUeKDkSkIL6Lxx6fUaa4iiy+Ltp9ra8mLQhwyNqD33TIN7YZJ3HDjHc3eWh9cjiZWwh6Jg/cQg==}
 
   mendix-native@https://github.com/mendix/mendix-native/releases/download/v0.5.2/mendix-native-v0.5.2.tgz:
-    resolution: {integrity: sha512-CqGEqSy+c+zoYHmphVg5CXR9JdAr7wZkkjgPgO41Pfar9KESIKcE7frfk+MHlpnhZH254xuH19XkIBQGpuFNeA==, tarball: https://github.com/mendix/mendix-native/releases/download/v0.5.2/mendix-native-v0.5.2.tgz}
+    resolution: {tarball: https://github.com/mendix/mendix-native/releases/download/v0.5.2/mendix-native-v0.5.2.tgz}
     version: 0.5.2
     peerDependencies:
       '@op-engineering/op-sqlite': '*'
