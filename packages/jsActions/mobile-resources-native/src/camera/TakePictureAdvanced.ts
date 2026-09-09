@@ -62,8 +62,6 @@ export async function TakePictureAdvanced(
         );
     }
 
-    // V3 dropped the feature of providing an action sheet so users can decide on which action to take, camera or library.
-    // react-native-image-picker v7.2.3 is always v4+ (no legacy action sheet API)
     const resultObject = await createMxObject("NativeMobileResources.ImageMetaData");
 
     try {
