@@ -296,9 +296,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      react-native-linear-gradient:
-        specifier: 2.8.3
-        version: 2.8.3(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
@@ -6564,12 +6561,6 @@ packages:
 
   react-native-is-edge-to-edge@1.3.1:
     resolution: {integrity: sha512-NIXU/iT5+ORyCc7p0z2nnlkouYKX425vuU1OEm6bMMtWWR9yvb+Xg5AZmImTKoF9abxCPqrKC3rOZsKzUYgYZA==}
-    peerDependencies:
-      react: 19.2.3
-      react-native: 0.84.1
-
-  react-native-linear-gradient@2.8.3:
-    resolution: {integrity: sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==}
     peerDependencies:
       react: 19.2.3
       react-native: 0.84.1
@@ -14825,11 +14816,6 @@ snapshots:
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
 
   react-native-is-edge-to-edge@1.3.1(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3):
-    dependencies:
-      react: 19.2.3
-      react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
-
-  react-native-linear-gradient@2.8.3(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3):
     dependencies:
       react: 19.2.3
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
