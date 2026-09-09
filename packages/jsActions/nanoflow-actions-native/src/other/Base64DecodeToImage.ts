@@ -6,10 +6,10 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Base64 } from "js-base64";
-import RNBlobUtil from "react-native-blob-util";
 
 // BEGIN EXTRA CODE
 const loadMendixNative = () => import("mendix-native" + "");
+const loadRNBlobUtil = () => import("react-native-blob-util" + "");
 // END EXTRA CODE
 
 /**
@@ -32,6 +32,7 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
     if (navigator && navigator.product === "ReactNative") {
         try {
             const { NativeFileSystem } = await loadMendixNative();
+            const RNBlobUtil = (await loadRNBlobUtil()).default;
 
             // Remove data URI prefix if present (e.g., "data:image/png;base64,")
             let cleanBase64 = base64;
@@ -81,11 +82,15 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
                     {},
                     fileBlob,
                     () => {
-                        RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
+                        RNBlobUtil.fs
+                            .unlink(tempPath)
+                            .catch((e: unknown) => console.info("Temp file cleanup failed:", e));
                         resolve(true);
                     },
                     error => {
-                        RNBlobUtil.fs.unlink(tempPath).catch(e => console.info("Temp file cleanup failed:", e));
+                        RNBlobUtil.fs
+                            .unlink(tempPath)
+                            .catch((e: unknown) => console.info("Temp file cleanup failed:", e));
                         reject(error);
                     }
                 );

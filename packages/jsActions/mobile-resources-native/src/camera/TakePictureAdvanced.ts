@@ -6,6 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
+import { NativeFileSystem } from "mendix-native";
 import { Alert, Linking, Platform } from "react-native";
 import {
     CameraOptions,
@@ -16,10 +17,10 @@ import {
     launchImageLibrary
 } from "react-native-image-picker";
 import { getLocales } from "react-native-localize";
+import RNPermissions from "react-native-permissions";
 import { PictureQuality, PictureSource } from "../../typings/Camera";
 
 // BEGIN EXTRA CODE
-const loadMendixNative = () => import("mendix-native" + "");
 // END EXTRA CODE
 
 /**
@@ -63,7 +64,6 @@ export async function TakePictureAdvanced(
 
     // V3 dropped the feature of providing an action sheet so users can decide on which action to take, camera or library.
     // react-native-image-picker v7.2.3 is always v4+ (no legacy action sheet API)
-    const RNPermissions = (await import("react-native-permissions")).default;
     const resultObject = await createMxObject("NativeMobileResources.ImageMetaData");
 
     try {
@@ -126,7 +126,6 @@ export async function TakePictureAdvanced(
 
     async function safeRemove(filePath: string): Promise<void> {
         try {
-            const { NativeFileSystem } = await loadMendixNative();
             await NativeFileSystem.remove(filePath);
         } catch (error) {
             console.warn(`Failed to remove file at ${filePath}. Error: ${error}`);
@@ -136,8 +135,7 @@ export async function TakePictureAdvanced(
 
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            loadMendixNative()
-                .then(({ NativeFileSystem }) => NativeFileSystem.read(uri.replace("file://", "")))
+            NativeFileSystem.read(uri.replace("file://", ""))
                 .then((nativeBlob: unknown) => {
                     const blob = new Blob();
                     Object.assign(blob, { data: nativeBlob });
