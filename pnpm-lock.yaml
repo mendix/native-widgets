@@ -425,7 +425,7 @@ importers:
         version: 11.12.0(patch_hash=904ae66b3260903146147eebb4e7f360c42fb82a07f24669a71dc5331aade930)(@jest/transform@30.3.0)(@jest/types@30.5.1)(@types/babel__core@7.20.5)(@types/node@20.19.43)(jest-util@30.5.1)(jiti@2.6.1)(picomatch@4.0.7)(react-dom@19.2.3(react@19.2.3))(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3)(tslib@2.8.1)
       '@types/react-native-snap-carousel':
         specifier: ^3.7.4
-        version: 3.8.12(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))
+        version: 3.8.13(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))
 
   packages/pluggableWidgets/color-picker-native:
     dependencies:
@@ -3038,8 +3038,8 @@ packages:
     resolution: {integrity: sha512-Synwj+cdwhHOi9SFNmu7voLv3AQM24e3Hy78Qz7nNb6spkftkv0gtaZlIWMJ5G0pywcs08JFX/cve8vCWUX6xw==}
     deprecated: This is a stub types definition for react-native-modal (https://github.com/react-native-community/react-native-modal). react-native-modal provides its own type definitions, so you don't need @types/react-native-modal installed!
 
-  '@types/react-native-snap-carousel@3.8.12':
-    resolution: {integrity: sha512-J840OqAvfeZpNgBO9dDyJi8rUgC6UzMRBhfPSkqV4EpkQsBXB8EYgRNCQmT282yGO6HLywKql1Wijvuuf9Zx8w==}
+  '@types/react-native-snap-carousel@3.8.13':
+    resolution: {integrity: sha512-41zVuvqGKSnpSlQpgS+3SZa8r9H5KxD2wT3LHVTu4yHRhtDoh+N4E8YHvGT1XtDxX3YU+NiPJSDleXyBaYf/dQ==}
     peerDependencies:
       react-native: 0.84.1
 
@@ -3389,8 +3389,8 @@ packages:
   array-ify@1.0.0:
     resolution: {integrity: sha512-c5AMf34bKdvPhQ7tBGhqkgKNUzMr4WUs+WDtC2ZUGOUncbxKMTvqxYctiseW3+L4bA8ec+GcZ6/A/FW4m8ukng==}
 
-  array-includes@3.1.9:
-    resolution: {integrity: sha512-FmeCCAenzH0KH381SPT5FZmiA/TmpndpcaShhfgEN9eCVjnFBqq3l1xrI42y8+PPLI6hypzou4GXw00WHmPBLQ==}
+  array-includes@3.2.0:
+    resolution: {integrity: sha512-VXY5eFRarnXcYxwBjJzPmEhH55+rmP79/+ueDhi0F+TuqfHCItagIHqxeUZrmgrOPa31QTh9H85DjX3FfJ0FTg==}
     engines: {node: '>= 0.4'}
 
   array-union@1.0.2:
@@ -3632,8 +3632,8 @@ packages:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
     engines: {node: '>=10'}
 
-  cheminfo-types@1.15.0:
-    resolution: {integrity: sha512-shv45WN2u0yN9EHH1bisNrv+fy4Cw+eLM5lOoriP67mePrwbHZ1kJqg90C8GEU7K1A8gJsicEoVZHcuBbuul/w==}
+  cheminfo-types@1.16.0:
+    resolution: {integrity: sha512-j0MiXFnLRVEZg3vUr7SXm6F3HuDNVE5arfQyDMiy1w2fAcuOs3QRgVsw7aOIACvr0aqbvn85cucwt+yOu64IiQ==}
 
   chevrotain@7.1.1:
     resolution: {integrity: sha512-wy3mC1x4ye+O+QkEinVJkPf5u2vsrDIYW9G7ZuwFl6v/Yu0LwUuT2POsb+NUWApebyxfkQq6+yDfRExbnI5rcw==}
@@ -5600,7 +5600,7 @@ packages:
     resolution: {integrity: sha512-RazCdCHoLVNKUUeKDkSkIL6Lxx6fUaa4iiy+Ltp9ra8mLQhwyNqD33TIN7YZJ3HDjHc3eWh9cjiZWwh6Jg/cQg==}
 
   mendix-native@https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz:
-    resolution: {integrity: sha512-7q2dCjO0dNaS7Ad+p6rQTeJaYj5nxi2lXCgMBRDuDCHqSjdDFIMuD6Q6rSyVaiDdHt1WjOMLX5jsj38AcrNIoQ==, tarball: https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz}
+    resolution: {tarball: https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz}
     version: 0.6.0
     peerDependencies:
       '@op-engineering/op-sqlite': '*'
@@ -5959,8 +5959,8 @@ packages:
   node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
 
-  node-releases@2.0.54:
-    resolution: {integrity: sha512-YHs7BmmcsdAI5Ozuf8JZo6PT0mv2GIWC9vMfvUC3dp65M8hn7Ux8CPL+2oBI7juNuj9d0ndhTcznq2ODBps9cQ==}
+  node-releases@2.0.55:
+    resolution: {integrity: sha512-mIrE/Cw9y+9Au6dS5vDKDhQza9YvG6w+ZrS6X+ZzA7yFW/soAeaups4Qzn1bL6g5FVy8WtP79+0j82oPIbqRjQ==}
     engines: {node: '>=18'}
 
   normalize-path@3.0.0:
@@ -6558,8 +6558,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-is@19.2.8:
-    resolution: {integrity: sha512-s5un28nYxKJw5gvUHyW5PCC28CvBqLu9r3cWgzHT4Vo/5fqqkFcdRYsGcKf50WMPpjjFZS5d76fn3YCo2njKwQ==}
+  react-is@19.3.0:
+    resolution: {integrity: sha512-UpMYezM4v5/18F28aC66AEsjXIgE02kyEMH6yLdgLXu/UTfa1Ntwck/nNLrbqJsEXW7gPb0coNO9FQse9WTovA==}
 
   react-native-animatable@1.3.3:
     resolution: {integrity: sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==}
@@ -7625,8 +7625,8 @@ packages:
     peerDependencies:
       react: 19.2.3
 
-  use-sync-external-store@1.6.0:
-    resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
+  use-sync-external-store@1.7.0:
+    resolution: {integrity: sha512-6L+EeigHMQhdaIPNIFUKwfWJSwWFQ8gJbJ2DLOs5sDIegTwR9fRxvnM3uciHKjIZhFz+KAv2emhWMRvDmMcY8A==}
     peerDependencies:
       react: 19.2.3
 
@@ -8025,8 +8025,8 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@4.5.4:
-    resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
+  zod@4.6.1:
+    resolution: {integrity: sha512-341aRWQsve0rvronKNTqZpjmzdbUDlFuzHaI/XLg/Ej82qffDJRRfBTCuv7+9q/rMjB6LSLyEBnW4InJeMtt/Q==}
 
 snapshots:
 
@@ -10127,9 +10127,9 @@ snapshots:
       nanoid: 3.3.18
       query-string: 7.1.3
       react: 19.2.3
-      react-is: 19.2.8
+      react-is: 19.3.0
       use-latest-callback: 0.2.6(react@19.2.3)
-      use-sync-external-store: 1.6.0(react@19.2.3)
+      use-sync-external-store: 1.7.0(react@19.2.3)
 
   '@react-navigation/elements@2.9.40(@react-navigation/native@7.3.18(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3))(react-native-safe-area-context@5.7.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3))(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -10139,7 +10139,7 @@ snapshots:
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3)
       react-native-safe-area-context: 5.7.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3)
       use-latest-callback: 0.2.6(react@19.2.3)
-      use-sync-external-store: 1.6.0(react@19.2.3)
+      use-sync-external-store: 1.7.0(react@19.2.3)
 
   '@react-navigation/native@7.3.18(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -10621,7 +10621,7 @@ snapshots:
       - react
       - react-native
 
-  '@types/react-native-snap-carousel@3.8.12(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))':
+  '@types/react-native-snap-carousel@3.8.13(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3))':
     dependencies:
       '@types/react': 19.2.18
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.87.1(@babel/core@7.29.7))(@types/react@19.2.18)(react@19.2.3)
@@ -10960,14 +10960,14 @@ snapshots:
 
   array-ify@1.0.0: {}
 
-  array-includes@3.1.9:
+  array-includes@3.2.0:
     dependencies:
       call-bind: 1.0.9
       call-bound: 1.0.4
       define-properties: 1.2.1
       es-abstract: 1.24.2
       es-object-atoms: 1.1.2
-      get-intrinsic: 1.3.0
+      es-shim-unscopables: 1.1.0
       is-string: 1.1.1
       math-intrinsics: 1.1.0
 
@@ -11216,7 +11216,7 @@ snapshots:
       baseline-browser-mapping: 2.11.21
       caniuse-lite: 1.0.30001810
       electron-to-chromium: 1.5.425
-      node-releases: 2.0.54
+      node-releases: 2.0.55
       update-browserslist-db: 1.3.2(browserslist@4.28.9)
 
   bs-logger@0.2.6:
@@ -11272,7 +11272,7 @@ snapshots:
 
   char-regex@1.0.2: {}
 
-  cheminfo-types@1.15.0: {}
+  cheminfo-types@1.16.0: {}
 
   chevrotain@7.1.1:
     dependencies:
@@ -11987,14 +11987,14 @@ snapshots:
       '@babel/parser': 7.29.8
       eslint: 9.39.4(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 4.5.4
-      zod-validation-error: 4.0.2(zod@4.5.4)
+      zod: 4.6.1
+      zod-validation-error: 4.0.2(zod@4.6.1)
     transitivePeerDependencies:
       - supports-color
 
   eslint-plugin-react@7.37.5(eslint@9.39.4(jiti@2.6.1)):
     dependencies:
-      array-includes: 3.1.9
+      array-includes: 3.2.0
       array.prototype.findlast: 1.2.5
       array.prototype.flatmap: 1.3.3
       array.prototype.tosorted: 1.1.4
@@ -13508,7 +13508,7 @@ snapshots:
 
   jsx-ast-utils@3.3.5:
     dependencies:
-      array-includes: 3.1.9
+      array-includes: 3.2.0
       array.prototype.flat: 1.3.3
       object.assign: 4.1.7
       object.values: 1.2.1
@@ -14179,12 +14179,12 @@ snapshots:
 
   ml-regression-base@3.0.0:
     dependencies:
-      cheminfo-types: 1.15.0
+      cheminfo-types: 1.16.0
       is-any-array: 2.0.1
 
   ml-regression-base@4.0.1:
     dependencies:
-      cheminfo-types: 1.15.0
+      cheminfo-types: 1.16.0
       is-any-array: 3.0.0
 
   ml-regression-exponential@2.1.3:
@@ -14217,7 +14217,7 @@ snapshots:
 
   ml-regression-simple-linear@3.0.1:
     dependencies:
-      cheminfo-types: 1.15.0
+      cheminfo-types: 1.16.0
       ml-regression-base: 4.0.1
 
   ml-regression-theil-sen@2.0.0:
@@ -14291,7 +14291,7 @@ snapshots:
 
   node-int64@0.4.0: {}
 
-  node-releases@2.0.54: {}
+  node-releases@2.0.55: {}
 
   normalize-path@3.0.0: {}
 
@@ -14777,7 +14777,7 @@ snapshots:
   pretty-format@30.5.1:
     dependencies:
       '@jest/react-is-18': react-is@18.3.1
-      '@jest/react-is-19': react-is@19.2.8
+      '@jest/react-is-19': react-is@19.3.0
       '@jest/schemas': 30.5.0
       ansi-styles: 5.2.0
 
@@ -14872,7 +14872,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-is@19.2.8: {}
+  react-is@19.3.0: {}
 
   react-native-animatable@1.3.3:
     dependencies:
@@ -15151,7 +15151,7 @@ snapshots:
   react-test-renderer@19.2.3(react@19.2.3):
     dependencies:
       react: 19.2.3
-      react-is: 19.2.8
+      react-is: 19.3.0
       scheduler: 0.27.0
 
   react@19.2.3: {}
@@ -16073,7 +16073,7 @@ snapshots:
     dependencies:
       react: 19.2.3
 
-  use-sync-external-store@1.6.0(react@19.2.3):
+  use-sync-external-store@1.7.0(react@19.2.3):
     dependencies:
       react: 19.2.3
 
@@ -16588,8 +16588,8 @@ snapshots:
       '@napi-rs/lzma': 1.5.1
       tinyglobby: 0.2.17
 
-  zod-validation-error@4.0.2(zod@4.5.4):
+  zod-validation-error@4.0.2(zod@4.6.1):
     dependencies:
-      zod: 4.5.4
+      zod: 4.6.1
 
-  zod@4.5.4: {}
+  zod@4.6.1: {}
