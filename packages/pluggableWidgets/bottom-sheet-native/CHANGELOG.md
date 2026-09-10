@@ -8,6 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
+-   Fixed the keyboard covering text inputs on iOS in a modal bottom sheet with custom rendering. The sheet now moves above the keyboard when an input is focused, and back down once it is dismissed.
+
+## [5.3.2] - 2026-8-4
+
+### Fixed
+
+-   Fixed bottomsheet issue to close when the trigger attribute changes.
+
+## [5.3.1] - 2026-7-3
+
+### Fixed
+
 -   Fixed flickering issue on Android when opening bottom sheet (both basic and custom render types).
 -   Improved backdrop animation with smooth fade-in/fade-out transitions.
 -   Fixed bottomsheet issue to close when the trigger attribute changes.
