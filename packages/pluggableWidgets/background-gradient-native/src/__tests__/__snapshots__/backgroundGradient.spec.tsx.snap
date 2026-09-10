@@ -50,13 +50,13 @@ exports[`Background gradient render background gradient with custom style 1`] = 
                 {
                   "color": "#fff",
                   "positions": [
-                    "NaN%",
+                    "0%",
                   ],
                 },
                 {
                   "color": "#000",
                   "positions": [
-                    "NaN%",
+                    "100%",
                   ],
                 },
               ],
