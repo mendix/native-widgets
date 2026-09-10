@@ -159,3 +159,39 @@ exports[`Bottom sheet renders a expanding fullscreen with custom styles 1`] = `
 `;
 
 exports[`Bottom sheet renders a native bottom action sheet for ios (Basic modal) 1`] = `null`;
+
+exports[`Bottom sheet renders basic modal with supportedOrientations when open 1`] = `
+<Modal
+  animationType="none"
+  onRequestClose={[Function]}
+  onShow={[Function]}
+  supportedOrientations={
+    [
+      "portrait",
+      "portrait-upside-down",
+      "landscape-left",
+      "landscape-right",
+    ]
+  }
+  transparent={true}
+  visible={true}
+/>
+`;
+
+exports[`Bottom sheet renders custom modal with supportedOrientations when open 1`] = `
+<Modal
+  animationType="none"
+  onRequestClose={[Function]}
+  onShow={[Function]}
+  supportedOrientations={
+    [
+      "portrait",
+      "portrait-upside-down",
+      "landscape-left",
+      "landscape-right",
+    ]
+  }
+  transparent={true}
+  visible={true}
+/>
+`;
