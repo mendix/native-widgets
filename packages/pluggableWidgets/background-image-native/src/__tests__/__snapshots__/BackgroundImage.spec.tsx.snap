@@ -123,12 +123,12 @@ exports[`BackgroundImage renders without content 1`] = `
 <View
   style={
     [
-      {},
       {
         "flexBasis": "auto",
         "flexGrow": 1,
         "flexShrink": 1,
       },
+      {},
     ]
   }
   testID="backgroundImageTest"
