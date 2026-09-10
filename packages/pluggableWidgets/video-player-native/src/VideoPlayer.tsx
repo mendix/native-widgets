@@ -1,4 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
+import { AndroidNavigationBar } from "mendix-native";
 import { ReactElement, useEffect, useRef, useState, Fragment, useCallback, useMemo } from "react";
 import {
     ActivityIndicator,
@@ -85,9 +86,6 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     }, [props.showControls, showControls, showControlsHandler]);
 
     async function fullScreenHandler(isFullScreen: boolean): Promise<void> {
-        // Dynamic import to avoid bundling mendix-native in web builds
-        const { AndroidNavigationBar } = require("mendix-native");
-
         setFullScreen(isFullScreen);
         if (AndroidNavigationBar.isActive) {
             if (isFullScreen) {
