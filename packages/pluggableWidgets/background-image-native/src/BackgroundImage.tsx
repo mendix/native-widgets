@@ -4,7 +4,7 @@ import { ValueStatus } from "mendix";
 import { Image, SvgImageStyle } from "mendix/components/native/Image";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 
-import { BackgroundImageStyle, defaultBackgroundImageStyle } from "./ui/Styles";
+import { BackgroundImageStyle, defaultBackgroundImageStyle, NO_CONTENT_CONTAINER_STYLE } from "./ui/Styles";
 import { BackgroundImageProps } from "../typings/BackgroundImageProps";
 
 export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle>): JSX.Element | null {
@@ -35,9 +35,7 @@ export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle
 
     // When there's no content, allow container to grow to fill available space
     // When there's content, size container to content
-    const containerStyle = props.content
-        ? styles.container
-        : [styles.container, { flexGrow: 1, flexShrink: 1, flexBasis: "auto" as const }];
+    const containerStyle = props.content ? styles.container : [NO_CONTENT_CONTAINER_STYLE, styles.container];
 
     return (
         <View style={containerStyle} testID={name}>
