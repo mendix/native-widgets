@@ -1,5 +1,5 @@
 diff --git a/configs/rollup-plugin-collect-dependencies.mjs b/configs/rollup-plugin-collect-dependencies.mjs
-index d45c737bf32cb1029249fdc069b3df3f832d1ab4..9246919bd939c622447ba0227c5b695892f162a8 100644
+index d45c737bf32cb1029249fdc069b3df3f832d1ab4..9f5ae6f6adf3e41220d897ba1aa074c7da458314 100644
 --- a/configs/rollup-plugin-collect-dependencies.mjs
 +++ b/configs/rollup-plugin-collect-dependencies.mjs
 @@ -1,8 +1,7 @@
@@ -21,7 +21,22 @@ index d45c737bf32cb1029249fdc069b3df3f832d1ab4..9246919bd939c622447ba0227c5b6958
                          );
                      }
                  }
-@@ -169,14 +168,28 @@ async function copyJsModule(moduleSourcePath, to) {
+@@ -125,7 +124,13 @@ async function resolvePackage(target, sourceDir, optional = false) {
+ }
+ 
+ async function hasNativeCode(dir) {
+-    return (await fg(["**/{android,ios}/*", "**/*.podspec"], { cwd: dir })).length > 0;
++    return (await fg(
++        ["**/{android,ios}/*", "**/*.podspec"],
++        {
++            cwd: dir,
++            ignore: ["**/example*/**", "**/__tests__/**", "**/docs/**"]
++        }
++    )).length > 0;
+ }
+ 
+ async function getTransitiveDependencies(packagePath, isExternal) {
+@@ -169,14 +174,28 @@ async function copyJsModule(moduleSourcePath, to) {
      if (existsSync(to)) {
          return;
      }
@@ -45,7 +60,7 @@ index d45c737bf32cb1029249fdc069b3df3f832d1ab4..9246919bd939c622447ba0227c5b6958
 +        filter: src => {
 +            const relativePath = src.replace(actualSourcePath, "").replace(/^[\\/]/, "");
 +
-+            if (relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)) {
++            if (relativePath.match(/(^|[\\/])(android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)([\\/]|$)/)) {
 +                return false;
 +            }
 +
