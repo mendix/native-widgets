@@ -1,0 +1,25 @@
+appId: "${APP_ID}"
+---
+- runFlow:
+    file: "../../../../../../maestro/Precondition.yaml"
+- retry:
+    maxRetries: 2
+    commands:
+      - tapOn:
+          text: "B"
+      - extendedWaitUntil:
+          visible: "Bottom Sheet"
+          timeout: 10000
+- tapOn:
+    text: "Bottom Sheet"
+- tapOn:
+    text: "Modal basic"
+- setOrientation: LANDSCAPE_LEFT
+- tapOn:
+    text: "Open"
+- waitForAnimationToEnd:
+    timeout: 5000
+- takeScreenshot:
+    path: "maestro/images/actual/${PLATFORM}/bottom_sheet_modal_basic_landscape"
+- assertScreenshot:
+    path: "maestro/images/expected/${PLATFORM}/bottom_sheet_modal_basic_landscape.png"
