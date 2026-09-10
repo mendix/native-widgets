@@ -30,6 +30,8 @@
     "build-mpk": "ts-node --project ./scripts/tsconfig.json ./scripts/release/build-mpk.ts",
     "version": "ts-node --project ./scripts/tsconfig.json ./scripts/release/BumpVersion.ts",
     "validate-staged-widget-versions": "node scripts/validation/validate-versions-staged-files.js",
+    "validate-manifest-format": "node scripts/validation/validate-manifest-format.js",
+    "validate-native-dependencies": "node scripts/validation/validate-native-dependencies.js",
     "setup-mobile": "pnpm setup-android && pnpm setup-ios",
     "build:widgets": "node ./scripts/widget/buildWidgets.js",
     "test_widgets:maestro:ios": "bash maestro/run_maestro_widget_tests.sh ios",
