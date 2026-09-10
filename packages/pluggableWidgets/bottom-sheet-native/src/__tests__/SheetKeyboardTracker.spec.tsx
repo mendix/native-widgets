@@ -49,7 +49,6 @@ describe("SheetKeyboardTracker", () => {
             }
             return { remove: removeListener } as unknown as EmitterSubscription;
         });
-        jest.spyOn(TextInput.State, "currentlyFocusedInput").mockReturnValue({} as any);
         setPlatform("ios");
     });
 
@@ -60,7 +59,7 @@ describe("SheetKeyboardTracker", () => {
         }
     });
 
-    it("reports the focused input to the sheet when the keyboard opens on iOS", () => {
+    it("reports a target to the sheet when the keyboard opens on iOS", () => {
         render(<SheetKeyboardTracker />);
 
         expect(animatedKeyboardState.get().target).toBeUndefined();
@@ -90,14 +89,17 @@ describe("SheetKeyboardTracker", () => {
         expect(animatedKeyboardState.get().target).not.toBe(firstTarget);
     });
 
-    it("does nothing when the keyboard opens without a focused input", () => {
-        // Typed as non-nullable by RN, but null at runtime when nothing is focused.
+    it("reports a target even before React Native has recorded the focused input", () => {
+        // On iOS keyboardWillShow is delivered before TextInput's onFocus, which is what
+        // fills this ref. Gating on it made the very first focus a no-op, so the sheet
+        // only moved once a later keyboard event -- e.g. after backgrounding the app --
+        // found the ref populated. Typed as non-nullable by RN, but null at runtime.
         jest.spyOn(TextInput.State, "currentlyFocusedInput").mockReturnValue(null as any);
         render(<SheetKeyboardTracker />);
 
         showKeyboard();
 
-        expect(animatedKeyboardState.get().target).toBeUndefined();
+        expect(animatedKeyboardState.get().target).toBeTruthy();
     });
 
     it("does not subscribe on Android, where the OS already moves the input into view", () => {

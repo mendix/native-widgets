@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Keyboard, Platform, TextInput } from "react-native";
+import { Keyboard, Platform } from "react-native";
 import { useBottomSheetInternal } from "@gorhom/bottom-sheet";
 
 /**
@@ -11,9 +11,9 @@ import { useBottomSheetInternal } from "@gorhom/bottom-sheet";
  * component that ever sets it. Mendix Text Box renders a plain TextInput, so the sheet
  * never learns an input is focused and keyboardBehavior has nothing to act on.
  *
- * Reporting the focused input here closes that gap. The sheet caches the swallowed
- * event and replays it as soon as `target` is set, so this works no matter whether our
- * listener runs before or after the library's own.
+ * Reporting a target here closes that gap. The sheet caches the swallowed event and
+ * replays it as soon as `target` is set, so this works no matter whether our listener
+ * runs before or after the library's own.
  *
  * Renders nothing and must be placed inside a BottomSheet, as it reads the sheet's
  * internal context.
@@ -31,10 +31,15 @@ export const SheetKeyboardTracker = (): null => {
         }
 
         const subscription = Keyboard.addListener("keyboardWillShow", () => {
-            if (!TextInput.State.currentlyFocusedInput()) {
-                return;
-            }
-
+            // Deliberately unconditional: iOS only raises the keyboard for a first
+            // responder, and the sheet fills a modal, so the focused input is ours.
+            //
+            // In particular we cannot consult TextInput.State.currentlyFocusedInput()
+            // here. React Native fills that ref in TextInput's onFocus handler, which on
+            // iOS is delivered *after* keyboardWillShow -- the very race the sheet caches
+            // events for. Gating on it made the first focus a no-op, so the sheet only
+            // started moving once a later keyboard event found the ref populated.
+            //
             // The sheet treats `target` as an opaque marker: it only checks that one is
             // set, and replays a swallowed event whenever the value changes. Using a
             // fresh value on every open therefore covers both listener orderings, and
