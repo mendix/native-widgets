@@ -14,3 +14,5 @@ export const defaultBackgroundImageStyle: BackgroundImageStyle = {
     container: {},
     image: {}
 };
+
+export const NO_CONTENT_CONTAINER_STYLE = { flexGrow: 1, flexShrink: 1, flexBasis: "auto" as const };
