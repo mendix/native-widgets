@@ -39,7 +39,9 @@ export function BackgroundGradient({ name, colorList, content, onClick, style }:
     const angle = angleValidation(styles.angle);
     const opacity = opacityValidation(styles.opacity);
 
-    let sortedColorList = (styles.colorList && colorList.length === 0 ? styles.colorList : colorList).sort(
+    // Extracted before deepmerge to avoid corrupting Big instances in colorList offsets
+    const styleColorList = style.flatMap(s => s.colorList ?? []);
+    let sortedColorList = (styleColorList.length > 0 && colorList.length === 0 ? styleColorList : colorList).sort(
         (a, b) => Number(a.offset) - Number(b.offset)
     );
 
