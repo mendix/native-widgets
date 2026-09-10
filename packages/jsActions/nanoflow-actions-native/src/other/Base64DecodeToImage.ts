@@ -8,8 +8,6 @@
 import { Base64 } from "js-base64";
 
 // BEGIN EXTRA CODE
-const loadMendixNative = () => import("mendix-native" + "");
-const loadRNBlobUtil = () => import("react-native-blob-util" + "");
 // END EXTRA CODE
 
 /**
@@ -31,8 +29,8 @@ export async function Base64DecodeToImage(base64: string, image: mendix.lib.MxOb
     // Native platform
     if (navigator && navigator.product === "ReactNative") {
         try {
-            const { NativeFileSystem } = await loadMendixNative();
-            const RNBlobUtil = (await loadRNBlobUtil()).default;
+            const { NativeFileSystem } = await import("mendix-native");
+            const RNBlobUtil = (await import("react-native-blob-util")).default;
 
             // Remove data URI prefix if present (e.g., "data:image/png;base64,")
             let cleanBase64 = base64;
