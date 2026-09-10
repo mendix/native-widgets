@@ -1,4 +1,4 @@
-const { existsSync, readdirSync } = require("fs");
+const { existsSync, readdirSync, readFileSync } = require("fs");
 const { join } = require("path");
 const { execSync } = require("child_process");
 const fg = require("fast-glob");
@@ -27,7 +27,15 @@ try {
 
 async function validateNativeDependencies() {
     // Check for bypass approval
-    const commitMessage = process.env.CI_COMMIT_MESSAGE || "";
+    // In CI: read from environment variable
+    // In commit-msg hook: read from file path passed as argument
+    let commitMessage = process.env.CI_COMMIT_MESSAGE || "";
+
+    const commitMsgFile = process.argv[2]; // Path from commit-msg hook
+    if (commitMsgFile && existsSync(commitMsgFile)) {
+        commitMessage = readFileSync(commitMsgFile, "utf-8");
+    }
+
     const isApproved = commitMessage.includes("NATIVE_DEPENDENCY_APPROVED");
 
     if (isApproved) {
