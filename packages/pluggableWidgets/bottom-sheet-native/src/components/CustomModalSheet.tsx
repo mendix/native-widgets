@@ -78,7 +78,14 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
     const maxHeight = windowHeight * 0.9;
 
     return (
-        <Modal transparent animationType="none" visible={mounted} onRequestClose={close} onShow={handleModalShow}>
+        <Modal
+            transparent
+            animationType="none"
+            visible={mounted}
+            onRequestClose={close}
+            onShow={handleModalShow}
+            supportedOrientations={["portrait", "portrait-upside-down", "landscape-left", "landscape-right"]}
+        >
             {ready && (
                 <BottomSheet
                     ref={bottomSheetRef}
