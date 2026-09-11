@@ -72,3 +72,9 @@ jobs:
         run: pnpm -r --filter='!native-widgets' --filter=$(if [ "${{ steps.files.outputs.global_files }}" = "" ] && ${{ github.event_name == 'pull_request' }}; then echo '...[origin/main]'; else echo '**'; fi) run build
         env:
           NODE_OPTIONS: --max_old_space_size=8192
+      - name: "Validating manifest format"
+        run: pnpm run validate-manifest-format
+      - name: "Validating native dependencies"
+        run: pnpm run validate-native-dependencies
+        env:
+          CI_COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title }}
