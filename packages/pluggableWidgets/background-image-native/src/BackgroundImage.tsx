@@ -4,7 +4,7 @@ import { ValueStatus } from "mendix";
 import { Image, SvgImageStyle } from "mendix/components/native/Image";
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 
-import { BackgroundImageStyle, defaultBackgroundImageStyle } from "./ui/Styles";
+import { BackgroundImageStyle, defaultBackgroundImageStyle, NO_CONTENT_CONTAINER_STYLE } from "./ui/Styles";
 import { BackgroundImageProps } from "../typings/BackgroundImageProps";
 
 export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle>): JSX.Element | null {
@@ -33,8 +33,12 @@ export function BackgroundImage(props: BackgroundImageProps<BackgroundImageStyle
         { opacity, resizeMode }
     ] as StyleProp<SvgImageStyle>;
 
+    // When there's no content, allow container to grow to fill available space
+    // When there's content, size container to content
+    const containerStyle = props.content ? styles.container : [NO_CONTENT_CONTAINER_STYLE, styles.container];
+
     return (
-        <View style={styles.container} testID={name}>
+        <View style={containerStyle} testID={name}>
             <Image source={image.value} style={imageStyle} color={styles.image.svgColor} testID={`${name}$image`} />
             {props.content}
         </View>
