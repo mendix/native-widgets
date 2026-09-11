@@ -193,7 +193,7 @@ export async function copyJsModule(moduleSourcePath, to) {
 
                 // Skip certain directories
                 if (
-                    relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)
+                    relativePath.match(/(^|[\\/])(android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)([\\/]|$)/)
                 ) {
                     return false;
                 }
