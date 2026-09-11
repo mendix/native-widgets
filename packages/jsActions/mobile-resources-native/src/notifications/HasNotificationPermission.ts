@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { NativeModules } from "react-native";
+import messaging from "@react-native-firebase/messaging";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -18,7 +18,6 @@ import { NativeModules } from "react-native";
 export async function HasNotificationPermission(): Promise<boolean> {
     // BEGIN USER CODE
     // Documentation https://rnfirebase.io/docs/v5.x.x/notifications/receiving-notifications
-
     const enum permissionStatus {
         NotDetermined = -1,
         Denied = 0,
@@ -28,17 +27,15 @@ export async function HasNotificationPermission(): Promise<boolean> {
 
     const allowedAuthorizationStatuses = [permissionStatus.Authorized, permissionStatus.Provisional];
 
-    if (NativeModules && !NativeModules.RNFBMessagingModule) {
-        return Promise.reject(new Error("Firebase module is not available in your app"));
-    }
-
-    return NativeModules.RNFBMessagingModule.hasPermission().then((authStatus: number) => {
-        if (allowedAuthorizationStatuses.includes(authStatus)) {
-            return Promise.resolve(true);
-        } else {
-            return Promise.resolve(false);
-        }
-    });
+    return messaging()
+        .hasPermission()
+        .then((authStatus: number) => {
+            if (allowedAuthorizationStatuses.includes(authStatus)) {
+                return Promise.resolve(true);
+            } else {
+                return Promise.resolve(false);
+            }
+        });
 
     // END USER CODE
 }
