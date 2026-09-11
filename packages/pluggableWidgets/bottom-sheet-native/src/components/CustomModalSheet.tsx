@@ -1,12 +1,23 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { Modal, Pressable, useWindowDimensions } from "react-native";
+import { Modal, Platform, Pressable, useWindowDimensions } from "react-native";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
+    BottomSheetProps as GorhomBottomSheetProps,
     BottomSheetScrollView
 } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { BottomSheetStyle } from "../ui/Styles";
+import { SheetKeyboardTracker } from "./SheetKeyboardTracker";
+
+/**
+ * Move the sheet above the keyboard, and back down once it is dismissed. Applied on iOS
+ * only, because Android already moves the focused input into view through
+ * windowSoftInputMode. See SheetKeyboardTracker for why the tracker is needed to make
+ * these take effect at all.
+ */
+const keyboardProps: Pick<GorhomBottomSheetProps, "keyboardBehavior" | "keyboardBlurBehavior"> =
+    Platform.OS === "ios" ? { keyboardBehavior: "interactive", keyboardBlurBehavior: "restore" } : {};
 
 interface CustomModalSheetProps {
     triggerAttribute?: EditableValue<boolean>;
@@ -95,7 +106,9 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                     backgroundStyle={props.styles.container}
                     handleComponent={null}
                     handleStyle={{ display: "none" }}
+                    {...keyboardProps}
                 >
+                    <SheetKeyboardTracker />
                     <BottomSheetScrollView style={[{ flex: 1 }]} contentContainerStyle={{ paddingBottom: 16 }}>
                         {props.content}
                     </BottomSheetScrollView>
