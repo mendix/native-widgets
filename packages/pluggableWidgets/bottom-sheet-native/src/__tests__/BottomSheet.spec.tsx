@@ -166,6 +166,32 @@ describe("Bottom sheet", () => {
         expect(component.toJSON()).toMatchSnapshot();
     });
 
+    it("renders custom modal with supportedOrientations when open", () => {
+        const component = render(
+            <BottomSheet
+                {...defaultProps}
+                modalRendering="custom"
+                largeContent={<Text />}
+                triggerAttribute={new EditableValueBuilder<boolean>().withValue(true).build()}
+            />
+        );
+
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("renders basic modal with supportedOrientations when open", () => {
+        const component = render(
+            <BottomSheet
+                {...defaultProps}
+                modalRendering="basic"
+                nativeImplementation={false}
+                triggerAttribute={new EditableValueBuilder<boolean>().withValue(true).build()}
+            />
+        );
+
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+
     it("closes custom modal when triggerAttribute is set to false", () => {
         const triggerAttribute = new EditableValueBuilder<boolean>().withValue(true).build();
         const props = {
