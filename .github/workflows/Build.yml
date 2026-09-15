@@ -76,5 +76,3 @@ jobs:
         run: pnpm run validate-manifest-format
       - name: "Validating native dependencies"
         run: pnpm run validate-native-dependencies
-        env:
-          CI_COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title }}
