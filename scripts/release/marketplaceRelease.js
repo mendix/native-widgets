@@ -1,4 +1,5 @@
 const { join } = require("path");
+const { appendFileSync } = require("fs");
 
 const config = {
     appStoreUrl: "https://appstore.home.mendix.com/rest/packagesapi/v2",
@@ -44,10 +45,32 @@ async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMX
         await publishDraft(postResponse.UUID);
         console.log(`Successfully uploaded ${pkgName} to the Mendix Marketplace.`);
 
-        await verifyReleasePublished(marketplaceId, version, pkgName);
+        try {
+            await verifyReleasePublished(marketplaceId, version, pkgName);
+        } catch (verificationError) {
+            console.warn(`⚠️  WARNING: ${verificationError.message}`);
+            console.warn(`Please manually verify at: https://marketplace.mendix.com/link/component/${marketplaceId}`);
+            setVerificationFailedOutput(marketplaceId);
+        }
     } catch (error) {
         error.message = `Failed uploading ${pkgName} to appstore with error: ${error.message}`;
         throw error;
+    }
+}
+
+function setVerificationFailedOutput(marketplaceId) {
+    try {
+        const githubOutput = process.env.GITHUB_OUTPUT;
+        if (githubOutput) {
+            appendFileSync(
+                githubOutput,
+                `verification_failed=true\nmarketplace_url=https://marketplace.mendix.com/link/component/${marketplaceId}\n`
+            );
+        }
+    } catch (error) {
+        console.warn(
+            `Failed to set GitHub Actions output: ${error.message}. Please manually verify the release at https://marketplace.mendix.com/link/component/${marketplaceId}`
+        );
     }
 }
 
