@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Added an `On change` event that triggers when the `Trigger attribute` value changes, allowing detection of bottom sheet dismissal (e.g. by outside click).
 
+### Fixed
+
+-   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
+
 ## [5.3.2] - 2026-8-4
 
 ### Fixed
