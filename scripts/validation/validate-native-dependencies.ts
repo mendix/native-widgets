@@ -1,7 +1,7 @@
-const { existsSync, readdirSync, readFileSync } = require("fs");
-const { join } = require("path");
-const { execSync } = require("child_process");
-const fg = require("fast-glob");
+import { existsSync, readdirSync, readFileSync } from "fs";
+import { join } from "path";
+import { execSync } from "child_process";
+import * as fg from "fast-glob";
 
 /**
  * CI Check: Detect New Native Dependencies
@@ -11,39 +11,68 @@ const fg = require("fast-glob");
  * which forces customers to rebuild their mobile apps.
  *
  * How it works:
- * - Compares package.json dependencies against previous commit (HEAD)
+ * - Compares package.json dependencies against parent commit (HEAD^)
  * - For any NEW dependencies, checks if they contain native code
  * - Warns if the new dependency has ios/android folders
  *
  * Bypass: Include "NATIVE_DEPENDENCY_APPROVED" in the commit message.
  */
 
+interface PackageJson {
+    dependencies?: Record<string, string>;
+    peerDependencies?: Record<string, string>;
+}
+
+interface Violation {
+    widget: string;
+    dependency: string;
+    path: string;
+}
+
 try {
-    validateNativeDependencies();
+    await validateNativeDependencies();
 } catch (error) {
     console.error(error);
     process.exit(1);
 }
 
-async function validateNativeDependencies() {
+async function validateNativeDependencies(): Promise<void> {
     // Check for bypass approval
-    // In CI: read from environment variable
+    let isApproved = false;
+
     // In commit-msg hook: read from file path passed as argument
-    let commitMessage = process.env.CI_COMMIT_MESSAGE || "";
-
-    const commitMsgFile = process.argv[2]; // Path from commit-msg hook
+    const commitMsgFile = process.argv[2];
     if (commitMsgFile && existsSync(commitMsgFile)) {
-        commitMessage = readFileSync(commitMsgFile, "utf-8");
+        const commitMessage = readFileSync(commitMsgFile, "utf-8");
+        isApproved = commitMessage.includes("NATIVE_DEPENDENCY_APPROVED");
+    } else {
+        // In CI: check all commits between HEAD^ and HEAD
+        try {
+            const commitMessages = execSync("git log HEAD^..HEAD --format=%B", {
+                encoding: "utf-8",
+                stdio: ["pipe", "pipe", "ignore"]
+            });
+            isApproved = commitMessages.includes("NATIVE_DEPENDENCY_APPROVED");
+        } catch (error) {
+            // If git log fails (e.g., no parent commit), fall back to checking HEAD only
+            try {
+                const commitMessage = execSync("git log -1 --format=%B", {
+                    encoding: "utf-8",
+                    stdio: ["pipe", "pipe", "ignore"]
+                });
+                isApproved = commitMessage.includes("NATIVE_DEPENDENCY_APPROVED");
+            } catch (fallbackError) {
+                // If even that fails, continue with validation
+            }
+        }
     }
-
-    const isApproved = commitMessage.includes("NATIVE_DEPENDENCY_APPROVED");
 
     if (isApproved) {
         console.log("✅ Native dependency changes approved via commit message");
         return;
     }
 
-    const violations = [];
+    const violations: Violation[] = [];
     const widgetsDir = join(process.cwd(), "packages/pluggableWidgets");
 
     if (!existsSync(widgetsDir)) {
@@ -64,21 +93,22 @@ async function validateNativeDependencies() {
 
         try {
             // Get current package.json
-            const currentPackageJson = require(packageJsonPath);
-            const currentDeps = {
+            const currentPackageJson: PackageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+            const currentDeps: Record<string, string> = {
                 ...currentPackageJson.dependencies,
                 ...currentPackageJson.peerDependencies
             };
 
-            // Get previous package.json from git (HEAD)
-            let previousDeps = {};
+            // Get previous package.json from git (HEAD^)
+            let previousDeps: Record<string, string> = {};
             try {
-                const relativePath = join("packages/pluggableWidgets", widget, "package.json");
-                const previousContent = execSync(`git show HEAD:${relativePath}`, {
+                // Git always uses forward slashes, even on Windows
+                const relativePath = join("packages/pluggableWidgets", widget, "package.json").replace(/\\/g, "/");
+                const previousContent = execSync(`git show HEAD^:${relativePath}`, {
                     encoding: "utf-8",
                     stdio: ["pipe", "pipe", "ignore"]
                 });
-                const previousPackageJson = JSON.parse(previousContent);
+                const previousPackageJson: PackageJson = JSON.parse(previousContent);
                 previousDeps = {
                     ...previousPackageJson.dependencies,
                     ...previousPackageJson.peerDependencies
@@ -110,7 +140,7 @@ async function validateNativeDependencies() {
                 }
             }
         } catch (error) {
-            console.warn(`⚠️  Could not check ${widget}: ${error.message}`);
+            console.warn(`⚠️  Could not check ${widget}: ${error instanceof Error ? error.message : String(error)}`);
         }
     }
 
@@ -140,11 +170,12 @@ async function validateNativeDependencies() {
  * Check if a dependency contains native code
  * Same logic as the patched hasNativeCode function
  */
-async function hasNativeCode(dir) {
+async function hasNativeCode(dir: string): Promise<boolean> {
     try {
-        const files = await fg(["**/{android,ios}/*", "**/*.podspec"], {
+        const files = await fg.default(["**/{android,ios}/*", "**/*.podspec"], {
             cwd: dir,
-            ignore: ["**/example*/**", "**/__tests__/**", "**/docs/**"]
+            ignore: ["**/example*/**", "**/__tests__/**", "**/docs/**", "**/.github/**"],
+            caseSensitiveMatch: false
         });
         return files.length > 0;
     } catch (error) {

@@ -1,5 +1,5 @@
-const { readFileSync, existsSync, readdirSync } = require("fs");
-const { join } = require("path");
+import { readFileSync, existsSync, readdirSync } from "fs";
+import { join } from "path";
 
 /**
  * CI Check: Prevent Empty Manifest Objects
@@ -13,6 +13,17 @@ const { join } = require("path");
  * - Widgets WITHOUT native dependencies: emit NO FILE at all
  */
 
+interface Manifest {
+    nativeDependencies?: Record<string, string>;
+    [key: string]: unknown;
+}
+
+interface Violation {
+    widget: string;
+    file: string;
+    reason: string;
+}
+
 try {
     validateManifestFormat();
 } catch (error) {
@@ -20,8 +31,8 @@ try {
     process.exit(1);
 }
 
-function validateManifestFormat() {
-    const violations = [];
+function validateManifestFormat(): void {
+    const violations: Violation[] = [];
     const widgetsDir = join(process.cwd(), "packages/pluggableWidgets");
 
     if (!existsSync(widgetsDir)) {
@@ -56,7 +67,7 @@ function validateManifestFormat() {
                     continue;
                 }
 
-                const manifest = JSON.parse(content);
+                const manifest: Manifest = JSON.parse(content);
 
                 // Check for empty manifest or empty nativeDependencies object
                 const isEmpty =
@@ -78,7 +89,7 @@ function validateManifestFormat() {
                 violations.push({
                     widget,
                     file,
-                    reason: `Invalid JSON: ${error.message}`
+                    reason: `Invalid JSON: ${error instanceof Error ? error.message : String(error)}`
                 });
             }
         }
