@@ -18,6 +18,7 @@ import messaging from "@react-native-firebase/messaging";
 export async function HasNotificationPermission(): Promise<boolean> {
     // BEGIN USER CODE
     // Documentation https://rnfirebase.io/docs/v5.x.x/notifications/receiving-notifications
+
     const enum permissionStatus {
         NotDetermined = -1,
         Denied = 0,
