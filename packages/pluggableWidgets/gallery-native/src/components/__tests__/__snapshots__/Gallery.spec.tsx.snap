@@ -2,7 +2,15 @@
 
 exports[`Gallery rendering rendering with load more button it shouldn't render the paging button if hasn't more item 1`] = `
 <View
-  style={{}}
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -14,9 +22,18 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     horizontal={false}
     keyExtractor={[Function]}
     numColumns={2}
+    onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
     scrollEventThrottle={50}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
     testID="gallery-test-list"
   >
     <View>
@@ -178,7 +195,15 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
 
 exports[`Gallery rendering rendering with load more button renders correctly 1`] = `
 <View
-  style={{}}
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -190,9 +215,18 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     horizontal={false}
     keyExtractor={[Function]}
     numColumns={2}
+    onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
     scrollEventThrottle={50}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
     testID="gallery-test-list"
   >
     <View>
@@ -399,7 +433,15 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
 
 exports[`Gallery rendering rendering with load more button renders correctly with custom paging button title 1`] = `
 <View
-  style={{}}
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -411,9 +453,18 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     horizontal={false}
     keyExtractor={[Function]}
     numColumns={2}
+    onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
     scrollEventThrottle={50}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
     testID="gallery-test-list"
   >
     <View>
@@ -620,7 +671,15 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
 
 exports[`Gallery rendering renders correctly 1`] = `
 <View
-  style={{}}
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -632,9 +691,18 @@ exports[`Gallery rendering renders correctly 1`] = `
     horizontal={false}
     keyExtractor={[Function]}
     numColumns={2}
+    onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
     scrollEventThrottle={50}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
     testID="gallery-test-list"
   >
     <View>
@@ -1016,7 +1084,15 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
 
 exports[`Gallery rendering renders correctly with empty list and custom placeholder 1`] = `
 <View
-  style={{}}
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
@@ -1028,10 +1104,19 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
     horizontal={false}
     keyExtractor={[Function]}
     numColumns={2}
+    onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
     refreshing={false}
     scrollEventThrottle={50}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
     testID="gallery-test-list"
   >
     <View>
@@ -1045,7 +1130,15 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
 
 exports[`Gallery rendering renders correctly with filter 1`] = `
 <View
-  style={{}}
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View>
@@ -1060,9 +1153,18 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     horizontal={false}
     keyExtractor={[Function]}
     numColumns={2}
+    onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
     scrollEventThrottle={50}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
     testID="gallery-test-list"
   >
     <View>
