@@ -1,5 +1,14 @@
-import { ReactElement, ReactNode, useCallback, useMemo } from "react";
-import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity, useWindowDimensions } from "react-native";
+import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    LayoutChangeEvent,
+    Text,
+    Pressable,
+    View,
+    ViewProps,
+    Platform,
+    TouchableOpacity,
+    useWindowDimensions
+} from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
 import { GalleryStyle } from "../ui/Styles";
@@ -35,6 +44,13 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
     const { width } = useWindowDimensions();
+    // FlashList requires a non-zero height to render items (it's virtualized and needs viewport dimensions).
+    // When the parent provides height (e.g. via flex), we use flex: 1. When it doesn't (e.g. a Container
+    // widget with no flex/height), flex: 1 resolves to 0 and nothing renders. In that case, we fall back
+    // to minHeight based on FlashList's reported content size. This matches the ListView widget's approach.
+    const wrapperRef = useRef<View>(null);
+    const [contentHeight, setContentHeight] = useState(0);
+    const [layoutDecision, setLayoutDecision] = useState<"minHeight" | "flex" | null>(null);
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -137,8 +153,39 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         [props.style.emptyPlaceholder, props.emptyPlaceholder]
     );
 
+    const handleWrapperLayout = useCallback(
+        (event: LayoutChangeEvent) => {
+            const { height } = event.nativeEvent.layout;
+            if (height > 0 && layoutDecision === null) {
+                setLayoutDecision("flex");
+            }
+        },
+        [layoutDecision]
+    );
+
+    useEffect(() => {
+        if (contentHeight > 0 && layoutDecision === null && wrapperRef.current) {
+            wrapperRef.current.measure((_x, _y, _width, height) => {
+                setLayoutDecision(height > 0 ? "flex" : "minHeight");
+            });
+        }
+    }, [contentHeight, layoutDecision]);
+
+    const containerStyle = isScrollDirectionVertical
+        ? layoutDecision === "minHeight"
+            ? [{ minHeight: Math.max(contentHeight, 1) }, props.style.container]
+            : [{ flex: 1 }, props.style.container]
+        : props.style.container;
+
+    const listStyle = isScrollDirectionVertical ? [{ flex: 1 }, props.style.list] : props.style.list;
+
     return (
-        <View testID={`${name}`} style={props.style.container}>
+        <View
+            testID={`${name}`}
+            style={containerStyle}
+            ref={wrapperRef}
+            onLayout={isScrollDirectionVertical ? handleWrapperLayout : undefined}
+        >
             {props.filters ? <View>{props.filters}</View> : null}
             <FlashList
                 {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
@@ -157,8 +204,9 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 onEndReachedThreshold={0.6}
                 scrollEventThrottle={50}
                 renderItem={renderItem}
-                style={props.style.list}
+                style={listStyle}
                 testID={`${name}-list`}
+                onContentSizeChange={isScrollDirectionVertical ? (_w, h) => setContentHeight(h) : undefined}
             />
         </View>
     );
