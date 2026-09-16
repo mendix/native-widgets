@@ -1,4 +1,4 @@
-import { FeedbackStyle } from "../ui/styles";
+import { FeedbackStyle, defaultFeedbackStyle } from "../ui/styles";
 import { render, cleanup, fireEvent, waitFor } from "@testing-library/react-native";
 import { FeedbackProps } from "../../typings/FeedbackProps";
 import { Feedback } from "../Feedback";
@@ -95,4 +95,19 @@ describe("Feedback", () => {
         expect(typeof body.metadata.screenWidth).toBe("number");
         expect(typeof body.metadata.screenHeight).toBe("number");
     }, 15000);
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultFeedbackStyle).sort();
+        expect(keys).toEqual([
+            "activityIndicator",
+            "button",
+            "buttonDisabled",
+            "dialog",
+            "floatingButton",
+            "switchInput",
+            "switchLabel",
+            "textAreaInput",
+            "title"
+        ]);
+    });
 });

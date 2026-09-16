@@ -5,6 +5,7 @@ import { Bar } from "react-native-progress";
 import { render } from "@testing-library/react-native";
 
 import { ProgressBar, Props } from "../ProgressBar";
+import { defaultProgressBarStyle } from "../ui/Styles";
 
 describe("ProgressBar", () => {
     it("renders", () => {
@@ -44,6 +45,11 @@ describe("ProgressBar", () => {
         const component = render(<ProgressBar {...createProps(-30, -100, 0)} />);
         expect(component.UNSAFE_getByType(Bar).props.progress).toBe(0.7);
         expect(component.UNSAFE_queryByType(Text)).toBeNull();
+    });
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultProgressBarStyle).sort();
+        expect(keys).toEqual(["bar", "container", "fill", "validationMessage"]);
     });
 });
 

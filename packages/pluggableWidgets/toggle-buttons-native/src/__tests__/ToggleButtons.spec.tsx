@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import { fireEvent, render } from "@testing-library/react-native";
 
 import { Props, ToggleButtons } from "../ToggleButtons";
+import { defaultToggleButtonsStyle } from "../ui/Styles";
 
 describe("ToggleButtons", () => {
     let defaultProps: Props;
@@ -67,5 +68,18 @@ describe("ToggleButtons", () => {
         fireEvent.press(component.getByText("Formatted b"));
 
         expect(defaultProps.enum.setValue).not.toHaveBeenCalled();
+    });
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultToggleButtonsStyle).sort();
+        expect(keys).toEqual([
+            "activeButton",
+            "activeButtonText",
+            "button",
+            "container",
+            "containerDisabled",
+            "text",
+            "validationMessage"
+        ]);
     });
 });

@@ -334,6 +334,11 @@ describe("PieDoughnutChart", () => {
             });
         });
     });
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultStyle).sort();
+        expect(keys).toEqual(["container", "slices"]);
+    });
 });
 
 function createProps(opts: Partial<PieDoughnutChartProps<ChartStyle>> = {}): PieDoughnutChartProps<ChartStyle> {
