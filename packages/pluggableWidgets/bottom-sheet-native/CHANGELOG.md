@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
+-   Fixed iOS orientation change when opening the bottom sheet modal on devices in landscape mode.
 -   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
 
 ## [5.3.2] - 2026-8-4
