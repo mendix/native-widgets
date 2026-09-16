@@ -224,9 +224,11 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
         console.log(`Verification attempt ${attempt}/${maxRetries}: Checking for version ${expectedVersion}`);
 
         try {
-            // Call the Mendix Content API to get all released module versions
+            // Call the Mendix Content API to get all released module versions since the last 24 hours
+            const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+            const publishedSince = yesterday.toISOString().split("T")[0];
             const versionsResponse = await fetch(
-                `https://marketplace-api.mendix.com/v1/content/${contentId}/versions`,
+                `https://marketplace-api.mendix.com/v1/content/${contentId}/versions?publishedSince=${publishedSince}`,
                 {
                     method: "GET",
                     headers: {
