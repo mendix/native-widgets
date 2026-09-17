@@ -44,6 +44,7 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           TAG: ${{ steps.variables.outputs.tag }}
       - name: "Check changes and publish package ${{ steps.variables.outputs.tag }}"
+        id: publish
         run: pnpm --filter=${{ steps.scope.outputs._0 }} run release:marketplace
         env:
           OPENID_URL: ${{ secrets.OPENID_URL }}
@@ -52,7 +53,15 @@ jobs:
           TAG: ${{ steps.variables.outputs.tag }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MENDIX_PAT_TOKEN: ${{ secrets.MENDIX_PAT_TOKEN }}
-      - name: "Send slack msg on failure"
+      - name: "Send slack notification on verification failure"
+        if: ${{ steps.publish.outputs.verification_failed == 'true' }}
+        uses: ./.github/actions/slack-notification
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          message: |
+            :warning: *${{ steps.scope.outputs._0 }}* v${{ steps.scope.outputs._1 }} — published successfully but verification step failed. Please check manually: <${{ steps.publish.outputs.marketplace_url }}|Marketplace> · <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Logs>
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: "Send slack msg on publish failure"
         if: ${{ failure() }}
         uses: ./.github/actions/slack-notification
         with:
