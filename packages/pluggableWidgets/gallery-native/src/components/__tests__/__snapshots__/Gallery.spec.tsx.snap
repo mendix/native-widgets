@@ -2,173 +2,198 @@
 
 exports[`Gallery rendering rendering with load more button it shouldn't render the paging button if hasn't more item 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
-    ListFooterComponentStyle={
+    onLayout={[Function]}
+    style={
       {
-        "marginTop": 8,
+        "flex": 1,
       }
     }
-    horizontal={false}
-    keyExtractor={[Function]}
-    numColumns={2}
-    onEndReached={[Function]}
-    onEndReachedThreshold={0.6}
-    scrollEventThrottle={50}
-    testID="gallery-test-list"
   >
-    <View>
-      <View
-        testID="gallery-test-list-item-11"
-      >
+    <View
+      ListFooterComponentStyle={
+        {
+          "marginTop": 8,
+        }
+      }
+      horizontal={false}
+      keyExtractor={[Function]}
+      numColumns={2}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.6}
+      scrollEventThrottle={50}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+      testID="gallery-test-list"
+    >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              undefined,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-11"
         >
-          11
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+          >
+            11
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-22"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-22"
         >
-          22
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            22
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-33"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-33"
         >
-          33
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            33
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-44"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-44"
         >
-          44
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            44
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-55"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-55"
         >
-          55
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            55
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-66"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-66"
         >
-          66
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            66
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-77"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-77"
         >
-          77
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            77
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-88"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-88"
         >
-          88
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            88
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-99"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              undefined,
-            ]
-          }
+          testID="gallery-test-list-item-99"
         >
-          99
+          <View
+            style={
+              [
+                undefined,
+                false,
+                undefined,
+              ]
+            }
+          >
+            99
+          </View>
         </View>
       </View>
     </View>
@@ -178,220 +203,245 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
 
 exports[`Gallery rendering rendering with load more button renders correctly 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
-    ListFooterComponentStyle={
+    onLayout={[Function]}
+    style={
       {
-        "marginTop": 8,
+        "flex": 1,
       }
     }
-    horizontal={false}
-    keyExtractor={[Function]}
-    numColumns={2}
-    onEndReached={[Function]}
-    onEndReachedThreshold={0.6}
-    scrollEventThrottle={50}
-    testID="gallery-test-list"
   >
-    <View>
-      <View
-        testID="gallery-test-list-item-11"
-      >
-        <View
-          style={
-            [
-              undefined,
-              undefined,
-              false,
-            ]
-          }
-        >
-          11
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-22"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          22
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-33"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          33
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-44"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          44
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-55"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          55
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-66"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          66
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-77"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          77
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-88"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          88
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-99"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              undefined,
-            ]
-          }
-        >
-          99
-        </View>
-      </View>
-    </View>
     <View
-      accessibilityState={
+      ListFooterComponentStyle={
         {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
+          "marginTop": 8,
         }
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+      horizontal={false}
+      keyExtractor={[Function]}
+      numColumns={2}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.6}
+      scrollEventThrottle={50}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      nativeBackgroundAndroid={
-        {
-          "borderless": false,
-          "color": 855638016,
-          "rippleRadius": undefined,
-          "type": "RippleAndroid",
-        }
-      }
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={{}}
-      testID="gallery-test-pagination-button"
+      testID="gallery-test-list"
     >
-      <Text>
-        Load more
-      </Text>
+      <View>
+        <View
+          testID="gallery-test-list-item-11"
+        >
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+          >
+            11
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-22"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            22
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-33"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            33
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-44"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            44
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-55"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            55
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-66"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            66
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-77"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            77
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-88"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            88
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-99"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                undefined,
+              ]
+            }
+          >
+            99
+          </View>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        nativeBackgroundAndroid={
+          {
+            "borderless": false,
+            "color": 855638016,
+            "rippleRadius": undefined,
+            "type": "RippleAndroid",
+          }
+        }
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={{}}
+        testID="gallery-test-pagination-button"
+      >
+        <Text>
+          Load more
+        </Text>
+      </View>
     </View>
   </View>
 </View>
@@ -399,220 +449,245 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
 
 exports[`Gallery rendering rendering with load more button renders correctly with custom paging button title 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
-    ListFooterComponentStyle={
+    onLayout={[Function]}
+    style={
       {
-        "marginTop": 8,
+        "flex": 1,
       }
     }
-    horizontal={false}
-    keyExtractor={[Function]}
-    numColumns={2}
-    onEndReached={[Function]}
-    onEndReachedThreshold={0.6}
-    scrollEventThrottle={50}
-    testID="gallery-test-list"
   >
-    <View>
-      <View
-        testID="gallery-test-list-item-11"
-      >
-        <View
-          style={
-            [
-              undefined,
-              undefined,
-              false,
-            ]
-          }
-        >
-          11
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-22"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          22
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-33"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          33
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-44"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          44
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-55"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          55
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-66"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          66
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-77"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          77
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-88"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
-        >
-          88
-        </View>
-      </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-99"
-      >
-        <View
-          style={
-            [
-              undefined,
-              false,
-              undefined,
-            ]
-          }
-        >
-          99
-        </View>
-      </View>
-    </View>
     <View
-      accessibilityState={
+      ListFooterComponentStyle={
         {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
+          "marginTop": 8,
         }
       }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
+      horizontal={false}
+      keyExtractor={[Function]}
+      numColumns={2}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.6}
+      scrollEventThrottle={50}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
       }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      nativeBackgroundAndroid={
-        {
-          "borderless": false,
-          "color": 855638016,
-          "rippleRadius": undefined,
-          "type": "RippleAndroid",
-        }
-      }
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={{}}
-      testID="gallery-test-pagination-button"
+      testID="gallery-test-list"
     >
-      <Text>
-        Show more
-      </Text>
+      <View>
+        <View
+          testID="gallery-test-list-item-11"
+        >
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+          >
+            11
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-22"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            22
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-33"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            33
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-44"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            44
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-55"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            55
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-66"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            66
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-77"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            77
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-88"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            88
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          testID="gallery-test-list-item-99"
+        >
+          <View
+            style={
+              [
+                undefined,
+                false,
+                undefined,
+              ]
+            }
+          >
+            99
+          </View>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        nativeBackgroundAndroid={
+          {
+            "borderless": false,
+            "color": 855638016,
+            "rippleRadius": undefined,
+            "type": "RippleAndroid",
+          }
+        }
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={{}}
+        testID="gallery-test-pagination-button"
+      >
+        <Text>
+          Show more
+        </Text>
+      </View>
     </View>
   </View>
 </View>
@@ -620,173 +695,198 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
 
 exports[`Gallery rendering renders correctly 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
-    ListFooterComponentStyle={
+    onLayout={[Function]}
+    style={
       {
-        "marginTop": 8,
+        "flex": 1,
       }
     }
-    horizontal={false}
-    keyExtractor={[Function]}
-    numColumns={2}
-    onEndReached={[Function]}
-    onEndReachedThreshold={0.6}
-    scrollEventThrottle={50}
-    testID="gallery-test-list"
   >
-    <View>
-      <View
-        testID="gallery-test-list-item-11"
-      >
+    <View
+      ListFooterComponentStyle={
+        {
+          "marginTop": 8,
+        }
+      }
+      horizontal={false}
+      keyExtractor={[Function]}
+      numColumns={2}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.6}
+      scrollEventThrottle={50}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+      testID="gallery-test-list"
+    >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              undefined,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-11"
         >
-          11
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+          >
+            11
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-22"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-22"
         >
-          22
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            22
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-33"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-33"
         >
-          33
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            33
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-44"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-44"
         >
-          44
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            44
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-55"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-55"
         >
-          55
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            55
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-66"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-66"
         >
-          66
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            66
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-77"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-77"
         >
-          77
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            77
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-88"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-88"
         >
-          88
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            88
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-99"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              undefined,
-            ]
-          }
+          testID="gallery-test-list-item-99"
         >
-          99
+          <View
+            style={
+              [
+                undefined,
+                false,
+                undefined,
+              ]
+            }
+          >
+            99
+          </View>
         </View>
       </View>
     </View>
@@ -799,214 +899,216 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
   style={{}}
   testID="gallery-test"
 >
-  <View
-    ListFooterComponentStyle={
-      {
-        "marginStart": 8,
+  <View>
+    <View
+      ListFooterComponentStyle={
+        {
+          "marginStart": 8,
+        }
       }
-    }
-    horizontal={true}
-    keyExtractor={[Function]}
-    onEndReached={[Function]}
-    onEndReachedThreshold={0.6}
-    scrollEventThrottle={50}
-    testID="gallery-test-list"
-  >
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-11"
-      >
+      horizontal={true}
+      keyExtractor={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.6}
+      scrollEventThrottle={50}
+      testID="gallery-test-list"
+    >
+      <View>
         <View
           style={
-            [
-              undefined,
-              undefined,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-11"
         >
-          11
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+          >
+            11
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-22"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-22"
         >
-          22
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            22
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-33"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-33"
         >
-          33
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            33
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-44"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-44"
         >
-          44
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            44
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-55"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-55"
         >
-          55
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            55
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-66"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-66"
         >
-          66
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            66
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-77"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-77"
         >
-          77
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            77
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-88"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              false,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-88"
         >
-          88
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            88
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        style={
-          {
-            "width": 750,
-          }
-        }
-        testID="gallery-test-list-item-99"
-      >
+      <View>
         <View
           style={
-            [
-              undefined,
-              false,
-              undefined,
-            ]
+            {
+              "width": 750,
+            }
           }
+          testID="gallery-test-list-item-99"
         >
-          99
+          <View
+            style={
+              [
+                undefined,
+                false,
+                undefined,
+              ]
+            }
+          >
+            99
+          </View>
         </View>
       </View>
     </View>
@@ -1016,28 +1118,53 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
 
 exports[`Gallery rendering renders correctly with empty list and custom placeholder 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View
-    ListFooterComponentStyle={
+    onLayout={[Function]}
+    style={
       {
-        "marginTop": 8,
+        "flex": 1,
       }
     }
-    horizontal={false}
-    keyExtractor={[Function]}
-    numColumns={2}
-    onEndReached={[Function]}
-    onEndReachedThreshold={0.6}
-    refreshing={false}
-    scrollEventThrottle={50}
-    testID="gallery-test-list"
   >
-    <View>
-      <Text>
-        Empty list...
-      </Text>
+    <View
+      ListFooterComponentStyle={
+        {
+          "marginTop": 8,
+        }
+      }
+      horizontal={false}
+      keyExtractor={[Function]}
+      numColumns={2}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.6}
+      refreshing={false}
+      scrollEventThrottle={50}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+      testID="gallery-test-list"
+    >
+      <View>
+        <Text>
+          Empty list...
+        </Text>
+      </View>
     </View>
   </View>
 </View>
@@ -1045,176 +1172,201 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
 
 exports[`Gallery rendering renders correctly with filter 1`] = `
 <View
-  style={{}}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {},
+    ]
+  }
   testID="gallery-test"
 >
   <View>
     <TextInput />
   </View>
   <View
-    ListFooterComponentStyle={
+    onLayout={[Function]}
+    style={
       {
-        "marginTop": 8,
+        "flex": 1,
       }
     }
-    horizontal={false}
-    keyExtractor={[Function]}
-    numColumns={2}
-    onEndReached={[Function]}
-    onEndReachedThreshold={0.6}
-    scrollEventThrottle={50}
-    testID="gallery-test-list"
   >
-    <View>
-      <View
-        testID="gallery-test-list-item-11"
-      >
+    <View
+      ListFooterComponentStyle={
+        {
+          "marginTop": 8,
+        }
+      }
+      horizontal={false}
+      keyExtractor={[Function]}
+      numColumns={2}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.6}
+      scrollEventThrottle={50}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+      testID="gallery-test-list"
+    >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              undefined,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-11"
         >
-          11
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+          >
+            11
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-22"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-22"
         >
-          22
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            22
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-33"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-33"
         >
-          33
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            33
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-44"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-44"
         >
-          44
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            44
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-55"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-55"
         >
-          55
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            55
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-66"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-66"
         >
-          66
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            66
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-77"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-77"
         >
-          77
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            77
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-88"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              false,
-            ]
-          }
+          testID="gallery-test-list-item-88"
         >
-          88
+          <View
+            style={
+              [
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            88
+          </View>
         </View>
       </View>
-    </View>
-    <View>
-      <View
-        testID="gallery-test-list-item-99"
-      >
+      <View>
         <View
-          style={
-            [
-              undefined,
-              false,
-              undefined,
-            ]
-          }
+          testID="gallery-test-list-item-99"
         >
-          99
+          <View
+            style={
+              [
+                undefined,
+                false,
+                undefined,
+              ]
+            }
+          >
+            99
+          </View>
         </View>
       </View>
     </View>
