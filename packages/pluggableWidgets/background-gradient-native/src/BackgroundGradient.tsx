@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Pressable } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+import { Pressable, View } from "react-native";
 import { all } from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
 import defaultStyle, { CustomStyle } from "./ui/Styles";
@@ -40,7 +39,9 @@ export function BackgroundGradient({ name, colorList, content, onClick, style }:
     const angle = angleValidation(styles.angle);
     const opacity = opacityValidation(styles.opacity);
 
-    let sortedColorList = (styles.colorList && colorList.length === 0 ? styles.colorList : colorList).sort(
+    // Extracted before deepmerge to avoid corrupting Big instances in colorList offsets
+    const styleColorList = style.flatMap(s => s.colorList ?? []);
+    let sortedColorList = (styleColorList.length > 0 && colorList.length === 0 ? styleColorList : colorList).sort(
         (a, b) => Number(a.offset) - Number(b.offset)
     );
 
@@ -67,9 +68,25 @@ export function BackgroundGradient({ name, colorList, content, onClick, style }:
                 opacity: onClick?.canExecute && pressed ? opacity * 0.3 : opacity
             })}
         >
-            <LinearGradient colors={colors} locations={offsets} useAngle angle={angle} style={styles.container}>
+            <View
+                style={[
+                    styles.container,
+                    {
+                        experimental_backgroundImage: [
+                            {
+                                type: "linear-gradient" as const,
+                                direction: `${angle}deg`,
+                                colorStops: colors.map((color, index) => ({
+                                    color,
+                                    positions: [`${offsets[index] * 100}%`]
+                                }))
+                            }
+                        ]
+                    }
+                ]}
+            >
                 {content}
-            </LinearGradient>
+            </View>
         </Pressable>
     );
 }
