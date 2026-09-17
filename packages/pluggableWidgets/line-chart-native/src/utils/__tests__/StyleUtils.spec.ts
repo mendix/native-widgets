@@ -1,5 +1,5 @@
 import { aggregateGridPadding, mapToAxisStyle, mapToGridStyle, mapToLineStyle, mapToMarkerStyle } from "../StyleUtils";
-import { LineChartAxisStyle, LineChartGridStyle, LineChartLineStyle } from "../../ui/Styles";
+import { LineChartAxisStyle, LineChartGridStyle, LineChartLineStyle, defaultLineChartStyle } from "../../ui/Styles";
 
 describe("StyleMappers", () => {
     describe("mapToGridStyle", () => {
@@ -181,5 +181,12 @@ describe("aggregateGridPadding", () => {
 
     it("returns undefined when no grid style is passed", () => {
         expect(aggregateGridPadding(undefined)).toBeUndefined();
+    });
+});
+
+describe("Style schema guardrail", () => {
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultLineChartStyle).sort();
+        expect(keys).toEqual(["chart", "container", "errorMessage", "grid", "legend", "xAxis"]);
     });
 });
