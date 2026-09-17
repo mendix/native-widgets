@@ -47,8 +47,8 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     // FlashList requires a non-zero height to render items (it's virtualized and needs viewport dimensions).
     // When the parent provides height (e.g. via flex), we use flex: 1. When it doesn't (e.g. a Container
     // widget with no flex/height), flex: 1 resolves to 0 and nothing renders. In that case, we fall back
-    // to minHeight based on FlashList's reported content size. This matches the ListView widget's approach.
-    const wrapperRef = useRef<View>(null);
+    // to minHeight based on FlashList's reported content size. We measure the FlashList area specifically so we get the height of the list area, not the entire Gallery (which may include filters and padding).
+    const listAreaRef = useRef<View>(null);
     const [contentHeight, setContentHeight] = useState(0);
     const [layoutDecision, setLayoutDecision] = useState<"minHeight" | "flex" | null>(null);
 
@@ -152,7 +152,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         [props.style.emptyPlaceholder, props.emptyPlaceholder]
     );
 
-    const handleWrapperLayout = useCallback(
+    const handleListAreaLayout = useCallback(
         (event: LayoutChangeEvent) => {
             const { height } = event.nativeEvent.layout;
             if (height > 0 && layoutDecision === null) {
@@ -163,8 +163,8 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     );
 
     useEffect(() => {
-        if (contentHeight > 0 && layoutDecision === null && wrapperRef.current) {
-            wrapperRef.current.measure((_x, _y, _width, height) => {
+        if (contentHeight > 0 && layoutDecision === null && listAreaRef.current) {
+            listAreaRef.current.measure((_x, _y, _width, height) => {
                 setLayoutDecision(height > 0 ? "flex" : "minHeight");
             });
         }
@@ -179,34 +179,35 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const listStyle = isScrollDirectionVertical ? [{ flex: 1 }, props.style.list] : props.style.list;
 
     return (
-        <View
-            testID={`${name}`}
-            style={containerStyle}
-            ref={wrapperRef}
-            onLayout={isScrollDirectionVertical ? handleWrapperLayout : undefined}
-        >
+        <View testID={`${name}`} style={containerStyle}>
             {props.filters ? <View>{props.filters}</View> : null}
-            <FlashList
-                {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
-                {...(isScrollDirectionVertical ? { numColumns } : {})}
-                ListFooterComponent={loadMoreButton}
-                ListFooterComponentStyle={{
-                    ...props.style.loadMoreButtonContainer,
-                    ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
-                }}
-                refreshing={props.pullDownIsExecuting}
-                data={props.items}
-                horizontal={!isScrollDirectionVertical}
-                keyExtractor={item => item.id}
-                ListEmptyComponent={renderEmptyPlaceholder}
-                onEndReached={onEndReached}
-                onEndReachedThreshold={0.6}
-                scrollEventThrottle={50}
-                renderItem={renderItem}
-                style={listStyle}
-                testID={`${name}-list`}
-                onContentSizeChange={isScrollDirectionVertical ? (_w, h) => setContentHeight(h) : undefined}
-            />
+            <View
+                ref={listAreaRef}
+                style={isScrollDirectionVertical ? { flex: 1 } : undefined}
+                onLayout={isScrollDirectionVertical ? handleListAreaLayout : undefined}
+            >
+                <FlashList
+                    {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
+                    {...(isScrollDirectionVertical ? { numColumns } : {})}
+                    ListFooterComponent={loadMoreButton}
+                    ListFooterComponentStyle={{
+                        ...props.style.loadMoreButtonContainer,
+                        ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
+                    }}
+                    refreshing={props.pullDownIsExecuting}
+                    data={props.items}
+                    horizontal={!isScrollDirectionVertical}
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={renderEmptyPlaceholder}
+                    onEndReached={onEndReached}
+                    onEndReachedThreshold={0.6}
+                    scrollEventThrottle={50}
+                    renderItem={renderItem}
+                    style={listStyle}
+                    testID={`${name}-list`}
+                    onContentSizeChange={isScrollDirectionVertical ? (_w, h) => setContentHeight(h) : undefined}
+                />
+            </View>
         </View>
     );
 };
