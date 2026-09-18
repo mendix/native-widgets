@@ -1,4 +1,5 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
+import { AndroidNavigationBar } from "mendix-native";
 import { ReactElement, useEffect, useRef, useState, Fragment, useCallback, useMemo } from "react";
 import {
     ActivityIndicator,
@@ -9,7 +10,6 @@ import {
     View,
     Appearance,
     Modal,
-    NativeModules,
     Pressable
 } from "react-native";
 import Video, { OnProgressData, ReactVideoProps, VideoRef } from "react-native-video";
@@ -87,8 +87,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
 
     async function fullScreenHandler(isFullScreen: boolean): Promise<void> {
         setFullScreen(isFullScreen);
-        const { NavigationBar } = NativeModules;
-        if (NavigationBar) {
+        if (AndroidNavigationBar.isActive) {
             if (isFullScreen) {
                 StatusBar.setHidden(true);
             } else {
