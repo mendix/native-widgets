@@ -24,10 +24,10 @@ export myCarouselStyle = {
 
 #### Pagination
 
-| Style Key                                                                         | Description                                                                                                    |
-| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| container: ViewStyle                                                              | Styles the main view around pagination, regardless of text or dot.                                             |
-| dotStyle: ViewStyle + color?: string                                              | Styles all the pagination dots.                                                                                |
-| inactiveDotStyle: ViewStyle + {opacity?: number; scale?: number; color?: string}; | Additional styles for inactive dots. Will be merged with dotStyle.                                             |
-| dotContainerStyle: ViewStyle                                                      | Styles the view around individual pagination dots                                                              |
-| text: TextStyle                                                                   | Will be applied when there is more than 5 elements in carousel and pagination buttons becomes text like "1/5". |
+| Style Key                                                                         | Description                                                                                                   |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| container: ViewStyle                                                              | Styles the main view around pagination, regardless of text or dot.                                            |
+| dotStyle: ViewStyle + color?: string                                              | Styles all the pagination dots.                                                                               |
+| inactiveDotStyle: ViewStyle + {opacity?: number; scale?: number; color?: string}; | Additional styles for inactive dots. Will be merged with dotStyle.                                            |
+| dotContainerStyle: ViewStyle                                                      | Styles the view around individual pagination dots                                                             |
+| text: TextStyle                                                                   | Will be applied when there is more than 5 elements in carousel and pagination buttons become text like "1/5". |
