@@ -1118,54 +1118,13 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
 
 exports[`Gallery rendering renders correctly with empty list and custom placeholder 1`] = `
 <View
-  style={
-    [
-      {
-        "flex": 1,
-      },
-      {},
-    ]
-  }
+  style={{}}
   testID="gallery-test"
 >
-  <View
-    onLayout={[Function]}
-    style={
-      {
-        "flex": 1,
-      }
-    }
-  >
-    <View
-      ListFooterComponentStyle={
-        {
-          "marginTop": 8,
-        }
-      }
-      horizontal={false}
-      keyExtractor={[Function]}
-      numColumns={2}
-      onContentSizeChange={[Function]}
-      onEndReached={[Function]}
-      onEndReachedThreshold={0.6}
-      refreshing={false}
-      scrollEventThrottle={50}
-      style={
-        [
-          {
-            "flex": 1,
-          },
-          undefined,
-        ]
-      }
-      testID="gallery-test-list"
-    >
-      <View>
-        <Text>
-          Empty list...
-        </Text>
-      </View>
-    </View>
+  <View>
+    <Text>
+      Empty list...
+    </Text>
   </View>
 </View>
 `;

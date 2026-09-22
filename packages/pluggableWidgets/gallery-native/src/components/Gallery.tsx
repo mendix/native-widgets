@@ -170,10 +170,14 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         }
     }, [contentHeight, layoutDecision]);
 
+    const hasItems = props.items && props.items.length > 0;
+
     const containerStyle = isScrollDirectionVertical
-        ? layoutDecision === "minHeight"
-            ? [{ minHeight: Math.max(contentHeight, 1) }, props.style.container]
-            : [{ flex: 1 }, props.style.container]
+        ? hasItems
+            ? layoutDecision === "minHeight"
+                ? [{ minHeight: Math.max(contentHeight, 1) }, props.style.container]
+                : [{ flex: 1 }, props.style.container]
+            : props.style.container
         : props.style.container;
 
     const listStyle = isScrollDirectionVertical ? [{ flex: 1 }, props.style.list] : props.style.list;
@@ -181,33 +185,35 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     return (
         <View testID={`${name}`} style={containerStyle}>
             {props.filters ? <View>{props.filters}</View> : null}
-            <View
-                ref={listAreaRef}
-                style={isScrollDirectionVertical ? { flex: 1 } : undefined}
-                onLayout={isScrollDirectionVertical ? handleListAreaLayout : undefined}
-            >
-                <FlashList
-                    {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
-                    {...(isScrollDirectionVertical ? { numColumns } : {})}
-                    ListFooterComponent={loadMoreButton}
-                    ListFooterComponentStyle={{
-                        ...props.style.loadMoreButtonContainer,
-                        ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
-                    }}
-                    refreshing={props.pullDownIsExecuting}
-                    data={props.items}
-                    horizontal={!isScrollDirectionVertical}
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={renderEmptyPlaceholder}
-                    onEndReached={onEndReached}
-                    onEndReachedThreshold={0.6}
-                    scrollEventThrottle={50}
-                    renderItem={renderItem}
-                    style={listStyle}
-                    testID={`${name}-list`}
-                    onContentSizeChange={isScrollDirectionVertical ? (_w, h) => setContentHeight(h) : undefined}
-                />
-            </View>
+            {!hasItems && renderEmptyPlaceholder}
+            {hasItems ? (
+                <View
+                    ref={listAreaRef}
+                    style={isScrollDirectionVertical ? { flex: 1 } : undefined}
+                    onLayout={isScrollDirectionVertical ? handleListAreaLayout : undefined}
+                >
+                    <FlashList
+                        {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
+                        {...(isScrollDirectionVertical ? { numColumns } : {})}
+                        ListFooterComponent={loadMoreButton}
+                        ListFooterComponentStyle={{
+                            ...props.style.loadMoreButtonContainer,
+                            ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
+                        }}
+                        refreshing={props.pullDownIsExecuting}
+                        data={props.items}
+                        horizontal={!isScrollDirectionVertical}
+                        keyExtractor={item => item.id}
+                        onEndReached={onEndReached}
+                        onEndReachedThreshold={0.6}
+                        scrollEventThrottle={50}
+                        renderItem={renderItem}
+                        style={listStyle}
+                        testID={`${name}-list`}
+                        onContentSizeChange={isScrollDirectionVertical ? (_w, h) => setContentHeight(h) : undefined}
+                    />
+                </View>
+            ) : null}
         </View>
     );
 };
