@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { Modal, Pressable, useWindowDimensions } from "react-native";
+import { Keyboard, Modal, Pressable, useWindowDimensions } from "react-native";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
@@ -33,7 +33,17 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
     }
 
     const close = useCallback(() => {
-        bottomSheetRef.current?.close();
+        // Dismissing the sheet is deliberate, so it must not be interrupted. A keyboard that
+        // hides while the sheet is closing restores the sheet to its snap point -- see
+        // `sheetKeyboardProps` -- which cancels the close animation, and because the sheet
+        // lands back on the index it already had, neither onChange nor onClose follows and
+        // nothing retries: the sheet stays open while the trigger attribute reads false.
+        // `forceClose` closes the sheet the same way, but blocks every position change that
+        // does not come from the user until it is done.
+        if (Keyboard.isVisible()) {
+            Keyboard.dismiss();
+        }
+        bottomSheetRef.current?.forceClose();
     }, []);
 
     useEffect(() => {

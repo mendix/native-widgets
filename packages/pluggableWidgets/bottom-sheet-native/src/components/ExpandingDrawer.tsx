@@ -6,7 +6,7 @@ import BottomSheet, {
     BottomSheetView
 } from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
-import { SheetKeyboardTracker, sheetKeyboardProps } from "./SheetKeyboardTracker";
+import { dismissSheetKeyboard, SheetKeyboardTracker, sheetKeyboardProps } from "./SheetKeyboardTracker";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -175,6 +175,9 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                 setIsOpen(true);
             }
             if (hasClosed || hasCollapsed) {
+                // The content a focused input sits in is no longer on screen, so the keyboard
+                // has nothing left to type into and would only cover the drawer.
+                dismissSheetKeyboard(scrollableRef);
                 props.onClose?.();
                 setIsOpen(index !== -1); // Set isOpen to false only if fully closed
             }
