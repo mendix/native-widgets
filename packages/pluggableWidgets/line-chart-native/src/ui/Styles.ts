@@ -89,6 +89,8 @@ export const defaultLineChartStyle: LineChartStyle = {
             alignSelf: "center"
         }
     },
+    yAxis: {},
+    lines: {},
     legend: {
         container: {
             flexDirection: "row",

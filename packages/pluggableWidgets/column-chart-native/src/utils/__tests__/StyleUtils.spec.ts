@@ -214,6 +214,16 @@ describe("aggregateGridPadding", () => {
 describe("Style schema guardrail", () => {
     it("preserves expected style key set", () => {
         const keys = Object.keys(defaultColumnChartStyle).sort();
-        expect(keys).toEqual(["chart", "container", "errorMessage", "legend", "xAxis"]);
+        expect(keys).toEqual([
+            "chart",
+            "columns",
+            "container",
+            "domain",
+            "errorMessage",
+            "grid",
+            "legend",
+            "xAxis",
+            "yAxis"
+        ]);
     });
 });

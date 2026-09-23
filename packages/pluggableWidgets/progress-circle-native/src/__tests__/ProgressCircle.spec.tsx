@@ -86,6 +86,16 @@ No current value provided.`
         const keys = Object.keys(defaultProgressCircleStyle).sort();
         expect(keys).toEqual(["circle", "container", "fill", "text", "validationMessage"]);
     });
+
+    it("preserves expected fill style key set", () => {
+        const keys = Object.keys(defaultProgressCircleStyle.fill).sort();
+        expect(keys).toEqual(["backgroundColor", "lineCapRounded", "width"]);
+    });
+
+    it("preserves expected circle style key set", () => {
+        const keys = Object.keys(defaultProgressCircleStyle.circle).sort();
+        expect(keys).toEqual(["borderColor", "borderWidth", "size"]);
+    });
 });
 
 function createProps(progressValue?: number, minimumValue?: number, maximumValue?: number): Props {

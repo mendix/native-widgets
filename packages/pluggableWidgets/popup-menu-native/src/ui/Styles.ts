@@ -7,6 +7,13 @@ export interface PopupMenuStyle {
     buttonContainer?: ViewStyle;
 }
 
+export const defaultPopupMenuStyle: PopupMenuStyle = {
+    container: {},
+    basic: {},
+    custom: {},
+    buttonContainer: {}
+};
+
 export interface CustomItemStyle extends ViewStyle {
     container?: ViewStyle;
     itemStyle?: { rippleColor?: string };

@@ -1,5 +1,5 @@
 import { PopupMenuProps } from "../../typings/PopupMenuProps";
-import { PopupMenuStyle } from "../ui/Styles";
+import { defaultPopupMenuStyle, PopupMenuStyle } from "../ui/Styles";
 import { Text, View } from "react-native";
 import { actionValue } from "@mendix/piw-utils-internal";
 import { act, fireEvent, render, within } from "@testing-library/react-native";
@@ -143,6 +143,32 @@ describe("Popup menu", () => {
             const secondView = within(firstView.children[0] as ReactTestInstance).UNSAFE_getByType(View);
             expect(secondView.props.style.backgroundColor).toEqual("yellow");
             expect(within(secondView).getByText("Yolo")).not.toBeNull();
+        });
+    });
+
+    describe("Style schema guardrail", () => {
+        it("preserves expected style key set", () => {
+            const keys = Object.keys(defaultPopupMenuStyle).sort();
+            expect(keys).toEqual(["basic", "buttonContainer", "container", "custom"]);
+        });
+
+        it("preserves expected basic.itemStyle key set", () => {
+            const itemStyle: NonNullable<PopupMenuStyle["basic"]>["itemStyle"] = {
+                rippleColor: "",
+                ellipsizeMode: "tail",
+                defaultStyle: {},
+                primaryStyle: {},
+                dangerStyle: {},
+                customStyle: {}
+            };
+            expect(Object.keys(itemStyle).sort()).toEqual([
+                "customStyle",
+                "dangerStyle",
+                "defaultStyle",
+                "ellipsizeMode",
+                "primaryStyle",
+                "rippleColor"
+            ]);
         });
     });
 });
