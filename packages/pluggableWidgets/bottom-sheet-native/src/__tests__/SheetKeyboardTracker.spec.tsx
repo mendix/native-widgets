@@ -2,7 +2,7 @@ import { RefObject } from "react";
 import { render } from "@testing-library/react-native";
 import { EmitterSubscription, Keyboard, Platform, TextInput } from "react-native";
 import { BottomSheetScrollViewMethods, useBottomSheetInternal } from "@gorhom/bottom-sheet";
-import { SheetKeyboardTracker } from "../components/SheetKeyboardTracker";
+import { dismissSheetKeyboard, SheetKeyboardTracker } from "../components/SheetKeyboardTracker";
 
 jest.mock("@gorhom/bottom-sheet", () => ({
     useBottomSheetInternal: jest.fn()
@@ -252,6 +252,39 @@ describe("SheetKeyboardTracker", () => {
             unmount();
 
             expect(removeListener).toHaveBeenCalledTimes(2);
+        });
+    });
+
+    describe("dismissSheetKeyboard", () => {
+        beforeEach(() => {
+            jest.spyOn(Keyboard, "dismiss").mockImplementation(() => undefined);
+        });
+
+        it("dismisses the keyboard of an input inside the sheet", () => {
+            jest.spyOn(Keyboard, "isVisible").mockReturnValue(true);
+            focusInput();
+
+            dismissSheetKeyboard(scrollableRef);
+
+            expect(Keyboard.dismiss).toHaveBeenCalled();
+        });
+
+        it("leaves the keyboard of an input elsewhere on the page up", () => {
+            jest.spyOn(Keyboard, "isVisible").mockReturnValue(true);
+            focusInput({ insideSheet: false });
+
+            dismissSheetKeyboard(scrollableRef);
+
+            expect(Keyboard.dismiss).not.toHaveBeenCalled();
+        });
+
+        it("does nothing when no keyboard is open", () => {
+            jest.spyOn(Keyboard, "isVisible").mockReturnValue(false);
+            focusInput();
+
+            dismissSheetKeyboard(scrollableRef);
+
+            expect(Keyboard.dismiss).not.toHaveBeenCalled();
         });
     });
 

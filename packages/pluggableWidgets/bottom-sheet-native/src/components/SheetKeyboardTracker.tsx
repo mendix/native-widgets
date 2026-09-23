@@ -38,9 +38,15 @@ export const sheetKeyboardProps: Pick<GorhomBottomSheetProps, "keyboardBehavior"
  */
 type SheetScrollable = BottomSheetScrollViewMethods & HostInstance;
 
+/** A ref to the sheet's scrollable, as the sheet itself holds it. */
+type ScrollableRef = RefObject<BottomSheetScrollViewMethods | null>;
+
+const resolveScrollable = (scrollableRef: ScrollableRef): SheetScrollable | null =>
+    scrollableRef.current as SheetScrollable | null;
+
 interface SheetKeyboardTrackerProps {
     /** The sheet's scrollable, so the focused input can be scrolled above the keyboard. */
-    scrollableRef: RefObject<BottomSheetScrollViewMethods | null>;
+    scrollableRef: ScrollableRef;
     /**
      * Whether the sheet fills a modal. Every keyboard then belongs to the sheet, which lets
      * it rise together with the keyboard. A sheet that shares the screen with the page has
@@ -58,7 +64,8 @@ interface SheetKeyboardTrackerProps {
  * untouched, so an input further down the content stays behind the keyboard -- neither
  * the library nor React Native scrolls it into view on its own.
  */
-const scrollFocusedInputIntoView = (scrollable: SheetScrollable | null): void => {
+const scrollFocusedInputIntoView = (scrollableRef: ScrollableRef): void => {
+    const scrollable = resolveScrollable(scrollableRef);
     const focusedInput = TextInput.State.currentlyFocusedInput();
 
     if (!scrollable || !focusedInput) {
@@ -89,7 +96,8 @@ const scrollFocusedInputIntoView = (scrollable: SheetScrollable | null): void =>
  * being typed into. An input outside the scrollable -- an expanding drawer renders its
  * small content as a sticky header -- counts as not ours, as there is nothing to scroll.
  */
-const whenFocusedInputIsInSheet = (scrollable: SheetScrollable | null, handleOwnInput: () => void): void => {
+const whenFocusedInputIsInSheet = (scrollableRef: ScrollableRef, handleOwnInput: () => void): void => {
+    const scrollable = resolveScrollable(scrollableRef);
     const focusedInput = TextInput.State.currentlyFocusedInput();
 
     if (!scrollable || !focusedInput) {
@@ -97,6 +105,23 @@ const whenFocusedInputIsInSheet = (scrollable: SheetScrollable | null, handleOwn
     }
 
     focusedInput.measureLayout(scrollable, handleOwnInput, () => undefined);
+};
+
+/**
+ * Dismisses the keyboard, if it is the sheet's own.
+ *
+ * For a sheet to put away the content its focused input sits in -- an expanding drawer
+ * collapsing back to its small content -- and leave the keyboard covering what is left of it
+ * makes no sense. Only the sheet's own keyboard is taken down, so a sheet that snaps for its
+ * own reasons, such as its content being remeasured, cannot dismiss the keyboard of an input
+ * elsewhere on the page.
+ */
+export const dismissSheetKeyboard = (scrollableRef: ScrollableRef): void => {
+    if (!Keyboard.isVisible()) {
+        return;
+    }
+
+    whenFocusedInputIsInSheet(scrollableRef, () => Keyboard.dismiss());
 };
 
 /**
@@ -128,7 +153,6 @@ export const SheetKeyboardTracker = ({ scrollableRef, isModal }: SheetKeyboardTr
         }
 
         let settleTimeout: ReturnType<typeof setTimeout> | undefined;
-        const getScrollable = (): SheetScrollable | null => scrollableRef.current as SheetScrollable | null;
 
         const claimKeyboard = (): void => {
             // The sheet treats `target` as an opaque marker: it only checks that one is
@@ -140,10 +164,10 @@ export const SheetKeyboardTracker = ({ scrollableRef, isModal }: SheetKeyboardTr
         };
 
         const keepFocusedInputVisible = (): void => {
-            scrollFocusedInputIntoView(getScrollable());
+            scrollFocusedInputIntoView(scrollableRef);
 
             clearTimeout(settleTimeout);
-            settleTimeout = setTimeout(() => scrollFocusedInputIntoView(getScrollable()), SHEET_SETTLE_DELAY);
+            settleTimeout = setTimeout(() => scrollFocusedInputIntoView(scrollableRef), SHEET_SETTLE_DELAY);
         };
 
         const subscriptions: EmitterSubscription[] = [];
@@ -183,7 +207,7 @@ export const SheetKeyboardTracker = ({ scrollableRef, isModal }: SheetKeyboardTr
                     return;
                 }
 
-                whenFocusedInputIsInSheet(getScrollable(), () => {
+                whenFocusedInputIsInSheet(scrollableRef, () => {
                     claimKeyboard();
                     keepFocusedInputVisible();
                 });
