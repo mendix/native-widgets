@@ -1,14 +1,5 @@
-import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-    LayoutChangeEvent,
-    Text,
-    Pressable,
-    View,
-    ViewProps,
-    Platform,
-    TouchableOpacity,
-    useWindowDimensions
-} from "react-native";
+import { ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
+import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity, useWindowDimensions } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
 import { GalleryStyle } from "../ui/Styles";
@@ -43,14 +34,10 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const firstItemId = props.items?.[0]?.id;
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
-    const { width } = useWindowDimensions();
-    // FlashList requires a non-zero height to render items (it's virtualized and needs viewport dimensions).
-    // When the parent provides height (e.g. via flex), we use flex: 1. When it doesn't (e.g. a Container
-    // widget with no flex/height), flex: 1 resolves to 0 and nothing renders. In that case, we fall back
-    // to minHeight based on FlashList's reported content size. We measure the FlashList area specifically so we get the height of the list area, not the entire Gallery (which may include filters and padding).
-    const listAreaRef = useRef<View>(null);
+    const { width, height: windowHeight } = useWindowDimensions();
+    // FlashList is virtualized and only renders items that fit within its own height, so it needs a
+    // non-zero height. The list area is sized from FlashList's reported content height instead of flex.
     const [contentHeight, setContentHeight] = useState(0);
-    const [layoutDecision, setLayoutDecision] = useState<"minHeight" | "flex" | null>(null);
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -152,33 +139,23 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         [props.style.emptyPlaceholder, props.emptyPlaceholder]
     );
 
-    const handleListAreaLayout = useCallback(
-        (event: LayoutChangeEvent) => {
-            const { height } = event.nativeEvent.layout;
-            if (height > 0 && layoutDecision === null) {
-                setLayoutDecision("flex");
-            }
-        },
-        [layoutDecision]
-    );
-
-    useEffect(() => {
-        if (contentHeight > 0 && layoutDecision === null && listAreaRef.current) {
-            listAreaRef.current.measure((_x, _y, _width, height) => {
-                setLayoutDecision(height > 0 ? "flex" : "minHeight");
-            });
+    const onContentSizeChange = useCallback((_width: number, height: number): void => {
+        if (height > 0) {
+            setContentHeight(height);
         }
-    }, [contentHeight, layoutDecision]);
+    }, []);
 
     const hasItems = props.items && props.items.length > 0;
 
-    const containerStyle = isScrollDirectionVertical
-        ? hasItems
-            ? layoutDecision === "minHeight"
-                ? [{ minHeight: Math.max(contentHeight, 1) }, props.style.container]
-                : [{ flex: 1 }, props.style.container]
-            : props.style.container
-        : props.style.container;
+    // Shrink to the available space when the content is larger, so widgets below the gallery stay visible.
+    const containerStyle =
+        isScrollDirectionVertical && hasItems ? [{ flexShrink: 1 }, props.style.container] : props.style.container;
+
+    // The list area is sized by its content, capped at the window height; beyond that FlashList scrolls
+    // internally. Starting at 1 lets FlashList render its first items and report their content size.
+    const listAreaStyle = isScrollDirectionVertical
+        ? { height: Math.min(Math.max(contentHeight, 1), windowHeight), flexShrink: 1 }
+        : undefined;
 
     const listStyle = isScrollDirectionVertical ? [{ flex: 1 }, props.style.list] : props.style.list;
 
@@ -187,11 +164,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
             {props.filters ? <View>{props.filters}</View> : null}
             {!hasItems && renderEmptyPlaceholder}
             {hasItems ? (
-                <View
-                    ref={listAreaRef}
-                    style={isScrollDirectionVertical ? { flex: 1 } : undefined}
-                    onLayout={isScrollDirectionVertical ? handleListAreaLayout : undefined}
-                >
+                <View style={listAreaStyle}>
                     <FlashList
                         {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
                         {...(isScrollDirectionVertical ? { numColumns } : {})}
@@ -209,8 +182,9 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                         scrollEventThrottle={50}
                         renderItem={renderItem}
                         style={listStyle}
+                        nestedScrollEnabled
                         testID={`${name}-list`}
-                        onContentSizeChange={isScrollDirectionVertical ? (_w, h) => setContentHeight(h) : undefined}
+                        onContentSizeChange={isScrollDirectionVertical ? onContentSizeChange : undefined}
                     />
                 </View>
             ) : null}
