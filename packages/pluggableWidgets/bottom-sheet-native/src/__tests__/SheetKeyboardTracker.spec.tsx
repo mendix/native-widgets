@@ -13,6 +13,9 @@ interface KeyboardState {
     height: number;
 }
 
+/** Distance between the top of the screen and the sheet's scrollable. */
+const SCROLLABLE_SCREEN_Y = 120;
+
 /** Minimal stand-in for the reanimated shared value the sheet keeps its keyboard state in. */
 const createKeyboardState = (): { get: () => KeyboardState; set: (updater: any) => void } => {
     let state: KeyboardState = { height: 0 };
@@ -29,6 +32,7 @@ describe("SheetKeyboardTracker", () => {
     let animatedKeyboardState: ReturnType<typeof createKeyboardState>;
     let showKeyboard: () => void;
     let finishShowingKeyboard: () => void;
+    let finishHidingKeyboard: () => void;
     let scrollToKeyboard: jest.Mock;
     let scrollableRef: RefObject<BottomSheetScrollViewMethods | null>;
     let removeListener: jest.Mock;
@@ -38,11 +42,20 @@ describe("SheetKeyboardTracker", () => {
         Object.defineProperty(Platform, "OS", { configurable: true, value: os });
     };
 
-    const renderTracker = (): ReturnType<typeof render> =>
-        render(<SheetKeyboardTracker scrollableRef={scrollableRef} />);
+    const renderTracker = ({ isModal = true } = {}): ReturnType<typeof render> =>
+        render(<SheetKeyboardTracker scrollableRef={scrollableRef} isModal={isModal} />);
 
-    const focusInput = (): unknown => {
-        const focusedInput = { id: "focused input" };
+    /**
+     * Focuses an input, either one of the sheet's own or one elsewhere on the page. The
+     * sheet tells the two apart by measuring the input against its scrollable, which fails
+     * for a view outside it.
+     */
+    const focusInput = ({ insideSheet = true } = {}): unknown => {
+        const focusedInput = {
+            id: "focused input",
+            measureLayout: (_relativeTo: unknown, onSuccess: () => void, onFail: () => void) =>
+                insideSheet ? onSuccess() : onFail()
+        };
         jest.spyOn(TextInput.State, "currentlyFocusedInput").mockReturnValue(focusedInput as any);
 
         return focusedInput;
@@ -57,7 +70,8 @@ describe("SheetKeyboardTracker", () => {
         scrollToKeyboard = jest.fn();
         scrollableRef = {
             current: {
-                getScrollResponder: () => ({ scrollResponderScrollNativeHandleToKeyboard: scrollToKeyboard })
+                getScrollResponder: () => ({ scrollResponderScrollNativeHandleToKeyboard: scrollToKeyboard }),
+                measureInWindow: (callback: (x: number, y: number) => void) => callback(0, SCROLLABLE_SCREEN_Y)
             } as unknown as BottomSheetScrollViewMethods
         };
 
@@ -67,12 +81,16 @@ describe("SheetKeyboardTracker", () => {
         };
         showKeyboard = notSubscribed("keyboardWillShow");
         finishShowingKeyboard = notSubscribed("keyboardDidShow");
+        finishHidingKeyboard = notSubscribed("keyboardDidHide");
         jest.spyOn(Keyboard, "addListener").mockImplementation((eventName, handler) => {
             if (eventName === "keyboardWillShow") {
                 showKeyboard = () => handler({} as any);
             }
             if (eventName === "keyboardDidShow") {
                 finishShowingKeyboard = () => handler({} as any);
+            }
+            if (eventName === "keyboardDidHide") {
+                finishHidingKeyboard = () => handler({} as any);
             }
             return { remove: removeListener } as unknown as EmitterSubscription;
         });
@@ -94,7 +112,6 @@ describe("SheetKeyboardTracker", () => {
 
         showKeyboard();
 
-        // Without a target the sheet discards the keyboard event and never moves.
         expect(animatedKeyboardState.get().target).toBeTruthy();
     });
 
@@ -112,16 +129,17 @@ describe("SheetKeyboardTracker", () => {
 
         showKeyboard();
         const firstTarget = animatedKeyboardState.get().target;
+
         showKeyboard();
 
         expect(animatedKeyboardState.get().target).not.toBe(firstTarget);
     });
 
-    it("reports a target even before React Native has recorded the focused input", () => {
-        // On iOS keyboardWillShow is delivered before TextInput's onFocus, which is what
-        // fills this ref. Gating on it made the very first focus a no-op, so the sheet
-        // only moved once a later keyboard event -- e.g. after backgrounding the app --
-        // found the ref populated. Typed as non-nullable by RN, but null at runtime.
+    it("reports a target even before the focused input is recorded", () => {
+        // React Native records the focused input after iOS has announced the keyboard, so a
+        // modal sheet cannot wait for it: gating on the ref made the first focus a no-op and
+        // only moved the sheet once a later keyboard event -- e.g. after backgrounding the
+        // app -- found the ref populated. Typed as non-nullable by RN, but null at runtime.
         jest.spyOn(TextInput.State, "currentlyFocusedInput").mockReturnValue(null as any);
         renderTracker();
 
@@ -130,10 +148,12 @@ describe("SheetKeyboardTracker", () => {
         expect(animatedKeyboardState.get().target).toBeTruthy();
     });
 
-    it("scrolls the focused input above the keyboard", () => {
+    it("scrolls the focused input above the keyboard, measured from where the scrollable sits", () => {
         // A sheet too tall to fit above the keyboard is not moved any further; its content
         // area is shrunk instead, which leaves the input behind the keyboard until the
-        // content is scrolled.
+        // content is scrolled. The offset the scroll is asked for is relative to the scroll
+        // content, while the keyboard is compared against the screen, so the scrollable's
+        // own distance from the top of the screen has to be added to the gap.
         const focusedInput = focusInput();
         renderTracker();
 
@@ -141,7 +161,7 @@ describe("SheetKeyboardTracker", () => {
 
         // The last argument keeps the content from being pulled down when the input is
         // already above the keyboard.
-        expect(scrollToKeyboard).toHaveBeenCalledWith(focusedInput, 16, true);
+        expect(scrollToKeyboard).toHaveBeenCalledWith(focusedInput, SCROLLABLE_SCREEN_Y + 16, true);
     });
 
     it("scrolls again once the sheet has settled, as the first scroll is bound by the content area it is still resizing", () => {
@@ -186,6 +206,53 @@ describe("SheetKeyboardTracker", () => {
         jest.runOnlyPendingTimers();
 
         expect(scrollToKeyboard).toHaveBeenCalledTimes(1);
+    });
+
+    describe("when the sheet shares the screen with the page", () => {
+        it("claims the keyboard of an input inside the sheet, and scrolls it into view", () => {
+            const focusedInput = focusInput();
+            renderTracker({ isModal: false });
+
+            finishShowingKeyboard();
+
+            expect(animatedKeyboardState.get().target).toBeTruthy();
+            expect(scrollToKeyboard).toHaveBeenCalledWith(focusedInput, SCROLLABLE_SCREEN_Y + 16, true);
+        });
+
+        it("leaves the sheet where it is for an input elsewhere on the page", () => {
+            focusInput({ insideSheet: false });
+            renderTracker({ isModal: false });
+
+            finishShowingKeyboard();
+            jest.runOnlyPendingTimers();
+
+            expect(animatedKeyboardState.get().target).toBeUndefined();
+            expect(scrollToKeyboard).not.toHaveBeenCalled();
+        });
+
+        it("does not claim the keyboard before it is up, as the focused input is not recorded yet", () => {
+            renderTracker({ isModal: false });
+
+            expect(Keyboard.addListener).not.toHaveBeenCalledWith("keyboardWillShow", expect.anything());
+        });
+
+        it("releases its claim when the keyboard hides, so a later page input leaves the sheet alone", () => {
+            focusInput();
+            renderTracker({ isModal: false });
+
+            finishShowingKeyboard();
+            finishHidingKeyboard();
+
+            expect(animatedKeyboardState.get().target).toBeUndefined();
+        });
+
+        it("unsubscribes on unmount", () => {
+            const { unmount } = renderTracker({ isModal: false });
+
+            unmount();
+
+            expect(removeListener).toHaveBeenCalledTimes(2);
+        });
     });
 
     it("does not subscribe on Android, where the OS already moves the input into view", () => {

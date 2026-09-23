@@ -1,7 +1,12 @@
 import { ReactNode, ReactElement, useCallback, useMemo, useState, useRef, Children } from "react";
 import { Dimensions, LayoutChangeEvent, StyleSheet, View } from "react-native";
-import BottomSheet, { BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+    BottomSheetScrollView,
+    BottomSheetScrollViewMethods,
+    BottomSheetView
+} from "@gorhom/bottom-sheet";
 import { BottomSheetStyle } from "../ui/Styles";
+import { SheetKeyboardTracker, sheetKeyboardProps } from "./SheetKeyboardTracker";
 
 interface ExpandingDrawerProps {
     smallContent?: ReactNode;
@@ -22,6 +27,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
     const [fullscreenContentOnlyHeight, setFullscreenContentOnlyHeight] = useState(0); // Height of fullscreenContent ONLY
     const [isOpen, setIsOpen] = useState<boolean>(true); // Tracks if the drawer is open or closed
     const bottomSheetRef = useRef<BottomSheet>(null);
+    const scrollableRef = useRef<BottomSheetScrollViewMethods>(null);
 
     const screenHeight = Dimensions.get("screen").height;
     const halfScreen = Math.round(screenHeight * 0.5);
@@ -195,7 +201,12 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
                     animateOnMount
                     backgroundStyle={containerStyle}
                     enableDynamicSizing={false}
+                    {...sheetKeyboardProps}
                 >
+                    {/* The drawer shares the screen with the page, so it only claims a
+                    keyboard raised by an input of its own. */}
+                    <SheetKeyboardTracker scrollableRef={scrollableRef} isModal={false} />
+
                     {/* Sticky header (smallContent) */}
                     <BottomSheetView onLayout={onLayoutSmallContent} style={{ height: headerHeight }}>
                         {props.smallContent}
@@ -203,6 +214,7 @@ export const ExpandingDrawer = (props: ExpandingDrawerProps): ReactElement => {
 
                     {/* Scrollable content area */}
                     <BottomSheetScrollView
+                        ref={scrollableRef}
                         style={{ flex: 1, marginTop: headerHeight }} // Allow it to take available space
                         contentContainerStyle={{ paddingBottom: 16 }}
                     >

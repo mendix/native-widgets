@@ -1,27 +1,15 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { Modal, Platform, Pressable, useWindowDimensions } from "react-native";
+import { Modal, Pressable, useWindowDimensions } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
-    BottomSheetProps as GorhomBottomSheetProps,
     BottomSheetScrollView,
     BottomSheetScrollViewMethods
 } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { BottomSheetStyle } from "../ui/Styles";
-import { SheetKeyboardTracker } from "./SheetKeyboardTracker";
-
-/**
- * Move the sheet above the keyboard, and back down once it is dismissed. A sheet too tall
- * to fit above the keyboard is pinned to the top of the screen instead, with its content
- * area shrunk to the space that is left; SheetKeyboardTracker then scrolls the focused
- * input into that area. Applied on iOS only, because Android already moves the focused
- * input into view through windowSoftInputMode. See SheetKeyboardTracker for why the
- * tracker is needed to make these take effect at all.
- */
-const keyboardProps: Pick<GorhomBottomSheetProps, "keyboardBehavior" | "keyboardBlurBehavior"> =
-    Platform.OS === "ios" ? { keyboardBehavior: "interactive", keyboardBlurBehavior: "restore" } : {};
+import { SheetKeyboardTracker, sheetKeyboardProps } from "./SheetKeyboardTracker";
 
 interface CustomModalSheetProps {
     triggerAttribute?: EditableValue<boolean>;
@@ -126,9 +114,9 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                     backgroundStyle={props.styles.container}
                     handleComponent={null}
                     handleStyle={{ display: "none" }}
-                    {...keyboardProps}
+                    {...sheetKeyboardProps}
                 >
-                    <SheetKeyboardTracker scrollableRef={scrollableRef} />
+                    <SheetKeyboardTracker scrollableRef={scrollableRef} isModal />
                     <BottomSheetScrollView
                         ref={scrollableRef}
                         style={[{ flex: 1 }]}
