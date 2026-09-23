@@ -5,7 +5,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
   style={
     [
       {
-        "flex": 1,
+        "flexShrink": 1,
       },
       {},
     ]
@@ -13,10 +13,10 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
   testID="gallery-test"
 >
   <View
-    onLayout={[Function]}
     style={
       {
-        "flex": 1,
+        "flexShrink": 1,
+        "height": 1,
       }
     }
   >
@@ -28,6 +28,7 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
       }
       horizontal={false}
       keyExtractor={[Function]}
+      nestedScrollEnabled={true}
       numColumns={2}
       onContentSizeChange={[Function]}
       onEndReached={[Function]}
@@ -206,7 +207,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
   style={
     [
       {
-        "flex": 1,
+        "flexShrink": 1,
       },
       {},
     ]
@@ -214,10 +215,10 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
   testID="gallery-test"
 >
   <View
-    onLayout={[Function]}
     style={
       {
-        "flex": 1,
+        "flexShrink": 1,
+        "height": 1,
       }
     }
   >
@@ -229,6 +230,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
       }
       horizontal={false}
       keyExtractor={[Function]}
+      nestedScrollEnabled={true}
       numColumns={2}
       onContentSizeChange={[Function]}
       onEndReached={[Function]}
@@ -452,7 +454,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
   style={
     [
       {
-        "flex": 1,
+        "flexShrink": 1,
       },
       {},
     ]
@@ -460,10 +462,10 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
   testID="gallery-test"
 >
   <View
-    onLayout={[Function]}
     style={
       {
-        "flex": 1,
+        "flexShrink": 1,
+        "height": 1,
       }
     }
   >
@@ -475,6 +477,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
       }
       horizontal={false}
       keyExtractor={[Function]}
+      nestedScrollEnabled={true}
       numColumns={2}
       onContentSizeChange={[Function]}
       onEndReached={[Function]}
@@ -698,7 +701,7 @@ exports[`Gallery rendering renders correctly 1`] = `
   style={
     [
       {
-        "flex": 1,
+        "flexShrink": 1,
       },
       {},
     ]
@@ -706,10 +709,10 @@ exports[`Gallery rendering renders correctly 1`] = `
   testID="gallery-test"
 >
   <View
-    onLayout={[Function]}
     style={
       {
-        "flex": 1,
+        "flexShrink": 1,
+        "height": 1,
       }
     }
   >
@@ -721,6 +724,7 @@ exports[`Gallery rendering renders correctly 1`] = `
       }
       horizontal={false}
       keyExtractor={[Function]}
+      nestedScrollEnabled={true}
       numColumns={2}
       onContentSizeChange={[Function]}
       onEndReached={[Function]}
@@ -908,6 +912,7 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
       }
       horizontal={true}
       keyExtractor={[Function]}
+      nestedScrollEnabled={true}
       onEndReached={[Function]}
       onEndReachedThreshold={0.6}
       scrollEventThrottle={50}
@@ -1134,7 +1139,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
   style={
     [
       {
-        "flex": 1,
+        "flexShrink": 1,
       },
       {},
     ]
@@ -1145,10 +1150,10 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     <TextInput />
   </View>
   <View
-    onLayout={[Function]}
     style={
       {
-        "flex": 1,
+        "flexShrink": 1,
+        "height": 1,
       }
     }
   >
@@ -1160,6 +1165,7 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
       }
       horizontal={false}
       keyExtractor={[Function]}
+      nestedScrollEnabled={true}
       numColumns={2}
       onContentSizeChange={[Function]}
       onEndReached={[Function]}
