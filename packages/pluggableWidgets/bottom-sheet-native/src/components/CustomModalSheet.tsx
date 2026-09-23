@@ -4,17 +4,20 @@ import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
     BottomSheetProps as GorhomBottomSheetProps,
-    BottomSheetScrollView
+    BottomSheetScrollView,
+    BottomSheetScrollViewMethods
 } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { BottomSheetStyle } from "../ui/Styles";
 import { SheetKeyboardTracker } from "./SheetKeyboardTracker";
 
 /**
- * Move the sheet above the keyboard, and back down once it is dismissed. Applied on iOS
- * only, because Android already moves the focused input into view through
- * windowSoftInputMode. See SheetKeyboardTracker for why the tracker is needed to make
- * these take effect at all.
+ * Move the sheet above the keyboard, and back down once it is dismissed. A sheet too tall
+ * to fit above the keyboard is pinned to the top of the screen instead, with its content
+ * area shrunk to the space that is left; SheetKeyboardTracker then scrolls the focused
+ * input into that area. Applied on iOS only, because Android already moves the focused
+ * input into view through windowSoftInputMode. See SheetKeyboardTracker for why the
+ * tracker is needed to make these take effect at all.
  */
 const keyboardProps: Pick<GorhomBottomSheetProps, "keyboardBehavior" | "keyboardBlurBehavior"> =
     Platform.OS === "ios" ? { keyboardBehavior: "interactive", keyboardBlurBehavior: "restore" } : {};
@@ -27,6 +30,7 @@ interface CustomModalSheetProps {
 
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
+    const scrollableRef = useRef<BottomSheetScrollViewMethods>(null);
     const { height: windowHeight } = useWindowDimensions();
 
     const externalOpen =
@@ -108,8 +112,12 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                     handleStyle={{ display: "none" }}
                     {...keyboardProps}
                 >
-                    <SheetKeyboardTracker />
-                    <BottomSheetScrollView style={[{ flex: 1 }]} contentContainerStyle={{ paddingBottom: 16 }}>
+                    <SheetKeyboardTracker scrollableRef={scrollableRef} />
+                    <BottomSheetScrollView
+                        ref={scrollableRef}
+                        style={[{ flex: 1 }]}
+                        contentContainerStyle={{ paddingBottom: 16 }}
+                    >
                         {props.content}
                     </BottomSheetScrollView>
                 </BottomSheet>
