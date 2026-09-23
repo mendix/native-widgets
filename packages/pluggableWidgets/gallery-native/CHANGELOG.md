@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 -   We've fixed an issue where Gallery widget does not display data.
+### Fixed
+
+-   We've fixed an issue where items in a horizontally scrolling Gallery would stretch to the full screen width instead of sizing to their content.
+
+### Added
+
+-   Added horizontal item sizing options to fit items to their content or divide the Gallery width into configurable columns.
 
 ## [2.2.1] - 2026-6-10
 

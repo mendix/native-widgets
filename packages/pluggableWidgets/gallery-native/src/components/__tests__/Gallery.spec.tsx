@@ -30,6 +30,7 @@ const defaultProps: GalleryProps<ObjectItem> = {
     pagination: "virtualScrolling",
     phoneColumns: 2,
     scrollDirection: "vertical",
+    horizontalItemSizing: "fullWidth",
     style: { container: {} },
     tabletColumns: 3
 };
@@ -44,6 +45,39 @@ describe("Gallery", () => {
         it("renders correctly horizontal", () => {
             const gallery = render(<Gallery {...defaultProps} scrollDirection="horizontal" />);
             expect(gallery).toMatchSnapshot();
+        });
+
+        it("preserves full-width horizontal items by default", () => {
+            const gallery = render(<Gallery {...defaultProps} scrollDirection="horizontal" />);
+            const list = gallery.getByTestId("gallery-test-list");
+            const firstItem = gallery.getByTestId("gallery-test-list-item-11");
+
+            expect(list.props.ItemSeparatorComponent).toBeUndefined();
+            expect(firstItem.props.style).toEqual({ width: 750 });
+        });
+
+        it("does not constrain or separate fit-content horizontal items", () => {
+            const gallery = render(
+                <Gallery {...defaultProps} scrollDirection="horizontal" horizontalItemSizing="fitContent" />
+            );
+            const list = gallery.getByTestId("gallery-test-list");
+            const firstItem = gallery.getByTestId("gallery-test-list-item-11");
+
+            expect(list.props.ItemSeparatorComponent).toBeUndefined();
+            expect(firstItem.props.style).toBeUndefined();
+        });
+
+        it("divides the available width between horizontal columns", () => {
+            const gallery = render(
+                <Gallery {...defaultProps} scrollDirection="horizontal" horizontalItemSizing="fillColumns" />
+            );
+
+            fireEvent(gallery.getByTestId("gallery-test"), "layout", {
+                nativeEvent: { layout: { width: 750, height: 100, x: 0, y: 0 } }
+            });
+
+            expect(gallery.getByTestId("gallery-test-list-item-11").props.style).toEqual({ width: 375 });
+            expect(gallery.getByTestId("gallery-test-list").props.ItemSeparatorComponent).toBeUndefined();
         });
 
         it("renders correctly with empty list and custom placeholder", () => {

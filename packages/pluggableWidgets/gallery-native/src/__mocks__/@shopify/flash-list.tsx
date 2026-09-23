@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 
 // Mock FlashList - render items directly without using FlatList
-export const FlashList = React.forwardRef((props: any) => {
+export const FlashList = React.forwardRef((props: any, ref) => {
     const {
         data = [],
         renderItem,
@@ -27,7 +27,7 @@ export const FlashList = React.forwardRef((props: any) => {
     };
 
     return (
-        <View {...rest} refreshControl={refreshControl}>
+        <View ref={ref} {...rest} refreshControl={refreshControl}>
             {ListHeaderComponent}
             {renderItems()}
             {ListFooterComponent}
