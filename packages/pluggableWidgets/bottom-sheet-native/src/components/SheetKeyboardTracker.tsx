@@ -1,6 +1,10 @@
 import { RefObject, useEffect, useRef } from "react";
-import { Keyboard, Platform, TextInput } from "react-native";
-import { BottomSheetScrollViewMethods, useBottomSheetInternal } from "@gorhom/bottom-sheet";
+import { EmitterSubscription, HostInstance, Keyboard, Platform, TextInput } from "react-native";
+import {
+    BottomSheetProps as GorhomBottomSheetProps,
+    BottomSheetScrollViewMethods,
+    useBottomSheetInternal
+} from "@gorhom/bottom-sheet";
 
 /** Breathing room left between the focused input and the top of the keyboard. */
 const INPUT_KEYBOARD_GAP = 16;
@@ -13,9 +17,36 @@ const INPUT_KEYBOARD_GAP = 16;
  */
 const SHEET_SETTLE_DELAY = 300;
 
+/**
+ * Move the sheet above the keyboard, and back down once it is dismissed. A sheet too tall
+ * to fit above the keyboard is pinned to the top of its container instead, with its content
+ * area shrunk to the space that is left; SheetKeyboardTracker then scrolls the focused
+ * input into that area. Applied on iOS only, because Android already moves the focused
+ * input into view through windowSoftInputMode, so shifting the sheet from JS as well would
+ * offset it twice. See SheetKeyboardTracker for why the tracker is needed to make these
+ * take effect at all.
+ */
+export const sheetKeyboardProps: Pick<GorhomBottomSheetProps, "keyboardBehavior" | "keyboardBlurBehavior"> =
+    Platform.OS === "ios" ? { keyboardBehavior: "interactive", keyboardBlurBehavior: "restore" } : {};
+
+/**
+ * The sheet's scrollable doubles as the host instance of the ScrollView underneath it:
+ * React Native hangs the imperative scroll methods onto the native instance itself, and
+ * both Reanimated and the sheet library hand that instance straight to the ref. The
+ * library's typing only advertises the scroll methods, so widen it to measure the
+ * scrollable, and to measure the focused input against it.
+ */
+type SheetScrollable = BottomSheetScrollViewMethods & HostInstance;
+
 interface SheetKeyboardTrackerProps {
     /** The sheet's scrollable, so the focused input can be scrolled above the keyboard. */
     scrollableRef: RefObject<BottomSheetScrollViewMethods | null>;
+    /**
+     * Whether the sheet fills a modal. Every keyboard then belongs to the sheet, which lets
+     * it rise together with the keyboard. A sheet that shares the screen with the page has
+     * to wait until the focused input has been placed inside it instead.
+     */
+    isModal: boolean;
 }
 
 /**
@@ -26,24 +57,46 @@ interface SheetKeyboardTrackerProps {
  * content area to the space above the keyboard instead. The scroll offset is left
  * untouched, so an input further down the content stays behind the keyboard -- neither
  * the library nor React Native scrolls it into view on its own.
- *
- * `scrollResponderScrollNativeHandleToKeyboard` measures the input against the scroll
- * content and scrolls it just above the keyboard. It assumes the scrollable starts at the
- * top of the screen, which holds here: the library shrinks the content area exactly when
- * it has also pinned the sheet to the top, as both follow from the sheet not fitting
- * above the keyboard. When it does not shrink, the content fits the sheet and there is
- * nothing to scroll.
  */
-const scrollFocusedInputIntoView = (scrollable: BottomSheetScrollViewMethods | null): void => {
+const scrollFocusedInputIntoView = (scrollable: SheetScrollable | null): void => {
     const focusedInput = TextInput.State.currentlyFocusedInput();
 
     if (!scrollable || !focusedInput) {
         return;
     }
 
-    scrollable
-        .getScrollResponder()
-        ?.scrollResponderScrollNativeHandleToKeyboard(focusedInput, INPUT_KEYBOARD_GAP, true);
+    // `scrollResponderScrollNativeHandleToKeyboard` measures the input against the scroll
+    // content, and then compares that content offset to the keyboard's position on screen
+    // as if the two shared an origin -- which only holds for a scrollable that starts at
+    // the very top of the screen. Handing it the scrollable's own distance from the top as
+    // the additional offset makes the target position exact wherever the sheet sits.
+    scrollable.measureInWindow?.((_x, scrollableScreenY) => {
+        // The last argument keeps the content from being pulled down when the input is
+        // already above the keyboard.
+        scrollable
+            .getScrollResponder()
+            ?.scrollResponderScrollNativeHandleToKeyboard(focusedInput, scrollableScreenY + INPUT_KEYBOARD_GAP, true);
+    });
+};
+
+/**
+ * Runs `handleOwnInput` when the focused input sits inside the sheet's scrollable.
+ *
+ * `measureLayout` reports a failure when the two views are not part of the same hierarchy,
+ * which makes it a containment test. A sheet that does not fill a modal shares the screen
+ * with the page, and a keyboard raised by an input elsewhere on the page has to leave the
+ * sheet where it is: moving it would only cover more of the page, including the input
+ * being typed into. An input outside the scrollable -- an expanding drawer renders its
+ * small content as a sticky header -- counts as not ours, as there is nothing to scroll.
+ */
+const whenFocusedInputIsInSheet = (scrollable: SheetScrollable | null, handleOwnInput: () => void): void => {
+    const focusedInput = TextInput.State.currentlyFocusedInput();
+
+    if (!scrollable || !focusedInput) {
+        return;
+    }
+
+    focusedInput.measureLayout(scrollable, handleOwnInput, () => undefined);
 };
 
 /**
@@ -58,15 +111,14 @@ const scrollFocusedInputIntoView = (scrollable: BottomSheetScrollViewMethods | n
  *
  * Reporting a target here closes that gap. The sheet caches the swallowed event and
  * replays it as soon as `target` is set, so this works no matter whether our listener
- * runs before or after the library's own.
+ * runs before or after the library's own, and no matter how late the target arrives.
  *
  * Renders nothing and must be placed inside a BottomSheet, as it reads the sheet's
  * internal context.
  *
- * iOS only: on Android the OS already moves the focused input into view via
- * windowSoftInputMode, so shifting the sheet from JS as well would offset it twice.
+ * iOS only, for the reason given on `sheetKeyboardProps`.
  */
-export const SheetKeyboardTracker = ({ scrollableRef }: SheetKeyboardTrackerProps): null => {
+export const SheetKeyboardTracker = ({ scrollableRef, isModal }: SheetKeyboardTrackerProps): null => {
     const { animatedKeyboardState } = useBottomSheetInternal();
     const targetRef = useRef(0);
 
@@ -76,42 +128,73 @@ export const SheetKeyboardTracker = ({ scrollableRef }: SheetKeyboardTrackerProp
         }
 
         let settleTimeout: ReturnType<typeof setTimeout> | undefined;
+        const getScrollable = (): SheetScrollable | null => scrollableRef.current as SheetScrollable | null;
 
-        const willShowSubscription = Keyboard.addListener("keyboardWillShow", () => {
+        const claimKeyboard = (): void => {
+            // The sheet treats `target` as an opaque marker: it only checks that one is
+            // set, and replays a swallowed event whenever the value changes. Using a fresh
+            // value on every open therefore covers both listener orderings, and avoids node
+            // handles, which no longer resolve from the new architecture's host instances.
+            targetRef.current += 1;
+            animatedKeyboardState.set(state => ({ ...state, target: targetRef.current }));
+        };
+
+        const keepFocusedInputVisible = (): void => {
+            scrollFocusedInputIntoView(getScrollable());
+
+            clearTimeout(settleTimeout);
+            settleTimeout = setTimeout(() => scrollFocusedInputIntoView(getScrollable()), SHEET_SETTLE_DELAY);
+        };
+
+        const subscriptions: EmitterSubscription[] = [];
+
+        if (isModal) {
+            // Claimed on "will show", so the sheet rises together with the keyboard.
+            //
             // Deliberately unconditional: iOS only raises the keyboard for a first
             // responder, and the sheet fills a modal, so the focused input is ours.
             //
-            // In particular we cannot consult TextInput.State.currentlyFocusedInput()
-            // here. React Native fills that ref in TextInput's onFocus handler, which on
-            // iOS is delivered *after* keyboardWillShow -- the very race the sheet caches
-            // events for. Gating on it made the first focus a no-op, so the sheet only
-            // started moving once a later keyboard event found the ref populated.
-            //
-            // The sheet treats `target` as an opaque marker: it only checks that one is
-            // set, and replays a swallowed event whenever the value changes. Using a
-            // fresh value on every open therefore covers both listener orderings, and
-            // avoids node handles, which no longer resolve from the new architecture's
-            // host instances.
-            targetRef.current += 1;
-            animatedKeyboardState.set(state => ({ ...state, target: targetRef.current }));
-        });
+            // In particular we cannot consult TextInput.State.currentlyFocusedInput() here.
+            // React Native fills that ref in TextInput's onFocus handler, which on iOS is
+            // delivered *after* keyboardWillShow -- the very race the sheet caches events
+            // for. Gating on it made the first focus a no-op, so the sheet only moved once
+            // a later keyboard event -- e.g. after backgrounding the app -- found the ref
+            // populated.
+            subscriptions.push(Keyboard.addListener("keyboardWillShow", claimKeyboard));
+        } else {
+            // A claim covers a single keyboard, so that focusing an input inside the sheet
+            // does not hand it every keyboard that follows.
+            subscriptions.push(
+                Keyboard.addListener("keyboardDidHide", () =>
+                    animatedKeyboardState.set(state => ({ ...state, target: undefined }))
+                )
+            );
+        }
 
-        // Scrolled on "did show", because that is when React Native has recorded the
-        // focused input. Switching between inputs while the keyboard stays up does not
-        // raise this event, but such an input was tapped, so it is already in view.
-        const didShowSubscription = Keyboard.addListener("keyboardDidShow", () => {
-            scrollFocusedInputIntoView(scrollableRef.current);
+        // Handled on "did show", because that is when React Native has recorded the focused
+        // input: a sheet sharing the screen with the page needs it to tell whether the
+        // keyboard is its own, and the scroll correction needs it to measure. Switching
+        // between inputs while the keyboard stays up does not raise this event, but such an
+        // input was tapped, so it is already in view.
+        subscriptions.push(
+            Keyboard.addListener("keyboardDidShow", () => {
+                if (isModal) {
+                    keepFocusedInputVisible();
+                    return;
+                }
 
-            clearTimeout(settleTimeout);
-            settleTimeout = setTimeout(() => scrollFocusedInputIntoView(scrollableRef.current), SHEET_SETTLE_DELAY);
-        });
+                whenFocusedInputIsInSheet(getScrollable(), () => {
+                    claimKeyboard();
+                    keepFocusedInputVisible();
+                });
+            })
+        );
 
         return () => {
             clearTimeout(settleTimeout);
-            willShowSubscription.remove();
-            didShowSubscription.remove();
+            subscriptions.forEach(subscription => subscription.remove());
         };
-    }, [animatedKeyboardState, scrollableRef]);
+    }, [animatedKeyboardState, scrollableRef, isModal]);
 
     return null;
 };

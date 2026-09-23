@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
--   Fixed the keyboard covering text inputs on iOS in a modal bottom sheet with custom rendering. The sheet now moves above the keyboard when an input is focused, and back down once it is dismissed. A sheet too tall to fit above the keyboard scrolls the focused input into view instead.
+-   Fixed the keyboard covering text inputs on iOS in a modal bottom sheet with custom rendering, and in an expanding bottom sheet. The sheet now moves above the keyboard when an input inside it is focused, and back down once the keyboard is dismissed. A sheet too tall to fit above the keyboard scrolls the focused input into view instead.
 
 ## [5.3.2] - 2026-8-4
 
