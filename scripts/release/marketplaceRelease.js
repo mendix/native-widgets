@@ -1,4 +1,5 @@
 const { join } = require("path");
+const { appendFileSync } = require("fs");
 
 const config = {
     appStoreUrl: "https://appstore.home.mendix.com/rest/packagesapi/v2",
@@ -44,7 +45,13 @@ async function uploadModuleToAppStore(pkgName, marketplaceId, version, minimumMX
         await publishDraft(postResponse.UUID);
         console.log(`Successfully uploaded ${pkgName} to the Mendix Marketplace.`);
 
-        await verifyReleasePublished(marketplaceId, version, pkgName);
+        try {
+            await verifyReleasePublished(marketplaceId, version, pkgName);
+        } catch (verificationError) {
+            console.warn(`⚠️  WARNING: ${verificationError.message}`);
+            console.warn(`Please manually verify at: https://marketplace.mendix.com/link/component/${marketplaceId}`);
+            setVerificationFailedOutput(marketplaceId);
+        }
     } catch (error) {
         error.message = `Failed uploading ${pkgName} to appstore with error: ${error.message}`;
         throw error;
@@ -174,6 +181,22 @@ async function fetchData(method, url, body, additionalHeaders) {
     }
 }
 
+function setVerificationFailedOutput(marketplaceId) {
+    try {
+        const githubOutput = process.env.GITHUB_OUTPUT;
+        if (githubOutput) {
+            appendFileSync(
+                githubOutput,
+                `verification_failed=true\nmarketplace_url=https://marketplace.mendix.com/link/component/${marketplaceId}\n`
+            );
+        }
+    } catch (error) {
+        console.warn(
+            `Failed to set GitHub Actions output: ${error.message}. Please manually verify the release at https://marketplace.mendix.com/link/component/${marketplaceId}`
+        );
+    }
+}
+
 function packageMetadata() {
     const pkgPath = join(process.cwd(), "package.json");
     const { name, widgetName, version, marketplace } = require(pkgPath);
@@ -201,9 +224,11 @@ async function verifyReleasePublished(contentId, expectedVersion, pkgName) {
         console.log(`Verification attempt ${attempt}/${maxRetries}: Checking for version ${expectedVersion}`);
 
         try {
-            // Call the Mendix Content API to get all released module versions
+            // Call the Mendix Content API to get all released module versions since the last 24 hours
+            const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+            const publishedSince = yesterday.toISOString().split("T")[0];
             const versionsResponse = await fetch(
-                `https://marketplace-api.mendix.com/v1/content/${contentId}/versions`,
+                `https://marketplace-api.mendix.com/v1/content/${contentId}/versions?publishedSince=${publishedSince}`,
                 {
                     method: "GET",
                     headers: {

@@ -8,9 +8,11 @@ Creates a canvas on which a user can draw.
 
 This guide covers the required configuration and best practices for implementing the Signature widget in your Mendix Native Mobile application. It includes instructions for new implementations as well as migration steps for existing projects using the Signature widget.
 
+**Version Information:** The changes described in this guide apply to **Native Mobile Resources version 12.5.0 and later**. If you are using an earlier version, please refer to the legacy documentation below.
+
 ---
 
-### Advantages of the New Signature Widget
+### Advantages of the New Signature Widget (Native Mobile Resources 12.5.0+)
 
 The updated Signature widget simplifies configuration and reduces manual setup:
 
@@ -64,9 +66,11 @@ The `On sign end` action is **required** and triggers when the user clicks the S
 
 ### Migration Steps for Existing Projects
 
+If you are upgrading from a version prior to Native Mobile Resources 12.5.0, follow these migration steps to adopt the new implementation.
+
 #### What Changed
 
-Previously, you needed to store the base64-encoded signature string in a String attribute, then call a nanoflow that used the **base64DecodeToImage** action to convert the string into an image, and finally commit the object before continuing with your flow. With this update, the widget now handles the base64-to-image conversion internally, eliminating this overhead.
+Previously, you needed to store the base64-encoded signature string in a String attribute, then call a nanoflow that used the **base64DecodeToImage** action to convert the string into an image, and finally commit the object before continuing with your flow. Starting from Native Mobile Resources 12.5.0, the widget now handles the base64-to-image conversion internally, eliminating this overhead.
 
 **Key Changes:**
 
@@ -136,6 +140,19 @@ The following is a step-by-step walkthrough of migrating a Mendix app from Studi
 
 ---
 
-### Breaking Changes
+### Breaking Changes (Native Mobile Resources 12.5.0+)
 
 -   With this update, the previous **Attribute** property has been removed. The widget no longer stores a base64-encoded string into it. If you were using that base64 value as input to any API, integration, or export, those values will be empty going forward, as nothing is written to that attribute anymore.
+
+---
+
+## Legacy Documentation (Native Mobile Resources < 12.5.0)
+
+If you are using a version prior to Native Mobile Resources 12.5.0, the Signature widget uses a different implementation:
+
+### Configuration for Legacy Versions
+
+1. **Attribute Property (String):** Configure a String attribute to store the base64-encoded signature.
+2. **On Save Event:** Create a nanoflow that:
+    - Uses the **base64DecodeToImage** action from NanoflowCommons to convert the base64 string to an image
+    - Performs any additional actions as you require(commit object,synchronization, navigation, etc.)
