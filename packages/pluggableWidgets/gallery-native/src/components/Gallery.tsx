@@ -1,9 +1,18 @@
 import { ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
-import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity, useWindowDimensions } from "react-native";
+import {
+    LayoutChangeEvent,
+    Text,
+    Pressable,
+    View,
+    ViewProps,
+    Platform,
+    TouchableOpacity,
+    useWindowDimensions
+} from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
 import { GalleryStyle } from "../ui/Styles";
-import { PaginationEnum, ScrollDirectionEnum } from "../../typings/GalleryProps";
+import { HorizontalItemSizingEnum, PaginationEnum, ScrollDirectionEnum } from "../../typings/GalleryProps";
 import { isAvailable } from "@mendix/piw-utils-internal";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { FlashList } from "@shopify/flash-list";
@@ -24,6 +33,7 @@ export interface GalleryProps<T extends ObjectItem> {
     pullDown?: () => void;
     pullDownIsExecuting?: boolean;
     scrollDirection: ScrollDirectionEnum;
+    horizontalItemSizing: HorizontalItemSizingEnum;
     style: GalleryStyle;
     tabletColumns: number;
 }
@@ -34,10 +44,22 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const firstItemId = props.items?.[0]?.id;
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
-    const { width, height: windowHeight } = useWindowDimensions();
+    const { width: windowWidth, height: windowHeight } = useWindowDimensions();
     // FlashList is virtualized and only renders items that fit within its own height, so it needs a
     // non-zero height. The list area is sized from FlashList's reported content height instead of flex.
     const [contentHeight, setContentHeight] = useState(0);
+    const [containerWidth, setContainerWidth] = useState(0);
+    const horizontalItemWidth = isScrollDirectionVertical
+        ? undefined
+        : props.horizontalItemSizing === "fullWidth"
+        ? windowWidth
+        : props.horizontalItemSizing === "fillColumns" && containerWidth > 0
+        ? containerWidth / numColumns
+        : undefined;
+
+    const onContainerLayout = useCallback((event: LayoutChangeEvent): void => {
+        setContainerWidth(event.nativeEvent.layout.width);
+    }, []);
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -48,9 +70,8 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const renderItem = useCallback(
         (item: { item: T }): ReactElement =>
             itemRenderer((children, onPress) => {
-                const itemStyle = isScrollDirectionVertical ? undefined : { width };
                 const listItemWrapperProps: ViewProps = {
-                    style: itemStyle,
+                    style: horizontalItemWidth === undefined ? undefined : { width: horizontalItemWidth },
                     testID: `${name}-list-item-${item.item.id}`
                 };
                 const renderListItemContent = (
@@ -74,8 +95,7 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
             }, item.item),
         [
             itemRenderer,
-            isScrollDirectionVertical,
-            width,
+            horizontalItemWidth,
             name,
             style.listItem,
             style.firstItem,
@@ -160,7 +180,13 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const listStyle = isScrollDirectionVertical ? [{ flex: 1 }, props.style.list] : props.style.list;
 
     return (
-        <View testID={`${name}`} style={containerStyle}>
+        <View
+            testID={`${name}`}
+            style={containerStyle}
+            {...(!isScrollDirectionVertical && props.horizontalItemSizing === "fillColumns"
+                ? { onLayout: onContainerLayout }
+                : {})}
+        >
             {props.filters ? <View>{props.filters}</View> : null}
             {!hasItems && renderEmptyPlaceholder}
             {hasItems ? (
