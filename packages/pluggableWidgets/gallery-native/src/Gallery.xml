@@ -24,6 +24,15 @@
                         <enumerationValue key="horizontal">Horizontal</enumerationValue>
                     </enumerationValues>
                 </property>
+                <property key="horizontalItemSizing" type="enumeration" defaultValue="fullWidth">
+                    <caption>Horizontal item sizing</caption>
+                    <description>Choose whether horizontal items use the full screen width, fit their content, or divide the available Gallery width into columns.</description>
+                    <enumerationValues>
+                        <enumerationValue key="fullWidth">Full width</enumerationValue>
+                        <enumerationValue key="fitContent">Fit content</enumerationValue>
+                        <enumerationValue key="fillColumns">Fill columns</enumerationValue>
+                    </enumerationValues>
+                </property>
             </propertyGroup>
             <propertyGroup caption="Columns">
                 <property key="tabletColumns" type="integer" defaultValue="1">
