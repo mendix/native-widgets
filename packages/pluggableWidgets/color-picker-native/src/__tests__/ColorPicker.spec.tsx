@@ -4,6 +4,7 @@ import Slider from "react-native-slider";
 import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { ColorPicker, Props } from "../ColorPicker";
+import { defaultColorPickerStyle } from "../ui/Styles";
 
 describe("Color Picker", () => {
     let defaultProps: Props;
@@ -177,6 +178,11 @@ describe("Color Picker", () => {
     function getSliders(component: RenderAPI): ReactTestInstance[] {
         return component.UNSAFE_getAllByType(Slider);
     }
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultColorPickerStyle).sort();
+        expect(keys).toEqual(["container", "preview"]);
+    });
 });
 
 function responderMove(dx: number): any {

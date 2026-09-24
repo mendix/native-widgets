@@ -3,6 +3,7 @@ import { actionValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { render } from "@testing-library/react-native";
 import { View } from "react-native";
 import { BarcodeScanner, Props } from "../BarcodeScanner";
+import { defaultBarcodeScannerStyle } from "../ui/styles";
 
 let mockOnCodeScanned: ((codes: Array<{ value: string }>) => void) | undefined;
 
@@ -67,5 +68,15 @@ describe("BarcodeScanner", () => {
 
         expect(defaultProps.barcode.setValue).toHaveBeenCalledWith("value1");
         expect(onDetectAction.execute).toHaveBeenCalledTimes(2);
+    });
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultBarcodeScannerStyle).sort();
+        expect(keys).toEqual(["container", "mask"]);
+    });
+
+    it("preserves expected mask style key set", () => {
+        const keys = Object.keys(defaultBarcodeScannerStyle.mask).sort();
+        expect(keys).toEqual(["backgroundColor", "color"]);
     });
 });

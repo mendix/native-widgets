@@ -3,6 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import Big from "big.js";
 import { ActionValue } from "mendix";
 import { BackgroundGradient, props } from "../BackgroundGradient";
+import defaultStyle from "../ui/Styles";
 
 describe("Background gradient", () => {
     let defaultProps: props;
@@ -131,5 +132,10 @@ describe("Background gradient", () => {
         const pressable = component.getByTestId("test");
         fireEvent.press(pressable);
         expect(actionExecution).toHaveBeenCalled();
+    });
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultStyle).sort();
+        expect(keys).toEqual(["angle", "colorList", "container", "opacity"]);
     });
 });
