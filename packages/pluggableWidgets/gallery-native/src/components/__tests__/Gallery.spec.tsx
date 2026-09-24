@@ -143,8 +143,8 @@ describe("Gallery", () => {
 
         it("it shouldn't triggers the load more items event when item list empty", () => {
             const gallery = render(<Gallery {...defaultProps} items={[]} hasMoreItems={false} />);
-            const galleryList = gallery.getByTestId("gallery-test-list");
-            fireEvent(galleryList, "onEndReached");
+            const galleryList = gallery.queryByTestId("gallery-test-list");
+            expect(galleryList).toBeNull();
             expect(defaultProps.loadMoreItems).not.toHaveBeenCalled();
         });
 

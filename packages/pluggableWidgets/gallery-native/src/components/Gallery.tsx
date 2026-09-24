@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useCallback, useMemo } from "react";
+import { ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
 import { Text, Pressable, View, ViewProps, Platform, TouchableOpacity, useWindowDimensions } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
 import DeviceInfo from "react-native-device-info";
@@ -34,7 +34,10 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
     const firstItemId = props.items?.[0]?.id;
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
-    const { width } = useWindowDimensions();
+    const { width, height: windowHeight } = useWindowDimensions();
+    // FlashList is virtualized and only renders items that fit within its own height, so it needs a
+    // non-zero height. The list area is sized from FlashList's reported content height instead of flex.
+    const [contentHeight, setContentHeight] = useState(0);
 
     const onEndReached = (): void => {
         if (props.pagination === "virtualScrolling" && props.hasMoreItems) {
@@ -137,29 +140,55 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         [props.style.emptyPlaceholder, props.emptyPlaceholder]
     );
 
+    const onContentSizeChange = useCallback((_width: number, height: number): void => {
+        if (height > 0) {
+            setContentHeight(height);
+        }
+    }, []);
+
+    const hasItems = props.items && props.items.length > 0;
+
+    // Shrink to the available space when the content is larger, so widgets below the gallery stay visible.
+    const containerStyle =
+        isScrollDirectionVertical && hasItems ? [{ flexShrink: 1 }, props.style.container] : props.style.container;
+
+    // The list area is sized by its content, capped at the window height; beyond that FlashList scrolls
+    // internally. Starting at 1 lets FlashList render its first items and report their content size.
+    const listAreaStyle = isScrollDirectionVertical
+        ? { height: Math.min(Math.max(contentHeight, 1), windowHeight), flexShrink: 1 }
+        : undefined;
+
+    const listStyle = isScrollDirectionVertical ? [{ flex: 1 }, props.style.list] : props.style.list;
+
     return (
-        <View testID={`${name}`} style={props.style.container}>
+        <View testID={`${name}`} style={containerStyle}>
             {props.filters ? <View>{props.filters}</View> : null}
-            <FlashList
-                {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
-                {...(isScrollDirectionVertical ? { numColumns } : {})}
-                ListFooterComponent={loadMoreButton}
-                ListFooterComponentStyle={{
-                    ...props.style.loadMoreButtonContainer,
-                    ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
-                }}
-                refreshing={props.pullDownIsExecuting}
-                data={props.items}
-                horizontal={!isScrollDirectionVertical}
-                keyExtractor={item => item.id}
-                ListEmptyComponent={renderEmptyPlaceholder}
-                onEndReached={onEndReached}
-                onEndReachedThreshold={0.6}
-                scrollEventThrottle={50}
-                renderItem={renderItem}
-                style={props.style.list}
-                testID={`${name}-list`}
-            />
+            {!hasItems && renderEmptyPlaceholder}
+            {hasItems ? (
+                <View style={listAreaStyle}>
+                    <FlashList
+                        {...(isScrollDirectionVertical && props.pullDown ? { onRefresh: props.pullDown } : {})}
+                        {...(isScrollDirectionVertical ? { numColumns } : {})}
+                        ListFooterComponent={loadMoreButton}
+                        ListFooterComponentStyle={{
+                            ...props.style.loadMoreButtonContainer,
+                            ...(isScrollDirectionVertical ? { marginTop: 8 } : { marginStart: 8 })
+                        }}
+                        refreshing={props.pullDownIsExecuting}
+                        data={props.items}
+                        horizontal={!isScrollDirectionVertical}
+                        keyExtractor={item => item.id}
+                        onEndReached={onEndReached}
+                        onEndReachedThreshold={0.6}
+                        scrollEventThrottle={50}
+                        renderItem={renderItem}
+                        style={listStyle}
+                        nestedScrollEnabled
+                        testID={`${name}-list`}
+                        onContentSizeChange={isScrollDirectionVertical ? onContentSizeChange : undefined}
+                    />
+                </View>
+            ) : null}
         </View>
     );
 };
