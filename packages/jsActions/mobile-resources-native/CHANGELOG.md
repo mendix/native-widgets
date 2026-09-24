@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [12.5.0] Native Mobile Resources - 2026-9-24
+
+
+## [2.3.1] BackgroundGradient
+### Changed
+
+-   We removed the library of `react-native-linear-gradient` in favor of a react-native View with linear-gradient type background.
+
+## [2.3.1] BackgroundImage
+-   Fixed background image widget not visible when there is no content inside it.
+
+## [5.3.3] BottomSheet
+### Added
+
+-   Added an `On change` event that triggers when the `Trigger attribute` value changes, allowing detection of bottom sheet dismissal (e.g. by outside click).
+
+### Fixed
+
+-   Fixed iOS orientation change when opening the bottom sheet modal on devices in landscape mode.
+-   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
+
+## [3.0.0] Signature
+### Added
+
+-   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
+-   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
+
 ## [12.4.0] Native Mobile Resources - 2026-9-2
 ### Fixed
 
