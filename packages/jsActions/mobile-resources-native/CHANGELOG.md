@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.13] Native Mobile Resources - 2026-9-24
+
+## [2.2.1] BackgroundImage
+
+-   Fixed background image widget not visible when there is no content inside it.
+
 ## [11.3.12] Native Mobile Resources - 2026-9-2
 
 ### Fixed
