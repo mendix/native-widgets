@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.3.3] - 2026-9-24
+
 ### Added
 
 -   Added an `On change` event that triggers when the `Trigger attribute` value changes, allowing detection of bottom sheet dismissal (e.g. by outside click).
