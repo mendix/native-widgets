@@ -11,7 +11,7 @@
   "marketplace": {
     "name": "Nanoflow Commons",
     "description": "The Nanoflow Commons module contains commonly used nanoflow actions that are usable across web, hybrid mobile, and native mobile apps, such as: client activities, geo location, local storage, & more.",
-    "minimumMXVersion": "11.12.3",
+    "minimumMXVersion": "11.14.0",
     "marketplaceId": 109515
   },
   "testProject": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
     "js-base64": "~3.7.2",
+    "mendix-native": "https://github.com/mendix/mendix-native/releases/download/v0.6.0/mendix-native-v0.6.0.tgz",
     "react-native-nitro-geolocation": "1.4.3",
     "react-native-nitro-modules": "0.36.1",
     "react-native-permissions": "5.5.1",
