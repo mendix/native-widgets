@@ -107,6 +107,25 @@ reduce_motion() {
         || echo "::warning::Could not set ReduceMotionReduceSlideTransitionsEnabled"
 }
 
+# Every XCUITest hang in CI (`XCTPerformOnMainRunLoop work timed out`) came right after an
+# inputText, i.e. with the software keyboard up. Keep the keyboard as plain as possible: no
+# first-use "slide to type" overlay (a freshly booted/reset simulator shows it on the first
+# keyboard), no prediction bar, no autocorrect/spellcheck popups. Same domain Appium writes.
+configure_keyboard() {
+    echo "Configuring iOS Simulator keyboard..."
+    if [ -z "$SIMULATOR_DEVICE_ID" ]; then
+        echo "Error: SIMULATOR_DEVICE_ID not set"
+        return 1
+    fi
+    xcrun simctl spawn "$SIMULATOR_DEVICE_ID" defaults write com.apple.keyboard.preferences DidShowContinuousPathIntroduction -bool true \
+        || echo "::warning::Could not set keyboard preference DidShowContinuousPathIntroduction"
+    local key
+    for key in KeyboardPrediction KeyboardShowPredictionBar KeyboardAutocorrection KeyboardCheckSpelling KeyboardAutocapitalization KeyboardContinuousPathEnabled; do
+        xcrun simctl spawn "$SIMULATOR_DEVICE_ID" defaults write com.apple.keyboard.preferences "$key" -bool false \
+            || echo "::warning::Could not set keyboard preference $key"
+    done
+}
+
 set_status_bar() {
     echo "Setting status bar on iOS Simulator..."
     if [ -z "$SIMULATOR_DEVICE_ID" ]; then
@@ -147,6 +166,7 @@ report_slim_state() {
 start_simulator
 report_slim_state
 reduce_motion
+configure_keyboard
 set_status_bar
 install_ios_app
 verify_installed_app
