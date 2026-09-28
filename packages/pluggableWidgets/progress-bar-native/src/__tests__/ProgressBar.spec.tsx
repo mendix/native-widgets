@@ -51,6 +51,11 @@ describe("ProgressBar", () => {
         const keys = Object.keys(defaultProgressBarStyle).sort();
         expect(keys).toEqual(["bar", "container", "fill", "validationMessage"]);
     });
+
+    it("preserves expected fill style key set", () => {
+        const keys = Object.keys(defaultProgressBarStyle.fill).sort();
+        expect(keys).toEqual(["backgroundColor"]);
+    });
 });
 
 function createProps(progressValue?: number, minimumValue?: number, maximumValue?: number): Props {

@@ -74,4 +74,9 @@ describe("BarcodeScanner", () => {
         const keys = Object.keys(defaultBarcodeScannerStyle).sort();
         expect(keys).toEqual(["container", "mask"]);
     });
+
+    it("preserves expected mask style key set", () => {
+        const keys = Object.keys(defaultBarcodeScannerStyle.mask).sort();
+        expect(keys).toEqual(["backgroundColor", "color"]);
+    });
 });

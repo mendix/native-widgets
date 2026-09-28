@@ -339,6 +339,14 @@ describe("PieDoughnutChart", () => {
         const keys = Object.keys(defaultStyle).sort();
         expect(keys).toEqual(["container", "slices"]);
     });
+
+    it("preserves expected slices.customStyles entry key set", () => {
+        const entry: NonNullable<NonNullable<ChartStyle["slices"]>["customStyles"]>[string] = {
+            slice: {},
+            label: {}
+        };
+        expect(Object.keys(entry).sort()).toEqual(["label", "slice"]);
+    });
 });
 
 function createProps(opts: Partial<PieDoughnutChartProps<ChartStyle>> = {}): PieDoughnutChartProps<ChartStyle> {
