@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 -   We fixed the sliders not announcing their value to screen readers. They can now also be adjusted with VoiceOver and TalkBack.
+-   We fixed the other sliders moving slightly while one slider is dragged, and hue and saturation being lost when the color becomes black or white.
 
 ## [2.1.0] - 2024-12-3
 
