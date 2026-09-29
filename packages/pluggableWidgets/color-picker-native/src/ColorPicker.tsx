@@ -37,8 +37,7 @@ export class ColorPicker extends Component<Props, State> {
             return null;
         }
 
-        const colorHex = this.state.color ? this.getColor() : this.props.color.value;
-        const color = tinycolor(colorHex).toHsl();
+        const color = this.getCurrentColor();
 
         return (
             <View style={this.styles.container} testID={`${this.props.name}`}>
@@ -52,33 +51,36 @@ export class ColorPicker extends Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
-        if (this.props.color.value !== prevProps.color.value && this.state.color === prevState.color) {
+        // Keep the unrounded color while it still matches the value, so the other sliders don't jump when it is
+        // stored with 8-bit precision or hue and saturation are lost at black and white
+        if (
+            this.props.color.value !== prevProps.color.value &&
+            this.state.color === prevState.color &&
+            this.state.color &&
+            this.getColor() !== this.props.color.value
+        ) {
             this.setState({ color: undefined });
         }
     }
 
     private onChangeHue(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.h = value;
-        this.setColor(color);
+        this.setColor({ ...this.getCurrentColor(), h: value });
     }
 
     private onChangeSaturation(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.s = value;
-        this.setColor(color);
+        this.setColor({ ...this.getCurrentColor(), s: value });
     }
 
     private onChangeLightness(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.l = value;
-        this.setColor(color);
+        this.setColor({ ...this.getCurrentColor(), l: value });
     }
 
     private onChangeAlpha(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.a = value;
-        this.setColor(color);
+        this.setColor({ ...this.getCurrentColor(), a: value });
+    }
+
+    private getCurrentColor(): HSLA {
+        return this.pendingColor ?? this.state.color ?? tinycolor(this.props.color.value).toHsl();
     }
 
     private setColor(color: HSLA): void {
