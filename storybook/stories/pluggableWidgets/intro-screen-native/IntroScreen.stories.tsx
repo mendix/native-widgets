@@ -5,9 +5,9 @@ import { Big } from "big.js";
 import { ValueStatus } from "mendix";
 // Imported straight from the widget package's source: Metro watches the repo root, so a story
 // exercises the same code the mpk is built from, with no build step in between.
-import { IntroScreen } from "../../packages/pluggableWidgets/intro-screen-native/src/IntroScreen";
-import type { IntroScreenStyle } from "../../packages/pluggableWidgets/intro-screen-native/src/ui/Styles";
-import { actionValue, dynamicValue, editableValue } from "./mendixValues";
+import { IntroScreen } from "../../../../packages/pluggableWidgets/intro-screen-native/src/IntroScreen";
+import type { IntroScreenStyle } from "../../../../packages/pluggableWidgets/intro-screen-native/src/ui/Styles";
+import { actionValue, dynamicValue, editableValue } from "../../shared/mendixValues";
 
 const slideStyles = StyleSheet.create({
     slide: { flex: 1, alignItems: "center", justifyContent: "center" },

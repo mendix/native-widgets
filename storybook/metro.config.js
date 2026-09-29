@@ -15,7 +15,12 @@ const stubbedPackages = {
     mendix: path.join(projectRoot, "mendix-stubs"),
     // Workspace packages the widgets import. They are not installed here, so map them to the
     // checkout directly; both ship a built dist/ that postinstall keeps current.
-    "@mendix/piw-utils-internal": path.join(repoRoot, "packages/tools/piw-utils-internal"),
+    //
+    // piw-utils-internal goes through a local shim rather than straight to the checkout, because one
+    // of its exports (`FilterType`, a `const enum`) is erased by tsc and so is missing from its
+    // dist/. The shim re-exports the built barrel and adds that one value back — see the file for
+    // why Babel cannot do what tsc does here.
+    "@mendix/piw-utils-internal": path.join(projectRoot, "piw-stubs/piw-utils-internal"),
     "@mendix/piw-native-utils-internal": path.join(repoRoot, "packages/tools/piw-native-utils-internal")
 };
 
