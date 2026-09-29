@@ -1,6 +1,5 @@
 import { actionValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { View } from "react-native";
-import Slider from "react-native-slider";
 import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { ColorPicker, Props } from "../ColorPicker";
@@ -59,78 +58,52 @@ describe("Color Picker", () => {
 
     it("changes the value when swiping hue slider", () => {
         const onChangeAction = actionValue();
-        const component = render(
-            <ColorPicker
-                {...defaultProps}
-                onChange={onChangeAction}
-                showAlpha={false}
-                showLightness={false}
-                showSaturation={false}
-            />
-        );
+        const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} />);
 
-        const hueHandler = getHueHandle(component);
-
-        fireEvent(hueHandler, "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(hueHandler, "responderMove", responderMove(0));
+        const hue = getTouchArea(component, "hue");
+        fireEvent(hue, "responderGrant", touch(0));
+        fireEvent(hue, "responderMove", move(140));
 
         expect(onChangeAction.execute).not.toHaveBeenCalled();
 
-        fireEvent(hueHandler, "responderRelease", {});
+        fireEvent(hue, "responderRelease", {});
 
         expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
-
-        expect(defaultProps.color.setValue).toHaveBeenCalledWith("#000000");
+        expect(defaultProps.color.setValue).toHaveBeenCalledWith("#00ffff");
     });
 
     it("changes the value when swiping saturation slider", () => {
         const onChangeAction = actionValue();
         const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} />);
 
-        const saturationHandler = getSaturationHandle(component);
-
-        fireEvent(saturationHandler, "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(saturationHandler, "responderMove", responderMove(0));
-
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-
-        fireEvent(saturationHandler, "responderRelease", {});
+        const saturation = getTouchArea(component, "saturation");
+        fireEvent(saturation, "responderGrant", touch(0));
+        fireEvent(saturation, "responderMove", move(-280));
+        fireEvent(saturation, "responderRelease", {});
 
         expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
-        expect(defaultProps.color.setValue).toHaveBeenCalledWith("#000000");
+        expect(defaultProps.color.setValue).toHaveBeenCalledWith("#808080");
     });
 
     it("changes the value when swiping lightness slider with no lightness", () => {
-        const onChangeAction = actionValue();
-        const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} />);
+        const component = render(<ColorPicker {...defaultProps} />);
 
-        const lightnessHandler = getLightnessHandle(component);
+        const lightness = getTouchArea(component, "lightness");
+        fireEvent(lightness, "responderGrant", touch(0));
+        fireEvent(lightness, "responderMove", move(-140));
+        fireEvent(lightness, "responderRelease", {});
 
-        fireEvent(lightnessHandler, "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(lightnessHandler, "responderMove", responderMove(0));
-
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-
-        fireEvent(lightnessHandler, "responderRelease", {});
-
-        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
         expect(defaultProps.color.setValue).toHaveBeenCalledWith("#000000");
     });
 
     it("changes the value when swiping lightness slider with full lightness", () => {
-        const onChangeAction = actionValue();
-        const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} />);
+        const component = render(<ColorPicker {...defaultProps} />);
 
-        const lightnessHandler = getLightnessHandle(component);
+        const lightness = getTouchArea(component, "lightness");
+        fireEvent(lightness, "responderGrant", touch(0));
+        fireEvent(lightness, "responderMove", move(140));
+        fireEvent(lightness, "responderRelease", {});
 
-        fireEvent(lightnessHandler, "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(lightnessHandler, "responderMove", responderMove(1));
-
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-
-        fireEvent(lightnessHandler, "responderRelease", {});
-
-        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
         expect(defaultProps.color.setValue).toHaveBeenCalledWith("#ffffff");
     });
 
@@ -138,45 +111,80 @@ describe("Color Picker", () => {
         const onChangeAction = actionValue();
         const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} showAlpha format="rgb" />);
 
-        const alphaHandler = getAlphaHandle(component);
-
-        fireEvent(alphaHandler, "responderGrant", { touchHistory: { touchBank: [] } });
-        fireEvent(alphaHandler, "responderMove", responderMove(-1));
-
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-
-        fireEvent(alphaHandler, "responderRelease", {});
+        const alpha = getTouchArea(component, "alpha");
+        fireEvent(alpha, "responderGrant", touch(0));
+        fireEvent(alpha, "responderMove", move(-280));
+        fireEvent(alpha, "responderRelease", {});
 
         expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
         expect(defaultProps.color.setValue).toHaveBeenCalledWith("rgba(255, 0, 0, 0)");
     });
 
-    function getHueHandle(component: RenderAPI): ReactTestInstance {
-        return getSliders(component)[0]
-            .findAllByType(View)
-            .filter(instance => instance.props.onMoveShouldSetResponder)[0];
-    }
+    it("moves to the tapped position on the track", () => {
+        const onChangeAction = actionValue();
+        const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} />);
 
-    function getSaturationHandle(component: RenderAPI): ReactTestInstance {
-        return getSliders(component)[1]
-            .findAllByType(View)
-            .filter(instance => instance.props.onMoveShouldSetResponder)[0];
-    }
+        // Thumb centre at half of the track: 10 + 140 in the slider, plus half of the 28px touch overflow
+        const hue = getTouchArea(component, "hue");
+        expect(hue.props.onStartShouldSetResponder(touch(14 + 150))).toBe(true);
+        fireEvent(hue, "responderGrant", touch(14 + 150));
+        fireEvent(hue, "responderRelease", {});
 
-    function getLightnessHandle(component: RenderAPI): ReactTestInstance {
-        return getSliders(component)[2]
-            .findAllByType(View)
-            .filter(instance => instance.props.onMoveShouldSetResponder)[0];
-    }
+        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
+        expect(defaultProps.color.setValue).toHaveBeenCalledWith("#00ffff");
+    });
 
-    function getAlphaHandle(component: RenderAPI): ReactTestInstance {
-        return getSliders(component)[3]
-            .findAllByType(View)
-            .filter(instance => instance.props.onMoveShouldSetResponder)[0];
-    }
+    it("does not respond to touches when read-only", () => {
+        const component = render(
+            <ColorPicker
+                {...defaultProps}
+                color={new EditableValueBuilder<string>().withValue("#ff0000").isReadOnly().build()}
+            />
+        );
 
-    function getSliders(component: RenderAPI): ReactTestInstance[] {
-        return component.UNSAFE_getAllByType(Slider);
+        const hue = getTouchArea(component, "hue");
+        expect(hue.props.onStartShouldSetResponder(touch(14 + 150))).toBe(false);
+        expect(component.getByTestId("color-picker-test$hue").props.accessibilityState).toEqual({ disabled: true });
+    });
+
+    it("announces the slider value to screen readers", () => {
+        const component = render(
+            <ColorPicker {...defaultProps} color={new EditableValueBuilder<string>().withValue("#00ffff").build()} />
+        );
+
+        const hue = component.getByTestId("color-picker-test$hue");
+        expect(hue.props.accessibilityRole).toBe("adjustable");
+        expect(hue.props.accessibilityValue).toEqual({ min: 0, max: 100, now: 50 });
+        expect(component.getByTestId("color-picker-test$lightness").props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 50
+        });
+    });
+
+    it("changes the value with screen reader actions", () => {
+        const onChangeAction = actionValue();
+        const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} />);
+
+        fireEvent(component.getByTestId("color-picker-test$lightness"), "accessibilityAction", {
+            nativeEvent: { actionName: "increment" }
+        });
+
+        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
+        expect(defaultProps.color.setValue).toHaveBeenCalledWith("#ff3333");
+    });
+
+    // Lays out the slider 300 wide with a 20 wide thumb, leaving a 280px track
+    function getTouchArea(component: RenderAPI, name: string): ReactTestInstance {
+        const slider = component.getByTestId(`color-picker-test$${name}`);
+        const [container, thumb] = slider.findAll(
+            node => typeof node.type === "string" && typeof node.props.onLayout === "function"
+        );
+        fireEvent(container, "layout", { nativeEvent: { layout: { width: 300, height: 40 } } });
+        fireEvent(thumb, "layout", { nativeEvent: { layout: { width: 20, height: 20 } } });
+        return slider.findAll(
+            node => typeof node.type === "string" && typeof node.props.onResponderGrant === "function"
+        )[0];
     }
 
     it("preserves expected style key set", () => {
@@ -185,7 +193,11 @@ describe("Color Picker", () => {
     });
 });
 
-function responderMove(dx: number): any {
+function touch(locationX: number): object {
+    return { nativeEvent: { locationX, locationY: 20 }, touchHistory: { touchBank: [] } };
+}
+
+function move(dx: number): object {
     return {
         touchHistory: {
             numberActiveTouches: 1,
