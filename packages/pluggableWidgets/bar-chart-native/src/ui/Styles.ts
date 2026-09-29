@@ -93,6 +93,9 @@ export const defaultBarChartStyle: BarChartStyle = {
             alignSelf: "center"
         }
     },
+    yAxis: {},
+    domain: {},
+    bars: {},
     legend: {
         container: {
             flexDirection: "row",
