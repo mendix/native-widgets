@@ -107,6 +107,66 @@ describe("Color Picker", () => {
         expect(defaultProps.color.setValue).toHaveBeenCalledWith("#ffffff");
     });
 
+    it("keeps the saturation when swiping lightness slider", () => {
+        const color = new EditableValueBuilder<string>().withValue("#d66329").build();
+        const component = render(<ColorPicker {...defaultProps} color={color} />);
+        const saturation = (): object => component.getByTestId("color-picker-test$saturation").props.accessibilityValue;
+        expect(saturation()).toEqual({ min: 0, max: 100, now: 68 });
+
+        // Lightness 0.03 is stored as #0d0602, which reads back as saturation 0.73
+        const lightness = getTouchArea(component, "lightness");
+        fireEvent(lightness, "responderGrant", touch(0));
+        fireEvent(lightness, "responderMove", move(-131));
+        expect(saturation()).toEqual({ min: 0, max: 100, now: 68 });
+
+        fireEvent(lightness, "responderRelease", {});
+        expect(color.setValue).toHaveBeenCalledWith("#0d0602");
+        component.rerender(
+            <ColorPicker {...defaultProps} color={new EditableValueBuilder<string>().withValue("#0d0602").build()} />
+        );
+        expect(saturation()).toEqual({ min: 0, max: 100, now: 68 });
+    });
+
+    it("keeps hue and saturation when swiping lightness slider through black", () => {
+        const component = render(<ColorPicker {...defaultProps} />);
+
+        const lightness = getTouchArea(component, "lightness");
+        fireEvent(lightness, "responderGrant", touch(0));
+        fireEvent(lightness, "responderMove", move(-140));
+        fireEvent(lightness, "responderRelease", {});
+        expect(defaultProps.color.setValue).toHaveBeenLastCalledWith("#000000");
+
+        const color = new EditableValueBuilder<string>().withValue("#000000").build();
+        component.rerender(<ColorPicker {...defaultProps} color={color} />);
+        fireEvent(lightness, "responderGrant", touch(0));
+        fireEvent(lightness, "responderMove", move(140));
+        fireEvent(lightness, "responderRelease", {});
+        expect(color.setValue).toHaveBeenCalledWith("#ff0000");
+    });
+
+    it("follows value changes from outside", () => {
+        const component = render(<ColorPicker {...defaultProps} />);
+
+        const lightness = getTouchArea(component, "lightness");
+        fireEvent(lightness, "responderGrant", touch(0));
+        fireEvent(lightness, "responderMove", move(-140));
+        fireEvent(lightness, "responderRelease", {});
+
+        component.rerender(
+            <ColorPicker {...defaultProps} color={new EditableValueBuilder<string>().withValue("#00ffff").build()} />
+        );
+        expect(component.getByTestId("color-picker-test$hue").props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 50
+        });
+        expect(component.getByTestId("color-picker-test$lightness").props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 50
+        });
+    });
+
     it("changes the value when swiping alpha slider", () => {
         const onChangeAction = actionValue();
         const component = render(<ColorPicker {...defaultProps} onChange={onChangeAction} showAlpha format="rgb" />);
