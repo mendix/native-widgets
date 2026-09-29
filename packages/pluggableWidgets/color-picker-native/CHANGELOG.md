@@ -10,10 +10,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   We updated deprecated-react-native-prop-types to 4.2.3.
--   We pinned react-native-color to 0.0.10.
--   We pinned react-native-slider to 0.11.0.
 -   We updated tinycolor2 to 1.6.0.
+-   We replaced react-native-slider and react-native-color with built-in components, and removed deprecated-react-native-prop-types.
+
+### Fixed
+
+-   We fixed the sliders not announcing their value to screen readers. They can now also be adjusted with VoiceOver and TalkBack.
 
 ## [2.1.0] - 2024-12-3
 
