@@ -1,7 +1,12 @@
-import { available, flattenStyles, toNumber, unavailable } from "@mendix/piw-native-utils-internal";
+import {
+    available,
+    flattenStyles,
+    Slider as NativeSlider,
+    toNumber,
+    unavailable
+} from "@mendix/piw-native-utils-internal";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { ValueStatus, Option } from "mendix";
-import { Slider as RNSlider } from "@miblanchard/react-native-slider";
 import { ReactElement, useCallback, useRef } from "react";
 import { Text, View } from "react-native";
 import { Big } from "big.js";
@@ -23,27 +28,23 @@ export function Slider(props: Props): ReactElement {
     const decimalCount = useCallback((val: Option<Big>): number => val?.toString().split(".")?.[1]?.length || 0, []);
 
     const onValueChange = useCallback(
-        (values: number[]): void => {
-            if (values[0] === null || values[0] === undefined) {
-                return;
-            }
-
+        (value: number): void => {
             if (props.stepSize.status === ValueStatus.Available) {
-                props.valueAttribute.setValue(new Big(values[0].toFixed(decimalCount(props.stepSize.value))));
+                props.valueAttribute.setValue(new Big(value.toFixed(decimalCount(props.stepSize.value))));
             }
         },
         [props.valueAttribute, props.stepSize, decimalCount]
     );
 
     const onSlidingComplete = useCallback(
-        (values: number[]): void => {
-            if (values[0] === null || values[0] === undefined || lastValue.current === values[0]) {
+        (value: number): void => {
+            if (lastValue.current === value) {
                 return;
             }
 
-            lastValue.current = values[0];
+            lastValue.current = value;
             if (props.stepSize.status === ValueStatus.Available) {
-                props.valueAttribute.setValue(new Big(values[0].toFixed(decimalCount(props.stepSize.value))));
+                props.valueAttribute.setValue(new Big(value.toFixed(decimalCount(props.stepSize.value))));
             }
 
             executeAction(props.onChange);
@@ -53,12 +54,14 @@ export function Slider(props: Props): ReactElement {
 
     return (
         <View style={styles.container} testID={props.name}>
-            <RNSlider
+            <NativeSlider
+                testID={`${props.name}$slider`}
                 value={value != null ? value : 0}
                 minimumValue={validProps ? toNumber(props.minimumValue) ?? 0 : 0}
                 maximumValue={validProps ? toNumber(props.maximumValue) ?? 100 : 100}
                 step={validProps ? toNumber(props.stepSize) ?? 1 : 1}
                 disabled={!editable}
+                trackClickable
                 trackStyle={editable ? styles.track : styles.trackDisabled}
                 minimumTrackStyle={editable ? styles.highlight : styles.highlightDisabled}
                 maximumTrackStyle={editable ? styles.track : styles.trackDisabled}
