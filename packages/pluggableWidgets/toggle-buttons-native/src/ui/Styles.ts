@@ -12,6 +12,7 @@ export interface ToggleButtonsStyle extends Style {
 }
 
 const blue = "rgb(0, 122, 255)";
+
 const purple = "rgb(98, 0, 238)";
 
 export const defaultToggleButtonsStyle: ToggleButtonsStyle = {
