@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
 -   We fixed the barcode with patterned backgrounds not getting scanned correctly on Android.
 -   We Added a property `scan delay` which will delays the scanning process by mentioned seconds, so end user will get an time to place the scanner over QR code correctly.
 
