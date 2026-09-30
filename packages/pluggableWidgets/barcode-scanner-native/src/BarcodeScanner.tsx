@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
-import { ReactElement, useCallback, useMemo, useRef, useState } from "react";
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View, LayoutChangeEvent, Platform } from "react-native";
 import { Camera, useCodeScanner, Code, useCameraDevice, CodeScannerFrame } from "react-native-vision-camera";
 import BarcodeMask from "./components/BarcodeMask";
@@ -10,6 +10,11 @@ import { BarcodeScannerStyle, defaultBarcodeScannerStyle } from "./ui/styles";
 import { executeAction } from "@mendix/piw-utils-internal";
 
 export type Props = BarcodeScannerProps<BarcodeScannerStyle>;
+
+// ML Kit on Android can misread 1D barcodes (e.g. Code 39) on busy backgrounds for a single frame,
+// so a value is only accepted after it is detected on this many consecutive reads.
+const REQUIRED_CONSECUTIVE_READS_ANDROID = 3;
+const SCAN_LOCK_DURATION_MS = 2000;
 
 type CodePositionInfo = {
     isWithinMask: boolean;
@@ -143,6 +148,32 @@ export function BarcodeScanner(props: Props): ReactElement {
 
     // Ref to track the lock state
     const isLockedRef = useRef(false);
+    // Timer that releases the lock, kept so it can be cleared when the widget unmounts
+    const lockTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Time from which detected codes may be accepted, null until the camera is initialized
+    const scanStartTimeRef = useRef<number | null>(null);
+
+    // Last detected value and how many consecutive reads returned it
+    const lastReadValueRef = useRef<string | null>(null);
+    const consecutiveReadsRef = useRef(0);
+
+    // Starts a new scan: codes are accepted again after the configured scan delay,
+    // and the consecutive read count starts from zero
+    const resetScanState = useCallback(() => {
+        scanStartTimeRef.current = Date.now() + props.scanDelay * 1000;
+        lastReadValueRef.current = null;
+        consecutiveReadsRef.current = 0;
+    }, [props.scanDelay]);
+
+    // Clear a pending lock timer when the widget unmounts
+    useEffect(() => {
+        return () => {
+            if (lockTimeoutRef.current) {
+                clearTimeout(lockTimeoutRef.current);
+            }
+        };
+    }, []);
 
     const [cameraViewDimensions, setCameraViewDimensions] = useState<{ width: number; height: number } | null>(null);
 
@@ -220,8 +251,13 @@ export function BarcodeScanner(props: Props): ReactElement {
 
     const onCodeScanned = useCallback(
         (codes: Code[], frame: CodeScannerFrame) => {
-            // Block if still in cooldown
-            if (isLockedRef.current) {
+            // Block if still in cooldown or the previous detection is still being handled
+            if (isLockedRef.current || props.onDetect?.isExecuting) {
+                return;
+            }
+
+            // Block until the camera is initialized and the scan delay has passed
+            if (scanStartTimeRef.current === null || Date.now() < scanStartTimeRef.current) {
                 return;
             }
 
@@ -251,19 +287,35 @@ export function BarcodeScanner(props: Props): ReactElement {
 
             const { value } = selectedCode;
 
+            // Android only: accept the value after it was read on several consecutive reads,
+            // a different value restarts the count
+            if (Platform.OS === "android") {
+                if (value === lastReadValueRef.current) {
+                    consecutiveReadsRef.current += 1;
+                } else {
+                    lastReadValueRef.current = value;
+                    consecutiveReadsRef.current = 1;
+                }
+
+                if (consecutiveReadsRef.current < REQUIRED_CONSECUTIVE_READS_ANDROID) {
+                    return;
+                }
+            }
+
             if (value !== props.barcode.value) {
                 props.barcode.setValue(value);
             }
 
             executeAction(props.onDetect);
 
-            // Lock further scans for 2 seconds
+            // Lock further scans for 2 seconds, then start a new scan (including the scan delay)
             isLockedRef.current = true;
-            setTimeout(() => {
+            lockTimeoutRef.current = setTimeout(() => {
+                resetScanState();
                 isLockedRef.current = false;
-            }, 2000);
+            }, SCAN_LOCK_DURATION_MS);
         },
-        [props.barcode, props.onDetect, getCodePositionInfo]
+        [props.barcode, props.onDetect, getCodePositionInfo, resetScanState]
     );
 
     const codeScanner = useCodeScanner({
@@ -285,6 +337,11 @@ export function BarcodeScanner(props: Props): ReactElement {
         onCodeScanned
     });
 
+    // The camera is ready, start the scan delay from now
+    const handleCameraInitialized = useCallback(() => {
+        resetScanState();
+    }, [resetScanState]);
+
     const handleCameraLayout = useCallback((event: LayoutChangeEvent) => {
         const { width, height } = event.nativeEvent.layout;
         setCameraViewDimensions({ width, height });
@@ -301,6 +358,7 @@ export function BarcodeScanner(props: Props): ReactElement {
                         isActive
                         device={device}
                         codeScanner={codeScanner}
+                        onInitialized={handleCameraInitialized}
                         onLayout={handleCameraLayout}
                     />
                     {props.showMask && (
