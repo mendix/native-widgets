@@ -10,26 +10,24 @@ exports[`ToggleButtons renders 1`] = `
   testID="toggle-buttons-test"
 >
   <View
-    removeClippedSubviews={false}
+    accessibilityRole="tablist"
+    accessible={false}
     style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "flexDirection": "row",
-        },
-        {},
-      ]
+      {
+        "flexDirection": "row",
+      }
     }
   >
     <View
       accessibilityLabel="Formatted a"
+      accessibilityRole="tab"
       accessibilityState={
         {
           "busy": undefined,
           "checked": undefined,
           "disabled": false,
           "expanded": undefined,
-          "selected": undefined,
+          "selected": true,
         }
       }
       accessibilityValue={
@@ -43,7 +41,9 @@ exports[`ToggleButtons renders 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
+      onBlur={[Function]}
       onClick={[Function]}
+      onFocus={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -51,67 +51,57 @@ exports[`ToggleButtons renders 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgb(98, 0, 238)",
-          "borderBottomLeftRadius": 3,
-          "borderColor": "rgb(98, 0, 238)",
-          "borderRadius": 0,
-          "borderRightWidth": 1,
-          "borderTopLeftRadius": 3,
-          "borderWidth": 1,
-          "flex": 1,
-          "justifyContent": "center",
-          "opacity": 1,
-          "paddingVertical": 5,
-        }
-      }
-    >
-      <View
-        style={
+        [
           {
-            "flexDirection": "row",
-          }
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "borderRadius": 3,
+            "borderWidth": 1,
+            "flex": 1,
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingVertical": 5,
+          },
+          {
+            "borderColor": "#CCC",
+            "borderRadius": 0,
+          },
+          {
+            "backgroundColor": "rgb(98, 0, 238)",
+            "borderColor": "rgb(98, 0, 238)",
+          },
+        ]
+      }
+      testID="toggle-buttons-test$button-0"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          [
+            {
+              "color": "#666",
+              "fontWeight": "600",
+              "paddingVertical": 3,
+            },
+            {
+              "color": "#fff",
+            },
+          ]
         }
       >
-        <Text
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            [
-              {
-                "color": "#0076FF",
-              },
-              {
-                "color": "#666",
-                "fontWeight": "600",
-                "paddingVertical": 3,
-              },
-              [
-                {
-                  "color": "white",
-                },
-                {
-                  "color": "#fff",
-                },
-              ],
-            ]
-          }
-        >
-          Formatted a
-        </Text>
-      </View>
+        Formatted a
+      </Text>
     </View>
     <View
       accessibilityLabel="Formatted b"
+      accessibilityRole="tab"
       accessibilityState={
         {
           "busy": undefined,
           "checked": undefined,
           "disabled": false,
           "expanded": undefined,
-          "selected": undefined,
+          "selected": false,
         }
       }
       accessibilityValue={
@@ -125,7 +115,9 @@ exports[`ToggleButtons renders 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
+      onBlur={[Function]}
       onClick={[Function]}
+      onFocus={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -133,50 +125,41 @@ exports[`ToggleButtons renders 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "white",
-          "borderBottomRightRadius": 3,
-          "borderColor": "#CCC",
-          "borderLeftWidth": 0,
-          "borderRadius": 0,
-          "borderTopRightRadius": 3,
-          "borderWidth": 1,
-          "flex": 1,
-          "justifyContent": "center",
-          "opacity": 1,
-          "paddingVertical": 5,
-        }
-      }
-    >
-      <View
-        style={
+        [
           {
-            "flexDirection": "row",
-          }
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "borderRadius": 3,
+            "borderWidth": 1,
+            "flex": 1,
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingVertical": 5,
+          },
+          {
+            "borderColor": "#CCC",
+            "borderRadius": 0,
+          },
+          false,
+        ]
+      }
+      testID="toggle-buttons-test$button-1"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          [
+            {
+              "color": "#666",
+              "fontWeight": "600",
+              "paddingVertical": 3,
+            },
+            false,
+          ]
         }
       >
-        <Text
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            [
-              {
-                "color": "#0076FF",
-              },
-              {
-                "color": "#666",
-                "fontWeight": "600",
-                "paddingVertical": 3,
-              },
-              {},
-            ]
-          }
-        >
-          Formatted b
-        </Text>
-      </View>
+        Formatted b
+      </Text>
     </View>
   </View>
 </View>
