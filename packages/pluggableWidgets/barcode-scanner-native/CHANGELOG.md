@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
 -   We added support for QR of available remaining types including pdf417 in barcode scanner functinality.
 -   We fixed the barcode mask not visible issue and selection logic of QR code.
 -   We fixed the barcode with patterned backgrounds not getting scanned correctly on Android.
