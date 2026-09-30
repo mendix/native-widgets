@@ -443,7 +443,9 @@ function snapToStep(value: number, { minimumValue = 0, maximumValue = 1, step = 
 }
 
 function decimalPlaces(value: number): number {
-    return (String(value).split(".")[1] ?? "").length;
+    const [coefficient, exponent = "0"] = String(value).toLowerCase().split("e");
+    const fractionalDigits = (coefficient.split(".")[1] ?? "").length;
+    return Math.max(0, fractionalDigits - Number(exponent));
 }
 
 function getAccessibilityIncrement(props: SliderBaseProps): number {

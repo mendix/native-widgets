@@ -173,6 +173,17 @@ describe("Slider", () => {
         expect(defaultProps.onValueChange).toHaveBeenLastCalledWith(1.2);
     });
 
+    it("rounds values when the step uses scientific notation", () => {
+        const touchArea = getTouchArea(
+            renderMeasured({ ...defaultProps, minimumValue: 0, maximumValue: 1e-6, step: 1e-7, value: 0 })
+        );
+
+        fireEvent(touchArea, "responderGrant", touch(24));
+        fireEvent(touchArea, "responderMove", move(112));
+
+        expect(defaultProps.onValueChange).toHaveBeenLastCalledWith(4e-7);
+    });
+
     describe("track", () => {
         it("ignores presses outside the thumb by default", () => {
             const touchArea = getTouchArea(renderMeasured(defaultProps));
