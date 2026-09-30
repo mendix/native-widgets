@@ -2,13 +2,12 @@ import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
 import { Component, ReactElement, ReactNode } from "react";
 import { View, ViewStyle } from "react-native";
-
-import { HueGradient, LightnessGradient, SaturationGradient } from "react-native-color";
 import tinycolor from "tinycolor2";
 import { ColorPickerProps } from "../typings/ColorPickerProps";
 import { PickerSlider } from "./components/PickerSlider";
 import { AlphaGradient } from "./components/AlphaGradient";
 import { DisabledHueGradient } from "./components/DisabledHueGradient";
+import { HueGradient, LightnessGradient, SaturationGradient } from "./components/Gradients";
 import { ColorPickerStyle, defaultColorPickerStyle } from "./ui/Styles";
 import HSLA = tinycolor.ColorFormats.HSLA;
 import { executeAction } from "@mendix/piw-utils-internal";
@@ -27,6 +26,8 @@ export class ColorPicker extends Component<Props, State> {
     private readonly onChangeCompleteHandler = this.onChangeComplete.bind(this);
     private readonly styles = flattenStyles(defaultColorPickerStyle, this.props.style);
     private readonly defaultSteps = 80;
+    // Screen reader actions change and complete in one event, before the state update is applied
+    private pendingColor?: HSLA;
     readonly state: State = {
         color: undefined
     };
@@ -36,8 +37,7 @@ export class ColorPicker extends Component<Props, State> {
             return null;
         }
 
-        const colorHex = this.state.color ? this.getColor() : this.props.color.value;
-        const color = tinycolor(colorHex).toHsl();
+        const color = this.getCurrentColor();
 
         return (
             <View style={this.styles.container} testID={`${this.props.name}`}>
@@ -51,45 +51,54 @@ export class ColorPicker extends Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
-        if (this.props.color.value !== prevProps.color.value && this.state.color === prevState.color) {
+        // Keep the unrounded color while it still matches the value, so the other sliders don't jump when it is
+        // stored with 8-bit precision or hue and saturation are lost at black and white
+        if (
+            this.props.color.value !== prevProps.color.value &&
+            this.state.color === prevState.color &&
+            this.state.color &&
+            this.getColor() !== this.props.color.value
+        ) {
             this.setState({ color: undefined });
         }
     }
 
     private onChangeHue(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.h = value;
-        this.setState({ color });
+        this.setColor({ ...this.getCurrentColor(), h: value });
     }
 
     private onChangeSaturation(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.s = value;
-        this.setState({ color });
+        this.setColor({ ...this.getCurrentColor(), s: value });
     }
 
     private onChangeLightness(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.l = value;
-        this.setState({ color });
+        this.setColor({ ...this.getCurrentColor(), l: value });
     }
 
     private onChangeAlpha(value: number): void {
-        const color = tinycolor(this.props.color.value).toHsl();
-        color.a = value;
+        this.setColor({ ...this.getCurrentColor(), a: value });
+    }
+
+    private getCurrentColor(): HSLA {
+        return this.pendingColor ?? this.state.color ?? tinycolor(this.props.color.value).toHsl();
+    }
+
+    private setColor(color: HSLA): void {
+        this.pendingColor = color;
         this.setState({ color });
     }
 
     private onChangeComplete(): void {
-        if (this.state.color && this.props.color.value !== this.getColor()) {
-            this.props.color.setValue(this.getColor());
+        if (this.pendingColor && this.props.color.value !== this.getColor(this.pendingColor)) {
+            this.props.color.setValue(this.getColor(this.pendingColor));
         }
+        this.pendingColor = undefined;
 
         executeAction(this.props.onChange);
     }
 
-    private getColor(): string {
-        const color = tinycolor(this.state.color);
+    private getColor(hsla = this.state.color): string {
+        const color = tinycolor(hsla);
         switch (this.props.format) {
             case "hex":
                 return color.toHexString();
