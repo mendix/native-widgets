@@ -9,6 +9,8 @@ import { Big } from "big.js";
 
 export type ScrollDirectionEnum = "vertical" | "horizontal";
 
+export type HorizontalItemSizingEnum = "fullWidth" | "fitContent" | "fillColumns";
+
 export type PaginationEnum = "virtualScrolling" | "buttons";
 
 export interface FilterListType {
@@ -25,6 +27,7 @@ export interface GalleryProps<Style> {
     datasource: ListValue;
     content?: ListWidgetValue;
     scrollDirection: ScrollDirectionEnum;
+    horizontalItemSizing: HorizontalItemSizingEnum;
     tabletColumns: number;
     phoneColumns: number;
     pageSize: number;
@@ -51,6 +54,7 @@ export interface GalleryPreviewProps {
     datasource: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     scrollDirection: ScrollDirectionEnum;
+    horizontalItemSizing: HorizontalItemSizingEnum;
     tabletColumns: number | null;
     phoneColumns: number | null;
     pageSize: number | null;
