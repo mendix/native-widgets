@@ -8,7 +8,13 @@ import { defaultBarcodeScannerStyle } from "../ui/styles";
 let mockOnCodeScanned: ((codes: Array<{ value: string }>) => void) | undefined;
 
 jest.mock("react-native-vision-camera", () => ({
-    Camera: ({ children, ...props }: any) => <View {...props}>{children}</View>,
+    Camera: ({ children, onInitialized, ...props }: any) => {
+        // Call onInitialized to simulate camera being ready
+        if (onInitialized) {
+            setTimeout(() => onInitialized(), 0);
+        }
+        return <View {...props}>{children}</View>;
+    },
     useCameraDevice: () => "mock-device",
     useCodeScanner: (options: any) => {
         mockOnCodeScanned = options.onCodeScanned;
@@ -28,7 +34,8 @@ describe("BarcodeScanner", () => {
             showMask: false,
             name: "barcode-scanner-test",
             style: [],
-            barcode: new EditableValueBuilder<string>().build()
+            barcode: new EditableValueBuilder<string>().build(),
+            scanDelay: 0
         };
     });
 
@@ -55,7 +62,12 @@ describe("BarcodeScanner", () => {
         const onDetectAction = actionValue();
         render(<BarcodeScanner {...defaultProps} onDetect={onDetectAction} />);
 
-        // Simulate scanning
+        // Wait for camera initialization and advance time past scan delay
+        jest.runOnlyPendingTimers();
+
+        // Simulate scanning (3 consecutive reads required on Android)
+        mockOnCodeScanned?.([{ value: "value" }]);
+        mockOnCodeScanned?.([{ value: "value" }]);
         mockOnCodeScanned?.([{ value: "value" }]);
         jest.advanceTimersByTime(2000);
 
@@ -63,6 +75,8 @@ describe("BarcodeScanner", () => {
         expect(onDetectAction.execute).toHaveBeenCalledTimes(1);
 
         // Another scan
+        mockOnCodeScanned?.([{ value: "value1" }]);
+        mockOnCodeScanned?.([{ value: "value1" }]);
         mockOnCodeScanned?.([{ value: "value1" }]);
         jest.advanceTimersByTime(2000);
 
