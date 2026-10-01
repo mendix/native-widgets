@@ -1,6 +1,6 @@
 import { Component, JSX } from "react";
 import { ViewStyle } from "react-native";
-import { Gradient } from "react-native-color";
+import { Gradient } from "./Gradients";
 import tinycolor from "tinycolor2";
 import HSLA = tinycolor.ColorFormats.HSLA;
 

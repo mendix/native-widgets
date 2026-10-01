@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We replaced @miblanchard/react-native-slider with a built-in slider component.
+
+### Fixed
+
+-   We fixed the range slider thumbs not announcing their values or being adjustable with VoiceOver and TalkBack.
+
 ## [3.0.1] - 2026-9-2
 
 ### Changed

@@ -20,35 +20,14 @@ exports[`Color Picker renders 1`] = `
     testID="color-picker-test$preview"
   />
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$hue"
   >
     <View
       style={
@@ -805,13 +784,32 @@ exports[`Color Picker renders 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 0,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={1}
       style={
         [
           {
@@ -821,16 +819,9 @@ exports[`Color Picker renders 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={0}
+      testID="color-picker-test$hue"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -841,6 +832,7 @@ exports[`Color Picker renders 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -909,42 +901,21 @@ exports[`Color Picker renders 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
     </View>
   </View>
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$saturation"
   >
     <View
       style={
@@ -1701,13 +1672,32 @@ exports[`Color Picker renders 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 100,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={0.01}
       style={
         [
           {
@@ -1717,16 +1707,9 @@ exports[`Color Picker renders 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={1}
+      testID="color-picker-test$saturation"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -1737,6 +1720,7 @@ exports[`Color Picker renders 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -1805,42 +1789,21 @@ exports[`Color Picker renders 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
     </View>
   </View>
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$lightness"
   >
     <View
       style={
@@ -2597,13 +2560,32 @@ exports[`Color Picker renders 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 50,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={0.01}
       style={
         [
           {
@@ -2613,16 +2595,9 @@ exports[`Color Picker renders 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={0.5}
+      testID="color-picker-test$lightness"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -2633,6 +2608,7 @@ exports[`Color Picker renders 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -2701,7 +2677,7 @@ exports[`Color Picker renders 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
@@ -2730,35 +2706,14 @@ exports[`Color Picker renders with alpha slider 1`] = `
     testID="color-picker-test$preview"
   />
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$hue"
   >
     <View
       style={
@@ -3515,13 +3470,32 @@ exports[`Color Picker renders with alpha slider 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 0,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={1}
       style={
         [
           {
@@ -3531,16 +3505,9 @@ exports[`Color Picker renders with alpha slider 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={0}
+      testID="color-picker-test$hue"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -3551,6 +3518,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -3619,42 +3587,21 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
     </View>
   </View>
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$saturation"
   >
     <View
       style={
@@ -4411,13 +4358,32 @@ exports[`Color Picker renders with alpha slider 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 100,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={0.01}
       style={
         [
           {
@@ -4427,16 +4393,9 @@ exports[`Color Picker renders with alpha slider 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={1}
+      testID="color-picker-test$saturation"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -4447,6 +4406,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -4515,42 +4475,21 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
     </View>
   </View>
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$lightness"
   >
     <View
       style={
@@ -5307,13 +5246,32 @@ exports[`Color Picker renders with alpha slider 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 50,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={0.01}
       style={
         [
           {
@@ -5323,16 +5281,9 @@ exports[`Color Picker renders with alpha slider 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={0.5}
+      testID="color-picker-test$lightness"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -5343,6 +5294,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -5411,42 +5363,21 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
     </View>
   </View>
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$alpha"
   >
     <View
       style={
@@ -6203,13 +6134,32 @@ exports[`Color Picker renders with alpha slider 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 100,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={0.01}
       style={
         [
           {
@@ -6219,16 +6169,9 @@ exports[`Color Picker renders with alpha slider 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={1}
+      testID="color-picker-test$alpha"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -6239,6 +6182,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -6307,7 +6251,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
@@ -6337,35 +6281,14 @@ exports[`Color Picker renders with custom style 1`] = `
     testID="color-picker-test$preview"
   />
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$hue"
   >
     <View
       style={
@@ -7122,13 +7045,32 @@ exports[`Color Picker renders with custom style 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 0,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={1}
       style={
         [
           {
@@ -7138,16 +7080,9 @@ exports[`Color Picker renders with custom style 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={0}
+      testID="color-picker-test$hue"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -7158,6 +7093,7 @@ exports[`Color Picker renders with custom style 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -7226,42 +7162,21 @@ exports[`Color Picker renders with custom style 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
     </View>
   </View>
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$saturation"
   >
     <View
       style={
@@ -8018,13 +7933,32 @@ exports[`Color Picker renders with custom style 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 100,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={0.01}
       style={
         [
           {
@@ -8034,16 +7968,9 @@ exports[`Color Picker renders with custom style 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={1}
+      testID="color-picker-test$saturation"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -8054,6 +7981,7 @@ exports[`Color Picker renders with custom style 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -8122,42 +8050,21 @@ exports[`Color Picker renders with custom style 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
     </View>
   </View>
   <View
-    accessibilityState={
+    style={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "alignItems": "stretch",
+        "flexDirection": "column",
+        "height": 32,
+        "justifyContent": "center",
       }
     }
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "alignItems": "stretch",
-          "flexDirection": "column",
-          "height": 32,
-          "justifyContent": "center",
-        },
-      ]
-    }
-    testID="color-picker-test$lightness"
   >
     <View
       style={
@@ -8914,13 +8821,32 @@ exports[`Color Picker renders with custom style 1`] = `
       </View>
     </View>
     <View
-      animateTransitions={false}
-      animationType="timing"
-      disabled={false}
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 50,
+        }
+      }
+      accessible={true}
+      onAccessibilityAction={[Function]}
       onLayout={[Function]}
-      onSlidingComplete={[Function]}
-      onValueChange={[Function]}
-      step={0.01}
       style={
         [
           {
@@ -8930,16 +8856,9 @@ exports[`Color Picker renders with custom style 1`] = `
           undefined,
         ]
       }
-      thumbTouchSize={
-        {
-          "height": 48,
-          "width": 48,
-        }
-      }
-      value={0.5}
+      testID="color-picker-test$lightness"
     >
       <View
-        onLayout={[Function]}
         renderToHardwareTextureAndroid={true}
         style={
           [
@@ -8950,6 +8869,7 @@ exports[`Color Picker renders with custom style 1`] = `
               "borderRadius": 2,
               "height": 4,
             },
+            undefined,
             undefined,
           ]
         }
@@ -9018,7 +8938,7 @@ exports[`Color Picker renders with custom style 1`] = `
               "right": 0,
               "top": 0,
             },
-            {},
+            false,
           ]
         }
       />
