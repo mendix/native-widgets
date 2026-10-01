@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [2.5.0] - 2026-9-2
-
 ### Changed
 
 -   Replaced external dependency `react-native-segmented-control-tab` with in-house SegmentedControl component.
 -   Fixed accessibility: component now uses modern React Native accessibility props (`accessibilityRole="tab"`, `accessibilityState.selected`) instead of deprecated `accessibilityTraits` and `accessibilityComponentType`.
+
+## [2.5.0] - 2026-9-2
+
+### Changed
+
+-   We updated react-native-segmented-control-tab to 3.4.1.
 
 ## [2.3.0] - 2024-12-3
 
