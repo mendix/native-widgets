@@ -39,6 +39,8 @@ export function SegmentedControl(props: SegmentedControlProps): ReactElement {
         <View style={{ flexDirection: "row" }} accessible={false} accessibilityRole="tablist">
             {values.map((value, index) => {
                 const isSelected = index === selectedIndex;
+                const isFirst = index === 0;
+                const isLast = index === values.length - 1;
 
                 return (
                     <Pressable
@@ -56,9 +58,17 @@ export function SegmentedControl(props: SegmentedControlProps): ReactElement {
                                 justifyContent: "center",
                                 paddingVertical: 5,
                                 borderWidth: 1,
-                                borderRadius,
                                 backgroundColor: "transparent",
-                                opacity: pressed ? 0.6 : 1
+                                opacity: pressed ? 0.6 : 1,
+                                ...(isFirst && {
+                                    borderTopLeftRadius: borderRadius,
+                                    borderBottomLeftRadius: borderRadius
+                                }),
+                                ...(isLast && {
+                                    borderTopRightRadius: borderRadius,
+                                    borderBottomRightRadius: borderRadius
+                                }),
+                                ...(!isFirst && { marginLeft: -1 })
                             },
                             buttonStyle,
                             isSelected && activeButtonStyle
