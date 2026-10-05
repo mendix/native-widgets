@@ -1,4 +1,4 @@
-import { createElement, ReactElement, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { ReactElement, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
     AccessibilityActionEvent,
     Animated,
