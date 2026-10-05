@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   We added mendix-native as a dependency to provide native file system.
+
 ## [12.5.1] Native Mobile Resources - 2026-10-8
 
 
@@ -21,16 +25,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [12.5.0] Native Mobile Resources - 2026-9-24
 
-
 ## [2.3.1] BackgroundGradient
+
 ### Changed
 
 -   We removed the library of `react-native-linear-gradient` in favor of a react-native View with linear-gradient type background.
 
 ## [2.3.1] BackgroundImage
+
 -   Fixed background image widget not visible when there is no content inside it.
 
 ## [5.3.3] BottomSheet
+
 ### Added
 
 -   Added an `On change` event that triggers when the `Trigger attribute` value changes, allowing detection of bottom sheet dismissal (e.g. by outside click).
@@ -41,36 +47,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
 
 ## [3.0.0] Signature
+
 ### Added
 
 -   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
 -   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
 
 ## [12.4.0] Native Mobile Resources - 2026-9-2
+
 ### Fixed
 
 -   Removed the visible changes in NC and NMR modules during the first build of the app.
 
 ## [3.4.0] Animation
+
 ### Changed
 
 -   We updated react-native-animatable to 1.4.0.
 
 ## [3.3.0] BarChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 
 ## [4.5.0] BarcodeScanner
+
 -   We fixed the barcode mask not visible issue and selection logic of QR code.
 
 ## [3.3.0] Carousel
+
 ### Changed
 
 -   We updated deprecated-react-native-prop-types to 4.2.3.
 -   We pinned react-native-snap-carousel to 3.9.1.
 
 ## [2.3.0] ColorPicker
+
 ### Changed
 
 -   We updated deprecated-react-native-prop-types to 4.2.3.
@@ -79,61 +92,73 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We updated tinycolor2 to 1.6.0.
 
 ## [2.3.0] ColumnChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 
 ## [3.6.2] Feedback
+
 ### Changed
 
 -   We pinned querystringify to 2.2.0.
 
 ## [4.3.0] FloatingActionButton
+
 -   We have removed the 'react-native-reanimated' library and used Animated API of react native for animation purpose.
 -   We fixed an issue of secondary button's caption not displayed if its horizontal position is center.
 -   We refactored code and migrated to functional component.
 
 ## [4.5.0] IntroScreen
+
 ### Fixed
 
 -   We fixed an issue where the IntroScreen did not show the slide set by the active slide attribute, and where swiping between slides did not work reliably on slower Android devices.
 
 ## [3.3.0] LineChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 
 ## [5.2.1] Maps
+
 ### Changed
 
 -   We pinned prop-types to 15.8.1.
 
 ## [2.3.0] PieDoughnutChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 
 ## [4.1.1] PopupMenu
+
 ### Changed
 
 -   We pinned react-native-material-menu to 1.2.0.
 
 ## [4.4.1] ProgressBar
+
 ### Changed
 
 -   We pinned react-native-progress to 5.0.1.
 
 ## [3.3.1] ProgressCircle
+
 ### Changed
 
 -   We pinned react-native-progress to 5.0.1.
 
 ## [3.0.1] RangeSlider
+
 ### Changed
 
 -   We pinned @miblanchard/react-native-slider to 2.6.0.
 
 ## [5.3.0] Rating
+
 ### Changed
 
 -   We removed @react-native-vector-icons/common dependency.
@@ -141,11 +166,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We added react-native-svg dependency and fixed the issue of rating icons not visible if user sets empty star and selected star as none in studio pro.
 
 ## [4.0.1] Slider
+
 ### Changed
 
 -   We pinned @miblanchard/react-native-slider to 2.6.0.
 
 ## [2.5.0] ToggleButtons
+
 ### Changed
 
 -   We updated react-native-segmented-control-tab to 3.4.1.

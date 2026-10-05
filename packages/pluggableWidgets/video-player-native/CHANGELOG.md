@@ -6,11 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [6.5.0] - 2026-10-1
+### Added
 
-### Changed
-
--   We added mendix-native as a dependency.
+-   We added mendix-native as a dependency to provide platform utilities.
 
 ## [6.4.1] - 2026-6-10
 
