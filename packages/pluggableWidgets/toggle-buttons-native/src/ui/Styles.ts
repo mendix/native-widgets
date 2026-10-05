@@ -23,7 +23,7 @@ export const defaultToggleButtonsStyle: ToggleButtonsStyle = {
         opacity: 0.5
     },
     button: {
-        borderRadius: 0,
+        backgroundColor: "#fff",
         borderColor: Platform.select({ ios: blue, default: "#CCC" })
     },
     text: Platform.select({
