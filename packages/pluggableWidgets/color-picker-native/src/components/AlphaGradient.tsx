@@ -18,7 +18,7 @@ export class AlphaGradient extends Component<AlphaGradientProps> {
         return current.h !== next.h || current.s !== next.s || current.l !== next.l;
     }
 
-    getStepColor = (i: number) => tinycolor({ ...this.props.color, a: i }).toHslString();
+    getStepColor = (i: number): string => tinycolor({ ...this.props.color, a: i }).toHslString();
 
     render(): JSX.Element {
         const { style, gradientSteps } = this.props;

@@ -1,8 +1,4 @@
-/**
- * Gradients ported from react-native-color 0.0.10 (https://github.com/hector/react-native-color)
- * Copyright (c) 2017 Hector Garcia, MIT License
- */
-import { memo, ReactElement } from "react";
+import { ComponentType, memo, ReactElement } from "react";
 import { Platform, StyleSheet, View, ViewStyle } from "react-native";
 import tinycolor from "tinycolor2";
 import HSLA = tinycolor.ColorFormats.HSLA;
@@ -11,72 +7,75 @@ interface GradientProps {
     style?: ViewStyle;
     gradientSteps: number;
     maximumValue: number;
-    getStepColor: (i: number) => string;
+    getStepColor: (value: number) => string;
 }
 
-interface ColorGradientProps {
+interface ChannelGradientProps {
     style?: ViewStyle;
     gradientSteps: number;
     color: HSLA;
 }
 
+/**
+ * Approximates a horizontal linear gradient with a row of solid color segments.
+ * Segment `n` is colored with the value `n / gradientSteps * maximumValue`, so both ends of the range are included.
+ */
 export const Gradient = ({ style, gradientSteps, maximumValue, getStepColor }: GradientProps): ReactElement => {
-    const rows = [];
-    for (let i = 0; i <= gradientSteps; i++) {
-        rows.push(
-            <View
-                key={i}
-                style={{
-                    flex: 1,
-                    marginLeft: Platform.OS === "ios" ? -StyleSheet.hairlineWidth : 0,
-                    backgroundColor: getStepColor((i * maximumValue) / gradientSteps)
-                }}
-            />
-        );
-    }
-    return <View style={[styles.container, style]}>{rows}</View>;
+    const segmentColors = Array.from({ length: gradientSteps + 1 }, (_, index) =>
+        getStepColor((index / gradientSteps) * maximumValue)
+    );
+
+    return (
+        <View style={[styles.track, style]}>
+            {segmentColors.map((backgroundColor, index) => (
+                <View key={index} style={[styles.segment, { backgroundColor }]} />
+            ))}
+        </View>
+    );
 };
 
+const hueColor = (hue: number): string => tinycolor({ h: hue, s: 1, l: 0.5 }).toHslString();
+
 export const HueGradient = memo(
-    ({ style, gradientSteps }: Omit<ColorGradientProps, "color">): ReactElement => (
-        <Gradient
-            style={style}
-            gradientSteps={gradientSteps}
-            getStepColor={i => tinycolor({ s: 1, l: 0.5, h: i }).toHslString()}
-            maximumValue={359}
-        />
+    ({ style, gradientSteps }: Omit<ChannelGradientProps, "color">): ReactElement => (
+        <Gradient style={style} gradientSteps={gradientSteps} maximumValue={359} getStepColor={hueColor} />
     )
 );
 
-export const SaturationGradient = memo(
-    ({ style, color, gradientSteps }: ColorGradientProps): ReactElement => (
-        <Gradient
-            style={style}
-            gradientSteps={gradientSteps}
-            getStepColor={i => tinycolor({ ...color, s: i }).toHslString()}
-            maximumValue={1}
-        />
-    ),
-    (previous, next) => previous.color.h === next.color.h && previous.color.l === next.color.l
-);
+/**
+ * Builds a gradient that sweeps one HSL channel from 0 to 1 while keeping the other channels of `color` fixed.
+ * Changes to the swept channel itself don't affect the gradient, so they don't trigger a re-render.
+ */
+const createChannelGradient = (channel: "s" | "l"): ComponentType<ChannelGradientProps> => {
+    const fixedChannels = (["h", "s", "l"] as const).filter(key => key !== channel);
 
-export const LightnessGradient = memo(
-    ({ style, color, gradientSteps }: ColorGradientProps): ReactElement => (
-        <Gradient
-            style={style}
-            gradientSteps={gradientSteps}
-            getStepColor={i => tinycolor({ ...color, l: i }).toHslString()}
-            maximumValue={1}
-        />
-    ),
-    (previous, next) => previous.color.h === next.color.h && previous.color.s === next.color.s
-);
+    return memo(
+        ({ style, gradientSteps, color }: ChannelGradientProps): ReactElement => (
+            <Gradient
+                style={style}
+                gradientSteps={gradientSteps}
+                maximumValue={1}
+                getStepColor={value => tinycolor({ ...color, [channel]: value }).toHslString()}
+            />
+        ),
+        (previous, next) => fixedChannels.every(key => previous.color[key] === next.color[key])
+    );
+};
+
+export const SaturationGradient = createChannelGradient("s");
+
+export const LightnessGradient = createChannelGradient("l");
 
 const styles = StyleSheet.create({
-    container: {
+    track: {
         flex: 1,
         flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "stretch"
+        alignItems: "stretch",
+        justifyContent: "center"
+    },
+    segment: {
+        flex: 1,
+        // Overlap neighbouring segments slightly so iOS doesn't render visible seams between them
+        marginLeft: Platform.OS === "ios" ? -StyleSheet.hairlineWidth : 0
     }
 });
