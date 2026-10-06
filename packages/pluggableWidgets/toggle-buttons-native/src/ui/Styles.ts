@@ -12,6 +12,7 @@ export interface ToggleButtonsStyle extends Style {
 }
 
 const blue = "rgb(0, 122, 255)";
+
 const purple = "rgb(98, 0, 238)";
 
 export const defaultToggleButtonsStyle: ToggleButtonsStyle = {
@@ -22,7 +23,7 @@ export const defaultToggleButtonsStyle: ToggleButtonsStyle = {
         opacity: 0.5
     },
     button: {
-        borderRadius: 0,
+        backgroundColor: "#fff",
         borderColor: Platform.select({ ios: blue, default: "#CCC" })
     },
     text: Platform.select({
