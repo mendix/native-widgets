@@ -1,92 +1,146 @@
-import { available, flattenStyles, unavailable } from "@mendix/piw-native-utils-internal";
-import { Component, JSX } from "react";
+import { Arc, available, flattenStyles, unavailable } from "@mendix/piw-native-utils-internal";
+import { JSX } from "react";
 import { Text, View, PixelRatio } from "react-native";
-import { Circle } from "react-native-progress";
+import { Svg } from "react-native-svg";
 
 import { ProgressCircleProps } from "../typings/ProgressCircleProps";
 import { defaultProgressCircleStyle, ProgressCircleStyle } from "./ui/Styles";
 
 export type Props = ProgressCircleProps<ProgressCircleStyle>;
 
-export class ProgressCircle extends Component<Props> {
-    private readonly styles = flattenStyles(defaultProgressCircleStyle, this.props.style);
+const CIRCLE = Math.PI * 2;
 
-    render(): JSX.Element {
-        const validationMessages = this.validate();
-        const progress = validationMessages.length === 0 ? this.calculateProgress() : 0;
-        const showsText = this.props.circleText !== "none";
-        return (
-            <View style={this.styles.container}>
-                <Circle
-                    testID={this.props.name}
-                    progress={progress}
-                    textStyle={this.styles.text}
-                    color={this.styles.fill.backgroundColor}
-                    // Update the progress size based on the device's font scale
-                    size={Number(this.styles.circle.size) * PixelRatio.getFontScale()}
-                    borderWidth={this.styles.circle.borderWidth}
-                    borderColor={this.styles.circle.borderColor}
-                    thickness={this.styles.fill.width}
-                    showsText={showsText}
-                    {...(showsText ? { formatText: () => this.formatText(progress) } : {})}
-                    strokeCap={this.styles.fill.lineCapRounded ? "round" : "square"}
+export function ProgressCircle(props: Props): JSX.Element {
+    const styles = flattenStyles(defaultProgressCircleStyle, props.style);
+    const validationMessages = validate(props);
+    const progress = validationMessages.length === 0 ? calculateProgress(props) : 0;
+    const showsText = props.circleText !== "none";
+
+    // Update the progress size based on the device's font scale
+    const size = Number(styles.circle.size) * PixelRatio.getFontScale();
+    const border = Number(styles.circle.borderWidth) || 0;
+    const thickness = Number(styles.fill.width);
+    const color = styles.fill.backgroundColor;
+    const strokeCap = styles.fill.lineCapRounded ? "round" : "square";
+
+    const radius = size / 2 - border;
+    const offset = { top: border, left: border };
+    const textOffset = border + thickness;
+    const textSize = size - textOffset * 2;
+    const angle = progress * CIRCLE;
+
+    const text = showsText ? formatText(progress, props) : "";
+
+    return (
+        <View
+            style={[{ backgroundColor: "transparent", overflow: "hidden" }, styles.container]}
+            testID={props.name}
+            accessible
+            accessibilityRole="progressbar"
+            accessibilityLabel="Progress circle"
+            accessibilityValue={{
+                min: available(props.minimumValue) ? props.minimumValue.value!.toNumber() : 0,
+                max: available(props.maximumValue) ? props.maximumValue.value!.toNumber() : 100,
+                now: available(props.progressValue) ? props.progressValue.value!.toNumber() : 0,
+                ...(showsText ? { text } : {})
+            }}
+        >
+            <Svg width={size} height={size}>
+                <Arc
+                    testID={`${props.name}-arc`}
+                    radius={radius}
+                    offset={offset}
+                    startAngle={0}
+                    endAngle={angle}
+                    stroke={color}
+                    strokeCap={strokeCap}
+                    strokeWidth={thickness}
                 />
-                {validationMessages.length > 0 && (
-                    <Text style={this.styles.validationMessage}>{validationMessages.join("\n")}</Text>
+                {border > 0 && (
+                    <Arc
+                        testID={`${props.name}-border`}
+                        radius={size / 2}
+                        startAngle={0}
+                        endAngle={CIRCLE}
+                        stroke={styles.circle.borderColor || color}
+                        strokeCap={strokeCap}
+                        strokeWidth={border}
+                    />
                 )}
-            </View>
-        );
+            </Svg>
+            {showsText && (
+                <View
+                    style={{
+                        position: "absolute",
+                        left: textOffset,
+                        top: textOffset,
+                        width: textSize,
+                        height: textSize,
+                        borderRadius: textSize / 2,
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}
+                >
+                    <Text style={[{ color, fontSize: textSize / 4.5, fontWeight: "300" as const }, styles.text]}>
+                        {text}
+                    </Text>
+                </View>
+            )}
+            {validationMessages.length > 0 && (
+                <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>
+            )}
+        </View>
+    );
+}
+
+function formatText(progress: number, props: Props): string {
+    switch (props.circleText as "customText" | "percentage") {
+        case "customText":
+            return (props.customText && props.customText.value) || "";
+        case "percentage":
+            return `${Math.round(progress * 100)}%`;
+        default:
+            return "";
     }
+}
 
-    private formatText(progress: number): string {
-        switch (this.props.circleText as "customText" | "percentage") {
-            case "customText":
-                return (this.props.customText && this.props.customText.value) || "";
-            case "percentage":
-                return `${Math.round(progress * 100)}%`;
-            default:
-                return "";
-        }
+function validate(props: Props): string[] {
+    const messages: string[] = [];
+    const { minimumValue, maximumValue, progressValue } = props;
+
+    if (unavailable(minimumValue)) {
+        messages.push("No minimum value provided.");
     }
-
-    private validate(): string[] {
-        const messages: string[] = [];
-        const { minimumValue, maximumValue, progressValue } = this.props;
-
-        if (unavailable(minimumValue)) {
-            messages.push("No minimum value provided.");
-        }
-        if (unavailable(maximumValue)) {
-            messages.push("No maximum value provided.");
-        }
-        if (unavailable(progressValue)) {
-            messages.push("No current value provided.");
-        }
-        if (available(minimumValue) && available(maximumValue) && available(progressValue)) {
-            if (minimumValue.value!.gte(maximumValue.value!)) {
-                messages.push("The minimum value must be equal or less than the maximum value.");
-            } else {
-                if (progressValue.value!.lt(minimumValue.value!)) {
-                    messages.push("The current value must be equal or greater than the minimum value.");
-                }
-                if (progressValue.value!.gt(maximumValue.value!)) {
-                    messages.push("The current value must be equal or less than the maximum value.");
-                }
+    if (unavailable(maximumValue)) {
+        messages.push("No maximum value provided.");
+    }
+    if (unavailable(progressValue)) {
+        messages.push("No current value provided.");
+    }
+    if (available(minimumValue) && available(maximumValue) && available(progressValue)) {
+        if (minimumValue.value!.gte(maximumValue.value!)) {
+            messages.push("The minimum value must be equal or less than the maximum value.");
+        } else {
+            if (progressValue.value!.lt(minimumValue.value!)) {
+                messages.push("The current value must be equal or greater than the minimum value.");
+            }
+            if (progressValue.value!.gt(maximumValue.value!)) {
+                messages.push("The current value must be equal or less than the maximum value.");
             }
         }
-
-        return messages;
     }
 
-    private calculateProgress(): number {
-        const { minimumValue, maximumValue, progressValue } = this.props;
+    return messages;
+}
 
-        if (!available(minimumValue) || !available(maximumValue) || !available(progressValue)) {
-            return 0;
-        }
+function calculateProgress(props: Props): number {
+    const { minimumValue, maximumValue, progressValue } = props;
 
-        const numerator = progressValue.value!.minus(minimumValue.value!);
-        const denominator = maximumValue.value!.minus(minimumValue.value!);
-        return Number(numerator.div(denominator));
+    if (!available(minimumValue) || !available(maximumValue) || !available(progressValue)) {
+        return 0;
     }
+
+    const numerator = progressValue.value!.minus(minimumValue.value!);
+    const denominator = maximumValue.value!.minus(minimumValue.value!);
+    return Number(numerator.div(denominator));
 }
