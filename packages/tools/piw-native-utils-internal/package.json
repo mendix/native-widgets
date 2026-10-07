@@ -25,15 +25,14 @@
     "test": "pluggable-widgets-tools test:unit:native",
     "postinstall": "pnpm build"
   },
-  "dependencies": {
-    "react-native-svg": "^15.15.4"
-  },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
+    "react-native-svg": "15.15.4",
     "rimraf": "^6.1.2"
   },
   "peerDependencies": {
     "react": "19.2.3",
-    "react-native": "0.84.1"
+    "react-native": "0.84.1",
+    "react-native-svg": "15.15.4"
   }
 }
