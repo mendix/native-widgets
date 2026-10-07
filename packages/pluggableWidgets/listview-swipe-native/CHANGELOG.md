@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+-   Updated react-native-gesture-handler from version v2.31.2 to v2.33.0.
+
 ## [3.5.0] - 2026-6-10
 
 ### Changed

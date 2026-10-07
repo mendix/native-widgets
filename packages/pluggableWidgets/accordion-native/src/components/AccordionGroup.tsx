@@ -36,7 +36,7 @@ export function AccordionGroup({
         <View style={style.container}>
             <Pressable
                 style={[style.header.container, icon === "left" && { flexDirection: "row-reverse" }]}
-                onPress={collapsible ? () => onPressGroupHeader(group, index) : null}
+                onPress={collapsible ? () => onPressGroupHeader(group, index) : undefined}
             >
                 {group.headerRenderMode === "text" ? (
                     <Text style={[style.header[group.headerTextRenderMode], { flex: 1 }]}>

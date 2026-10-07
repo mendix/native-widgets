@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   We pinned react-native-progress to 5.0.1.
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
 
 ## [3.2.1] - 2025-2-7
 

@@ -140,7 +140,7 @@ exports[`VideoPlayer VideoPlayerAndroid render video with controls 1`] = `
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          {},
+          undefined,
         ]
       }
     >
@@ -376,7 +376,7 @@ exports[`VideoPlayer hides the loading indicator after load 1`] = `
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          {},
+          undefined,
         ]
       }
     >
@@ -526,7 +526,7 @@ exports[`VideoPlayer load a video and calculate the aspect ratio 1`] = `
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          {},
+          undefined,
         ]
       }
     >
@@ -676,7 +676,7 @@ exports[`VideoPlayer renders a loading indicator 1`] = `
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          {},
+          undefined,
         ]
       }
     >
@@ -830,7 +830,7 @@ exports[`VideoPlayer shows the loading indicator if the source changes 1`] = `
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          {},
+          undefined,
         ]
       }
     >

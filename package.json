@@ -43,7 +43,8 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@react-native/babel-preset": "0.84.1",
+    "@react-native/babel-preset": "0.88.0-rc.3",
+    "@react-native/jest-preset": "0.88.0-rc.3",
     "@testing-library/react-native": "^13.3.3",
     "@types/big.js": "^6.2.2",
     "@types/concurrently": "^6.4.0",
@@ -51,8 +52,8 @@
     "@types/jasmine": "^3.10.19",
     "@types/mime": "^2.0.3",
     "@types/node": "^20.19.37",
-    "@types/react": "~19.2.14",
-    "@types/react-dom": "~19.2.3",
+    "@types/react": "~19.3.0",
+    "@types/react-dom": "~19.3.0",
     "@types/react-test-renderer": "~19.1.0",
     "@types/shelljs": "^0.8.17",
     "@types/xml2js": "^0.4.14",
@@ -64,7 +65,7 @@
     "lint-staged": "^11.2.6",
     "mendix-client": "^7.15.8",
     "pretty-quick": "^3.3.1",
-    "react-dom": "19.2.3",
+    "react-dom": "19.3.0",
     "recursive-copy": "^2.0.14",
     "ts-node": "^10.9.2"
   },
@@ -82,16 +83,16 @@
       "@rollup/plugin-typescript": "12.3.0",
       "mendix": "11.8.0",
       "eslint": "9.39.4",
-      "react": "19.2.3",
-      "react-dom": "19.2.3",
-      "react-native": "0.84.1",
-      "@types/react": "~19.2.14",
-      "@types/react-dom": "~19.2.3",
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "react-native": "0.88.0-rc.3",
+      "@types/react": "~19.3.0",
+      "@types/react-dom": "~19.3.0",
       "@prettier/plugin-xml": "2.2.0",
       "cheerio": "1.0.0-rc.12",
       "typescript": "~5.9.3",
       "rollup": "4.30.1",
-      "react-test-renderer": "19.2.3",
+      "react-test-renderer": "19.3.0",
       "@xmldom/xmldom": ">=0.8.13",
       "flatted": ">=3.4.2",
       "immutable": ">=5.1.5",
@@ -103,9 +104,11 @@
       "lodash": ">=4.18.0"
     },
     "patchedDependencies": {
-      "react-native-gesture-handler@2.31.2": "patches/react-native-gesture-handler+2.31.2.patch",
+      "react-native-gesture-handler@2.33.0": "patches/react-native-gesture-handler+2.33.0.patch",
       "react-native-snap-carousel@3.9.1": "patches/react-native-snap-carousel+3.9.1.patch",
-      "@mendix/pluggable-widgets-tools": "patches/@mendix__pluggable-widgets-tools.patch"
+      "@mendix/pluggable-widgets-tools": "patches/@mendix__pluggable-widgets-tools.patch",
+      "@d11/react-native-fast-image@8.13.0": "patches/@d11+react-native-fast-image+8.13.0.patch",
+      "react-native-progress@5.0.1": "patches/react-native-progress+5.0.1.patch"
     }
   },
   "packageManager": "pnpm@10.32.0+sha512.9b2634bb3fed5601c33633f2d92593f506270a3963b8c51d2b2d6a828da615ce4e9deebef9614ccebbc13ac8d3c0f9c9ccceb583c69c8578436fa477dbb20d70"

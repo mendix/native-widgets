@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
 -   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
 
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+
 ## [2.4.0] - 2026-5-15
 
 ### Changed

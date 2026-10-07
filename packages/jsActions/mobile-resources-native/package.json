@@ -1,7 +1,7 @@
 {
   "name": "mobile-resources-native",
   "moduleName": "Native Mobile Resources",
-  "version": "12.2.0",
+  "version": "13.0.0",
   "license": "Apache-2.0",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "repository": {
@@ -35,7 +35,7 @@
     "@swan-io/react-native-browser": "1.0.1",
     "fbjs": "3.0.4",
     "mime": "3.0.0",
-    "react-native-blob-util": "0.24.7",
+    "react-native-blob-util": "0.24.11",
     "react-native-device-info": "15.0.2",
     "react-native-file-viewer-turbo": "0.7.4",
     "react-native-image-picker": "7.2.3",

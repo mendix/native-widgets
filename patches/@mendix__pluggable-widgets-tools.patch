@@ -1,5 +1,5 @@
 diff --git a/configs/rollup-plugin-collect-dependencies.mjs b/configs/rollup-plugin-collect-dependencies.mjs
-index d45c737bf32cb1029249fdc069b3df3f832d1ab4..9246919bd939c622447ba0227c5b695892f162a8 100644
+index d45c737..9246919 100644
 --- a/configs/rollup-plugin-collect-dependencies.mjs
 +++ b/configs/rollup-plugin-collect-dependencies.mjs
 @@ -1,8 +1,7 @@
@@ -59,7 +59,7 @@ index d45c737bf32cb1029249fdc069b3df3f832d1ab4..9246919bd939c622447ba0227c5b6958
  }
  
 diff --git a/configs/rollup.config.native.mjs b/configs/rollup.config.native.mjs
-index 62c5c82ddbd628e5d22709660f26e82855ddfceb..927c8e729238f8cb2971b752c2ccace3d9464606 100644
+index 62c5c82..927c8e7 100644
 --- a/configs/rollup.config.native.mjs
 +++ b/configs/rollup.config.native.mjs
 @@ -52,9 +52,9 @@ const nativeExternal = [
@@ -83,18 +83,45 @@ index 62c5c82ddbd628e5d22709660f26e82855ddfceb..927c8e729238f8cb2971b752c2ccace3
              // We need to create .mpk and copy results to test project after bundling is finished.
              // In case of a regular build is it is on `writeBundle` of the last config we define
              // (since rollup processes configs sequentially). But in watch mode rollup re-bundles only
+diff --git a/configs/tsconfig.base.json b/configs/tsconfig.base.json
+index 62627fd..0b8f2d5 100644
+--- a/configs/tsconfig.base.json
++++ b/configs/tsconfig.base.json
+@@ -6,7 +6,7 @@
+         "target": "es6",
+         "lib": ["esnext", "dom"],
+         "types": ["jest", "node"],
+-        "moduleResolution": "node",
++        "moduleResolution": "bundler",
+         "declaration": false,
+         "noLib": false,
+         "forceConsistentCasingInFileNames": true,
 diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
-index 9424f7f802a4ca7843d536d4d46c67375e73f67f..af13d476c202d712cab51e5a83be9d2183fc1008 100644
+index 9424f7f..088669c 100644
 --- a/test-config/jest.native.config.js
 +++ b/test-config/jest.native.config.js
-@@ -16,8 +16,9 @@ module.exports = {
+@@ -3,7 +3,7 @@ const { join } = require("path");
+ const projectDir = process.cwd();
+ 
+ module.exports = {
+-    preset: "react-native",
++    preset: "@react-native/jest-preset",
+     testRunner: "jest-jasmine2",
+     clearMocks: true,
+     haste: {
+@@ -16,12 +16,13 @@ module.exports = {
          ...(hasDependency("react-native-gesture-handler") ? ["react-native-gesture-handler/jestSetup.js"] : [])
      ],
      testMatch: ["<rootDir>/**/*.spec.{js,jsx,ts,tsx}"],
 -    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-)/)"],
 +    transformIgnorePatterns: ["node_modules/(?!(.*react-native.*|victory-|@shopify/flash-list)/)"],
      transform: {
-+        "^.+\\.(ttf|otf|woff2?|eot)$": require.resolve("react-native/jest/assetFileTransformer.js"),
++        "^.+\\.(ttf|otf|woff2?|eot)$": require.resolve("@react-native/jest-preset/jest/assetFileTransformer.js"),
          "^.+\\.tsx?$": [
              "ts-jest",
              {
+-                tsconfig: { module: "commonjs", target: "ES2019" }
++                tsconfig: { module: "preserve", target: "ES2019", noEmitOnError: false }
+             }
+         ],
+         "^.+\\.jsx?$": join(__dirname, "transform-native.js")

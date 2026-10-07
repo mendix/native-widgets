@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We removed @react-native-vector-icons/common dependency.
 -   We removed @react-native-vector-icons/get-image depedency.
 -   We added react-native-svg dependency and fixed the issue of rating icons not visible if user sets empty star and selected star as none in studio pro.
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
 
 ## [5.2.1] - 2026-6-10
 

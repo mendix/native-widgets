@@ -1,28 +1,19 @@
-import { ComponentType, ReactElement, useCallback, useRef, Fragment } from "react";
+import { ReactElement, useCallback, useRef, Fragment } from "react";
 import { PopupMenuProps } from "../typings/PopupMenuProps";
 import { PopupMenuStyle } from "./ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
-import {
-    Platform,
-    StyleSheet,
-    TouchableHighlight,
-    TouchableHighlightProps,
-    TouchableNativeFeedback,
-    TouchableNativeFeedbackProps,
-    TouchableOpacity,
-    View
-} from "react-native";
+import { Platform, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
 import { ActionValue } from "mendix";
 import Menu, { MenuDivider, MenuItem } from "react-native-material-menu";
 
-const TouchableItem: ComponentType<TouchableNativeFeedbackProps | TouchableHighlightProps> =
+const TouchableItem: typeof TouchableNativeFeedback | typeof TouchableHighlight =
     Platform.OS === "android" ? TouchableNativeFeedback : TouchableHighlight;
 
-const TouchableButton: ComponentType<TouchableNativeFeedbackProps | typeof TouchableOpacity> =
+const TouchableButton: typeof TouchableNativeFeedback | typeof TouchableOpacity =
     Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
 
 export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
-    const styles = StyleSheet.flatten(props.style);
+    const styles: PopupMenuStyle = Object.assign({}, ...props.style);
 
     const menuRef = useRef<Menu | null>(null);
     const showMenu = useCallback(() => {

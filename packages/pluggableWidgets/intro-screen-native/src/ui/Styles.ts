@@ -1,6 +1,6 @@
 import { Style } from "@mendix/piw-native-utils-internal";
 import { I18nManager, Platform, StyleSheet, TextStyle, ViewStyle } from "react-native";
-import absoluteFillObject = StyleSheet.absoluteFillObject;
+import absoluteFill = StyleSheet.absoluteFill;
 import DeviceInfo from "react-native-device-info";
 
 const isiPhoneModelWithNotch = (): boolean => {
@@ -81,10 +81,10 @@ export interface IntroScreenStyle extends Style {
 
 export const defaultWelcomeScreenStyle: IntroScreenStyle = {
     fullscreenContainer: {
-        ...absoluteFillObject
+        ...absoluteFill
     },
     popupContainer: {
-        ...absoluteFillObject,
+        ...absoluteFill,
         paddingHorizontal: 50,
         paddingVertical: 150,
         backgroundColor: "rgba(0, 0, 0, 0.5)"

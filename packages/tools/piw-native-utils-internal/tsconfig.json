@@ -4,8 +4,8 @@
     "compilerOptions": {
         "target": "es2017",
         "lib": ["es2015", "es2017"],
-        "types": ["mendix-client", "big.js", "react-native", "jest"],
-        "moduleResolution": "node",
+        "types": ["mendix-client", "big.js", "jest"],
+        "moduleResolution": "bundler",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "strict": true,
