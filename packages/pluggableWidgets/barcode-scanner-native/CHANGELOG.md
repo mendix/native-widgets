@@ -19,6 +19,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   We fixed barcodes with patterned backgrounds not being scanned correctly on Android.
 
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+
 ## [4.2.2] - 2025-12-23
 
 -   We expanded the barcode-scanner configuration in Vision Camera to support all available `CodeType` formats, including QR, Aztec, Data Matrix, PDF-417, EAN, UPC, GS1 DataBar, ITF, and Code barcodes.

@@ -1,0 +1,32 @@
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 2332172..3f89f3c 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -1,5 +1,5 @@
+ import React from 'react';
+-import { FlexStyle, LayoutChangeEvent, ShadowStyleIOS, StyleProp, TransformsStyle, ImageRequireSource, AccessibilityProps, ViewProps, ColorValue } from 'react-native';
++import { LayoutChangeEvent, StyleProp, ImageRequireSource, AccessibilityProps, ViewProps, ColorValue, ImageStyle as RNImageStyle } from 'react-native';
+ export type ResizeMode = 'contain' | 'cover' | 'stretch' | 'center';
+ declare const resizeMode: {
+     readonly contain: "contain";
+@@ -49,19 +49,7 @@ export interface OnErrorEvent {
+         error: string;
+     };
+ }
+-export interface ImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {
+-    backfaceVisibility?: 'visible' | 'hidden';
+-    borderBottomLeftRadius?: number;
+-    borderBottomRightRadius?: number;
+-    backgroundColor?: string;
+-    borderColor?: string;
+-    borderWidth?: number;
+-    borderRadius?: number;
+-    borderTopLeftRadius?: number;
+-    borderTopRightRadius?: number;
+-    overlayColor?: string;
+-    opacity?: number;
+-}
++export type ImageStyle = RNImageStyle;
+ export interface FastImageProps extends AccessibilityProps, ViewProps {
+     source?: Source | ImageRequireSource;
+     defaultSource?: ImageRequireSource;

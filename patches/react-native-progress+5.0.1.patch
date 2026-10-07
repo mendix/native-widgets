@@ -1,0 +1,23 @@
+diff --git a/index.d.ts b/index.d.ts
+index 76a62c0..fbe1e41 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -1,15 +1,15 @@
+ declare module 'react-native-progress' {
+   import React from 'react';
+-  import { TextStyle, ViewProperties } from 'react-native';
++  import { TextStyle, ViewProps } from 'react-native';
+ 
+   /**
+    * Properties for all `Progress` components.
+    *
+    * @export
+    * @interface DefaultPropTypes
+-   * @extends {ViewProperties}
++   * @extends {ViewProps}
+    */
+-  export interface DefaultPropTypes extends ViewProperties {
++  export interface DefaultPropTypes extends ViewProps {
+     /**
+      * Whether or not to animate changes to progress.
+      *

@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
 -   We added mendix-native as a dependency to provide native file system.
 
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+
 ## [2.4.0] - 2026-5-15
 
 ### Changed
