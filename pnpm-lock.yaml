@@ -677,9 +677,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: 1.0.0
         version: link:../../tools/piw-utils-internal
-      react-native-progress:
-        specifier: 5.0.1
-        version: 5.0.1(react-native-svg@15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
@@ -690,9 +687,9 @@ importers:
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
-      react-native-progress:
-        specifier: 5.0.1
-        version: 5.0.1(react-native-svg@15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3))
+      react-native-svg:
+        specifier: 15.15.4
+        version: 15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
     devDependencies:
       '@mendix/piw-utils-internal':
         specifier: '*'
@@ -903,6 +900,16 @@ importers:
         version: 11.12.0(patch_hash=cac90aed34fd19a0a6f1475c31d66a807c1e123ddf7116b44bf4b1f29ebe11bf)(@jest/transform@30.3.0)(@jest/types@30.4.1)(@types/babel__core@7.20.5)(@types/node@20.19.41)(jest-util@30.4.1)(jiti@2.6.1)(picomatch@4.0.4)(react-dom@19.2.3(react@19.2.3))(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)(tslib@2.8.1)
 
   packages/tools/piw-native-utils-internal:
+    dependencies:
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-native:
+        specifier: 0.84.1
+        version: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
+      react-native-svg:
+        specifier: ^15.15.4
+        version: 15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
@@ -6603,11 +6610,6 @@ packages:
     peerDependenciesMeta:
       react-native-windows:
         optional: true
-
-  react-native-progress@5.0.1:
-    resolution: {integrity: sha512-TYfJ4auAe5vubDma2yfFvt7ktSI+UCfysqJnkdHEcLXqAitRFOozgF/cLgN5VNi/iLdaf3ga1ETi2RF4jVZ/+g==}
-    peerDependencies:
-      react-native-svg: '*'
 
   react-native-qrcode-svg@6.0.6:
     resolution: {integrity: sha512-b+/teD+xj17VDujJzf956U2+9mX+gKwVJss2aqmhEIyjP7+TVOuE08D3UkzfOCWXE8gppcUTTz5gkY1NXgfwyQ==}
@@ -14821,11 +14823,6 @@ snapshots:
     dependencies:
       react: 19.2.3
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
-
-  react-native-progress@5.0.1(react-native-svg@15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)):
-    dependencies:
-      prop-types: 15.8.1
-      react-native-svg: 15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
 
   react-native-qrcode-svg@6.0.6(react-native-svg@15.15.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3))(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3):
     dependencies:
