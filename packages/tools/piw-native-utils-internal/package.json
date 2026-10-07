@@ -28,9 +28,5 @@
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
     "rimraf": "^6.1.2"
-  },
-  "peerDependencies": {
-    "react": "19.2.3",
-    "react-native": "0.84.1"
   }
 }
