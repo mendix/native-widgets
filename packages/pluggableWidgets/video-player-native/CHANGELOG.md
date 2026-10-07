@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 -   We added mendix-native as a dependency to provide platform utilities.
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+-   Updated @react-native-vector-icons/material-icons from version v12.4.1 to v13.1.4.
 
 ## [6.4.1] - 2026-6-10
 

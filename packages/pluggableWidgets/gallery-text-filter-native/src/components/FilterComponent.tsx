@@ -1,5 +1,5 @@
 import { ReactElement, useRef, useState, useEffect, useMemo } from "react";
-import { View, TextInput, TouchableOpacity, ViewStyle } from "react-native";
+import { View, TextInput, TextInputInstance, TouchableOpacity, ViewStyle } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { debounce } from "@mendix/piw-utils-internal";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
@@ -29,7 +29,7 @@ export default function FilterComponent(props: FilterComponentProps): ReactEleme
         props.styles?.textInputContainer || {}
     );
 
-    const inputRef = useRef<TextInput | null>(null);
+    const inputRef = useRef<TextInputInstance | null>(null);
 
     const [textInputProps, textInput] = extractStyles(props.styles?.textInput, textInputPropsKeys);
     const xIconSVG = (

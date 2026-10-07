@@ -17,6 +17,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Fixed iOS orientation change when opening the bottom sheet modal on devices in landscape mode.
 -   Fixed the app becoming unresponsive to touches after a modal bottom sheet (basic or custom rendering) was closed while it was still opening, e.g. when opening and closing it quickly. A sheet whose trigger attribute is set to false while it is opening now also closes once it has opened.
 
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+-   Updated react-native-gesture-handler from version v2.31.2 to v2.33.0.
+-   Updated react-native-reanimated from version v4.3.1 to v4.7.1.
+-   Updated react-native-worklets from version v0.8.3 to v0.13.0.
+
 ## [5.3.2] - 2026-8-4
 
 ### Fixed
