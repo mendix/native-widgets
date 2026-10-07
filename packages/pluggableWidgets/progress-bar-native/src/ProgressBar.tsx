@@ -1,7 +1,6 @@
-import { flattenStyles } from "@mendix/piw-native-utils-internal";
+import { Bar, flattenStyles } from "@mendix/piw-native-utils-internal";
 import { isAvailable } from "@mendix/piw-utils-internal";
 import { Text, View } from "react-native";
-import { Bar } from "react-native-progress";
 import { JSX } from "react";
 
 import { ProgressBarProps } from "../typings/ProgressBarProps";
@@ -55,15 +54,28 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
 
     return (
         <View style={styles.container}>
-            <Bar
-                testID={props.name}
-                height={Number(styles.bar.height)}
-                width={null}
-                progress={progress}
-                color={styles.fill.backgroundColor}
-                borderWidth={styles.bar.borderWidth}
-                style={styles.bar}
-            />
+            <View
+                accessible
+                accessibilityRole="progressbar"
+                accessibilityValue={{
+                    min: isAvailable(props.minimumValue) ? props.minimumValue.value!.toNumber() : 0,
+                    max: isAvailable(props.maximumValue) ? props.maximumValue.value!.toNumber() : 100,
+                    now: isAvailable(props.progressValue) ? props.progressValue.value!.toNumber() : 0
+                }}
+                accessibilityLabel="Progress bar"
+            >
+                <Bar
+                    testID={props.name}
+                    height={Number(styles.bar.height)}
+                    width={null}
+                    progress={progress}
+                    color={styles.fill.backgroundColor}
+                    borderWidth={styles.bar.borderWidth as number | undefined}
+                    borderColor={styles.bar.borderColor}
+                    borderRadius={styles.bar.borderRadius as number | undefined}
+                    unfilledColor={styles.bar.backgroundColor}
+                />
+            </View>
             {validationMessages.length > 0 && (
                 <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>
             )}
