@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [11.3.14] Native Mobile Resources - 2026-10-8
+
+## [2.1.1] Gallery
+
+-   We've fixed an issue where Gallery widget does not display data.
+
 ## [11.3.13] Native Mobile Resources - 2026-9-24
 
 ## [2.2.1] BackgroundImage
