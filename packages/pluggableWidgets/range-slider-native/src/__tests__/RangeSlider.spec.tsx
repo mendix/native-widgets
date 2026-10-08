@@ -1,22 +1,9 @@
 import { actionValue, dynamicValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
+import { ReactElement } from "react";
 import { ValueStatus, DynamicValue } from "mendix";
 import { Props, RangeSlider } from "../RangeSlider";
-
-jest.mock("@miblanchard/react-native-slider", () => {
-    const { View } = require("react-native");
-    return {
-        Slider: (props: any) => (
-            <View
-                testID="mocked-slider"
-                {...props}
-                onValueChange={(values: number[]) => props.onValueChange?.(values)}
-                onSlidingComplete={(values: number[]) => props.onSlidingComplete?.(values)}
-            />
-        )
-    };
-});
 
 describe("RangeSlider", () => {
     const noValue: DynamicValue<Big> = { status: ValueStatus.Unavailable, value: undefined };
@@ -123,62 +110,96 @@ describe("RangeSlider", () => {
         expect(component.getAllByText("Invalid")).toHaveLength(2);
     });
 
+    // Values 70 and 210 of 0-280 put the thumbs at left 67.5 and 202.5, so their centres in the touch area are at
+    // 9 + 67.5 + 15 and 9 + 202.5 + 15
+    const lowerCentre = 91.5;
+    const upperCentre = 226.5;
+    const sliderId = "range-slider-test$slider";
+
     it("renders as disabled when editable is never", () => {
-        const component = render(<RangeSlider {...defaultProps} editable={"never"} />);
-        const slider = component.getByTestId("mocked-slider");
-        expect(slider.props.disabled).toBe(true);
+        const component = renderMeasured(<RangeSlider {...defaultProps} editable={"never"} />, sliderId);
+
+        expect(component.getByTestId(`${sliderId}$thumb0`).props.accessibilityState).toEqual({ disabled: true });
+        expect(component.getByTestId(`${sliderId}$thumb1`).props.accessibilityState).toEqual({ disabled: true });
+        expect(drag(component, sliderId, lowerCentre, 27)).toBe(false);
     });
 
     it("renders as enabled when editable is default", () => {
-        const component = render(<RangeSlider {...defaultProps} />);
-        const slider = component.getByTestId("mocked-slider");
-        expect(slider.props.disabled).toBe(false);
+        const component = renderMeasured(<RangeSlider {...defaultProps} />, sliderId);
+
+        expect(component.getByTestId(`${sliderId}$thumb0`).props.accessibilityState).toEqual({ disabled: false });
     });
 
-    it("passes correct min/max/step to the slider", () => {
-        const component = render(<RangeSlider {...defaultProps} />);
-        const slider = component.getByTestId("mocked-slider");
-        expect(slider.props.minimumValue).toBe(0);
-        expect(slider.props.maximumValue).toBe(280);
-        expect(slider.props.step).toBe(1);
+    it("announces each value as adjustable", () => {
+        const component = renderMeasured(<RangeSlider {...defaultProps} />, sliderId);
+        const lower = component.getByTestId(`${sliderId}$thumb0`);
+        const upper = component.getByTestId(`${sliderId}$thumb1`);
+
+        expect(lower.props.accessibilityRole).toBe("adjustable");
+        expect(lower.props.accessibilityValue).toEqual({ min: 0, max: 100, now: 25 });
+        expect(upper.props.accessibilityRole).toBe("adjustable");
+        expect(upper.props.accessibilityValue).toEqual({ min: 0, max: 100, now: 75 });
     });
 
-    it("passes range values as array", () => {
-        const component = render(<RangeSlider {...defaultProps} />);
-        const slider = component.getByTestId("mocked-slider");
-        expect(slider.props.value).toEqual([70, 210]);
+    it("adjusts a value with a screen reader", () => {
+        const onChangeAction = actionValue();
+        const component = renderMeasured(<RangeSlider {...defaultProps} onChange={onChangeAction} />, sliderId);
+
+        fireEvent(component.getByTestId(`${sliderId}$thumb1`), "accessibilityAction", {
+            nativeEvent: { actionName: "decrement" }
+        });
+
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(70));
+        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(182));
+        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
     });
 
     it("calls onValueChange when sliding", () => {
-        const component = render(<RangeSlider {...defaultProps} />);
-        const slider = component.getByTestId("mocked-slider");
+        const component = renderMeasured(<RangeSlider {...defaultProps} />, sliderId);
 
-        fireEvent(slider, "onValueChange", [100, 210]);
+        drag(component, sliderId, lowerCentre, 27, false);
 
-        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(100));
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(98));
         expect(defaultProps.upperValueAttribute.setValue).toHaveBeenCalledWith(new Big(210));
     });
 
     it("calls onChange action on sliding complete", () => {
         const onChangeAction = actionValue();
-        const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
-        const slider = component.getByTestId("mocked-slider");
+        const component = renderMeasured(<RangeSlider {...defaultProps} onChange={onChangeAction} />, sliderId);
 
-        fireEvent(slider, "onSlidingComplete", [100, 250]);
+        drag(component, sliderId, upperCentre, 27);
 
-        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(100));
-        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenCalledWith(new Big(250));
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(70));
+        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(238));
         expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
     });
 
     it("does not call onChange when values haven't changed", () => {
         const onChangeAction = actionValue();
-        const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
-        const slider = component.getByTestId("mocked-slider");
+        const component = renderMeasured(<RangeSlider {...defaultProps} onChange={onChangeAction} />, sliderId);
 
-        fireEvent(slider, "onSlidingComplete", [70, 210]);
+        drag(component, sliderId, lowerCentre, 0);
 
         expect(onChangeAction.execute).not.toHaveBeenCalled();
+    });
+
+    it("does not move a thumb past the other", () => {
+        const component = renderMeasured(<RangeSlider {...defaultProps} />, sliderId);
+
+        drag(component, sliderId, lowerCentre, 1000);
+
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(210));
+        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(210));
+    });
+
+    it("moves the closest thumb to a pressed position on the track", () => {
+        const component = renderMeasured(<RangeSlider {...defaultProps} />, sliderId);
+
+        // Value 250 is at left 241.07
+        drag(component, sliderId, 9 + 241.07 + 15, 0);
+
+        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(70));
+        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenLastCalledWith(new Big(250));
     });
 
     it("renders with the width of the parent view", () => {
@@ -211,22 +232,6 @@ describe("RangeSlider", () => {
         expect(container.props.style).toEqual(expect.objectContaining({ width: 100 }));
     });
 
-    it("changes the lower value when swiping", () => {
-        const onChangeAction = actionValue();
-        const component = render(<RangeSlider {...defaultProps} onChange={onChangeAction} />);
-        const slider = component.getByTestId("mocked-slider");
-
-        fireEvent(slider, "onValueChange", [120, 210]);
-
-        expect(onChangeAction.execute).not.toHaveBeenCalled();
-
-        fireEvent(slider, "onSlidingComplete", [120, 210]);
-
-        expect(defaultProps.lowerValueAttribute.setValue).toHaveBeenCalledWith(new Big(120));
-        expect(defaultProps.upperValueAttribute.setValue).toHaveBeenCalledWith(new Big(210));
-        expect(onChangeAction.execute).toHaveBeenCalledTimes(1);
-    });
-
     it("applies custom styles", () => {
         const component = render(
             <RangeSlider
@@ -256,3 +261,48 @@ describe("RangeSlider", () => {
         expect(component.toJSON()).toMatchSnapshot("with custom styles");
     });
 });
+
+// A 300 wide container and the 30 wide default marker leave a 270px track; the 48px touch area adds 9px on each side
+function renderMeasured(element: ReactElement, testID: string): RenderAPI {
+    const component = render(element);
+    const [container, thumb] = component
+        .getByTestId(testID)
+        .findAll(node => typeof node.type === "string" && typeof node.props.onLayout === "function");
+    fireEvent(container, "layout", { nativeEvent: { layout: { width: 300, height: 40 } } });
+    fireEvent(thumb, "layout", { nativeEvent: { layout: { width: 30, height: 30 } } });
+    return component;
+}
+
+function drag(component: RenderAPI, testID: string, locationX: number, dx: number, release = true): boolean {
+    const touchArea = component
+        .getByTestId(testID)
+        .findAll(node => typeof node.type === "string" && typeof node.props.onResponderGrant === "function")[0];
+    const touch = { nativeEvent: { locationX, locationY: 20 }, touchHistory: { touchBank: [] } };
+    if (!touchArea.props.onStartShouldSetResponder(touch)) {
+        return false;
+    }
+    fireEvent(touchArea, "responderGrant", touch);
+    const gesture = {
+        touchHistory: {
+            numberActiveTouches: 1,
+            indexOfSingleActiveTouch: 0,
+            touchBank: [
+                {
+                    touchActive: true,
+                    currentTimeStamp: Date.now(),
+                    currentPageX: dx,
+                    currentPageY: 0,
+                    previousPageX: 0,
+                    previousPageY: 0,
+                    startPageX: 0,
+                    startPageY: 0
+                }
+            ]
+        }
+    };
+    fireEvent(touchArea, "responderMove", gesture);
+    if (release) {
+        fireEvent(touchArea, "responderRelease", gesture);
+    }
+    return true;
+}
