@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [12.5.1] Native Mobile Resources - 2026-10-8
+
+
+## [2.3.0] Gallery
+### Fixed
+
+-   We've fixed an issue where Gallery widget does not display data.
+-   We've fixed an issue where items in a horizontally scrolling Gallery would stretch to the full screen width instead of sizing to their content.
+
+### Added
+
+-   Added horizontal item sizing options to fit items to their content or divide the Gallery width into configurable columns.
+
 ## [12.5.0] Native Mobile Resources - 2026-9-24
 
 

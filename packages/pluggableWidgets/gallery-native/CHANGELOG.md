@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-10-8
+
 ### Fixed
 
 -   We've fixed an issue where Gallery widget does not display data.
