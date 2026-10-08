@@ -1,5 +1,289 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`Carousel renders full width 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    {
+      "width": "100%",
+    }
+  }
+  testID="carousel"
+>
+  <RCTScrollView
+    collapsable={false}
+    contentContainerStyle={
+      {
+        "paddingLeft": 0,
+        "paddingRight": 0,
+      }
+    }
+    data={
+      [
+        {
+          "id": "1",
+        },
+        {
+          "id": "2",
+        },
+      ]
+    }
+    decelerationRate={0.9}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    getItemLayout={[Function]}
+    horizontal={true}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={true}
+    renderItem={[Function]}
+    scrollEventThrottle={16}
+    showsHorizontalScrollIndicator={false}
+    snapToInterval={300}
+    stickyHeaderIndices={[]}
+    style={
+      {
+        "height": 300,
+        "width": 300,
+      }
+    }
+    testID="carousel$carousel"
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          style={
+            {
+              "height": "100%",
+              "opacity": 1,
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+              "width": 300,
+            }
+          }
+          testID="carousel$content$0"
+        >
+          <View>
+            <Text>
+              MyContent
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          style={
+            {
+              "height": "100%",
+              "opacity": 1,
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+              "width": 300,
+            }
+          }
+          testID="carousel$content$1"
+        >
+          <View>
+            <Text>
+              MyContent
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    accessibilityLabel="carousel$pagination"
+    style={
+      [
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        {
+          "paddingHorizontal": 0,
+          "paddingVertical": 0,
+        },
+      ]
+    }
+    testID="carousel$pagination"
+  >
+    <View
+      accessibilityLabel="1"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": true,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          {
+            "marginHorizontal": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "borderRadius": 3.5,
+              "height": 7,
+              "width": 7,
+            },
+            {
+              "backgroundColor": "rgba(0, 0, 0, 0.75)",
+            },
+            {
+              "marginHorizontal": 0,
+            },
+          ]
+        }
+      />
+    </View>
+    <View
+      accessibilityLabel="2"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "justifyContent": "center",
+          },
+          {
+            "marginHorizontal": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "borderRadius": 3.5,
+              "height": 7,
+              "width": 7,
+            },
+            {
+              "backgroundColor": "rgba(0, 0, 0, 0.75)",
+            },
+            [
+              {
+                "opacity": 0.5,
+                "transform": [
+                  {
+                    "scale": 0.5,
+                  },
+                ],
+              },
+              {
+                "marginHorizontal": 0,
+              },
+            ],
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
 exports[`Carousel renders loading 1`] = `
 <View
   onLayout={[Function]}
