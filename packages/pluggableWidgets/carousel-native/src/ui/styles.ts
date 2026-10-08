@@ -65,6 +65,11 @@ export const defaultCarouselStyle: CarouselStyle = {
         slideItem: {
             width: "70%",
             height: "100%"
+        },
+        // Dims and shrinks the cards on either side of the active one, so it stands out against its neighbours.
+        inactiveSlideItem: {
+            opacity: 0.7,
+            scale: 0.9
         }
     },
     fullWidthLayout: {
