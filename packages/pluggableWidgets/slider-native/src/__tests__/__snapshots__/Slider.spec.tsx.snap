@@ -10,50 +10,141 @@ exports[`Slider applies custom styles: with custom styles 1`] = `
   testID="slider-test"
 >
   <View
-    disabled={false}
-    maximumTrackStyle={
-      {
-        "borderRadius": 2,
-        "height": 4,
-      }
-    }
-    maximumValue={280}
-    minimumTrackStyle={
-      {
-        "backgroundColor": "rgb(30, 76, 231)",
-      }
-    }
-    minimumValue={0}
-    onSlidingComplete={[Function]}
-    onValueChange={[Function]}
-    step={1}
-    testID="mocked-slider"
-    thumbStyle={
-      {
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#DDDDDD",
-        "borderRadius": 30,
-        "borderWidth": 1,
-        "elevation": 3,
-        "height": 30,
-        "shadowColor": "#000000",
-        "shadowOffset": {
-          "height": 3,
-          "width": 0,
+    accessibilityActions={
+      [
+        {
+          "name": "increment",
         },
-        "shadowOpacity": 0.2,
-        "shadowRadius": 1,
-        "width": 30,
-      }
+        {
+          "name": "decrement",
+        },
+      ]
     }
-    trackStyle={
+    accessibilityRole="adjustable"
+    accessibilityState={
       {
-        "borderRadius": 2,
-        "height": 4,
+        "disabled": false,
       }
     }
-    value={140}
-  />
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 50,
+      }
+    }
+    accessible={true}
+    onAccessibilityAction={[Function]}
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "height": 40,
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+    testID="slider-test$slider"
+  >
+    <View
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "#b3b3b3",
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+        ]
+      }
+    />
+    <View
+      collapsable={false}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "rgb(30, 76, 231)",
+          "borderRadius": 2,
+          "height": 4,
+          "opacity": 0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    />
+    <View
+      collapsable={false}
+      onLayout={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#DDDDDD",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "elevation": 3,
+          "height": 30,
+          "opacity": 0,
+          "position": "absolute",
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 30,
+        }
+      }
+    />
+    <View
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -63,49 +154,140 @@ exports[`Slider renders 1`] = `
   testID="slider-test"
 >
   <View
-    disabled={false}
-    maximumTrackStyle={
-      {
-        "borderRadius": 2,
-        "height": 4,
-      }
-    }
-    maximumValue={280}
-    minimumTrackStyle={
-      {
-        "backgroundColor": "rgb(30, 76, 231)",
-      }
-    }
-    minimumValue={0}
-    onSlidingComplete={[Function]}
-    onValueChange={[Function]}
-    step={1}
-    testID="mocked-slider"
-    thumbStyle={
-      {
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#DDDDDD",
-        "borderRadius": 30,
-        "borderWidth": 1,
-        "elevation": 3,
-        "height": 30,
-        "shadowColor": "#000000",
-        "shadowOffset": {
-          "height": 3,
-          "width": 0,
+    accessibilityActions={
+      [
+        {
+          "name": "increment",
         },
-        "shadowOpacity": 0.2,
-        "shadowRadius": 1,
-        "width": 30,
-      }
+        {
+          "name": "decrement",
+        },
+      ]
     }
-    trackStyle={
+    accessibilityRole="adjustable"
+    accessibilityState={
       {
-        "borderRadius": 2,
-        "height": 4,
+        "disabled": false,
       }
     }
-    value={140}
-  />
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 50,
+      }
+    }
+    accessible={true}
+    onAccessibilityAction={[Function]}
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "height": 40,
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+    testID="slider-test$slider"
+  >
+    <View
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "#b3b3b3",
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+        ]
+      }
+    />
+    <View
+      collapsable={false}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "rgb(30, 76, 231)",
+          "borderRadius": 2,
+          "height": 4,
+          "opacity": 0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    />
+    <View
+      collapsable={false}
+      onLayout={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#DDDDDD",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "elevation": 3,
+          "height": 30,
+          "opacity": 0,
+          "position": "absolute",
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 30,
+        }
+      }
+    />
+    <View
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+    />
+  </View>
 </View>
 `;

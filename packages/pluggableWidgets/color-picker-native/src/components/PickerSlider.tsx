@@ -1,6 +1,6 @@
-import { Component, createRef, PropsWithChildren, JSX } from "react";
-import { GestureResponderEvent, Platform, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
-import Slider from "react-native-slider";
+import { PropsWithChildren, ReactElement } from "react";
+import { Platform, StyleSheet, View, ViewStyle } from "react-native";
+import { Slider } from "@mendix/piw-native-utils-internal";
 
 interface PickerSlidersProps {
     value: number;
@@ -16,79 +16,28 @@ interface PickerSlidersProps {
     testID?: string;
 }
 
-export class PickerSlider extends Component<PropsWithChildren<PickerSlidersProps>> {
-    private readonly onTapHandler = this.onTap.bind(this);
-    private readonly onChangeHandler = this.onChange.bind(this);
-    private readonly onSlidingCompleteHandler = this.onSlidingComplete.bind(this);
-    private readonly viewRef = createRef<View>();
-    private isSliding = false;
-
-    render(): JSX.Element {
-        return (
-            <TouchableWithoutFeedback
-                onPressIn={this.onTapHandler}
-                testID={this.props.testID}
-                disabled={this.props.disabled}
-            >
-                <View style={[styles.container]} ref={this.viewRef}>
-                    <View style={styles.gradient}>{this.props.children}</View>
-                    <Slider
-                        value={this.props.value}
-                        step={this.props.step}
-                        animateTransitions={false}
-                        thumbTouchSize={{ width: 48, height: 48 }}
-                        minimumValue={this.props.minimumValue}
-                        maximumValue={this.props.maximumValue}
-                        onValueChange={this.onChangeHandler}
-                        onSlidingComplete={this.onSlidingCompleteHandler}
-                        minimumTrackTintColor="transparent"
-                        maximumTrackTintColor="transparent"
-                        trackStyle={this.props.trackStyle}
-                        thumbStyle={[
-                            styles.thumb,
-                            this.props.thumbStyle as ViewStyle,
-                            { backgroundColor: this.props.thumbTintColor }
-                        ]}
-                        disabled={this.props.disabled}
-                    />
-                </View>
-            </TouchableWithoutFeedback>
-        );
-    }
-
-    private onChange(value: number): void {
-        this.isSliding = true;
-        this.props.onValueChange(value);
-    }
-
-    private onSlidingComplete(): void {
-        this.isSliding = false;
-        this.props.onValueChangeComplete();
-    }
-
-    private onTap(event: GestureResponderEvent): void {
-        if (!this.viewRef.current || this.props.disabled) {
-            return;
-        }
-
-        const { step, maximumValue, minimumValue } = this.props;
-
-        this.viewRef.current.measure((_x, _y, width) => {
-            if (this.isSliding) {
-                return;
-            }
-            const positionFraction = event.nativeEvent.locationX / width;
-            const value = (maximumValue || 1) * positionFraction;
-            const roundedValue = this.roundToMultiple(value, step);
-            if (roundedValue >= (minimumValue || 0) && roundedValue <= (maximumValue || 1)) {
-                this.props.onValueChange(roundedValue);
-                this.props.onValueChangeComplete();
-            }
-        });
-    }
-
-    private readonly roundToMultiple = (value: number, multiple: number): number =>
-        Math.round(value / multiple) * multiple;
+export function PickerSlider(props: PropsWithChildren<PickerSlidersProps>): ReactElement {
+    return (
+        <View style={styles.container}>
+            <View style={styles.gradient}>{props.children}</View>
+            <Slider
+                testID={props.testID}
+                value={props.value}
+                step={props.step}
+                trackClickable
+                thumbTouchSize={{ width: 48, height: 48 }}
+                minimumValue={props.minimumValue}
+                maximumValue={props.maximumValue}
+                onValueChange={props.onValueChange}
+                onSlidingComplete={props.onValueChangeComplete}
+                minimumTrackTintColor="transparent"
+                maximumTrackTintColor="transparent"
+                trackStyle={props.trackStyle}
+                thumbStyle={[styles.thumb, props.thumbStyle, { backgroundColor: props.thumbTintColor }]}
+                disabled={props.disabled}
+            />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
