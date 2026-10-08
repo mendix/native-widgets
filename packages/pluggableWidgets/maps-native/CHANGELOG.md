@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   We pinned prop-types to 15.8.1.
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
 
 ## [5.2.0] - 2026-5-15
 

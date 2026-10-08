@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions failed to capture photos on Android.
 -   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions did not properly clean up temporary files.
 -   Replaced @notifee/react-native with react-native-notify-kit library.
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+-   Updated react-native-blob-util from version v0.24.7 to v0.24.11.
+-   The [backgroundColor], [translucent] and [networkActivityIndicatorVisible] parameters of the Change status bar action no longer have any effect, because react-native v0.88 removed support for them.
 
 ## [12.1.0] Native Mobile Resources - 2026-6-10
 

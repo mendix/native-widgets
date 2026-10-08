@@ -31,10 +31,11 @@ export default async args => {
         sourceMap: false,
         inlineSources: false,
         target: "es2019",
-        types: ["mendix-client", "react-native"],
+        types: ["mendix-client"],
         allowSyntheticDefaultImports: true,
         compilerOptions: {
             newLine: "CRLF",
+            moduleResolution: "bundler",
             // `react-native-nitro-geolocation` ships no compiled JS; its entry points are `.tsx`
             // (`main: "src/index"`, `browser: "src/index.web.tsx"`). The TS plugin therefore needs
             // `jsx` set to parse those `.tsx` files, otherwise the build fails with

@@ -158,7 +158,7 @@ exports[`Bottom sheet renders a expanding fullscreen with custom styles 1`] = `
 </View>
 `;
 
-exports[`Bottom sheet renders a native bottom action sheet for ios (Basic modal) 1`] = `null`;
+exports[`Bottom sheet renders a native bottom action sheet for ios (Basic modal) 1`] = `<View />`;
 
 exports[`Bottom sheet renders basic modal with supportedOrientations when open 1`] = `
 <Modal

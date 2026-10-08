@@ -31,21 +31,27 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
 
     // Compute styles from props synchronously using useMemo
     const styles = useMemo(() => {
-        const baseStyles = flattenStyles(defaultVideoStyle, props.style);
-        const alteredStyles = deepmerge({}, baseStyles);
+        const baseStyles: VideoStyle = deepmerge({}, flattenStyles(defaultVideoStyle, props.style));
         if (props.aspectRatio && videoAspectRatio !== 0) {
-            alteredStyles.video.aspectRatio = videoAspectRatio;
-            alteredStyles.container.aspectRatio = videoAspectRatio;
-        } else if (!props.aspectRatio) {
-            alteredStyles.container.aspectRatio = undefined;
-            if (alteredStyles.video.width) {
-                alteredStyles.container.width = alteredStyles.video.width;
-            }
-            if (alteredStyles.video.height) {
-                alteredStyles.container.height = alteredStyles.video.height;
-            }
+            return {
+                ...baseStyles,
+                video: { ...baseStyles.video, aspectRatio: videoAspectRatio },
+                container: { ...baseStyles.container, aspectRatio: videoAspectRatio }
+            };
         }
-        return alteredStyles;
+        if (!props.aspectRatio) {
+            const { width, height } = baseStyles.video;
+            return {
+                ...baseStyles,
+                container: {
+                    ...baseStyles.container,
+                    aspectRatio: undefined,
+                    ...(width ? { width } : {}),
+                    ...(height ? { height } : {})
+                }
+            };
+        }
+        return baseStyles;
     }, [props.style, props.aspectRatio, videoAspectRatio]);
 
     const timeoutRef = useRef<NodeJS.Timeout>(null);

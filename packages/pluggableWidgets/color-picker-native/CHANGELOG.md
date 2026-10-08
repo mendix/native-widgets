@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
+-   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
 -   We updated tinycolor2 to 1.6.0.
 -   We replaced react-native-slider and react-native-color with built-in components, and removed deprecated-react-native-prop-types.
 
