@@ -1,7 +1,7 @@
+import { Bar } from "@mendix/piw-native-utils-internal";
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { Text } from "react-native";
-import { Bar } from "react-native-progress";
+import { Text, View } from "react-native";
 import { render } from "@testing-library/react-native";
 
 import { ProgressBar, Props } from "../ProgressBar";
@@ -45,6 +45,30 @@ describe("ProgressBar", () => {
         const component = render(<ProgressBar {...createProps(-30, -100, 0)} />);
         expect(component.UNSAFE_getByType(Bar).props.progress).toBe(0.7);
         expect(component.UNSAFE_queryByType(Text)).toBeNull();
+    });
+
+    it("has progressbar accessibility role", () => {
+        const component = render(<ProgressBar {...createProps(60, 0, 100)} />);
+        const views = component.UNSAFE_getAllByType(View);
+        // Find the View with accessibilityRole="progressbar"
+        const accessibleElement = views.find(view => view.props.accessibilityRole === "progressbar");
+        expect(accessibleElement).toBeDefined();
+        expect(accessibleElement?.props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 60
+        });
+    });
+
+    it("has correct accessibility values with different range", () => {
+        const component = render(<ProgressBar {...createProps(25, 10, 50)} />);
+        const views = component.UNSAFE_getAllByType(View);
+        const accessibleElement = views.find(view => view.props.accessibilityRole === "progressbar");
+        expect(accessibleElement?.props.accessibilityValue).toEqual({
+            min: 10,
+            max: 50,
+            now: 25
+        });
     });
 
     it("preserves expected style key set", () => {

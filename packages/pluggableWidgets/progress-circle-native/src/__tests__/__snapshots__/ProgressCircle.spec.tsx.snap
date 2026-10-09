@@ -2,137 +2,134 @@
 
 exports[`ProgressCircle renders 1`] = `
 <View
-  style={{}}
+  accessibilityLabel="Progress circle"
+  accessibilityRole="progressbar"
+  accessibilityValue={
+    {
+      "max": 100,
+      "min": 0,
+      "now": 50,
+      "text": "50%",
+    }
+  }
+  accessible={true}
+  style={
+    [
+      {
+        "backgroundColor": "transparent",
+        "overflow": "hidden",
+      },
+      {},
+    ]
+  }
+  testID="progress-circle-test"
 >
-  <View
-    indeterminateAnimationDuration={1000}
+  <RNSVGSvgViewAndroid
+    bbHeight={100}
+    bbWidth={100}
+    focusable={false}
+    height={100}
     style={
       [
         {
           "backgroundColor": "transparent",
-          "overflow": "hidden",
+          "borderWidth": 0,
         },
-        undefined,
+        {
+          "flex": 0,
+          "height": 100,
+          "width": 100,
+        },
       ]
     }
-    testID="progress-circle-test"
+    width={100}
   >
-    <RNSVGSvgViewAndroid
-      bbHeight={100}
-      bbWidth={100}
-      collapsable={false}
-      fill="none"
-      focusable={false}
-      height={100}
-      style={
-        [
-          {
-            "backgroundColor": "transparent",
-            "borderWidth": 0,
-          },
-          {
-            "flex": 0,
-            "height": 100,
-            "width": 100,
-          },
-        ]
+    <RNSVGGroup
+      fill={
+        {
+          "payload": -16777216,
+          "type": 0,
+        }
       }
-      width={100}
     >
-      <RNSVGGroup
+      <RNSVGPath
+        d="M50 2.5
+          A47.5 47.5 0 0 1 50.00000000000001 97.5"
         fill={null}
         propList={
           [
             "fill",
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
           ]
         }
-      >
-        <RNSVGPath
-          d="M50 2.5
-          A47.5 47.5 0 0 1 50.00000000000001 97.5"
-          fill={
-            {
-              "payload": -16777216,
-              "type": 0,
-            }
+        stroke={
+          {
+            "payload": -10354450,
+            "type": 0,
           }
-          propList={
-            [
-              "stroke",
-              "strokeWidth",
-              "strokeLinecap",
-            ]
-          }
-          stroke={
-            {
-              "payload": -10354450,
-              "type": 0,
-            }
-          }
-          strokeLinecap={2}
-          strokeWidth={3}
-        />
-        <RNSVGPath
-          d="M50 0.5
+        }
+        strokeLinecap={2}
+        strokeWidth={3}
+        testID="progress-circle-test-arc"
+      />
+      <RNSVGPath
+        d="M50 0.5
             a49.5 49.5 0 0 1 0 99
             a49.5 49.5 0 0 1 0 -99"
-          fill={
-            {
-              "payload": -16777216,
-              "type": 0,
-            }
-          }
-          propList={
-            [
-              "stroke",
-              "strokeWidth",
-              "strokeLinecap",
-            ]
-          }
-          stroke={
-            {
-              "payload": -10354450,
-              "type": 0,
-            }
-          }
-          strokeLinecap={2}
-          strokeWidth={1}
-        />
-      </RNSVGGroup>
-    </RNSVGSvgViewAndroid>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "borderRadius": 46,
-          "height": 92,
-          "justifyContent": "center",
-          "left": 4,
-          "position": "absolute",
-          "top": 4,
-          "width": 92,
-        }
-      }
-    >
-      <Text
-        allowFontScaling={true}
-        style={
+        fill={null}
+        propList={
           [
-            {
-              "color": "rgb(98,0,238)",
-              "fontSize": 20.444444444444443,
-              "fontWeight": "300",
-            },
-            {
-              "color": "rgb(98,0,238)",
-              "fontSize": 18,
-            },
+            "fill",
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
           ]
         }
-      >
-        50%
-      </Text>
-    </View>
+        stroke={
+          {
+            "payload": -10354450,
+            "type": 0,
+          }
+        }
+        strokeLinecap={2}
+        strokeWidth={1}
+        testID="progress-circle-test-border"
+      />
+    </RNSVGGroup>
+  </RNSVGSvgViewAndroid>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "borderRadius": 46,
+        "height": 92,
+        "justifyContent": "center",
+        "left": 4,
+        "position": "absolute",
+        "top": 4,
+        "width": 92,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "rgb(98,0,238)",
+            "fontSize": 20.444444444444443,
+            "fontWeight": "300",
+          },
+          {
+            "color": "rgb(98,0,238)",
+            "fontSize": 18,
+          },
+        ]
+      }
+    >
+      50%
+    </Text>
   </View>
 </View>
 `;
