@@ -1,5 +1,6 @@
 import { Fragment, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+    AccessibilityActionEvent,
     ActivityIndicator,
     Animated,
     FlatList,
@@ -109,17 +110,32 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
                 ]
             };
 
+            // Only the active card is reachable by a screen reader: TalkBack/VoiceOver can't perform the swipe
+            // gesture (it's reinterpreted as their own navigation), so cards off to the side are not actually
+            // reachable by the user and would otherwise read out ahead of or behind the one actually on screen.
+            const isActive = index === activeSlide;
+
             return (
                 <Animated.View
                     style={[{ ...viewStyle }, animatedStyle]}
                     testID={`${props.name}$content$${index}`}
-                    accessible
+                    importantForAccessibility={isActive ? "auto" : "no-hide-descendants"}
+                    accessibilityElementsHidden={!isActive}
                 >
                     {props.content.get(item)}
                 </Animated.View>
             );
         },
-        [layoutSpecificStyle.slideItem, itemWidth, scrollX, inactiveOpacity, inactiveScale, props.content, props.name]
+        [
+            layoutSpecificStyle.slideItem,
+            itemWidth,
+            scrollX,
+            inactiveOpacity,
+            inactiveScale,
+            activeSlide,
+            props.content,
+            props.name
+        ]
     );
 
     const getItemLayout = useCallback(
@@ -135,6 +151,30 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
         listRef.current?.scrollToIndex({ index, animated: true });
     }, []);
 
+    // Steps one slide forward/backward on a TalkBack/VoiceOver increment or decrement gesture. The dots already
+    // let a screen reader jump straight to any slide by its own label, but the "N/M" counter shown once there
+    // are too many dots to be usable has no other way to move at all, so it needs this to be navigable.
+    const onPaginationAccessibilityAction = useCallback(
+        (event: AccessibilityActionEvent) => {
+            const itemCount = props.contentSource.items?.length;
+            if (!itemCount) {
+                return;
+            }
+            const { actionName } = event.nativeEvent;
+            const next =
+                actionName === "increment"
+                    ? Math.min(activeSlide + 1, itemCount - 1)
+                    : actionName === "decrement"
+                    ? Math.max(activeSlide - 1, 0)
+                    : undefined;
+            // Already at that end: skip the no-op scroll-to-self rather than replaying the same slide.
+            if (next !== undefined && next !== activeSlide) {
+                onDotPress(next);
+            }
+        },
+        [activeSlide, onDotPress, props.contentSource.items]
+    );
+
     const renderPagination = useCallback(() => {
         if (!props.showPagination) {
             return null;
@@ -146,8 +186,17 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
 
         if (paginationOverflow) {
             return (
-                <View style={pagination.container} testID={`${props.name}$pagination`}>
-                    <Text style={pagination.text}>
+                <View
+                    style={pagination.container}
+                    testID={`${props.name}$pagination`}
+                    accessible
+                    accessibilityRole="adjustable"
+                    accessibilityLabel={`Slide ${activeSlide + 1} of ${contentLength}`}
+                    accessibilityValue={{ min: 1, max: contentLength, now: activeSlide + 1 }}
+                    accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
+                    onAccessibilityAction={onPaginationAccessibilityAction}
+                >
+                    <Text style={pagination.text} importantForAccessibility="no" accessibilityElementsHidden>
                         {activeSlide + 1}/{contentLength}
                     </Text>
                 </View>
@@ -176,7 +225,6 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
                 inactiveDotOpacity={inActiveDotOpacity}
                 inactiveDotScale={inActiveDotScale}
                 onDotPress={onDotPress}
-                accessibilityLabel={`${props.name}$pagination`}
             />
         );
     }, [activeSlide, onDotPress, props.contentSource, props.showPagination, props.name, layoutSpecificStyle]);

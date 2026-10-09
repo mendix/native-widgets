@@ -69,8 +69,9 @@ exports[`Carousel renders full width 1`] = `
         }
       >
         <View
-          accessible={true}
+          accessibilityElementsHidden={false}
           collapsable={false}
+          importantForAccessibility="auto"
           style={
             {
               "height": "100%",
@@ -104,8 +105,9 @@ exports[`Carousel renders full width 1`] = `
         }
       >
         <View
-          accessible={true}
+          accessibilityElementsHidden={true}
           collapsable={false}
+          importantForAccessibility="no-hide-descendants"
           style={
             {
               "height": "100%",
@@ -130,7 +132,6 @@ exports[`Carousel renders full width 1`] = `
     </View>
   </RCTScrollView>
   <View
-    accessibilityLabel="carousel$pagination"
     style={
       [
         {
@@ -147,7 +148,7 @@ exports[`Carousel renders full width 1`] = `
     testID="carousel$pagination"
   >
     <View
-      accessibilityLabel="1"
+      accessibilityLabel="Go to slide 1"
       accessibilityRole="button"
       accessibilityState={
         {
@@ -209,7 +210,7 @@ exports[`Carousel renders full width 1`] = `
       />
     </View>
     <View
-      accessibilityLabel="2"
+      accessibilityLabel="Go to slide 2"
       accessibilityRole="button"
       accessibilityState={
         {
