@@ -1,7 +1,8 @@
 import { mergeNativeStyles, extractStyles } from "@mendix/pluggable-widgets-tools";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { ReactElement, useCallback, useEffect, useRef } from "react";
-import { View, Text, NativeModules } from "react-native";
+import { View, Text } from "react-native";
+import { NativeFileSystem } from "mendix-native";
 import SignatureScreen, { SignatureViewRef } from "react-native-signature-canvas";
 import { Touchable } from "./components/Touchable";
 import RNBlobUtil from "react-native-blob-util";
@@ -37,7 +38,7 @@ async function dataUriToBlob(base64: string): Promise<{ blob: File; tempPath: st
     // NativeFileBackend.storeFile calls NativeFileSystem.save(blob.data, path)
     // and blob.close() — a plain object has no .data getter or .close(), which
     // crashes iOS via [NSInvocation invokeWithTarget:].
-    const nativeBlob = await NativeModules.MxFileSystem.read(tempPath.replace("file://", ""));
+    const nativeBlob = await NativeFileSystem.read(tempPath.replace("file://", ""));
     // Normalize: MxFileSystem.read may return 'length' instead of 'size'.
     const blobData = { ...(nativeBlob as any) };
     if (blobData.size === undefined && blobData.length !== undefined) {

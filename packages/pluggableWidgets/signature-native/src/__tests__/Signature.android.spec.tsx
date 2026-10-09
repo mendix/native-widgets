@@ -16,7 +16,11 @@ global.fetch = jest.fn(() =>
 jest.mock("react-native", () => {
     const RN = jest.requireActual("react-native");
     RN.NativeModules.RNCWebView = { isFileUploadSupported: jest.fn(() => true) };
-    RN.NativeModules.MxFileSystem = {
+    return RN;
+});
+
+jest.mock("mendix-native", () => ({
+    NativeFileSystem: {
         read: jest.fn(() =>
             Promise.resolve({
                 data: "mock-blob-data",
@@ -31,9 +35,8 @@ jest.mock("react-native", () => {
                 close: jest.fn()
             })
         )
-    };
-    return RN;
-});
+    }
+}));
 
 jest.mock("react-native/Libraries/Utilities/Platform", () => {
     const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
