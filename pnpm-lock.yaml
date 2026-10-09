@@ -36,9 +36,6 @@ patchedDependencies:
   react-native-gesture-handler@2.31.2:
     hash: 5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8
     path: patches/react-native-gesture-handler+2.31.2.patch
-  react-native-slider@0.11.0:
-    hash: 899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6
-    path: patches/react-native-slider+0.11.0.patch
   react-native-snap-carousel@3.9.1:
     hash: 3a4c1b0f17629becc5d99ef1958df5a2f55c46e45f45670862aaeda12ab2f4e1
     path: patches/react-native-snap-carousel+3.9.1.patch
@@ -432,15 +429,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      deprecated-react-native-prop-types:
-        specifier: 4.2.3
-        version: 4.2.3
-      react-native-color:
-        specifier: 0.0.10
-        version: 0.0.10(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
-      react-native-slider:
-        specifier: 0.11.0
-        version: 0.11.0(patch_hash=899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6)
       tinycolor2:
         specifier: 1.6.0
         version: 1.6.0
@@ -759,9 +747,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      '@miblanchard/react-native-slider':
-        specifier: 2.6.0
-        version: 2.6.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
@@ -848,9 +833,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      '@miblanchard/react-native-slider':
-        specifier: 2.6.0
-        version: 2.6.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
@@ -2040,12 +2022,6 @@ packages:
     resolution: {integrity: sha512-/XbD1T7rX38gOh22bdTpzeI09FEZQEbpmtimkMg2iN9mk3hDLgspnceuaUu4dhM2QrjQ43E60cFa/nC45LHSiQ==}
     engines: {node: '>=20'}
     hasBin: true
-
-  '@miblanchard/react-native-slider@2.6.0':
-    resolution: {integrity: sha512-o7hk/f/8vkqh6QNR5L52m+ws846fQeD/qNCC9CCSRdBqjq66KiCgbxzlhRzKM/gbtxcvMYMIEEJ1yes5cr6I3A==}
-    peerDependencies:
-      react: 19.2.3
-      react-native: 0.84.1
 
   '@napi-rs/wasm-runtime@1.1.6':
     resolution: {integrity: sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==}
@@ -6435,12 +6411,6 @@ packages:
       react: 19.2.3
       react-native: 0.84.1
 
-  react-native-color@0.0.10:
-    resolution: {integrity: sha512-MrYIaWH/fiRXBhfJBVG7vtNF5cQQKg1rK16pU8xtlKne2Ipu+Inki1Gb/oFvaOu+zNXb5/6tss467k8zYIvMwA==}
-    peerDependencies:
-      react: 19.2.3
-      react-native: 0.84.1
-
   react-native-device-info@15.0.2:
     resolution: {integrity: sha512-dd71eXG2l3Cwp66IvKNadMTB8fhU3PEjyVddI97sYan+D4bgIAUmgGDhbSOFvHcGavksb2U17kiQYaDiK2WK2g==}
     peerDependencies:
@@ -6585,9 +6555,6 @@ packages:
     resolution: {integrity: sha512-c8FUCYckXErlGbqxfhMNBcPzBdhCSpBgCtTx9+rpntvveBoajE44854NLydeAvCxHuh1yV5y2EnNFij7AuXtSw==}
     peerDependencies:
       react-native-webview: ^11.0.3
-
-  react-native-slider@0.11.0:
-    resolution: {integrity: sha512-jV9K87eu9uWr0uJIyrSpBLnCKvVlOySC2wynq9TFCdV9oGgjt7Niq8Q1A8R8v+5GHsuBw/s8vEj1AAkkUi+u+w==}
 
   react-native-snap-carousel@3.9.1:
     resolution: {integrity: sha512-xWEGusacIgK1YaDXLi7Gao2+ISLoGPVEBR8fcMf4tOOJQufutlNwkoLu0l6B8Qgsrre0nTxoVZikRgGRDWlLaQ==}
@@ -9436,11 +9403,6 @@ snapshots:
       - supports-color
       - tslib
       - utf-8-validate
-
-  '@miblanchard/react-native-slider@2.6.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)':
-    dependencies:
-      react: 19.2.3
-      react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
 
   '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
@@ -14628,14 +14590,6 @@ snapshots:
       react: 19.2.3
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
 
-  react-native-color@0.0.10(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3):
-    dependencies:
-      prop-types: 15.8.1
-      react: 19.2.3
-      react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
-      react-native-slider: 0.11.0(patch_hash=899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6)
-      tinycolor2: 1.6.0
-
   react-native-device-info@15.0.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)):
     dependencies:
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
@@ -14756,10 +14710,6 @@ snapshots:
   react-native-signature-canvas@3.4.0(react-native-webview@13.16.1(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)):
     dependencies:
       react-native-webview: 13.16.1(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
-
-  react-native-slider@0.11.0(patch_hash=899d0bc0de45e25eb7731c4e61ae23a5223c2e1654b7d020dfae1c70e61b32c6):
-    dependencies:
-      prop-types: 15.8.1
 
   react-native-snap-carousel@3.9.1(patch_hash=3a4c1b0f17629becc5d99ef1958df5a2f55c46e45f45670862aaeda12ab2f4e1)(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3):
     dependencies:
