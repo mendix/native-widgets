@@ -20,9 +20,8 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
-    "test": "jest --projects \"$(node -p \"require.resolve('@mendix/pluggable-widgets-tools/test-config/jest.native.config.js')\")\"",
-    "prepare": "pnpm build",
     "test": "pluggable-widgets-tools test:unit:native",
+    "prepare": "pnpm build",
     "postinstall": "pnpm build"
   },
   "devDependencies": {
