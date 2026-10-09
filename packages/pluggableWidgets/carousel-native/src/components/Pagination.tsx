@@ -18,7 +18,6 @@ interface PaginationProps {
     inactiveDotScale?: number;
     inactiveDotStyle?: ViewStyle;
     onDotPress: (index: number) => void;
-    accessibilityLabel?: string;
     testID?: string;
 }
 
@@ -32,11 +31,7 @@ export function Pagination(props: PaginationProps): ReactElement {
     } = props;
 
     return (
-        <View
-            style={[styles.container, props.containerStyle]}
-            testID={props.testID}
-            accessibilityLabel={props.accessibilityLabel}
-        >
+        <View style={[styles.container, props.containerStyle]} testID={props.testID}>
             {Array.from({ length: props.dotsLength }, (_, index) => {
                 const active = index === props.activeDotIndex;
                 return (
@@ -45,7 +40,7 @@ export function Pagination(props: PaginationProps): ReactElement {
                         onPress={() => props.onDotPress(index)}
                         style={[styles.dotContainer, props.dotContainerStyle]}
                         accessibilityRole="button"
-                        accessibilityLabel={`${index + 1}`}
+                        accessibilityLabel={`Go to slide ${index + 1}`}
                         accessibilityState={{ selected: active }}
                     >
                         <View
