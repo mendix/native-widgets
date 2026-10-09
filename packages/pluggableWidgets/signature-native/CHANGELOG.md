@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
 -   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
+-   We added mendix-native as a dependency to provide native file system.
 
 ## [2.4.0] - 2026-5-15
 

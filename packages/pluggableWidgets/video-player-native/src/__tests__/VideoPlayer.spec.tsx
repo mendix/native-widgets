@@ -9,6 +9,10 @@ import { VideoStyle } from "../ui/Styles";
 
 jest.useFakeTimers();
 jest.mock("react-native-video", () => "Video");
+// The real module resolves the MxNavigation TurboModule at import time, which is unavailable under Jest.
+jest.mock("mendix-native", () => ({
+    AndroidNavigationBar: { isActive: true, height: 24 }
+}));
 
 describe("VideoPlayer", () => {
     let defaultProps: VideoPlayerProps<VideoStyle>;

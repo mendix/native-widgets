@@ -6,7 +6,8 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import { Alert, Linking, NativeModules, Platform } from "react-native";
+import { NativeFileSystem } from "mendix-native";
+import { Alert, Linking, Platform } from "react-native";
 import {
     CameraOptions,
     ErrorCode,
@@ -16,7 +17,8 @@ import {
     launchImageLibrary
 } from "react-native-image-picker";
 import { getLocales } from "react-native-localize";
-import { ImagePickerV2Options, ImagePickerV2Response, PictureQuality, PictureSource } from "../../typings/Camera";
+import RNPermissions from "react-native-permissions";
+import { PictureQuality, PictureSource } from "../../typings/Camera";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -46,7 +48,6 @@ export async function TakePictureAdvanced(
     maximumHeight?: Big
 ): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
-
     if (!picture) {
         return Promise.reject(new Error("Input parameter 'Picture' is required"));
     }
@@ -61,63 +62,33 @@ export async function TakePictureAdvanced(
         );
     }
 
-    // V3 dropped the feature of providing an action sheet so users can decide on which action to take, camera or library.
-    const nativeVersionMajor = NativeModules?.ImagePickerManager?.showImagePicker ? 2 : 4;
-    const RNPermissions = nativeVersionMajor === 4 ? (await import("react-native-permissions")).default : null;
     const resultObject = await createMxObject("NativeMobileResources.ImageMetaData");
 
     try {
         const response = await takePicture();
-        let pictureTaken: boolean;
 
-        if (nativeVersionMajor === 2) {
-            const responseV2 = response as ImagePickerV2Response;
-
-            if (!responseV2 || !responseV2.uri) {
-                return Promise.resolve(resultObject);
-            }
-            const responseV2Uri = responseV2.uri;
-
-            pictureTaken = await storeFile(picture, responseV2Uri);
-
-            resultObject.set("PictureTaken", pictureTaken);
-            resultObject.set("URI", responseV2Uri);
-            resultObject.set("IsVertical", responseV2.isVertical);
-            resultObject.set("Width", responseV2.width);
-            resultObject.set("Height", responseV2.height);
-            resultObject.set(
-                "FileName",
-                // eslint-disable-next-line no-useless-escape
-                responseV2.fileName ? responseV2.fileName : /[^\/]*$/.exec(responseV2Uri)![0]
-            );
-            resultObject.set("FileSize", responseV2.fileSize);
-            resultObject.set("FileType", responseV2.type);
-        } else {
-            const responseV1 = response as ImagePickerResponse;
-
-            if (!responseV1 || !responseV1.assets || !responseV1.assets[0] || !responseV1.assets[0].uri) {
-                return Promise.resolve(resultObject);
-            }
-            const responseV1Assets = responseV1.assets[0];
-            const responseV1Uri = responseV1.assets[0].uri;
-
-            pictureTaken = await storeFile(picture, responseV1Uri);
-
-            resultObject.set("PictureTaken", pictureTaken);
-            resultObject.set("URI", responseV1Uri);
-            // Note:  V4 asset doesn't include isVertical
-            resultObject.set("Width", responseV1Assets.width);
-            resultObject.set("Height", responseV1Assets.height);
-            resultObject.set(
-                "FileName",
-                responseV1Assets.fileName
-                    ? responseV1Assets.fileName
-                    : // eslint-disable-next-line no-useless-escape
-                      /[^\/]*$/.exec(responseV1Uri)![0]
-            );
-            resultObject.set("FileSize", responseV1Assets.fileSize);
-            resultObject.set("FileType", responseV1Assets.type);
+        if (!response || !response.assets || !response.assets[0] || !response.assets[0].uri) {
+            return Promise.resolve(resultObject);
         }
+
+        const responseAssets = response.assets[0];
+        const responseUri = response.assets[0].uri;
+        const pictureTaken = await storeFile(picture, responseUri);
+
+        resultObject.set("PictureTaken", pictureTaken);
+        resultObject.set("URI", responseUri);
+        // Note: V4 asset doesn't include isVertical
+        resultObject.set("Width", responseAssets.width);
+        resultObject.set("Height", responseAssets.height);
+        resultObject.set(
+            "FileName",
+            responseAssets.fileName
+                ? responseAssets.fileName
+                : // eslint-disable-next-line no-useless-escape
+                  /[^\/]*$/.exec(responseUri)![0]
+        );
+        resultObject.set("FileSize", responseAssets.fileSize);
+        resultObject.set("FileType", responseAssets.type);
 
         return Promise.resolve(resultObject);
     } catch (error) {
@@ -128,33 +99,15 @@ export async function TakePictureAdvanced(
         }
     }
 
-    function takePicture(): Promise<ImagePickerV2Response | ImagePickerResponse | undefined> {
+    function takePicture(): Promise<ImagePickerResponse | undefined> {
         return new Promise((resolve, reject) => {
-            const options = nativeVersionMajor === 2 ? getOptionsV2() : getOptions();
+            const options = getOptions();
             getPictureMethod()
                 .then(method =>
-                    method(options, (response: ImagePickerV2Response | ImagePickerResponse) => {
+                    method(options, (response: ImagePickerResponse) => {
                         if (response.didCancel) {
                             return resolve(undefined);
                         }
-
-                        if (nativeVersionMajor === 2) {
-                            const responseV2 = response as ImagePickerV2Response;
-
-                            if (responseV2.error) {
-                                const unhandledError = handleImagePickerV2Error(responseV2.error);
-
-                                if (!unhandledError) {
-                                    return resolve(undefined);
-                                }
-
-                                return reject(new Error(responseV2.error));
-                            }
-
-                            return resolve(responseV2);
-                        }
-
-                        response = response as ImagePickerResponse;
 
                         if (response.errorCode) {
                             handleImagePickerV4Error(response.errorCode, response.errorMessage);
@@ -171,7 +124,7 @@ export async function TakePictureAdvanced(
 
     async function safeRemove(filePath: string): Promise<void> {
         try {
-            await NativeModules.MxFileSystem.remove(filePath);
+            await NativeFileSystem.remove(filePath);
         } catch (error) {
             console.warn(`Failed to remove file at ${filePath}. Error: ${error}`);
             // ignore error
@@ -180,7 +133,7 @@ export async function TakePictureAdvanced(
 
     function storeFile(imageObject: mendix.lib.MxObject, uri: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            NativeModules.MxFileSystem.read(uri.replace("file://", ""))
+            NativeFileSystem.read(uri.replace("file://", ""))
                 .then((nativeBlob: unknown) => {
                     const blob = new Blob();
                     Object.assign(blob, { data: nativeBlob });
@@ -222,13 +175,10 @@ export async function TakePictureAdvanced(
     }
 
     async function getPictureMethod(): Promise<
-        (
-            options: ImagePickerV2Options | CameraOptions | ImageLibraryOptions,
-            callback: (response: ImagePickerV2Response | ImagePickerResponse) => void
-        ) => void
+        (options: CameraOptions | ImageLibraryOptions, callback: (response: ImagePickerResponse) => void) => void
     > {
         async function handleCameraRequest(): Promise<typeof launchCamera> {
-            if (Platform.OS === "android" && nativeVersionMajor === 4) {
+            if (Platform.OS === "android") {
                 await checkAndMaybeRequestAndroidPermission();
             }
 
@@ -278,38 +228,6 @@ export async function TakePictureAdvanced(
         }
     }
 
-    function getOptionsV2(): ImagePickerV2Options {
-        const { maxWidth, maxHeight } = getPictureQuality();
-        const [language] = getLocales().map(local => local.languageCode);
-        const isDutch = language === "nl";
-
-        return {
-            mediaType: "photo" as const,
-            maxWidth,
-            maxHeight,
-            noData: true,
-            title: isDutch ? "Foto toevoegen" : "Select a photo",
-            cancelButtonTitle: isDutch ? "Annuleren" : "Cancel",
-            takePhotoButtonTitle: isDutch ? "Foto maken" : "Take photo",
-            chooseFromLibraryButtonTitle: isDutch ? "Kies uit bibliotheek" : "Choose from library",
-            permissionDenied: {
-                title: isDutch
-                    ? "Deze app heeft geen toegang tot uw camera of foto bibliotheek"
-                    : "This app does not have access to your camera or photo library",
-                text: isDutch
-                    ? "Ga naar Instellingen > Privacy om toegang tot uw camera en bestanden te verlenen."
-                    : "To enable access, tap Settings > Privacy and turn on Camera and Photos/Storage.",
-                reTryTitle: isDutch ? "Instellingen" : "Settings",
-                okTitle: isDutch ? "Annuleren" : "Cancel"
-            },
-            storageOptions: {
-                skipBackup: true,
-                cameraRoll: false,
-                privateDirectory: true
-            }
-        };
-    }
-
     function getOptions(): CameraOptions | ImageLibraryOptions {
         const { maxWidth, maxHeight } = getPictureQuality();
         return {
@@ -343,37 +261,6 @@ export async function TakePictureAdvanced(
                     maxWidth: Number(maximumWidth),
                     maxHeight: Number(maximumHeight)
                 };
-        }
-    }
-
-    function handleImagePickerV2Error(error: string): string | undefined {
-        const ERRORS = {
-            AndroidPermissionDenied: "Permissions weren't granted",
-            iOSPhotoLibraryPermissionDenied: "Photo library permissions not granted",
-            iOSCameraPermissionDenied: "Camera permissions not granted"
-        };
-
-        switch (error) {
-            case ERRORS.iOSPhotoLibraryPermissionDenied:
-                showAlert(
-                    "This app does not have access to your photo library",
-                    "To enable access, tap Settings and turn on Photos."
-                );
-                return;
-
-            case ERRORS.iOSCameraPermissionDenied:
-                showAlert(
-                    "This app does not have access to your camera",
-                    "To enable access, tap Settings and turn on Camera."
-                );
-                return;
-
-            case ERRORS.AndroidPermissionDenied:
-                // Ignore this error because the image picker plugin already shows an alert in this case.
-                return;
-
-            default:
-                return error;
         }
     }
 
