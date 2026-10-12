@@ -1,5 +1,5 @@
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
-import { fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 import { EditableValue } from "mendix";
 import { Keyboard, Modal, Text } from "react-native";
 import { CustomModalSheet } from "../components/CustomModalSheet";
@@ -7,6 +7,10 @@ import { BottomSheetStyle } from "../ui/Styles";
 
 /** The methods the sheet exposes on its ref, so the close path can be asserted. */
 const mockSheetMethods = { close: jest.fn(), forceClose: jest.fn() };
+/** Whether the mocked sheet reports reaching its snap point on mount, as a fully opened sheet does. */
+let mockReportsOpen = true;
+/** The props the mocked sheet was last rendered with, so tests can fire its callbacks. */
+let mockSheetProps: any;
 
 jest.mock("@gorhom/bottom-sheet", () => {
     const React = require("react");
@@ -18,7 +22,12 @@ jest.mock("@gorhom/bottom-sheet", () => {
             React.useImperativeHandle(ref, () => mockSheetMethods);
             // The real sheet animates open on mount and reports the index it landed on,
             // which is what tells the widget it has something to close.
-            React.useEffect(() => props.onChange?.(0), []);
+            mockSheetProps = props;
+            React.useEffect(() => {
+                if (mockReportsOpen) {
+                    props.onChange?.(0);
+                }
+            }, []);
 
             return React.createElement(View, null, props.children);
         }),
@@ -71,6 +80,8 @@ describe("CustomModalSheet", () => {
     beforeEach(() => {
         mockSheetMethods.close.mockClear();
         mockSheetMethods.forceClose.mockClear();
+        mockReportsOpen = true;
+        mockSheetProps = undefined;
         triggerAttribute = new EditableValueBuilder<boolean>().withValue(true).build();
         jest.spyOn(Keyboard, "dismiss").mockImplementation(() => undefined);
     });
@@ -107,6 +118,31 @@ describe("CustomModalSheet", () => {
         dismissSheet(component);
 
         expect(Keyboard.dismiss).not.toHaveBeenCalled();
+        expect(mockSheetMethods.forceClose).toHaveBeenCalled();
+    });
+
+    it("removes the modal when the sheet closes before it finished opening", () => {
+        // Tapping the backdrop while the sheet is still animating open closes it without it
+        // ever reaching its snap point, so only onClose reports it. The transparent modal must
+        // still go away, or it stays on screen and blocks every touch.
+        mockReportsOpen = false;
+        const component = openSheet();
+
+        act(() => mockSheetProps.onClose());
+
+        expect(triggerAttribute.value).toBe(false);
+        expect(component.UNSAFE_getByType(Modal).props.visible).toBe(false);
+    });
+
+    it("closes the sheet once it opens when the trigger attribute went false during the open", () => {
+        mockReportsOpen = false;
+        const component = openSheet();
+
+        dismissSheet(component);
+        expect(mockSheetMethods.forceClose).not.toHaveBeenCalled();
+
+        act(() => mockSheetProps.onChange(0));
+
         expect(mockSheetMethods.forceClose).toHaveBeenCalled();
     });
 });
