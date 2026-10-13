@@ -97,6 +97,47 @@ describe("Carousel", () => {
         scrollToIndex.mockRestore();
     });
 
+    describe("short drags", () => {
+        // Card layout sizes each item to 70% of the measured width.
+        const itemWidth = 300 * 0.7;
+
+        const drag = (carousel: ReturnType<typeof render>, from: number, to: number): void => {
+            const list = carousel.getByTestId("carousel$carousel");
+            fireEvent(list, "scrollBeginDrag", { nativeEvent: { contentOffset: { x: from } } });
+            fireEvent(list, "scrollEndDrag", { nativeEvent: { contentOffset: { x: to } } });
+        };
+
+        it("steps to the neighbouring slide once a drag passes the threshold, even short of half a card", () => {
+            const scrollToIndex = jest.spyOn(FlatList.prototype, "scrollToIndex").mockImplementation(() => undefined);
+            const carousel = render(
+                <Carousel {...defaultProps} contentSource={listValueBuilder.withAmountOfItems(6)} />
+            );
+            fireContainerLayout(carousel, { width: 300, height: 150 });
+
+            drag(carousel, 0, 40);
+            expect(scrollToIndex).toHaveBeenLastCalledWith({ index: 1, animated: true });
+            expect(carousel.getByTestId("carousel$pagination").props.accessibilityLabel).toBe("Slide 2 of 6");
+
+            drag(carousel, itemWidth, itemWidth - 40);
+            expect(scrollToIndex).toHaveBeenLastCalledWith({ index: 0, animated: true });
+            expect(carousel.getByTestId("carousel$pagination").props.accessibilityLabel).toBe("Slide 1 of 6");
+            scrollToIndex.mockRestore();
+        });
+
+        it("leaves the slide alone for a drag under the threshold or past either end", () => {
+            const scrollToIndex = jest.spyOn(FlatList.prototype, "scrollToIndex").mockImplementation(() => undefined);
+            const carousel = render(<Carousel {...defaultProps} />);
+            fireContainerLayout(carousel, { width: 300, height: 150 });
+
+            drag(carousel, 0, 10);
+            drag(carousel, 0, -40);
+            drag(carousel, itemWidth, itemWidth + 40);
+
+            expect(scrollToIndex).not.toHaveBeenCalled();
+            scrollToIndex.mockRestore();
+        });
+    });
+
     describe("accessibility", () => {
         it("labels each dot by its slide number, with the active one marked selected", () => {
             const carousel = render(<Carousel {...defaultProps} />);
