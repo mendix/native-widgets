@@ -8,8 +8,10 @@ import {
     StyleSheet,
     Text,
     TouchableHighlight,
+    StyleProp,
     useWindowDimensions,
-    View
+    View,
+    ViewStyle
 } from "react-native";
 import BottomSheet, {
     BottomSheetBackdrop,
@@ -145,14 +147,14 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     const buttonContainerStyle = { ...props.styles.modalItems?.container } as ModalItemContainerStyle;
 
-    const getButtonStyle = () => {
+    const getButtonStyle = (): StyleProp<ViewStyle> => {
         if (props.useNative) {
             return [nativeAndroidStyles.buttonContainer];
         }
         return [styles.buttonContainer, buttonContainerStyle];
     };
 
-    const renderItem = (item: ItemsBasicType, index: number) => {
+    const renderItem = (item: ItemsBasicType, index: number): ReactElement => {
         if (Platform.OS === "android" || !props.useNative) {
             return (
                 <TouchableHighlight
@@ -179,7 +181,7 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         );
     };
 
-    const getContainerStyle = () => {
+    const getContainerStyle = (): StyleProp<ViewStyle> => {
         if (props.useNative) {
             return [nativeAndroidStyles.sheetContainer];
         }
