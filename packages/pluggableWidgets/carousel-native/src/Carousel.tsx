@@ -16,6 +16,9 @@ import { Pagination } from "./components/Pagination";
 import deepmerge from "deepmerge";
 import { ObjectItem, ValueStatus } from "mendix";
 
+// Minimum drag distance, in points, that steps to the neighbouring slide even when native snapping would not.
+const SWIPE_THRESHOLD = 20;
+
 export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
     const [sliderDimensions, setSliderDimensions] = useState({
         slider: { width: 0, height: 0 },
@@ -75,6 +78,41 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
             setActiveSlide(previous => (previous === index ? previous : index));
         },
         [itemWidth, props.contentSource.items]
+    );
+
+    // Where the current drag started, so a short drag that native snapping would bounce back can still step a slide.
+    const dragStart = useRef({ offset: 0, index: 0 });
+
+    const onScrollBeginDrag = useCallback(
+        (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+            const offset = event.nativeEvent.contentOffset.x;
+            dragStart.current = { offset, index: itemWidth > 0 ? Math.round(offset / itemWidth) : 0 };
+        },
+        [itemWidth]
+    );
+
+    // snapToInterval only leaves the current slide once a drag passes half a card or flings with enough velocity,
+    // so a short, slow drag bounces back. The library we replaced moved a slide once a drag passed
+    // SWIPE_THRESHOLD instead (on iOS, where it ran without momentum), so we keep that behaviour on top.
+    const onScrollEndDrag = useCallback(
+        (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+            const itemCount = props.contentSource.items?.length;
+            if (itemWidth > 0 && itemCount) {
+                const offset = event.nativeEvent.contentOffset.x;
+                const delta = offset - dragStart.current.offset;
+                const startIndex = dragStart.current.index;
+                if (Math.round(offset / itemWidth) === startIndex && Math.abs(delta) > SWIPE_THRESHOLD) {
+                    const next = Math.min(Math.max(startIndex + Math.sign(delta), 0), itemCount - 1);
+                    if (next !== startIndex) {
+                        listRef.current?.scrollToIndex({ index: next, animated: true });
+                        setActiveSlide(next);
+                        return;
+                    }
+                }
+            }
+            updateActiveSlide(event);
+        },
+        [itemWidth, props.contentSource.items, updateActiveSlide]
     );
 
     const renderItem = useCallback(
@@ -293,7 +331,8 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
                             onScroll={onScroll}
                             scrollEventThrottle={16}
                             onMomentumScrollEnd={updateActiveSlide}
-                            onScrollEndDrag={updateActiveSlide}
+                            onScrollBeginDrag={onScrollBeginDrag}
+                            onScrollEndDrag={onScrollEndDrag}
                         />
                         {renderPagination()}
                     </Fragment>
