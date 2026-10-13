@@ -55,10 +55,11 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         bottomSheetRef.current?.forceClose();
     }, []);
 
-    // Read by `handleChange`, which runs after the sheet finishes opening and must see the
-    // trigger attribute as it is then, not as it was when the open started.
+    // Latest trigger value, read by `handleChange` once the sheet has finished opening.
     const externalOpenRef = useRef(externalOpen);
-    externalOpenRef.current = externalOpen;
+    useEffect(() => {
+        externalOpenRef.current = externalOpen;
+    }, [externalOpen]);
 
     useEffect(() => {
         if (!externalOpen && mounted && didOpenRef.current) {
@@ -76,9 +77,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                 return;
             }
             didOpenRef.current = true;
-            // The trigger attribute went false while the sheet was still opening. The effect
-            // above skipped the close then, because there was nothing open to close yet, and
-            // it does not run again on its own -- so close now that there is.
+            // Close now if the trigger attribute went false while the sheet was still opening.
             if (!externalOpenRef.current) {
                 close();
             }
@@ -86,11 +85,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         [close]
     );
 
-    // onClose fires whenever the sheet comes to rest closed, including when it is closed before
-    // it ever reached its snap point -- e.g. the backdrop tapped while the sheet is still
-    // animating open. onChange reports no index change then, so cleaning up only on
-    // onChange(-1) would leave the transparent modal and its full-screen backdrop wrapper on
-    // screen, swallowing every touch, with nothing left that can close them.
+    // Always clean up on close, also when the sheet closed before it finished opening.
     const handleClose = useCallback(() => {
         didOpenRef.current = false;
         setReady(false);

@@ -82,6 +82,12 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         bottomSheetRef.current?.close();
     }, []);
 
+    // Latest trigger value, read by `handleChange` once the sheet has finished opening.
+    const externalOpenRef = useRef(externalOpen);
+    useEffect(() => {
+        externalOpenRef.current = externalOpen;
+    }, [externalOpen]);
+
     useEffect(() => {
         if (!externalOpen && mounted && didOpenRef.current) {
             close();
@@ -90,20 +96,25 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     const handleChange = useCallback(
         (index: number) => {
-            if (index === 0) {
-                didOpenRef.current = true;
+            if (index !== 0) {
                 return;
             }
-
-            if (index === -1 && didOpenRef.current) {
-                didOpenRef.current = false;
-                setReady(false);
-                props.triggerAttribute?.setValue(false);
-                setMounted(false);
+            didOpenRef.current = true;
+            // Close now if the trigger attribute went false while the sheet was still opening.
+            if (!externalOpenRef.current) {
+                close();
             }
         },
-        [props.triggerAttribute]
+        [close]
     );
+
+    // Always clean up on close, also when the sheet closed before it finished opening.
+    const handleClose = useCallback(() => {
+        didOpenRef.current = false;
+        setReady(false);
+        props.triggerAttribute?.setValue(false);
+        setMounted(false);
+    }, [props.triggerAttribute]);
 
     const renderBackdrop = useCallback(
         (backdropProps: BottomSheetBackdropProps) => (
@@ -201,7 +212,7 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                     animateOnMount
                     enablePanDownToClose
                     onChange={handleChange}
-                    onClose={() => handleChange(-1)}
+                    onClose={handleClose}
                     style={getContainerStyle()}
                     backdropComponent={renderBackdrop}
                     backgroundStyle={props.styles.container}
