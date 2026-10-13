@@ -367,7 +367,9 @@ export function BarcodeScanner(props: Props): ReactElement {
         onBarcodeScanned,
         onError: onScanError
     });
-    scannerOutputRef.current = scannerOutput;
+    useEffect(() => {
+        scannerOutputRef.current = scannerOutput;
+    }, [scannerOutput]);
 
     // The camera is ready, start the scan delay from now
     const handleCameraStarted = useCallback(() => {
