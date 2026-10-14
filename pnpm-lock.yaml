@@ -853,9 +853,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      react-native-segmented-control-tab:
-        specifier: 3.4.1
-        version: 3.4.1
     devDependencies:
       '@babel/plugin-transform-flow-strip-types':
         specifier: ^7.4.4
@@ -6634,9 +6631,6 @@ packages:
     peerDependencies:
       react: 19.2.3
       react-native: 0.84.1
-
-  react-native-segmented-control-tab@3.4.1:
-    resolution: {integrity: sha512-BNPdlE9Unr0Xabewn8W+FhBMLjssXy9Ey7S7AY0hXlrKrEKFdC9z0yT+eEWd5dLam4T6T4IuGL8b7ZF4uGyWNw==}
 
   react-native-signature-canvas@3.4.0:
     resolution: {integrity: sha512-c8FUCYckXErlGbqxfhMNBcPzBdhCSpBgCtTx9+rpntvveBoajE44854NLydeAvCxHuh1yV5y2EnNFij7AuXtSw==}
@@ -14854,8 +14848,6 @@ snapshots:
       react-freeze: 1.0.4(react@19.2.3)
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3)
       warn-once: 0.1.1
-
-  react-native-segmented-control-tab@3.4.1: {}
 
   react-native-signature-canvas@3.4.0(react-native-webview@13.16.1(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)):
     dependencies:
