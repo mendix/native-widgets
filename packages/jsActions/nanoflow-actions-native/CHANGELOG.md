@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Fixed an issue where base64-to-image decoding was failing.
 -   Migrated the geolocation actions from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.
+-   Updated react-native-nitro-modules to 0.37.0.
 
 ### Fixed
 

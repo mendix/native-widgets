@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   Replaced @notifee/react-native with react-native-notify-kit library.
+-   Updated @react-native-firebase/app and @react-native-firebase/messaging to 21.14.0.
 
 ## [5.1.0] - 2025-12-15
 
