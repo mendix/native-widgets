@@ -24,9 +24,6 @@
     "prepare": "pnpm build",
     "postinstall": "pnpm build"
   },
-  "peerDependencies": {
-    "react-native-safe-area-context": "5.7.0"
-  },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
     "rimraf": "^6.1.2"
