@@ -17,6 +17,9 @@ appId: "${APP_ID}"
 - inputText:
     text: "Maestro"
 - pressKey: Enter
+# Dismiss the keyboard before reading the hierarchy — every XCUITest hang in CI (viewHierarchy
+# timing out) came with the keyboard up.
+- hideKeyboard
 - assertVisible:
     text: "Maestro"
     index: 1
