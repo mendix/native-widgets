@@ -1,15 +1,45 @@
-import { StructurePreviewProps, topBar } from "@mendix/piw-utils-internal";
+import { StructurePreviewProps } from "@mendix/piw-utils-internal";
 
 import { RepeaterPreviewProps } from "../typings/RepeaterProps";
 
 export function getPreview(values: RepeaterPreviewProps, isDarkMode: boolean): StructurePreviewProps {
-    return topBar(
-        "Repeater",
-        {
-            type: "DropZone",
-            placeholder: "Content",
-            property: values.content
-        },
-        isDarkMode
-    );
+    return {
+        type: "Container",
+        borders: true,
+        children: [
+            {
+                type: "Container",
+                backgroundColor: isDarkMode ? "#454545" : "#F5F5F5",
+                children: [
+                    {
+                        type: "Container",
+                        padding: 4,
+                        children: [
+                            {
+                                type: "Text",
+                                fontColor: isDarkMode ? "#DEDEDE" : "#6B707B",
+                                content: "Repeater"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "DropZone",
+                placeholder: "Content",
+                property: values.content
+            },
+            {
+                type: "Container",
+                borders: true,
+                children: [
+                    {
+                        type: "DropZone",
+                        placeholder: "No items placeholder: Place widgets here",
+                        property: values.emptyPlaceholder
+                    }
+                ]
+            }
+        ]
+    };
 }
