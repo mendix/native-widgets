@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState, JSX } from "react";
 import { defaultWelcomeScreenStyle, IntroScreenStyle } from "./ui/Styles";
 import { IntroScreenProps } from "../typings/IntroScreenProps";
-import { Modal, View } from "react-native";
+import { View } from "react-native";
 import { DynamicValue, ValueStatus } from "mendix";
 import { SwipeableContainer } from "./SwipeableContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import deepmerge from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
+import { MxOverlay } from "@mendix/piw-native-utils-internal";
+
+// The popup container draws its own dimmed background, so the overlay backdrop must not add a second one
+const transparentBackdrop = { backgroundColor: "transparent" };
 
 export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Element {
     const [visible, setVisible] = useState(false);
@@ -68,7 +72,16 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
     const showNextDone = props.buttonPattern !== "none";
 
     return (
-        <Modal visible={visible} transparent={props.showMode === "popup"}>
+        <MxOverlay
+            visible={visible}
+            placement="fullscreen"
+            dismissOnBackPress={false}
+            dismissOnBackdropPress={false}
+            backdropStyle={transparentBackdrop}
+            animationDuration={0}
+            respectSafeArea={false}
+            statusBarTranslucent={false}
+        >
             <View style={props.showMode === "fullscreen" ? styles.fullscreenContainer : styles.popupContainer}>
                 <SwipeableContainer
                     testID={props.name}
@@ -96,6 +109,6 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
                     hideIndicatorLastSlide={props.hideIndicatorLastSlide}
                 />
             </View>
-        </Modal>
+        </MxOverlay>
     );
 }
