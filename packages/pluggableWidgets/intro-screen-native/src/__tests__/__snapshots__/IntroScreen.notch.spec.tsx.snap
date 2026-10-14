@@ -2,387 +2,241 @@
 
 exports[`Intro Screen renders 1`] = `
 <Modal
-  transparent={false}
+  animationType="none"
+  onRequestClose={[Function]}
+  statusBarTranslucent={false}
+  transparent={true}
   visible={true}
 >
   <View
     style={
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
+      [
+        {
+          "flex": 1,
+        },
+        {},
+        undefined,
+      ]
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      importantForAccessibility="no"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         {
-          "flex": 1,
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
         }
       }
     >
       <View
         collapsable={false}
-        onLayout={[Function]}
+        pointerEvents="none"
         style={
-          [
-            {
-              "flex": undefined,
-              "overflow": "hidden",
-            },
-            {
-              "flex": 1,
-              "flexDirection": "row",
-            },
-            undefined,
-          ]
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
         }
-      >
-        <RCTScrollView
-          bounces={false}
-          collapsable={false}
-          horizontal={true}
-          importantForAccessibility="no"
-          initialScrollIndex={0}
-          keyExtractor={[Function]}
-          onLayout={[Function]}
-          onScroll={[Function]}
-          onScrollBeginDrag={[Function]}
-          onViewableItemsChanged={[Function]}
-          pagingEnabled={true}
-          scrollEventThrottle={50}
-          showsHorizontalScrollIndicator={false}
-          testID="intro-screen-notch-test"
-          viewabilityConfig={
-            {
-              "itemVisiblePercentThreshold": 60,
-              "minimumViewTime": 250,
-            }
-          }
-        >
-          <View>
-            <View
-              style={
-                {
-                  "height": undefined,
-                  "marginTop": undefined,
-                  "width": 0,
-                }
-              }
-            />
-            <View
-              style={
-                {
-                  "height": 0,
-                  "marginLeft": 0,
-                  "marginTop": undefined,
-                  "opacity": 1,
-                  "width": 0,
-                }
-              }
-            >
-              <View
-                index={0}
-                onLayout={[Function]}
-                style={
-                  {
-                    "flexDirection": "row",
-                    "height": undefined,
-                    "left": 0,
-                    "maxHeight": undefined,
-                    "maxWidth": undefined,
-                    "minHeight": undefined,
-                    "minWidth": undefined,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "top": 0,
-                    "width": undefined,
-                  }
-                }
-              >
-                <View
-                  accessibilityElementsHidden={false}
-                  importantForAccessibility="auto"
-                  style={
-                    {
-                      "height": 800,
-                      "width": 400,
-                    }
-                  }
-                >
-                  <View />
-                </View>
-              </View>
-            </View>
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "bottom": 22,
-              "justifyContent": "space-between",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-            },
-            {
-              "flexDirection": "row",
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              },
-              {
-                "width": 133.33333333333334,
-              },
-            ]
-          }
-        />
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          focusable={true}
-          nativeBackgroundAndroid={
-            {
-              "attribute": "selectableItemBackground",
-              "rippleRadius": undefined,
-              "type": "ThemeAttrAndroid",
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "paddingVertical": 12,
-              },
-              {
-                "width": 133.33333333333334,
-              },
-            ]
-          }
-          testID="intro-screen-notch-test$buttonDone"
-        >
-          <View
-            style={
-              {
-                "alignSelf": "center",
-              }
-            }
-          >
-            <View
-              testId="icon"
-            />
-          </View>
-        </View>
-      </View>
+      />
     </View>
-  </View>
-</Modal>
-`;
-
-exports[`Intro Screen renders with 1 bottom button 1`] = `
-<Modal
-  transparent={false}
-  visible={true}
->
-  <View
-    style={
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    }
-  >
     <View
+      collapsable={false}
+      importantForAccessibility="yes"
+      onLayout={[Function]}
       style={
         {
           "flex": 1,
+          "opacity": 1,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
         }
       }
     >
       <View
-        collapsable={false}
-        onLayout={[Function]}
         style={
-          [
-            {
-              "flex": undefined,
-              "overflow": "hidden",
-            },
-            {
-              "flex": 1,
-              "flexDirection": "row",
-            },
-            undefined,
-          ]
-        }
-      >
-        <RCTScrollView
-          bounces={false}
-          collapsable={false}
-          horizontal={true}
-          importantForAccessibility="no"
-          initialScrollIndex={0}
-          keyExtractor={[Function]}
-          onLayout={[Function]}
-          onScroll={[Function]}
-          onScrollBeginDrag={[Function]}
-          onViewableItemsChanged={[Function]}
-          pagingEnabled={true}
-          scrollEventThrottle={50}
-          showsHorizontalScrollIndicator={false}
-          testID="intro-screen-notch-test"
-          viewabilityConfig={
-            {
-              "itemVisiblePercentThreshold": 60,
-              "minimumViewTime": 250,
-            }
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
           }
-        >
-          <View>
-            <View
-              style={
-                {
-                  "height": undefined,
-                  "marginTop": undefined,
-                  "width": 0,
-                }
-              }
-            />
-            <View
-              style={
-                {
-                  "height": 0,
-                  "marginLeft": 0,
-                  "marginTop": undefined,
-                  "opacity": 1,
-                  "width": 0,
-                }
-              }
-            >
-              <View
-                index={0}
-                onLayout={[Function]}
-                style={
-                  {
-                    "flexDirection": "row",
-                    "height": undefined,
-                    "left": 0,
-                    "maxHeight": undefined,
-                    "maxWidth": undefined,
-                    "minHeight": undefined,
-                    "minWidth": undefined,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "top": 0,
-                    "width": undefined,
-                  }
-                }
-              >
-                <View
-                  accessibilityElementsHidden={false}
-                  importantForAccessibility="auto"
-                  style={
-                    {
-                      "height": 800,
-                      "width": 400,
-                    }
-                  }
-                >
-                  <View />
-                </View>
-              </View>
-            </View>
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "bottom": 22,
-              "justifyContent": "space-between",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-            },
-            {},
-          ]
         }
       >
         <View
           style={
-            [
-              {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              },
-              {
-                "width": "100%",
-              },
-            ]
-          }
-        />
-        <View
-          style={
             {
               "flex": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginTop": 16,
             }
           }
         >
           <View
+            collapsable={false}
+            onLayout={[Function]}
             style={
-              {
-                "flex": 1,
-              }
+              [
+                {
+                  "flex": undefined,
+                  "overflow": "hidden",
+                },
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
             }
           >
+            <RCTScrollView
+              bounces={false}
+              collapsable={false}
+              horizontal={true}
+              importantForAccessibility="no"
+              initialScrollIndex={0}
+              keyExtractor={[Function]}
+              onLayout={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onViewableItemsChanged={[Function]}
+              pagingEnabled={true}
+              scrollEventThrottle={50}
+              showsHorizontalScrollIndicator={false}
+              testID="intro-screen-notch-test"
+              viewabilityConfig={
+                {
+                  "itemVisiblePercentThreshold": 60,
+                  "minimumViewTime": 250,
+                }
+              }
+            >
+              <View>
+                <View
+                  style={
+                    {
+                      "height": undefined,
+                      "marginTop": undefined,
+                      "width": 0,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    {
+                      "height": 0,
+                      "marginLeft": 0,
+                      "marginTop": undefined,
+                      "opacity": 1,
+                      "width": 0,
+                    }
+                  }
+                >
+                  <View
+                    index={0}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "flexDirection": "row",
+                        "height": undefined,
+                        "left": 0,
+                        "maxHeight": undefined,
+                        "maxWidth": undefined,
+                        "minHeight": undefined,
+                        "minWidth": undefined,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "top": 0,
+                        "width": undefined,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityElementsHidden={false}
+                      importantForAccessibility="auto"
+                      style={
+                        {
+                          "height": 800,
+                          "width": 400,
+                        }
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "bottom": 22,
+                  "justifyContent": "space-between",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                },
+                {
+                  "flexDirection": "row",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "width": 133.33333333333334,
+                  },
+                ]
+              }
+            />
             <View
               accessibilityState={
                 {
@@ -421,11 +275,14 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
                 [
                   {
                     "alignItems": "center",
+                    "alignSelf": "stretch",
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "paddingVertical": 12,
                   },
-                  {},
+                  {
+                    "width": 133.33333333333334,
+                  },
                 ]
               }
               testID="intro-screen-notch-test$buttonDone"
@@ -440,6 +297,327 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
                 <View
                   testId="icon"
                 />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;
+
+exports[`Intro Screen renders with 1 bottom button 1`] = `
+<Modal
+  animationType="none"
+  onRequestClose={[Function]}
+  statusBarTranslucent={false}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {},
+        undefined,
+      ]
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      importantForAccessibility="no"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="none"
+        style={
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <View
+      collapsable={false}
+      importantForAccessibility="yes"
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+          "opacity": 1,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            onLayout={[Function]}
+            style={
+              [
+                {
+                  "flex": undefined,
+                  "overflow": "hidden",
+                },
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
+            }
+          >
+            <RCTScrollView
+              bounces={false}
+              collapsable={false}
+              horizontal={true}
+              importantForAccessibility="no"
+              initialScrollIndex={0}
+              keyExtractor={[Function]}
+              onLayout={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onViewableItemsChanged={[Function]}
+              pagingEnabled={true}
+              scrollEventThrottle={50}
+              showsHorizontalScrollIndicator={false}
+              testID="intro-screen-notch-test"
+              viewabilityConfig={
+                {
+                  "itemVisiblePercentThreshold": 60,
+                  "minimumViewTime": 250,
+                }
+              }
+            >
+              <View>
+                <View
+                  style={
+                    {
+                      "height": undefined,
+                      "marginTop": undefined,
+                      "width": 0,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    {
+                      "height": 0,
+                      "marginLeft": 0,
+                      "marginTop": undefined,
+                      "opacity": 1,
+                      "width": 0,
+                    }
+                  }
+                >
+                  <View
+                    index={0}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "flexDirection": "row",
+                        "height": undefined,
+                        "left": 0,
+                        "maxHeight": undefined,
+                        "maxWidth": undefined,
+                        "minHeight": undefined,
+                        "minWidth": undefined,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "top": 0,
+                        "width": undefined,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityElementsHidden={false}
+                      importantForAccessibility="auto"
+                      style={
+                        {
+                          "height": 800,
+                          "width": 400,
+                        }
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "bottom": 22,
+                  "justifyContent": "space-between",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                },
+                {},
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "width": "100%",
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "marginTop": 16,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "flex": 1,
+                  }
+                }
+              >
+                <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  nativeBackgroundAndroid={
+                    {
+                      "attribute": "selectableItemBackground",
+                      "rippleRadius": undefined,
+                      "type": "ThemeAttrAndroid",
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "paddingVertical": 12,
+                      },
+                      {},
+                    ]
+                  }
+                  testID="intro-screen-notch-test$buttonDone"
+                >
+                  <View
+                    style={
+                      {
+                        "alignSelf": "center",
+                      }
+                    }
+                  >
+                    <View
+                      testId="icon"
+                    />
+                  </View>
+                </View>
               </View>
             </View>
           </View>
@@ -452,169 +630,562 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
 
 exports[`Intro Screen renders with 2 bottom button 1`] = `
 <Modal
-  transparent={false}
+  animationType="none"
+  onRequestClose={[Function]}
+  statusBarTranslucent={false}
+  transparent={true}
   visible={true}
 >
   <View
     style={
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
+      [
+        {
+          "flex": 1,
+        },
+        {},
+        undefined,
+      ]
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      importantForAccessibility="no"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         {
-          "flex": 1,
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
         }
       }
     >
       <View
         collapsable={false}
-        onLayout={[Function]}
+        pointerEvents="none"
         style={
-          [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <View
+      collapsable={false}
+      importantForAccessibility="yes"
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+          "opacity": 1,
+          "transform": [
             {
-              "flex": undefined,
-              "overflow": "hidden",
+              "translateY": 0,
             },
-            {
-              "flex": 1,
-              "flexDirection": "row",
-            },
-            undefined,
-          ]
+          ],
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
         }
       >
-        <RCTScrollView
-          bounces={false}
-          collapsable={false}
-          horizontal={true}
-          importantForAccessibility="no"
-          initialScrollIndex={0}
-          keyExtractor={[Function]}
-          onLayout={[Function]}
-          onScroll={[Function]}
-          onScrollBeginDrag={[Function]}
-          onViewableItemsChanged={[Function]}
-          pagingEnabled={true}
-          scrollEventThrottle={50}
-          showsHorizontalScrollIndicator={false}
-          testID="intro-screen-notch-test"
-          viewabilityConfig={
+        <View
+          style={
             {
-              "itemVisiblePercentThreshold": 60,
-              "minimumViewTime": 250,
+              "flex": 1,
             }
           }
         >
-          <View>
+          <View
+            collapsable={false}
+            onLayout={[Function]}
+            style={
+              [
+                {
+                  "flex": undefined,
+                  "overflow": "hidden",
+                },
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
+            }
+          >
+            <RCTScrollView
+              bounces={false}
+              collapsable={false}
+              horizontal={true}
+              importantForAccessibility="no"
+              initialScrollIndex={0}
+              keyExtractor={[Function]}
+              onLayout={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onViewableItemsChanged={[Function]}
+              pagingEnabled={true}
+              scrollEventThrottle={50}
+              showsHorizontalScrollIndicator={false}
+              testID="intro-screen-notch-test"
+              viewabilityConfig={
+                {
+                  "itemVisiblePercentThreshold": 60,
+                  "minimumViewTime": 250,
+                }
+              }
+            >
+              <View>
+                <View
+                  style={
+                    {
+                      "height": undefined,
+                      "marginTop": undefined,
+                      "width": 0,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    {
+                      "height": 0,
+                      "marginLeft": 0,
+                      "marginTop": undefined,
+                      "opacity": 1,
+                      "width": 0,
+                    }
+                  }
+                >
+                  <View
+                    index={0}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "flexDirection": "row",
+                        "height": undefined,
+                        "left": 0,
+                        "maxHeight": undefined,
+                        "maxWidth": undefined,
+                        "minHeight": undefined,
+                        "minWidth": undefined,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "top": 0,
+                        "width": undefined,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityElementsHidden={false}
+                      importantForAccessibility="auto"
+                      style={
+                        {
+                          "height": 800,
+                          "width": 400,
+                        }
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "bottom": 22,
+                  "justifyContent": "space-between",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                },
+                {},
+              ]
+            }
+          >
             <View
               style={
-                {
-                  "height": undefined,
-                  "marginTop": undefined,
-                  "width": 0,
-                }
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "width": "100%",
+                  },
+                ]
               }
             />
             <View
               style={
                 {
-                  "height": 0,
-                  "marginLeft": 0,
-                  "marginTop": undefined,
-                  "opacity": 1,
-                  "width": 0,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "marginTop": 16,
                 }
               }
             >
               <View
-                index={0}
-                onLayout={[Function]}
                 style={
                   {
-                    "flexDirection": "row",
-                    "height": undefined,
-                    "left": 0,
-                    "maxHeight": undefined,
-                    "maxWidth": undefined,
-                    "minHeight": undefined,
-                    "minWidth": undefined,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "top": 0,
-                    "width": undefined,
+                    "flex": 1,
                   }
                 }
               >
                 <View
-                  accessibilityElementsHidden={false}
-                  importantForAccessibility="auto"
-                  style={
+                  accessibilityState={
                     {
-                      "height": 800,
-                      "width": 400,
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
                     }
                   }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  nativeBackgroundAndroid={
+                    {
+                      "attribute": "selectableItemBackground",
+                      "rippleRadius": undefined,
+                      "type": "ThemeAttrAndroid",
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "paddingVertical": 12,
+                      },
+                      {},
+                    ]
+                  }
+                  testID="intro-screen-notch-test$buttonDone"
                 >
-                  <View />
+                  <View
+                    style={
+                      {
+                        "alignSelf": "center",
+                      }
+                    }
+                  >
+                    <View
+                      testId="icon"
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </RCTScrollView>
+        </View>
       </View>
+    </View>
+  </View>
+</Modal>
+`;
+
+exports[`Intro Screen renders with active slide attribute 1`] = `
+<Modal
+  animationType="none"
+  onRequestClose={[Function]}
+  statusBarTranslucent={false}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {},
+        undefined,
+      ]
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      importantForAccessibility="no"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="none"
+        style={
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <View
+      collapsable={false}
+      importantForAccessibility="yes"
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+          "opacity": 1,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+        }
+      }
+    >
       <View
         style={
-          [
-            {
-              "alignItems": "center",
-              "bottom": 22,
-              "justifyContent": "space-between",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-            },
-            {},
-          ]
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
         }
       >
         <View
           style={
-            [
-              {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              },
-              {
-                "width": "100%",
-              },
-            ]
-          }
-        />
-        <View
-          style={
             {
               "flex": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "marginTop": 16,
             }
           }
         >
           <View
+            collapsable={false}
+            onLayout={[Function]}
             style={
-              {
-                "flex": 1,
-              }
+              [
+                {
+                  "flex": undefined,
+                  "overflow": "hidden",
+                },
+                {
+                  "flex": 1,
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
             }
           >
+            <RCTScrollView
+              bounces={false}
+              collapsable={false}
+              horizontal={true}
+              importantForAccessibility="no"
+              initialScrollIndex={0}
+              keyExtractor={[Function]}
+              onLayout={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onViewableItemsChanged={[Function]}
+              pagingEnabled={true}
+              scrollEventThrottle={50}
+              showsHorizontalScrollIndicator={false}
+              testID="intro-screen-notch-test"
+              viewabilityConfig={
+                {
+                  "itemVisiblePercentThreshold": 60,
+                  "minimumViewTime": 250,
+                }
+              }
+            >
+              <View>
+                <View
+                  style={
+                    {
+                      "height": undefined,
+                      "marginTop": undefined,
+                      "width": 0,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    {
+                      "height": 0,
+                      "marginLeft": 0,
+                      "marginTop": undefined,
+                      "opacity": 1,
+                      "width": 0,
+                    }
+                  }
+                >
+                  <View
+                    index={0}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "flexDirection": "row",
+                        "height": undefined,
+                        "left": 0,
+                        "maxHeight": undefined,
+                        "maxWidth": undefined,
+                        "minHeight": undefined,
+                        "minWidth": undefined,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "top": 0,
+                        "width": undefined,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityElementsHidden={false}
+                      importantForAccessibility="auto"
+                      style={
+                        {
+                          "height": 800,
+                          "width": 400,
+                        }
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "bottom": 22,
+                  "justifyContent": "space-between",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                },
+                {
+                  "flexDirection": "row",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "width": 133.33333333333334,
+                  },
+                ]
+              }
+            />
             <View
               accessibilityState={
                 {
@@ -653,11 +1224,14 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
                 [
                   {
                     "alignItems": "center",
+                    "alignSelf": "stretch",
                     "flexDirection": "row",
                     "justifyContent": "center",
                     "paddingVertical": 12,
                   },
-                  {},
+                  {
+                    "width": 133.33333333333334,
+                  },
                 ]
               }
               testID="intro-screen-notch-test$buttonDone"
@@ -682,434 +1256,305 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
 </Modal>
 `;
 
-exports[`Intro Screen renders with active slide attribute 1`] = `
-<Modal
-  transparent={false}
-  visible={true}
->
-  <View
-    style={
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    }
-  >
-    <View
-      style={
-        {
-          "flex": 1,
-        }
-      }
-    >
-      <View
-        collapsable={false}
-        onLayout={[Function]}
-        style={
-          [
-            {
-              "flex": undefined,
-              "overflow": "hidden",
-            },
-            {
-              "flex": 1,
-              "flexDirection": "row",
-            },
-            undefined,
-          ]
-        }
-      >
-        <RCTScrollView
-          bounces={false}
-          collapsable={false}
-          horizontal={true}
-          importantForAccessibility="no"
-          initialScrollIndex={0}
-          keyExtractor={[Function]}
-          onLayout={[Function]}
-          onScroll={[Function]}
-          onScrollBeginDrag={[Function]}
-          onViewableItemsChanged={[Function]}
-          pagingEnabled={true}
-          scrollEventThrottle={50}
-          showsHorizontalScrollIndicator={false}
-          testID="intro-screen-notch-test"
-          viewabilityConfig={
-            {
-              "itemVisiblePercentThreshold": 60,
-              "minimumViewTime": 250,
-            }
-          }
-        >
-          <View>
-            <View
-              style={
-                {
-                  "height": undefined,
-                  "marginTop": undefined,
-                  "width": 0,
-                }
-              }
-            />
-            <View
-              style={
-                {
-                  "height": 0,
-                  "marginLeft": 0,
-                  "marginTop": undefined,
-                  "opacity": 1,
-                  "width": 0,
-                }
-              }
-            >
-              <View
-                index={0}
-                onLayout={[Function]}
-                style={
-                  {
-                    "flexDirection": "row",
-                    "height": undefined,
-                    "left": 0,
-                    "maxHeight": undefined,
-                    "maxWidth": undefined,
-                    "minHeight": undefined,
-                    "minWidth": undefined,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "top": 0,
-                    "width": undefined,
-                  }
-                }
-              >
-                <View
-                  accessibilityElementsHidden={false}
-                  importantForAccessibility="auto"
-                  style={
-                    {
-                      "height": 800,
-                      "width": 400,
-                    }
-                  }
-                >
-                  <View />
-                </View>
-              </View>
-            </View>
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "bottom": 22,
-              "justifyContent": "space-between",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-            },
-            {
-              "flexDirection": "row",
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              },
-              {
-                "width": 133.33333333333334,
-              },
-            ]
-          }
-        />
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          focusable={true}
-          nativeBackgroundAndroid={
-            {
-              "attribute": "selectableItemBackground",
-              "rippleRadius": undefined,
-              "type": "ThemeAttrAndroid",
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "paddingVertical": 12,
-              },
-              {
-                "width": 133.33333333333334,
-              },
-            ]
-          }
-          testID="intro-screen-notch-test$buttonDone"
-        >
-          <View
-            style={
-              {
-                "alignSelf": "center",
-              }
-            }
-          >
-            <View
-              testId="icon"
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  </View>
-</Modal>
-`;
-
 exports[`Intro Screen renders with async storage identifier 1`] = `
 <Modal
-  transparent={false}
+  animationType="none"
+  onRequestClose={[Function]}
+  statusBarTranslucent={false}
+  transparent={true}
   visible={true}
 >
   <View
     style={
-      {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
+      [
+        {
+          "flex": 1,
+        },
+        {},
+        undefined,
+      ]
     }
   >
     <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={false}
+      collapsable={false}
+      focusable={true}
+      importantForAccessibility="no"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         {
-          "flex": 1,
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
         }
       }
     >
       <View
         collapsable={false}
-        onLayout={[Function]}
+        pointerEvents="none"
         style={
-          [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <View
+      collapsable={false}
+      importantForAccessibility="yes"
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+          "opacity": 1,
+          "transform": [
             {
-              "flex": undefined,
-              "overflow": "hidden",
+              "translateY": 0,
             },
-            {
-              "flex": 1,
-              "flexDirection": "row",
-            },
-            undefined,
-          ]
+          ],
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
         }
       >
-        <RCTScrollView
-          bounces={false}
-          collapsable={false}
-          horizontal={true}
-          importantForAccessibility="no"
-          initialScrollIndex={0}
-          keyExtractor={[Function]}
-          onLayout={[Function]}
-          onScroll={[Function]}
-          onScrollBeginDrag={[Function]}
-          onViewableItemsChanged={[Function]}
-          pagingEnabled={true}
-          scrollEventThrottle={50}
-          showsHorizontalScrollIndicator={false}
-          testID="intro-screen-notch-test"
-          viewabilityConfig={
+        <View
+          style={
             {
-              "itemVisiblePercentThreshold": 60,
-              "minimumViewTime": 250,
+              "flex": 1,
             }
           }
         >
-          <View>
-            <View
-              style={
+          <View
+            collapsable={false}
+            onLayout={[Function]}
+            style={
+              [
                 {
-                  "height": undefined,
-                  "marginTop": undefined,
-                  "width": 0,
-                }
-              }
-            />
-            <View
-              style={
+                  "flex": undefined,
+                  "overflow": "hidden",
+                },
                 {
-                  "height": 0,
-                  "marginLeft": 0,
-                  "marginTop": undefined,
-                  "opacity": 1,
-                  "width": 0,
+                  "flex": 1,
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
+            }
+          >
+            <RCTScrollView
+              bounces={false}
+              collapsable={false}
+              horizontal={true}
+              importantForAccessibility="no"
+              initialScrollIndex={0}
+              keyExtractor={[Function]}
+              onLayout={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onViewableItemsChanged={[Function]}
+              pagingEnabled={true}
+              scrollEventThrottle={50}
+              showsHorizontalScrollIndicator={false}
+              testID="intro-screen-notch-test"
+              viewabilityConfig={
+                {
+                  "itemVisiblePercentThreshold": 60,
+                  "minimumViewTime": 250,
                 }
               }
             >
+              <View>
+                <View
+                  style={
+                    {
+                      "height": undefined,
+                      "marginTop": undefined,
+                      "width": 0,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    {
+                      "height": 0,
+                      "marginLeft": 0,
+                      "marginTop": undefined,
+                      "opacity": 1,
+                      "width": 0,
+                    }
+                  }
+                >
+                  <View
+                    index={0}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "flexDirection": "row",
+                        "height": undefined,
+                        "left": 0,
+                        "maxHeight": undefined,
+                        "maxWidth": undefined,
+                        "minHeight": undefined,
+                        "minWidth": undefined,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "top": 0,
+                        "width": undefined,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityElementsHidden={false}
+                      importantForAccessibility="auto"
+                      style={
+                        {
+                          "height": 800,
+                          "width": 400,
+                        }
+                      }
+                    >
+                      <View />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "bottom": 22,
+                  "justifyContent": "space-between",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                },
+                {
+                  "flexDirection": "row",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "width": 133.33333333333334,
+                  },
+                ]
+              }
+            />
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              nativeBackgroundAndroid={
+                {
+                  "attribute": "selectableItemBackground",
+                  "rippleRadius": undefined,
+                  "type": "ThemeAttrAndroid",
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "stretch",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "paddingVertical": 12,
+                  },
+                  {
+                    "width": 133.33333333333334,
+                  },
+                ]
+              }
+              testID="intro-screen-notch-test$buttonDone"
+            >
               <View
-                index={0}
-                onLayout={[Function]}
                 style={
                   {
-                    "flexDirection": "row",
-                    "height": undefined,
-                    "left": 0,
-                    "maxHeight": undefined,
-                    "maxWidth": undefined,
-                    "minHeight": undefined,
-                    "minWidth": undefined,
-                    "opacity": 1,
-                    "position": "absolute",
-                    "top": 0,
-                    "width": undefined,
+                    "alignSelf": "center",
                   }
                 }
               >
                 <View
-                  accessibilityElementsHidden={false}
-                  importantForAccessibility="auto"
-                  style={
-                    {
-                      "height": 800,
-                      "width": 400,
-                    }
-                  }
-                >
-                  <View />
-                </View>
+                  testId="icon"
+                />
               </View>
             </View>
-          </View>
-        </RCTScrollView>
-      </View>
-      <View
-        style={
-          [
-            {
-              "alignItems": "center",
-              "bottom": 22,
-              "justifyContent": "space-between",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-            },
-            {
-              "flexDirection": "row",
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              },
-              {
-                "width": 133.33333333333334,
-              },
-            ]
-          }
-        />
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          focusable={true}
-          nativeBackgroundAndroid={
-            {
-              "attribute": "selectableItemBackground",
-              "rippleRadius": undefined,
-              "type": "ThemeAttrAndroid",
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "paddingVertical": 12,
-              },
-              {
-                "width": 133.33333333333334,
-              },
-            ]
-          }
-          testID="intro-screen-notch-test$buttonDone"
-        >
-          <View
-            style={
-              {
-                "alignSelf": "center",
-              }
-            }
-          >
-            <View
-              testId="icon"
-            />
           </View>
         </View>
       </View>
