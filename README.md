@@ -69,8 +69,8 @@ Note: this applies to NMR for latest Studio Pro (currently 9.X)
 -   Ensure your current git branch includes all changes intended to be released.
     -   Including updates to widgets' changelogs and semver version in `package.json` and `package.xml`.
 -   Build all widgets in release mode; in root of repo run `pnpm release`.
--   Copy each widgets' `.mpk` to the NMR project's `/widgets` directory, overriding any existing `.mpk`s.
--   (conditional) If the widget is new, it needs to be listed on the NMR project page `NativeModileResources._WidgetExport`.
+-   Copy each widget's `.mpk` to the NMR project's `/widgets` directory, overriding any existing `.mpk`s.
+-   (conditional) If the widget is new, it needs to be listed on the NMR project page `NativeMobileResources._WidgetExport`.
     -   Configure the widget with basic minimum requirements (e.g. datasource), enough to avoid any project errors.
 -   Ensure monorepo's `mobile-resources-native` package has correct changelog and `package.json` version.
 -   cd to `packages/jsActions/mobile-resources-native` and run `pnpm release`.

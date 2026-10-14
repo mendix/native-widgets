@@ -43,12 +43,12 @@ A main object has four objects. Objects with **?** are optional and do not need 
 
 #### ModalItemsStyle
 
-| Style Key                      | Description                                                 |
-| ------------------------------ | ----------------------------------------------------------- |
-| defaultStyle?: BasicItemStyle; | Styles all basic items which has "default" style selected\. |
-| primaryStyle?: BasicItemStyle; | Styles all basic items which has "primary" style selected\. |
-| dangerStyle?: BasicItemStyle;  | Styles all basic items which has "danger" style selected\.  |
-| customStyle?: BasicItemStyle;  | Styles all basic items which has "custom" style selected\.  |
+| Style Key                      | Description                                                  |
+| ------------------------------ | ------------------------------------------------------------ |
+| defaultStyle?: BasicItemStyle; | Styles all basic items which have "default" style selected\. |
+| primaryStyle?: BasicItemStyle; | Styles all basic items which have "primary" style selected\. |
+| dangerStyle?: BasicItemStyle;  | Styles all basic items which have "danger" style selected\.  |
+| customStyle?: BasicItemStyle;  | Styles all basic items which have "custom" style selected\.  |
 
 Example:
 
