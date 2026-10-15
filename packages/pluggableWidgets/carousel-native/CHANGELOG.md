@@ -8,8 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   We updated deprecated-react-native-prop-types to 4.2.3.
--   We pinned react-native-snap-carousel to 3.9.1.
+-   We replaced react-native-snap-carousel with a built-in carousel component, removing the dependency on it and on deprecated-react-native-prop-types.
+
+### Fixed
+
+-   Carousel is now accessible: TalkBack and VoiceOver users can jump straight to a slide via its pagination dot, or step through slides one at a time; only the active slide is ever read out, instead of all of them at once.
 
 ## [3.1.0] - 2024-12-3
 
