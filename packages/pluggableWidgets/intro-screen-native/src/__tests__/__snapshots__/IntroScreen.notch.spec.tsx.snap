@@ -5,7 +5,12 @@ exports[`Intro Screen renders 1`] = `
   animationType="none"
   onRequestClose={[Function]}
   statusBarTranslucent={false}
-  transparent={true}
+  supportedOrientations={
+    [
+      "portrait",
+    ]
+  }
+  transparent={false}
   visible={true}
 >
   <View
@@ -312,7 +317,12 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
   animationType="none"
   onRequestClose={[Function]}
   statusBarTranslucent={false}
-  transparent={true}
+  supportedOrientations={
+    [
+      "portrait",
+    ]
+  }
+  transparent={false}
   visible={true}
 >
   <View
@@ -633,7 +643,12 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
   animationType="none"
   onRequestClose={[Function]}
   statusBarTranslucent={false}
-  transparent={true}
+  supportedOrientations={
+    [
+      "portrait",
+    ]
+  }
+  transparent={false}
   visible={true}
 >
   <View
@@ -954,7 +969,12 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
   animationType="none"
   onRequestClose={[Function]}
   statusBarTranslucent={false}
-  transparent={true}
+  supportedOrientations={
+    [
+      "portrait",
+    ]
+  }
+  transparent={false}
   visible={true}
 >
   <View
@@ -1261,7 +1281,12 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
   animationType="none"
   onRequestClose={[Function]}
   statusBarTranslucent={false}
-  transparent={true}
+  supportedOrientations={
+    [
+      "portrait",
+    ]
+  }
+  transparent={false}
   visible={true}
 >
   <View
