@@ -14,6 +14,7 @@ import {
     Animated,
     findNodeHandle,
     Modal,
+    ModalProps,
     Platform,
     Pressable,
     StyleProp,
@@ -43,6 +44,10 @@ export interface MxOverlayProps {
     returnFocusRef?: RefObject<Component | null>;
     /** Enter/exit duration in ms. 0 disables the animation. Defaults to 200. */
     animationDuration?: number;
+    /** Render a transparent modal so what is behind shows through. When false the platform provides an opaque background. Defaults to true. */
+    transparent?: boolean;
+    /** Orientations the overlay may rotate to (iOS only). Defaults to all four, so the device orientation is kept. */
+    supportedOrientations?: ModalProps["supportedOrientations"];
     /** Draw the overlay under the Android status bar. Defaults to true. */
     statusBarTranslucent?: boolean;
     /** Pad the content by the safe-area insets. Defaults to true. */
@@ -53,6 +58,13 @@ export interface MxOverlayProps {
 
 const ZERO_INSETS = { top: 0, right: 0, bottom: 0, left: 0 };
 const DEFAULT_ANIMATION_DURATION = 200;
+// iOS Modal defaults to portrait only, so list every orientation to keep the device orientation while it is open
+const ALL_ORIENTATIONS: ModalProps["supportedOrientations"] = [
+    "portrait",
+    "portrait-upside-down",
+    "landscape-left",
+    "landscape-right"
+];
 const SLIDE_DISTANCE: Record<MxOverlayPlacement, number> = {
     center: 16,
     positioned: 16,
@@ -80,6 +92,8 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
         returnFocusRef,
         animationDuration = DEFAULT_ANIMATION_DURATION,
         respectSafeArea = true,
+        transparent = true,
+        supportedOrientations = ALL_ORIENTATIONS,
         statusBarTranslucent = true,
         testID,
         children
@@ -90,6 +104,16 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
     const [progress] = useState(() => new Animated.Value(visible ? 1 : 0));
     const contentRef = useRef<View>(null);
     const focusMoved = useRef(false);
+    const wasMounted = useRef(mounted);
+
+    // Restore focus in its own effect: it must run after the Modal has actually unmounted, otherwise
+    // the still-visible overlay (accessibilityViewIsModal) hides the element that should get focus.
+    useEffect(() => {
+        if (wasMounted.current && !mounted) {
+            moveFocusTo(returnFocusRef);
+        }
+        wasMounted.current = mounted;
+    }, [mounted, returnFocusRef]);
 
     useEffect(() => {
         if (visible) {
@@ -101,7 +125,6 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
         const finish = (): void => {
             if (!visible) {
                 setMounted(false);
-                moveFocusTo(returnFocusRef);
             }
         };
 
@@ -155,8 +178,9 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
     return (
         <Modal
             visible
-            transparent
+            transparent={transparent}
             statusBarTranslucent={statusBarTranslucent}
+            supportedOrientations={supportedOrientations}
             animationType="none"
             onRequestClose={handleBackPress}
         >

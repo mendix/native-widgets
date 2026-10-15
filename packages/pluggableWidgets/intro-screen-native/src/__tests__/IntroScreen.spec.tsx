@@ -2,7 +2,7 @@ import { render, act, fireEvent, RenderAPI } from "@testing-library/react-native
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
-import { View } from "react-native";
+import { Modal, View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
@@ -52,6 +52,34 @@ describe("Intro Screen", () => {
         const component = render(<IntroScreen {...defaultProps} />);
         layout(component, "intro-screen-test");
         expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("renders an opaque modal in fullscreen mode", () => {
+        const component = render(<IntroScreen {...defaultProps} showMode="fullscreen" />);
+
+        expect(component.UNSAFE_getByType(Modal).props.transparent).toBe(false);
+    });
+
+    it("renders a transparent modal in popup mode", () => {
+        const component = render(<IntroScreen {...defaultProps} showMode="popup" />);
+
+        expect(component.UNSAFE_getByType(Modal).props.transparent).toBe(true);
+    });
+
+    it("stays in portrait on iOS", () => {
+        const component = render(<IntroScreen {...defaultProps} />);
+
+        expect(component.UNSAFE_getByType(Modal).props.supportedOrientations).toEqual(["portrait"]);
+    });
+
+    it("keeps the intro screen open when the Android back button is pressed", () => {
+        const component = render(<IntroScreen {...defaultProps} />);
+
+        act(() => {
+            component.UNSAFE_getByType(Modal).props.onRequestClose();
+        });
+
+        expect(component.UNSAFE_queryByType(Modal)).not.toBeNull();
     });
 
     it("renders with 1 bottom button", () => {
