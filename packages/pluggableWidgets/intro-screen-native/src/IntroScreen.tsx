@@ -75,6 +75,8 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
         <MxOverlay
             visible={visible}
             placement="fullscreen"
+            transparent={props.showMode === "popup"}
+            supportedOrientations={["portrait"]}
             dismissOnBackPress={false}
             dismissOnBackdropPress={false}
             backdropStyle={transparentBackdrop}
