@@ -181,6 +181,23 @@ describe("Carousel", () => {
             expect(carousel.getByTestId("carousel$content$1").props.accessibilityElementsHidden).toBe(false);
         });
 
+        it("keeps the last slide reachable when the datasource shrinks under the active one", () => {
+            const carousel = render(
+                <Carousel {...defaultProps} contentSource={listValueBuilder.withAmountOfItems(6)} />
+            );
+            fireContainerLayout(carousel, { width: 300, height: 150 });
+            const itemWidth = 300 * 0.7;
+
+            fireEvent(carousel.getByTestId("carousel$carousel"), "momentumScrollEnd", {
+                nativeEvent: { contentOffset: { x: 4 * itemWidth } }
+            });
+            carousel.rerender(<Carousel {...defaultProps} contentSource={listValueBuilder.withAmountOfItems(2)} />);
+
+            expect(carousel.getByTestId("carousel$content$1").props.accessibilityElementsHidden).toBe(false);
+            const dots = carousel.getAllByRole("button");
+            expect(dots[1].props.accessibilityState).toEqual({ selected: true });
+        });
+
         it("steps forward and backward on a TalkBack/VoiceOver increment or decrement action", () => {
             const scrollToIndex = jest.spyOn(FlatList.prototype, "scrollToIndex").mockImplementation(() => undefined);
             const carousel = render(
