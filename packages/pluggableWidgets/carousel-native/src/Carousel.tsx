@@ -36,7 +36,10 @@ export const Carousel = (props: CarouselProps<CarouselStyle>): ReactElement => {
     // Drives the per-item scale/opacity below; native-driven, so it never touches the JS thread while scrolling.
     const [scrollX] = useState(() => new Animated.Value(0));
 
-    const [activeSlide, setActiveSlide] = useState(0);
+    const [activeSlideState, setActiveSlide] = useState(0);
+    // The datasource can shrink under the selected slide without any scroll event reporting it, so clamp here;
+    // otherwise no slide would match and every one would be hidden from screen readers.
+    const activeSlide = Math.min(activeSlideState, Math.max((props.contentSource.items?.length ?? 0) - 1, 0));
 
     const [loading, setLoading] = useState(true);
 
