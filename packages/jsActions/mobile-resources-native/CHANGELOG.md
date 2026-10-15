@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions failed to capture photos on Android.
 -   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions did not properly clean up temporary files.
 -   Replaced @notifee/react-native with react-native-notify-kit library.
+-   Updated @react-native-firebase/messaging to 21.14.0.
 
 ## [12.1.0] Native Mobile Resources - 2026-6-10
 
