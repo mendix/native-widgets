@@ -9,6 +9,9 @@ import { defaultProgressCircleStyle, ProgressCircleStyle } from "./ui/Styles";
 export type Props = ProgressCircleProps<ProgressCircleStyle>;
 
 const CIRCLE = Math.PI * 2;
+// iOS reads accessibilityValue as now / (max - min), ignoring min, so the value is always reported on a 0-100 scale
+// to be announced correctly for any range (same approach as the Slider).
+const ACCESSIBILITY_SCALE = 100;
 
 export function ProgressCircle(props: Props): JSX.Element {
     const styles = flattenStyles(defaultProgressCircleStyle, props.style);
@@ -39,9 +42,9 @@ export function ProgressCircle(props: Props): JSX.Element {
             accessibilityRole="progressbar"
             accessibilityLabel="Progress circle"
             accessibilityValue={{
-                min: available(props.minimumValue) ? props.minimumValue.value!.toNumber() : 0,
-                max: available(props.maximumValue) ? props.maximumValue.value!.toNumber() : 100,
-                now: available(props.progressValue) ? props.progressValue.value!.toNumber() : 0,
+                min: 0,
+                max: ACCESSIBILITY_SCALE,
+                now: Math.round(progress * ACCESSIBILITY_SCALE),
                 ...(showsText ? { text } : {})
             }}
         >

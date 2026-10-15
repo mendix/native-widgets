@@ -60,14 +60,27 @@ describe("ProgressBar", () => {
         });
     });
 
-    it("has correct accessibility values with different range", () => {
+    it("reports the accessibility value as a percentage of the range", () => {
         const component = render(<ProgressBar {...createProps(25, 10, 50)} />);
         const views = component.UNSAFE_getAllByType(View);
         const accessibleElement = views.find(view => view.props.accessibilityRole === "progressbar");
+        // (25 - 10) / (50 - 10) = 37.5%, rounded
         expect(accessibleElement?.props.accessibilityValue).toEqual({
-            min: 10,
-            max: 50,
-            now: 25
+            min: 0,
+            max: 100,
+            now: 38
+        });
+    });
+
+    it("reports the percentage of the range when the range does not start at 0", () => {
+        const component = render(<ProgressBar {...createProps(49, 1, 100)} />);
+        const views = component.UNSAFE_getAllByType(View);
+        const accessibleElement = views.find(view => view.props.accessibilityRole === "progressbar");
+        // (49 - 1) / (100 - 1) = 48.5%; iOS divides by the range without subtracting min, so the scale must be 0-100
+        expect(accessibleElement?.props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 48
         });
     });
 

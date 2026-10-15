@@ -8,6 +8,10 @@ import { defaultProgressBarStyle, ProgressBarStyle } from "./ui/Styles";
 
 export type Props = ProgressBarProps<ProgressBarStyle>;
 
+// iOS reads accessibilityValue as now / (max - min), ignoring min, so the value is always reported on a 0-100 scale
+// to be announced correctly for any range (same approach as the Slider).
+const ACCESSIBILITY_SCALE = 100;
+
 export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Element {
     const styles = flattenStyles(defaultProgressBarStyle, props.style);
 
@@ -58,9 +62,9 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
                 accessible
                 accessibilityRole="progressbar"
                 accessibilityValue={{
-                    min: isAvailable(props.minimumValue) ? props.minimumValue.value!.toNumber() : 0,
-                    max: isAvailable(props.maximumValue) ? props.maximumValue.value!.toNumber() : 100,
-                    now: isAvailable(props.progressValue) ? props.progressValue.value!.toNumber() : 0
+                    min: 0,
+                    max: ACCESSIBILITY_SCALE,
+                    now: Math.round(progress * ACCESSIBILITY_SCALE)
                 }}
                 accessibilityLabel="Progress bar"
             >
