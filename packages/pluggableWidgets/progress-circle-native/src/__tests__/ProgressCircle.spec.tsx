@@ -114,6 +114,16 @@ No current value provided.`
         });
     });
 
+    it("reports the percentage of the range when the range does not start at 0", () => {
+        const component = render(<ProgressCircle {...createProps(49, 1, 100)} circleText="none" />);
+        // (49 - 1) / (100 - 1) = 48.5%; iOS divides by the range without subtracting min, so the scale must be 0-100
+        expect(component.getByTestId(TEST_ID).props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 48
+        });
+    });
+
     it("scales size by device font scale", () => {
         const spy = jest.spyOn(PixelRatio, "getFontScale").mockReturnValue(2);
         const component = render(<ProgressCircle {...createProps(50, 0, 100)} />);
