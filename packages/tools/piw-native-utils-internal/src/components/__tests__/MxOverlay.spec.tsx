@@ -110,6 +110,42 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
             expect(setFocus).toHaveBeenCalledTimes(1);
             expect(setFocus).toHaveBeenCalledWith(9);
         });
+
+        it("restores focus only after the modal has unmounted", () => {
+            const returnFocusRef = createRef<View>();
+            mockFindNodeHandle.mockImplementation(node => (node === returnFocusRef.current ? 9 : 42));
+            const rendered: { current?: ReturnType<typeof render> } = {};
+            const modalPresentWhenFocused: boolean[] = [];
+            setFocus.mockImplementation(() => {
+                modalPresentWhenFocused.push(Boolean(rendered.current?.UNSAFE_queryByType(Modal)));
+            });
+            const element = (visible: boolean): ReactElement => (
+                <>
+                    <View ref={returnFocusRef} />
+                    <MxOverlay visible={visible} animationDuration={0} returnFocusRef={returnFocusRef}>
+                        <Text>content</Text>
+                    </MxOverlay>
+                </>
+            );
+            rendered.current = render(element(true));
+            setFocus.mockClear();
+            modalPresentWhenFocused.length = 0;
+
+            rendered.current.rerender(element(false));
+
+            expect(modalPresentWhenFocused).toEqual([false]);
+        });
+
+        it("does not move focus when it was never shown", () => {
+            const returnFocusRef = createRef<View>();
+            render(
+                <MxOverlay visible={false} returnFocusRef={returnFocusRef}>
+                    <Text>content</Text>
+                </MxOverlay>
+            );
+
+            expect(setFocus).not.toHaveBeenCalled();
+        });
     });
 
     describe("back button", () => {
@@ -161,6 +197,26 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
             expect(
                 renderOverlay({ statusBarTranslucent: false }).UNSAFE_getByType(Modal).props.statusBarTranslucent
             ).toBe(false);
+        });
+
+        it("renders a transparent modal by default and an opaque one when transparent is false", () => {
+            expect(renderOverlay().UNSAFE_getByType(Modal).props.transparent).toBe(true);
+            expect(renderOverlay({ transparent: false }).UNSAFE_getByType(Modal).props.transparent).toBe(false);
+        });
+
+        it("supports every orientation so the device orientation is kept on iOS", () => {
+            expect(renderOverlay().UNSAFE_getByType(Modal).props.supportedOrientations).toEqual([
+                "portrait",
+                "portrait-upside-down",
+                "landscape-left",
+                "landscape-right"
+            ]);
+        });
+
+        it("uses the supportedOrientations passed by the caller", () => {
+            const utils = renderOverlay({ supportedOrientations: ["portrait"] });
+
+            expect(utils.UNSAFE_getByType(Modal).props.supportedOrientations).toEqual(["portrait"]);
         });
 
         it("renders nothing while hidden", () => {
