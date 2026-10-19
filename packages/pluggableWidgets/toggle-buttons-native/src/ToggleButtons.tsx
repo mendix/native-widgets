@@ -1,11 +1,11 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { Component, JSX } from "react";
 import { Text, View } from "react-native";
-import SegmentedControlTab from "react-native-segmented-control-tab";
 
 import { ToggleButtonsProps } from "../typings/ToggleButtonsProps";
 import { defaultToggleButtonsStyle, ToggleButtonsStyle } from "./ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
+import { SegmentedControl } from "./components/SegmentedControl";
 
 export type Props = ToggleButtonsProps<ToggleButtonsStyle>;
 
@@ -25,16 +25,17 @@ export class ToggleButtons extends Component<Props> {
 
         return (
             <View style={enabled ? this.styles.container : this.styles.containerDisabled} testID={this.props.name}>
-                <SegmentedControlTab
+                <SegmentedControl
                     values={captions}
                     selectedIndex={selectedIndex}
                     enabled={enabled}
                     onTabPress={this.onChangeHandler}
                     borderRadius={Number(this.styles.container.borderRadius)}
-                    tabStyle={this.styles.button}
-                    tabTextStyle={this.styles.text}
-                    activeTabStyle={this.styles.activeButton}
-                    activeTabTextStyle={this.styles.activeButtonText}
+                    buttonStyle={this.styles.button}
+                    textStyle={this.styles.text}
+                    activeButtonStyle={this.styles.activeButton}
+                    activeTextStyle={this.styles.activeButtonText}
+                    testID={this.props.name}
                 />
                 {this.props.enum.validation && (
                     <Text style={this.styles.validationMessage}>{this.props.enum.validation}</Text>

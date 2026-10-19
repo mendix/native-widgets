@@ -1,0 +1,472 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`SegmentedControl renders correctly 1`] = `
+<View
+  accessibilityRole="tablist"
+  accessible={false}
+  style={
+    {
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    accessibilityLabel="Option 1"
+    accessibilityRole="tab"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderBottomLeftRadius": 5,
+          "borderTopLeftRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "paddingVertical": 5,
+        },
+        {
+          "borderColor": "#CCC",
+          "borderWidth": 1,
+          "padding": 8,
+        },
+        {
+          "backgroundColor": "rgb(98, 0, 238)",
+          "borderColor": "rgb(98, 0, 238)",
+        },
+      ]
+    }
+    testID="segmented-control-test$button-0"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        [
+          {
+            "color": "#666",
+          },
+          {
+            "color": "#fff",
+          },
+        ]
+      }
+    >
+      Option 1
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="Option 2"
+    accessibilityRole="tab"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderWidth": 1,
+          "flex": 1,
+          "justifyContent": "center",
+          "marginLeft": -1,
+          "opacity": 1,
+          "paddingVertical": 5,
+        },
+        {
+          "borderColor": "#CCC",
+          "borderWidth": 1,
+          "padding": 8,
+        },
+        false,
+      ]
+    }
+    testID="segmented-control-test$button-1"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        [
+          {
+            "color": "#666",
+          },
+          false,
+        ]
+      }
+    >
+      Option 2
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="Option 3"
+    accessibilityRole="tab"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderBottomRightRadius": 5,
+          "borderTopRightRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "justifyContent": "center",
+          "marginLeft": -1,
+          "opacity": 1,
+          "paddingVertical": 5,
+        },
+        {
+          "borderColor": "#CCC",
+          "borderWidth": 1,
+          "padding": 8,
+        },
+        false,
+      ]
+    }
+    testID="segmented-control-test$button-2"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        [
+          {
+            "color": "#666",
+          },
+          false,
+        ]
+      }
+    >
+      Option 3
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`SegmentedControl renders with single value 1`] = `
+<View
+  accessibilityRole="tablist"
+  accessible={false}
+  style={
+    {
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    accessibilityLabel="Single"
+    accessibilityRole="tab"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderBottomLeftRadius": 5,
+          "borderBottomRightRadius": 5,
+          "borderTopLeftRadius": 5,
+          "borderTopRightRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "paddingVertical": 5,
+        },
+        {
+          "borderColor": "#CCC",
+          "borderWidth": 1,
+          "padding": 8,
+        },
+        {
+          "backgroundColor": "rgb(98, 0, 238)",
+          "borderColor": "rgb(98, 0, 238)",
+        },
+      ]
+    }
+    testID="segmented-control-test$button-0"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        [
+          {
+            "color": "#666",
+          },
+          {
+            "color": "#fff",
+          },
+        ]
+      }
+    >
+      Single
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`SegmentedControl renders with two values 1`] = `
+<View
+  accessibilityRole="tablist"
+  accessible={false}
+  style={
+    {
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    accessibilityLabel="First"
+    accessibilityRole="tab"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderBottomLeftRadius": 5,
+          "borderTopLeftRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "paddingVertical": 5,
+        },
+        {
+          "borderColor": "#CCC",
+          "borderWidth": 1,
+          "padding": 8,
+        },
+        {
+          "backgroundColor": "rgb(98, 0, 238)",
+          "borderColor": "rgb(98, 0, 238)",
+        },
+      ]
+    }
+    testID="segmented-control-test$button-0"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        [
+          {
+            "color": "#666",
+          },
+          {
+            "color": "#fff",
+          },
+        ]
+      }
+    >
+      First
+    </Text>
+  </View>
+  <View
+    accessibilityLabel="Second"
+    accessibilityRole="tab"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderBottomRightRadius": 5,
+          "borderTopRightRadius": 5,
+          "borderWidth": 1,
+          "flex": 1,
+          "justifyContent": "center",
+          "marginLeft": -1,
+          "opacity": 1,
+          "paddingVertical": 5,
+        },
+        {
+          "borderColor": "#CCC",
+          "borderWidth": 1,
+          "padding": 8,
+        },
+        false,
+      ]
+    }
+    testID="segmented-control-test$button-1"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        [
+          {
+            "color": "#666",
+          },
+          false,
+        ]
+      }
+    >
+      Second
+    </Text>
+  </View>
+</View>
+`;
