@@ -1,7 +1,7 @@
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { act, fireEvent, render } from "@testing-library/react-native";
 import { EditableValue } from "mendix";
-import { Modal, Text } from "react-native";
+import { Keyboard, Modal, Text } from "react-native";
 import { CustomModalSheet } from "../components/CustomModalSheet";
 import { BottomSheetStyle } from "../ui/Styles";
 
@@ -32,7 +32,10 @@ jest.mock("@gorhom/bottom-sheet", () => {
             return React.createElement(View, null, props.children);
         }),
         BottomSheetBackdrop: () => null,
-        BottomSheetScrollView: (props: any) => React.createElement(View, null, props.children)
+        BottomSheetScrollView: React.forwardRef((props: any, _ref: any) =>
+            React.createElement(View, null, props.children)
+        ),
+        useBottomSheetInternal: () => ({ animatedKeyboardState: { get: () => ({}), set: () => undefined } })
     };
 });
 
@@ -81,6 +84,42 @@ describe("CustomModalSheet", () => {
         mockReportsOpen = true;
         mockSheetProps = undefined;
         triggerAttribute = new EditableValueBuilder<boolean>().withValue(true).build();
+        jest.spyOn(Keyboard, "dismiss").mockImplementation(() => undefined);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it("forces the sheet closed, so that a keyboard hiding mid-close cannot restore it", () => {
+        // A plain close is interruptible: the keyboard's blur behavior restores the sheet to
+        // the snap point it is still recorded at, which cancels the close animation and
+        // reports no index change -- leaving the sheet open with the trigger attribute false.
+        const component = openSheet();
+
+        dismissSheet(component);
+
+        expect(mockSheetMethods.forceClose).toHaveBeenCalled();
+        expect(mockSheetMethods.close).not.toHaveBeenCalled();
+    });
+
+    it("dismisses an open keyboard together with the sheet", () => {
+        jest.spyOn(Keyboard, "isVisible").mockReturnValue(true);
+        const component = openSheet();
+
+        dismissSheet(component);
+
+        expect(Keyboard.dismiss).toHaveBeenCalled();
+    });
+
+    it("leaves the keyboard alone when none is open", () => {
+        jest.spyOn(Keyboard, "isVisible").mockReturnValue(false);
+        const component = openSheet();
+
+        dismissSheet(component);
+
+        expect(Keyboard.dismiss).not.toHaveBeenCalled();
+        expect(mockSheetMethods.forceClose).toHaveBeenCalled();
     });
 
     it("removes the modal when the sheet closes before it finished opening", () => {
@@ -101,10 +140,10 @@ describe("CustomModalSheet", () => {
         const component = openSheet();
 
         dismissSheet(component);
-        expect(mockSheetMethods.close).not.toHaveBeenCalled();
+        expect(mockSheetMethods.forceClose).not.toHaveBeenCalled();
 
         act(() => mockSheetProps.onChange(0));
 
-        expect(mockSheetMethods.close).toHaveBeenCalled();
+        expect(mockSheetMethods.forceClose).toHaveBeenCalled();
     });
 });
