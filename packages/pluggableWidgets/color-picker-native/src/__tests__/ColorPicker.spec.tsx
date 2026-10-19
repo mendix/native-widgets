@@ -18,7 +18,8 @@ describe("Color Picker", () => {
             showPreview: true,
             showSaturation: true,
             showLightness: true,
-            showAlpha: false
+            showAlpha: false,
+            enableAccessibility: false
         };
     });
 
@@ -230,6 +231,7 @@ describe("Color Picker", () => {
                 {...defaultProps}
                 format="rgb"
                 showAlpha
+                enableAccessibility
                 hueLabel={label("Tint")}
                 saturationLabel={label("Intensity")}
             />
@@ -241,6 +243,13 @@ describe("Color Picker", () => {
         expect(labelOf("saturation")).toBe("Intensity");
         expect(labelOf("lightness")).toBe("Brightness");
         expect(labelOf("alpha")).toBe("Transparency");
+    });
+
+    it("ignores custom labels when accessibility is not enabled", () => {
+        const label = (value: string): DynamicValue<string> => ({ status: ValueStatus.Available, value });
+        const component = render(<ColorPicker {...defaultProps} hueLabel={label("Tint")} />);
+
+        expect(component.getByTestId("color-picker-test$hue").props.accessibilityLabel).toBe("Hue");
     });
 
     it("changes the value with screen reader actions", () => {

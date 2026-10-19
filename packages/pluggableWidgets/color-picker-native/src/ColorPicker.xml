@@ -45,6 +45,10 @@
                 </property>
             </propertyGroup>
             <propertyGroup caption="Accessibility">
+                <property key="enableAccessibility" type="boolean" defaultValue="false">
+                    <caption>Custom accessibility labels</caption>
+                    <description>Enables setting custom screen reader labels for the sliders.</description>
+                </property>
                 <property key="hueLabel" type="textTemplate" required="false">
                     <caption>Hue label</caption>
                     <description>Screen reader label of the hue slider. Defaults to "Hue".</description>

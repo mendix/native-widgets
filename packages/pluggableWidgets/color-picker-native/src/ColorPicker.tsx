@@ -110,7 +110,7 @@ export function ColorPicker(props: Props): ReactElement | null {
             )}
             <PickerSlider
                 testID={`${props.name}$hue`}
-                accessibilityLabel={props.hueLabel?.value || "Hue"}
+                accessibilityLabel={(props.enableAccessibility && props.hueLabel?.value) || "Hue"}
                 value={color.h}
                 onValueChange={onChangeHue}
                 onValueChangeComplete={onChangeComplete}
@@ -129,7 +129,7 @@ export function ColorPicker(props: Props): ReactElement | null {
             {props.showSaturation && !colorValue.readOnly && (
                 <PickerSlider
                     testID={`${props.name}$saturation`}
-                    accessibilityLabel={props.saturationLabel?.value || "Saturation"}
+                    accessibilityLabel={(props.enableAccessibility && props.saturationLabel?.value) || "Saturation"}
                     value={color.s}
                     onValueChange={onChangeSaturation}
                     onValueChangeComplete={onChangeComplete}
@@ -144,7 +144,7 @@ export function ColorPicker(props: Props): ReactElement | null {
             {props.showLightness && !colorValue.readOnly && (
                 <PickerSlider
                     testID={`${props.name}$lightness`}
-                    accessibilityLabel={props.lightnessLabel?.value || "Brightness"}
+                    accessibilityLabel={(props.enableAccessibility && props.lightnessLabel?.value) || "Brightness"}
                     value={color.l}
                     onValueChange={onChangeLightness}
                     onValueChangeComplete={onChangeComplete}
@@ -159,7 +159,7 @@ export function ColorPicker(props: Props): ReactElement | null {
             {format !== "hex" && props.showAlpha && !colorValue.readOnly && (
                 <PickerSlider
                     testID={`${props.name}$alpha`}
-                    accessibilityLabel={props.alphaLabel?.value || "Transparency"}
+                    accessibilityLabel={(props.enableAccessibility && props.alphaLabel?.value) || "Transparency"}
                     value={color.a}
                     onValueChange={onChangeAlpha}
                     onValueChangeComplete={onChangeComplete}
