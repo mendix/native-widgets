@@ -20,9 +20,6 @@
     "react-native-image-picker": "7.2.3",
     "react-native-permissions": "5.5.1",
     "react-native-webview": "13.16.1",
-    "@react-native-firebase/app": "21.14.0",
-    "@react-native-firebase/messaging": "21.14.0",
-    "@react-native-firebase/crashlytics": "21.14.0",
     "@sbaiahmed1/react-native-biometrics": "0.15.0",
     "react-native-sound": "0.13.0"
 }
