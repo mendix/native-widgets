@@ -81,7 +81,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@mendix/pluggable-widgets-tools": "file:temp-vendor/mendix-pluggable-widgets-tools-11.15.0-moo-2499-rn-088-b46c515.tgz",
+      "@mendix/pluggable-widgets-tools": "file:temp-vendor/mendix-pluggable-widgets-tools-11.15.0-moo-2499-rn-088-9ae23f1.tgz",
+      "mendix-native": "file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz",
       "@rollup/plugin-typescript": "12.3.0",
       "mendix": "11.8.0",
       "eslint": "9.39.4",
