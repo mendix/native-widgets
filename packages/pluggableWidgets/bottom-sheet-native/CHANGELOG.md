@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
 -   Fixed iOS orientation change when opening the bottom sheet modal on devices in landscape mode.
+-   Fixed the app becoming unresponsive to touches after a modal bottom sheet (basic or custom rendering) was closed while it was still opening, e.g. when opening and closing it quickly. A sheet whose trigger attribute is set to false while it is opening now also closes once it has opened.
 
 ## [5.3.2] - 2026-8-4
 
