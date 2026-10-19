@@ -854,13 +854,20 @@ jobs:
         if: env.IOS_APP_CACHED != 'true'
         working-directory: native-template/ios
         run: pod install
+      - name: "Patch MLKit frameworks for arm64 simulator"
+        if: env.IOS_APP_CACHED != 'true'
+        # MLKit (via react-native-vision-camera-barcode-scanner) has no arm64-simulator slice;
+        # re-tag its arm64 device objects as simulator so the arm64 simulator build links.
+        run: node native-widgets/scripts/test/patch-mlkit-arm64-simulator.js native-template/ios/Pods
       - name: "Build iOS app"
         if: env.IOS_APP_CACHED != 'true'
         working-directory: native-template/ios
         # Build for the simulator's native arch (arm64 on Apple Silicon runners).
         # ONLY_ACTIVE_ARCH=YES already limits to the active arch; the old
         # VALID_ARCHS="i386 x86_64" forced dead/foreign archs and broke on macos-26.
-        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES
+        # EXCLUDED_ARCHS="i386 x86_64" explicitly excludes x86_64 to prevent Xcode from
+        # building a universal binary when Pods are arm64-only.
+        run: xcodebuild -workspace NativeTemplate.xcworkspace -scheme nativeTemplate -configuration Debug -sdk iphonesimulator -derivedDataPath build ONLY_ACTIVE_ARCH=YES EXCLUDED_ARCHS="i386 x86_64"
       - name: "Save built iOS app"
         if: env.IOS_APP_CACHED != 'true'
         uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
