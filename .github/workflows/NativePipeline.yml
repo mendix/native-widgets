@@ -854,6 +854,11 @@ jobs:
         if: env.IOS_APP_CACHED != 'true'
         working-directory: native-template/ios
         run: pod install
+      - name: "Patch MLKit frameworks for arm64 simulator"
+        if: env.IOS_APP_CACHED != 'true'
+        # MLKit (via react-native-vision-camera-barcode-scanner) has no arm64-simulator slice;
+        # re-tag its arm64 device objects as simulator so the arm64 simulator build links.
+        run: node native-widgets/scripts/test/patch-mlkit-arm64-simulator.js native-template/ios/Pods
       - name: "Build iOS app"
         if: env.IOS_APP_CACHED != 'true'
         working-directory: native-template/ios
