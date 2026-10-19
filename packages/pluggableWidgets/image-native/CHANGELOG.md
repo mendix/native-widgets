@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   Updated react-native from version v0.84.1 to v0.88.0-rc.3.
+-   Updated react-native from version v0.84.1 to v0.88.0.
 -   Updated @react-native-vector-icons/common from version v12.4.2 to v13.0.3.
 -   Updated @react-native-vector-icons/get-image from version v12.3.0 to v13.0.1.
 
