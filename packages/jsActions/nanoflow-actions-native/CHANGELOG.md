@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Updated react-native-nitro-modules to 0.37.0.
 
+### Added
+
+-   We added mendix-native as a dependency to provide native file system.
+
 ## [7.4.0] Nanoflow Commons - 2026-9-22
 
 -   Migrated the geolocation actions from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.

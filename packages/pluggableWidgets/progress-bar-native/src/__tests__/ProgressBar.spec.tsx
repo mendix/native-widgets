@@ -1,7 +1,7 @@
+import { Bar } from "@mendix/piw-native-utils-internal";
 import { dynamicValue } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
-import { Text } from "react-native";
-import { Bar } from "react-native-progress";
+import { Text, View } from "react-native";
 import { render } from "@testing-library/react-native";
 
 import { ProgressBar, Props } from "../ProgressBar";
@@ -45,6 +45,43 @@ describe("ProgressBar", () => {
         const component = render(<ProgressBar {...createProps(-30, -100, 0)} />);
         expect(component.UNSAFE_getByType(Bar).props.progress).toBe(0.7);
         expect(component.UNSAFE_queryByType(Text)).toBeNull();
+    });
+
+    it("has progressbar accessibility role", () => {
+        const component = render(<ProgressBar {...createProps(60, 0, 100)} />);
+        const views = component.UNSAFE_getAllByType(View);
+        // Find the View with accessibilityRole="progressbar"
+        const accessibleElement = views.find(view => view.props.accessibilityRole === "progressbar");
+        expect(accessibleElement).toBeDefined();
+        expect(accessibleElement?.props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 60
+        });
+    });
+
+    it("reports the accessibility value as a percentage of the range", () => {
+        const component = render(<ProgressBar {...createProps(25, 10, 50)} />);
+        const views = component.UNSAFE_getAllByType(View);
+        const accessibleElement = views.find(view => view.props.accessibilityRole === "progressbar");
+        // (25 - 10) / (50 - 10) = 37.5%, rounded
+        expect(accessibleElement?.props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 38
+        });
+    });
+
+    it("reports the percentage of the range when the range does not start at 0", () => {
+        const component = render(<ProgressBar {...createProps(49, 1, 100)} />);
+        const views = component.UNSAFE_getAllByType(View);
+        const accessibleElement = views.find(view => view.props.accessibilityRole === "progressbar");
+        // (49 - 1) / (100 - 1) = 48.5%; iOS divides by the range without subtracting min, so the scale must be 0-100
+        expect(accessibleElement?.props.accessibilityValue).toEqual({
+            min: 0,
+            max: 100,
+            now: 48
+        });
     });
 
     it("preserves expected style key set", () => {
