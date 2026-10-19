@@ -42,12 +42,6 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
         bottomSheetRef.current?.close();
     }, []);
 
-    // Latest trigger value, read by `handleChange` once the sheet has finished opening.
-    const externalOpenRef = useRef(externalOpen);
-    useEffect(() => {
-        externalOpenRef.current = externalOpen;
-    }, [externalOpen]);
-
     useEffect(() => {
         if (!externalOpen && mounted && didOpenRef.current) {
             close();
@@ -60,25 +54,20 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
 
     const handleChange = useCallback(
         (index: number) => {
-            if (index !== 0) {
+            if (index === 0) {
+                didOpenRef.current = true;
                 return;
             }
-            didOpenRef.current = true;
-            // Close now if the trigger attribute went false while the sheet was still opening.
-            if (!externalOpenRef.current) {
-                close();
+
+            if (index === -1 && didOpenRef.current) {
+                didOpenRef.current = false;
+                setReady(false);
+                props.triggerAttribute?.setValue(false);
+                setMounted(false);
             }
         },
-        [close]
+        [props.triggerAttribute]
     );
-
-    // Always clean up on close, also when the sheet closed before it finished opening.
-    const handleClose = useCallback(() => {
-        didOpenRef.current = false;
-        setReady(false);
-        props.triggerAttribute?.setValue(false);
-        setMounted(false);
-    }, [props.triggerAttribute]);
 
     const renderBackdrop = useCallback(
         (backdropProps: BottomSheetBackdropProps) => (
@@ -116,7 +105,7 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                     containerLayoutState={containerLayout}
                     enablePanDownToClose
                     onChange={handleChange}
-                    onClose={handleClose}
+                    onClose={() => handleChange(-1)}
                     backdropComponent={renderBackdrop}
                     style={[props.styles.modal]}
                     backgroundStyle={props.styles.container}

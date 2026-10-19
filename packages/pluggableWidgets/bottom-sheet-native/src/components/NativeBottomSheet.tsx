@@ -8,10 +8,8 @@ import {
     StyleSheet,
     Text,
     TouchableHighlight,
-    StyleProp,
     useWindowDimensions,
-    View,
-    ViewStyle
+    View
 } from "react-native";
 import BottomSheet, {
     BottomSheetBackdrop,
@@ -84,12 +82,6 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         bottomSheetRef.current?.close();
     }, []);
 
-    // Latest trigger value, read by `handleChange` once the sheet has finished opening.
-    const externalOpenRef = useRef(externalOpen);
-    useEffect(() => {
-        externalOpenRef.current = externalOpen;
-    }, [externalOpen]);
-
     useEffect(() => {
         if (!externalOpen && mounted && didOpenRef.current) {
             close();
@@ -98,25 +90,20 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     const handleChange = useCallback(
         (index: number) => {
-            if (index !== 0) {
+            if (index === 0) {
+                didOpenRef.current = true;
                 return;
             }
-            didOpenRef.current = true;
-            // Close now if the trigger attribute went false while the sheet was still opening.
-            if (!externalOpenRef.current) {
-                close();
+
+            if (index === -1 && didOpenRef.current) {
+                didOpenRef.current = false;
+                setReady(false);
+                props.triggerAttribute?.setValue(false);
+                setMounted(false);
             }
         },
-        [close]
+        [props.triggerAttribute]
     );
-
-    // Always clean up on close, also when the sheet closed before it finished opening.
-    const handleClose = useCallback(() => {
-        didOpenRef.current = false;
-        setReady(false);
-        props.triggerAttribute?.setValue(false);
-        setMounted(false);
-    }, [props.triggerAttribute]);
 
     const renderBackdrop = useCallback(
         (backdropProps: BottomSheetBackdropProps) => (
@@ -147,14 +134,14 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     const buttonContainerStyle = { ...props.styles.modalItems?.container } as ModalItemContainerStyle;
 
-    const getButtonStyle = (): StyleProp<ViewStyle> => {
+    const getButtonStyle = () => {
         if (props.useNative) {
             return [nativeAndroidStyles.buttonContainer];
         }
         return [styles.buttonContainer, buttonContainerStyle];
     };
 
-    const renderItem = (item: ItemsBasicType, index: number): ReactElement => {
+    const renderItem = (item: ItemsBasicType, index: number) => {
         if (Platform.OS === "android" || !props.useNative) {
             return (
                 <TouchableHighlight
@@ -181,7 +168,7 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         );
     };
 
-    const getContainerStyle = (): StyleProp<ViewStyle> => {
+    const getContainerStyle = () => {
         if (props.useNative) {
             return [nativeAndroidStyles.sheetContainer];
         }
@@ -214,7 +201,7 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                     animateOnMount
                     enablePanDownToClose
                     onChange={handleChange}
-                    onClose={handleClose}
+                    onClose={() => handleChange(-1)}
                     style={getContainerStyle()}
                     backdropComponent={renderBackdrop}
                     backgroundStyle={props.styles.container}
