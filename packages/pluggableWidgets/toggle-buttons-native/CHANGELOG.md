@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
--   toggle button now uses modern React Native accessibility props (`accessibilityRole="tab"`, `accessibilityState.selected`) instead of deprecated `accessibilityTraits` and `accessibilityComponentType`.
+-   Toggle button now uses modern React Native accessibility props (`accessibilityRole="tab"`, `accessibilityState.selected`) instead of deprecated `accessibilityTraits` and `accessibilityComponentType`.
 
 ## [2.3.0] - 2024-12-3
 
