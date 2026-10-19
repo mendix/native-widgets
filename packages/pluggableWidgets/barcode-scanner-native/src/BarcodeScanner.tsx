@@ -349,7 +349,7 @@ export function BarcodeScanner(props: Props): ReactElement {
 
             // Lock further scans for 2 seconds
             isLockedRef.current = true;
-            setTimeout(() => {
+            lockTimeoutRef.current = setTimeout(() => {
                 isLockedRef.current = false;
             }, SCAN_LOCK_DURATION_MS);
         },
