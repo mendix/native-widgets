@@ -3,7 +3,7 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { ActionValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue } from "mendix";
 import { CSSProperties } from "react";
 
 export type FormatEnum = "hex" | "hsl" | "hsv" | "rgb";
@@ -17,6 +17,10 @@ export interface ColorPickerProps<Style> {
     showSaturation: boolean;
     showLightness: boolean;
     showAlpha: boolean;
+    hueLabel?: DynamicValue<string>;
+    saturationLabel?: DynamicValue<string>;
+    lightnessLabel?: DynamicValue<string>;
+    alphaLabel?: DynamicValue<string>;
     onChange?: ActionValue;
 }
 
@@ -37,5 +41,9 @@ export interface ColorPickerPreviewProps {
     showSaturation: boolean;
     showLightness: boolean;
     showAlpha: boolean;
+    hueLabel: string;
+    saturationLabel: string;
+    lightnessLabel: string;
+    alphaLabel: string;
     onChange: {} | null;
 }

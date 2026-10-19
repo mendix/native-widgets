@@ -1,4 +1,5 @@
 import { actionValue, EditableValueBuilder } from "@mendix/piw-utils-internal";
+import { DynamicValue, ValueStatus } from "mendix";
 import { View } from "react-native";
 import { fireEvent, render, RenderAPI } from "@testing-library/react-native";
 import { ReactTestInstance } from "react-test-renderer";
@@ -220,6 +221,26 @@ describe("Color Picker", () => {
             max: 100,
             now: 50
         });
+    });
+
+    it("labels the sliders for screen readers", () => {
+        const label = (value: string): DynamicValue<string> => ({ status: ValueStatus.Available, value });
+        const component = render(
+            <ColorPicker
+                {...defaultProps}
+                format="rgb"
+                showAlpha
+                hueLabel={label("Tint")}
+                saturationLabel={label("Intensity")}
+            />
+        );
+
+        const labelOf = (name: string): string =>
+            component.getByTestId(`color-picker-test$${name}`).props.accessibilityLabel;
+        expect(labelOf("hue")).toBe("Tint");
+        expect(labelOf("saturation")).toBe("Intensity");
+        expect(labelOf("lightness")).toBe("Brightness");
+        expect(labelOf("alpha")).toBe("Transparency");
     });
 
     it("changes the value with screen reader actions", () => {
