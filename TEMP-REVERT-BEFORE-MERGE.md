@@ -1,29 +1,33 @@
 # TEMPORARY: revert before merging the React Native 0.88 upgrade
 
-To test the React Native 0.88 upgrade, `@mendix/pluggable-widgets-tools` is installed from a tarball packed from the
-unreleased [`MxKevinBeqo/widgets-tools#moo/MOO-2499-rn-088`](https://github.com/MxKevinBeqo/widgets-tools/tree/moo/MOO-2499-rn-088)
-branch (commit `b46c5159`) instead of npm. Once a version of the tools with React Native 0.88 support is released, undo
-the following and delete this file.
+To test the React Native 0.88 upgrade, two dependencies are installed from tarballs in `temp-vendor/`, packed from
+unreleased branches:
 
-1. `package.json` → `pnpm.overrides`: set `@mendix/pluggable-widgets-tools` back to the released version (it was
-   `11.12.0` before this change) instead of
-   `file:temp-vendor/mendix-pluggable-widgets-tools-11.15.0-moo-2499-rn-088-b46c515.tgz`.
+-   `@mendix/pluggable-widgets-tools` from
+    [`MxKevinBeqo/widgets-tools#moo/MOO-2499-rn-088`](https://github.com/MxKevinBeqo/widgets-tools/tree/moo/MOO-2499-rn-088)
+    (commit `9ae23f1`), instead of npm.
+-   `mendix-native` from [`mendix/mendix-native#moo/MOO-2500-rn-0.88`](https://github.com/mendix/mendix-native/tree/moo/MOO-2500-rn-0.88)
+    (commit `76aba2e`, version 0.6.2), instead of the
+    [v0.6.0 release](https://github.com/mendix/mendix-native/releases/tag/v0.6.0) that `video-player-native`,
+    `mobile-resources-native` and `nanoflow-actions-native` depend on.
+
+Once versions with React Native 0.88 support are released, undo the following and delete this file.
+
+1. `package.json` → `pnpm.overrides`:
+    - Set `@mendix/pluggable-widgets-tools` back to the released version (it was `11.12.0` before this change) instead
+      of `file:temp-vendor/mendix-pluggable-widgets-tools-11.15.0-moo-2499-rn-088-9ae23f1.tgz`.
+    - Remove the `mendix-native` override, and point the `mendix-native` dependency of the three packages above at the
+      new release.
 2. Delete the `temp-vendor/` folder.
-3. `patches/@mendix__pluggable-widgets-tools.patch`:
-    - Remove the `TEMPORARY` note at the top of the file.
-    - Remove the `package.json` hunk. It widens `engines.node` from `^22.18.0` to `>=22.18.0`, because the tools refuse
-      to run on the Node 24 this repo uses (`.nvmrc`). If the released version still says `^22.18.0`, raise it with the
-      tools maintainers rather than keeping the hunk.
-    - Regenerate the remaining hunks against the released version and drop any it already includes: the
-      `rollup-plugin-collect-dependencies.mjs` copy fix, the `@shopify/flash-list` transform pattern, and the ts-jest
-      `module: "preserve"` / `noEmitOnError: false` settings (the branch still uses `module: "commonjs"`, which
-      TypeScript rejects together with the base config's `moduleResolution: "bundler"`).
-4. Run `pnpm install` to update `pnpm-lock.yaml`.
+3. Run `pnpm install` to update `pnpm-lock.yaml`.
 
-## Why a tarball and not a git dependency
+## Why tarballs and not git dependencies
 
-CI installs with `pnpm install --frozen-lockfile --ignore-scripts`. A git dependency only gets its compiled `dist/`
-from its `prepack` script, which `--ignore-scripts` skips, so every widget build failed with
-`Cannot find module '../dist/commands/audit.js'`. The tarball was made with `pnpm pack` in
-`packages/pluggable-widgets-tools` of a clean checkout of that commit, so it ships `dist/` prebuilt like the npm package.
-To pick up a newer commit of the branch, repack it the same way, replace the file and update the override.
+CI installs with `pnpm install --frozen-lockfile --ignore-scripts`. A git dependency only gets its compiled output from
+its `prepare`/`prepack` script, which `--ignore-scripts` skips, so every widget build failed with
+`Cannot find module '../dist/commands/audit.js'`. The tarballs ship their compiled output prebuilt, like the published
+packages. To pick up a newer commit of a branch, repack it from a clean checkout of that commit, replace the file and
+update the override:
+
+-   widgets-tools: `pnpm install --frozen-lockfile`, then `pnpm pack` in `packages/pluggable-widgets-tools`.
+-   mendix-native: `yarn install --immutable`, `yarn prepare` and `yarn pack`, the same steps as its release workflow.
