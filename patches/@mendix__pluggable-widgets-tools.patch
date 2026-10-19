@@ -1,0 +1,20 @@
+TEMPORARY - REVERT BEFORE MERGE (see TEMP-REVERT-BEFORE-MERGE.md in the repo root).
+
+Sets noEmitOnError: false for ts-jest, so type errors in the TypeScript sources of dependencies (e.g.
+react-native-video) do not stop tests from compiling. Proposed on the widgets-tools branch; drop this patch once the
+tarball is repacked from a commit that includes it.
+
+diff --git a/test-config/jest.native.config.js b/test-config/jest.native.config.js
+index ae35851..ffb7cfd 100644
+--- a/test-config/jest.native.config.js
++++ b/test-config/jest.native.config.js
+@@ -22,7 +22,8 @@ module.exports = {
+         "^.+\\.tsx?$": [
+             "ts-jest",
+             {
+-                tsconfig: { module: "commonjs", target: "ES2019" }
++                // Type errors in the TypeScript sources of node_modules (e.g. react-native-video) must not block emit.
++                tsconfig: { module: "commonjs", target: "ES2019", noEmitOnError: false }
+             }
+         ],
+         "^.+\\.jsx?$": join(__dirname, "transform-native.js")

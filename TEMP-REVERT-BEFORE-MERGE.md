@@ -19,7 +19,10 @@ Once versions with React Native 0.88 support are released, undo the following an
     - Remove the `mendix-native` override, and point the `mendix-native` dependency of the three packages above at the
       new release.
 2. Delete the `temp-vendor/` folder.
-3. Run `pnpm install` to update `pnpm-lock.yaml`.
+3. Delete `patches/@mendix__pluggable-widgets-tools.patch` and its `pnpm.patchedDependencies` entry. It sets
+   `noEmitOnError: false` for ts-jest, which is proposed on the widgets-tools branch but not in commit `9ae23f1`. If the
+   released version doesn't include it, regenerate the patch against that version instead.
+4. Run `pnpm install` to update `pnpm-lock.yaml`.
 
 ## Why tarballs and not git dependencies
 
