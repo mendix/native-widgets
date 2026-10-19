@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Removed the react-native-progress dependency. There is no change in appearance or behavior.
+
+### Added
+
+-   The progress circle now announces itself to screen readers with a progress bar role and its current value.
+
 ## [3.3.1] - 2026-9-2
 
 ### Changed
