@@ -185,7 +185,14 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
     }
 
     return (
-        <Modal onRequestClose={close} transparent animationType="none" visible={mounted} onShow={handleModalShow}>
+        <Modal
+            onRequestClose={close}
+            transparent
+            animationType="none"
+            visible={mounted}
+            onShow={handleModalShow}
+            supportedOrientations={["portrait", "portrait-upside-down", "landscape-left", "landscape-right"]}
+        >
             {ready && (
                 <BottomSheet
                     ref={bottomSheetRef}

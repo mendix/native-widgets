@@ -1,6 +1,6 @@
-import { Component, JSX } from "react";
+import { memo, ReactElement } from "react";
 import { ViewStyle } from "react-native";
-import { Gradient } from "react-native-color";
+import { Gradient } from "./Gradients";
 import tinycolor from "tinycolor2";
 import HSLA = tinycolor.ColorFormats.HSLA;
 
@@ -10,20 +10,16 @@ interface AlphaGradientProps {
     color: HSLA;
 }
 
-export class AlphaGradient extends Component<AlphaGradientProps> {
-    shouldComponentUpdate(nextProps: AlphaGradientProps): boolean {
-        const current = this.props.color;
-        const next = nextProps.color;
-
-        return current.h !== next.h || current.s !== next.s || current.l !== next.l;
-    }
-
-    getStepColor = (i: number) => tinycolor({ ...this.props.color, a: i }).toHslString();
-
-    render(): JSX.Element {
-        const { style, gradientSteps } = this.props;
-        return (
-            <Gradient style={style} gradientSteps={gradientSteps} getStepColor={this.getStepColor} maximumValue={1} />
-        );
-    }
-}
+export const AlphaGradient = memo(
+    ({ style, gradientSteps, color }: AlphaGradientProps): ReactElement => (
+        <Gradient
+            style={style}
+            gradientSteps={gradientSteps}
+            getStepColor={value => tinycolor({ ...color, a: value }).toHslString()}
+            maximumValue={1}
+        />
+    ),
+    // Changes to the alpha channel itself don't affect the gradient, so they don't trigger a re-render
+    (previous, next) =>
+        previous.color.h === next.color.h && previous.color.s === next.color.s && previous.color.l === next.color.l
+);

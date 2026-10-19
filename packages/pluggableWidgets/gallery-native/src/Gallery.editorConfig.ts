@@ -14,10 +14,14 @@ export function getProperties(values: GalleryPreviewProps, defaultProperties: Pr
         hidePropertyIn(defaultProperties, values, "loadMoreButtonCaption");
     }
 
-    if (values.scrollDirection === "horizontal") {
+    if (values.scrollDirection === "vertical") {
+        hidePropertyIn(defaultProperties, values, "horizontalItemSizing");
+    } else {
         hidePropertyIn(defaultProperties, values, "pullDown");
-        hidePropertyIn(defaultProperties, values, "tabletColumns");
-        hidePropertyIn(defaultProperties, values, "phoneColumns");
+        if (values.horizontalItemSizing !== "fillColumns") {
+            hidePropertyIn(defaultProperties, values, "tabletColumns");
+            hidePropertyIn(defaultProperties, values, "phoneColumns");
+        }
     }
 
     if (values.filterList?.length === 0) {

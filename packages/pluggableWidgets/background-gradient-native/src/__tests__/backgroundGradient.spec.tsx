@@ -3,6 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import Big from "big.js";
 import { ActionValue } from "mendix";
 import { BackgroundGradient, props } from "../BackgroundGradient";
+import defaultStyle from "../ui/Styles";
 
 describe("Background gradient", () => {
     let defaultProps: props;
@@ -90,6 +91,28 @@ describe("Background gradient", () => {
         const component = render(<BackgroundGradient {...defaultProps} />);
         expect(component.toJSON()).toMatchSnapshot();
     });
+    it("correctly parses offsets from custom style colorList", () => {
+        defaultProps = {
+            ...defaultProps,
+            colorList: [],
+            style: [
+                {
+                    angle: 0,
+                    opacity: 100,
+                    container: {},
+                    colorList: [
+                        { color: "#ff0000", offset: Big(0) },
+                        { color: "#00ff00", offset: Big(0.5) },
+                        { color: "#0000ff", offset: Big(1) }
+                    ]
+                }
+            ]
+        };
+        const tree = render(<BackgroundGradient {...defaultProps} />).toJSON() as any;
+        const gradientView = tree.children[0];
+        const colorStops = gradientView.props.style[1].experimental_backgroundImage[0].colorStops;
+        expect(colorStops.map((s: any) => s.positions[0])).toEqual(["0%", "50%", "100%"]);
+    });
     it("render background gradient with one color", () => {
         defaultProps = {
             ...defaultProps,
@@ -109,5 +132,10 @@ describe("Background gradient", () => {
         const pressable = component.getByTestId("test");
         fireEvent.press(pressable);
         expect(actionExecution).toHaveBeenCalled();
+    });
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultStyle).sort();
+        expect(keys).toEqual(["angle", "colorList", "container", "opacity"]);
     });
 });

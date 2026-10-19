@@ -120,6 +120,7 @@ export const Gallery = (props: GalleryProps<GalleryStyle>): ReactElement => {
             pullDown={props.pullDown && pullDown}
             pullDownIsExecuting={props.pullDown?.isExecuting ?? false}
             scrollDirection={props.scrollDirection}
+            horizontalItemSizing={props.horizontalItemSizing}
             style={styles}
             tabletColumns={props.tabletColumns}
         />

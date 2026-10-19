@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We removed the library of `react-native-linear-gradient` in favor of a react-native View with linear-gradient type background.
+
 ## [2.2.1] - 2026-1-19
 
 -   We fixed an issue where the `background-gradient-native` widget would not render correctly with the new RN architecture upgrade.

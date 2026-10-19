@@ -8,7 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   We pinned @miblanchard/react-native-slider to 2.6.0.
+-   We replaced @miblanchard/react-native-slider with a built-in slider component.
+
+### Fixed
+
+-   We fixed the range slider thumbs not announcing their values or being adjustable with VoiceOver and TalkBack.
 
 ## [2.3.0] - 2024-12-3
 

@@ -127,7 +127,14 @@ async function resolvePackage(target, sourceDir, optional = false) {
 }
 
 async function hasNativeCode(dir) {
-    return (await fg(["**/{android,ios}/*", "**/*.podspec"], { cwd: dir })).length > 0;
+    return (await fg(
+        ["**/{android,ios}/*", "**/*.podspec"],
+        {
+            cwd: dir,
+            ignore: ["**/example*/**", "**/__tests__/**", "**/docs/**", "**/.github/**"],
+            caseSensitiveMatch: false
+        }
+    )).length > 0;
 }
 
 async function getTransitiveDependencies(packagePath, isExternal) {
@@ -187,7 +194,7 @@ export async function copyJsModule(moduleSourcePath, to) {
 
                 // Skip certain directories
                 if (
-                    relativePath.match(/[\\/](android|ios|windows|mac|jest|github|gradle|__.*__|docs|example.*)[\\/]/)
+                    relativePath.match(/(^|[\\/])(android|ios|windows|mac|jest|\.github|gradle|__.*__|docs|example.*)([\\/]|$)/i)
                 ) {
                     return false;
                 }

@@ -1,5 +1,5 @@
 import { CarouselProps } from "../../typings/CarouselProps";
-import { CarouselStyle } from "../ui/styles";
+import { CarouselStyle, defaultCarouselStyle } from "../ui/styles";
 import { render } from "@testing-library/react-native";
 import { Text, View } from "react-native";
 import { buildWidgetValue, ListValueBuilder } from "@mendix/piw-utils-internal";
@@ -47,4 +47,9 @@ describe("Carousel", () => {
     //     };
     //     expect(render(<Carousel {...props} />).toJSON()).toMatchSnapshot();
     // });
+
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultCarouselStyle).sort();
+        expect(keys).toEqual(["cardLayout", "container", "fullWidthLayout"]);
+    });
 });

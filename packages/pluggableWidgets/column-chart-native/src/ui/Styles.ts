@@ -82,11 +82,15 @@ export const defaultColumnChartStyle: ColumnChartStyle = {
     chart: {
         flex: 1
     },
+    grid: {},
     xAxis: {
         label: {
             alignSelf: "center"
         }
     },
+    yAxis: {},
+    domain: {},
+    columns: {},
     legend: {
         container: {
             flexDirection: "row",

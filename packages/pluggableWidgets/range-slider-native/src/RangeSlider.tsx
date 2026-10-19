@@ -1,5 +1,11 @@
-import { available, flattenStyles, toNumber, unavailable } from "@mendix/piw-native-utils-internal";
-import { Slider } from "@miblanchard/react-native-slider";
+import {
+    available,
+    flattenStyles,
+    RangeSlider as NativeRangeSlider,
+    RangeSliderValue,
+    toNumber,
+    unavailable
+} from "@mendix/piw-native-utils-internal";
 import { ReactElement, useCallback, useRef } from "react";
 import { Text, View } from "react-native";
 import { Big } from "big.js";
@@ -26,10 +32,7 @@ export function RangeSlider(props: Props): ReactElement {
     const isEnabled = enabledLower || enabledUpper;
 
     const onValueChange = useCallback(
-        (values: number[]): void => {
-            if (values[0] == null || values[1] == null) {
-                return;
-            }
+        (values: RangeSliderValue): void => {
             props.lowerValueAttribute.setValue(new Big(values[0]));
             props.upperValueAttribute.setValue(new Big(values[1]));
         },
@@ -37,12 +40,8 @@ export function RangeSlider(props: Props): ReactElement {
     );
 
     const onSlidingComplete = useCallback(
-        (values: number[]): void => {
-            if (
-                values[0] == null ||
-                values[1] == null ||
-                (lastLowerValue.current === values[0] && lastUpperValue.current === values[1])
-            ) {
+        (values: RangeSliderValue): void => {
+            if (lastLowerValue.current === values[0] && lastUpperValue.current === values[1]) {
                 return;
             }
 
@@ -58,12 +57,14 @@ export function RangeSlider(props: Props): ReactElement {
 
     return (
         <View style={styles.container} testID={props.name}>
-            <Slider
+            <NativeRangeSlider
+                testID={`${props.name}$slider`}
                 value={lowerValue != null && upperValue != null ? [lowerValue, upperValue] : [0, 100]}
                 minimumValue={validProps ? toNumber(props.minimumValue) ?? 0 : 0}
                 maximumValue={validProps ? toNumber(props.maximumValue) ?? 100 : 100}
                 step={validProps ? toNumber(props.stepSize) ?? 1 : 1}
                 disabled={!isEnabled}
+                trackClickable
                 trackStyle={isEnabled ? styles.track : styles.trackDisabled}
                 minimumTrackStyle={isEnabled ? styles.highlight : styles.highlightDisabled}
                 maximumTrackStyle={isEnabled ? styles.track : styles.tracktDisabled}

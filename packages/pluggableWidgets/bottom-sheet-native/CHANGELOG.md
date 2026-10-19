@@ -6,10 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   Added an `On change` event that triggers when the `Trigger attribute` value changes, allowing detection of bottom sheet dismissal (e.g. by outside click).
+
 ### Fixed
 
 -   Fixed the keyboard covering text inputs on iOS in a modal bottom sheet with custom rendering, and in an expanding bottom sheet. The sheet now moves above the keyboard when an input inside it is focused, and back down once the keyboard is dismissed. A sheet too tall to fit above the keyboard scrolls the focused input into view instead. Closing a modal bottom sheet while the keyboard is open now always closes it, and collapsing an expanding bottom sheet dismisses the keyboard its own content raised.
 -   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
+-   Fixed iOS orientation change when opening the bottom sheet modal on devices in landscape mode.
 
 ## [5.3.2] - 2026-8-4
 

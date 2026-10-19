@@ -10,55 +10,201 @@ exports[`RangeSlider applies custom styles: with custom styles 1`] = `
   testID="range-slider-test"
 >
   <View
-    disabled={false}
-    maximumTrackStyle={
-      {
-        "borderRadius": 2,
-        "height": 4,
-      }
-    }
-    maximumValue={280}
-    minimumTrackStyle={
-      {
-        "backgroundColor": "rgb(30, 76, 231)",
-      }
-    }
-    minimumValue={0}
-    onSlidingComplete={[Function]}
-    onValueChange={[Function]}
-    step={1}
-    testID="mocked-slider"
-    thumbStyle={
-      {
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#DDDDDD",
-        "borderRadius": 30,
-        "borderWidth": 1,
-        "elevation": 3,
-        "height": 30,
-        "shadowColor": "#000000",
-        "shadowOffset": {
-          "height": 3,
-          "width": 0,
-        },
-        "shadowOpacity": 0.2,
-        "shadowRadius": 1,
-        "width": 30,
-      }
-    }
-    trackStyle={
-      {
-        "borderRadius": 2,
-        "height": 4,
-      }
-    }
-    value={
+    onLayout={[Function]}
+    style={
       [
-        70,
-        210,
+        {
+          "height": 40,
+          "justifyContent": "center",
+        },
+        undefined,
       ]
     }
-  />
+    testID="range-slider-test$slider"
+  >
+    <View
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "#b3b3b3",
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+        ]
+      }
+    />
+    <View
+      collapsable={false}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "rgb(30, 76, 231)",
+          "borderRadius": 2,
+          "height": 4,
+          "opacity": 0,
+          "position": "absolute",
+          "start": 0,
+          "width": 0,
+        }
+      }
+    />
+    <View
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 25,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      onAccessibilityAction={[Function]}
+      onLayout={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#DDDDDD",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "elevation": 3,
+          "height": 30,
+          "opacity": 0,
+          "position": "absolute",
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 30,
+        }
+      }
+      testID="range-slider-test$slider$thumb0"
+    />
+    <View
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 75,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      onAccessibilityAction={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#DDDDDD",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "elevation": 3,
+          "height": 30,
+          "opacity": 0,
+          "position": "absolute",
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 30,
+        }
+      }
+      testID="range-slider-test$slider$thumb1"
+    />
+    <View
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -68,54 +214,200 @@ exports[`RangeSlider renders 1`] = `
   testID="range-slider-test"
 >
   <View
-    disabled={false}
-    maximumTrackStyle={
-      {
-        "borderRadius": 2,
-        "height": 4,
-      }
-    }
-    maximumValue={280}
-    minimumTrackStyle={
-      {
-        "backgroundColor": "rgb(30, 76, 231)",
-      }
-    }
-    minimumValue={0}
-    onSlidingComplete={[Function]}
-    onValueChange={[Function]}
-    step={1}
-    testID="mocked-slider"
-    thumbStyle={
-      {
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#DDDDDD",
-        "borderRadius": 30,
-        "borderWidth": 1,
-        "elevation": 3,
-        "height": 30,
-        "shadowColor": "#000000",
-        "shadowOffset": {
-          "height": 3,
-          "width": 0,
-        },
-        "shadowOpacity": 0.2,
-        "shadowRadius": 1,
-        "width": 30,
-      }
-    }
-    trackStyle={
-      {
-        "borderRadius": 2,
-        "height": 4,
-      }
-    }
-    value={
+    onLayout={[Function]}
+    style={
       [
-        70,
-        210,
+        {
+          "height": 40,
+          "justifyContent": "center",
+        },
+        undefined,
       ]
     }
-  />
+    testID="range-slider-test$slider"
+  >
+    <View
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "#b3b3b3",
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+          {
+            "borderRadius": 2,
+            "height": 4,
+          },
+        ]
+      }
+    />
+    <View
+      collapsable={false}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "rgb(30, 76, 231)",
+          "borderRadius": 2,
+          "height": 4,
+          "opacity": 0,
+          "position": "absolute",
+          "start": 0,
+          "width": 0,
+        }
+      }
+    />
+    <View
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 25,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      onAccessibilityAction={[Function]}
+      onLayout={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#DDDDDD",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "elevation": 3,
+          "height": 30,
+          "opacity": 0,
+          "position": "absolute",
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 30,
+        }
+      }
+      testID="range-slider-test$slider$thumb0"
+    />
+    <View
+      accessibilityActions={
+        [
+          {
+            "name": "increment",
+          },
+          {
+            "name": "decrement",
+          },
+        ]
+      }
+      accessibilityRole="adjustable"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": 100,
+          "min": 0,
+          "now": 75,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      onAccessibilityAction={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#DDDDDD",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "elevation": 3,
+          "height": 30,
+          "opacity": 0,
+          "position": "absolute",
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 30,
+        }
+      }
+      testID="range-slider-test$slider$thumb1"
+    />
+    <View
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      renderToHardwareTextureAndroid={true}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          false,
+        ]
+      }
+    />
+  </View>
 </View>
 `;

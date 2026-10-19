@@ -1,5 +1,5 @@
 import { aggregateGridPadding, mapToAxisStyle, mapToGridStyle, mapToBarStyles } from "../StyleUtils";
-import { BarChartAxisStyle, BarChartGridStyle, BarChartStyle } from "../../ui/Styles";
+import { BarChartAxisStyle, BarChartGridStyle, BarChartStyle, defaultBarChartStyle } from "../../ui/Styles";
 
 describe("StyleMappers", () => {
     describe("mapToGridStyle", () => {
@@ -208,5 +208,22 @@ describe("aggregateGridPadding", () => {
 
     it("returns undefined when no grid style is passed", () => {
         expect(aggregateGridPadding(undefined)).toBeUndefined();
+    });
+});
+
+describe("Style schema guardrail", () => {
+    it("preserves expected style key set", () => {
+        const keys = Object.keys(defaultBarChartStyle).sort();
+        expect(keys).toEqual([
+            "bars",
+            "chart",
+            "container",
+            "domain",
+            "errorMessage",
+            "grid",
+            "legend",
+            "xAxis",
+            "yAxis"
+        ]);
     });
 });
