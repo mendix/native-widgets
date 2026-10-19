@@ -5,58 +5,53 @@ exports[`ProgressBar renders 1`] = `
   style={{}}
 >
   <View
-    animated={true}
-    animationConfig={
+    accessibilityLabel="Progress bar"
+    accessibilityRole="progressbar"
+    accessibilityValue={
       {
-        "bounciness": 0,
+        "max": 100,
+        "min": 0,
+        "now": 50,
       }
     }
-    animationType="spring"
-    indeterminate={false}
-    indeterminateAnimationDuration={1000}
-    onLayout={[Function]}
-    progress={0.5}
-    style={
-      [
-        {
-          "backgroundColor": undefined,
-          "borderColor": "rgb(98,0,238)",
-          "borderRadius": 4,
-          "borderWidth": 0,
-          "overflow": "hidden",
-          "width": null,
-        },
-        {
-          "backgroundColor": "rgba(98,0,238, 0.2)",
-          "borderRadius": 0,
-          "borderWidth": 0,
-          "height": 6,
-        },
-      ]
-    }
-    testID="progress-bar-test"
-    useNativeDriver={false}
+    accessible={true}
   >
     <View
-      collapsable={false}
+      onLayout={[Function]}
       style={
-        {
-          "backgroundColor": "rgb(98,0,238)",
-          "height": 6,
-          "transform": [
-            {
-              "translateX": -0,
-            },
-            {
-              "translateX": -0,
-            },
-            {
-              "scaleX": 0.50005,
-            },
-          ],
-        }
+        [
+          {
+            "backgroundColor": "rgba(98,0,238, 0.2)",
+            "borderColor": "rgb(98,0,238)",
+            "borderRadius": 0,
+            "borderWidth": 0,
+            "overflow": "hidden",
+            "width": undefined,
+          },
+          undefined,
+        ]
       }
-    />
+      testID="progress-bar-test"
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "rgb(98,0,238)",
+            "height": 6,
+            "transform": [
+              {
+                "translateX": -0,
+              },
+              {
+                "scaleX": 0.5,
+              },
+            ],
+            "width": "100%",
+          }
+        }
+        testID="progress-bar-test-fill"
+      />
+    </View>
   </View>
 </View>
 `;
