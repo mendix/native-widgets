@@ -2,12 +2,12 @@
 
 To test the React Native 0.88 upgrade, `@mendix/pluggable-widgets-tools` is installed from a tarball packed from the
 unreleased [`MxKevinBeqo/widgets-tools#moo/MOO-2499-rn-088`](https://github.com/MxKevinBeqo/widgets-tools/tree/moo/MOO-2499-rn-088)
-branch (commit `0dc4f444`) instead of npm. Once a version of the tools with React Native 0.88 support is released, undo
+branch (commit `b46c5159`) instead of npm. Once a version of the tools with React Native 0.88 support is released, undo
 the following and delete this file.
 
 1. `package.json` → `pnpm.overrides`: set `@mendix/pluggable-widgets-tools` back to the released version (it was
    `11.12.0` before this change) instead of
-   `file:temp-vendor/mendix-pluggable-widgets-tools-11.15.0-moo-2499-rn-088-0dc4f44.tgz`.
+   `file:temp-vendor/mendix-pluggable-widgets-tools-11.15.0-moo-2499-rn-088-b46c515.tgz`.
 2. Delete the `temp-vendor/` folder.
 3. `patches/@mendix__pluggable-widgets-tools.patch`:
     - Remove the `TEMPORARY` note at the top of the file.
