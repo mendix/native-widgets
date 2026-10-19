@@ -17,6 +17,7 @@ export interface ColorPickerProps<Style> {
     showSaturation: boolean;
     showLightness: boolean;
     showAlpha: boolean;
+    enableAccessibility: boolean;
     hueLabel?: DynamicValue<string>;
     saturationLabel?: DynamicValue<string>;
     lightnessLabel?: DynamicValue<string>;
@@ -41,6 +42,7 @@ export interface ColorPickerPreviewProps {
     showSaturation: boolean;
     showLightness: boolean;
     showAlpha: boolean;
+    enableAccessibility: boolean;
     hueLabel: string;
     saturationLabel: string;
     lightnessLabel: string;
