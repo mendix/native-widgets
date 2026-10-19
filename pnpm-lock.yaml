@@ -30,14 +30,6 @@ overrides:
   undici: '>=6.24.0'
   lodash: '>=4.18.0'
 
-patchedDependencies:
-  '@d11/react-native-fast-image@8.13.0':
-    hash: b59db8bd2067d2432d332a7246b6c2b432bf4e1b27f3d3f3c870f5c4740fe495
-    path: patches/@d11+react-native-fast-image+8.13.0.patch
-  react-native-gesture-handler@2.33.0:
-    hash: 5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8
-    path: patches/react-native-gesture-handler+2.33.0.patch
-
 importers:
 
   .:
@@ -143,7 +135,7 @@ importers:
         version: 3.0.4(encoding@0.1.13)
       mendix-native:
         specifier: file:../../../temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz
-        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       mime:
         specifier: 3.0.0
         version: 3.0.0
@@ -201,7 +193,7 @@ importers:
         version: 3.7.8
       mendix-native:
         specifier: file:../../../temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz
-        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       react-native-geocoder:
         specifier: 0.5.0
         version: 0.5.0
@@ -367,7 +359,7 @@ importers:
     dependencies:
       '@gorhom/bottom-sheet':
         specifier: 5.2.14
-        version: 5.2.14(@types/react-native@0.73.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(@types/react@19.3.0)(react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native-reanimated@4.7.1(react-native-worklets@0.13.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: 5.2.14(@types/react-native@0.73.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(@types/react@19.3.0)(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native-reanimated@4.7.1(react-native-worklets@0.13.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
@@ -382,7 +374,7 @@ importers:
         version: 15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))
       react-native-gesture-handler:
         specifier: 2.33.0
-        version: 2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: 2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       react-native-reanimated:
         specifier: 4.7.1
         version: 4.7.1(react-native-worklets@0.13.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
@@ -522,7 +514,7 @@ importers:
     dependencies:
       '@d11/react-native-fast-image':
         specifier: 8.13.0
-        version: 8.13.0(patch_hash=b59db8bd2067d2432d332a7246b6c2b432bf4e1b27f3d3f3c870f5c4740fe495)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: 8.13.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       '@mendix/piw-native-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-native-utils-internal
@@ -588,7 +580,7 @@ importers:
         version: link:../../tools/piw-utils-internal
       react-native-gesture-handler:
         specifier: 2.33.0
-        version: 2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: 2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: file:../../../temp-vendor/mendix-pluggable-widgets-tools-11.15.0-moo-2499-rn-088-bfb3b44.tgz
@@ -866,7 +858,7 @@ importers:
         version: 13.1.4(@react-native-vector-icons/get-image@13.0.1(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native/assets-registry@0.84.1)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       mendix-native:
         specifier: file:../../../temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz
-        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       react-native-video:
         specifier: 6.19.2
         version: 6.19.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
@@ -6526,9 +6518,6 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-is@19.2.7:
-    resolution: {integrity: sha512-kZFnouyVv7eP/Phmrlo9FK+zcAdriZJvzxXHF1Sl1P377WSGe2G/JxVolhTrB/jeV47lKImhNUsijjHAAbcl/A==}
-
   react-is@19.3.1:
     resolution: {integrity: sha512-RRieF6IyxQBkcK6pP8xOHprLTPW6QjRkbGdImtqNme+/hYVwCZkLQLdlZGOhUqXwkS9IEynaGvPJtv6XB/cz0Q==}
 
@@ -8958,7 +8947,7 @@ snapshots:
 
   '@csstools/css-tokenizer@3.0.4': {}
 
-  '@d11/react-native-fast-image@8.13.0(patch_hash=b59db8bd2067d2432d332a7246b6c2b432bf4e1b27f3d3f3c870f5c4740fe495)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
+  '@d11/react-native-fast-image@8.13.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
     dependencies:
       react: 19.3.0
       react-native: 0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)
@@ -9047,13 +9036,13 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@gorhom/bottom-sheet@5.2.14(@types/react-native@0.73.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(@types/react@19.3.0)(react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native-reanimated@4.7.1(react-native-worklets@0.13.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
+  '@gorhom/bottom-sheet@5.2.14(@types/react-native@0.73.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(@types/react@19.3.0)(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native-reanimated@4.7.1(react-native-worklets@0.13.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@gorhom/portal': 1.0.14(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       invariant: 2.2.4
       react: 19.3.0
       react-native: 0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0)
-      react-native-gesture-handler: 2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+      react-native-gesture-handler: 2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       react-native-reanimated: 4.7.1(react-native-worklets@0.13.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
     optionalDependencies:
       '@types/react': 19.3.0
@@ -10175,10 +10164,10 @@ snapshots:
       '@react-navigation/routers': 7.5.5
       escape-string-regexp: 4.0.0
       fast-deep-equal: 3.1.3
-      nanoid: 3.3.12
+      nanoid: 3.3.20
       query-string: 7.1.3
       react: 19.3.0
-      react-is: 19.2.7
+      react-is: 19.3.1
       use-latest-callback: 0.2.6(react@19.3.0)
       use-sync-external-store: 1.6.0(react@19.3.0)
 
@@ -10197,14 +10186,14 @@ snapshots:
       '@react-navigation/core': 7.17.5(react@19.3.0)
       escape-string-regexp: 4.0.0
       fast-deep-equal: 3.1.3
-      nanoid: 3.3.12
+      nanoid: 3.3.20
       react: 19.3.0
       react-native: 0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)
       use-latest-callback: 0.2.6(react@19.3.0)
 
   '@react-navigation/routers@7.5.5':
     dependencies:
-      nanoid: 3.3.12
+      nanoid: 3.3.20
 
   '@rollup/plugin-alias@5.1.1(rollup@4.30.1)':
     optionalDependencies:
@@ -13668,13 +13657,13 @@ snapshots:
       '@types/big.js': 0.0.31
       '@types/dojo': 1.9.49
 
-  mendix-native@file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
+  mendix-native@file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
     dependencies:
       '@op-engineering/op-sqlite': 18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       '@react-native-async-storage/async-storage': 2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))
       react: 19.3.0
       react-native: 0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)
-      react-native-gesture-handler: 2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+      react-native-gesture-handler: 2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
 
   mendix@11.8.0:
     dependencies:
@@ -14723,12 +14712,12 @@ snapshots:
       '@jest/schemas': 30.4.1
       ansi-styles: 5.2.0
       react-is-18: react-is@18.3.1
-      react-is-19: react-is@19.2.7
+      react-is-19: react-is@19.3.1
 
   pretty-format@30.5.1:
     dependencies:
       '@jest/react-is-18': react-is@18.3.1
-      '@jest/react-is-19': react-is@19.2.7
+      '@jest/react-is-19': react-is@19.3.1
       '@jest/schemas': 30.5.0
       ansi-styles: 5.2.0
 
@@ -14818,8 +14807,6 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-is@19.2.7: {}
-
   react-is@19.3.1: {}
 
   react-native-animatable@1.3.3:
@@ -14855,7 +14842,7 @@ snapshots:
 
   react-native-geocoder@0.5.0: {}
 
-  react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
+  react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
     dependencies:
       '@egjs/hammerjs': 2.0.17
       '@types/react-test-renderer': 19.1.0
@@ -14864,7 +14851,7 @@ snapshots:
       react: 19.3.0
       react-native: 0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0)
 
-  react-native-gesture-handler@2.33.0(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
+  react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
     dependencies:
       '@egjs/hammerjs': 2.0.17
       '@types/react-test-renderer': 19.1.0
