@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { NativeModules, PermissionsAndroid, Platform } from "react-native";
+import { PermissionsAndroid, Platform } from "react-native";
 import messaging from "@react-native-firebase/messaging";
 
 // BEGIN EXTRA CODE
@@ -19,11 +19,6 @@ import messaging from "@react-native-firebase/messaging";
 export async function RequestNotificationPermission(): Promise<boolean> {
     // BEGIN USER CODE
     // Documentation https://rnfirebase.io/messaging/usage
-
-    if (NativeModules && !NativeModules.RNFBMessagingModule) {
-        return Promise.reject(new Error("Firebase module is not available in your app"));
-    }
-
     if (Platform.OS === "android") {
         try {
             const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);

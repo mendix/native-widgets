@@ -17,6 +17,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Replaced @notifee/react-native with react-native-notify-kit library.
 -   Updated @react-native-firebase/messaging to 21.14.0.
 
+### Added
+
+-   We added mendix-native as a dependency to provide native file system.
+
 ## [12.1.0] Native Mobile Resources - 2026-6-10
 
 -   Updated react-native from version 0.83.4 to 0.84.1.

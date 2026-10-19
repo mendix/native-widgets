@@ -6,13 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
--   Fixed an issue where base64-to-image decoding was failing.
--   Migrated the geolocation actions from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.
--   Updated react-native-nitro-modules to 0.37.0.
-
 ### Fixed
 
 -   Fixed a resource leak in `Get current location with minimum accuracy` where the timeout and location watcher were not cleared on error.
+-   Fixed an issue where base64-to-image decoding was failing.
+
+### Added
+
+-   We added mendix-native as a dependency to provide native file system.
+
+### Changed
+
+-   Migrated the geolocation actions from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.
+-   Updated react-native-nitro-modules to 0.37.0.
 
 ## [7.2.0] Nanoflow Commons - 2026-7-3
 

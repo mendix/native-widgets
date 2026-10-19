@@ -1,13 +1,15 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { Modal, Pressable, useWindowDimensions } from "react-native";
+import { Keyboard, Modal, Pressable, useWindowDimensions } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
-    BottomSheetScrollView
+    BottomSheetScrollView,
+    BottomSheetScrollViewMethods
 } from "@gorhom/bottom-sheet";
 import { EditableValue, ValueStatus } from "mendix";
 import { BottomSheetStyle } from "../ui/Styles";
+import { SheetKeyboardTracker, sheetKeyboardProps } from "./SheetKeyboardTracker";
 
 interface CustomModalSheetProps {
     triggerAttribute?: EditableValue<boolean>;
@@ -17,6 +19,7 @@ interface CustomModalSheetProps {
 
 export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
+    const scrollableRef = useRef<BottomSheetScrollViewMethods>(null);
     const { height: windowHeight } = useWindowDimensions();
     const containerLayout = useSharedValue({
         height: windowHeight,
@@ -39,8 +42,24 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
     }
 
     const close = useCallback(() => {
-        bottomSheetRef.current?.close();
+        // Dismissing the sheet is deliberate, so it must not be interrupted. A keyboard that
+        // hides while the sheet is closing restores the sheet to its snap point -- see
+        // `sheetKeyboardProps` -- which cancels the close animation, and because the sheet
+        // lands back on the index it already had, neither onChange nor onClose follows and
+        // nothing retries: the sheet stays open while the trigger attribute reads false.
+        // `forceClose` closes the sheet the same way, but blocks every position change that
+        // does not come from the user until it is done.
+        if (Keyboard.isVisible()) {
+            Keyboard.dismiss();
+        }
+        bottomSheetRef.current?.forceClose();
     }, []);
+
+    // Latest trigger value, read by `handleChange` once the sheet has finished opening.
+    const externalOpenRef = useRef(externalOpen);
+    useEffect(() => {
+        externalOpenRef.current = externalOpen;
+    }, [externalOpen]);
 
     useEffect(() => {
         if (!externalOpen && mounted && didOpenRef.current) {
@@ -54,20 +73,25 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
 
     const handleChange = useCallback(
         (index: number) => {
-            if (index === 0) {
-                didOpenRef.current = true;
+            if (index !== 0) {
                 return;
             }
-
-            if (index === -1 && didOpenRef.current) {
-                didOpenRef.current = false;
-                setReady(false);
-                props.triggerAttribute?.setValue(false);
-                setMounted(false);
+            didOpenRef.current = true;
+            // Close now if the trigger attribute went false while the sheet was still opening.
+            if (!externalOpenRef.current) {
+                close();
             }
         },
-        [props.triggerAttribute]
+        [close]
     );
+
+    // Always clean up on close, also when the sheet closed before it finished opening.
+    const handleClose = useCallback(() => {
+        didOpenRef.current = false;
+        setReady(false);
+        props.triggerAttribute?.setValue(false);
+        setMounted(false);
+    }, [props.triggerAttribute]);
 
     const renderBackdrop = useCallback(
         (backdropProps: BottomSheetBackdropProps) => (
@@ -105,14 +129,20 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
                     containerLayoutState={containerLayout}
                     enablePanDownToClose
                     onChange={handleChange}
-                    onClose={() => handleChange(-1)}
+                    onClose={handleClose}
                     backdropComponent={renderBackdrop}
                     style={[props.styles.modal]}
                     backgroundStyle={props.styles.container}
                     handleComponent={null}
                     handleStyle={{ display: "none" }}
+                    {...sheetKeyboardProps}
                 >
-                    <BottomSheetScrollView style={[{ flex: 1 }]} contentContainerStyle={{ paddingBottom: 16 }}>
+                    <SheetKeyboardTracker scrollableRef={scrollableRef} isModal />
+                    <BottomSheetScrollView
+                        ref={scrollableRef}
+                        style={[{ flex: 1 }]}
+                        contentContainerStyle={{ paddingBottom: 16 }}
+                    >
                         {props.content}
                     </BottomSheetScrollView>
                 </BottomSheet>
