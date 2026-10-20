@@ -21,6 +21,13 @@ appId: "${APP_ID}"
 - inputText:
     text: "Title 5"
 - pressKey: Enter
+# iOS: dismiss the keyboard before reading the hierarchy — every XCUITest hang in CI (viewHierarchy
+# timing out) came with the keyboard up. Android-only hideKeyboard is a Back press, so it stays iOS-scoped.
+- runFlow:
+    when:
+      platform: ios
+    commands:
+      - hideKeyboard
 - assertVisible:
     text: "Title 5"
     index: 1
@@ -30,5 +37,10 @@ appId: "${APP_ID}"
 - inputText:
     text: "Title 100"
 - pressKey: Enter
+- runFlow:
+    when:
+      platform: ios
+    commands:
+      - hideKeyboard
 - assertVisible:
     text: "No results found"

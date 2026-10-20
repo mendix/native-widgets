@@ -83,8 +83,17 @@ stop_recording() {
 
 # A wedged XCUITest driver escapes as UnknownFailure to main, so a flow-level `retry:` can never
 # catch it. Bound the wall clock here, then reset the device and retry once.
+#
+# Backstop only — the fatal-exception check in run_maestro catches the common hang within seconds.
+# Must cover a cold driver bootstrap after a simulator reset (up to ~170s in CI on top of a ~35s
+# flow, MAESTRO_DRIVER_STARTUP_TIMEOUT allows 240s), so it can't go much lower than this.
+MAESTRO_FLOW_TIMEOUT="${MAESTRO_FLOW_TIMEOUT:-300}"
 
-MAESTRO_FLOW_TIMEOUT="${MAESTRO_FLOW_TIMEOUT:-480}"
+# Once main dies Maestro prints this and then idles (non-daemon threads keep the JVM alive) until
+# the watchdog fires — in CI that was another ~4.5-6 min per hang. Nothing recovers after it.
+MAESTRO_FATAL_PATTERN='Exception in thread "main"'
+# Grace period after the fatal line so the stack trace reaches the log before we kill the JVM.
+MAESTRO_FATAL_GRACE=10
 
 # Outside maestro's 0-1 range and below the 128+N signal range.
 MAESTRO_INFRA_EXIT=90
@@ -125,10 +134,17 @@ run_maestro() {
     local waited=0
     while [ "$waited" -lt "$MAESTRO_FLOW_TIMEOUT" ]; do
       kill -0 "$maestro_pid" 2>/dev/null || exit 0
+      if [ -n "$log_file" ] && grep -qF "$MAESTRO_FATAL_PATTERN" "$log_file" 2>/dev/null; then
+        sleep "$MAESTRO_FATAL_GRACE"
+        kill -0 "$maestro_pid" 2>/dev/null || exit 0
+        echo "::warning::maestro main thread died on $(basename "$flow") after ${waited}s — killing the lingering JVM (hung driver)"
+        break
+      fi
       sleep 5
       waited=$((waited + 5))
     done
-    echo "::warning::maestro exceeded ${MAESTRO_FLOW_TIMEOUT}s on $(basename "$flow") — killing it (hung driver)"
+    [ "$waited" -ge "$MAESTRO_FLOW_TIMEOUT" ] &&
+      echo "::warning::maestro exceeded ${MAESTRO_FLOW_TIMEOUT}s on $(basename "$flow") — killing it (hung driver)"
     kill -TERM "$maestro_pid" 2>/dev/null || true
     sleep 10
     kill -9 "$maestro_pid" 2>/dev/null || true
