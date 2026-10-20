@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 -   Fixed an issue where the "Get straight line distance" action threw an error at runtime.
+-   Fixed an issue where actions using decimal values threw a "Big is not defined" error at runtime.
 
 ## [7.4.0] Nanoflow Commons - 2026-9-22
 
