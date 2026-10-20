@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   Fixed an issue where actions using decimal values threw a "Big is not defined" error at runtime.
+
 ## [11.3.14] Native Mobile Resources - 2026-10-8
 
 ## [2.1.1] Gallery
