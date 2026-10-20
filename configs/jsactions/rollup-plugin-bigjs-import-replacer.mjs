@@ -5,8 +5,11 @@ export function bigJsImportReplacer() {
             const [filename] = Object.keys(bundle);
             const fileInfo = bundle[filename];
 
-            // Remove Big import entirely - mxbuild will add it in the header at line 8
-            fileInfo.code = fileInfo.code.replace(/^import\s*\{\s*Big\s*\}\s*from\s*['"]big\.js['"];?\s*\r?\n/m, "");
+            // Keep the Big import (Studio Pro does not re-add it at runtime), normalized to Studio Pro's quote style
+            fileInfo.code = fileInfo.code.replace(
+                /^import\s*\{\s*Big\s*\}\s*from\s*['"]big\.js['"];?/m,
+                `import { Big } from "big.js";`
+            );
         }
     };
 }
