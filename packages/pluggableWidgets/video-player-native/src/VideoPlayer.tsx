@@ -1,4 +1,4 @@
-import { flattenStyles } from "@mendix/piw-native-utils-internal";
+import { flattenStyles, MxOverlay } from "@mendix/piw-native-utils-internal";
 import { AndroidNavigationBar } from "mendix-native";
 import { ReactElement, useEffect, useRef, useState, Fragment, useCallback, useMemo } from "react";
 import {
@@ -9,7 +9,10 @@ import {
     TouchableOpacity,
     View,
     Appearance,
+<<<<<<< HEAD
     Modal,
+=======
+>>>>>>> 80f778dd6 (fix: add mxoverlay to video player)
     Pressable
 } from "react-native";
 import Video, { OnProgressData, ReactVideoProps, VideoRef } from "react-native-video";
@@ -51,6 +54,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     const timeoutRef = useRef<NodeJS.Timeout>(null);
     const playerRef = useRef<VideoRef>(null);
     const fullScreenPlayerRef = useRef<VideoRef>(null);
+    const fullScreenButtonRef = useRef<View>(null);
     const [status, setStatus] = useState(StatusEnum.NOT_READY);
     const [fullScreen, setFullScreen] = useState(false);
     const [showControls, setShowControls] = useState(false);
@@ -117,11 +121,16 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     return (
         <Fragment>
             {isAndroid && (
-                <Modal
+                <MxOverlay
                     visible={fullScreen}
                     onRequestClose={() => fullScreenHandler(false)}
+                    placement="fullscreen"
+                    transparent={false}
+                    respectSafeArea={false}
+                    animationDuration={0}
+                    dismissOnBackdropPress={false}
+                    returnFocusRef={fullScreenButtonRef}
                     testID="fullscreen-modal"
-                    statusBarTranslucent
                 >
                     <View style={styles.fullScreenVideoPlayer}>
                         <Pressable onPress={onVideoPressHandler} testID="fullscreen-overlay">
@@ -156,7 +165,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                         )}
                         {errorText}
                     </View>
-                </Modal>
+                </MxOverlay>
             )}
             <View style={styles.container}>
                 {status === StatusEnum.LOADING && <ActivityIndicator color={styles.indicator.color} size="large" />}
@@ -179,6 +188,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
                 )}
                 {isAndroid && showControls && (
                     <TouchableOpacity
+                        ref={fullScreenButtonRef}
                         onPress={() => fullScreenHandler(true)}
                         style={styles.controlBtnContainerStyle}
                         testID="btn-fullscreen"

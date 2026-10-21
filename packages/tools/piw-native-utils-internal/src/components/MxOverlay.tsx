@@ -162,10 +162,24 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
         return null;
     }
 
-    const translateY = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [SLIDE_DISTANCE[placement], 0]
-    });
+    // Without an animation the views keep no opacity or transform at all, so content that does not cope well with
+    // an animated parent (e.g. an Android SurfaceView) is left alone. The component type stays the same either way,
+    // so children are never remounted when the duration changes.
+    const animated = animationDuration > 0;
+    const backdropAnimation = animated ? { opacity: progress } : undefined;
+    const contentAnimation = animated
+        ? {
+              opacity: progress,
+              transform: [
+                  {
+                      translateY: progress.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [SLIDE_DISTANCE[placement], 0]
+                      })
+                  }
+              ]
+          }
+        : undefined;
 
     // iOS needs accessibilityViewIsModal to hide what is behind the overlay; Android relies on importantForAccessibility.
     const modalSemantics =
@@ -192,10 +206,7 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
                     importantForAccessibility="no"
                     testID={testID ? `${testID}-backdrop` : undefined}
                 >
-                    <Animated.View
-                        pointerEvents="none"
-                        style={[styles.backdrop, backdropStyle, { opacity: progress }]}
-                    />
+                    <Animated.View pointerEvents="none" style={[styles.backdrop, backdropStyle, backdropAnimation]} />
                 </Pressable>
                 <Animated.View
                     ref={contentRef}
@@ -206,7 +217,7 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
                         placement === "positioned" && position
                             ? { position: "absolute", top: position.top, left: position.left }
                             : undefined,
-                        { opacity: progress, transform: [{ translateY }] }
+                        contentAnimation
                     ]}
                     testID={testID ? `${testID}-content` : undefined}
                 >
