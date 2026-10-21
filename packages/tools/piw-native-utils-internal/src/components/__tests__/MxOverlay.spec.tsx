@@ -1,5 +1,6 @@
 import { createRef, ReactElement } from "react";
-import { AccessibilityInfo, Modal, Platform, Text, View } from "react-native";
+import { AccessibilityInfo, Modal, Platform, StyleSheet, Text, View } from "react-native";
+import { ReactTestInstance } from "react-test-renderer";
 import { act, fireEvent, render } from "@testing-library/react-native";
 import { MxOverlay, MxOverlayProps } from "../MxOverlay";
 
@@ -217,6 +218,33 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
             const utils = renderOverlay({ supportedOrientations: ["portrait"] });
 
             expect(utils.UNSAFE_getByType(Modal).props.supportedOrientations).toEqual(["portrait"]);
+        });
+
+        describe("animated styles", () => {
+            const flattenedStyles = (props: Partial<MxOverlayProps>): { content: any; backdrop: any } => {
+                const { getByTestId } = renderOverlay(props);
+                const backdropView = getByTestId("overlay-backdrop", { includeHiddenElements: true }).children[0];
+                return {
+                    content: StyleSheet.flatten(getByTestId("overlay-content").props.style),
+                    backdrop: StyleSheet.flatten((backdropView as ReactTestInstance).props.style)
+                };
+            };
+
+            it("leaves out opacity and transform when there is no animation", () => {
+                const { content, backdrop } = flattenedStyles({ animationDuration: 0 });
+
+                expect(content.opacity).toBeUndefined();
+                expect(content.transform).toBeUndefined();
+                expect(backdrop.opacity).toBeUndefined();
+            });
+
+            it("animates opacity and transform when there is an animation", () => {
+                const { content, backdrop } = flattenedStyles({ animationDuration: 200 });
+
+                expect(content.opacity).toBeDefined();
+                expect(content.transform).toBeDefined();
+                expect(backdrop.opacity).toBeDefined();
+            });
         });
 
         it("renders nothing while hidden", () => {
