@@ -27,8 +27,8 @@
             </propertyGroup>
             <propertyGroup caption="Scanning">
                 <property key="scanDelay" type="integer" required="true" defaultValue="0">
-                    <caption>Scan delay (seconds)</caption>
-                    <description>Time after the camera opens before barcodes are detected. Gives the user time to place the barcode inside the mask.</description>
+                    <caption>Scan delay</caption>
+                    <description>Number of seconds to wait after the camera starts before barcodes are scanned, so the user has time to position the barcode. Set to 0 to start scanning immediately.</description>
                 </property>
             </propertyGroup>
             <propertyGroup caption="Events">
