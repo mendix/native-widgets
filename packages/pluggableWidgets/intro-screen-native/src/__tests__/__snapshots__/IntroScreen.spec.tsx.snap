@@ -73,7 +73,6 @@ exports[`Intro Screen renders 1`] = `
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
@@ -88,12 +87,6 @@ exports[`Intro Screen renders 1`] = `
       style={
         {
           "flex": 1,
-          "opacity": 1,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
         }
       }
     >
@@ -385,7 +378,6 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
@@ -400,12 +392,6 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
       style={
         {
           "flex": 1,
-          "opacity": 1,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
         }
       }
     >
@@ -711,7 +697,6 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
@@ -726,12 +711,6 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
       style={
         {
           "flex": 1,
-          "opacity": 1,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
         }
       }
     >
@@ -1037,7 +1016,6 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
@@ -1052,12 +1030,6 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
       style={
         {
           "flex": 1,
-          "opacity": 1,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
         }
       }
     >
@@ -1349,7 +1321,6 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
             "backgroundColor": "transparent",
             "bottom": 0,
             "left": 0,
-            "opacity": 1,
             "position": "absolute",
             "right": 0,
             "top": 0,
@@ -1364,12 +1335,6 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
       style={
         {
           "flex": 1,
-          "opacity": 1,
-          "transform": [
-            {
-              "translateY": 0,
-            },
-          ],
         }
       }
     >

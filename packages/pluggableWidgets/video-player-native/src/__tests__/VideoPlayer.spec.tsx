@@ -1,6 +1,6 @@
 import { dynamicValue } from "@mendix/piw-utils-internal";
-import { Modal, View } from "react-native";
-import { fireEvent, render, waitFor } from "@testing-library/react-native";
+import { AccessibilityInfo, Modal, Platform, StatusBar, View } from "react-native";
+import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import { ReactVideoProps } from "react-native-video";
 
 import { VideoPlayer } from "../VideoPlayer";
@@ -9,6 +9,16 @@ import { VideoStyle } from "../ui/Styles";
 
 jest.useFakeTimers();
 jest.mock("react-native-video", () => "Video");
+const mockFindNodeHandle = jest.fn();
+jest.mock("react-native/Libraries/ReactNative/RendererProxy", () => {
+    const actual = jest.requireActual("react-native/Libraries/ReactNative/RendererProxy");
+    return {
+        ...actual,
+        // Only intercepted while a test installs an implementation, so other tests keep the real behaviour
+        findNodeHandle: (node: unknown) =>
+            mockFindNodeHandle.getMockImplementation() ? mockFindNodeHandle(node) : actual.findNodeHandle(node)
+    };
+});
 // The real module resolves the MxNavigation TurboModule at import time, which is unavailable under Jest.
 jest.mock("mendix-native", () => ({
     AndroidNavigationBar: { isActive: true, height: 24 }
@@ -117,6 +127,122 @@ describe("VideoPlayer", () => {
                 component.getByTestId("btn-fullscreen-exit");
                 const modal = component.UNSAFE_getByType(Modal);
                 expect(modal.props.visible).toBe(true);
+            });
+        });
+
+        describe("fullscreen overlay", () => {
+            let setHidden: jest.SpyInstance;
+            let setFocus: jest.SpyInstance;
+
+            beforeEach(() => {
+                setHidden = jest.spyOn(StatusBar, "setHidden").mockImplementation(() => undefined);
+                setFocus = jest.spyOn(AccessibilityInfo, "setAccessibilityFocus").mockImplementation(() => undefined);
+            });
+
+            afterEach(() => {
+                mockFindNodeHandle.mockReset();
+                jest.restoreAllMocks();
+            });
+
+            const openFullScreen = (): ReturnType<typeof render> => {
+                const component = render(<VideoPlayer {...defaultProps} />);
+                fireEvent.press(component.getByTestId("btn-fullscreen"));
+                return component;
+            };
+
+            it("is not rendered until fullscreen is requested", () => {
+                const component = render(<VideoPlayer {...defaultProps} />);
+
+                expect(component.UNSAFE_queryByType(Modal)).toBeNull();
+                expect(component.queryByTestId("btn-fullscreen-exit")).toBeNull();
+            });
+
+            it("opens an opaque modal that draws under the status bar", () => {
+                const component = openFullScreen();
+                const { props } = component.UNSAFE_getByType(Modal);
+
+                expect(props.transparent).toBe(false);
+                expect(props.statusBarTranslucent).toBe(true);
+                expect(component.getByTestId("fullscreen-modal")).toBeTruthy();
+            });
+
+            it("hides the status bar when entering fullscreen", () => {
+                openFullScreen();
+
+                expect(setHidden).toHaveBeenCalledWith(true);
+            });
+
+            it("leaves fullscreen and restores the status bar with the exit button", () => {
+                const component = openFullScreen();
+
+                fireEvent.press(component.getByTestId("btn-fullscreen-exit"));
+
+                expect(component.UNSAFE_queryByType(Modal)).toBeNull();
+                expect(setHidden).toHaveBeenLastCalledWith(false);
+            });
+
+            it("leaves fullscreen and restores the status bar with the Android back button", () => {
+                const component = openFullScreen();
+
+                act(() => component.UNSAFE_getByType(Modal).props.onRequestClose());
+
+                expect(component.UNSAFE_queryByType(Modal)).toBeNull();
+                expect(setHidden).toHaveBeenLastCalledWith(false);
+            });
+
+            it("stays in fullscreen when the area around the video is pressed", () => {
+                const component = openFullScreen();
+
+                fireEvent.press(component.getByTestId("fullscreen-modal-backdrop", { includeHiddenElements: true }));
+
+                expect(component.UNSAFE_queryByType(Modal)).not.toBeNull();
+            });
+
+            it("uses the Android modal semantics for the fullscreen overlay", () => {
+                const component = openFullScreen();
+                const { props } = component.getByTestId("fullscreen-modal-content");
+
+                expect(props.importantForAccessibility).toBe("yes");
+                expect(props.accessibilityViewIsModal).toBeUndefined();
+            });
+
+            it("returns accessibility focus to the fullscreen button after leaving fullscreen", () => {
+                const tags = new Map<unknown, number>();
+                const nodes = new Map<number, { props: { testID?: string } }>();
+                mockFindNodeHandle.mockImplementation((node: { props: { testID?: string } } | null) => {
+                    if (!node) {
+                        return null;
+                    }
+                    if (!tags.has(node)) {
+                        tags.set(node, tags.size + 1);
+                        nodes.set(tags.size, node);
+                    }
+                    return tags.get(node);
+                });
+                const component = openFullScreen();
+                setFocus.mockClear();
+
+                fireEvent.press(component.getByTestId("btn-fullscreen-exit"));
+
+                expect(setFocus).toHaveBeenCalledTimes(1);
+                expect(nodes.get(setFocus.mock.calls[0][0])?.props.testID).toBe("btn-fullscreen");
+            });
+        });
+
+        describe("on iOS", () => {
+            const androidOS = Platform.OS;
+
+            afterEach(() => {
+                (Platform as { OS: string }).OS = androidOS;
+            });
+
+            it("does not render the fullscreen overlay or button", () => {
+                (Platform as { OS: string }).OS = "ios";
+
+                const component = render(<VideoPlayer {...defaultProps} />);
+
+                expect(component.UNSAFE_queryByType(Modal)).toBeNull();
+                expect(component.queryByTestId("btn-fullscreen")).toBeNull();
             });
         });
     });
