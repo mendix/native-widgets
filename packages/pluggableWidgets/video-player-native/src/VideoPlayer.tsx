@@ -9,10 +9,6 @@ import {
     TouchableOpacity,
     View,
     Appearance,
-<<<<<<< HEAD
-    Modal,
-=======
->>>>>>> 80f778dd6 (fix: add mxoverlay to video player)
     Pressable
 } from "react-native";
 import Video, { OnProgressData, ReactVideoProps, VideoRef } from "react-native-video";
