@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   Removed the react-native-progress dependency. There is no change in appearance or behavior.
+-   Updated react-native from version v0.84.1 to v0.88.0.
 
 ### Added
 

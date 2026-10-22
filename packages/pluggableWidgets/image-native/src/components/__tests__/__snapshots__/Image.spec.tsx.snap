@@ -1480,7 +1480,7 @@ exports[`Widget Icon type: icon/glyph renders the structure with an icon and def
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          {},
+          undefined,
         ]
       }
     >
