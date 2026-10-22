@@ -12,6 +12,7 @@ exports[`BarcodeScanner renders 1`] = `
   testID="barcode-scanner-test"
 >
   <View
+    constraints={[]}
     device="mock-device"
     isActive={true}
     onLayout={[Function]}
@@ -43,6 +44,7 @@ exports[`BarcodeScanner renders with mask 1`] = `
   testID="barcode-scanner-test"
 >
   <View
+    constraints={[]}
     device="mock-device"
     isActive={true}
     onLayout={[Function]}
@@ -81,6 +83,7 @@ exports[`BarcodeScanner renders with mask with animated line 1`] = `
   testID="barcode-scanner-test"
 >
   <View
+    constraints={[]}
     device="mock-device"
     isActive={true}
     onLayout={[Function]}

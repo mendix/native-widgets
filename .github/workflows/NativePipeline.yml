@@ -858,6 +858,9 @@ jobs:
         if: env.IOS_APP_CACHED != 'true'
         # MLKit (via react-native-vision-camera-barcode-scanner) has no arm64-simulator slice;
         # re-tag its arm64 device objects as simulator so the arm64 simulator build links.
+        # Native Template excludes that package from iOS (react-native.config.js, ios: null); once the
+        # Native Template release with that change is used here, MLKit is no longer installed and this
+        # step (and EXCLUDED_ARCHS below) can be removed.
         run: node native-widgets/scripts/test/patch-mlkit-arm64-simulator.js native-template/ios/Pods
       - name: "Build iOS app"
         if: env.IOS_APP_CACHED != 'true'

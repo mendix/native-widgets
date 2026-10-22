@@ -2,13 +2,10 @@ import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { ValueStatus } from "mendix";
 import { ReactElement, useCallback, useMemo, useRef, useState, useEffect } from "react";
 import { View, LayoutChangeEvent, Platform } from "react-native";
-import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera";
-import {
-    useBarcodeScannerOutput,
-    type Barcode,
-    type TargetBarcodeFormat
-} from "react-native-vision-camera-barcode-scanner";
+import { Camera, useCameraDevice, useCameraPermission, type CameraRef } from "react-native-vision-camera";
 import BarcodeMask from "./components/BarcodeMask";
+import { DetectedCode, Size, UseScannerOutput } from "./scanners/types";
+import { useIosScannerOutput } from "./scanners/useIosScannerOutput";
 
 import { BarcodeScannerProps } from "../typings/BarcodeScannerProps";
 import { BarcodeScannerStyle, defaultBarcodeScannerStyle } from "./ui/styles";
@@ -21,23 +18,13 @@ export type Props = BarcodeScannerProps<BarcodeScannerStyle>;
 const REQUIRED_CONSECUTIVE_READS_ANDROID = 3;
 const SCAN_LOCK_DURATION_MS = 2000;
 
-const BARCODE_FORMATS: TargetBarcodeFormat[] = [
-    "qr-code",
-    "aztec",
-    "codabar",
-    "code-39",
-    "code-93",
-    "code-128",
-    "data-matrix",
-    "ean-13",
-    "ean-8",
-    "upc-a",
-    "upc-e",
-    "pdf-417",
-    "itf"
-];
-
-type Size = { width: number; height: number };
+// iOS uses Apple's scanner from vision-camera core, Android uses Google ML Kit. The Android scanner package isn't
+// linked on iOS and fails when loaded, so it is only required on Android. Keep this require directly behind the
+// Platform.OS check: the widget build replaces Platform.OS per platform and drops the require from the iOS bundle.
+const useScannerOutput: UseScannerOutput =
+    Platform.OS === "android"
+        ? require("./scanners/useAndroidScannerOutput").useAndroidScannerOutput
+        : useIosScannerOutput;
 
 type CodePositionInfo = {
     isWithinMask: boolean;
@@ -46,87 +33,18 @@ type CodePositionInfo = {
     overlapPercentage: number;
 };
 
-type TransformedCoordinates = {
-    codeX: number;
-    codeY: number;
-    codeWidth: number;
-    codeHeight: number;
-};
-
 type OverlapInfo = {
     overlapArea: number;
     overlapPercentage: number;
 };
 
 type CandidateCode = {
-    barcode: Barcode;
+    code: DetectedCode;
     isWithinMask: boolean;
     distanceToMaskCenterSquared: number;
     overlapArea: number;
     overlapPercentage: number;
 };
-
-/**
- * Transforms barcode coordinates from scanner buffer space to screen view space.
- * Handles platform-specific coordinate systems:
- * - iOS: Barcode coordinates are in sensor's native landscape space, need 90° rotation for portrait
- * - Android: ML Kit already rotates coordinates to match device orientation
- */
-function transformCodeCoordinates(
-    boundingBox: Barcode["boundingBox"],
-    bufferResolution: Size,
-    viewWidth: number,
-    viewHeight: number
-): TransformedCoordinates {
-    const frameWidth = bufferResolution.width;
-    const frameHeight = bufferResolution.height;
-    const isPortrait = viewHeight > viewWidth;
-
-    const left = boundingBox.left;
-    const top = boundingBox.top;
-    const right = boundingBox.right;
-    const bottom = boundingBox.bottom;
-    const codeFrameWidth = right - left;
-    const codeFrameHeight = bottom - top;
-
-    let codeX: number;
-    let codeY: number;
-    let codeWidth: number;
-    let codeHeight: number;
-
-    if (isPortrait && Platform.OS === "ios") {
-        // iOS: barcode coordinates are in the sensor's native landscape space,
-        // so we need a 90° rotation to map to portrait view coordinates.
-        const scaleX = viewWidth / frameHeight;
-        const scaleY = viewHeight / frameWidth;
-
-        codeX = (frameHeight - top - codeFrameHeight) * scaleX;
-        codeY = left * scaleY;
-        codeWidth = codeFrameHeight * scaleX;
-        codeHeight = codeFrameWidth * scaleY;
-    } else if (isPortrait && Platform.OS === "android") {
-        // Android: ML Kit already rotates barcode coordinates to match device orientation,
-        // but buffer resolution still reports sensor landscape dimensions (e.g. 1920x1080).
-        // Scale using the shorter dimension for X and longer for Y.
-        const scaleX = viewWidth / Math.min(frameWidth, frameHeight);
-        const scaleY = viewHeight / Math.max(frameWidth, frameHeight);
-
-        codeX = left * scaleX;
-        codeY = top * scaleY;
-        codeWidth = codeFrameWidth * scaleX;
-        codeHeight = codeFrameHeight * scaleY;
-    } else {
-        const scaleX = viewWidth / frameWidth;
-        const scaleY = viewHeight / frameHeight;
-
-        codeX = left * scaleX;
-        codeY = top * scaleY;
-        codeWidth = codeFrameWidth * scaleX;
-        codeHeight = codeFrameHeight * scaleY;
-    }
-
-    return { codeX, codeY, codeWidth, codeHeight };
-}
 
 /**
  * Calculates the overlap between a barcode and the mask region.
@@ -176,6 +94,7 @@ function compareCodesByPriority(a: CandidateCode, b: CandidateCode): number {
 export function BarcodeScanner(props: Props): ReactElement {
     const device = useCameraDevice("back");
     const [cameraViewDimensions, setCameraViewDimensions] = useState<Size | null>(null);
+    const cameraRef = useRef<CameraRef>(null);
 
     const { hasPermission, canRequestPermission, requestPermission } = useCameraPermission();
 
@@ -221,7 +140,7 @@ export function BarcodeScanner(props: Props): ReactElement {
     const maskHeight = styles.mask.height || 260;
 
     const getCodePositionInfo = useCallback(
-        (barcode: Barcode, bufferResolution: Size | undefined): CodePositionInfo => {
+        (code: DetectedCode): CodePositionInfo => {
             if (!props.showMask) {
                 return {
                     isWithinMask: true,
@@ -231,7 +150,8 @@ export function BarcodeScanner(props: Props): ReactElement {
                 };
             }
 
-            if (!cameraViewDimensions || !bufferResolution) {
+            const bounds = cameraViewDimensions ? code.getViewBounds() : undefined;
+            if (!cameraViewDimensions || !bounds) {
                 return {
                     isWithinMask: false,
                     distanceToMaskCenterSquared: Number.MAX_SAFE_INTEGER,
@@ -248,12 +168,7 @@ export function BarcodeScanner(props: Props): ReactElement {
             const maskCenterX = maskX + maskWidth / 2;
             const maskCenterY = maskY + maskHeight / 2;
 
-            const { codeX, codeY, codeWidth, codeHeight } = transformCodeCoordinates(
-                barcode.boundingBox,
-                bufferResolution,
-                viewWidth,
-                viewHeight
-            );
+            const { x: codeX, y: codeY, width: codeWidth, height: codeHeight } = bounds;
 
             const codeCenterX = codeX + codeWidth / 2;
             const codeCenterY = codeY + codeHeight / 2;
@@ -288,11 +203,8 @@ export function BarcodeScanner(props: Props): ReactElement {
         [props.showMask, cameraViewDimensions, maskWidth, maskHeight]
     );
 
-    // Read inside the scan callback to get the buffer resolution the scanner is actually using
-    const scannerOutputRef = useRef<ReturnType<typeof useBarcodeScannerOutput> | null>(null);
-
-    const onBarcodeScanned = useCallback(
-        (barcodes: Barcode[]) => {
+    const onCodesScanned = useCallback(
+        (codes: DetectedCode[]) => {
             // Block if still in cooldown or the previous detection is still being handled
             if (isLockedRef.current || props.onDetect?.isExecuting) {
                 return;
@@ -303,16 +215,14 @@ export function BarcodeScanner(props: Props): ReactElement {
                 return;
             }
 
-            if (props.barcode.status !== ValueStatus.Available || barcodes.length === 0) {
+            if (props.barcode.status !== ValueStatus.Available || codes.length === 0) {
                 return;
             }
 
-            const bufferResolution = scannerOutputRef.current?.currentResolution;
-
-            const candidates = barcodes
-                .map(barcode => ({
-                    barcode,
-                    ...getCodePositionInfo(barcode, bufferResolution)
+            const candidates = codes
+                .map(code => ({
+                    code,
+                    ...getCodePositionInfo(code)
                 }))
                 .filter(item => item.isWithinMask);
 
@@ -320,7 +230,7 @@ export function BarcodeScanner(props: Props): ReactElement {
                 return;
             }
 
-            const value = candidates.sort(compareCodesByPriority)[0].barcode.rawValue;
+            const value = candidates.sort(compareCodesByPriority)[0].code.value;
 
             if (!value) {
                 return;
@@ -356,20 +266,7 @@ export function BarcodeScanner(props: Props): ReactElement {
         [props.barcode, props.onDetect, getCodePositionInfo]
     );
 
-    const onScanError = useCallback((error: Error) => {
-        console.warn("Barcode scanner error:", error);
-    }, []);
-
-    const scannerOutput = useBarcodeScannerOutput({
-        barcodeFormats: BARCODE_FORMATS,
-        // Full resolution so dense/patterned QR codes can be decoded
-        outputResolution: "full",
-        onBarcodeScanned,
-        onError: onScanError
-    });
-    useEffect(() => {
-        scannerOutputRef.current = scannerOutput;
-    }, [scannerOutput]);
+    const scannerOutput = useScannerOutput({ onCodesScanned, cameraRef, cameraViewDimensions });
 
     // The camera is ready, start the scan delay from now
     const handleCameraStarted = useCallback(() => {
@@ -386,10 +283,12 @@ export function BarcodeScanner(props: Props): ReactElement {
             {device && hasPermission && (
                 <>
                     <Camera
+                        ref={cameraRef}
                         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
                         isActive
                         device={device}
-                        outputs={[scannerOutput]}
+                        outputs={scannerOutput.outputs}
+                        constraints={scannerOutput.constraints}
                         onStarted={handleCameraStarted}
                         onLayout={handleCameraLayout}
                     />

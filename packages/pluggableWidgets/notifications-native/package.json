@@ -20,8 +20,8 @@
   "dependencies": {
     "@mendix/piw-utils-internal": "*",
     "react-native-notify-kit": "10.4.7",
-    "@react-native-firebase/app": "21.14.0",
-    "@react-native-firebase/messaging": "21.14.0"
+    "@react-native-firebase/app": "20.1.0",
+    "@react-native-firebase/messaging": "20.1.0"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"
