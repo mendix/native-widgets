@@ -32,6 +32,7 @@ export const defaultVideoStyle: VideoStyle = {
         color: "white"
     },
     fullScreenVideoPlayer: {
+        flex: 1,
         justifyContent: "center",
         backgroundColor: "black",
         margin: 0
