@@ -1118,6 +1118,7 @@ exports[`Color Picker renders 1`] = `
           },
         ]
       }
+      accessibilityLabel="Hue"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -2330,6 +2331,7 @@ exports[`Color Picker renders 1`] = `
           },
         ]
       }
+      accessibilityLabel="Saturation"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -3542,6 +3544,7 @@ exports[`Color Picker renders 1`] = `
           },
         ]
       }
+      accessibilityLabel="Brightness"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -4776,6 +4779,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
           },
         ]
       }
+      accessibilityLabel="Hue"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -5988,6 +5992,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
           },
         ]
       }
+      accessibilityLabel="Saturation"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -7200,6 +7205,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
           },
         ]
       }
+      accessibilityLabel="Brightness"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -8412,6 +8418,7 @@ exports[`Color Picker renders with alpha slider 1`] = `
           },
         ]
       }
+      accessibilityLabel="Transparency"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -9647,6 +9654,7 @@ exports[`Color Picker renders with custom style 1`] = `
           },
         ]
       }
+      accessibilityLabel="Hue"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -10859,6 +10867,7 @@ exports[`Color Picker renders with custom style 1`] = `
           },
         ]
       }
+      accessibilityLabel="Saturation"
       accessibilityRole="adjustable"
       accessibilityState={
         {
@@ -12071,6 +12080,7 @@ exports[`Color Picker renders with custom style 1`] = `
           },
         ]
       }
+      accessibilityLabel="Brightness"
       accessibilityRole="adjustable"
       accessibilityState={
         {
