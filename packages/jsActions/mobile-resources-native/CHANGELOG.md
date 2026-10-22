@@ -6,10 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-### Fixed
-
--   Updated @react-native-firebase/messaging to 21.14.0.
-
 ### Added
 
 -   We added mendix-native as a dependency to provide native file system.
