@@ -12,8 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [12.5.1] Native Mobile Resources - 2026-10-8
 
-
 ## [2.3.0] Gallery
+
 ### Fixed
 
 -   We've fixed an issue where Gallery widget does not display data.
