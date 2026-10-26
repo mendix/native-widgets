@@ -17,10 +17,6 @@ jest.mock("react-native-reanimated", () => {
     return Reanimated;
 });
 
-jest.mock("react-native-device-info", () => ({
-    getDeviceId: () => "iPhone10,6"
-}));
-
 jest.mock("react-native/Libraries/Utilities/Platform", () => {
     const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
     Platform.OS = "ios";
