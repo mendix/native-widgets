@@ -7,7 +7,7 @@ import { SwipeableContainer } from "./SwipeableContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import deepmerge from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
-import { useDeviceMetrics } from "@mendix/piw-native-utils-internal";
+import { useDeviceMetrics } from "../../gallery-native/src/utils/deviceMetrics";
 
 export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Element {
     const [visible, setVisible] = useState(false);

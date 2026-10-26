@@ -6,7 +6,7 @@ import { View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
-jest.mock("@mendix/piw-native-utils-internal", () => ({
+jest.mock("../../../gallery-native/src/utils/deviceMetrics", () => ({
     useDeviceMetrics: () => ({ hasNotch: true })
 }));
 

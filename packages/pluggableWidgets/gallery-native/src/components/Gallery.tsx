@@ -10,7 +10,7 @@ import {
     useWindowDimensions
 } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
-import { useDeviceMetrics } from "@mendix/piw-native-utils-internal";
+import { useDeviceMetrics } from "../utils/deviceMetrics";
 import { GalleryStyle } from "../ui/Styles";
 import { HorizontalItemSizingEnum, PaginationEnum, ScrollDirectionEnum } from "../../typings/GalleryProps";
 import { isAvailable } from "@mendix/piw-utils-internal";
