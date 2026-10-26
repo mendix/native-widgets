@@ -373,9 +373,6 @@ importers:
       '@shopify/flash-list':
         specifier: 2.3.1
         version: 2.3.1(@babel/runtime@7.29.7)(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))
       react-native-gesture-handler:
         specifier: 2.31.2
         version: 2.31.2(patch_hash=5be6c2cce8be6bd8afdbbf6c289d8b210686eafce0b41bf8cae2c29388aaa3b8)(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
@@ -484,15 +481,15 @@ importers:
 
   packages/pluggableWidgets/gallery-native:
     dependencies:
+      '@mendix/piw-native-utils-internal':
+        specifier: '*'
+        version: link:../../tools/piw-native-utils-internal
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
       '@shopify/flash-list':
         specifier: 2.3.1
         version: 2.3.1(@babel/runtime@7.29.7)(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
@@ -553,9 +550,6 @@ importers:
       '@shopify/flash-list':
         specifier: 2.3.1
         version: 2.3.1(@babel/runtime@7.29.7)(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
@@ -894,6 +888,10 @@ importers:
         version: 11.12.0(patch_hash=c3d32a9026cacb93268037356ae25d0e56d1b9b3ecb22aea09cbf1c69542670e)(@jest/transform@30.3.0)(@jest/types@30.4.1)(@types/babel__core@7.20.5)(@types/node@20.19.41)(jest-util@30.4.1)(jiti@2.6.1)(picomatch@4.0.4)(react-dom@19.2.3(react@19.2.3))(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))(react@19.2.3)(tslib@2.8.1)
 
   packages/tools/piw-native-utils-internal:
+    dependencies:
+      react-native-device-info:
+        specifier: 15.0.2
+        version: 15.0.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.2.16)(react@19.2.3))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.12.0
