@@ -8,7 +8,8 @@ import {
     type TargetBarcodeFormat
 } from "react-native-vision-camera-barcode-scanner";
 
-import { DetectedCode, ScannerOutput, ScannerOutputOptions, Size, ViewBounds } from "./types";
+import { ScannerOutput, ScannerOutputOptions, Size, ViewBounds } from "./types";
+import { buildDetectedCodes } from "./utils";
 
 // Kept as a module constant because the scanner output is recreated whenever this array changes.
 const BARCODE_FORMATS: TargetBarcodeFormat[] = [
@@ -30,6 +31,7 @@ const BARCODE_FORMATS: TargetBarcodeFormat[] = [
 /**
  * Transforms barcode coordinates from scanner buffer space to screen view space.
  * ML Kit already rotates coordinates to match device orientation.
+ * Uses uniform cover scaling (like CSS object-fit: cover) to match VisionCamera's preview rendering.
  */
 function toViewBounds(boundingBox: Barcode["boundingBox"], bufferResolution: Size, viewSize: Size): ViewBounds {
     const frameWidth = bufferResolution.width;
@@ -40,17 +42,29 @@ function toViewBounds(boundingBox: Barcode["boundingBox"], bufferResolution: Siz
     const codeFrameWidth = boundingBox.right - boundingBox.left;
     const codeFrameHeight = boundingBox.bottom - boundingBox.top;
 
-    // Buffer resolution still reports sensor landscape dimensions (e.g. 1920x1080) in portrait,
-    // so scale using the shorter dimension for X and longer for Y.
-    const scaleX = isPortrait ? viewWidth / Math.min(frameWidth, frameHeight) : viewWidth / frameWidth;
-    const scaleY = isPortrait ? viewHeight / Math.max(frameWidth, frameHeight) : viewHeight / frameHeight;
+    // Buffer resolution reports sensor landscape dimensions (e.g. 1920x1080) even in portrait.
+    // In portrait, we need to use the swapped dimensions for aspect ratio calculation.
+    const effectiveFrameWidth = isPortrait ? Math.min(frameWidth, frameHeight) : frameWidth;
+    const effectiveFrameHeight = isPortrait ? Math.max(frameWidth, frameHeight) : frameHeight;
 
-    return {
-        x: boundingBox.left * scaleX,
-        y: boundingBox.top * scaleY,
-        width: codeFrameWidth * scaleX,
-        height: codeFrameHeight * scaleY
+    // Use uniform cover scaling: scale factor is the maximum of width/height ratios
+    // This ensures the frame fills the view completely, with one dimension cropped
+    const scale = Math.max(viewWidth / effectiveFrameWidth, viewHeight / effectiveFrameHeight);
+
+    // Calculate how much the scaled frame extends beyond the view (crop region)
+    const scaledFrameWidth = effectiveFrameWidth * scale;
+    const scaledFrameHeight = effectiveFrameHeight * scale;
+    const cropOffsetX = (scaledFrameWidth - viewWidth) / 2;
+    const cropOffsetY = (scaledFrameHeight - viewHeight) / 2;
+
+    const result = {
+        x: boundingBox.left * scale - cropOffsetX,
+        y: boundingBox.top * scale - cropOffsetY,
+        width: codeFrameWidth * scale,
+        height: codeFrameHeight * scale
     };
+
+    return result;
 }
 
 export function useAndroidScannerOutput({ onCodesScanned, cameraViewDimensions }: ScannerOutputOptions): ScannerOutput {
@@ -59,23 +73,17 @@ export function useAndroidScannerOutput({ onCodesScanned, cameraViewDimensions }
 
     const onBarcodeScanned = useCallback(
         (barcodes: Barcode[]) => {
-            const codes: DetectedCode[] = [];
-            for (const barcode of barcodes) {
-                const value = barcode.rawValue;
-                if (!value) {
-                    continue;
-                }
-                codes.push({
-                    value,
-                    getViewBounds: () => {
-                        const bufferResolution = scannerOutputRef.current?.currentResolution;
-                        if (!bufferResolution || !cameraViewDimensions) {
-                            return undefined;
-                        }
-                        return toViewBounds(barcode.boundingBox, bufferResolution, cameraViewDimensions);
+            const codes = buildDetectedCodes(
+                barcodes,
+                barcode => barcode.rawValue,
+                barcode => () => {
+                    const bufferResolution = scannerOutputRef.current?.currentResolution;
+                    if (!bufferResolution || !cameraViewDimensions) {
+                        return undefined;
                     }
-                });
-            }
+                    return toViewBounds(barcode.boundingBox, bufferResolution, cameraViewDimensions);
+                }
+            );
             onCodesScanned(codes);
         },
         [onCodesScanned, cameraViewDimensions]

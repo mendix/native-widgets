@@ -8,7 +8,8 @@ import {
     type ScannedObjectType
 } from "react-native-vision-camera";
 
-import { DetectedCode, ScannerOutput, ScannerOutputOptions } from "./types";
+import { ScannerOutput, ScannerOutputOptions } from "./types";
+import { buildDetectedCodes } from "./utils";
 
 // Same code types as v4 on iOS (Apple AVFoundation): UPC-A is reported as EAN-13, and v4's "itf" was interleaved 2 of 5.
 // Kept as a module constant because the object output is recreated whenever this array changes.
@@ -30,29 +31,20 @@ const OBJECT_TYPES: ScannedObjectType[] = [
 export function useIosScannerOutput({ onCodesScanned, cameraRef }: ScannerOutputOptions): ScannerOutput {
     const onObjectsScanned = useCallback(
         (objects: ScannedObject[]) => {
-            const codes: DetectedCode[] = [];
-            for (const object of objects) {
-                if (!isScannedCode(object)) {
-                    continue;
-                }
-                const value = object.value;
-                if (!value) {
-                    continue;
-                }
-                codes.push({
-                    value,
-                    getViewBounds: () => {
-                        try {
-                            // Converts from normalized camera space to view space, handling orientation and cropping natively
-                            return cameraRef.current?.convertScannedObjectCoordinatesToViewCoordinates(object)
-                                .boundingBox;
-                        } catch {
-                            // The preview isn't ready yet
-                            return undefined;
-                        }
+            const scannedCodes = objects.filter(isScannedCode);
+            const codes = buildDetectedCodes(
+                scannedCodes,
+                object => object.value,
+                object => () => {
+                    try {
+                        // Converts from normalized camera space to view space, handling orientation and cropping natively
+                        return cameraRef.current?.convertScannedObjectCoordinatesToViewCoordinates(object).boundingBox;
+                    } catch {
+                        // The preview isn't ready yet
+                        return undefined;
                     }
-                });
-            }
+                }
+            );
             onCodesScanned(codes);
         },
         [onCodesScanned, cameraRef]
