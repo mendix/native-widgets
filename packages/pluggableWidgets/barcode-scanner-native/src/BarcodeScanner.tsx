@@ -119,13 +119,18 @@ export function BarcodeScanner(props: Props): ReactElement {
     const lastReadValueRef = useRef<string | null>(null);
     const consecutiveReadsRef = useRef(0);
 
+    // Resets the consecutive read counter (Android only)
+    const resetConsecutiveReads = useCallback(() => {
+        lastReadValueRef.current = null;
+        consecutiveReadsRef.current = 0;
+    }, []);
+
     // Starts a new scan: codes are accepted again after the configured scan delay,
     // and the consecutive read count starts from zero
     const resetScanState = useCallback(() => {
         scanStartTimeRef.current = Date.now() + props.scanDelay * 1000;
-        lastReadValueRef.current = null;
-        consecutiveReadsRef.current = 0;
-    }, [props.scanDelay]);
+        resetConsecutiveReads();
+    }, [props.scanDelay, resetConsecutiveReads]);
 
     // Clear a pending lock timer when the widget unmounts
     useEffect(() => {
@@ -216,6 +221,7 @@ export function BarcodeScanner(props: Props): ReactElement {
             }
 
             if (props.barcode.status !== ValueStatus.Available || codes.length === 0) {
+                resetConsecutiveReads();
                 return;
             }
 
@@ -227,12 +233,14 @@ export function BarcodeScanner(props: Props): ReactElement {
                 .filter(item => item.isWithinMask);
 
             if (candidates.length === 0) {
+                resetConsecutiveReads();
                 return;
             }
 
             const value = candidates.sort(compareCodesByPriority)[0].code.value;
 
             if (!value) {
+                resetConsecutiveReads();
                 return;
             }
 
@@ -257,13 +265,16 @@ export function BarcodeScanner(props: Props): ReactElement {
 
             executeAction(props.onDetect);
 
+            // Reset consecutive reads counter after accepting a detection
+            resetConsecutiveReads();
+
             // Lock further scans for 2 seconds
             isLockedRef.current = true;
             lockTimeoutRef.current = setTimeout(() => {
                 isLockedRef.current = false;
             }, SCAN_LOCK_DURATION_MS);
         },
-        [props.barcode, props.onDetect, getCodePositionInfo]
+        [props.barcode, props.onDetect, getCodePositionInfo, resetConsecutiveReads]
     );
 
     const scannerOutput = useScannerOutput({ onCodesScanned, cameraRef, cameraViewDimensions });
