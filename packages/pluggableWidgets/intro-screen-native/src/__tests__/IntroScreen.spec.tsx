@@ -6,9 +6,8 @@ import { View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
-jest.mock("react-native-device-info", () => ({
-    hasNotch: jest.fn(),
-    getDeviceId: jest.fn().mockReturnValue("")
+jest.mock("@mendix/piw-native-utils-internal", () => ({
+    useDeviceMetrics: () => ({ hasNotch: false })
 }));
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
@@ -42,9 +41,8 @@ describe("Intro Screen", () => {
             identifier: ""
         };
 
-        jest.mock("react-native-device-info", () => ({
-            hasNotch: jest.fn(),
-            getDeviceId: jest.fn().mockReturnValue("iPhone")
+        jest.mock("@mendix/piw-native-utils-internal", () => ({
+            useDeviceMetrics: () => ({ hasNotch: false })
         }));
     });
 

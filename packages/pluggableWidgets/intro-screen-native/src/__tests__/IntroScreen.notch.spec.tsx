@@ -6,9 +6,8 @@ import { View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
-jest.mock("react-native-device-info", () => ({
-    hasNotch: jest.fn().mockReturnValue(true),
-    getDeviceId: jest.fn().mockReturnValue("iPhone10,6")
+jest.mock("@mendix/piw-native-utils-internal", () => ({
+    useDeviceMetrics: () => ({ hasNotch: true })
 }));
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
