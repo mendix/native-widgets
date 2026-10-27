@@ -13,6 +13,13 @@ appId: "${APP_ID}"
 - tapOn:
     id: "container1"
 - inputText: "11"
+# iOS: dismiss the keyboard first — every XCUITest hang in CI (viewHierarchy timing out) came with
+# the keyboard up. Android-only hideKeyboard is a Back press, so it stays iOS-scoped.
+- runFlow:
+    when:
+      platform: ios
+    commands:
+      - hideKeyboard
 - tapOn: "Show confirmation "
 - assertVisible: "Yolo"
 - assertVisible: "11"
