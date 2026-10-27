@@ -206,7 +206,8 @@ describe("VideoPlayer", () => {
                 expect(props.accessibilityViewIsModal).toBeUndefined();
             });
 
-            it("returns accessibility focus to the fullscreen button after leaving fullscreen", () => {
+            // Hand out numeric tags like a device does, so the element that received focus can be identified
+            const trackNodeTags = (): ((tag: number) => string | undefined) => {
                 const tags = new Map<unknown, number>();
                 const nodes = new Map<number, { props: { testID?: string } }>();
                 mockFindNodeHandle.mockImplementation((node: { props: { testID?: string } } | null) => {
@@ -219,13 +220,36 @@ describe("VideoPlayer", () => {
                     }
                     return tags.get(node);
                 });
+                return tag => nodes.get(tag)?.props.testID;
+            };
+
+            const CONTROLS_TIMEOUT = 5000;
+
+            it("returns accessibility focus to the fullscreen button after leaving fullscreen", () => {
+                const testIdOf = trackNodeTags();
                 const component = openFullScreen();
                 setFocus.mockClear();
 
                 fireEvent.press(component.getByTestId("btn-fullscreen-exit"));
 
                 expect(setFocus).toHaveBeenCalledTimes(1);
-                expect(nodes.get(setFocus.mock.calls[0][0])?.props.testID).toBe("btn-fullscreen");
+                expect(testIdOf(setFocus.mock.calls[0][0])).toBe("btn-fullscreen");
+            });
+
+            it("returns accessibility focus when leaving fullscreen after the controls have timed out", () => {
+                const testIdOf = trackNodeTags();
+                const component = openFullScreen();
+                act(() => {
+                    jest.advanceTimersByTime(CONTROLS_TIMEOUT + 1000);
+                });
+                // The fullscreen button is only rendered while the controls are shown
+                expect(component.queryByTestId("btn-fullscreen")).toBeNull();
+                setFocus.mockClear();
+
+                act(() => component.UNSAFE_getByType(Modal).props.onRequestClose());
+
+                expect(setFocus).toHaveBeenCalledTimes(1);
+                expect(testIdOf(setFocus.mock.calls[0][0])).toBe("btn-fullscreen");
             });
         });
 

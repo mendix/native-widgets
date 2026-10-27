@@ -87,6 +87,9 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
 
     async function fullScreenHandler(isFullScreen: boolean): Promise<void> {
         setFullScreen(isFullScreen);
+        if (!isFullScreen && props.showControls) {
+            showControlsHandler();
+        }
         if (AndroidNavigationBar.isActive) {
             if (isFullScreen) {
                 StatusBar.setHidden(true);
