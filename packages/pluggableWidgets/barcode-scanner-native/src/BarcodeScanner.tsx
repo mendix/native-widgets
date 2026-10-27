@@ -100,7 +100,7 @@ export function BarcodeScanner(props: Props): ReactElement {
 
     // VisionCamera v5 no longer prompts implicitly when the session starts; it throws without permission
     useEffect(() => {
-        if (canRequestPermission) {
+        if (!hasPermission && canRequestPermission) {
             requestPermission();
         }
     }, [canRequestPermission, requestPermission]);
