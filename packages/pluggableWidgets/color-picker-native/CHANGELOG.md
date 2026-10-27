@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   We added screen reader label properties for the hue, saturation, brightness and transparency sliders.
+
 ### Changed
 
 -   We updated tinycolor2 to 1.6.0.
