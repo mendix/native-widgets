@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Added horizontal item sizing options to fit items to their content or divide the Gallery width into configurable columns.
 
+### Changed
+
+-   Migrated device metrics utility to shared package for better code reusability.
+
 ## [2.2.1] - 2026-6-10
 
 ### Changed
