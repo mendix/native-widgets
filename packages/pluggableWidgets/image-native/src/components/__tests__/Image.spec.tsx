@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { AccessibilityInfo, Modal, Platform, Text } from "react-native";
 import { fireEvent, render, act, RenderAPI } from "@testing-library/react-native";
 import { NativeIcon, NativeImage } from "mendix";
 import { Style } from "@mendix/piw-native-utils-internal";
@@ -28,6 +28,17 @@ async function findByImageTestId(
 async function fireLayout(image: RenderAPI, name: string, suffix: string): Promise<void> {
     fireEvent(await findByImageTestId(image, name, suffix), "layout", onLayoutEventData);
 }
+
+const mockFindNodeHandle = jest.fn();
+jest.mock("react-native/Libraries/ReactNative/RendererProxy", () => {
+    const actual = jest.requireActual("react-native/Libraries/ReactNative/RendererProxy");
+    return {
+        ...actual,
+        // Only intercepted while a test installs an implementation, so other tests keep the real behaviour
+        findNodeHandle: (node: unknown) =>
+            mockFindNodeHandle.getMockImplementation() ? mockFindNodeHandle(node) : actual.findNodeHandle(node)
+    };
+});
 
 jest.mock("../../utils/imageUtils", () => {
     const actual = jest.requireActual("../../utils/imageUtils") as typeof import("../../utils/imageUtils");
@@ -666,6 +677,148 @@ describe("Widget", () => {
                 fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
                 expect(imageProps.onClick?.execute).toHaveBeenCalledTimes(1);
             });
+        });
+    });
+
+    describe("Enlarged overlay", () => {
+        const originalOS = Platform.OS;
+        let setFocus: jest.SpyInstance;
+        let nodeOf: (tag: number) => { props: { testID?: string } };
+
+        const openEnlarged = async (props: Partial<ImageProps<Style>> = {}): Promise<RenderAPI> => {
+            const image = render(<Image {...imageProps} onClickType={"enlarge"} {...props} />);
+            await flushMicrotasksQueue();
+            fireEvent.press(await findByImageTestId(image, imageProps.name, "ImageSmallPressable"));
+            await findByImageTestId(image, imageProps.name, "ImageEnlargedPressable");
+            return image;
+        };
+
+        // Closing plays the exit animation, so fake timers are switched on right before closing to run it to the end
+        const closeWithFakeTimers = (close: () => void): void => {
+            jest.useFakeTimers();
+            act(() => close());
+            act(() => {
+                jest.advanceTimersByTime(500);
+            });
+        };
+
+        beforeEach(() => {
+            setFocus = jest.spyOn(AccessibilityInfo, "setAccessibilityFocus").mockImplementation(() => undefined);
+            // Numeric tags (as on a device) that can be mapped back, to see which element got focus
+            const tags = new Map<unknown, number>();
+            const nodes = new Map<number, { props: { testID?: string } }>();
+            mockFindNodeHandle.mockReset().mockImplementation((node: { props: { testID?: string } } | null) => {
+                if (!node) {
+                    return null;
+                }
+                if (!tags.has(node)) {
+                    tags.set(node, tags.size + 1);
+                    nodes.set(tags.size, node);
+                }
+                return tags.get(node);
+            });
+            nodeOf = tag => nodes.get(tag)!;
+        });
+
+        afterEach(() => {
+            jest.useRealTimers();
+            (Platform as { OS: string }).OS = originalOS;
+            mockFindNodeHandle.mockReset();
+            jest.restoreAllMocks();
+        });
+
+        it("is not shown before the image is pressed", async () => {
+            const image = render(<Image {...imageProps} onClickType={"enlarge"} />);
+            await flushMicrotasksQueue();
+
+            expect(image.UNSAFE_queryByType(Modal)).toBeNull();
+        });
+
+        it("shows a transparent modal that keeps every orientation", async () => {
+            const image = await openEnlarged();
+            const { props } = image.UNSAFE_getByType(Modal);
+
+            expect(props.transparent).toBe(true);
+            expect(props.statusBarTranslucent).toBe(false);
+            expect(props.supportedOrientations).toEqual([
+                "portrait",
+                "portrait-upside-down",
+                "landscape",
+                "landscape-left",
+                "landscape-right"
+            ]);
+        });
+
+        it("closes when the enlarged image is pressed", async () => {
+            const image = await openEnlarged();
+            const enlarged = await findByImageTestId(image, imageProps.name, "ImageEnlargedPressable");
+
+            closeWithFakeTimers(() => fireEvent.press(enlarged));
+
+            expect(image.UNSAFE_queryByType(Modal)).toBeNull();
+        });
+
+        it("closes on the Android back button", async () => {
+            const image = await openEnlarged();
+
+            closeWithFakeTimers(() => image.UNSAFE_getByType(Modal).props.onRequestClose());
+
+            expect(image.UNSAFE_queryByType(Modal)).toBeNull();
+        });
+
+        it("exposes the screen reader caption, hint and role on the enlarged image", async () => {
+            const image = await openEnlarged({
+                screenReaderCaption: dynamicValue("A caption"),
+                screenReaderHint: dynamicValue("A hint")
+            });
+            const { props } = await findByImageTestId(image, imageProps.name, "ImageEnlargedPressable");
+
+            expect(props.accessibilityLabel).toBe("A caption");
+            expect(props.accessibilityHint).toBe("A hint");
+            expect(props.accessibilityRole).toBe("image");
+        });
+
+        it("marks the overlay as modal on iOS", async () => {
+            (Platform as { OS: string }).OS = "ios";
+            const image = await openEnlarged();
+            const { props } = await findByImageTestId(image, imageProps.name, "ImageEnlargedOverlay-content");
+
+            expect(props.accessibilityViewIsModal).toBe(true);
+            expect(props.importantForAccessibility).toBeUndefined();
+        });
+
+        it("marks the overlay as important for accessibility on Android", async () => {
+            (Platform as { OS: string }).OS = "android";
+            const image = await openEnlarged();
+            const { props } = await findByImageTestId(image, imageProps.name, "ImageEnlargedOverlay-content");
+
+            expect(props.importantForAccessibility).toBe("yes");
+            expect(props.accessibilityViewIsModal).toBeUndefined();
+        });
+
+        it("moves accessibility focus to the enlarged image when it opens", async () => {
+            const image = await openEnlarged();
+
+            fireEvent(
+                await findByImageTestId(image, imageProps.name, "ImageEnlargedOverlay-content"),
+                "layout",
+                onLayoutEventData
+            );
+
+            expect(setFocus).toHaveBeenCalledTimes(1);
+            expect(nodeOf(setFocus.mock.calls[0][0]).props.testID).toBe(`${imageProps.name}$ImageEnlargedPressable`);
+        });
+
+        it("returns accessibility focus to the small image once it has closed", async () => {
+            const image = await openEnlarged();
+            const enlarged = await findByImageTestId(image, imageProps.name, "ImageEnlargedPressable");
+            setFocus.mockClear();
+
+            closeWithFakeTimers(() => fireEvent.press(enlarged));
+
+            expect(image.UNSAFE_queryByType(Modal)).toBeNull();
+            expect(setFocus).toHaveBeenCalledTimes(1);
+            expect(nodeOf(setFocus.mock.calls[0][0]).props.testID).toBe(`${imageProps.name}$ImageSmallPressable`);
         });
     });
 });
