@@ -6,9 +6,7 @@ import {
     StyleSheet,
     Text,
     TouchableNativeFeedback,
-    TouchableNativeFeedbackProps,
     TouchableOpacity,
-    TouchableOpacityProps,
     View
 } from "react-native";
 import { ButtonStyle, IntroScreenStyle } from "./ui/Styles";
@@ -44,12 +42,10 @@ interface SwipeableContainerProps {
     activeSlide?: EditableValue<Big>;
 }
 
-type TouchableProps = TouchableNativeFeedbackProps | TouchableOpacityProps;
-
 declare type Option<T> = T | undefined;
 
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === "android";
-const Touchable: React.ComponentType<TouchableProps> =
+const Touchable: typeof TouchableNativeFeedback | typeof TouchableOpacity =
     Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
 
 // Changing this config after mount is not supported by flash-list, so it is a constant.
