@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   The IntroScreen is now presented through the shared MxOverlay component. Its appearance and behaviour, including blocking the Android back button, are unchanged.
+
 ### Fixed
 
 -   We fixed an issue where the IntroScreen did not show the slide set by the active slide attribute, and where swiping between slides did not work reliably on slower Android devices.
