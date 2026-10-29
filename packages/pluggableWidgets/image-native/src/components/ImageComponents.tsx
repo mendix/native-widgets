@@ -1,5 +1,15 @@
-import { Dispatch, SetStateAction, FunctionComponent, useState, Fragment, useCallback, useMemo } from "react";
-import { Modal, Pressable, LayoutChangeEvent, View, ImageStyle, useWindowDimensions } from "react-native";
+import {
+    Dispatch,
+    SetStateAction,
+    FunctionComponent,
+    RefObject,
+    useState,
+    Fragment,
+    useCallback,
+    useMemo,
+    useRef
+} from "react";
+import { Pressable, LayoutChangeEvent, View, ImageStyle, useWindowDimensions } from "react-native";
 import { SvgUri } from "react-native-svg";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { OnClickTypeEnum } from "../../typings/ImageProps";
@@ -7,6 +17,10 @@ import { CustomImageObjectProps, onLayoutSetDimensions, getScaledDimensions } fr
 import { DimensionsType, ImageIconSVG } from "./ImageIconSVG";
 import { DefaultImageStyle } from "../ui/Styles.js";
 import { DynamicValue } from "mendix";
+import { MxOverlay } from "@mendix/piw-native-utils-internal";
+
+// The themed backdrop style is applied on the pressable inside the overlay, so the overlay backdrop stays transparent
+const transparentBackdrop = { backgroundColor: "transparent" };
 
 interface AccessibilityProps {
     accessible: boolean;
@@ -31,11 +45,13 @@ export interface ImageViewerProps extends ImageViewerBaseProps {
 }
 interface ImageSmallProps extends ImageViewerBaseProps {
     onClick: () => Dispatch<SetStateAction<boolean>> | void;
+    pressableRef?: RefObject<View | null>;
     styles: DefaultImageStyle;
 }
 interface ImageEnlargedProps extends ImageViewerBaseProps {
     visible: boolean;
     setEnlarged: Dispatch<SetStateAction<boolean>>;
+    returnFocusRef?: RefObject<View | null>;
     styles: DefaultImageStyle;
 }
 interface GetImageDimensionsComponentProps extends ImageViewerBaseProps {
@@ -44,6 +60,7 @@ interface GetImageDimensionsComponentProps extends ImageViewerBaseProps {
 
 export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
     const [enlarged, setEnlarged] = useState(false);
+    const triggerRef = useRef<View>(null);
     const {
         accessible,
         screenReaderCaption,
@@ -73,6 +90,7 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
                 iconSize={iconSize}
                 initialDimensions={initialDimensions}
                 onClick={onClickType === "enlarge" ? () => setEnlarged(true) : onClick}
+                pressableRef={triggerRef}
                 styles={styles}
             />
             <GetImageDimensionsComponent
@@ -91,6 +109,7 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
                 screenReaderHint={screenReaderHint}
                 visible={enlarged}
                 setEnlarged={setEnlarged}
+                returnFocusRef={triggerRef}
                 source={source}
                 initialDimensions={initialDimensions}
                 styles={styles}
@@ -156,6 +175,7 @@ export const ImageSmall: FunctionComponent<ImageSmallProps> = props => {
         customHeight,
         iconSize,
         onClick,
+        pressableRef,
         styles,
         name,
         accessible,
@@ -181,6 +201,7 @@ export const ImageSmall: FunctionComponent<ImageSmallProps> = props => {
 
     return source.type === "icon" || (initialDimensions?.width && initialDimensions?.height) ? (
         <Pressable
+            ref={pressableRef}
             accessible={accessible}
             accessibilityLabel={screenReaderCaption?.value}
             accessibilityHint={screenReaderHint?.value}
@@ -218,8 +239,10 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
         name,
         accessible,
         screenReaderCaption,
-        screenReaderHint
+        screenReaderHint,
+        returnFocusRef
     } = props;
+    const contentRef = useRef<View>(null);
     const [svgProps] = extractStyles(styles.image as ImageStyle, ["width", "height"]);
 
     const { width, height } = useWindowDimensions();
@@ -227,17 +250,17 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
         return getScaledDimensions(width, height, initialDimensions);
     }, [width, height, initialDimensions]);
 
-    return visible && initialDimensions?.width && initialDimensions?.height ? (
-        <Modal
-            accessible={accessible}
-            accessibilityLabel={screenReaderCaption?.value}
-            accessibilityHint={screenReaderHint?.value}
-            accessibilityRole="image"
+    return initialDimensions?.width && initialDimensions?.height ? (
+        <MxOverlay
             visible={visible}
             onRequestClose={() => setEnlarged(false)}
-            onDismiss={() => setEnlarged(false)}
-            transparent
-            animationType="fade"
+            placement="fullscreen"
+            testID={`${name}$ImageEnlargedOverlay`}
+            backdropStyle={transparentBackdrop}
+            respectSafeArea={false}
+            statusBarTranslucent={false}
+            initialFocusRef={contentRef}
+            returnFocusRef={returnFocusRef}
             supportedOrientations={[
                 "portrait",
                 "portrait-upside-down",
@@ -247,6 +270,11 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
             ]}
         >
             <Pressable
+                ref={contentRef}
+                accessible={accessible}
+                accessibilityLabel={screenReaderCaption?.value}
+                accessibilityHint={screenReaderHint?.value}
+                accessibilityRole="image"
                 testID={`${name}$ImageEnlargedPressable`}
                 onPress={() => setEnlarged(false)}
                 style={styles.backdrop}
@@ -268,6 +296,6 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
                     />
                 </View>
             </Pressable>
-        </Modal>
+        </MxOverlay>
     ) : null;
 };
