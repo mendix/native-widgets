@@ -7,14 +7,14 @@ import { SwipeableContainer } from "./SwipeableContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import deepmerge from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
+import { useDeviceMetrics } from "@mendix/piw-native-utils-internal";
 
 export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Element {
     const [visible, setVisible] = useState(false);
+    const { hasNotch } = useDeviceMetrics();
+    const notchStyle = hasNotch ? { paginationContainer: { bottom: 22 } } : {};
     const customStyles = props.style ? props.style.filter(o => o != null) : [];
-    const styles =
-        customStyles.length > 0
-            ? deepmerge.all<IntroScreenStyle>([defaultWelcomeScreenStyle, ...customStyles])
-            : defaultWelcomeScreenStyle;
+    const styles = deepmerge.all<IntroScreenStyle>([defaultWelcomeScreenStyle, notchStyle, ...customStyles]);
 
     useEffect(() => {
         let isMounted = true;

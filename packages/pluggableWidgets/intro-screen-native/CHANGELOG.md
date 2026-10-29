@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   We fixed an issue where the IntroScreen did not show the slide set by the active slide attribute, and where swiping between slides did not work reliably on slower Android devices.
 
+### Changed
+
+-   Migrated device metrics utility to shared package for better code reusability and removed static iPhone list for notch detection.
+
 ## [4.4.1] - 2026-6-10
 
 ### Changed

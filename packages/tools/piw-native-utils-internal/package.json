@@ -24,6 +24,9 @@
     "prepare": "pnpm build",
     "postinstall": "pnpm build"
   },
+  "dependencies": {
+    "react-native-device-info": "15.0.2"
+  },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*",
     "rimraf": "^6.1.2"
