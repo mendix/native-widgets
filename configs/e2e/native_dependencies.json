@@ -7,7 +7,7 @@
     "react-native-linear-gradient": "2.8.3",
     "@react-native-community/netinfo": "11.5.2",
     "react-native-svg": "15.15.4",
-    "react-native-video": "6.19.2",
+    "react-native-video": "6.19.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "react-native-vision-camera": "5.2.3",
     "react-native-vision-camera-barcode-scanner": "5.2.3",
