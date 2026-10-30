@@ -24,7 +24,7 @@
     "react-native-svg": "15.15.4",
     "react-native-vision-camera": "5.2.3",
     "react-native-vision-camera-barcode-scanner": "5.2.3",
-    "react-native-nitro-modules": "0.37.0",
+    "react-native-nitro-modules": "0.36.1",
     "react-native-nitro-image": "0.15.2"
   },
   "devDependencies": {
