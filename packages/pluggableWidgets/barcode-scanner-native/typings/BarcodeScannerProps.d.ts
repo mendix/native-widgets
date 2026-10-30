@@ -12,7 +12,6 @@ export interface BarcodeScannerProps<Style> {
     barcode: EditableValue<string>;
     showMask: boolean;
     showAnimatedLine: boolean;
-    scanDelay: number;
     onDetect?: ActionValue;
 }
 
@@ -30,6 +29,5 @@ export interface BarcodeScannerPreviewProps {
     barcode: string;
     showMask: boolean;
     showAnimatedLine: boolean;
-    scanDelay: number | null;
     onDetect: {} | null;
 }
