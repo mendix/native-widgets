@@ -5,14 +5,28 @@ import { View } from "react-native";
 import { BarcodeScanner, Props } from "../BarcodeScanner";
 import { defaultBarcodeScannerStyle } from "../ui/styles";
 
-let mockOnCodeScanned: ((codes: Array<{ value: string }>) => void) | undefined;
+let mockOnBarcodeScanned: ((barcodes: Array<{ rawValue: string }>) => void) | undefined;
 
 jest.mock("react-native-vision-camera", () => ({
-    Camera: ({ children, ...props }: any) => <View {...props}>{children}</View>,
+    Camera: ({ children, onStarted, ...props }: any) => {
+        // Call onStarted to simulate camera being ready
+        if (onStarted) {
+            setTimeout(() => onStarted(), 0);
+        }
+        return <View {...props}>{children}</View>;
+    },
     useCameraDevice: () => "mock-device",
-    useCodeScanner: (options: any) => {
-        mockOnCodeScanned = options.onCodeScanned;
-        return "mockCodeScanner";
+    useCameraPermission: () => ({
+        hasPermission: true,
+        canRequestPermission: false,
+        requestPermission: jest.fn()
+    })
+}));
+
+jest.mock("react-native-vision-camera-barcode-scanner", () => ({
+    useBarcodeScannerOutput: (options: any) => {
+        mockOnBarcodeScanned = options.onBarcodeScanned;
+        return "mockScannerOutput";
     }
 }));
 
@@ -28,7 +42,8 @@ describe("BarcodeScanner", () => {
             showMask: false,
             name: "barcode-scanner-test",
             style: [],
-            barcode: new EditableValueBuilder<string>().build()
+            barcode: new EditableValueBuilder<string>().build(),
+            scanDelay: 0
         };
     });
 
@@ -55,15 +70,22 @@ describe("BarcodeScanner", () => {
         const onDetectAction = actionValue();
         render(<BarcodeScanner {...defaultProps} onDetect={onDetectAction} />);
 
-        // Simulate scanning
-        mockOnCodeScanned?.([{ value: "value" }]);
+        // Wait for camera start and advance time past scan delay
+        jest.runOnlyPendingTimers();
+
+        // Simulate scanning (3 consecutive reads required on Android)
+        mockOnBarcodeScanned?.([{ rawValue: "value" }]);
+        mockOnBarcodeScanned?.([{ rawValue: "value" }]);
+        mockOnBarcodeScanned?.([{ rawValue: "value" }]);
         jest.advanceTimersByTime(2000);
 
         expect(defaultProps.barcode.setValue).toHaveBeenCalledWith("value");
         expect(onDetectAction.execute).toHaveBeenCalledTimes(1);
 
         // Another scan
-        mockOnCodeScanned?.([{ value: "value1" }]);
+        mockOnBarcodeScanned?.([{ rawValue: "value1" }]);
+        mockOnBarcodeScanned?.([{ rawValue: "value1" }]);
+        mockOnBarcodeScanned?.([{ rawValue: "value1" }]);
         jest.advanceTimersByTime(2000);
 
         expect(defaultProps.barcode.setValue).toHaveBeenCalledWith("value1");
