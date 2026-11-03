@@ -16,10 +16,10 @@ appId: "${APP_ID}"
     id: "text2" # History:
 - tapOn:
     text: "Scan"
-- assertVisible:
-    text: "Allow"
+- extendedWaitUntil:
+    visible: "Allow"
+    timeout: 10000
     optional: true
-    timeout: 5000
 - tapOn:
     text: "Allow"
     optional: true
