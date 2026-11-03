@@ -1,5 +1,7 @@
 import { Fragment, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
+    AccessibilityActionEvent,
+    AccessibilityInfo,
     I18nManager,
     LayoutChangeEvent,
     Platform,
@@ -22,12 +24,17 @@ interface SwipeableContainerProps {
     testID?: string;
     skipLabel?: string;
     skipIcon?: DynamicValue<NativeIcon>;
+    skipAccessibilityLabel?: string;
     doneLabel?: string;
     doneIcon?: DynamicValue<NativeIcon>;
+    doneAccessibilityLabel?: string;
     nextLabel?: string;
     nextIcon?: DynamicValue<NativeIcon>;
+    nextAccessibilityLabel?: string;
     previousLabel?: string;
     previousIcon?: DynamicValue<NativeIcon>;
+    previousAccessibilityLabel?: string;
+    slidePositionLabel?: string;
     showDoneButton: boolean;
     showSkipButton: boolean;
     showNextButton: boolean;
@@ -58,6 +65,10 @@ const VIEWABILITY_CONFIG = {
     minimumViewTime: 250
 } as const;
 
+// A configured label is spoken as-is; otherwise the position is spelled out
+const getSlidePositionLabel = (label: Option<string>, current: number, total: number): string =>
+    label || `Slide ${current} of ${total}`;
+
 const refreshActiveSlideAttribute = (slides: SlidesType[], activeSlide?: EditableValue<Big>): number => {
     if (activeSlide && activeSlide.value !== undefined && slides && slides.length > 0) {
         const slide = Number(activeSlide.value) - 1;
@@ -80,6 +91,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const flashList = useRef<FlashListRef<any>>(null);
     const pendingWrite = useRef<{ replaced: number } | null>(null);
     const isUserScrolling = useRef(false);
+    const [reduceMotion, setReduceMotion] = useState(false);
     const activeSlidePending =
         props.activeSlide?.status === ValueStatus.Loading && props.activeSlide.value === undefined;
 
@@ -95,6 +107,16 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         }
     }, [listMounted, activeSlidePending, props.slides, props.activeSlide, activeIndex]);
 
+    useEffect(() => {
+        let isMounted = true;
+        AccessibilityInfo.isReduceMotionEnabled().then(enabled => isMounted && setReduceMotion(enabled));
+        const subscription = AccessibilityInfo.addEventListener("reduceMotionChanged", setReduceMotion);
+        return () => {
+            isMounted = false;
+            subscription.remove();
+        };
+    }, []);
+
     const rtlSafeIndex = useCallback(
         (i: number): number => (isAndroidRTL ? props.slides.length - 1 - i : i),
         [props.slides.length]
@@ -105,11 +127,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             setActiveIndex(pageNum);
             if (width > 0 && flashList && flashList.current) {
                 flashList.current.scrollToOffset({
-                    offset: rtlSafeIndex(pageNum) * width
+                    offset: rtlSafeIndex(pageNum) * width,
+                    animated: !reduceMotion
                 });
             }
         },
-        [rtlSafeIndex, width]
+        [rtlSafeIndex, width, reduceMotion]
     );
 
     useEffect(() => {
@@ -130,14 +153,22 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         }
     }, [props.activeSlide, activeIndex, width, props.slides, goToSlide]);
 
+    // Focus stays on the pressed button, so the new slide is announced explicitly for screen reader users
+    const announceSlide = (index: number): void =>
+        AccessibilityInfo.announceForAccessibility(
+            getSlidePositionLabel(props.slidePositionLabel, index + 1, props.slides.length)
+        );
+
     const onNextPress = (): void => {
         goToSlide(activeIndex + 1);
         onSlideChange(activeIndex + 1, activeIndex);
+        announceSlide(activeIndex + 1);
     };
 
     const onPrevPress = (): void => {
         goToSlide(activeIndex - 1);
         onSlideChange(activeIndex - 1, activeIndex);
+        announceSlide(activeIndex - 1);
     };
 
     const onPaginationPress = (index: number): void => {
@@ -164,6 +195,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
 
     const renderButton = (
         caption: Option<string>,
+        accessibilityLabel: string,
         icon: Option<DynamicValue<NativeIcon>>,
         defaultIcon: string,
         style: ButtonStyle,
@@ -200,7 +232,12 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
             : {};
         return (
             <Container {...containerProps}>
-                <Touchable onPress={onPress} testID={`${props.testID}$${testID}`}>
+                <Touchable
+                    onPress={onPress}
+                    testID={`${props.testID}$${testID}`}
+                    accessibilityRole="button"
+                    accessibilityLabel={accessibilityLabel}
+                >
                     <View style={[style.container, !props.bottomButton ? { width: width / 3 } : {}]}>
                         {iconContent}
                         {caption && <Text style={style.caption}>{caption}</Text>}
@@ -226,12 +263,14 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const renderNextButton = ({
         showNextButton = true,
         nextLabel,
+        nextAccessibilityLabel,
         nextIcon,
         styles
     }: SwipeableContainerProps): ReactNode =>
         showNextButton &&
         renderButton(
             nextLabel,
+            nextAccessibilityLabel || nextLabel || "Next",
             nextIcon,
             "chevron-right",
             props.bottomButton ? styles.paginationAbove.buttonNext : styles.paginationBetween.buttonNext,
@@ -242,12 +281,14 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const renderPrevButton = ({
         showPreviousButton,
         previousLabel,
+        previousAccessibilityLabel,
         previousIcon,
         styles
     }: SwipeableContainerProps): ReactNode =>
         showPreviousButton &&
         renderButton(
             previousLabel,
+            previousAccessibilityLabel || previousLabel || "Previous",
             previousIcon,
             "chevron-left",
             props.bottomButton ? styles.paginationAbove.buttonPrevious : styles.paginationBetween.buttonPrevious,
@@ -258,6 +299,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const renderDoneButton = ({
         showDoneButton = true,
         doneLabel,
+        doneAccessibilityLabel,
         doneIcon,
         onDone,
         styles
@@ -265,6 +307,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         showDoneButton &&
         renderButton(
             doneLabel,
+            doneAccessibilityLabel || doneLabel || "Done",
             doneIcon,
             "ok",
             props.bottomButton ? styles.paginationAbove.buttonDone : styles.paginationBetween.buttonDone,
@@ -275,6 +318,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
     const renderSkipButton = ({
         showSkipButton,
         skipLabel,
+        skipAccessibilityLabel,
         skipIcon,
         onSkip,
         slides,
@@ -283,6 +327,7 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         showSkipButton &&
         renderButton(
             skipLabel,
+            skipAccessibilityLabel || skipLabel || "Skip",
             skipIcon,
             "remove",
             props.bottomButton ? styles.paginationAbove.buttonSkip : styles.paginationBetween.buttonSkip,
@@ -298,34 +343,59 @@ export const SwipeableContainer = (props: SwipeableContainerProps): ReactElement
         const rightButton = isLastSlide ? renderDoneButton(props) : renderNextButton(props);
         const paginationOverflow = props.slides.length > 5;
         const hidePagination = props.hidePagination || (isLastSlide && props.hideIndicatorLastSlide);
+        const showDots = !hidePagination && !paginationOverflow && props.slides.length > 1;
+        // The dots are exposed to screen readers as one adjustable element instead of one button per dot,
+        // so Next/Previous are reached directly. Swiping up/down on it still changes slide.
+        // The position is the label only: min/max/now would make TalkBack read the bare number as well.
+        const indicatorAccessibilityProps = {
+            accessible: true,
+            accessibilityRole: "adjustable" as const,
+            accessibilityLabel: getSlidePositionLabel(props.slidePositionLabel, activeIndex + 1, props.slides.length),
+            accessibilityActions: [{ name: "increment" }, { name: "decrement" }],
+            onAccessibilityAction: (event: AccessibilityActionEvent): void => {
+                const target = event.nativeEvent.actionName === "increment" ? activeIndex + 1 : activeIndex - 1;
+                if (target >= 0 && target < props.slides.length) {
+                    onPaginationPress(target);
+                }
+            }
+        };
 
         return (
             <View style={[props.styles.paginationContainer, !props.bottomButton ? { flexDirection: "row" } : {}]}>
                 {!props.bottomButton && leftButton}
-                <View style={[styles.paginationDots, props.bottomButton ? { width: "100%" } : { width: width / 3 }]}>
-                    {!hidePagination &&
-                        !paginationOverflow &&
-                        props.slides.length > 1 &&
-                        props.slides.map((_, i) => (
-                            <TouchableOpacity
-                                testID={`${props.testID}$dot${i}`}
-                                key={i}
-                                style={[
-                                    styles.dot,
-                                    rtlSafeIndex(i) === activeIndex
-                                        ? props.styles.activeDotStyle
-                                        : props.styles.dotStyle
-                                ]}
-                                onPress={() => onPaginationPress(i)}
-                                accessibilityRole="button"
-                                accessibilityLabel={`Go to slide ${i + 1}`}
-                                accessibilityState={{ selected: rtlSafeIndex(i) === activeIndex }}
-                            />
-                        ))}
-                    {!hidePagination && paginationOverflow && (
-                        <Text style={props.styles.paginationText} testID={`${props.testID}$paginationText`}>
-                            {activeIndex + 1}/{props.slides.length}
-                        </Text>
+                <View style={props.bottomButton ? { width: "100%" } : { width: width / 3 }}>
+                    <View
+                        style={styles.paginationDots}
+                        importantForAccessibility={showDots ? "no-hide-descendants" : "auto"}
+                        accessibilityElementsHidden={showDots}
+                    >
+                        {showDots &&
+                            props.slides.map((_, i) => (
+                                <TouchableOpacity
+                                    testID={`${props.testID}$dot${i}`}
+                                    key={i}
+                                    style={[
+                                        styles.dot,
+                                        rtlSafeIndex(i) === activeIndex
+                                            ? props.styles.activeDotStyle
+                                            : props.styles.dotStyle
+                                    ]}
+                                    onPress={() => onPaginationPress(i)}
+                                    accessible={false}
+                                    // accessible={false} alone does not stop TalkBack from focusing a pressable dot
+                                    importantForAccessibility="no-hide-descendants"
+                                    accessibilityElementsHidden
+                                />
+                            ))}
+                        {!hidePagination && paginationOverflow && (
+                            <Text style={props.styles.paginationText} testID={`${props.testID}$paginationText`}>
+                                {activeIndex + 1}/{props.slides.length}
+                            </Text>
+                        )}
+                    </View>
+                    {showDots && (
+                        // Screen reader node on its own, with no children, so TalkBack has nothing to step into
+                        <View style={StyleSheet.absoluteFill} pointerEvents="none" {...indicatorAccessibilityProps} />
                     )}
                 </View>
                 {!props.bottomButton && rightButton}
