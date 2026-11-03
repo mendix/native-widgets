@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+-   We added an "Accessibility" group with a label for the slide position announcement, and an accessibility label for each of the Skip, Previous, Next and Done buttons, so screen reader text can be translated.
+
+### Fixed
+
+-   We fixed an issue where screen readers (TalkBack and VoiceOver) read out every pagination dot as a separate button. The dots are now announced once as a page indicator (for example "Slide 2 of 4"), which can be adjusted to change slide.
+
 ### Changed
 
 -   The IntroScreen is now presented through the shared MxOverlay component. Its appearance and behaviour, including blocking the Android back button, are unchanged.

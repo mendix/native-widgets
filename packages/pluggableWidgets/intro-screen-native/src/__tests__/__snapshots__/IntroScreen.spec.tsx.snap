@@ -223,19 +223,26 @@ exports[`Intro Screen renders 1`] = `
           >
             <View
               style={
-                [
+                {
+                  "width": 133.33333333333334,
+                }
+              }
+            >
+              <View
+                accessibilityElementsHidden={false}
+                importantForAccessibility="auto"
+                style={
                   {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
-                  },
-                  {
-                    "width": 133.33333333333334,
-                  },
-                ]
-              }
-            />
+                  }
+                }
+              />
+            </View>
             <View
+              accessibilityLabel="Done"
+              accessibilityRole="button"
               accessibilityState={
                 {
                   "busy": undefined,
@@ -526,18 +533,23 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
           >
             <View
               style={
-                [
+                {
+                  "width": "100%",
+                }
+              }
+            >
+              <View
+                accessibilityElementsHidden={false}
+                importantForAccessibility="auto"
+                style={
                   {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
-                  },
-                  {
-                    "width": "100%",
-                  },
-                ]
-              }
-            />
+                  }
+                }
+              />
+            </View>
             <View
               style={
                 {
@@ -556,6 +568,8 @@ exports[`Intro Screen renders with 1 bottom button 1`] = `
                 }
               >
                 <View
+                  accessibilityLabel="Done"
+                  accessibilityRole="button"
                   accessibilityState={
                     {
                       "busy": undefined,
@@ -845,18 +859,23 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
           >
             <View
               style={
-                [
+                {
+                  "width": "100%",
+                }
+              }
+            >
+              <View
+                accessibilityElementsHidden={false}
+                importantForAccessibility="auto"
+                style={
                   {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
-                  },
-                  {
-                    "width": "100%",
-                  },
-                ]
-              }
-            />
+                  }
+                }
+              />
+            </View>
             <View
               style={
                 {
@@ -875,6 +894,8 @@ exports[`Intro Screen renders with 2 bottom button 1`] = `
                 }
               >
                 <View
+                  accessibilityLabel="Done"
+                  accessibilityRole="button"
                   accessibilityState={
                     {
                       "busy": undefined,
@@ -1166,19 +1187,26 @@ exports[`Intro Screen renders with active slide attribute 1`] = `
           >
             <View
               style={
-                [
+                {
+                  "width": 133.33333333333334,
+                }
+              }
+            >
+              <View
+                accessibilityElementsHidden={false}
+                importantForAccessibility="auto"
+                style={
                   {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
-                  },
-                  {
-                    "width": 133.33333333333334,
-                  },
-                ]
-              }
-            />
+                  }
+                }
+              />
+            </View>
             <View
+              accessibilityLabel="Done"
+              accessibilityRole="button"
               accessibilityState={
                 {
                   "busy": undefined,
@@ -1471,19 +1499,26 @@ exports[`Intro Screen renders with async storage identifier 1`] = `
           >
             <View
               style={
-                [
+                {
+                  "width": 133.33333333333334,
+                }
+              }
+            >
+              <View
+                accessibilityElementsHidden={false}
+                importantForAccessibility="auto"
+                style={
                   {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "justifyContent": "center",
-                  },
-                  {
-                    "width": 133.33333333333334,
-                  },
-                ]
-              }
-            />
+                  }
+                }
+              />
+            </View>
             <View
+              accessibilityLabel="Done"
+              accessibilityRole="button"
               accessibilityState={
                 {
                   "busy": undefined,
