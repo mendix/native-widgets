@@ -32,14 +32,19 @@ export interface IntroScreenProps<Style> {
     slideIndicators: SlideIndicatorsEnum;
     hideIndicatorLastSlide: boolean;
     identifier: string;
+    slidePositionLabel?: DynamicValue<string>;
     skipCaption?: DynamicValue<string>;
     skipIcon?: DynamicValue<NativeIcon>;
+    skipAccessibilityLabel?: DynamicValue<string>;
     previousCaption?: DynamicValue<string>;
     previousIcon?: DynamicValue<NativeIcon>;
+    previousAccessibilityLabel?: DynamicValue<string>;
     nextCaption?: DynamicValue<string>;
     nextIcon?: DynamicValue<NativeIcon>;
+    nextAccessibilityLabel?: DynamicValue<string>;
     doneCaption?: DynamicValue<string>;
     doneIcon?: DynamicValue<NativeIcon>;
+    doneAccessibilityLabel?: DynamicValue<string>;
     activeSlideAttribute?: EditableValue<Big>;
     onSlideChange?: ActionValue;
     onDone?: ActionValue;
@@ -63,30 +68,35 @@ export interface IntroScreenPreviewProps {
     slideIndicators: SlideIndicatorsEnum;
     hideIndicatorLastSlide: boolean;
     identifier: string;
+    slidePositionLabel: string;
     skipCaption: string;
     skipIcon:
         | { type: "glyph"; iconClass: string }
         | { type: "image"; imageUrl: string; iconUrl: string }
         | { type: "icon"; iconClass: string }
         | undefined;
+    skipAccessibilityLabel: string;
     previousCaption: string;
     previousIcon:
         | { type: "glyph"; iconClass: string }
         | { type: "image"; imageUrl: string; iconUrl: string }
         | { type: "icon"; iconClass: string }
         | undefined;
+    previousAccessibilityLabel: string;
     nextCaption: string;
     nextIcon:
         | { type: "glyph"; iconClass: string }
         | { type: "image"; imageUrl: string; iconUrl: string }
         | { type: "icon"; iconClass: string }
         | undefined;
+    nextAccessibilityLabel: string;
     doneCaption: string;
     doneIcon:
         | { type: "glyph"; iconClass: string }
         | { type: "image"; imageUrl: string; iconUrl: string }
         | { type: "icon"; iconClass: string }
         | undefined;
+    doneAccessibilityLabel: string;
     activeSlideAttribute: string;
     onSlideChange: {} | null;
     onDone: {} | null;
