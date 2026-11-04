@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [12.6.0] Native Mobile Resources - 2026-11-4
 ### Fixed
 
 -   Fixed an issue where actions using decimal values threw a "Big is not defined" error at runtime.
@@ -14,6 +15,85 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   We added mendix-native as a dependency to provide native file system.
 -   We bumped the `brace-expansion` package to v5.0.12 to fix a denial-of-service vulnerability.
+
+## [5.3.5] BottomSheet
+### Fixed
+
+-   Fixed the app becoming unresponsive to touches after a modal bottom sheet (basic or custom rendering) was closed while it was still opening, e.g. when opening and closing it quickly. A sheet whose trigger attribute is set to false while it is opening now also closes once it has opened.
+
+## [2.4.1] ColorPicker
+### Added
+
+-   We added screen reader label properties for the hue, saturation, brightness and transparency sliders.
+
+### Changed
+
+-   We replaced react-native-slider and react-native-color with built-in components, and removed deprecated-react-native-prop-types.
+
+### Fixed
+
+-   We fixed the sliders not announcing their value to screen readers. They can now also be adjusted with VoiceOver and TalkBack.
+-   We fixed the other sliders moving slightly while one slider is dragged, and hue and saturation being lost when the color becomes black or white.
+
+## [3.2.0] Image
+### Changed
+
+-   The enlarged image is now presented through the shared MxOverlay component. Screen readers now treat it as a modal, move focus to the enlarged image when it opens and return focus to the image when it closes.
+
+## [4.6.0] IntroScreen
+### Changed
+
+-   The IntroScreen is now presented through the shared MxOverlay component. Its appearance and behaviour, including blocking the Android back button, are unchanged.
+
+## [4.5.0] ProgressBar
+### Changed
+
+-   Removed the react-native-progress dependency. There is no change in appearance or behavior.
+
+### Added
+
+-   The progress bar now announces itself to screen readers with a progress bar role and its current value.
+
+## [3.4.0] ProgressCircle
+### Changed
+
+-   Removed the react-native-progress dependency. There is no change in appearance or behavior.
+
+### Added
+
+-   The progress circle now announces itself to screen readers with a progress bar role and its current value.
+
+## [3.1.0] RangeSlider
+### Changed
+
+-   We replaced @miblanchard/react-native-slider with a built-in slider component.
+
+### Fixed
+
+-   We fixed the range slider thumbs not announcing their values or being adjustable with VoiceOver and TalkBack.
+
+## [3.1.0] Signature
+### Added
+
+-   We added mendix-native as a dependency to provide native file system.
+
+## [4.1.0] Slider
+### Changed
+
+-   We replaced @miblanchard/react-native-slider with a built-in slider component.
+
+### Fixed
+
+-   We fixed the slider not announcing its value or being adjustable with VoiceOver and TalkBack.
+
+## [6.5.0] VideoPlayer
+### Added
+
+-   We added mendix-native as a dependency to provide platform utilities.
+
+### Changed
+
+-   The Android fullscreen video is now presented through the shared MxOverlay component. Screen readers now treat it as a modal, and focus returns to the fullscreen button when you leave fullscreen.
 
 ## [12.5.1] Native Mobile Resources - 2026-10-8
 
