@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   The enlarged image is now presented through the shared MxOverlay component. Screen readers now treat it as a modal, move focus to the enlarged image when it opens and return focus to the image when it closes.
+
 ## [3.1.2] - 2026-7-17
 
 ### Fixed

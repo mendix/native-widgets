@@ -1,4 +1,5 @@
 import { StructurePreviewProps } from "@mendix/piw-utils-internal";
+import { hidePropertiesIn, Properties } from "@mendix/pluggable-widgets-tools";
 
 import { ColorPickerPreviewProps } from "../typings/ColorPickerProps";
 import colorPickerSvgNoPreviewDark from "./assets/ColorPicker.nopreview.dark.svg";
@@ -21,4 +22,11 @@ export function getPreview(values: ColorPickerPreviewProps, isDarkMode: boolean)
         ),
         width: 188
     };
+}
+
+export function getProperties(values: ColorPickerPreviewProps, defaultProperties: Properties): Properties {
+    if (!values.enableAccessibility) {
+        hidePropertiesIn(defaultProperties, values, ["hueLabel", "saturationLabel", "lightnessLabel", "alphaLabel"]);
+    }
+    return defaultProperties;
 }

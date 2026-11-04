@@ -14,6 +14,7 @@ interface PickerSlidersProps {
     trackStyle?: ViewStyle;
     disabled?: boolean;
     testID?: string;
+    accessibilityLabel?: string;
 }
 
 export function PickerSlider(props: PropsWithChildren<PickerSlidersProps>): ReactElement {
@@ -22,6 +23,7 @@ export function PickerSlider(props: PropsWithChildren<PickerSlidersProps>): Reac
             <View style={styles.gradient}>{props.children}</View>
             <Slider
                 testID={props.testID}
+                accessibilityLabel={props.accessibilityLabel}
                 value={props.value}
                 step={props.step}
                 trackClickable

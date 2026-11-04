@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<widget id="com.mendix.widget.native.colorpicker.ColorPicker" supportedPlatform="Native" needsEntityContext="true"
-        offlineCapable="true" pluginWidget="true" xmlns="http://www.mendix.com/widget/1.0/"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../../../node_modules/mendix/custom_widget.xsd">
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="com.mendix.widget.native.colorpicker.ColorPicker" supportedPlatform="Native" needsEntityContext="true" offlineCapable="true" pluginWidget="true" xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../../../node_modules/mendix/custom_widget.xsd">
     <name>Color picker</name>
     <description>Pick a color from a circular color input</description>
     <studioProCategory>Input elements</studioProCategory>
@@ -14,7 +11,7 @@
                     <caption>Color</caption>
                     <description>Attribute containing a valid color like #d0d0d0, red, rgba(255,255,255,0).</description>
                     <attributeTypes>
-                        <attributeType name="String"/>
+                        <attributeType name="String" />
                     </attributeTypes>
                 </property>
                 <property key="format" type="enumeration" defaultValue="hex">
@@ -47,6 +44,28 @@
                     <description>Enables a slider to make the color more transparent or opaque.</description>
                 </property>
             </propertyGroup>
+            <propertyGroup caption="Accessibility">
+                <property key="enableAccessibility" type="boolean" defaultValue="false">
+                    <caption>Custom accessibility labels</caption>
+                    <description>Enables setting custom screen reader labels for the sliders.</description>
+                </property>
+                <property key="hueLabel" type="textTemplate" required="false">
+                    <caption>Hue label</caption>
+                    <description>Screen reader label of the hue slider. Defaults to "Hue".</description>
+                </property>
+                <property key="saturationLabel" type="textTemplate" required="false">
+                    <caption>Saturation label</caption>
+                    <description>Screen reader label of the saturation slider. Defaults to "Saturation".</description>
+                </property>
+                <property key="lightnessLabel" type="textTemplate" required="false">
+                    <caption>Brightness label</caption>
+                    <description>Screen reader label of the brightness slider. Defaults to "Brightness".</description>
+                </property>
+                <property key="alphaLabel" type="textTemplate" required="false">
+                    <caption>Transparency label</caption>
+                    <description>Screen reader label of the transparency slider. Defaults to "Transparency".</description>
+                </property>
+            </propertyGroup>
             <propertyGroup caption="Events">
                 <property key="onChange" type="action" required="false">
                     <caption>On change</caption>
@@ -55,7 +74,7 @@
             </propertyGroup>
             <propertyGroup caption="Common">
                 <systemProperty key="Visibility" />
-                <systemProperty key="Name"/>
+                <systemProperty key="Name" />
             </propertyGroup>
         </propertyGroup>
     </properties>

@@ -9,8 +9,6 @@ import { Big } from "big.js";
 
 // BEGIN EXTRA CODE
 
-type DistanceUnit = "KILOMETER" | "STATUTE_MILE" | "NAUTICAL_MILE";
-
 function deg2rad(deg: Big): Big {
     return deg.times(Math.PI / 180);
 }
@@ -22,6 +20,8 @@ function kmToStatueMile(km: Big): Big {
 function kmToNauticalMile(km: Big): Big {
     return km.div(1.852);
 }
+
+type DistanceUnit = "KILOMETER" | "STATUTE_MILE" | "NAUTICAL_MILE";
 
 // END EXTRA CODE
 
