@@ -6,7 +6,6 @@ settings:
 
 overrides:
   '@mendix/pluggable-widgets-tools': 11.16.0
-  mendix-native: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz
   '@rollup/plugin-typescript': 12.3.0
   mendix: 11.8.0
   eslint: 9.39.4
@@ -135,8 +134,8 @@ importers:
         specifier: 3.0.4
         version: 3.0.4(encoding@0.1.13)
       mendix-native:
-        specifier: file:../../../temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz
-        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        specifier: https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz
+        version: https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       mime:
         specifier: 3.0.0
         version: 3.0.0
@@ -193,8 +192,8 @@ importers:
         specifier: ~3.7.2
         version: 3.7.8
       mendix-native:
-        specifier: file:../../../temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz
-        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        specifier: https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz
+        version: https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       react-native-geocoder:
         specifier: 0.5.0
         version: 0.5.0
@@ -867,8 +866,8 @@ importers:
         specifier: 13.1.4
         version: 13.1.4(@react-native-vector-icons/get-image@13.0.1(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native/assets-registry@0.84.1)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       mendix-native:
-        specifier: file:../../../temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz
-        version: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        specifier: https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz
+        version: https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       react-native-video:
         specifier: 6.19.2
         version: 6.19.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
@@ -5466,9 +5465,9 @@ packages:
   mendix-client@7.15.8:
     resolution: {integrity: sha512-RazCdCHoLVNKUUeKDkSkIL6Lxx6fUaa4iiy+Ltp9ra8mLQhwyNqD33TIN7YZJ3HDjHc3eWh9cjiZWwh6Jg/cQg==}
 
-  mendix-native@file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz:
-    resolution: {integrity: sha512-lJvcqEmUKRmgd1tCDbTivO6231ywxVbydE/kd7kXSbYhqdNMrxxgoPnrZHgCQqRg8F3hhr6IsRhaoiHBI+9yNQ==, tarball: file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz}
-    version: 0.6.2
+  mendix-native@https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz:
+    resolution: {integrity: sha512-vcApM+cTsoxjy1gNvH2Ti/esuS12E7WHq9cDvIIQn/E1/R0tNDMdj5xnpMFug3Sz0X64O3ZscknaZIQCcxn40g==, tarball: https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz}
+    version: 1.0.0
     peerDependencies:
       '@op-engineering/op-sqlite': '*'
       '@react-native-async-storage/async-storage': '*'
@@ -13407,7 +13406,7 @@ snapshots:
       '@types/big.js': 0.0.31
       '@types/dojo': 1.9.49
 
-  mendix-native@file:temp-vendor/mendix-native-0.6.2-moo-2500-rn-0.88-76aba2e.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
+  mendix-native@https://github.com/mendix/mendix-native/releases/download/v1.0.0/mendix-native-v1.0.0.tgz(@op-engineering/op-sqlite@18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(@react-native-async-storage/async-storage@2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)))(react-native-gesture-handler@2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0):
     dependencies:
       '@op-engineering/op-sqlite': 18.2.5(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       '@react-native-async-storage/async-storage': 2.2.0(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))
