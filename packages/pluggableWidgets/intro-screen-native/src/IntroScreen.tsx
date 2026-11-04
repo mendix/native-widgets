@@ -7,8 +7,7 @@ import { SwipeableContainer } from "./SwipeableContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import deepmerge from "deepmerge";
 import { executeAction } from "@mendix/piw-utils-internal";
-import { MxOverlay } from "@mendix/piw-native-utils-internal";
-import { useDeviceMetrics } from "@mendix/piw-native-utils-internal";
+import { MxOverlay, useDeviceMetrics } from "@mendix/piw-native-utils-internal";
 
 // The popup container draws its own dimmed background, so the overlay backdrop must not add a second one
 const transparentBackdrop = { backgroundColor: "transparent" };
