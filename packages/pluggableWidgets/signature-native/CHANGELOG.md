@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-11-4
+
 ### Added
 
 -   We added mendix-native as a dependency to provide native file system.

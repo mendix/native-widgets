@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-11-4
+
 ### Changed
 
 -   Removed the react-native-progress dependency. There is no change in appearance or behavior.
