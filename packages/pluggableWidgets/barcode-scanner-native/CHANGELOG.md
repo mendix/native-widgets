@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+-   We added support for QR of available remaining types including pdf417 in barcode scanner functinality.
+-   We fixed the barcode mask not visible issue and selection logic of QR code.
+
 ### BREAKING
 
 -   We updated react-native-vision-camera from v4.7.3 to v5.2.3. On Android, barcodes are now scanned with react-native-vision-camera-barcode-scanner v5.2.3 (Google ML Kit). On iOS, barcodes are still scanned with Apple's built-in scanner, as before. This version requires Make It Native version 11.12.3 or above. Older versions of Make It Native cannot run this version of the widget.
