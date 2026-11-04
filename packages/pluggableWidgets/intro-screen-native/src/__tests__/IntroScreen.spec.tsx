@@ -6,9 +6,13 @@ import { Modal, View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
 
-jest.mock("@mendix/piw-native-utils-internal", () => ({
-    useDeviceMetrics: () => ({ hasNotch: false })
-}));
+jest.mock("@mendix/piw-native-utils-internal", () => {
+    const actual = jest.requireActual("@mendix/piw-native-utils-internal");
+    return {
+        ...actual,
+        useDeviceMetrics: () => ({ hasNotch: false })
+    };
+});
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
     getItem: jest.fn().mockResolvedValue(null),
@@ -40,10 +44,6 @@ describe("Intro Screen", () => {
             hideIndicatorLastSlide: false,
             identifier: ""
         };
-
-        jest.mock("@mendix/piw-native-utils-internal", () => ({
-            useDeviceMetrics: () => ({ hasNotch: false })
-        }));
     });
 
     it("renders", () => {
