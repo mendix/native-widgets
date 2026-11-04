@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.4.1] - 2026-11-4
+
 ### Added
 
 -   We added screen reader label properties for the hue, saturation, brightness and transparency sliders.

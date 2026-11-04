@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.3.5] - 2026-11-4
+
 ### Fixed
 
 -   Fixed the app becoming unresponsive to touches after a modal bottom sheet (basic or custom rendering) was closed while it was still opening, e.g. when opening and closing it quickly. A sheet whose trigger attribute is set to false while it is opening now also closes once it has opened.
