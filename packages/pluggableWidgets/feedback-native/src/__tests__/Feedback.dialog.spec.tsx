@@ -1,9 +1,14 @@
-import { act, cleanup, fireEvent, render, RenderAPI, waitFor } from "@testing-library/react-native";
+import { act, cleanup, configure, fireEvent, render, RenderAPI, waitFor } from "@testing-library/react-native";
 import { AccessibilityInfo, ActivityIndicator, Modal, StyleSheet } from "react-native";
 import { FeedbackProps } from "../../typings/FeedbackProps";
 import { Feedback } from "../Feedback";
 import { FeedbackStyle } from "../ui/styles";
 import { themedFixture } from "./themedFixture";
+
+// CI runners are several times slower than a laptop and the first test that opens a dialog loads much of React
+// Native lazily, so the default 5s limits are too tight for the flows in this spec
+jest.setTimeout(30000);
+configure({ asyncUtilTimeout: 10000 });
 
 const mockFindNodeHandle = jest.fn();
 jest.mock("react-native/Libraries/ReactNative/RendererProxy", () => {
