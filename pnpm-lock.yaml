@@ -123,6 +123,9 @@ importers:
 
   packages/jsActions/mobile-resources-native:
     dependencies:
+      '@mendix/piw-native-utils-internal':
+        specifier: '*'
+        version: link:../../tools/piw-native-utils-internal
       '@react-native-camera-roll/camera-roll':
         specifier: 7.10.2
         version: 7.10.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))
@@ -147,9 +150,6 @@ importers:
       react-native-blob-util:
         specifier: 0.24.7
         version: 0.24.7(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))
       react-native-file-viewer-turbo:
         specifier: 0.7.4
         version: 0.7.4(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)

@@ -28,6 +28,7 @@
     "release:marketplace": "node ../../../scripts/release/marketplaceRelease.js"
   },
   "dependencies": {
+    "@mendix/piw-native-utils-internal": "*",
     "@react-native-camera-roll/camera-roll": "7.10.2",
     "react-native-notify-kit": "10.4.7",
     "@react-native-firebase/messaging": "20.1.0",
@@ -37,7 +38,6 @@
     "mendix-native": "https://github.com/mendix/mendix-native/releases/download/v0.5.2/mendix-native-v0.5.2.tgz",
     "mime": "3.0.0",
     "react-native-blob-util": "0.24.7",
-    "react-native-device-info": "15.0.2",
     "react-native-file-viewer-turbo": "0.7.4",
     "react-native-image-picker": "7.2.3",
     "react-native-localize": "3.7.0",
