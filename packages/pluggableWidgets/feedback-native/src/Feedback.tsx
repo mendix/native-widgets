@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { Image, SvgImageStyle } from "mendix/components/native/Image";
-import { Component, Fragment, JSX } from "react";
+import { Component, createRef, Fragment, JSX } from "react";
 import {
     ActivityIndicator,
     Dimensions,
@@ -12,8 +12,8 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-import Dialog from "react-native-dialog";
 import { captureScreen } from "react-native-view-shot";
+import { Dialog } from "./components/Dialog";
 import { FeedbackProps } from "../typings/FeedbackProps";
 import {
     activityIndicatorStyle,
@@ -54,12 +54,14 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
     private readonly onSendHandler = this.onSend.bind(this);
     private readonly styles = flattenStyles(defaultFeedbackStyle, this.props.style);
     private readonly processedStyles = processStyles(this.styles);
+    private readonly floatingButtonRef = createRef<View>();
     private readonly dialogContainerProps = {
         contentStyle: this.processedStyles.dialogStyle,
         buttonSeparatorStyle: this.processedStyles.buttonSeparatorIos,
         footerStyle: this.processedStyles.borderIos,
         blurStyle: this.processedStyles.blurStyle,
-        supportedOrientations: ["portrait", "landscape"]
+        supportedOrientations: ["portrait" as const, "landscape" as const],
+        returnFocusRef: this.floatingButtonRef
     };
 
     componentDidMount() {
@@ -98,6 +100,7 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
             <View style={floatingButtonContainer(this.state.deviceHeight)}>
                 <View style={this.styles.floatingButton}>
                     <TouchableOpacity
+                        ref={this.floatingButtonRef}
                         onPress={this.onFeedbackButtonPressHandler}
                         testID={`${this.props.name}$button`}
                         accessibilityRole="button"
@@ -124,9 +127,8 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
         return (
             <Dialog.Container
                 visible={this.state.status === "todo"}
-                {...{
-                    testID: `${this.props.name}$popup`
-                }}
+                testID={`${this.props.name}$popup`}
+                onRequestClose={this.onCancelHandler}
                 {...this.dialogContainerProps}
             >
                 <Dialog.Title style={this.styles.title}>
@@ -180,6 +182,7 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
 
     private renderInProgressDialog(): JSX.Element {
         return (
+            // Sending cannot be cancelled, so there is no onRequestClose and the back button does nothing
             <Dialog.Container visible={this.state.status === "inprogress"} {...this.dialogContainerProps}>
                 <Dialog.Title style={this.styles.title}>{this.props.titleSending?.value ?? "Sending..."}</Dialog.Title>
                 <ActivityIndicator
@@ -193,7 +196,11 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
 
     private renderDoneDialog(): JSX.Element {
         return (
-            <Dialog.Container visible={this.state.status === "done"} {...this.dialogContainerProps}>
+            <Dialog.Container
+                visible={this.state.status === "done"}
+                onRequestClose={this.onCancelHandler}
+                {...this.dialogContainerProps}
+            >
                 <Dialog.Title style={this.styles.title}>{this.props.titleResult?.value ?? "Result"}</Dialog.Title>
                 <Dialog.Description style={this.processedStyles.descriptionStyle} testID={`${this.props.name}$success`}>
                     {this.props.messageSuccess?.value ?? "Feedback successfully sent"}
@@ -210,7 +217,11 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
 
     private renderErrorDialog(): JSX.Element {
         return (
-            <Dialog.Container visible={this.state.status === "error"} {...this.dialogContainerProps}>
+            <Dialog.Container
+                visible={this.state.status === "error"}
+                onRequestClose={this.onCancelHandler}
+                {...this.dialogContainerProps}
+            >
                 <Dialog.Title style={this.styles.title}>{this.props.titleResult?.value ?? "Result"}</Dialog.Title>
                 <Dialog.Description style={this.processedStyles.descriptionStyle} testID={`${this.props.name}$error`}>
                     {this.props.messageError?.value ?? "Error sending feedback"}
