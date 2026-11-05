@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   We added mendix-native as a dependency to provide platform utilities.
 
+### Changed
+
+-   The Android fullscreen video is now presented through the shared MxOverlay component. Screen readers now treat it as a modal, and focus returns to the fullscreen button when you leave fullscreen.
+
 ## [6.4.1] - 2026-6-10
 
 ### Changed
