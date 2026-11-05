@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### BREAKING
+
+-   We updated react-native-vision-camera from v4.7.3 to v5.2.3. On Android, barcodes are now scanned with react-native-vision-camera-barcode-scanner v5.2.3 (Google ML Kit). On iOS, barcodes are still scanned with Apple's built-in scanner, as before. This version requires Make It Native version 11.12.3 or above. Older versions of Make It Native cannot run this version of the widget.
+-   For Native Template builds, Native Template version 19.1.8 or above is required.
+
+### Added
+
+-   We added a `scan delay` property that delays scanning by the specified number of seconds, giving the end user time to position the scanner over the code.
+
+### Fixed
+
+-   We fixed barcodes with patterned backgrounds not being scanned correctly on Android.
+
 ## [4.5.0] - 2026-9-2
 
 -   We fixed the barcode mask not visible issue and selection logic of QR code.

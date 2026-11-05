@@ -9,13 +9,18 @@ exports[`BarcodeScanner renders 1`] = `
       "minHeight": 100,
     }
   }
+  testID="barcode-scanner-test"
 >
   <View
-    audio={false}
-    codeScanner="mockCodeScanner"
+    constraints={[]}
     device="mock-device"
     isActive={true}
     onLayout={[Function]}
+    outputs={
+      [
+        "mockScannerOutput",
+      ]
+    }
     style={
       {
         "alignItems": "center",
@@ -23,7 +28,6 @@ exports[`BarcodeScanner renders 1`] = `
         "justifyContent": "center",
       }
     }
-    testID="barcode-scanner-test"
   />
 </View>
 `;
@@ -37,13 +41,18 @@ exports[`BarcodeScanner renders with mask 1`] = `
       "minHeight": 100,
     }
   }
+  testID="barcode-scanner-test"
 >
   <View
-    audio={false}
-    codeScanner="mockCodeScanner"
+    constraints={[]}
     device="mock-device"
     isActive={true}
     onLayout={[Function]}
+    outputs={
+      [
+        "mockScannerOutput",
+      ]
+    }
     style={
       {
         "alignItems": "center",
@@ -51,7 +60,6 @@ exports[`BarcodeScanner renders with mask 1`] = `
         "justifyContent": "center",
       }
     }
-    testID="barcode-scanner-test"
   />
   <BarcodeMask
     backgroundColor="rgba(0, 0, 0, 0.6)"
@@ -72,13 +80,18 @@ exports[`BarcodeScanner renders with mask with animated line 1`] = `
       "minHeight": 100,
     }
   }
+  testID="barcode-scanner-test"
 >
   <View
-    audio={false}
-    codeScanner="mockCodeScanner"
+    constraints={[]}
     device="mock-device"
     isActive={true}
     onLayout={[Function]}
+    outputs={
+      [
+        "mockScannerOutput",
+      ]
+    }
     style={
       {
         "alignItems": "center",
@@ -86,7 +99,6 @@ exports[`BarcodeScanner renders with mask with animated line 1`] = `
         "justifyContent": "center",
       }
     }
-    testID="barcode-scanner-test"
   />
   <BarcodeMask
     backgroundColor="rgba(0, 0, 0, 0.6)"
