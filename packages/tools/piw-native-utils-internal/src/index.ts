@@ -5,3 +5,4 @@ export { MxOverlay, MxOverlayProps, MxOverlayPlacement } from "./components/MxOv
 export { Slider, SliderProps, RangeSlider, RangeSliderProps, RangeSliderValue } from "./components/Slider";
 export { Bar, BarProps } from "./components/Bar";
 export { Arc, ArcProps, makeArcPath } from "./components/Arc";
+export { useDeviceMetrics, DeviceMetrics } from "./deviceMetrics";
