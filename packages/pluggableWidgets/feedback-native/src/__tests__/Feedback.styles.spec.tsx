@@ -1,5 +1,5 @@
 import "./iosPlatform";
-import { cleanup, fireEvent, render, RenderAPI, waitFor } from "@testing-library/react-native";
+import { cleanup, configure, fireEvent, render, RenderAPI, waitFor } from "@testing-library/react-native";
 import { ActivityIndicator, StyleSheet, Switch } from "react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { FeedbackProps } from "../../typings/FeedbackProps";
@@ -10,6 +10,11 @@ import { themedFixture } from "./themedFixture";
 jest.mock("react-native-view-shot", () => ({
     captureScreen: jest.fn(() => Promise.resolve(""))
 }));
+
+// CI runners are several times slower than a laptop and the first test that opens a dialog loads much of React
+// Native lazily, so the default 5s limits are too tight for the flows in this spec
+jest.setTimeout(30000);
+configure({ asyncUtilTimeout: 10000 });
 
 const fetchMock = jest.fn();
 global.fetch = fetchMock;
