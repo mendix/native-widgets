@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions did not properly clean up temporary files.
 -   Replaced @notifee/react-native with react-native-notify-kit library.
 -   We bumped the `brace-expansion` package to v5.0.12 to fix a denial-of-service vulnerability.
+-   We refactored the GetDeviceInfo action to use the shared device metrics utility instead of directly importing react-native-device-info.
 
 ### Added
 
