@@ -2,9 +2,10 @@ import { render, act, fireEvent, RenderAPI } from "@testing-library/react-native
 import { IntroScreen } from "../IntroScreen";
 import { IntroScreenProps } from "../../typings/IntroScreenProps";
 import { IntroScreenStyle } from "../ui/Styles";
-import { Modal, View } from "react-native";
+import { AccessibilityInfo, Modal, ScrollView, View } from "react-native";
 import { EditableValueBuilder } from "@mendix/piw-utils-internal";
 import { Big } from "big.js";
+import { DynamicValue, ValueStatus } from "mendix";
 
 jest.mock("react-native-device-info", () => ({
     hasNotch: jest.fn(),
@@ -15,6 +16,8 @@ jest.mock("@react-native-async-storage/async-storage", () => ({
     getItem: jest.fn().mockResolvedValue(null),
     setItem: jest.fn().mockResolvedValue(null)
 }));
+
+const dynamicValue = (value: string): DynamicValue<string> => ({ status: ValueStatus.Available, value });
 
 const layout = (component: RenderAPI, name: string): void => {
     fireEvent(component.getByTestId(name), "layout", {
@@ -338,6 +341,125 @@ describe("Intro Screen", () => {
             layout(component, "intro-screen-test");
 
             expect(component.getByTestId("intro-screen-test").props.initialScrollIndex).toBe(0);
+        });
+    });
+
+    describe("page indicator accessibility", () => {
+        const slides = [1, 2, 3].map(n => ({ name: `Page ${n}`, content: <View /> }));
+        const adjust = (component: RenderAPI, actionName: string): void => {
+            fireEvent(component.getByRole("adjustable"), "accessibilityAction", {
+                nativeEvent: { actionName }
+            });
+        };
+
+        it("exposes the dots as one adjustable element and hides the individual dots", () => {
+            const component = render(<IntroScreen {...defaultProps} slides={slides} />);
+            layout(component, "intro-screen-test");
+
+            const indicator = component.getByRole("adjustable");
+            expect(indicator.props.accessibilityRole).toBe("adjustable");
+            expect(indicator.props.accessibilityLabel).toBe("Slide 1 of 3");
+            expect(indicator.props.accessibilityValue).toBeUndefined();
+            [0, 1, 2].forEach(i => {
+                const dot = component.getByTestId(`intro-screen-test$dot${i}`, { hidden: true });
+                expect(dot.props.accessible).toBe(false);
+                expect(dot.props.importantForAccessibility).toBe("no-hide-descendants");
+                expect(dot.props.accessibilityElementsHidden).toBe(true);
+            });
+        });
+
+        it("changes slide on increment and decrement and stays within range", () => {
+            const component = render(<IntroScreen {...defaultProps} slides={slides} />);
+            layout(component, "intro-screen-test");
+
+            adjust(component, "decrement");
+            expect(component.getByRole("adjustable").props.accessibilityLabel).toBe("Slide 1 of 3");
+
+            adjust(component, "increment");
+            expect(component.getByRole("adjustable").props.accessibilityLabel).toBe("Slide 2 of 3");
+
+            adjust(component, "increment");
+            adjust(component, "increment");
+            expect(component.getByRole("adjustable").props.accessibilityLabel).toBe("Slide 3 of 3");
+
+            adjust(component, "decrement");
+            expect(component.getByRole("adjustable").props.accessibilityLabel).toBe("Slide 2 of 3");
+        });
+
+        it("speaks a configured label as-is", () => {
+            const component = render(
+                <IntroScreen
+                    {...defaultProps}
+                    slides={slides}
+                    slidePositionLabel={dynamicValue("Onboarding progress")}
+                />
+            );
+            layout(component, "intro-screen-test");
+
+            expect(component.getByRole("adjustable").props.accessibilityLabel).toBe("Onboarding progress");
+        });
+    });
+
+    describe("buttons accessibility", () => {
+        const slides = [1, 2, 3].map(n => ({ name: `Page ${n}`, content: <View /> }));
+
+        it("labels icon-only buttons with a default and prefers a configured label or caption", () => {
+            const component = render(
+                <IntroScreen
+                    {...defaultProps}
+                    slides={slides}
+                    nextAccessibilityLabel={dynamicValue("Volgende slide")}
+                    skipCaption={dynamicValue("Overslaan")}
+                />
+            );
+            layout(component, "intro-screen-test");
+
+            const next = component.getByTestId("intro-screen-test$buttonNext");
+            expect(next.props.accessibilityRole).toBe("button");
+            expect(next.props.accessibilityLabel).toBe("Volgende slide");
+            expect(component.getByTestId("intro-screen-test$buttonSkip").props.accessibilityLabel).toBe("Overslaan");
+
+            fireEvent.press(next);
+            expect(component.getByTestId("intro-screen-test$buttonPrevious").props.accessibilityLabel).toBe("Previous");
+        });
+    });
+
+    describe("screen reader announcements and reduce motion", () => {
+        const slides = [1, 2, 3].map(n => ({ name: `Page ${n}`, content: <View /> }));
+
+        afterEach(() => jest.restoreAllMocks());
+
+        it("announces the new slide after Next and Previous, but not after using the indicator", () => {
+            const announce = jest.spyOn(AccessibilityInfo, "announceForAccessibility");
+            const component = render(<IntroScreen {...defaultProps} slides={slides} />);
+            layout(component, "intro-screen-test");
+
+            fireEvent.press(component.getByTestId("intro-screen-test$buttonNext"));
+            expect(announce).toHaveBeenLastCalledWith("Slide 2 of 3");
+
+            fireEvent.press(component.getByTestId("intro-screen-test$buttonPrevious"));
+            expect(announce).toHaveBeenLastCalledWith("Slide 1 of 3");
+
+            announce.mockClear();
+            fireEvent(component.getByRole("adjustable"), "accessibilityAction", {
+                nativeEvent: { actionName: "increment" }
+            });
+            expect(announce).not.toHaveBeenCalled();
+        });
+
+        it.each([
+            [false, true],
+            [true, false]
+        ])("with reduce motion %s scrolls with animated %s", async (reduceMotion, animated) => {
+            jest.spyOn(AccessibilityInfo, "isReduceMotionEnabled").mockResolvedValue(reduceMotion);
+            const scrollTo = jest.spyOn(ScrollView.prototype, "scrollTo").mockImplementation(() => undefined);
+            const component = render(<IntroScreen {...defaultProps} slides={slides} />);
+            await act(async () => {});
+            layout(component, "intro-screen-test");
+
+            fireEvent.press(component.getByTestId("intro-screen-test$buttonNext"));
+
+            expect(scrollTo).toHaveBeenCalledWith(expect.objectContaining({ animated }));
         });
     });
 });
