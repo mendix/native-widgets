@@ -224,7 +224,7 @@ export function DialogContainer(props: DialogContainerProps): JSX.Element {
             onRequestClose={onRequestClose}
             dismissOnBackPress={onRequestClose !== undefined}
             dismissOnBackdropPress={false}
-            placement="center"
+            placement="fullscreen"
             backdropStyle={backdropStyle}
             animationDuration={ANIMATION_DURATION}
             respectSafeArea={false}
@@ -266,7 +266,8 @@ export function DialogContainer(props: DialogContainerProps): JSX.Element {
 
 const buildContainerStyles = (): Record<string, ViewStyle> =>
     StyleSheet.create({
-        centeredView: { marginTop: 22 },
+        // Fills the overlay so KeyboardAvoidingView's padding shrinks the centering area above the keyboard
+        centeredView: { flex: 1, justifyContent: "center", alignItems: "center", marginTop: 22 },
         blur: {
             position: "absolute",
             backgroundColor: PlatformColor("systemGray6"),
