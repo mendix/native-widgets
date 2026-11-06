@@ -450,9 +450,6 @@ importers:
       querystringify:
         specifier: 2.2.0
         version: 2.2.0
-      react-native-dialog:
-        specifier: 9.3.0
-        version: 9.3.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))
       react-native-view-shot:
         specifier: 5.1.0
         version: 5.1.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
@@ -466,9 +463,6 @@ importers:
       '@types/querystringify':
         specifier: ^2.0.2
         version: 2.0.2
-      '@types/react-native-dialog':
-        specifier: ^5.6.3
-        version: 5.6.3(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
 
   packages/pluggableWidgets/floating-action-button-native:
     dependencies:
@@ -2854,9 +2848,6 @@ packages:
 
   '@types/react-native-actionsheet@2.4.7':
     resolution: {integrity: sha512-OxseY74NqeSbUDLhXGuWmxrViZRQ0arLFGMcrkvm1RaWhOGGBMhVsa6LDjHTtk4fDkVGsnwakXyLo/iwJw/b3A==}
-
-  '@types/react-native-dialog@5.6.3':
-    resolution: {integrity: sha512-Fys6xjilFV8pX2/i4sI7HvW/D/w9Ap0TrHfJ0aeyZlKzRPETQ7IXKSC3KLoUlcX3nf6BZ//s/KnjK4RBTQ5xsA==}
 
   '@types/react-native-material-menu@1.0.10':
     resolution: {integrity: sha512-aLrBRTswRNGWAtPZs6Hcis7Fw8cuMDV/I9WDXhdhwfHd8lM8yVH4674SMH1MjV38C1HnKf3oSa84MebS8Ow4yw==}
@@ -5400,7 +5391,7 @@ packages:
     resolution: {integrity: sha512-RazCdCHoLVNKUUeKDkSkIL6Lxx6fUaa4iiy+Ltp9ra8mLQhwyNqD33TIN7YZJ3HDjHc3eWh9cjiZWwh6Jg/cQg==}
 
   mendix-native@https://github.com/mendix/mendix-native/releases/download/v0.5.2/mendix-native-v0.5.2.tgz:
-    resolution: {tarball: https://github.com/mendix/mendix-native/releases/download/v0.5.2/mendix-native-v0.5.2.tgz}
+    resolution: {integrity: sha512-CqGEqSy+c+zoYHmphVg5CXR9JdAr7wZkkjgPgO41Pfar9KESIKcE7frfk+MHlpnhZH254xuH19XkIBQGpuFNeA==, tarball: https://github.com/mendix/mendix-native/releases/download/v0.5.2/mendix-native-v0.5.2.tgz}
     version: 0.5.2
     peerDependencies:
       '@op-engineering/op-sqlite': '*'
@@ -6369,11 +6360,6 @@ packages:
 
   react-native-device-info@15.0.2:
     resolution: {integrity: sha512-dd71eXG2l3Cwp66IvKNadMTB8fhU3PEjyVddI97sYan+D4bgIAUmgGDhbSOFvHcGavksb2U17kiQYaDiK2WK2g==}
-    peerDependencies:
-      react-native: 0.84.1
-
-  react-native-dialog@9.3.0:
-    resolution: {integrity: sha512-JEOJY/0AzTM9grIl0BL8o/IJPIJru7k5MPj9POTE9RRezUEtgn0YSvCpTlBtG0obWgOdzg2otMz1OQvMXS0wMQ==}
     peerDependencies:
       react-native: 0.84.1
 
@@ -10238,21 +10224,6 @@ snapshots:
     dependencies:
       '@types/react': 19.2.17
 
-  '@types/react-native-dialog@5.6.3(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)':
-    dependencies:
-      '@types/react': 19.2.17
-      '@types/react-native': 0.73.0(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
-      react-native-modal: 13.0.1(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3))(react@19.2.3)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@react-native-community/cli'
-      - '@react-native/metro-config'
-      - bufferutil
-      - react
-      - react-native
-      - supports-color
-      - utf-8-validate
-
   '@types/react-native-material-menu@1.0.10(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(react@19.2.3)':
     dependencies:
       '@types/react': 19.2.17
@@ -10303,6 +10274,7 @@ snapshots:
       - react
       - supports-color
       - utf-8-validate
+    optional: true
 
   '@types/react-test-renderer@19.1.0':
     dependencies:
@@ -14494,10 +14466,6 @@ snapshots:
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
 
   react-native-device-info@15.0.2(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)):
-    dependencies:
-      react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
-
-  react-native-dialog@9.3.0(react-native@0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)):
     dependencies:
       react-native: 0.84.1(@babel/core@7.29.7)(@react-native/metro-config@0.86.1(@babel/core@7.29.7))(@types/react@19.2.17)(react@19.2.3)
 
