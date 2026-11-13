@@ -8,6 +8,7 @@ import {
     Text,
     TouchableOpacity,
     View,
+    ViewInstance,
     Appearance,
     Pressable
 } from "react-native";
@@ -56,7 +57,7 @@ export function VideoPlayer(props: VideoPlayerProps<VideoStyle>): ReactElement {
     const timeoutRef = useRef<NodeJS.Timeout>(null);
     const playerRef = useRef<VideoRef>(null);
     const fullScreenPlayerRef = useRef<VideoRef>(null);
-    const fullScreenButtonRef = useRef<View>(null);
+    const fullScreenButtonRef = useRef<ViewInstance>(null);
     const [status, setStatus] = useState(StatusEnum.NOT_READY);
     const [fullScreen, setFullScreen] = useState(false);
     const [showControls, setShowControls] = useState(false);

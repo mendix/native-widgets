@@ -9,7 +9,7 @@ import {
     useMemo,
     useRef
 } from "react";
-import { Pressable, LayoutChangeEvent, View, ImageStyle, useWindowDimensions } from "react-native";
+import { Pressable, LayoutChangeEvent, View, ViewInstance, ImageStyle, useWindowDimensions } from "react-native";
 import { SvgUri } from "react-native-svg";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { OnClickTypeEnum } from "../../typings/ImageProps";
@@ -45,13 +45,13 @@ export interface ImageViewerProps extends ImageViewerBaseProps {
 }
 interface ImageSmallProps extends ImageViewerBaseProps {
     onClick: () => Dispatch<SetStateAction<boolean>> | void;
-    pressableRef?: RefObject<View | null>;
+    pressableRef?: RefObject<ViewInstance | null>;
     styles: DefaultImageStyle;
 }
 interface ImageEnlargedProps extends ImageViewerBaseProps {
     visible: boolean;
     setEnlarged: Dispatch<SetStateAction<boolean>>;
-    returnFocusRef?: RefObject<View | null>;
+    returnFocusRef?: RefObject<ViewInstance | null>;
     styles: DefaultImageStyle;
 }
 interface GetImageDimensionsComponentProps extends ImageViewerBaseProps {
@@ -60,7 +60,7 @@ interface GetImageDimensionsComponentProps extends ImageViewerBaseProps {
 
 export const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
     const [enlarged, setEnlarged] = useState(false);
-    const triggerRef = useRef<View>(null);
+    const triggerRef = useRef<ViewInstance>(null);
     const {
         accessible,
         screenReaderCaption,
@@ -242,7 +242,7 @@ export const ImageEnlarged: FunctionComponent<ImageEnlargedProps> = props => {
         screenReaderHint,
         returnFocusRef
     } = props;
-    const contentRef = useRef<View>(null);
+    const contentRef = useRef<ViewInstance>(null);
     const [svgProps] = extractStyles(styles.image as ImageStyle, ["width", "height"]);
 
     const { width, height } = useWindowDimensions();

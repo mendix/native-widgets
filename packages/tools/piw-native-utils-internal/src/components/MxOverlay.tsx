@@ -13,6 +13,7 @@ import {
     AccessibilityInfo,
     Animated,
     findNodeHandle,
+    HostInstance,
     Modal,
     ModalProps,
     Platform,
@@ -20,6 +21,7 @@ import {
     StyleProp,
     StyleSheet,
     View,
+    ViewInstance,
     ViewStyle
 } from "react-native";
 import { SafeAreaInsetsContext } from "react-native-safe-area-context";
@@ -39,9 +41,9 @@ export interface MxOverlayProps {
     position?: { top: number; left: number };
     backdropStyle?: StyleProp<ViewStyle>;
     /** Element that receives accessibility focus when the overlay opens. Defaults to the overlay content. */
-    initialFocusRef?: RefObject<Component | null>;
+    initialFocusRef?: RefObject<Component | HostInstance | null>;
     /** Element that receives accessibility focus once the overlay has closed, typically the trigger. */
-    returnFocusRef?: RefObject<Component | null>;
+    returnFocusRef?: RefObject<Component | HostInstance | null>;
     /** Enter/exit duration in ms. 0 disables the animation. Defaults to 200. */
     animationDuration?: number;
     /** Render a transparent modal so what is behind shows through. When false the platform provides an opaque background. Defaults to true. */
@@ -72,7 +74,7 @@ const SLIDE_DISTANCE: Record<MxOverlayPlacement, number> = {
     fullscreen: 0
 };
 
-function moveFocusTo(ref?: RefObject<Component | null>): void {
+function moveFocusTo(ref?: RefObject<Component | HostInstance | null>): void {
     const node = ref?.current ? findNodeHandle(ref.current) : null;
     if (node) {
         AccessibilityInfo.setAccessibilityFocus(node);
@@ -102,7 +104,7 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
     const insets = useContext(SafeAreaInsetsContext) ?? ZERO_INSETS;
     const [mounted, setMounted] = useState(visible);
     const [progress] = useState(() => new Animated.Value(visible ? 1 : 0));
-    const contentRef = useRef<View>(null);
+    const contentRef = useRef<ViewInstance>(null);
     const focusMoved = useRef(false);
     const wasMounted = useRef(mounted);
 
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     backdrop: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
         backgroundColor: "rgba(0, 0, 0, 0.5)"
     },
     fullscreenContent: {
