@@ -21,7 +21,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -   Migrated the geolocation actions from `@react-native-community/geolocation` to `react-native-nitro-geolocation`.
 -   We bumped the `brace-expansion` package to v5.0.12 to fix a denial-of-service vulnerability.
--   Updated react-native-nitro-modules to 0.37.0.
 
 ### Changed
 

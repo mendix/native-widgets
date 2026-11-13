@@ -328,11 +328,9 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
     </RNSVGSvgViewAndroid>
   </View>,
   <Modal
-    accessibilityRole="image"
-    accessible={true}
-    animationType="fade"
-    onDismiss={[Function]}
+    animationType="none"
     onRequestClose={[Function]}
+    statusBarTranslucent={false}
     supportedOrientations={
       [
         "portrait",
@@ -346,122 +344,212 @@ exports[`Widget Dynamic Image SVG renders the structure inside a modal 1`] = `
     visible={true}
   >
     <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.8)",
-          "height": "100%",
-          "justifyContent": "center",
-          "width": "100%",
-        }
+        [
+          {
+            "flex": 1,
+          },
+          {},
+          undefined,
+        ]
       }
-      testID="Image1$ImageEnlargedPressable"
+      testID="Image1$ImageEnlargedOverlay"
     >
       <View
-        pointerEvents="none"
-        style={
+        accessibilityState={
           {
-            "height": 750,
-            "width": 750,
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
           }
         }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={false}
+        collapsable={false}
+        focusable={true}
+        importantForAccessibility="no"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-backdrop"
       >
-        <RNSVGSvgViewAndroid
-          align="xMidYMid"
-          bbHeight={750}
-          bbWidth={750}
-          color="#000"
-          focusable={false}
-          height={750}
-          id="Layer_1"
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
+        <View
+          collapsable={false}
+          pointerEvents="none"
           style={
-            [
+            {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+      <View
+        collapsable={false}
+        importantForAccessibility="yes"
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+            "opacity": 0,
+            "transform": [
               {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
+                "translateY": 0,
               },
-              [
-                {
-                  "aspectRatio": 1,
-                },
-                {
-                  "flexGrow": 1,
-                  "maxHeight": "100%",
-                  "maxWidth": "100%",
-                  "minHeight": 8,
-                  "minWidth": 8,
-                },
-              ],
+            ],
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-content"
+      >
+        <View
+          accessibilityRole="image"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "rgba(0,0,0,0.8)",
+              "height": "100%",
+              "justifyContent": "center",
+              "width": "100%",
+            }
+          }
+          testID="Image1$ImageEnlargedPressable"
+        >
+          <View
+            pointerEvents="none"
+            style={
               {
-                "flex": 0,
                 "height": 750,
                 "width": 750,
-              },
-            ]
-          }
-          testID="Image1$SvgUri"
-          uri="file:///this/is/a/fake/path.svg"
-          vbHeight={9999}
-          vbWidth={9999}
-          version={1.1}
-          width={750}
-          x="0px"
-          xmlSpace="preserve"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          y="0px"
-        >
-          <RNSVGGroup
-            fill={
-              {
-                "payload": -16777216,
-                "type": 0,
               }
             }
           >
-            <RNSVGPath
-              d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-              fill={
-                {
-                  "payload": -16777216,
-                  "type": 0,
-                }
+            <RNSVGSvgViewAndroid
+              align="xMidYMid"
+              bbHeight={750}
+              bbWidth={750}
+              color="#000"
+              focusable={false}
+              height={750}
+              id="Layer_1"
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  [
+                    {
+                      "aspectRatio": 1,
+                    },
+                    {
+                      "flexGrow": 1,
+                      "maxHeight": "100%",
+                      "maxWidth": "100%",
+                      "minHeight": 8,
+                      "minWidth": 8,
+                    },
+                  ],
+                  {
+                    "flex": 0,
+                    "height": 750,
+                    "width": 750,
+                  },
+                ]
               }
-            />
-          </RNSVGGroup>
-        </RNSVGSvgViewAndroid>
+              testID="Image1$SvgUri"
+              uri="file:///this/is/a/fake/path.svg"
+              vbHeight={9999}
+              vbWidth={9999}
+              version={1.1}
+              width={750}
+              x="0px"
+              xmlSpace="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": -16777216,
+                    "type": 0,
+                  }
+                }
+              >
+                <RNSVGPath
+                  d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+                  fill={
+                    {
+                      "payload": -16777216,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGSvgViewAndroid>
+          </View>
+        </View>
       </View>
     </View>
   </Modal>,
@@ -1119,11 +1207,9 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
     </View>
   </View>,
   <Modal
-    accessibilityRole="image"
-    accessible={true}
-    animationType="fade"
-    onDismiss={[Function]}
+    animationType="none"
     onRequestClose={[Function]}
+    statusBarTranslucent={false}
     supportedOrientations={
       [
         "portrait",
@@ -1137,99 +1223,189 @@ exports[`Widget Dynamic Image renders the structure inside a modal 1`] = `
     visible={true}
   >
     <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.8)",
-          "height": "100%",
-          "justifyContent": "center",
-          "width": "100%",
-        }
+        [
+          {
+            "flex": 1,
+          },
+          {},
+          undefined,
+        ]
       }
-      testID="Image1$ImageEnlargedPressable"
+      testID="Image1$ImageEnlargedOverlay"
     >
       <View
-        pointerEvents="none"
-        style={
+        accessibilityState={
           {
-            "height": 375,
-            "width": 750,
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
           }
         }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={false}
+        collapsable={false}
+        focusable={true}
+        importantForAccessibility="no"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-backdrop"
       >
         <View
+          collapsable={false}
+          pointerEvents="none"
           style={
-            [
-              {
-                "overflow": "hidden",
-              },
-              [
-                {
-                  "aspectRatio": 2,
-                },
-                {
-                  "height": 375,
-                  "width": 750,
-                },
-                {
-                  "flexGrow": 1,
-                  "maxHeight": "100%",
-                  "maxWidth": "100%",
-                  "minHeight": 8,
-                  "minWidth": 8,
-                },
-              ],
-            ]
-          }
-        >
-          <FastImageView
-            resizeMode="contain"
-            source={
-              {
-                "height": 1111,
-                "width": 2222,
-              }
+            {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
             }
+          }
+        />
+      </View>
+      <View
+        collapsable={false}
+        importantForAccessibility="yes"
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-content"
+      >
+        <View
+          accessibilityRole="image"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "rgba(0,0,0,0.8)",
+              "height": "100%",
+              "justifyContent": "center",
+              "width": "100%",
+            }
+          }
+          testID="Image1$ImageEnlargedPressable"
+        >
+          <View
+            pointerEvents="none"
             style={
               {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
+                "height": 375,
+                "width": 750,
               }
             }
-            testID="Image1$Image"
-          />
+          >
+            <View
+              style={
+                [
+                  {
+                    "overflow": "hidden",
+                  },
+                  [
+                    {
+                      "aspectRatio": 2,
+                    },
+                    {
+                      "height": 375,
+                      "width": 750,
+                    },
+                    {
+                      "flexGrow": 1,
+                      "maxHeight": "100%",
+                      "maxWidth": "100%",
+                      "minHeight": 8,
+                      "minWidth": 8,
+                    },
+                  ],
+                ]
+              }
+            >
+              <FastImageView
+                resizeMode="contain"
+                source={
+                  {
+                    "height": 1111,
+                    "width": 2222,
+                  }
+                }
+                style={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                testID="Image1$Image"
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -1672,11 +1848,9 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
     </View>
   </View>,
   <Modal
-    accessibilityRole="image"
-    accessible={true}
-    animationType="fade"
-    onDismiss={[Function]}
+    animationType="none"
     onRequestClose={[Function]}
+    statusBarTranslucent={false}
     supportedOrientations={
       [
         "portrait",
@@ -1690,99 +1864,189 @@ exports[`Widget Icon type: image/staticImage renders the structure inside a moda
     visible={true}
   >
     <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.8)",
-          "height": "100%",
-          "justifyContent": "center",
-          "width": "100%",
-        }
+        [
+          {
+            "flex": 1,
+          },
+          {},
+          undefined,
+        ]
       }
-      testID="Image1$ImageEnlargedPressable"
+      testID="Image1$ImageEnlargedOverlay"
     >
       <View
-        pointerEvents="none"
-        style={
+        accessibilityState={
           {
-            "height": 375,
-            "width": 750,
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
           }
         }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={false}
+        collapsable={false}
+        focusable={true}
+        importantForAccessibility="no"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-backdrop"
       >
         <View
+          collapsable={false}
+          pointerEvents="none"
           style={
-            [
-              {
-                "overflow": "hidden",
-              },
-              [
-                {
-                  "aspectRatio": 2,
-                },
-                {
-                  "height": 375,
-                  "width": 750,
-                },
-                {
-                  "flexGrow": 1,
-                  "maxHeight": "100%",
-                  "maxWidth": "100%",
-                  "minHeight": 8,
-                  "minWidth": 8,
-                },
-              ],
-            ]
-          }
-        >
-          <FastImageView
-            resizeMode="contain"
-            source={
-              {
-                "height": 1111,
-                "width": 2222,
-              }
+            {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
             }
+          }
+        />
+      </View>
+      <View
+        collapsable={false}
+        importantForAccessibility="yes"
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-content"
+      >
+        <View
+          accessibilityRole="image"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "rgba(0,0,0,0.8)",
+              "height": "100%",
+              "justifyContent": "center",
+              "width": "100%",
+            }
+          }
+          testID="Image1$ImageEnlargedPressable"
+        >
+          <View
+            pointerEvents="none"
             style={
               {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
+                "height": 375,
+                "width": 750,
               }
             }
-            testID="Image1$Image"
-          />
+          >
+            <View
+              style={
+                [
+                  {
+                    "overflow": "hidden",
+                  },
+                  [
+                    {
+                      "aspectRatio": 2,
+                    },
+                    {
+                      "height": 375,
+                      "width": 750,
+                    },
+                    {
+                      "flexGrow": 1,
+                      "maxHeight": "100%",
+                      "maxWidth": "100%",
+                      "minHeight": 8,
+                      "minWidth": 8,
+                    },
+                  ],
+                ]
+              }
+            >
+              <FastImageView
+                resizeMode="contain"
+                source={
+                  {
+                    "height": 1111,
+                    "width": 2222,
+                  }
+                }
+                style={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                testID="Image1$Image"
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -2438,11 +2702,9 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
     </RNSVGSvgViewAndroid>
   </View>,
   <Modal
-    accessibilityRole="image"
-    accessible={true}
-    animationType="fade"
-    onDismiss={[Function]}
+    animationType="none"
     onRequestClose={[Function]}
+    statusBarTranslucent={false}
     supportedOrientations={
       [
         "portrait",
@@ -2456,126 +2718,216 @@ exports[`Widget Static Image SVG renders the structure inside a modal 1`] = `
     visible={true}
   >
     <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.8)",
-          "height": "100%",
-          "justifyContent": "center",
-          "width": "100%",
-        }
+        [
+          {
+            "flex": 1,
+          },
+          {},
+          undefined,
+        ]
       }
-      testID="Image1$ImageEnlargedPressable"
+      testID="Image1$ImageEnlargedOverlay"
     >
       <View
-        pointerEvents="none"
-        style={
+        accessibilityState={
           {
-            "height": 15,
-            "width": 15,
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
           }
         }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={false}
+        collapsable={false}
+        focusable={true}
+        importantForAccessibility="no"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-backdrop"
       >
-        <RNSVGSvgViewAndroid
-          align="xMidYMid"
-          bbHeight={15}
-          bbWidth={15}
-          color="#000"
-          focusable={false}
-          height={15}
-          id="Layer_1"
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
+        <View
+          collapsable={false}
+          pointerEvents="none"
           style={
-            [
+            {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+      <View
+        collapsable={false}
+        importantForAccessibility="yes"
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+            "opacity": 0,
+            "transform": [
               {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
+                "translateY": 0,
               },
-              [
-                {
-                  "aspectRatio": 1,
-                },
-                {
-                  "flexGrow": 1,
-                  "maxHeight": "100%",
-                  "maxWidth": "100%",
-                  "minHeight": 8,
-                  "minWidth": 8,
-                },
-              ],
+            ],
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-content"
+      >
+        <View
+          accessibilityRole="image"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "rgba(0,0,0,0.8)",
+              "height": "100%",
+              "justifyContent": "center",
+              "width": "100%",
+            }
+          }
+          testID="Image1$ImageEnlargedPressable"
+        >
+          <View
+            pointerEvents="none"
+            style={
               {
-                "flex": 0,
                 "height": 15,
                 "width": 15,
-              },
-            ]
-          }
-          testID="Image1$SvgXml"
-          vbHeight={15}
-          vbWidth={15}
-          version={1.1}
-          width={15}
-          x="0px"
-          xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              }
+            }
+          >
+            <RNSVGSvgViewAndroid
+              align="xMidYMid"
+              bbHeight={15}
+              bbWidth={15}
+              color="#000"
+              focusable={false}
+              height={15}
+              id="Layer_1"
+              meetOrSlice={0}
+              minX={0}
+              minY={0}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "borderWidth": 0,
+                  },
+                  [
+                    {
+                      "aspectRatio": 1,
+                    },
+                    {
+                      "flexGrow": 1,
+                      "maxHeight": "100%",
+                      "maxWidth": "100%",
+                      "minHeight": 8,
+                      "minWidth": 8,
+                    },
+                  ],
+                  {
+                    "flex": 0,
+                    "height": 15,
+                    "width": 15,
+                  },
+                ]
+              }
+              testID="Image1$SvgXml"
+              vbHeight={15}
+              vbWidth={15}
+              version={1.1}
+              width={15}
+              x="0px"
+              xml="<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="15px" height="15px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
 <path d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"/>
 </svg>
 "
-          xmlSpace="preserve"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          y="0px"
-        >
-          <RNSVGGroup
-            fill={
-              {
-                "payload": -16777216,
-                "type": 0,
-              }
-            }
-          >
-            <RNSVGPath
-              d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
-              fill={
-                {
-                  "payload": -16777216,
-                  "type": 0,
+              xmlSpace="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": -16777216,
+                    "type": 0,
+                  }
                 }
-              }
-            />
-          </RNSVGGroup>
-        </RNSVGSvgViewAndroid>
+              >
+                <RNSVGPath
+                  d="M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z"
+                  fill={
+                    {
+                      "payload": -16777216,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGSvgViewAndroid>
+          </View>
+        </View>
       </View>
     </View>
   </Modal>,
@@ -3241,11 +3593,9 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
     </View>
   </View>,
   <Modal
-    accessibilityRole="image"
-    accessible={true}
-    animationType="fade"
-    onDismiss={[Function]}
+    animationType="none"
     onRequestClose={[Function]}
+    statusBarTranslucent={false}
     supportedOrientations={
       [
         "portrait",
@@ -3259,99 +3609,189 @@ exports[`Widget Static Image renders the structure inside a modal 1`] = `
     visible={true}
   >
     <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "rgba(0,0,0,0.8)",
-          "height": "100%",
-          "justifyContent": "center",
-          "width": "100%",
-        }
+        [
+          {
+            "flex": 1,
+          },
+          {},
+          undefined,
+        ]
       }
-      testID="Image1$ImageEnlargedPressable"
+      testID="Image1$ImageEnlargedOverlay"
     >
       <View
-        pointerEvents="none"
-        style={
+        accessibilityState={
           {
-            "height": 375,
-            "width": 750,
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
           }
         }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={false}
+        collapsable={false}
+        focusable={true}
+        importantForAccessibility="no"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-backdrop"
       >
         <View
+          collapsable={false}
+          pointerEvents="none"
           style={
-            [
-              {
-                "overflow": "hidden",
-              },
-              [
-                {
-                  "aspectRatio": 2,
-                },
-                {
-                  "height": 375,
-                  "width": 750,
-                },
-                {
-                  "flexGrow": 1,
-                  "maxHeight": "100%",
-                  "maxWidth": "100%",
-                  "minHeight": 8,
-                  "minWidth": 8,
-                },
-              ],
-            ]
-          }
-        >
-          <FastImageView
-            resizeMode="contain"
-            source={
-              {
-                "height": 1111,
-                "width": 2222,
-              }
+            {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
             }
+          }
+        />
+      </View>
+      <View
+        collapsable={false}
+        importantForAccessibility="yes"
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+            "opacity": 0,
+            "transform": [
+              {
+                "translateY": 0,
+              },
+            ],
+          }
+        }
+        testID="Image1$ImageEnlargedOverlay-content"
+      >
+        <View
+          accessibilityRole="image"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "rgba(0,0,0,0.8)",
+              "height": "100%",
+              "justifyContent": "center",
+              "width": "100%",
+            }
+          }
+          testID="Image1$ImageEnlargedPressable"
+        >
+          <View
+            pointerEvents="none"
             style={
               {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
+                "height": 375,
+                "width": 750,
               }
             }
-            testID="Image1$Image"
-          />
+          >
+            <View
+              style={
+                [
+                  {
+                    "overflow": "hidden",
+                  },
+                  [
+                    {
+                      "aspectRatio": 2,
+                    },
+                    {
+                      "height": 375,
+                      "width": 750,
+                    },
+                    {
+                      "flexGrow": 1,
+                      "maxHeight": "100%",
+                      "maxWidth": "100%",
+                      "minHeight": 8,
+                      "minWidth": 8,
+                    },
+                  ],
+                ]
+              }
+            >
+              <FastImageView
+                resizeMode="contain"
+                source={
+                  {
+                    "height": 1111,
+                    "width": 2222,
+                  }
+                }
+                style={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                testID="Image1$Image"
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>

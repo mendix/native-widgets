@@ -6592,8 +6592,8 @@ packages:
       react: 19.3.0
       react-native: 0.88.0
 
-  react-native-vision-camera-barcode-scanner@5.2.3:
-    resolution: {integrity: sha512-p8SyswRlr9Ty5gFcQ1qM8gmU8hKbHyRLyu9TKFMD7oUXsZDF93NKGvcr4Qdr16Z+AIj3HYA/fW1NgoeY+L353g==}
+  react-native-vision-camera@4.7.3:
+    resolution: {integrity: sha512-g1/neOyjSqn1kaAa2FxI/qp5KzNvPcF0bnQw6NntfbxH6tm0+8WFZszlgb5OV+iYlB6lFUztCbDtyz5IpL47OA==}
     peerDependencies:
       react: 19.3.0
       react-native: 0.88.0
@@ -6601,7 +6601,7 @@ packages:
       react-native-nitro-modules: '*'
       react-native-vision-camera: '*'
     peerDependenciesMeta:
-      react-native-nitro-modules:
+      '@shopify/react-native-skia':
         optional: true
 
   react-native-vision-camera@5.2.3:
