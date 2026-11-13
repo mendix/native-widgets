@@ -1,5 +1,5 @@
 import { createRef, ReactElement } from "react";
-import { AccessibilityInfo, Modal, Platform, StyleSheet, Text, View } from "react-native";
+import { AccessibilityInfo, Modal, Platform, StyleSheet, Text, View, ViewInstance } from "react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { act, fireEvent, render } from "@testing-library/react-native";
 import { MxOverlay, MxOverlayProps } from "../MxOverlay";
@@ -79,7 +79,7 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
         });
 
         it("moves focus to initialFocusRef when provided", () => {
-            const initialFocusRef = createRef<View>();
+            const initialFocusRef = createRef<ViewInstance>();
             mockFindNodeHandle.mockImplementation(node => (node === initialFocusRef.current ? 7 : 42));
             const { getByTestId } = render(
                 <MxOverlay visible animationDuration={0} testID="overlay" initialFocusRef={initialFocusRef}>
@@ -93,7 +93,7 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
         });
 
         it("restores focus to returnFocusRef after closing", () => {
-            const returnFocusRef = createRef<View>();
+            const returnFocusRef = createRef<ViewInstance>();
             mockFindNodeHandle.mockImplementation(node => (node === returnFocusRef.current ? 9 : 42));
             const element = (visible: boolean): ReactElement => (
                 <>
@@ -113,7 +113,7 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
         });
 
         it("restores focus only after the modal has unmounted", () => {
-            const returnFocusRef = createRef<View>();
+            const returnFocusRef = createRef<ViewInstance>();
             mockFindNodeHandle.mockImplementation(node => (node === returnFocusRef.current ? 9 : 42));
             const rendered: { current?: ReturnType<typeof render> } = {};
             const modalPresentWhenFocused: boolean[] = [];
@@ -138,7 +138,7 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
         });
 
         it("does not move focus when it was never shown", () => {
-            const returnFocusRef = createRef<View>();
+            const returnFocusRef = createRef<ViewInstance>();
             render(
                 <MxOverlay visible={false} returnFocusRef={returnFocusRef}>
                     <Text>content</Text>
