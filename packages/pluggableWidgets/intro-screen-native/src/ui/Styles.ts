@@ -1,6 +1,6 @@
 import { Style } from "@mendix/piw-native-utils-internal";
 import { I18nManager, Platform, StyleSheet, TextStyle, ViewStyle } from "react-native";
-import absoluteFillObject = StyleSheet.absoluteFillObject;
+import absoluteFill = StyleSheet.absoluteFill;
 
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === "android";
 
@@ -59,10 +59,10 @@ export interface IntroScreenStyle extends Style {
 
 export const defaultWelcomeScreenStyle: IntroScreenStyle = {
     fullscreenContainer: {
-        ...absoluteFillObject
+        ...absoluteFill
     },
     popupContainer: {
-        ...absoluteFillObject,
+        ...absoluteFill,
         paddingHorizontal: 50,
         paddingVertical: 150,
         backgroundColor: "rgba(0, 0, 0, 0.5)"

@@ -1,7 +1,7 @@
 import { FunctionComponent, Fragment, useCallback } from "react";
-import { ImageURISource, Platform, View } from "react-native";
+import { ImageStyle, ImageURISource, Platform, StyleProp, View } from "react-native";
 import { SvgUri, SvgXml } from "react-native-svg";
-import FastImageComponent, { Source } from "@d11/react-native-fast-image";
+import FastImageComponent, { FastImageProps, Source } from "@d11/react-native-fast-image";
 import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { CustomImageProps, GlyphIcon } from "../utils/imageUtils";
 import { GlyphIcon as GlyphIconComponent, type GlyphIconName } from "./fonts/font";
@@ -70,6 +70,11 @@ export const ImageIconSVG: FunctionComponent<ImageIconSVGProps> = props => {
         // fall back to it for remote urls on Android.
         const uri = typeof image === "object" ? (image as ImageURISource)?.uri : undefined;
         const useFallback = Platform.OS === "android" && typeof uri === "string" && /^https?:\/\//i.test(uri);
+        const fastImageStyle: StyleProp<ImageStyle> = [
+            initialDimensions?.aspectRatio ? { aspectRatio: +initialDimensions.aspectRatio?.toFixed(2) } : {},
+            width && height ? { width, height } : {},
+            imageStyles
+        ];
 
         return (
             <FastImageComponent
@@ -77,11 +82,8 @@ export const ImageIconSVG: FunctionComponent<ImageIconSVGProps> = props => {
                 source={image as Source | number}
                 resizeMode={resizeMode || "contain"}
                 fallback={useFallback}
-                style={[
-                    initialDimensions?.aspectRatio ? { aspectRatio: +initialDimensions.aspectRatio?.toFixed(2) } : {},
-                    width && height ? { width, height } : {},
-                    imageStyles
-                ]}
+                // FastImage's ImageStyle extends RN style types that RN 0.88 no longer exports, so it lacks most props.
+                style={fastImageStyle as FastImageProps["style"]}
             />
         );
     }

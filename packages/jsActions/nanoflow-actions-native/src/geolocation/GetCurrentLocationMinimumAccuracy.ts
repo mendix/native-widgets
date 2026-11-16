@@ -100,7 +100,8 @@ export async function GetCurrentLocationMinimumAccuracy(
             }
         }
 
-        function onError(error: { code: number; message: string }): void {
+        // Web reports numeric W3C codes; nitro-geolocation 2.x reports string codes.
+        function onError(error: { code: number | string; message: string }): void {
             clearTimeout(timeoutId);
             clearWatch();
 

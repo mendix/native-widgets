@@ -9,10 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   Replaced external dependency `react-native-segmented-control-tab` with in-house SegmentedControl component.
+-   Updated react-native from version v0.84.1 to v0.88.0.
 
 ### Fixed
 
--   toggle button now uses modern React Native accessibility props (`accessibilityRole="tab"`, `accessibilityState.selected`) instead of deprecated `accessibilityTraits` and `accessibilityComponentType`.
+-   Toggle button now uses modern React Native accessibility props (`accessibilityRole="tab"`, `accessibilityState.selected`) instead of deprecated `accessibilityTraits` and `accessibilityComponentType`.
 
 ## [2.3.0] - 2024-12-3
 

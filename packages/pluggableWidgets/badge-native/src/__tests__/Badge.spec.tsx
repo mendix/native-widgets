@@ -67,7 +67,7 @@ describe("Badge", () => {
         describe("Android", () => {
             beforeEach(() => {
                 Platform.OS = "android";
-                Platform.select = jest.fn(dict => dict.android!);
+                jest.spyOn(Platform, "select").mockImplementation(spec => spec.android!);
             });
 
             it("renders touchables", () => {

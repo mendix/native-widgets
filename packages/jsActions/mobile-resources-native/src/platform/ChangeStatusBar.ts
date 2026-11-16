@@ -5,7 +5,7 @@
 // - the code between BEGIN USER CODE and END USER CODE
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
-import { Platform, StatusBar, StatusBarAnimation, StatusBarStyle } from "react-native";
+import { StatusBar, StatusBarAnimation, StatusBarStyle } from "react-native";
 
 // BEGIN EXTRA CODE
 // END EXTRA CODE
@@ -41,16 +41,12 @@ export async function ChangeStatusBar(
         StatusBar.setHidden(hidden, animateHideShow);
     }
 
-    if (backgroundColor && Platform.OS === "android") {
-        StatusBar.setBackgroundColor(backgroundColor, animateChanges);
-    }
-
-    if (translucent !== undefined && Platform.OS === "android") {
-        StatusBar.setTranslucent(translucent);
-    }
-
-    if (networkActivityIndicatorVisible && Platform.OS === "ios") {
-        StatusBar.setNetworkActivityIndicatorVisible(networkActivityIndicatorVisible);
+    // React Native 0.88 removed the status bar background color, translucency and network activity
+    // indicator APIs, as apps are always rendered edge-to-edge. These parameters no longer have any effect.
+    if (backgroundColor || translucent || networkActivityIndicatorVisible) {
+        console.warn(
+            "ChangeStatusBar: the 'backgroundColor', 'translucent' and 'networkActivityIndicatorVisible' parameters are no longer supported and will be ignored."
+        );
     }
 
     return Promise.resolve();

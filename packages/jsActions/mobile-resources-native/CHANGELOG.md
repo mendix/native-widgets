@@ -21,6 +21,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Replaced @notifee/react-native with react-native-notify-kit library.
 -   We bumped the `brace-expansion` package to v5.0.12 to fix a denial-of-service vulnerability.
 -   We refactored the GetDeviceInfo action to use the shared device metrics utility instead of directly importing react-native-device-info.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   Updated react-native-blob-util from version v0.24.7 to v0.24.11.
+-   The [backgroundColor], [translucent] and [networkActivityIndicatorVisible] parameters of the Change status bar action no longer have any effect, because react-native v0.88 removed support for them.
 
 ### Added
 

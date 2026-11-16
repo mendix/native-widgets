@@ -2,10 +2,12 @@ import { Text } from "react-native";
 import { render } from "@testing-library/react-native";
 import { Animation, Props } from "../Animation";
 
-jest.mock("react-native/Libraries/Utilities/Platform", () => ({
-    OS: "ios",
-    select: jest.fn(dict => dict.ios)
-}));
+jest.mock("react-native/Libraries/Utilities/Platform", () => {
+    const Platform = jest.requireActual("react-native/Libraries/Utilities/Platform");
+    Platform.OS = "ios";
+    Platform.default = { ...Platform.default, OS: "ios", select: jest.fn(dict => dict.ios) };
+    return Platform;
+});
 
 const textContent = <Text>Hello</Text>;
 
