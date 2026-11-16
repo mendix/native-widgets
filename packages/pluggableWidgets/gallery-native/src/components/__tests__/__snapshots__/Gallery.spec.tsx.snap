@@ -13,6 +13,11 @@ exports[`Gallery rendering rendering with load more button it shouldn't render t
     }
     horizontal={false}
     keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "disabled": true,
+      }
+    }
     numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
@@ -189,6 +194,11 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
     }
     horizontal={false}
     keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "disabled": true,
+      }
+    }
     numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
@@ -410,6 +420,11 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
     }
     horizontal={false}
     keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "disabled": true,
+      }
+    }
     numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
@@ -631,6 +646,11 @@ exports[`Gallery rendering renders correctly 1`] = `
     }
     horizontal={false}
     keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "disabled": true,
+      }
+    }
     numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
@@ -807,6 +827,11 @@ exports[`Gallery rendering renders correctly horizontal 1`] = `
     }
     horizontal={true}
     keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "disabled": true,
+      }
+    }
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
     scrollEventThrottle={50}
@@ -1027,6 +1052,11 @@ exports[`Gallery rendering renders correctly with empty list and custom placehol
     }
     horizontal={false}
     keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "disabled": true,
+      }
+    }
     numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}
@@ -1059,6 +1089,11 @@ exports[`Gallery rendering renders correctly with filter 1`] = `
     }
     horizontal={false}
     keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "disabled": true,
+      }
+    }
     numColumns={2}
     onEndReached={[Function]}
     onEndReachedThreshold={0.6}

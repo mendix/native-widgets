@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+-   We've fixed an issue where scrolling up in the Gallery widget was laggy.
+
 ## [2.2.1] - 2026-6-10
 
 ### Changed

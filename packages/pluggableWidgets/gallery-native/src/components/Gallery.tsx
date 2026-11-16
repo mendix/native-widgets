@@ -9,6 +9,7 @@ import { extractStyles } from "@mendix/pluggable-widgets-tools";
 import { FlashList } from "@shopify/flash-list";
 
 const DEFAULT_RIPPLE_COLOR = "rgba(0, 0, 0, 0.2)";
+const MAINTAIN_VISIBLE_CONTENT_POSITION = { disabled: true };
 
 export interface GalleryProps<T extends ObjectItem> {
     emptyPlaceholder?: ReactNode;
@@ -155,6 +156,11 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
                 onEndReached={onEndReached}
                 onEndReachedThreshold={0.6}
                 scrollEventThrottle={50}
+                // FlashList v2 enables this by default. It is meant for lists that prepend items (e.g. chats).
+                // The Gallery only appends, but with it enabled every size change of an item above the viewport
+                // triggers a scroll offset correction while scrolling up, which on Android restarts the fling
+                // and makes scrolling up laggy/jumpy.
+                maintainVisibleContentPosition={MAINTAIN_VISIBLE_CONTENT_POSITION}
                 renderItem={renderItem}
                 style={props.style.list}
                 testID={`${name}-list`}
