@@ -422,6 +422,7 @@ exports[`Gallery rendering rendering with load more button renders correctly 1`]
         focusable={true}
         nativeBackgroundAndroid={
           {
+            "alpha": null,
             "borderless": false,
             "color": 855638016,
             "rippleRadius": undefined,
@@ -669,6 +670,7 @@ exports[`Gallery rendering rendering with load more button renders correctly wit
         focusable={true}
         nativeBackgroundAndroid={
           {
+            "alpha": null,
             "borderless": false,
             "color": 855638016,
             "rippleRadius": undefined,

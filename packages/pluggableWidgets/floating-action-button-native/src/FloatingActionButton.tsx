@@ -50,37 +50,29 @@ function getPositionStyle(
     verticalPosition: VerticalPositionEnum,
     horizontalPosition: HorizontalPositionEnum
 ): ViewStyle {
-    const positionStyle: ViewStyle = {
-        position: "absolute",
-        left: 0,
-        right: 0,
-        zIndex: 999
-    };
-
-    switch (verticalPosition) {
-        case "bottom":
-            positionStyle.bottom = 0;
-            break;
-        case "top":
-        default:
-            positionStyle.top = 0;
-            break;
-    }
+    let alignItems: ViewStyle["alignItems"];
 
     switch (horizontalPosition) {
         case "left":
-            positionStyle.alignItems = "flex-start";
+            alignItems = "flex-start";
             break;
         case "center":
-            positionStyle.alignItems = "center";
+            alignItems = "center";
             break;
         case "right":
         default:
-            positionStyle.alignItems = "flex-end";
+            alignItems = "flex-end";
             break;
     }
 
-    return positionStyle;
+    return {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        zIndex: 999,
+        ...(verticalPosition === "bottom" ? { bottom: 0 } : { top: 0 }),
+        alignItems
+    };
 }
 
 function AnimatedMainIcon(props: AnimatedMainIconProps): JSX.Element {
