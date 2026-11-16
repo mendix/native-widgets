@@ -57,32 +57,34 @@ export function ProgressBar(props: ProgressBarProps<ProgressBarStyle>): JSX.Elem
     const progress = calculateProgress();
 
     return (
-        <View style={styles.container}>
-            <View
-                accessible
-                accessibilityRole="progressbar"
-                accessibilityValue={{
-                    min: 0,
-                    max: ACCESSIBILITY_SCALE,
-                    now: Math.round(progress * ACCESSIBILITY_SCALE)
-                }}
-                accessibilityLabel="Progress bar"
-            >
-                <Bar
-                    testID={props.name}
-                    height={Number(styles.bar.height)}
-                    width={null}
-                    progress={progress}
-                    color={styles.fill.backgroundColor}
-                    borderWidth={styles.bar.borderWidth as number | undefined}
-                    borderColor={styles.bar.borderColor}
-                    borderRadius={styles.bar.borderRadius as number | undefined}
-                    unfilledColor={styles.bar.backgroundColor}
-                />
+        <>
+            <View style={styles.container}>
+                <View
+                    accessible
+                    accessibilityRole="progressbar"
+                    accessibilityValue={{
+                        min: 0,
+                        max: ACCESSIBILITY_SCALE,
+                        now: Math.round(progress * ACCESSIBILITY_SCALE)
+                    }}
+                    accessibilityLabel="Progress bar"
+                >
+                    <Bar
+                        testID={props.name}
+                        height={Number(styles.bar.height)}
+                        width={null}
+                        progress={progress}
+                        color={styles.fill.backgroundColor}
+                        borderWidth={styles.bar.borderWidth as number | undefined}
+                        borderColor={styles.bar.borderColor}
+                        borderRadius={styles.bar.borderRadius as number | undefined}
+                        unfilledColor={styles.bar.backgroundColor}
+                    />
+                </View>
+                {validationMessages.length > 0 && (
+                    <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>
+                )}
             </View>
-            {validationMessages.length > 0 && (
-                <Text style={styles.validationMessage}>{validationMessages.join("\n")}</Text>
-            )}
-        </View>
+        </>
     );
 }
