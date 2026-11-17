@@ -1,6 +1,6 @@
 import { flattenStyles } from "@mendix/piw-native-utils-internal";
 import { Image, SvgImageStyle } from "mendix/components/native/Image";
-import { Component, createRef, Fragment, JSX } from "react";
+import { Component, ComponentRef, createRef, Fragment, JSX } from "react";
 import {
     ActivityIndicator,
     Dimensions,
@@ -54,7 +54,7 @@ export class Feedback extends Component<FeedbackProps<FeedbackStyle>, State> {
     private readonly onSendHandler = this.onSend.bind(this);
     private readonly styles = flattenStyles(defaultFeedbackStyle, this.props.style);
     private readonly processedStyles = processStyles(this.styles);
-    private readonly floatingButtonRef = createRef<View>();
+    private readonly floatingButtonRef = createRef<ComponentRef<typeof TouchableOpacity>>();
     private readonly dialogContainerProps = {
         contentStyle: this.processedStyles.dialogStyle,
         buttonSeparatorStyle: this.processedStyles.buttonSeparatorIos,

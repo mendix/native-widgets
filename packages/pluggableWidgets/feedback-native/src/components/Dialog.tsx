@@ -1,6 +1,7 @@
 import { MxOverlay } from "@mendix/piw-native-utils-internal";
 import {
     Children,
+    ComponentRef,
     cloneElement,
     createContext,
     isValidElement,
@@ -34,24 +35,28 @@ import {
  * semantics, focus handling and Android back handling.
  */
 
+type TextInstance = ComponentRef<typeof Text>;
+
 const iOS = Platform.OS === "ios";
 const BACKDROP_OPACITY = 0.3;
 const ANIMATION_DURATION = 300;
 const BUTTON_COLOR = iOS ? "#007ff9" : "#169689";
 const backdropStyle: ViewStyle = { backgroundColor: `rgba(0, 0, 0, ${BACKDROP_OPACITY})` };
 
-function useDialogStyles<T extends StyleSheet.NamedStyles<T>>(build: (isDark: boolean) => T): T {
+type NamedStyles = Record<string, ViewStyle | TextStyle>;
+
+function useDialogStyles<T extends NamedStyles>(build: (isDark: boolean) => T): T {
     return build(useColorScheme() === "dark");
 }
 
 /* Title */
 
 export interface DialogTitleProps extends TextProps {
-    ref?: Ref<Text>;
+    ref?: Ref<TextInstance>;
 }
 
 /** Lets the container hand the title the ref that receives accessibility focus when the dialog opens */
-const TitleFocusContext = createContext<RefObject<Text | null> | null>(null);
+const TitleFocusContext = createContext<RefObject<TextInstance | null> | null>(null);
 
 export function DialogTitle({ style, children, ref, ...rest }: DialogTitleProps): JSX.Element {
     const styles = useDialogStyles(buildTitleStyles);
@@ -170,7 +175,7 @@ export interface DialogContainerProps {
     blurStyle?: StyleProp<ViewStyle>;
     keyboardVerticalOffset?: number;
     supportedOrientations?: ModalProps["supportedOrientations"];
-    returnFocusRef?: RefObject<View | null>;
+    returnFocusRef?: RefObject<ComponentRef<typeof View> | null>;
     testID?: string;
 }
 
@@ -189,7 +194,7 @@ export function DialogContainer(props: DialogContainerProps): JSX.Element {
         testID
     } = props;
     const styles = useDialogStyles(buildContainerStyles);
-    const titleRef = useRef<Text>(null);
+    const titleRef = useRef<TextInstance>(null);
 
     const titles: ReactElement[] = [];
     const descriptions: ReactElement[] = [];
