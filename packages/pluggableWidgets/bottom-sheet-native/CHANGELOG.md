@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
+-   Removed unnecessary react-native-device-info dependency.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 -   Updated react-native-gesture-handler from version v2.31.2 to v2.33.0.
 -   Updated react-native-reanimated from version v4.3.1 to v4.7.1.

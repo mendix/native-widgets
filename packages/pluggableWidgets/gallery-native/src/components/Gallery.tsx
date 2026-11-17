@@ -10,7 +10,7 @@ import {
     useWindowDimensions
 } from "react-native";
 import { ObjectItem, DynamicValue } from "mendix";
-import DeviceInfo from "react-native-device-info";
+import { useDeviceMetrics } from "@mendix/piw-native-utils-internal";
 import { GalleryStyle } from "../ui/Styles";
 import { HorizontalItemSizingEnum, PaginationEnum, ScrollDirectionEnum } from "../../typings/GalleryProps";
 import { isAvailable } from "@mendix/piw-utils-internal";
@@ -39,8 +39,9 @@ export interface GalleryProps<T extends ObjectItem> {
 }
 
 export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElement => {
+    const { isTablet } = useDeviceMetrics();
     const isScrollDirectionVertical = props.scrollDirection === "vertical";
-    const numColumns = DeviceInfo.isTablet() ? props.tabletColumns : props.phoneColumns;
+    const numColumns = isTablet ? props.tabletColumns : props.phoneColumns;
     const firstItemId = props.items?.[0]?.id;
     const lastItemId = props.items?.[props.items.length - 1]?.id;
     const { name, style, itemRenderer } = props;
