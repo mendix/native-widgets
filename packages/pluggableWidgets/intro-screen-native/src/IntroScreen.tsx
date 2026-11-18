@@ -100,12 +100,17 @@ export function IntroScreen(props: IntroScreenProps<IntroScreenStyle>): JSX.Elem
                     hidePagination={props.slideIndicators === "never"}
                     skipLabel={checkLabel(props.skipCaption)}
                     skipIcon={props.skipIcon}
+                    skipAccessibilityLabel={checkLabel(props.skipAccessibilityLabel)}
                     previousLabel={checkLabel(props.previousCaption)}
                     previousIcon={props.previousIcon}
+                    previousAccessibilityLabel={checkLabel(props.previousAccessibilityLabel)}
                     nextLabel={checkLabel(props.nextCaption)}
                     nextIcon={props.nextIcon}
+                    nextAccessibilityLabel={checkLabel(props.nextAccessibilityLabel)}
                     doneLabel={checkLabel(props.doneCaption)}
                     doneIcon={props.doneIcon}
+                    doneAccessibilityLabel={checkLabel(props.doneAccessibilityLabel)}
+                    slidePositionLabel={checkLabel(props.slidePositionLabel)}
                     styles={styles}
                     activeSlide={props.activeSlideAttribute}
                     hideIndicatorLastSlide={props.hideIndicatorLastSlide}
