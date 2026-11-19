@@ -17,9 +17,18 @@ appId: "${APP_ID}"
 - extendedWaitUntil:
     visible: "URL loaded"
     timeout: 30000
-- tapOn: 
-    text: "OK"
-- tapOn: 
+# The page starts on the app's own web client, which fires On load several times while it
+# loads, and every On load stacks another blocking "URL loaded" alert. Dismiss all of them,
+# otherwise the tap on "Invalid URL" lands behind the remaining alerts.
+- repeat:
+    while:
+      visible: "URL loaded"
+    commands:
+      - tapOn:
+          text: "OK"
+      - waitForAnimationToEnd:
+          timeout: 3000
+- tapOn:
     text: "Invalid URL"
 - extendedWaitUntil:
     visible: "Error"
