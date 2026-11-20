@@ -6,6 +6,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [12.7.0] Native Mobile Resources - 2026-11-20
+
+
+## [4.6.0] BarcodeScanner
+### BREAKING
+
+-   We updated react-native-vision-camera from v4.7.3 to v5.2.3. On Android, barcodes are now scanned with react-native-vision-camera-barcode-scanner v5.2.3 (Google ML Kit). On iOS, barcodes are still scanned with Apple's built-in scanner, as before. This version requires Make It Native version 11.12.3 or above. Older versions of Make It Native cannot run this version of the widget.
+-   For Native Template builds, Native Template version 19.1.8 or above is required.
+
+### Added
+
+-   We added a `scan delay` property that delays scanning by the specified number of seconds, giving the end user time to position the scanner over the code.
+
+### Fixed
+
+-   We fixed barcodes with patterned backgrounds not being scanned correctly on Android.
+
+## [3.7.0] Feedback
+### Changed
+
+-   The feedback dialogs are now presented through the shared MxOverlay component instead of react-native-dialog, which has been removed as a dependency.
+-   Screen readers now treat the feedback dialogs as modal, move focus to the dialog title when one opens, and return focus to the feedback button when the last one closes.
+
+## [4.6.1] IntroScreen
+### Added
+
+-   We added an "Accessibility" group with a label for the slide position announcement, and an accessibility label for each of the Skip, Previous, Next and Done buttons, so screen reader text can be translated.
+
+### Fixed
+
+-   We fixed an issue where screen readers (TalkBack and VoiceOver) read out every pagination dot as a separate button. The dots are now announced once as a page indicator (for example "Slide 2 of 4"), which can be adjusted to change slide.
+
 ## [12.6.0] Native Mobile Resources - 2026-11-4
 ### Fixed
 
