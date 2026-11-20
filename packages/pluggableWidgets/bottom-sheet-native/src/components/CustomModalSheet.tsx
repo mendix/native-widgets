@@ -1,6 +1,7 @@
-import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { Keyboard, Modal, Pressable, useWindowDimensions } from "react-native";
+import { ReactElement, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { Keyboard, Modal, Pressable, useWindowDimensions, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
+import { SafeAreaInsetsContext, SafeAreaProvider } from "react-native-safe-area-context";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
@@ -119,34 +120,50 @@ export const CustomModalSheet = (props: CustomModalSheetProps): ReactElement => 
             onShow={handleModalShow}
             supportedOrientations={["portrait", "portrait-upside-down", "landscape-left", "landscape-right"]}
         >
-            {ready && (
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={0}
-                    animateOnMount
-                    enableDynamicSizing
-                    maxDynamicContentSize={maxHeight}
-                    containerLayoutState={containerLayout}
-                    enablePanDownToClose
-                    onChange={handleChange}
-                    onClose={handleClose}
-                    backdropComponent={renderBackdrop}
-                    style={[props.styles.modal]}
-                    backgroundStyle={props.styles.container}
-                    handleComponent={null}
-                    handleStyle={{ display: "none" }}
-                    {...sheetKeyboardProps}
-                >
-                    <SheetKeyboardTracker scrollableRef={scrollableRef} isModal />
-                    <BottomSheetScrollView
-                        ref={scrollableRef}
-                        style={[{ flex: 1 }]}
-                        contentContainerStyle={{ paddingBottom: 16 }}
+            {/* The modal is its own edge-to-edge window, so it needs insets measured for that window.
+                The page's SafeAreaProvider reports the page's insets, which in a Mendix app stop above
+                the Android navigation bar and leave the content's end underneath it. */}
+            <SafeAreaProvider>
+                {ready && (
+                    <BottomSheet
+                        ref={bottomSheetRef}
+                        index={0}
+                        animateOnMount
+                        enableDynamicSizing
+                        maxDynamicContentSize={maxHeight}
+                        containerLayoutState={containerLayout}
+                        enablePanDownToClose
+                        onChange={handleChange}
+                        onClose={handleClose}
+                        backdropComponent={renderBackdrop}
+                        style={[props.styles.modal]}
+                        backgroundStyle={props.styles.container}
+                        handleComponent={null}
+                        handleStyle={{ display: "none" }}
+                        {...sheetKeyboardProps}
                     >
-                        {props.content}
-                    </BottomSheetScrollView>
-                </BottomSheet>
-            )}
+                        <SheetKeyboardTracker scrollableRef={scrollableRef} isModal />
+                        <BottomSheetScrollView
+                            ref={scrollableRef}
+                            style={[{ flex: 1 }]}
+                            contentContainerStyle={{ paddingBottom: 16 }}
+                        >
+                            {props.content}
+                            <BottomInsetSpacer />
+                        </BottomSheetScrollView>
+                    </BottomSheet>
+                )}
+            </SafeAreaProvider>
         </Modal>
     );
+};
+
+/**
+ * Empty space as tall as the modal's bottom inset. Dynamic sizing measures it with the content, so the
+ * sheet grows by the inset and the content ends above the navigation bar or home indicator.
+ */
+const BottomInsetSpacer = (): ReactElement => {
+    // Falls back to 0 when no inset is known, e.g. under a test renderer.
+    const bottomInset = useContext(SafeAreaInsetsContext)?.bottom ?? 0;
+    return <View style={{ height: bottomInset }} />;
 };
