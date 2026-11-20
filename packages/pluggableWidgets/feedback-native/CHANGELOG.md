@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.7.0] - 2026-11-20
+
 ### Changed
 
 -   The feedback dialogs are now presented through the shared MxOverlay component instead of react-native-dialog, which has been removed as a dependency.
