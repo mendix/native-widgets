@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
     ActionSheetIOS,
     Appearance,
@@ -18,6 +18,7 @@ import BottomSheet, {
     BottomSheetBackdropProps,
     BottomSheetScrollView
 } from "@gorhom/bottom-sheet";
+import { SafeAreaInsetsContext } from "react-native-safe-area-context";
 import { EditableValue, ValueStatus } from "mendix";
 import { ItemsBasicType } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle, ModalItemContainerStyle } from "../ui/Styles";
@@ -40,6 +41,9 @@ interface NativeBottomSheetProps {
 export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement => {
     const bottomSheetRef = useRef<BottomSheet>(null);
     const { height: windowHeight } = useWindowDimensions();
+    // The modal draws edge to edge, so without this the last row sits under the Android navigation
+    // bar (or the iOS home indicator). Falls back to 0 when the app has no SafeAreaProvider.
+    const bottomInset = useContext(SafeAreaInsetsContext)?.bottom ?? 0;
 
     const externalOpen =
         props.triggerAttribute?.status === ValueStatus.Available && props.triggerAttribute.value === true;
@@ -190,8 +194,8 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
 
     const snapPoints = useMemo(() => {
         const maxHeight = windowHeight * 0.9;
-        return [Math.min(props.itemsBasic.length * ITEM_ROW_HEIGHT + VERTICAL_PADDING, maxHeight)];
-    }, [props.itemsBasic.length, windowHeight]);
+        return [Math.min(props.itemsBasic.length * ITEM_ROW_HEIGHT + VERTICAL_PADDING + bottomInset, maxHeight)];
+    }, [props.itemsBasic.length, windowHeight, bottomInset]);
 
     if (props.useNative && Platform.OS === "ios") {
         return <View></View>;
@@ -221,7 +225,9 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
                     handleComponent={null}
                     handleStyle={{ display: "none" }}
                 >
-                    <BottomSheetScrollView contentContainerStyle={{ paddingBottom: SCROLL_PADDING_BOTTOM }}>
+                    <BottomSheetScrollView
+                        contentContainerStyle={{ paddingBottom: SCROLL_PADDING_BOTTOM + bottomInset }}
+                    >
                         {props.itemsBasic.map((item, index) => renderItem(item, index))}
                     </BottomSheetScrollView>
                 </BottomSheet>
