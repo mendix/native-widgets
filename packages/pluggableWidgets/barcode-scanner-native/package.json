@@ -1,7 +1,7 @@
 {
   "name": "barcode-scanner-native",
   "widgetName": "BarcodeScanner",
-  "version": "4.4.0",
+  "version": "4.5.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -22,7 +22,10 @@
     "@mendix/piw-native-utils-internal": "*",
     "@mendix/piw-utils-internal": "*",
     "react-native-svg": "15.12.1",
-    "react-native-vision-camera": "4.7.3"
+    "react-native-vision-camera": "5.2.3",
+    "react-native-vision-camera-barcode-scanner": "5.2.3",
+    "react-native-nitro-modules": "0.37.0",
+    "react-native-nitro-image": "0.15.2"
   },
   "devDependencies": {
     "@mendix/pluggable-widgets-tools": "*"
