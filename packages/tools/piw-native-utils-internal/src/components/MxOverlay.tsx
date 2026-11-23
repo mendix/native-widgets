@@ -43,7 +43,9 @@ export interface MxOverlayProps {
     /** Element that receives accessibility focus when the overlay opens. Defaults to the overlay content. */
     initialFocusRef?: RefObject<Component | HostInstance | null>;
     /** Element that receives accessibility focus once the overlay has closed, typically the trigger. */
-    returnFocusRef?: RefObject<Component | HostInstance | null>;
+    returnFocusRef?: RefObject<Component | null>;
+    /** Called once the overlay has completely closed: the exit animation is done and the modal is gone. */
+    onClosed?: () => void;
     /** Enter/exit duration in ms. 0 disables the animation. Defaults to 200. */
     animationDuration?: number;
     /** Render a transparent modal so what is behind shows through. When false the platform provides an opaque background. Defaults to true. */
@@ -85,6 +87,7 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
     const {
         visible,
         onRequestClose,
+        onClosed,
         dismissOnBackPress = true,
         dismissOnBackdropPress = true,
         placement = "center",
@@ -113,9 +116,10 @@ export function MxOverlay(props: MxOverlayProps): ReactElement | null {
     useEffect(() => {
         if (wasMounted.current && !mounted) {
             moveFocusTo(returnFocusRef);
+            onClosed?.();
         }
         wasMounted.current = mounted;
-    }, [mounted, returnFocusRef]);
+    }, [mounted, returnFocusRef, onClosed]);
 
     useEffect(() => {
         if (visible) {
