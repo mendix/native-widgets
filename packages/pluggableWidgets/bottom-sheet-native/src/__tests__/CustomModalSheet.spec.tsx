@@ -5,6 +5,9 @@ import { Keyboard, Modal, Text } from "react-native";
 import { CustomModalSheet } from "../components/CustomModalSheet";
 import { BottomSheetStyle } from "../ui/Styles";
 
+// The real provider renders nothing until native code reports insets, which never happens under Jest.
+jest.mock("react-native-safe-area-context", () => require("react-native-safe-area-context/jest/mock").default);
+
 /** The methods the sheet exposes on its ref, so the close path can be asserted. */
 const mockSheetMethods = { close: jest.fn(), forceClose: jest.fn() };
 /** Whether the mocked sheet reports reaching its snap point on mount, as a fully opened sheet does. */
