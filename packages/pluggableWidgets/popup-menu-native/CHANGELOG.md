@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   The menu is now presented through the shared MxMenu component instead of react-native-material-menu, which has been removed as a dependency. The style keys, the four item style classes and the ripple colour keep working as before.
+-   Screen readers now treat the popup as a menu with menu items, report whether the menu is open on the trigger, and return focus to the trigger when the menu closes.
+-   Items no longer crash the app when a style sets a font size of 0.
+-   On iOS an item now dims and shows the ripple colour as its background while it is pressed, the same as on the drop-down. Before it used the default highlight of a touchable.
+
 ## [4.1.1] - 2026-9-2
 
 ### Changed

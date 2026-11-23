@@ -1,0 +1,119 @@
+name: Release internal utilities
+
+# Packs @mendix/piw-native-utils-internal and attaches the tarball to a GitHub release, the way mendix-native is
+# released, so the Mendix client can depend on it through the release's download URL, for example
+#   "@mendix/piw-native-utils-internal": "https://github.com/mendix/native-widgets/releases/download/piw-native-utils-internal-v1.1.0/piw-native-utils-internal-v1.1.0.tgz"
+# Only run it by hand: it publishes a release.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version bump type"
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions: {}
+
+env:
+  PACKAGE_DIR: packages/tools/piw-native-utils-internal
+  PACKAGE_NAME: "@mendix/piw-native-utils-internal"
+
+jobs:
+  release:
+    name: "Pack and release"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: "Checking-out code"
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - name: "Defining node version"
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version-file: ".nvmrc"
+          package-manager-cache: false
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
+
+      - name: "Calculating the next version"
+        id: version
+        env:
+          BUMP: ${{ inputs.version }}
+        run: |
+          cd "$PACKAGE_DIR"
+          CURRENT=$(node -p "require('./package.json').version")
+          # Bumps package.json only: no git tag, no lifecycle scripts
+          NEXT=$(npm version "$BUMP" --no-git-tag-version --ignore-scripts | sed 's/^v//')
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+          echo "tag=piw-native-utils-internal-v$NEXT" >> "$GITHUB_OUTPUT"
+          echo "Version $CURRENT -> $NEXT ($BUMP)"
+
+      - name: "Checking the release does not exist yet"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if git ls-remote --tags origin | grep -q "refs/tags/$TAG$"; then
+            echo "::error::The tag $TAG already exists"
+            exit 1
+          fi
+          if gh release view "$TAG" &>/dev/null; then
+            echo "::error::The release $TAG already exists"
+            exit 1
+          fi
+
+      - name: "Installing dependencies"
+        # The internal utilities are built once below instead of by the workspace lifecycle scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: "Building internal utilities"
+        run: pnpm run build:internal-utils
+      - name: "Linting and testing"
+        run: |
+          pnpm --filter "$PACKAGE_NAME" run lint
+          pnpm --filter "$PACKAGE_NAME" run test
+
+      - name: "Packing"
+        id: pack
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/pack"
+          # Ships a package.json without scripts: the build scripts of this workspace package would fail on install
+          TARBALL=$(node "$PACKAGE_DIR/scripts/pack.mjs" "$RUNNER_TEMP/pack" "$TAG.tgz")
+          echo "tarball=$TARBALL" >> "$GITHUB_OUTPUT"
+          echo "Tarball contents:"
+          tar -tzf "$TARBALL"
+
+      - name: "Creating the release"
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          body: "Internal utilities of the native widgets (@mendix/piw-native-utils-internal ${{ steps.version.outputs.next }}), packed for use as a dependency of the Mendix client. Not a widget release."
+          files: ${{ steps.pack.outputs.tarball }}
+          target_commitish: ${{ github.sha }}
+          fail_on_unmatched_files: true
+          draft: false
+          prerelease: false
+          # This repository's widget releases decide what "latest" is
+          make_latest: "false"
+
+      - name: "Opening a pull request with the version bump"
+        uses: peter-evans/create-pull-request@84ae59a2cdc2258d6fa0732dd66352dddae2a412 # v7.0.9
+        with:
+          commit-message: "chore: release piw-native-utils-internal ${{ steps.version.outputs.next }}"
+          branch: release/piw-native-utils-internal-${{ steps.version.outputs.next }}
+          title: "Release piw-native-utils-internal ${{ steps.version.outputs.next }}"
+          body: "Updates the version of @mendix/piw-native-utils-internal for the release ${{ steps.version.outputs.tag }}."
+          base: ${{ github.ref_name }}
+          add-paths: ${{ env.PACKAGE_DIR }}/package.json
