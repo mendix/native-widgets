@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated react-native-nitro-modules to 0.37.0.
+
 ## [7.4.1] Nanoflow Commons - 2026-11-17
+
 ### Fixed
 
 -   Fixed an issue where the "Get straight line distance" action threw an error at runtime.
 -   Fixed an issue where actions using decimal values threw a "Big is not defined" error at runtime.
--   Updated react-native-nitro-modules to 0.37.0.
 
 ### Added
 
