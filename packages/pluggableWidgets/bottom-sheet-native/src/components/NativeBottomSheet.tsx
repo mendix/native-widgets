@@ -1,4 +1,14 @@
-import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    ReactElement,
+    ReactNode,
+    RefObject,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from "react";
 import {
     ActionSheetIOS,
     Appearance,
@@ -18,6 +28,7 @@ import BottomSheet, {
     BottomSheetBackdropProps,
     BottomSheetScrollView
 } from "@gorhom/bottom-sheet";
+import { SafeAreaInsetsContext, SafeAreaProvider } from "react-native-safe-area-context";
 import { EditableValue, ValueStatus } from "mendix";
 import { ItemsBasicType } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle, ModalItemContainerStyle } from "../ui/Styles";
@@ -188,11 +199,6 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
         return [styles.sheetContainer, props.styles.container];
     };
 
-    const snapPoints = useMemo(() => {
-        const maxHeight = windowHeight * 0.9;
-        return [Math.min(props.itemsBasic.length * ITEM_ROW_HEIGHT + VERTICAL_PADDING, maxHeight)];
-    }, [props.itemsBasic.length, windowHeight]);
-
     if (props.useNative && Platform.OS === "ios") {
         return <View></View>;
     }
@@ -206,27 +212,70 @@ export const NativeBottomSheet = (props: NativeBottomSheetProps): ReactElement =
             onShow={handleModalShow}
             supportedOrientations={["portrait", "portrait-upside-down", "landscape-left", "landscape-right"]}
         >
-            {ready && (
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={0}
-                    snapPoints={snapPoints}
-                    animateOnMount
-                    enablePanDownToClose
-                    onChange={handleChange}
-                    onClose={handleClose}
-                    style={getContainerStyle()}
-                    backdropComponent={renderBackdrop}
-                    backgroundStyle={props.styles.container}
-                    handleComponent={null}
-                    handleStyle={{ display: "none" }}
-                >
-                    <BottomSheetScrollView contentContainerStyle={{ paddingBottom: SCROLL_PADDING_BOTTOM }}>
+            {/* The modal is its own edge-to-edge window, so it needs insets measured for that window.
+                The page's SafeAreaProvider reports the page's insets, which in a Mendix app stop above
+                the Android navigation bar and leave the last row underneath it. */}
+            <SafeAreaProvider>
+                {ready && (
+                    <InsetAwareSheet
+                        ref={bottomSheetRef}
+                        itemCount={props.itemsBasic.length}
+                        windowHeight={windowHeight}
+                        onChange={handleChange}
+                        onClose={handleClose}
+                        style={getContainerStyle()}
+                        backdropComponent={renderBackdrop}
+                        backgroundStyle={props.styles.container}
+                    >
                         {props.itemsBasic.map((item, index) => renderItem(item, index))}
-                    </BottomSheetScrollView>
-                </BottomSheet>
-            )}
+                    </InsetAwareSheet>
+                )}
+            </SafeAreaProvider>
         </Modal>
+    );
+};
+
+interface InsetAwareSheetProps {
+    ref: RefObject<BottomSheet | null>;
+    itemCount: number;
+    windowHeight: number;
+    onChange: (index: number) => void;
+    onClose: () => void;
+    style: StyleProp<ViewStyle>;
+    backdropComponent: (props: BottomSheetBackdropProps) => ReactElement;
+    backgroundStyle: StyleProp<ViewStyle>;
+    children: ReactNode;
+}
+
+/** The sheet itself, rendered under the modal's own SafeAreaProvider so it can read the modal's insets. */
+const InsetAwareSheet = ({ ref, children, ...props }: InsetAwareSheetProps): ReactElement => {
+    // Falls back to 0 when no inset is known, e.g. under a test renderer.
+    const bottomInset = useContext(SafeAreaInsetsContext)?.bottom ?? 0;
+
+    const snapPoints = useMemo(() => {
+        const maxHeight = props.windowHeight * 0.9;
+        return [Math.min(props.itemCount * ITEM_ROW_HEIGHT + VERTICAL_PADDING + bottomInset, maxHeight)];
+    }, [props.itemCount, props.windowHeight, bottomInset]);
+
+    return (
+        <BottomSheet
+            ref={ref}
+            index={0}
+            snapPoints={snapPoints}
+            animateOnMount
+            enablePanDownToClose
+            onChange={props.onChange}
+            onClose={props.onClose}
+            style={props.style}
+            backdropComponent={props.backdropComponent}
+            backgroundStyle={props.backgroundStyle}
+            handleComponent={null}
+            handleStyle={{ display: "none" }}
+        >
+            <BottomSheetScrollView contentContainerStyle={{ paddingBottom: SCROLL_PADDING_BOTTOM + bottomInset }}>
+                {children}
+            </BottomSheetScrollView>
+        </BottomSheet>
     );
 };
 
