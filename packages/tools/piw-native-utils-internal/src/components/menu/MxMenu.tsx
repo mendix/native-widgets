@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, RefObject, useCallback, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useState } from "react";
 import {
     I18nManager,
     LayoutChangeEvent,
@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { MxOverlay } from "../MxOverlay";
 import { computeMenuPosition, MenuPlacement, MenuRect, MenuSize, toStyleLeft } from "./position";
+import { MxMenuControl } from "./useMxMenu";
 
 const DEFAULT_ANIMATION_DURATION = 150;
 const DEFAULT_RADIUS = 4;
@@ -32,7 +33,7 @@ export interface MxMenuProps {
     style?: StyleProp<ViewStyle>;
     animationDuration?: number;
     /** Receives accessibility focus when the menu has closed, the trigger */
-    returnFocusRef?: RefObject<View | null>;
+    returnFocusRef?: MxMenuControl["anchorRef"];
     accessibilityLabel?: string;
     /** On the element that holds the items. The overlay's own elements get "-overlay" as a suffix. */
     testID?: string;
@@ -88,7 +89,7 @@ export function MxMenu(props: MxMenuProps): ReactElement {
     const position = anchor && size ? computeMenuPosition({ anchor, menu: size, window, rtl, placement }) : null;
     const swapsInRtl = rtl && I18nManager.doLeftAndRightSwapInRTL;
 
-    const surfaceStyle = StyleSheet.flatten<ViewStyle>([styles.surface, style]);
+    const surfaceStyle: ViewStyle = StyleSheet.flatten([styles.surface, style]) ?? {};
 
     return (
         <MxOverlay

@@ -43,7 +43,7 @@ export interface MxOverlayProps {
     /** Element that receives accessibility focus when the overlay opens. Defaults to the overlay content. */
     initialFocusRef?: RefObject<Component | HostInstance | null>;
     /** Element that receives accessibility focus once the overlay has closed, typically the trigger. */
-    returnFocusRef?: RefObject<Component | null>;
+    returnFocusRef?: RefObject<Component | HostInstance | null>;
     /** Called once the overlay has completely closed: the exit animation is done and the modal is gone. */
     onClosed?: () => void;
     /** Enter/exit duration in ms. 0 disables the animation. Defaults to 200. */

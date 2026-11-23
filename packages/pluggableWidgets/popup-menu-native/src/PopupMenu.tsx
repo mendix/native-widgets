@@ -1,16 +1,9 @@
-import { ComponentType, ReactElement, useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 import { PopupMenuProps } from "../typings/PopupMenuProps";
 import { PopupMenuStyle } from "./ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
 import { MxMenu, MxMenuDivider, MxMenuItem, useMxMenu } from "@mendix/piw-native-utils-internal";
-import {
-    Platform,
-    StyleSheet,
-    TouchableNativeFeedback,
-    TouchableNativeFeedbackProps,
-    TouchableOpacity,
-    View
-} from "react-native";
+import { Platform, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
 import { ActionValue } from "mendix";
 
 const TouchableButton: typeof TouchableNativeFeedback | typeof TouchableOpacity =

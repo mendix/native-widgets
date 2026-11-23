@@ -1,10 +1,13 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { ComponentRef, RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { MenuRect } from "./position";
 
+/** What a View ref points to. React Native has typed the View class and its instance differently over time. */
+export type MxMenuAnchorElement = ComponentRef<typeof View>;
+
 export interface MxMenuControl {
     /** Put on the element that opens the menu: it is measured so the menu can be placed next to it */
-    anchorRef: RefObject<View | null>;
+    anchorRef: RefObject<MxMenuAnchorElement | null>;
     /** Where the trigger is in the window, as measured when the menu was opened */
     anchor: MenuRect | null;
     visible: boolean;
@@ -18,7 +21,7 @@ export interface MxMenuControl {
  * Open and close state of a menu, plus the measuring of the element that opens it.
  */
 export function useMxMenu(): MxMenuControl {
-    const anchorRef = useRef<View>(null);
+    const anchorRef = useRef<MxMenuAnchorElement>(null);
     const mounted = useRef(true);
     const [anchor, setAnchor] = useState<MenuRect | null>(null);
     const [visible, setVisible] = useState(false);
