@@ -14,6 +14,11 @@
   "packagePath": "com.mendix.utils",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "menu.js",
+    "menu.d.ts"
+  ],
   "sideEffects": false,
   "scripts": {
     "start": "tsc --watch",

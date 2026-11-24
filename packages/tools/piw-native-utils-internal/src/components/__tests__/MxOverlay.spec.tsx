@@ -247,6 +247,59 @@ describe.each(["ios", "android"] as const)("MxOverlay on %s", os => {
             });
         });
 
+        it("tells when it has closed, once the exit animation is done", () => {
+            jest.useFakeTimers();
+            try {
+                const onClosed = jest.fn();
+                const element = (visible: boolean): ReactElement => (
+                    <MxOverlay visible={visible} animationDuration={200} onClosed={onClosed}>
+                        <Text>content</Text>
+                    </MxOverlay>
+                );
+                const { rerender } = render(element(true));
+                act(() => {
+                    jest.advanceTimersByTime(250);
+                });
+                expect(onClosed).not.toHaveBeenCalled();
+
+                rerender(element(false));
+                expect(onClosed).not.toHaveBeenCalled();
+
+                act(() => {
+                    jest.advanceTimersByTime(250);
+                });
+                expect(onClosed).toHaveBeenCalledTimes(1);
+            } finally {
+                jest.useRealTimers();
+            }
+        });
+
+        it("tells when it has closed without an animation", () => {
+            const onClosed = jest.fn();
+            const element = (visible: boolean): ReactElement => (
+                <MxOverlay visible={visible} animationDuration={0} onClosed={onClosed}>
+                    <Text>content</Text>
+                </MxOverlay>
+            );
+            const { rerender } = render(element(true));
+
+            rerender(element(false));
+
+            expect(onClosed).toHaveBeenCalledTimes(1);
+        });
+
+        it("does not tell it has closed when it was never shown", () => {
+            const onClosed = jest.fn();
+
+            render(
+                <MxOverlay visible={false} onClosed={onClosed}>
+                    <Text>content</Text>
+                </MxOverlay>
+            );
+
+            expect(onClosed).not.toHaveBeenCalled();
+        });
+
         it("renders nothing while hidden", () => {
             const { queryByTestId } = renderOverlay({ visible: false });
 
