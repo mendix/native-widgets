@@ -1,30 +1,8 @@
 import { Style } from "@mendix/piw-native-utils-internal";
 import { I18nManager, Platform, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import absoluteFillObject = StyleSheet.absoluteFillObject;
-import DeviceInfo from "react-native-device-info";
-
-const isiPhoneModelWithNotch = (): boolean => {
-    const model = DeviceInfo.getDeviceId();
-    if (model.indexOf("iPhone") !== -1) {
-        switch (model) {
-            case "iPhone10,6": // iPhone X GSM
-            case "iPhone11,2": // iPhone XS
-            case "iPhone11,4": // iPhone XS Max
-            case "iPhone11,6": // iPhone XS Max Global
-            case "iPhone11,8": // Iphone XR
-            case "iPhone12,1": // Iphone 11
-            case "iPhone12,3": // Iphone 11 Pro
-            case "iPhone12,5": // Iphone 11 Pro Max
-                return true;
-            default:
-                return false;
-        }
-    }
-    return false;
-};
 
 const isAndroidRTL = I18nManager.isRTL && Platform.OS === "android";
-const isIphoneWithNotch = DeviceInfo.hasNotch() || (Platform.OS === "ios" && isiPhoneModelWithNotch());
 
 const defaultButtonBetweenContainer: ViewStyle = {
     flexDirection: "row",
@@ -91,7 +69,7 @@ export const defaultWelcomeScreenStyle: IntroScreenStyle = {
     },
     paginationContainer: {
         position: "absolute",
-        bottom: isIphoneWithNotch ? 22 : 0,
+        bottom: 0,
         left: 0,
         right: 0,
         justifyContent: "space-between",

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Migrated device metrics utility to shared package for better code reusability.
+
 ## [2.3.0] - 2026-10-8
 
 ### Fixed
