@@ -792,9 +792,6 @@ importers:
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
-      react-native-blob-util:
-        specifier: 0.24.11
-        version: 0.24.11(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       react-native-signature-canvas:
         specifier: 3.4.0
         version: 3.4.0(react-native-webview@13.16.1(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))
