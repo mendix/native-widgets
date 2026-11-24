@@ -5,7 +5,7 @@ RUN \
     echo "Installing Java 21..." && \
     apt-get -qq update && \
     apt-get -qq install -y wget libgdiplus && \
-    wget -q https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz -O /tmp/openjdk.tar.gz || { echo "Failed to download Java 21"; exit 1; } && \
+    wget -q https://api.adoptium.net/v3/binary/latest/21/ga/linux/x64/jdk/hotspot/normal/eclipse -O /tmp/openjdk.tar.gz || { echo "Failed to download Java 21"; exit 1; } && \
     mkdir -p /usr/lib/jvm && \
     tar xfz /tmp/openjdk.tar.gz --directory /usr/lib/jvm || { echo "Failed to extract Java 21"; exit 1; } && \
     ls /usr/lib/jvm && \

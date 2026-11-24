@@ -5,6 +5,9 @@ import { BottomSheetProps } from "../../typings/BottomSheetProps";
 import { BottomSheetStyle } from "../ui/Styles";
 import { ActionSheetIOS, Platform, Text } from "react-native";
 
+// The real provider renders nothing until native code reports insets, which never happens under Jest.
+jest.mock("react-native-safe-area-context", () => require("react-native-safe-area-context/jest/mock").default);
+
 jest.mock("react-native-worklets", () => jest.requireActual("react-native-worklets/lib/module/mock"));
 
 jest.mock("react-native-reanimated", () => {
