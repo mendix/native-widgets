@@ -17,6 +17,13 @@ appId: "${APP_ID}"
 - tapOn:
     text: "Scan"
 - extendedWaitUntil:
+    visible: "Allow"
+    timeout: 10000
+    optional: true
+- tapOn:
+    text: "Allow"
+    optional: true
+- extendedWaitUntil:
     visible: 
         text: "Scan"
     timeout: 30000

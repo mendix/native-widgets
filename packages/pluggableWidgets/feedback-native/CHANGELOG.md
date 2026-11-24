@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.7.0] - 2026-11-20
+
+### Changed
+
+-   The feedback dialogs are now presented through the shared MxOverlay component instead of react-native-dialog, which has been removed as a dependency.
+-   Screen readers now treat the feedback dialogs as modal, move focus to the dialog title when one opens, and return focus to the feedback button when the last one closes.
+
 ## [3.6.2] - 2026-9-2
 
 ### Changed
