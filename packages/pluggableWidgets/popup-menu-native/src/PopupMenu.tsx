@@ -1,33 +1,31 @@
-import { ReactElement, useCallback, useRef, Fragment } from "react";
+import { ReactElement, useCallback } from "react";
 import { PopupMenuProps } from "../typings/PopupMenuProps";
 import { PopupMenuStyle } from "./ui/Styles";
 import { executeAction } from "@mendix/piw-utils-internal";
-import { Platform, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
+import { MxMenu, MxMenuDivider, MxMenuItem, useMxMenu } from "@mendix/piw-native-utils-internal";
+import { Platform, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
 import { ActionValue } from "mendix";
-import Menu, { MenuDivider, MenuItem } from "react-native-material-menu";
-
-const TouchableItem: typeof TouchableNativeFeedback | typeof TouchableHighlight =
-    Platform.OS === "android" ? TouchableNativeFeedback : TouchableHighlight;
 
 const TouchableButton: typeof TouchableNativeFeedback | typeof TouchableOpacity =
     Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
 
+// Custom items hold whatever the app puts in them, so they do not get the minimum size of a text item
+const customItemDefaults = { minHeight: 0, minWidth: 0, justifyContent: "flex-start" } as const;
+const basicItemDefaults = { height: 48, maxWidth: 248 } as const;
+
 export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
     const styles: PopupMenuStyle = Object.assign({}, ...props.style);
 
-    const menuRef = useRef<Menu | null>(null);
-    const showMenu = useCallback(() => {
-        menuRef.current?.show();
-    }, [menuRef.current]);
+    const { anchorRef, anchor, visible, expanded, open, close } = useMxMenu();
     const handlePress = useCallback(
         (action?: ActionValue) => {
-            menuRef.current?.hide();
+            close();
             // Set timeout needed since modal closes the alerts which might be shown in action
             setTimeout(() => {
                 executeAction(action);
             }, 500);
         },
-        [menuRef.current]
+        [close]
     );
 
     let menuOptions: ReactElement[];
@@ -35,67 +33,68 @@ export function PopupMenu(props: PopupMenuProps<PopupMenuStyle>): ReactElement {
         menuOptions = props.basicItems.map((item, index) => {
             const itemStyle = styles.basic?.itemStyle && styles.basic?.itemStyle[item.styleClass];
             return item.itemType === "divider" ? (
-                <MenuDivider key={index} color={styles.basic?.dividerColor} />
+                <MxMenuDivider key={index} color={styles.basic?.dividerColor} testID={`${props.name}_divider`} />
             ) : (
-                <MenuItem
+                <MxMenuItem
                     key={index}
                     onPress={() => handlePress(item.action)}
                     textStyle={itemStyle}
-                    ellipsizeMode={styles.basic?.itemStyle?.ellipsizeMode as any}
-                    style={styles.basic?.container as any}
+                    ellipsizeMode={styles.basic?.itemStyle?.ellipsizeMode}
+                    style={[basicItemDefaults, styles.basic?.container]}
                     {...getRippleColor(styles.basic?.itemStyle?.rippleColor)}
                     testID={`${props.name}_basic-item`}
                 >
                     {item.caption}
-                </MenuItem>
+                </MxMenuItem>
             );
         });
     } else {
         menuOptions = props.customItems.map((item, index) => (
-            <TouchableItem
+            <MxMenuItem
                 key={index}
-                style={styles.custom?.container}
+                style={[customItemDefaults, styles.custom?.container]}
                 onPress={() => handlePress(item.action)}
                 {...getRippleColor(styles.custom?.itemStyle?.rippleColor)}
                 testID={`${props.name}_custom-item`}
             >
-                {Platform.OS === "android" ? (
-                    <View style={styles.custom?.container}>{item.content}</View>
-                ) : (
-                    <Fragment>{item.content}</Fragment>
-                )}
-            </TouchableItem>
+                {item.content}
+            </MxMenuItem>
         ));
     }
 
     return (
-        <Menu
-            animationDuration={150}
-            ref={menuRef}
-            style={styles?.container as any}
-            button={
-                <TouchableButton onPress={showMenu} testID={`${props.name}_trigger`}>
+        <>
+            <View ref={anchorRef} collapsable={false}>
+                <TouchableButton
+                    onPress={open}
+                    testID={`${props.name}_trigger`}
+                    accessibilityRole="button"
+                    accessibilityState={{ expanded }}
+                >
                     <View style={styles.buttonContainer} pointerEvents="box-only">
                         <View pointerEvents="none">{props.menuTriggerer}</View>
                     </View>
                 </TouchableButton>
-            }
-        >
-            <View
-                style={{ overflow: "hidden", borderRadius: styles.container?.borderRadius }}
+            </View>
+            <MxMenu
+                visible={visible}
+                anchor={anchor}
+                onRequestClose={close}
+                animationDuration={150}
+                style={styles.container}
+                returnFocusRef={anchorRef}
                 testID={`${props.name}_menu`}
             >
                 {menuOptions}
-            </View>
-        </Menu>
+            </MxMenu>
+        </>
     );
 }
 
-function getRippleColor(color: string | undefined) {
-    if (color) {
-        return Platform.OS === "android"
-            ? color && { background: TouchableNativeFeedback.Ripple(color, false) }
-            : { underlayColor: color };
-    }
-    return undefined;
+/**
+ * One style key, two platform behaviours: rippleColor is the colour of the ripple on Android and the
+ * background shown while an item is pressed on iOS. The menu item picks the one for its platform.
+ */
+function getRippleColor(color: string | undefined): { rippleColor: string; underlayColor: string } | undefined {
+    return color ? { rippleColor: color, underlayColor: color } : undefined;
 }
