@@ -6,13 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We updated the style prop name from `experimental_backgroundImage` to `backgroundImage`.
+
 ## [2.4.0] - 2026-11-25
 
 ### Changed
 
 -   We removed the library of `react-native-linear-gradient` in favor of a react-native View with linear-gradient type background.
 -   Updated react-native from version v0.84.1 to v0.88.0.
--   We updated the style prop name from `experimental_backgroundImage` to `backgroundImage`.
 
 ## [2.2.1] - 2026-1-19
 
