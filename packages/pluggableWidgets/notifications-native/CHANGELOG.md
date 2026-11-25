@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [5.4.0] - 2026-11-25
+
 ### Changed
 
 -   Replaced @notifee/react-native with react-native-notify-kit library.

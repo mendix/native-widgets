@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-11-25
+
 ### Changed
 
 -   We replaced react-native-snap-carousel with a built-in carousel component, removing the dependency on it and on deprecated-react-native-prop-types.

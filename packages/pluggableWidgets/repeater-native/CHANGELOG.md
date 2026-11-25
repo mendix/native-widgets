@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-11-25
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
