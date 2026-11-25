@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   We refactored the GetDeviceInfo action to use the shared device metrics utility instead of directly importing react-native-device-info.
+
 ## [13.0.0] Native Mobile Resources - 2026-11-25
+
 ### Fixed
 
 -   Fixed an issue where actions using decimal values threw a "Big is not defined" error at runtime.
@@ -21,7 +26,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Fixed an issue where the `TakePicture` and `TakePictureAdvanced` actions did not properly clean up temporary files.
 -   Replaced @notifee/react-native with react-native-notify-kit library.
 -   We bumped the `brace-expansion` package to v5.0.12 to fix a denial-of-service vulnerability.
--   We refactored the GetDeviceInfo action to use the shared device metrics utility instead of directly importing react-native-device-info.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 -   Updated react-native-blob-util from version v0.24.7 to v0.24.11.
 -   The [backgroundColor], [translucent] and [networkActivityIndicatorVisible] parameters of the Change status bar action no longer have any effect, because react-native v0.88 removed support for them.
@@ -31,33 +35,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We added mendix-native as a dependency to provide native file system.
 
 ## [2.5.0] Accordion
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.5.0] ActivityIndicator
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [3.5.0] Animation
+
 ### Changed
 
 -   We updated react-native-animatable to 1.4.0.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [5.2.0] AppEvents
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.4.0] BackgroundGradient
+
 ### Changed
 
 -   We removed the library of `react-native-linear-gradient` in favor of a react-native View with linear-gradient type background.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.4.0] BackgroundImage
+
 -   Fixed background image widget not visible when there is no content inside it.
 
 ### Changed
@@ -65,17 +75,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.5.0] Badge
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [3.4.0] BarChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [4.6.0] BarcodeScanner
+
 -   We added support for QR of available remaining types including pdf417 in barcode scanner functinality.
 -   We fixed the barcode mask not visible issue and selection logic of QR code.
 
@@ -97,6 +110,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [5.4.0] BottomSheet
+
 ### Added
 
 -   Added an `On change` event that triggers when the `Trigger attribute` value changes, allowing detection of bottom sheet dismissal (e.g. by outside click).
@@ -116,6 +130,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native-worklets from version v0.8.3 to v0.13.0.
 
 ## [4.0.0] Carousel
+
 ### Changed
 
 -   We replaced react-native-snap-carousel with a built-in carousel component, removing the dependency on it and on deprecated-react-native-prop-types.
@@ -126,6 +141,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Carousel is now accessible: TalkBack and VoiceOver users can jump straight to a slide via its pagination dot, or step through slides one at a time; only the active slide is ever read out, instead of all of them at once.
 
 ## [2.4.1] ColorPicker
+
 ### Added
 
 -   We added screen reader label properties for the hue, saturation, brightness and transparency sliders.
@@ -142,18 +158,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We fixed the other sliders moving slightly while one slider is dragged, and hue and saturation being lost when the color becomes black or white.
 
 ## [2.4.0] ColumnChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [3.7.0] Feedback
+
 ### Changed
 
 -   We pinned querystringify to 2.2.0.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [4.4.0] FloatingActionButton
+
 -   We have removed the 'react-native-reanimated' library and used Animated API of react native for animation purpose.
 -   We fixed an issue of secondary button's caption not displayed if its horizontal position is center.
 -   We refactored code and migrated to functional component.
@@ -163,6 +182,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.4.0] Gallery
+
 ### Fixed
 
 -   We've fixed an issue where Gallery widget does not display data.
@@ -177,11 +197,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.2.0] GalleryTextFilter
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [3.2.0] Image
+
 ### Changed
 
 -   The enlarged image is now presented through the shared MxOverlay component. Screen readers now treat it as a modal, move focus to the enlarged image when it opens and return focus to the image when it closes.
@@ -197,6 +219,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated @react-native-vector-icons/get-image from version v12.3.0 to v13.0.1.
 
 ## [4.6.1] IntroScreen
+
 ### Changed
 
 -   The IntroScreen is now presented through the shared MxOverlay component. Its appearance and behaviour, including blocking the Android back button, are unchanged.
@@ -217,18 +240,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We fixed an issue where screen readers (TalkBack and VoiceOver) read out every pagination dot as a separate button. The dots are now announced once as a page indicator (for example "Slide 2 of 4"), which can be adjusted to change slide.
 
 ## [3.4.0] LineChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [3.6.0] ListViewSwipe
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 -   Updated react-native-gesture-handler from version v2.31.2 to v2.33.0.
 
 ## [5.3.0] Maps
+
 ### Changed
 
 -   We pinned prop-types to 15.8.1.
@@ -236,24 +262,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native-maps from version v1.20.1 to v1.27.2.
 
 ## [5.4.0] Notifications
+
 ### Changed
 
 -   Replaced @notifee/react-native with react-native-notify-kit library.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.4.0] PieDoughnutChart
+
 ### Changed
 
 -   We updated victory-native to 36.9.2.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [4.2.0] PopupMenu
+
 ### Changed
 
 -   We pinned react-native-material-menu to 1.2.0.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [4.5.0] ProgressBar
+
 ### Changed
 
 -   Removed the react-native-progress dependency. There is no change in appearance or behavior.
@@ -264,6 +294,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   The progress bar now announces itself to screen readers with a progress bar role and its current value.
 
 ## [3.4.0] ProgressCircle
+
 ### Changed
 
 -   Removed the react-native-progress dependency. There is no change in appearance or behavior.
@@ -274,16 +305,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   The progress circle now announces itself to screen readers with a progress bar role and its current value.
 
 ## [4.2.0] QRCode
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [1.4.0] RadioButtons
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [3.1.0] RangeSlider
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
@@ -294,6 +328,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We fixed the range slider thumbs not announcing their values or being adjustable with VoiceOver and TalkBack.
 
 ## [5.4.0] Rating
+
 ### Changed
 
 -   We removed @react-native-vector-icons/common dependency.
@@ -302,11 +337,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.5.0] Repeater
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [3.3.0] SafeAreaView
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
@@ -314,6 +351,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native-safe-area-context from version v5.7.0 to v5.8.1.
 
 ## [3.1.0] Signature
+
 ### Added
 
 -   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
@@ -325,6 +363,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [4.1.0] Slider
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
@@ -335,11 +374,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   We fixed the slider not announcing its value or being adjustable with VoiceOver and TalkBack.
 
 ## [1.3.0] Switch
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.6.0] ToggleButtons
+
 ### Changed
 
 -   Replaced external dependency `react-native-segmented-control-tab` with in-house SegmentedControl component.
@@ -350,6 +391,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Toggle button now uses modern React Native accessibility props (`accessibilityRole="tab"`, `accessibilityState.selected`) instead of deprecated `accessibilityTraits` and `accessibilityComponentType`.
 
 ## [6.5.1] VideoPlayer
+
 ### Added
 
 -   We added mendix-native as a dependency to provide platform utilities.
@@ -366,6 +408,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 -   Updated react-native-video from version v6.19.2 to v6.19.3.
 
 ## [4.5.0] WebView
+
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.

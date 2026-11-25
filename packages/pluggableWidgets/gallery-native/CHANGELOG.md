@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Migrated device metrics utility to shared package for better code reusability.
+
 ## [2.4.0] - 2026-11-25
 
 ### Fixed
@@ -19,7 +23,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 
--   Migrated device metrics utility to shared package for better code reusability.
 -   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [2.2.1] - 2026-6-10
