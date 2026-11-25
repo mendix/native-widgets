@@ -8,7 +8,7 @@
 
 -   JS actions in `nanoflow-actions-native` are included in and released with Nanoflow Commons.
 
-1. Make sure each changed widget has an appropriate change to it's `package.json` & `package.xml` (version bump) and changelog update before releasing.
+1. Make sure each changed widget has an appropriate change to its `package.json` & `package.xml` (version bump) and changelog update before releasing.
 1. In `CHANGELOG.md`, try to avoid using special characters like backtick[`] around the text while updating the changelog because it won't be able to parse the text; instead you can use square brackets[].
 1. Each widget (e.g. `bar-chart-native`) or module's (e.g. `mobile-resources-native`) `minimumMXVersion` in `package.json` should match the `NativeComponentsTestProject` Mendix project Studio Pro version. You can pull the [repo](https://github.com/mendix/Native-Mobile-Resources) into Windows and double-click the `.mpr` in the root. You should have at least one Studio Pro installation for this to work.
 1. On `master`, once all to-be-released changes are merged, add a tag to the commit you want to create a release from. The tag should
