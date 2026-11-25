@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.5.0] - 2026-11-25
+
 ### Changed
 
 -   We updated react-native-animatable to 1.4.0.

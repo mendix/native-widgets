@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [13.0.0] Native Mobile Resources - 2026-11-25
 ### Fixed
 
 -   Fixed an issue where actions using decimal values threw a "Big is not defined" error at runtime.
@@ -27,6 +28,346 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 -   We added mendix-native as a dependency to provide native file system.
+
+## [2.5.0] Accordion
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.5.0] ActivityIndicator
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [3.5.0] Animation
+### Changed
+
+-   We updated react-native-animatable to 1.4.0.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [5.2.0] AppEvents
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.4.0] BackgroundGradient
+### Changed
+
+-   We removed the library of `react-native-linear-gradient` in favor of a react-native View with linear-gradient type background.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.4.0] BackgroundImage
+-   Fixed background image widget not visible when there is no content inside it.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.5.0] Badge
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [3.4.0] BarChart
+### Changed
+
+-   We updated victory-native to 36.9.2.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [4.6.0] BarcodeScanner
+-   We added support for QR of available remaining types including pdf417 in barcode scanner functinality.
+-   We fixed the barcode mask not visible issue and selection logic of QR code.
+
+### BREAKING
+
+-   We updated react-native-vision-camera from v4.7.3 to v5.2.3. On Android, barcodes are now scanned with react-native-vision-camera-barcode-scanner v5.2.3 (Google ML Kit). On iOS, barcodes are still scanned with Apple's built-in scanner, as before. This version requires Make It Native version 11.12.3 or above. Older versions of Make It Native cannot run this version of the widget.
+-   For Native Template builds, Native Template version 20.0.2 or above is required.
+
+### Added
+
+-   We added a `scan delay` property that delays scanning by the specified number of seconds, giving the end user time to position the scanner over the code.
+
+### Fixed
+
+-   We fixed barcodes with patterned backgrounds not being scanned correctly on Android.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [5.4.0] BottomSheet
+### Added
+
+-   Added an `On change` event that triggers when the `Trigger attribute` value changes, allowing detection of bottom sheet dismissal (e.g. by outside click).
+
+### Fixed
+
+-   Fixed the keyboard covering text inputs on iOS in a modal bottom sheet with custom rendering, and in an expanding bottom sheet. The sheet now moves above the keyboard when an input inside it is focused, and back down once the keyboard is dismissed. A sheet too tall to fit above the keyboard scrolls the focused input into view instead. Closing a modal bottom sheet while the keyboard is open now always closes it, and collapsing an expanding bottom sheet dismisses the keyboard its own content raised.
+-   Replaced a deprecated prop 'containerHeight' with the respective 'containerLayoutState' option.
+-   Fixed iOS orientation change when opening the bottom sheet modal on devices in landscape mode.
+-   Fixed the app becoming unresponsive to touches after a modal bottom sheet (basic or custom rendering) was closed while it was still opening, e.g. when opening and closing it quickly. A sheet whose trigger attribute is set to false while it is opening now also closes once it has opened.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   Updated react-native-gesture-handler from version v2.31.2 to v2.33.0.
+-   Updated react-native-reanimated from version v4.3.1 to v4.7.1.
+-   Updated react-native-worklets from version v0.8.3 to v0.13.0.
+
+## [4.0.0] Carousel
+### Changed
+
+-   We replaced react-native-snap-carousel with a built-in carousel component, removing the dependency on it and on deprecated-react-native-prop-types.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+### Fixed
+
+-   Carousel is now accessible: TalkBack and VoiceOver users can jump straight to a slide via its pagination dot, or step through slides one at a time; only the active slide is ever read out, instead of all of them at once.
+
+## [2.4.1] ColorPicker
+### Added
+
+-   We added screen reader label properties for the hue, saturation, brightness and transparency sliders.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   We updated tinycolor2 to 1.6.0.
+-   We replaced react-native-slider and react-native-color with built-in components, and removed deprecated-react-native-prop-types.
+
+### Fixed
+
+-   We fixed the sliders not announcing their value to screen readers. They can now also be adjusted with VoiceOver and TalkBack.
+-   We fixed the other sliders moving slightly while one slider is dragged, and hue and saturation being lost when the color becomes black or white.
+
+## [2.4.0] ColumnChart
+### Changed
+
+-   We updated victory-native to 36.9.2.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [3.7.0] Feedback
+### Changed
+
+-   We pinned querystringify to 2.2.0.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [4.4.0] FloatingActionButton
+-   We have removed the 'react-native-reanimated' library and used Animated API of react native for animation purpose.
+-   We fixed an issue of secondary button's caption not displayed if its horizontal position is center.
+-   We refactored code and migrated to functional component.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.4.0] Gallery
+### Fixed
+
+-   We've fixed an issue where Gallery widget does not display data.
+-   We've fixed an issue where items in a horizontally scrolling Gallery would stretch to the full screen width instead of sizing to their content.
+
+### Added
+
+-   Added horizontal item sizing options to fit items to their content or divide the Gallery width into configurable columns.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.2.0] GalleryTextFilter
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [3.2.0] Image
+### Changed
+
+-   The enlarged image is now presented through the shared MxOverlay component. Screen readers now treat it as a modal, move focus to the enlarged image when it opens and return focus to the image when it closes.
+
+### Fixed
+
+-   We fixed an issue that caused images from entities to not render on Android in Online Synchronization mode
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   Updated @react-native-vector-icons/common from version v12.4.2 to v13.0.3.
+-   Updated @react-native-vector-icons/get-image from version v12.3.0 to v13.0.1.
+
+## [4.6.1] IntroScreen
+### Changed
+
+-   The IntroScreen is now presented through the shared MxOverlay component. Its appearance and behaviour, including blocking the Android back button, are unchanged.
+
+### Added
+
+-   We added an "Accessibility" group with a label for the slide position announcement, and an accessibility label for each of the Skip, Previous, Next and Done buttons, so screen reader text can be translated.
+
+### Fixed
+
+-   We fixed an issue where the IntroScreen did not show the slide set by the active slide attribute, and where swiping between slides did not work reliably on slower Android devices.
+-   We fixed the layout of the intro screen, which broke because react-native v0.88 removed StyleSheet.absoluteFillObject.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+-   We fixed an issue where screen readers (TalkBack and VoiceOver) read out every pagination dot as a separate button. The dots are now announced once as a page indicator (for example "Slide 2 of 4"), which can be adjusted to change slide.
+
+## [3.4.0] LineChart
+### Changed
+
+-   We updated victory-native to 36.9.2.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [3.6.0] ListViewSwipe
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   Updated react-native-gesture-handler from version v2.31.2 to v2.33.0.
+
+## [5.3.0] Maps
+### Changed
+
+-   We pinned prop-types to 15.8.1.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   Updated react-native-maps from version v1.20.1 to v1.27.2.
+
+## [5.4.0] Notifications
+### Changed
+
+-   Replaced @notifee/react-native with react-native-notify-kit library.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.4.0] PieDoughnutChart
+### Changed
+
+-   We updated victory-native to 36.9.2.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [4.2.0] PopupMenu
+### Changed
+
+-   We pinned react-native-material-menu to 1.2.0.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [4.5.0] ProgressBar
+### Changed
+
+-   Removed the react-native-progress dependency. There is no change in appearance or behavior.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+### Added
+
+-   The progress bar now announces itself to screen readers with a progress bar role and its current value.
+
+## [3.4.0] ProgressCircle
+### Changed
+
+-   Removed the react-native-progress dependency. There is no change in appearance or behavior.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+### Added
+
+-   The progress circle now announces itself to screen readers with a progress bar role and its current value.
+
+## [4.2.0] QRCode
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [1.4.0] RadioButtons
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [3.1.0] RangeSlider
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   We replaced @miblanchard/react-native-slider with a built-in slider component.
+
+### Fixed
+
+-   We fixed the range slider thumbs not announcing their values or being adjustable with VoiceOver and TalkBack.
+
+## [5.4.0] Rating
+### Changed
+
+-   We removed @react-native-vector-icons/common dependency.
+-   We removed @react-native-vector-icons/get-image depedency.
+-   We added react-native-svg dependency and fixed the issue of rating icons not visible if user sets empty star and selected star as none in studio pro.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.5.0] Repeater
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [3.3.0] SafeAreaView
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   Updated @react-navigation/bottom-tabs from version v7.15.2 to v7.20.0.
+-   Updated react-native-safe-area-context from version v5.7.0 to v5.8.1.
+
+## [3.1.0] Signature
+### Added
+
+-   Added direct image upload to System.Image object using the type `image` with `allowUpload` set to true.
+-   Renamed `onSave` action to `onSignEnd` to match web signature widget naming convention
+-   We added mendix-native as a dependency to provide native file system.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [4.1.0] Slider
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   We replaced @miblanchard/react-native-slider with a built-in slider component.
+
+### Fixed
+
+-   We fixed the slider not announcing its value or being adjustable with VoiceOver and TalkBack.
+
+## [1.3.0] Switch
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+## [2.6.0] ToggleButtons
+### Changed
+
+-   Replaced external dependency `react-native-segmented-control-tab` with in-house SegmentedControl component.
+-   Updated react-native from version v0.84.1 to v0.88.0.
+
+### Fixed
+
+-   Toggle button now uses modern React Native accessibility props (`accessibilityRole="tab"`, `accessibilityState.selected`) instead of deprecated `accessibilityTraits` and `accessibilityComponentType`.
+
+## [6.5.1] VideoPlayer
+### Added
+
+-   We added mendix-native as a dependency to provide platform utilities.
+
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
+-   Updated @react-native-vector-icons/material-icons from version v12.4.1 to v13.1.4.
+-   Updated react-native-video from version v6.19.2 to 6.19.3.
+
+### Changed
+
+-   The Android fullscreen video is now presented through the shared MxOverlay component. Screen readers now treat it as a modal, and focus returns to the fullscreen button when you leave fullscreen.
+-   Updated react-native-video from version v6.19.2 to v6.19.3.
+
+## [4.5.0] WebView
+### Changed
+
+-   Updated react-native from version v0.84.1 to v0.88.0.
 
 ## [12.1.0] Native Mobile Resources - 2026-6-10
 
