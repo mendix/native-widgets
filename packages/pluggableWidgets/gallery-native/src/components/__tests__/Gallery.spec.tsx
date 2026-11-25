@@ -167,6 +167,29 @@ describe("Gallery", () => {
             expect(pullDown).toHaveBeenCalledTimes(1);
         });
 
+        it("triggers pull down action when list is empty", async () => {
+            const pullDown = jest.fn();
+            const galleryComponent = render(
+                <Gallery
+                    {...defaultProps}
+                    scrollDirection="vertical"
+                    items={[]}
+                    hasMoreItems={false}
+                    emptyPlaceholder={<Text>Empty list...</Text>}
+                    pullDown={pullDown}
+                    pullDownIsExecuting={false}
+                />
+            );
+            const emptyPlaceholder = galleryComponent.getByTestId("gallery-test-empty-placeholder");
+            expect(galleryComponent.getByText("Empty list...")).toBeDefined();
+
+            const { refreshControl } = emptyPlaceholder.props;
+            await act(async () => {
+                refreshControl.props.onRefresh();
+            });
+            expect(pullDown).toHaveBeenCalledTimes(1);
+        });
+
         it("triggers load more items events on end reached", () => {
             const gallery = render(<Gallery {...defaultProps} />);
             const galleryList = gallery.getByTestId("gallery-test-list");
