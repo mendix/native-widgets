@@ -6,7 +6,7 @@
 // - the code between BEGIN EXTRA CODE and END EXTRA CODE
 // Other code you write will be lost the next time you deploy the project.
 import { Big } from "big.js";
-import DeviceInfo from "react-native-device-info";
+import { useDeviceMetrics } from "@mendix/piw-native-utils-internal";
 import { getLocales, getCountry, getTimeZone, uses24HourClock } from "react-native-localize";
 
 // BEGIN EXTRA CODE
@@ -17,20 +17,21 @@ import { getLocales, getCountry, getTimeZone, uses24HourClock } from "react-nati
  */
 export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
     // BEGIN USER CODE
+    const deviceMetrics = useDeviceMetrics();
 
     return Promise.all([
         createMxObject("NativeMobileResources.DeviceInfo"),
-        DeviceInfo.getBatteryLevel(),
-        DeviceInfo.getFontScale(),
-        DeviceInfo.getFreeDiskStorage(),
-        DeviceInfo.getTotalDiskCapacity(),
-        DeviceInfo.getTotalMemory(),
-        DeviceInfo.getCarrier(),
-        DeviceInfo.getManufacturer(),
-        DeviceInfo.getUserAgent(),
-        DeviceInfo.getUniqueId(),
-        DeviceInfo.isEmulator(),
-        DeviceInfo.isLandscape()
+        deviceMetrics.getBatteryLevel(),
+        deviceMetrics.getFontScale(),
+        deviceMetrics.getFreeDiskStorage(),
+        deviceMetrics.getTotalDiskCapacity(),
+        deviceMetrics.getTotalMemory(),
+        deviceMetrics.getCarrier(),
+        deviceMetrics.getManufacturer(),
+        deviceMetrics.getUserAgent(),
+        deviceMetrics.getUniqueId(),
+        deviceMetrics.isEmulator(),
+        deviceMetrics.isLandscape()
     ]).then(
         async ([
             mxObject,
@@ -47,33 +48,33 @@ export async function GetDeviceInfo(): Promise<mendix.lib.MxObject> {
             isLandscape
         ]) => {
             const locales = getLocales();
-            mxObject.set("ApplicationName", DeviceInfo.getApplicationName());
+            mxObject.set("ApplicationName", deviceMetrics.getApplicationName());
             mxObject.set("BatteryLevel", new Big(batteryLevel.toFixed(2)));
-            mxObject.set("Brand", DeviceInfo.getBrand());
-            mxObject.set("BuildNumber", String(DeviceInfo.getBuildNumber()));
-            mxObject.set("BundleId", DeviceInfo.getBundleId());
+            mxObject.set("Brand", deviceMetrics.getBrand());
+            mxObject.set("BuildNumber", String(deviceMetrics.getBuildNumber()));
+            mxObject.set("BundleId", deviceMetrics.getBundleId());
             mxObject.set("Carrier", carrier);
             mxObject.set("DeviceCountry", getCountry());
-            mxObject.set("DeviceId", DeviceInfo.getDeviceId());
+            mxObject.set("DeviceId", deviceMetrics.getDeviceId());
             mxObject.set("DeviceLocale", locales && locales.length > 0 ? locales[0].languageTag : "");
             mxObject.set("FontScale", new Big(fontScale.toFixed(2)));
             mxObject.set("FreeDiskStorage", new Big(freeDiskStorage));
             mxObject.set("Manufacturer", manufacturer);
-            mxObject.set("Model", DeviceInfo.getModel());
-            mxObject.set("ReadableVersion", DeviceInfo.getReadableVersion());
-            mxObject.set("SystemName", DeviceInfo.getSystemName());
-            mxObject.set("SystemVersion", DeviceInfo.getSystemVersion());
+            mxObject.set("Model", deviceMetrics.getModel());
+            mxObject.set("ReadableVersion", deviceMetrics.getReadableVersion());
+            mxObject.set("SystemName", deviceMetrics.getSystemName());
+            mxObject.set("SystemVersion", deviceMetrics.getSystemVersion());
             mxObject.set("Timezone", getTimeZone());
             mxObject.set("TotalDiskCapacity", new Big(totalDiskCapacity));
             mxObject.set("TotalMemory", new Big(totalMemory));
             mxObject.set("UniqueId", uniqueId);
             mxObject.set("UserAgent", userAgent);
-            mxObject.set("Version", DeviceInfo.getVersion());
+            mxObject.set("Version", deviceMetrics.getVersion());
             mxObject.set("Is24Hour", uses24HourClock());
             mxObject.set("IsEmulator", isEmulator);
-            mxObject.set("IsTablet", DeviceInfo.isTablet());
+            mxObject.set("IsTablet", deviceMetrics.isTablet);
             mxObject.set("IsLandscape", isLandscape);
-            mxObject.set("HasNotch", DeviceInfo.hasNotch());
+            mxObject.set("HasNotch", deviceMetrics.hasNotch);
 
             return mxObject;
         }

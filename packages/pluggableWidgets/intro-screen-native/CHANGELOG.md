@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+-   Migrated device metrics utility to shared package for better code reusability and removed static iPhone list for notch detection.
+
 ## [4.6.1] - 2026-11-25
 
 ### Changed
@@ -24,7 +28,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 -   Updated react-native from version v0.84.1 to v0.88.0.
-
 -   We fixed an issue where screen readers (TalkBack and VoiceOver) read out every pagination dot as a separate button. The dots are now announced once as a page indicator (for example "Slide 2 of 4"), which can be adjusted to change slide.
 
 ## [4.4.1] - 2026-6-10
