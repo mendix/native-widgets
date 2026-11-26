@@ -110,7 +110,7 @@ describe("Background gradient", () => {
         };
         const tree = render(<BackgroundGradient {...defaultProps} />).toJSON() as any;
         const gradientView = tree.children[0];
-        const colorStops = gradientView.props.style[1].experimental_backgroundImage[0].colorStops;
+        const colorStops = gradientView.props.style[1].backgroundImage[0].colorStops;
         expect(colorStops.map((s: any) => s.positions[0])).toEqual(["0%", "50%", "100%"]);
     });
     it("render background gradient with one color", () => {
