@@ -44,7 +44,7 @@ exports[`Background gradient render background gradient with custom style 1`] = 
       [
         {},
         {
-          "experimental_backgroundImage": [
+          "backgroundImage": [
             {
               "colorStops": [
                 {
@@ -119,7 +119,7 @@ exports[`Background gradient render background gradient with one color 1`] = `
       [
         {},
         {
-          "experimental_backgroundImage": [
+          "backgroundImage": [
             {
               "colorStops": [
                 {
@@ -194,7 +194,7 @@ exports[`Background gradient render correctly 1`] = `
       [
         {},
         {
-          "experimental_backgroundImage": [
+          "backgroundImage": [
             {
               "colorStops": [
                 {
@@ -269,7 +269,7 @@ exports[`Background gradient render with undefined angle 1`] = `
       [
         {},
         {
-          "experimental_backgroundImage": [
+          "backgroundImage": [
             {
               "colorStops": [
                 {
@@ -344,7 +344,7 @@ exports[`Background gradient render with undefined opacity 1`] = `
       [
         {},
         {
-          "experimental_backgroundImage": [
+          "backgroundImage": [
             {
               "colorStops": [
                 {
