@@ -6,6 +6,8 @@ import {
     View,
     ViewProps,
     Platform,
+    RefreshControl,
+    ScrollView,
     TouchableOpacity,
     useWindowDimensions
 } from "react-native";
@@ -155,10 +157,32 @@ export const Gallery = <T extends ObjectItem>(props: GalleryProps<T>): ReactElem
         props.loadMoreItems
     ]);
 
-    const renderEmptyPlaceholder = useMemo(
-        (): ReactElement => <View style={props.style.emptyPlaceholder}>{props.emptyPlaceholder}</View>,
-        [props.style.emptyPlaceholder, props.emptyPlaceholder]
-    );
+    const renderEmptyPlaceholder = useMemo((): ReactElement => {
+        const placeholder = <View style={props.style.emptyPlaceholder}>{props.emptyPlaceholder}</View>;
+        // Without items FlashList is not rendered, so wrap the placeholder in a scroll container
+        // to keep pull-to-refresh available on an empty gallery.
+        if (isScrollDirectionVertical && props.pullDown) {
+            return (
+                <ScrollView
+                    testID={`${name}-empty-placeholder`}
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    refreshControl={
+                        <RefreshControl refreshing={!!props.pullDownIsExecuting} onRefresh={props.pullDown} />
+                    }
+                >
+                    {placeholder}
+                </ScrollView>
+            );
+        }
+        return placeholder;
+    }, [
+        props.style.emptyPlaceholder,
+        props.emptyPlaceholder,
+        isScrollDirectionVertical,
+        props.pullDown,
+        props.pullDownIsExecuting,
+        name
+    ]);
 
     const onContentSizeChange = useCallback((_width: number, height: number): void => {
         if (height > 0) {
