@@ -72,7 +72,7 @@ export function BackgroundGradient({ name, colorList, content, onClick, style }:
                 style={[
                     styles.container,
                     {
-                        experimental_backgroundImage: [
+                        backgroundImage: [
                             {
                                 type: "linear-gradient" as const,
                                 direction: `${angle}deg`,

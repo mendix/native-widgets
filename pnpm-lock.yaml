@@ -118,6 +118,9 @@ importers:
 
   packages/jsActions/mobile-resources-native:
     dependencies:
+      '@mendix/piw-native-utils-internal':
+        specifier: '*'
+        version: link:../../tools/piw-native-utils-internal
       '@react-native-camera-roll/camera-roll':
         specifier: 7.10.2
         version: 7.10.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))
@@ -142,9 +145,6 @@ importers:
       react-native-blob-util:
         specifier: 0.24.11
         version: 0.24.11(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))
       react-native-file-viewer-turbo:
         specifier: 0.7.4
         version: 0.7.4(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
@@ -378,9 +378,6 @@ importers:
       '@shopify/flash-list':
         specifier: 2.3.1
         version: 2.3.1(@babel/runtime@7.29.7)(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))
       react-native-gesture-handler:
         specifier: 2.33.0
         version: 2.33.0(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
@@ -483,15 +480,15 @@ importers:
 
   packages/pluggableWidgets/gallery-native:
     dependencies:
+      '@mendix/piw-native-utils-internal':
+        specifier: '*'
+        version: link:../../tools/piw-native-utils-internal
       '@mendix/piw-utils-internal':
         specifier: '*'
         version: link:../../tools/piw-utils-internal
       '@shopify/flash-list':
         specifier: 2.3.1
         version: 2.3.1(@babel/runtime@7.29.7)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.16.0
@@ -552,9 +549,6 @@ importers:
       '@shopify/flash-list':
         specifier: 2.3.1
         version: 2.3.1(@babel/runtime@7.29.7)(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
-      react-native-device-info:
-        specifier: 15.0.2
-        version: 15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.16.0
@@ -893,6 +887,10 @@ importers:
         version: 11.16.0(@jest/transform@30.5.2)(@jest/types@30.5.1)(@types/babel__core@7.20.5)(@types/node@20.19.41)(jest-util@30.5.1)(jiti@2.6.1)(picomatch@4.0.4)(react-dom@19.3.0(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
 
   packages/tools/piw-native-utils-internal:
+    dependencies:
+      react-native-device-info:
+        specifier: 15.0.2
+        version: 15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0))
     devDependencies:
       '@mendix/pluggable-widgets-tools':
         specifier: 11.16.0
@@ -14771,10 +14769,6 @@ snapshots:
       base-64: 1.0.0
       react: 19.3.0
       react-native: 0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)
-
-  react-native-device-info@15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0)):
-    dependencies:
-      react-native: 0.88.0(@babel/core@7.29.7)(@react-native/metro-config@0.85.3(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0)
 
   react-native-device-info@15.0.2(react-native@0.88.0(@babel/core@7.29.7)(@types/react@19.3.0)(react@19.3.0)):
     dependencies:
